@@ -711,6 +711,8 @@ function homeView() {
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
+    h('div', { class: 'row between small' }, h('span', { class: 'muted' }, 'Đồng bộ với bản Claude/web'),
+      h('span', { class: 'row' }, h('button', { class: 'ghost', onclick: copyProgress }, 'Gửi tiến độ'), h('button', { class: 'ghost', onclick: pasteProgress }, 'Nhận tiến độ'))),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
@@ -1290,6 +1292,22 @@ async function importCode(code) {
   const o = JSON.parse(new TextDecoder().decode(bytes));
   if (!o || o.v !== 2 || typeof o.srs !== 'object' || typeof o.lessons !== 'object') throw new Error('Mã không phải tiến độ Lingogo.');
   return o;
+}
+async function copyProgress() {
+  const code = await exportCode();
+  let ok = false; try { await navigator.clipboard.writeText(code); ok = true; } catch (e) { try { const ta = h('textarea', { readonly: true }); ta.value = code; document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove(); } catch (e2) { ok = false; } }
+  toast(ok ? 'Đã sao chép tiến độ. Mở bản kia, bấm Nhận tiến độ.' : 'Không sao chép tự động được. Vào Tiến độ → Chuyển tiến độ.');
+}
+async function pasteProgress() {
+  let txt = ''; try { txt = await navigator.clipboard.readText(); } catch (e) { toast('Không đọc được bộ nhớ tạm. Vào Tiến độ → Chuyển tiến độ để dán tay.'); return; }
+  try {
+    const inc = await importCode(txt);
+    const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length;
+    S = mergeState(S, inc); save();
+    const dl = Object.keys(S.lessons).length - nL, ds = Object.keys(S.srs).length - nS;
+    toast(dl || ds ? 'Đã gộp: thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp. Hai bản vốn đã giống nhau.');
+    route();
+  } catch (e) { toast(e.message || 'Không đọc được mã.'); }
 }
 function transferPanel() {
   const out = h('textarea', { class: 'code', readonly: true, rows: 3, hidden: true, 'aria-label': 'Mã tiến độ', onfocus: (e) => e.target.select() });
