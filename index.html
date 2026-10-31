@@ -984,7 +984,8 @@ function lessonView(t, i) {
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
         !r.correct && !r.align && r.expected && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
         r.note && h('p', { class: 'small' }, r.note),
-        ex.type === 'order' && h('div', {}, spk(code, ex.text))));
+        ex.type === 'order' && h('div', {}, spk(code, ex.text))),
+        ex.type === 'fill' ? fillReveal(code, ex.fill) : '');
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
@@ -1215,6 +1216,13 @@ function charView(code, c, list) {
     writer.animateCharacter();
   }, 50);
 }
+function fillReveal(code, fill) {
+  const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
+  const spoken = full.replace(/^[AB][：:]\s*/gm, '');
+  return h('div', { class: 'panel stack', style: { gap: '6px' } }, h('p', { class: 'label' }, 'Đoạn hoàn chỉnh · nghe và đọc to'),
+    ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && code === 'zh' && h('p', { class: 'small read', style: { textAlign: 'left' } }, rl[i]))),
+    h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big' }), spk(code, spoken, { slow: true, cls: 'big' })));
+}
 function fillBlock(t) {
   const code = t.lang, parts = t.fill.text.split(/(\[\[[^\]]+\]\])/), sels = [];
   const res = h('div', { 'aria-live': 'polite' });
@@ -1234,7 +1242,7 @@ function fillBlock(t) {
       const ok = sels.filter((s) => s.value === s.dataset.ok).length;
       if (ok >= parseInt(S.fill[key] || '0', 10)) S.fill[key] = ok + '/' + sels.length; // lưu kết quả tốt nhất dạng "4/5"
       addXp(XP_ITEM * ok, code);
-      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''));
+      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''), fillReveal(code, t.fill));
     } }, 'Kiểm tra'), res);
 }
 
