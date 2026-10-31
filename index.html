@@ -904,10 +904,14 @@ function lessonView(t, i) {
         pool.replaceChildren(...bank.filter((b) => !chosen.includes(b)).map((b) => h('button', { lang: LANGS[code].lang, onclick: () => { chosen.push(b); draw(); } }, b.t)));
         update();
       };
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng'), ex.trans && h('p', { class: 'q' }, ex.trans), ans, pool);
-      ready = () => chosen.length === bank.length; after = () => pool.replaceChildren();
+      const typed = h('input', { type: 'text', lang: LANGS[code].lang, placeholder: 'Hoặc gõ cả câu vào đây', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Gõ cả câu',
+        oninput: update, onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } } });
+      const typedOn = () => typed.value.trim().length > 0;
+      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), ex.trans && h('p', { class: 'q' }, ex.trans), ans, pool, typed);
+      ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; };
       const joined = (arr) => code === 'en' ? normEn(arr.join(' ')) : arr.join('').replace(/\s/g, '');
-      gradeFn = () => ({ correct: joined(chosen.map((c) => c.t)) === joined(ex.tokens), expected: code === 'en' ? ex.text : ex.tokens.join('') });
+      const strip = (s) => code === 'en' ? normEn(s) : s.replace(/[\s。，！？、,.!?：:；;“”"']/g, '');
+      gradeFn = () => ({ correct: typedOn() ? strip(typed.value) === strip(code === 'en' ? ex.tokens.join(' ') : ex.tokens.join('')) : joined(chosen.map((c) => c.t)) === joined(ex.tokens), expected: code === 'en' ? ex.text : ex.tokens.join('') });
       setTimeout(draw);
     } else if (ex.type === 'fill') {
       const parts = ex.fill.text.split(/(\[\[[^\]]+\]\])/);
