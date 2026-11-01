@@ -1204,7 +1204,8 @@ function charView(code, c, list) {
   const idx = list.indexOf(c), box = h('div', { class: 'charbox' });
   const status = h('p', { class: 'center small muted', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
   let writer = null;
-  const quiz = () => { if (!writer) return; status.textContent = 'Viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
+  const quiz = () => { if (!writer) return; writer.hideOutline(); status.textContent = 'Viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
+    writer.showOutline();
     const k = sid(code, c); S.written[k] = (S.written[k] || 0) + 1; addXp(XP_ITEM, code); checkAch();
     status.textContent = s.totalMistakes === 0 ? 'Hoàn hảo! Không sai nét nào.' : 'Xong! Sai ' + s.totalMistakes + ' lần. Viết lại cho nhớ nhé.';
   } }); };
@@ -1216,7 +1217,7 @@ function charView(code, c, list) {
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: writeView }, 'Danh sách chữ'), h('span', { class: 'muted small' }, (idx + 1) + '/' + list.length)),
     h('div', { class: 'center' }, h('span', { class: 'big', lang: L().lang }, c)), box, status,
-    h('div', { class: 'listen' }, h('button', { onclick: () => writer && writer.animateCharacter() }, 'Xem thứ tự nét'), h('button', { class: 'primary', onclick: quiz }, 'Tự viết'), spk(code, c, { cls: 'big' })),
+    h('div', { class: 'listen' }, h('button', { onclick: () => { if (!writer) return; writer.cancelQuiz(); writer.showOutline(); writer.animateCharacter(); status.textContent = 'Xem từng nét, rồi bấm “Tự viết” để tự tập.'; } }, 'Xem thứ tự nét'), h('button', { class: 'primary', onclick: quiz }, 'Tự viết'), spk(code, c, { cls: 'big' })),
     h('div', { class: 'panel stack' }, info),
     h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →'))));
   setTimeout(async () => {
@@ -1226,8 +1227,7 @@ function charView(code, c, list) {
     writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
       strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: css.getPropertyValue('--line').trim(), drawingColor: css.getPropertyValue('--teal').trim(),
       highlightColor: css.getPropertyValue('--amber').trim(), charDataLoader: (ch, ok) => ok(data) });
-    status.textContent = 'Bấm “Xem thứ tự nét” rồi “Tự viết”.';
-    writer.animateCharacter();
+    status.textContent = 'Bấm “Tự viết” để tự tập, hoặc “Xem thứ tự nét” khi cần xem cách viết.';
   }, 50);
 }
 function fillReveal(code, fill) {
