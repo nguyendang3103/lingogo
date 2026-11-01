@@ -1062,14 +1062,28 @@ function reviewView() {
       back = h('div', { class: 'stack', hidden: true }, h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, kj.hv),
         h('p', { class: 'small', lang: 'ja' }, 'On: ' + kj.on + ' · Kun: ' + kj.kun), ...(kj.ex || []).slice(0, 3).map((e) => h('p', { class: 'small', lang: 'ja' }, ruby(e[0]), ' · ', h('span', { class: 'muted' }, e[1]))));
     }
-    const grades = h('div', { class: 'grades', hidden: true }, ...[[1, 'Quên'], [2, 'Khó'], [3, 'Nhớ'], [4, 'Dễ']].map(([g, label]) => h('button', { 'aria-keyshortcuts': String(g), onclick: () => {
-      S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code); queue.shift(); if (g === 1) queue.push(k); show();
-    } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, g), h('b', {}, label), h('small', {}, g === 1 ? 'hôm nay' : ivText(srsNext(s, g))))));
-    const reveal = h('button', { class: 'primary block', onclick: () => { back.hidden = false; grades.hidden = false; reveal.hidden = true; say(code, sayText); } }, 'Hiện nghĩa');
+    // Máy tự phân loại: chọn nghĩa đúng trong 4 đáp án; sai → Quên, đúng nhanh → Dễ, đúng chậm → Khó
+    const pool = Object.values(idx), t0r = Date.now();
+    const answer = it.v ? it.v.m : it.k.hv;
+    const others = it.v ? pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t === it.t).concat(pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t !== it.t))
+      : pool.filter((x) => x.k && x.k.k !== it.k.k && x.k.hv !== it.k.hv);
+    const labels = [...new Set(others.slice(0, 40).map((x) => (it.v ? x.v.m : x.k.hv)))];
+    const opts = shuffle([answer, ...sample(labels, 3)]);
+    const verdict = h('div', { 'aria-live': 'assertive' });
+    const cont = h('button', { class: 'primary block', hidden: true, onclick: () => { queue.shift(); if (cont.dataset.wrong) queue.push(k); show(); } }, 'Tiếp tục');
+    const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
+      const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
+      bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
+      S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code);
+      back.hidden = false; say(code, sayText);
+      verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
+      if (!ok) cont.dataset.wrong = '1';
+      cont.hidden = false; cont.focus();
+    } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
     mount(h('div', { class: 'stack-lg' }, head(),
       h('div', { class: 'row between' }, h('span', { class: 'small muted' }, it.t.sub || it.t.title), h('span', { class: 'chip' }, 'Còn ' + queue.length)),
-      h('div', { class: 'panel card' }, h('p', { class: 'small muted' }, 'Cố nhớ nghĩa trước khi lật thẻ'), front, h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })), back),
-      h('div', { class: 'dock stack' }, reveal, grades)));
+      h('div', { class: 'panel card' }, h('p', { class: 'small muted' }, it.v ? 'Chọn nghĩa đúng' : 'Chọn âm Hán Việt đúng'), front, h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })), back),
+      h('div', { class: 'dock stack' }, h('div', { class: 'options' }, bs), verdict, cont)));
   };
   show();
 }
