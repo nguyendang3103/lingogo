@@ -1204,8 +1204,7 @@ function charView(code, c, list) {
   const idx = list.indexOf(c), box = h('div', { class: 'charbox' });
   const status = h('p', { class: 'center small muted', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
   let writer = null;
-  const quiz = () => { if (!writer) return; writer.hideOutline(); status.textContent = 'Viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
-    writer.showOutline();
+  const quiz = () => { if (!writer) return; writer.showOutline(); status.textContent = 'Đồ theo chữ mờ, viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
     const k = sid(code, c); S.written[k] = (S.written[k] || 0) + 1; addXp(XP_ITEM, code); checkAch();
     status.textContent = s.totalMistakes === 0 ? 'Hoàn hảo! Không sai nét nào.' : 'Xong! Sai ' + s.totalMistakes + ' lần. Viết lại cho nhớ nhé.';
   } }); };
@@ -1227,7 +1226,7 @@ function charView(code, c, list) {
     writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
       strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: css.getPropertyValue('--line').trim(), drawingColor: css.getPropertyValue('--teal').trim(),
       highlightColor: css.getPropertyValue('--amber').trim(), charDataLoader: (ch, ok) => ok(data) });
-    status.textContent = 'Bấm “Tự viết” để tự tập, hoặc “Xem thứ tự nét” khi cần xem cách viết.';
+    status.textContent = 'Bấm “Tự viết” rồi đồ theo chữ mờ, hoặc “Xem thứ tự nét” khi cần xem cách viết.';
   }, 50);
 }
 function fillReveal(code, fill) {
