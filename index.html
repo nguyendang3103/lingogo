@@ -369,11 +369,18 @@ const ivText = (s) => { const n = s.due - todayN(); return n <= 1 ? 'ngày mai' 
 
 // ===== Tải dữ liệu =====
 const DATA = {}, STROKES = {}, BUNDLES = {};
+// Đọc file dữ liệu: ưu tiên bản nhúng sẵn trong trang (<script type="application/json" data-file="data/en.json">, do tools/inline.py chèn vào bản artifact),
+// vì một số trình duyệt (ví dụ iPad) bị chặn khi tải thêm file riêng (lỗi 403). Không có bản nhúng thì tải qua mạng như bình thường.
+async function getJSON(path) {
+  const el = document.querySelector('script[type="application/json"][data-file="' + path + '"]');
+  if (el) { try { return JSON.parse(el.textContent); } catch (e) { /* hỏng thì rơi về tải mạng */ } }
+  const r = await fetch(path);
+  if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
+  return r.json();
+}
 async function loadLang(code) {
   if (!DATA[code]) {
-    const r = await fetch('data/' + code + '.json');
-    if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
-    const d = await r.json();
+    const d = await getJSON('data/' + code + '.json');
     d.topics.forEach((t) => { t.lang = code; t.lessons = planTopic(d, t); });
     DATA[code] = d;
     remapLessons(d);
@@ -382,7 +389,7 @@ async function loadLang(code) {
 }
 async function loadStrokes(code) {
   if (!STROKES[code]) {
-    try { const r = await fetch('data/strokes-' + code + '.json'); STROKES[code] = r.ok ? await r.json() : {}; } catch (e) { STROKES[code] = {}; }
+    try { STROKES[code] = await getJSON('data/strokes-' + code + '.json'); } catch (e) { STROKES[code] = {}; }
   }
   return STROKES[code];
 }
@@ -400,7 +407,7 @@ function bundleOf(code, text) {
 }
 async function clipFor(code, text) {
   const b = bundleOf(code, text); if (!b) return null;
-  if (!(b.file in BUNDLES)) BUNDLES[b.file] = fetch(b.file).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  if (!(b.file in BUNDLES)) BUNDLES[b.file] = getJSON(b.file).catch(() => ({}));
   const m = await BUNDLES[b.file];
   return m && m[b.key] ? 'data:audio/mpeg;base64,' + m[b.key] : null;
 }
