@@ -939,7 +939,7 @@ function lessonView(t, i) {
         if (!data || !window.HanziWriter) { info.textContent = 'Chưa có dữ liệu nét cho chữ này.'; return; }
         const size = wbox.clientWidth || 260;
         writer = HanziWriter.create(wbox, ex.ch, { width: size, height: size, padding: 12, showCharacter: false, showOutline: true,
-          strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222', outlineColor: getComputedStyle(document.documentElement).getPropertyValue('--line').trim() || '#ddd',
+          strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222', outlineColor: guideColor(),
           drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257', charDataLoader: (c, ok) => ok(data) });
         writer.animateCharacter({ onComplete: startQuiz });
       }, 50);
@@ -1200,6 +1200,13 @@ function charHint(code, c) {
   const k = DATA.ja.topics.flatMap((t) => t.kanji || []).find((x) => x.k === c); if (k) return k.hv;
   let i = KANA.hira.indexOf(c); if (i < 0) i = KANA.kata.indexOf(c); return i >= 0 ? ROMA[i] : '';
 }
+// Màu chữ mờ để đồ nét: trộn màu chữ với màu nền (hex đặc, không dùng độ trong suốt) cho đủ thấy ở cả giao diện sáng và tối
+function guideColor() {
+  const css = getComputedStyle(document.documentElement);
+  const rgb = (v, d) => { const m = /^#?([0-9a-f]{6})$/i.exec(css.getPropertyValue(v).trim()); if (!m) return d; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
+  const a = rgb('--ink', [27, 42, 44]), b = rgb('--surface', [255, 255, 255]);
+  return '#' + a.map((x, i) => Math.round(x * 0.28 + b[i] * 0.72).toString(16).padStart(2, '0')).join('');
+}
 function charView(code, c, list) {
   const idx = list.indexOf(c), box = h('div', { class: 'charbox' });
   const status = h('p', { class: 'center small muted', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
@@ -1216,15 +1223,15 @@ function charView(code, c, list) {
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: writeView }, 'Danh sách chữ'), h('span', { class: 'muted small' }, (idx + 1) + '/' + list.length)),
     h('div', { class: 'center' }, h('span', { class: 'big', lang: L().lang }, c)), box, status,
-    h('div', { class: 'listen' }, h('button', { onclick: () => { if (!writer) return; writer.cancelQuiz(); writer.showOutline(); writer.animateCharacter(); status.textContent = 'Xem từng nét, rồi bấm “Tự viết” để tự tập.'; } }, 'Xem thứ tự nét'), h('button', { class: 'primary', onclick: quiz }, 'Tự viết'), spk(code, c, { cls: 'big' })),
+    h('div', { class: 'listen' }, h('button', { onclick: () => { if (!writer) return; writer.cancelQuiz(); writer.showOutline(); writer.animateCharacter({ onComplete: () => writer.hideCharacter() }); status.textContent = 'Xem từng nét, rồi bấm “Tự viết” để tự tập.'; } }, 'Xem thứ tự nét'), h('button', { class: 'primary', onclick: quiz }, 'Tự viết'), spk(code, c, { cls: 'big' })),
     h('div', { class: 'panel stack' }, info),
     h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →'))));
   setTimeout(async () => {
     const data = (await loadStrokes(code))[c];
     if (!data || !window.HanziWriter) { status.textContent = window.HanziWriter ? 'Chưa có dữ liệu nét cho chữ này.' : 'Không tải được công cụ viết. Kiểm tra mạng rồi mở lại.'; return; }
     const css = getComputedStyle(document.documentElement), size = box.clientWidth || 280;
-    writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
-      strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: css.getPropertyValue('--line').trim(), drawingColor: css.getPropertyValue('--teal').trim(),
+    writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showCharacter: false, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
+      strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: guideColor(), drawingColor: css.getPropertyValue('--teal').trim(),
       highlightColor: css.getPropertyValue('--amber').trim(), charDataLoader: (ch, ok) => ok(data) });
     status.textContent = 'Bấm “Tự viết” rồi đồ theo chữ mờ, hoặc “Xem thứ tự nét” khi cần xem cách viết.';
   }, 50);
