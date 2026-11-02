@@ -803,7 +803,7 @@ function buildSteps(t, i) {
     sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || v.m, tokens: tokensOf(code, v.ex), v }); }
+    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
     else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); }
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
@@ -820,7 +820,7 @@ function buildSteps(t, i) {
     l.quiz.forEach((q) => steps.push({ type: 'quiz', q }));
   } else if (l.kind === 'fill') {
     steps.push({ type: 'fill', fill: t.fill });
-    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || v.m, tokens: tokensOf(code, v.ex), v }));
+    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
     (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
