@@ -217,7 +217,7 @@ span.spk { width: 34px; height: 34px; min-height: 34px; }
 .kana .gap { visibility: hidden; }
 
 /* Flashcard */
-.card { min-height: 240px; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
+.card { min-height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
 .grades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .grades button { flex-direction: column; gap: 0; padding: 8px 4px; font-size: .9rem; }
 .grades small { color: var(--muted); font-size: .72rem; }
@@ -1054,7 +1054,7 @@ function reviewView() {
     if (it.v) {
       const v = it.v; sayText = v.w;
       front = h('div', { class: 'big', lang: L().lang }, plain(v.w));
-      back = h('div', { class: 'stack', hidden: true }, v.r && h('div', { class: code === 'en' ? 'ipa' : 'read' }, v.r), code !== 'en' && hvBlock(code, v), h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, v.m),
+      back = h('div', { class: 'stack', hidden: true }, v.r && (v.r !== v.w ? h('div', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null }, v.r) : null), code !== 'en' && hvBlock(code, v), h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, v.m),
         v.d && code === 'en' && h('p', { class: 'small muted' }, v.d), v.ex && h('p', { lang: L().lang }, '“' + v.ex + '”'), v.exr && h('p', { class: 'small read' }, v.exr), v.exm && h('p', { class: 'small muted' }, v.exm));
     } else {
       const kj = it.k; sayText = kj.ex && kj.ex[0] ? plain(kj.ex[0][0]) : kj.k;
@@ -1071,6 +1071,7 @@ function reviewView() {
     const opts = shuffle([answer, ...sample(labels, 3)]);
     const verdict = h('div', { 'aria-live': 'assertive' });
     const cont = h('button', { class: 'primary block', hidden: true, onclick: () => { queue.shift(); if (cont.dataset.wrong) queue.push(k); show(); } }, 'Tiếp tục');
+    const dock = h('div', { class: 'dock stack', hidden: true }, verdict, cont);
     const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
       const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
       bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
@@ -1078,12 +1079,14 @@ function reviewView() {
       back.hidden = false; say(code, sayText);
       verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
       if (!ok) cont.dataset.wrong = '1';
+      dock.hidden = false;
       cont.hidden = false; cont.focus();
     } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
     mount(h('div', { class: 'stack-lg' }, head(),
       h('div', { class: 'row between' }, h('span', { class: 'small muted' }, it.t.sub || it.t.title), h('span', { class: 'chip' }, 'Còn ' + queue.length)),
       h('div', { class: 'panel card' }, h('p', { class: 'small muted' }, it.v ? 'Chọn nghĩa đúng' : 'Chọn âm Hán Việt đúng'), front, h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })), back),
-      h('div', { class: 'dock stack' }, h('div', { class: 'options' }, bs), verdict, cont)));
+      h('div', { class: 'options' }, bs),
+      dock));
   };
   show();
 }
