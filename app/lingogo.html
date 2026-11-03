@@ -243,6 +243,13 @@ ruby rt { font-size: .55em; color: var(--muted); }
 textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospace, Menlo, monospace; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); resize: vertical; word-break: break-all; }
 
 /* Thanh tab */
+/* Modal đồng bộ & nút sync */
+.modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
+.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 420px; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+.sync-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; }
+.sync-btn:hover { background: var(--sunk); transform: rotate(90deg); }
+.sync-btn svg { width: 18px; height: 18px; }
+
 .tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; justify-content: center;
   background: var(--surface); border-top: 1px solid var(--line);
@@ -593,6 +600,9 @@ const ICON = {
   pen: 'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',
   chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
   speaker: 'M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11',
+  sync: 'M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5',
+  push: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12',
+  pull: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3',
 };
 // Nút loa: phát âm; slow = phát chậm (biểu tượng con rùa như app cũ)
 function spk(code, text, opts = {}) {
@@ -711,8 +721,9 @@ function homeView() {
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
-    h('div', { class: 'row between small' }, h('span', { class: 'muted' }, 'Đồng bộ'),
-      h('span', { class: 'row' }, h('button', { class: 'ghost', onclick: copyProgress }, 'Gửi tiến độ'), h('button', { class: 'ghost', onclick: pasteProgress }, 'Nhận tiến độ'))),
+    h('div', { class: 'row between small' },
+      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: showSyncModal }, 'Đồng bộ'),
+      h('button', { class: 'sync-btn', 'aria-label': 'Đồng bộ (Pull / Push)', title: 'Đồng bộ (Pull / Push)', onclick: showSyncModal }, icon(ICON.sync))),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
@@ -1323,18 +1334,86 @@ async function importCode(code) {
 async function copyProgress() {
   const code = await exportCode();
   let ok = false; try { await navigator.clipboard.writeText(code); ok = true; } catch (e) { try { const ta = h('textarea', { readonly: true }); ta.value = code; document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove(); } catch (e2) { ok = false; } }
-  toast(ok ? 'Đã sao chép tiến độ. Mở bản kia, bấm Nhận tiến độ.' : 'Không sao chép tự động được. Vào Tiến độ → Chuyển tiến độ.');
+  toast(ok ? 'Đã sao chép tiến độ (Push). Mở máy khác bấm Nhận (Pull).' : 'Không sao chép tự động được.');
+  return ok;
 }
 async function pasteProgress() {
-  let txt = ''; try { txt = await navigator.clipboard.readText(); } catch (e) { toast('Không đọc được bộ nhớ tạm. Vào Tiến độ → Chuyển tiến độ để dán tay.'); return; }
+  let txt = ''; try { txt = await navigator.clipboard.readText(); } catch (e) { toast('Không đọc được bộ nhớ tạm. Hãy dán mã vào ô.'); return false; }
   try {
     const inc = await importCode(txt);
     const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length;
     S = mergeState(S, inc); save();
     const dl = Object.keys(S.lessons).length - nL, ds = Object.keys(S.srs).length - nS;
-    toast(dl || ds ? 'Đã gộp: thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp. Hai bản vốn đã giống nhau.');
+    toast(dl || ds ? 'Đã gộp (Pull): thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp (Pull). Tiến độ đã khớp.');
     route();
-  } catch (e) { toast(e.message || 'Không đọc được mã.'); }
+    return true;
+  } catch (e) { toast(e.message || 'Không đọc được mã.'); return false; }
+}
+function showSyncModal() {
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const overlay = h('div', { class: 'modal-mask', onclick: (e) => { if (e.target === overlay) close(); } });
+  const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
+  window.addEventListener('keydown', onKey);
+
+  const manualBox = h('div', { class: 'stack', hidden: true });
+  const manualInp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây' });
+  const manualBtn = h('button', { class: 'primary block', onclick: async () => {
+    try {
+      const inc = await importCode(manualInp.value);
+      const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length;
+      S = mergeState(S, inc); save();
+      const dl = Object.keys(S.lessons).length - nL, ds = Object.keys(S.srs).length - nS;
+      toast(dl || ds ? 'Đã gộp (Pull): thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp. Tiến độ đã đồng bộ.');
+      close(); route();
+    } catch (e) { toast(e.message || 'Mã không hợp lệ.'); }
+  } }, 'Gộp mã này');
+  manualBox.append(
+    h('p', { class: 'small muted' }, 'Dán mã LGG1… từ thiết bị khác vào ô dưới rồi bấm Gộp:'),
+    manualInp, manualBtn
+  );
+
+  const toggleManual = h('button', { class: 'ghost small', onclick: () => {
+    manualBox.hidden = !manualBox.hidden;
+    toggleManual.textContent = manualBox.hidden ? 'Nhập mã thủ công…' : 'Thu gọn ô nhập';
+    if (!manualBox.hidden) setTimeout(() => manualInp.focus(), 50);
+  } }, 'Nhập mã thủ công…');
+
+  const box = h('div', { class: 'modal-box stack' },
+    h('div', { class: 'row between' },
+      h('h3', { style: { fontSize: '1.15rem' } }, 'Đồng bộ tiến độ'),
+      h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', padding: '4px 10px', fontSize: '1.1rem' } }, '✕')
+    ),
+    h('p', { class: 'small muted' }, 'Chuyển tiến độ giữa các thiết bị (máy tính, điện thoại):'),
+    h('button', { class: 'primary block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+      await copyProgress(); close();
+    } },
+      icon(ICON.push),
+      h('span', { class: 'grow' },
+        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Gửi tiến độ (Push)'),
+        h('span', { class: 'small', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
+      )
+    ),
+    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+      const ok = await pasteProgress();
+      if (ok) close();
+      else {
+        manualBox.hidden = false;
+        toggleManual.textContent = 'Thu gọn ô nhập';
+        setTimeout(() => manualInp.focus(), 50);
+      }
+    } },
+      icon(ICON.pull),
+      h('span', { class: 'grow' },
+        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Nhận tiến độ (Pull)'),
+        h('span', { class: 'small muted', style: { display: 'block', fontWeight: 400 } }, 'Đọc mã từ bộ nhớ tạm và gộp vào máy này')
+      )
+    ),
+    manualBox,
+    toggleManual
+  );
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
 }
 function transferPanel() {
   const out = h('textarea', { class: 'code', readonly: true, rows: 3, hidden: true, 'aria-label': 'Mã tiến độ', onfocus: (e) => e.target.select() });
