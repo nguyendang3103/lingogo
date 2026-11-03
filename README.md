@@ -1,10 +1,15 @@
 # Lingogo
 
+> 🌐 **Link học trực tuyến chính thức:** **[https://nguyendang3103.github.io/lingogo/](https://nguyendang3103.github.io/lingogo/)**
+>
+> *(Hỗ trợ đầy đủ âm thanh, nhận diện giọng nói chấm phát âm và tập viết chữ. Mở bằng Safari / Chrome trên điện thoại rồi chọn **"Thêm vào màn hình chính"** để dùng như App).*
+
+---
+
 App học tiếng Anh thương mại, tiếng Trung và tiếng Nhật trong một chỗ: lộ trình theo chủ đề, ôn tập ngắt quãng (SRS), luyện nói và tập viết chữ Hán, kana.
 
-- **Bản chạy trực tiếp (GitHub Pages):** https://nguyendang3103.github.io/lingogo/
-- **Bản Claude Artifact:** https://claude.ai/artifact/M4569cod66nCfxNbu3YGR6
-- **Kho tri thức & ghi chú học tập:** Được theo dõi trong bộ não thứ hai (kho `sallysbrain`, thư mục `wiki/learn/Lingogo/notes/`).
+- **Link chạy trực tiếp:** https://nguyendang3103.github.io/lingogo/
+- **Kho tri thức & ghi chú học tập:** Nằm trong thư mục `notes/` (`English Practice.md`, `Chinese Practice.md`, `Japanese Practice.md`).
 
 ## Cấu trúc thư mục
 
