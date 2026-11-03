@@ -1,0 +1,826 @@
+[
+{
+"sec": "ELEMENT",
+"k": "日",
+"hv": "NHẬT",
+"m": "mặt trời",
+"kun": "ひ、か",
+"on": "ニチ、ジツ"
+},
+{
+"sec": "ELEMENT",
+"k": "月",
+"hv": "NGUYỆT",
+"m": "mặt trăng",
+"kun": "つき",
+"on": "ゲツ、ガツ"
+},
+{
+"sec": "ELEMENT",
+"k": "金",
+"hv": "KIM",
+"m": "tiền, kim loại",
+"kun": "かね",
+"on": "キン"
+},
+{
+"sec": "ELEMENT",
+"k": "木",
+"hv": "MỘC",
+"m": "cây",
+"kun": "き、こ",
+"on": "ボク、モク"
+},
+{
+"sec": "ELEMENT",
+"k": "水",
+"hv": "THỦY",
+"m": "nước",
+"kun": "みず",
+"on": "スイ"
+},
+{
+"sec": "ELEMENT",
+"k": "火",
+"hv": "HỎA",
+"m": "lửa",
+"kun": "ひ",
+"on": "カ"
+},
+{
+"sec": "ELEMENT",
+"k": "土",
+"hv": "THỔ",
+"m": "đất",
+"kun": "つち",
+"on": "ド"
+},
+{
+"sec": "NATURE",
+"k": "車",
+"hv": "XA",
+"m": "xe hơi, ô tô",
+"kun": "くるま",
+"on": "シャ"
+},
+{
+"sec": "NATURE",
+"k": "門",
+"hv": "MÔN",
+"m": "cửa",
+"kun": "",
+"on": "モン"
+},
+{
+"sec": "NATURE",
+"k": "田",
+"hv": "ĐIỀN",
+"m": "ruộng lúa",
+"kun": "た、だ",
+"on": "デン"
+},
+{
+"sec": "NATURE",
+"k": "山",
+"hv": "SƠN",
+"m": "núi",
+"kun": "やま",
+"on": "サン、ザン"
+},
+{
+"sec": "NATURE",
+"k": "川",
+"hv": "XUYÊN",
+"m": "sông",
+"kun": "かわ、がわ",
+"on": "セン"
+},
+{
+"sec": "NATURE",
+"k": "雨",
+"hv": "VŨ",
+"m": "mưa",
+"kun": "あめ",
+"on": "ウ"
+},
+{
+"sec": "NATURE",
+"k": "天",
+"hv": "THIÊN",
+"m": "trời",
+"kun": "あめ、あま",
+"on": "テン"
+},
+{
+"sec": "NATURE",
+"k": "気",
+"hv": "KHÍ",
+"m": "tinh thần",
+"kun": "",
+"on": "キ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "父",
+"hv": "PHỤ",
+"m": "cha",
+"kun": "ちち",
+"on": "フ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "母",
+"hv": "MẪU",
+"m": "mẹ",
+"kun": "はは",
+"on": "ボ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "兄",
+"hv": "HUYNH",
+"m": "",
+"kun": "あに",
+"on": "キョウ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "姉",
+"hv": "TỈ",
+"m": "chị gái",
+"kun": "あね",
+"on": "シ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "私",
+"hv": "TƯ",
+"m": "riêng tư",
+"kun": "わたし、わたくし",
+"on": "シ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "弟",
+"hv": "ĐỆ",
+"m": "em trai",
+"kun": "おとうと",
+"on": "テイ、ダイ"
+},
+{
+"sec": "HUMAN RELATIONSHIPS",
+"k": "妹",
+"hv": "MUỘI",
+"m": "em gái",
+"kun": "いもうと",
+"on": "マイ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "一",
+"hv": "NHẤT",
+"m": "",
+"kun": "ひと、ひとつ",
+"on": "イチ、イツ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "二",
+"hv": "NHỊ",
+"m": "",
+"kun": "ふた、ふたつ",
+"on": "ニ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "三",
+"hv": "TAM",
+"m": "",
+"kun": "み、みっ、みつ",
+"on": "サン"
+},
+{
+"sec": "NUMBERS 1",
+"k": "四",
+"hv": "TỨ",
+"m": "",
+"kun": "よっ、よん、よ",
+"on": "シ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "五",
+"hv": "NGŨ",
+"m": "",
+"kun": "いつ、いつつ",
+"on": "ゴ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "六",
+"hv": "LỤC",
+"m": "",
+"kun": "む、むっ、むい",
+"on": "ロク"
+},
+{
+"sec": "NUMBERS 1",
+"k": "七",
+"hv": "THẤT",
+"m": "",
+"kun": "なな",
+"on": "シチ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "八",
+"hv": "BÁT",
+"m": "",
+"kun": "や、やつ、やっつ",
+"on": "ハチ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "九",
+"hv": "CỬU",
+"m": "",
+"kun": "ここの、ここのつ",
+"on": "キュウ"
+},
+{
+"sec": "NUMBERS 1",
+"k": "十",
+"hv": "THẬP",
+"m": "",
+"kun": "とお、と",
+"on": "ジュウ"
+},
+{
+"sec": "NUMBERS 2",
+"k": "百",
+"hv": "BÁCH",
+"m": "trăm",
+"kun": "もも",
+"on": "ヒャク"
+},
+{
+"sec": "NUMBERS 2",
+"k": "千",
+"hv": "THIÊN",
+"m": "nghìn",
+"kun": "ち",
+"on": "セン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "万",
+"hv": "VẠN",
+"m": "mười nghìn",
+"kun": "よろず",
+"on": "マン、バン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "円",
+"hv": "VIÊN",
+"m": "tròn",
+"kun": "まるい",
+"on": "エン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "年",
+"hv": "NIÊN",
+"m": "năm",
+"kun": "とし",
+"on": "ネン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "年",
+"hv": "BÁN",
+"m": "nửa",
+"kun": "なか.ば",
+"on": "ハン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "分",
+"hv": "PHÂN",
+"m": "phút",
+"kun": "わかる、わける",
+"on": "ブン、フン"
+},
+{
+"sec": "NUMBERS 2",
+"k": "時",
+"hv": "THÌ, THỜI",
+"m": "thời gian",
+"kun": "とき",
+"on": "ジ"
+},
+{
+"sec": "HUMAN",
+"k": "人",
+"hv": "NHÂN",
+"m": "người",
+"kun": "ひと",
+"on": "ジン、ニン"
+},
+{
+"sec": "HUMAN",
+"k": "女",
+"hv": "NỮ",
+"m": "đàn bà",
+"kun": "おんな",
+"on": "ジョ、ニョ"
+},
+{
+"sec": "HUMAN",
+"k": "生",
+"hv": "SINH",
+"m": "sống, sinh",
+"kun": "い·きる、う·む",
+"on": "セイ、ショウ"
+},
+{
+"sec": "HUMAN",
+"k": "子",
+"hv": "TỬ",
+"m": "đứa trẻ",
+"kun": "こ、-こ、-っこ",
+"on": "シ、ス"
+},
+{
+"sec": "HUMAN",
+"k": "学",
+"hv": "HỌC",
+"m": "",
+"kun": "まな·ぶ",
+"on": "ガク、ガッ"
+},
+{
+"sec": "HUMAN",
+"k": "先",
+"hv": "TIÊN",
+"m": "trước",
+"kun": "さき",
+"on": "セン"
+},
+{
+"sec": "HUMAN",
+"k": "白",
+"hv": "BẠCH",
+"m": "trắng",
+"kun": "しろ、しら-",
+"on": "ハク、ビャク"
+},
+{
+"sec": "BODY",
+"k": "口",
+"hv": "KHẨU",
+"m": "miệng",
+"kun": "くち",
+"on": "コウ"
+},
+{
+"sec": "BODY",
+"k": "石",
+"hv": "THẠCH",
+"m": "đá",
+"kun": "いし",
+"on": "セキ、シャク"
+},
+{
+"sec": "BODY",
+"k": "手",
+"hv": "THỦ",
+"m": "tay",
+"kun": "て",
+"on": "シュ"
+},
+{
+"sec": "BODY",
+"k": "足",
+"hv": "TÚC",
+"m": "chân, đủ",
+"kun": "あし、た·す",
+"on": "ソク"
+},
+{
+"sec": "BODY",
+"k": "耳",
+"hv": "NHĨ",
+"m": "tai",
+"kun": "みみ",
+"on": "ジ"
+},
+{
+"sec": "BODY",
+"k": "目",
+"hv": "MỤC",
+"m": "mắt",
+"kun": "め",
+"on": "モク"
+},
+{
+"sec": "BODY",
+"k": "体",
+"hv": "THỂ",
+"m": "",
+"kun": "からだ",
+"on": "タイ"
+},
+{
+"sec": "SIGNS",
+"k": "上",
+"hv": "THƯỢNG",
+"m": "trên",
+"kun": "うえ、あ.がる、のぼ.る",
+"on": "ジョウ、ショウ"
+},
+{
+"sec": "SIGNS",
+"k": "下",
+"hv": "HẠ",
+"m": "dưới",
+"kun": "した、さがる、くだる",
+"on": "カ、ゲ"
+},
+{
+"sec": "SIGNS",
+"k": "中",
+"hv": "TRUNG",
+"m": "trong",
+"kun": "なか",
+"on": "チュウ"
+},
+{
+"sec": "SIGNS",
+"k": "大",
+"hv": "ĐẠI",
+"m": "lớn",
+"kun": "おお、おお-きい",
+"on": "ダイ、タイ"
+},
+{
+"sec": "SIGNS",
+"k": "小",
+"hv": "TIỂU",
+"m": "nhỏ",
+"kun": "ちい",
+"on": "ショウ"
+},
+{
+"sec": "SIGNS",
+"k": "本",
+"hv": "BỔN",
+"m": "nguồn",
+"kun": "もと",
+"on": "ホン"
+},
+{
+"sec": "SIGNS",
+"k": "力",
+"hv": "LỰC",
+"m": "sức mạnh",
+"kun": "ちから",
+"on": "リョク、リキ"
+},
+{
+"sec": "SIGNS",
+"k": "何",
+"hv": "HÀ",
+"m": "cái gì",
+"kun": "なに、なん",
+"on": "カ"
+},
+{
+"sec": "SIGNS",
+"k": "出",
+"hv": "XUẤT",
+"m": "ra",
+"kun": "でる、だす",
+"on": "シュツ"
+},
+{
+"sec": "SIGNS",
+"k": "入",
+"hv": "NHẬP",
+"m": "vào",
+"kun": "い.る、はい.る",
+"on": "ニュウ"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "明",
+"hv": "MINH",
+"m": "sáng",
+"kun": "あかるい、あかるむ、あきらか",
+"on": "メイ、ミョウ"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "体",
+"hv": "THỂ",
+"m": "",
+"kun": "やす.む、やす.まる、やす.める",
+"on": "キュウ"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "好",
+"hv": "HẢO",
+"m": "thích, yêu",
+"kun": "す",
+"on": "コウ"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "男",
+"hv": "NAM",
+"m": "",
+"kun": "おとこ",
+"on": "ダン、ナン"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "間",
+"hv": "GIAN",
+"m": "giữa",
+"kun": "あいだ、ま",
+"on": "カン"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "岩",
+"hv": "NHAM",
+"m": "tảng đá",
+"kun": "いわ",
+"on": "ガン"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "畑",
+"hv": "VƯỜN",
+"m": "đồng ruộng",
+"kun": "はたけ",
+"on": ""
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "森",
+"hv": "SÂM",
+"m": "",
+"kun": "もり",
+"on": "シン"
+},
+{
+"sec": "COMBINATION OF MEANINGS",
+"k": "林",
+"hv": "LÂM",
+"m": "rừng",
+"kun": "はやし",
+"on": "リン"
+},
+{
+"sec": "POSITION 1",
+"k": "右",
+"hv": "HỮU",
+"m": "bên phải",
+"kun": "みぎ",
+"on": "ウ、ユウ"
+},
+{
+"sec": "POSITION 1",
+"k": "左",
+"hv": "TẢ",
+"m": "bên trái",
+"kun": "ひだり",
+"on": "サ"
+},
+{
+"sec": "POSITION 1",
+"k": "東",
+"hv": "ĐÔNG",
+"m": "hướng đông",
+"kun": "ひがし",
+"on": "トウ"
+},
+{
+"sec": "POSITION 1",
+"k": "西",
+"hv": "TÂY",
+"m": "hướng tây",
+"kun": "にし",
+"on": "セイ、サイ"
+},
+{
+"sec": "POSITION 1",
+"k": "北",
+"hv": "BẮC",
+"m": "hướng bắc",
+"kun": "きた",
+"on": "ホク"
+},
+{
+"sec": "POSITION 1",
+"k": "南",
+"hv": "NAM",
+"m": "hướng nam",
+"kun": "みなみ",
+"on": "ナン"
+},
+{
+"sec": "POSITION 1",
+"k": "外",
+"hv": "NGOẠI",
+"m": "ngoài",
+"kun": "そと、ほか、はず",
+"on": "ガイ、ゲ"
+},
+{
+"sec": "POSITION 1",
+"k": "駅",
+"hv": "DỊCH",
+"m": "nhà ga",
+"kun": "えき",
+"on": "エキ"
+},
+{
+"sec": "POSITION 1",
+"k": "会",
+"hv": "HỘI",
+"m": "họp",
+"kun": "あう、あわせる",
+"on": "カイ"
+},
+{
+"sec": "POSITION 1",
+"k": "内",
+"hv": "NỘI, NẠP",
+"m": "trong",
+"kun": "うち",
+"on": "ナイ"
+},
+{
+"sec": "ADJECTIVE 1",
+"k": "長",
+"hv": "TRƯỜNG",
+"m": "dài",
+"kun": "ながい、おさ",
+"on": "チョウ"
+},
+{
+"sec": "ADJECTIVE 1",
+"k": "高",
+"hv": "CAO",
+"m": "cao, đắt",
+"kun": "たかい",
+"on": "コウ"
+},
+{
+"sec": "ADJECTIVE 1",
+"k": "名",
+"hv": "DANH",
+"m": "tên",
+"kun": "な",
+"on": "メイ、ミョウ"
+},
+{
+"sec": "VERB 1",
+"k": "行",
+"hv": "HÀNH",
+"m": "đi, tổ chức",
+"kun": "い.く、ゆ.く、おこな.う",
+"on": "コウ、ギョウ"
+},
+{
+"sec": "VERB 1",
+"k": "来",
+"hv": "LAI",
+"m": "đến, ~sau",
+"kun": "く",
+"on": "ライ"
+},
+{
+"sec": "VERB 1",
+"k": "食",
+"hv": "THỰC",
+"m": "ăn",
+"kun": "たべる、くう",
+"on": "ショク"
+},
+{
+"sec": "VERB 1",
+"k": "見",
+"hv": "KIẾN",
+"m": "nhìn",
+"kun": "み.る、み.える、み.せる",
+"on": "ケン"
+},
+{
+"sec": "VERB 1",
+"k": "聞",
+"hv": "VĂN",
+"m": "nghe",
+"kun": "き.く、き.こえる",
+"on": "ブン、モン"
+},
+{
+"sec": "VERB 1",
+"k": "読",
+"hv": "ĐỘC",
+"m": "đọc",
+"kun": "よ",
+"on": "トク"
+},
+{
+"sec": "VERB 1",
+"k": "書",
+"hv": "THƯ",
+"m": "viết, văn thư",
+"kun": "か",
+"on": "ショ"
+},
+{
+"sec": "VERB 1",
+"k": "話",
+"hv": "THOẠI",
+"m": "nói chuyện",
+"kun": "はな.す、はなし",
+"on": "ワ"
+},
+{
+"sec": "TIME 1",
+"k": "午",
+"hv": "NGỌ",
+"m": "",
+"kun": "うま",
+"on": "ゴ"
+},
+{
+"sec": "TIME 1",
+"k": "前",
+"hv": "TIỀN",
+"m": "trước",
+"kun": "まえ",
+"on": "ゼン"
+},
+{
+"sec": "TIME 1",
+"k": "後",
+"hv": "HẬU, HẤU",
+"m": "sau",
+"kun": "うしろ、のち",
+"on": "ゴ、コウ"
+},
+{
+"sec": "TIME 1",
+"k": "毎",
+"hv": "MỖI",
+"m": "",
+"kun": "ごと、まい",
+"on": "マイ"
+},
+{
+"sec": "OTHER COMMON KANJI",
+"k": "校",
+"hv": "GIÁO, HIỆU, HÀO",
+"m": "",
+"kun": "",
+"on": "コウ"
+},
+{
+"sec": "OTHER COMMON KANJI",
+"k": "語",
+"hv": "NGỮ",
+"m": "",
+"kun": "かた-る、かた-らう",
+"on": "ゴ"
+},
+{
+"sec": "OTHER COMMON KANJI",
+"k": "今",
+"hv": "KIM",
+"m": "bây giờ",
+"kun": "いま",
+"on": "コン、キン"
+},
+{
+"sec": "OTHER COMMON KANJI",
+"k": "電",
+"hv": "ĐIỆN",
+"m": "điện",
+"kun": "",
+"on": "デン"
+},
+{
+"sec": "OTHER COMMON KANJI",
+"k": "国",
+"hv": "QUỐC",
+"m": "nước",
+"kun": "くに",
+"on": "コク"
+}
+]
