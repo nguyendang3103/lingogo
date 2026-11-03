@@ -955,26 +955,25 @@ function lessonView(t, i) {
       }, 50);
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
     } else if (ex.type === 'speak') {
-      let r = null;
       const status = h('div', { class: 'stack center', 'aria-live': 'polite' });
       const drawSpeak = () => status.replaceChildren(micBlocked
-        ? h('div', { class: 'stack' }, h('p', { class: 'small muted' }, 'Nghe mẫu, đọc to 3 lần, rồi bấm nút dưới đây.'), h('button', { class: 'primary block', onclick: () => { r = { self: true }; submit(); } }, 'Tôi đã đọc to'))
+        ? h('div', { class: 'stack' }, h('p', { class: 'small muted' }, 'Nghe mẫu, đọc to 3 lần, rồi bấm nút dưới đây.'), h('button', { class: 'primary block', onclick: () => { resp = { self: true }; submit(); } }, 'Tôi đã đọc to'))
         : h('div', { class: 'stack' }, h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
             const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
-            if (said) { r = { said }; submit(); } else drawSpeak();
+            if (said) { resp = { said }; submit(); } else drawSpeak();
           } }, icon(ICON.speak)), h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu')));
       drawSpeak();
       body = h('div', { class: 'stack center' }, h('p', { class: 'label' }, ex.scene || 'Nói theo mẫu'),
         h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem' } }, ex.raw ? ruby(ex.raw) : plain(ex.text)),
         ex.r && h('p', { class: 'read' }, ex.r), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status);
-      btn.hidden = true; ready = () => r !== null; after = () => status.replaceChildren();
-      gradeFn = () => { if (r.self) return { correct: true, self: true }; const a = align(code, ex.text, r.said); S.spoken[sid(code, plain(ex.text))] = Math.max(S.spoken[sid(code, plain(ex.text))] || 0, a.score); return { correct: a.score >= 80, score: a.score, align: a, said: r.said }; };
+      btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; ready = () => true; after = () => status.replaceChildren();
+      gradeFn = () => { if (!resp || resp.self) return { correct: true, self: true }; const a = align(code, ex.text, resp.said); S.spoken[sid(code, plain(ex.text))] = Math.max(S.spoken[sid(code, plain(ex.text))] || 0, a.score); return { correct: a.score >= 80, score: a.score, align: a, said: resp.said }; };
       setTimeout(() => say(code, ex.text), 300);
     }
 
     function check() {
       checked = true;
-      if (ex.type === 'intro' || ex.type === 'kintro') { done++; return step(); }
+      if (ex.type === 'intro' || ex.type === 'kintro' || (ex.type === 'speak' && !resp)) { done++; return step(); }
       const r = gradeFn();
       if (!first.has(ex.n)) {
         first.set(ex.n, Object.assign(r, { ex }));
