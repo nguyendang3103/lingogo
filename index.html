@@ -718,7 +718,7 @@ function homeView() {
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
-    h('div', { class: 'row between small' }, h('span', { class: 'muted' }, 'Đồng bộ với bản Claude/web'),
+    h('div', { class: 'row between small' }, h('span', { class: 'muted' }, 'Đồng bộ'),
       h('span', { class: 'row' }, h('button', { class: 'ghost', onclick: copyProgress }, 'Gửi tiến độ'), h('button', { class: 'ghost', onclick: pasteProgress }, 'Nhận tiến độ'))),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
