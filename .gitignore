@@ -1,0 +1,17 @@
+# Build & outputs
+build/
+dist/
+index-inline.html
+
+# Raw heavy media (rule 10: keep out of git)
+*.mp3
+*.wav
+*.m4a
+source/audio-nghe-N5/
+*.zip
+
+# System & OS junk
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
