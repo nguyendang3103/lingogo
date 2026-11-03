@@ -89,7 +89,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .ghost { background: transparent; border-color: transparent; color: var(--teal); }
 .block { width: 100%; }
 .mini { min-height: 36px; padding: 6px 12px; font-size: .88rem; border-radius: 10px; }
-input[type=text], textarea {
+input[type=text], input[type=password], textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink); background: var(--surface);
   border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-height: 50px;
 }
@@ -245,7 +245,7 @@ textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospac
 /* Thanh tab */
 /* Modal đồng bộ & nút sync */
 .modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
-.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 420px; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
 .sync-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; }
 .sync-btn:hover { background: var(--sunk); transform: rotate(90deg); }
 .sync-btn svg { width: 18px; height: 18px; }
@@ -291,6 +291,7 @@ function save() {
   S.t = Date.now();
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* bỏ qua */ }
   if (SYNC.ref) { clearTimeout(SYNC.timer); SYNC.timer = setTimeout(pushSync, 1500); }
+  scheduleGhPush();
 }
 // Gộp hai bản tiến độ (điện thoại và máy tính): giữ phần học nhiều hơn ở mỗi mục
 function mergeState(a, b) {
@@ -333,6 +334,133 @@ async function startSync() {
     if (S.t && S.t !== SYNC.seen) pushSync();
     document.addEventListener('visibilitychange', async () => { if (!document.hidden && SYNC.ref) { try { if (await pullSync() && VIEW !== 'lesson') route(); } catch (e) { /* bỏ qua */ } } });
   } catch (e) { /* không đồng bộ được: vẫn dùng bản trên máy */ }
+}
+
+// ===== Đồng bộ GitHub Gist (tự động sao lưu tiến độ lên tài khoản GitHub) =====
+const GH_KEY = 'lingogo-github-sync';
+const GH_SYNC = { timer: 0, seen: -1, running: false };
+function getGhConfig() {
+  try { const raw = localStorage.getItem(GH_KEY); return raw ? JSON.parse(raw) : { token: '', gistId: '', user: '' }; } catch (e) { return { token: '', gistId: '', user: '' }; }
+}
+function saveGhConfig(cfg) {
+  try { localStorage.setItem(GH_KEY, JSON.stringify(cfg)); } catch (e) {}
+}
+function ghHeaders(token) {
+  const clean = (token || '').trim();
+  const auth = clean.startsWith('Bearer ') || clean.startsWith('token ') ? clean : ('Bearer ' + clean);
+  return { 'Accept': 'application/vnd.github+json', 'Authorization': auth, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' };
+}
+async function findOrCreateGhGist(token) {
+  const h = ghHeaders(token);
+  const uRes = await fetch('https://api.github.com/user', { headers: h });
+  if (!uRes.ok) throw new Error('Token không hợp lệ hoặc thiếu quyền gist (lỗi ' + uRes.status + ')');
+  const uData = await uRes.json();
+  const username = uData.login || '';
+  const lRes = await fetch('https://api.github.com/gists?per_page=50', { headers: h });
+  if (lRes.ok) {
+    const list = await lRes.json();
+    const found = list.find((g) => g.files && g.files['lingogo-progress.json']);
+    if (found) return { gistId: found.id, user: username, isNew: false };
+  }
+  const cRes = await fetch('https://api.github.com/gists', {
+    method: 'POST',
+    headers: h,
+    body: JSON.stringify({
+      description: 'Lingogo Learning Progress Backup (Tự động đồng bộ)',
+      public: false,
+      files: { 'lingogo-progress.json': { content: JSON.stringify(S) } }
+    })
+  });
+  if (!cRes.ok) throw new Error('Không thể tạo Gist (lỗi ' + cRes.status + ')');
+  const created = await cRes.json();
+  return { gistId: created.id, user: username, isNew: true };
+}
+async function pullGhSync(quiet = false) {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId || GH_SYNC.running) return false;
+  try {
+    GH_SYNC.running = true;
+    const res = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+    if (!res.ok) {
+      if (res.status === 404) {
+        const found = await findOrCreateGhGist(cfg.token);
+        cfg.gistId = found.gistId; saveGhConfig(cfg);
+      }
+      return false;
+    }
+    const gist = await res.json();
+    const f = gist.files && gist.files['lingogo-progress.json'];
+    if (!f || !f.content) return false;
+    const remote = JSON.parse(f.content);
+    if (remote && (remote.t || 0) !== GH_SYNC.seen) {
+      const prevL = Object.keys(S.lessons || {}).length, prevS = Object.keys(S.srs || {}).length;
+      S = mergeState(S, remote);
+      GH_SYNC.seen = S.t || Date.now();
+      try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+      const dl = Object.keys(S.lessons || {}).length - prevL, ds = Object.keys(S.srs || {}).length - prevS;
+      if (!quiet) toast(dl || ds ? ('Đồng bộ GitHub: nhận thêm ' + dl + ' bài, ' + ds + ' mục ôn.') : 'Tiến độ đã đồng bộ mới nhất từ GitHub.');
+      if (typeof route === 'function' && VIEW !== 'lesson') route();
+      return true;
+    }
+    return false;
+  } catch (e) {
+    if (!quiet) toast('Lỗi đọc tiến độ từ GitHub: ' + (e.message || ''));
+    return false;
+  } finally {
+    GH_SYNC.running = false;
+  }
+}
+async function pushGhSync(quiet = true) {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId || GH_SYNC.running) return false;
+  try {
+    GH_SYNC.running = true;
+    try {
+      const getRes = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+      if (getRes.ok) {
+        const gist = await getRes.json();
+        const f = gist.files && gist.files['lingogo-progress.json'];
+        if (f && f.content) {
+          const remote = JSON.parse(f.content);
+          if (remote && (remote.t || 0) > (S.t || 0)) S = mergeState(S, remote);
+        }
+      }
+    } catch (e) {}
+    S.t = Math.max(Date.now(), (S.t || 0) + 1);
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    const res = await fetch('https://api.github.com/gists/' + cfg.gistId, {
+      method: 'PATCH',
+      headers: ghHeaders(cfg.token),
+      body: JSON.stringify({ files: { 'lingogo-progress.json': { content: JSON.stringify(S) } } })
+    });
+    if (!res.ok) throw new Error('Mã ' + res.status);
+    GH_SYNC.seen = S.t;
+    if (!quiet) toast('Đã sao lưu tiến độ lên GitHub!');
+    return true;
+  } catch (e) {
+    if (!quiet) toast('Chưa thể lưu lên GitHub: ' + (e.message || ''));
+    return false;
+  } finally {
+    GH_SYNC.running = false;
+  }
+}
+function scheduleGhPush() {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId) return;
+  clearTimeout(GH_SYNC.timer);
+  GH_SYNC.timer = setTimeout(() => { pushGhSync(true); }, 2500);
+}
+async function startGhSync() {
+  const cfg = getGhConfig();
+  if (!cfg.token) return;
+  try {
+    if (!cfg.gistId) {
+      const res = await findOrCreateGhGist(cfg.token);
+      cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
+    }
+    await pullGhSync(true);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) pullGhSync(true); });
+  } catch (e) { /* yên lặng khi khởi động nếu offline */ }
 }
 
 // ===== Ngày, streak, XP (ngày tính theo giờ máy, đánh số như các app cũ) =====
@@ -601,6 +729,7 @@ function mount(...nodes) { app.replaceChildren(...nodes.flat(9).filter((n) => n 
 let tt;
 function toast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600); }
 const ICON = {
+  github: 'M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z',
   home: 'M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z',
   speak: 'M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm6-3a6 6 0 0 1-12 0M12 18v3',
   cards: 'M4 7h12v13H4zM8 4h12v13',
@@ -1378,6 +1507,80 @@ function showSyncModal() {
   const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
   window.addEventListener('keydown', onKey);
 
+  const ghBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '10px' } });
+
+  function renderGh() {
+    ghBox.innerHTML = '';
+    const cfg = getGhConfig();
+    if (cfg.token && cfg.gistId) {
+      ghBox.append(
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+            icon(ICON.github),
+            h('div', {},
+              h('b', { style: { display: 'block', fontSize: '.9rem' } }, 'Đồng bộ GitHub (Tự động)'),
+              h('span', { class: 'small muted' }, 'Đã kết nối: @' + (cfg.user || 'GitHub User'))
+            )
+          ),
+          h('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }, title: 'Đang hoạt động' })
+        ),
+        h('div', { class: 'row', style: { gap: '8px' } },
+          h('button', { class: 'primary mini grow', onclick: async () => {
+            toast('Đang kiểm tra và đồng bộ GitHub...');
+            await pullGhSync(false);
+            await pushGhSync(false);
+          } }, icon(ICON.sync), ' Đồng bộ ngay'),
+          h('button', { class: 'ghost mini', onclick: () => {
+            if (confirm('Ngắt kết nối đồng bộ GitHub trên trình duyệt này?')) {
+              saveGhConfig({ token: '', gistId: '', user: '' });
+              renderGh();
+              toast('Đã ngắt kết nối GitHub.');
+            }
+          } }, 'Ngắt kết nối')
+        )
+      );
+    } else {
+      const inp = h('input', { type: 'password', placeholder: 'Dán GitHub Token (ghp_... hoặc github_pat_...)', style: { fontSize: '.86rem', minHeight: '38px', padding: '8px 10px' } });
+      const connBtn = h('button', { class: 'primary mini block', onclick: async () => {
+        const val = inp.value.trim();
+        if (!val) { toast('Vui lòng dán GitHub Token.'); return; }
+        connBtn.disabled = true; connBtn.textContent = 'Đang kết nối...';
+        try {
+          const res = await findOrCreateGhGist(val);
+          saveGhConfig({ token: val, gistId: res.gistId, user: res.user });
+          await pullGhSync(false);
+          await pushGhSync(false);
+          renderGh();
+          toast('Đã kết nối GitHub thành công (@' + res.user + ')!');
+        } catch (err) {
+          toast(err.message || 'Lỗi kết nối GitHub.');
+        } finally {
+          connBtn.disabled = false; connBtn.textContent = 'Kết nối & Tự động sao lưu';
+        }
+      } }, 'Kết nối & Tự động sao lưu');
+
+      ghBox.append(
+        h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+          icon(ICON.github),
+          h('b', { style: { fontSize: '.92rem' } }, 'Đồng bộ GitHub (Khuyên dùng)')
+        ),
+        h('p', { class: 'small muted', style: { margin: 0 } },
+          'Tự động sao lưu lên GitHub Gist. Chuyển máy chỉ cần nhập token là tự lấy lại bài.'
+        ),
+        inp,
+        connBtn,
+        h('a', {
+          href: 'https://github.com/settings/tokens/new?description=Lingogo%20Sync&scopes=gist',
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'small',
+          style: { color: 'var(--teal)', textDecoration: 'none', display: 'inline-block' }
+        }, '↗ Nhấn vào đây để tạo nhanh Token (đã chọn sẵn quyền gist)')
+      );
+    }
+  }
+  renderGh();
+
   const manualBox = h('div', { class: 'stack', hidden: true });
   const manualInp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây' });
   const manualBtn = h('button', { class: 'primary block', onclick: async () => {
@@ -1406,17 +1609,22 @@ function showSyncModal() {
       h('h3', { style: { fontSize: '1.15rem' } }, 'Đồng bộ tiến độ'),
       h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', padding: '4px 10px', fontSize: '1.1rem' } }, '✕')
     ),
-    h('p', { class: 'small muted' }, 'Chuyển tiến độ giữa các thiết bị (máy tính, điện thoại):'),
-    h('button', { class: 'primary block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+    ghBox,
+    h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '8px', opacity: .5 } },
+      h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } }),
+      h('span', { class: 'small' }, 'hoặc chuyển thủ công'),
+      h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } })
+    ),
+    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
       await copyProgress(); close();
     } },
       icon(ICON.push),
       h('span', { class: 'grow' },
-        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Gửi tiến độ (Push)'),
-        h('span', { class: 'small', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
+        h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Gửi tiến độ (Push)'),
+        h('span', { class: 'small muted', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
       )
     ),
-    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
       const ok = await pasteProgress();
       if (ok) close();
       else {
@@ -1427,7 +1635,7 @@ function showSyncModal() {
     } },
       icon(ICON.pull),
       h('span', { class: 'grow' },
-        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Nhận tiến độ (Pull)'),
+        h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Nhận tiến độ (Pull)'),
         h('span', { class: 'small muted', style: { display: 'block', fontWeight: 400 } }, 'Đọc mã từ bộ nhớ tạm và gộp vào máy này')
       )
     ),
@@ -1527,6 +1735,7 @@ document.addEventListener('keydown', (e) => {
 // ===== Khởi động =====
 route();
 startSync();
+startGhSync();
 </script>
 </body>
 </html>

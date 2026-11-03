@@ -29,6 +29,12 @@ python -m http.server 8000
 ```
 Mở trình duyệt tại http://localhost:8000.
 
+## Đồng bộ tiến độ đám mây qua GitHub (Gist Sync)
+App hỗ trợ đồng bộ tự động 2 chiều giữa nhiều thiết bị (PC, điện thoại, tablet) qua GitHub Gist cá nhân:
+- Bấm biểu tượng **🔄 Đồng bộ** trên app.
+- Nhập **GitHub Personal Access Token** (chỉ cần quyền `gist`).
+- Tiến độ bài học, điểm XP, chuỗi ngày streak và danh sách SRS sẽ tự động lưu và đồng bộ ngầm mỗi khi bạn học.
+
 ## Đóng gói cho Claude Artifact / iPad (tránh lỗi 403 CORS)
 
 ```bash
