@@ -1051,6 +1051,24 @@ function orderFeedback(code, ex, r) {
     )
   );
 }
+function quizFeedback(code, ex, r) {
+  const correctOpt = ex.q.o[ex.q.a];
+  const correctPinyin = (ex.q.r && ex.q.r[ex.q.a]) || '';
+  const hasAudio = (code === 'zh' || code === 'en' || code === 'ja') && /[一-鿿\w]/.test(correctOpt);
+  return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
+    h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: '1.25rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, plain(correctOpt)),
+    correctPinyin ? h('p', {
+      class: 'read',
+      lang: code === 'ja' ? 'ja' : null,
+      style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
+    }, correctPinyin) : null,
+    r.note ? h('p', { class: 'small', style: { margin: '2px 0 0 0', textAlign: 'left', lineHeight: 1.4 } }, r.note) : null,
+    hasAudio ? h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
+      listenBtns(code, correctOpt)
+    ) : null
+  );
+}
+
 
 // Tách câu thành các mảnh để sắp xếp
 function tokensOf(code, text) {
@@ -1152,7 +1170,7 @@ function lessonView(t, i) {
       ready = () => sel !== null;
       after = () => bs.forEach((b, j) => { b.disabled = true; if (opts[j] === correctOpt) b.classList.add('right'); else if (j === sel) b.classList.add('wrong'); });
       let correctOpt = null;
-      return { el: h('div', { class: 'options' }, bs), setCorrect: (o) => { correctOpt = o; }, sel: () => opts[sel] };
+      return { el: h('div', { class: 'options' }, bs), setCorrect: (o) => { correctOpt = o; }, sel: () => opts[sel], buttons: bs };
     };
 
     if (ex.type === 'intro') {
@@ -1185,9 +1203,18 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Kanji này đọc Hán Việt là gì?'), h('div', { class: 'big', lang: 'ja' }, ex.k.k), c.el);
       gradeFn = () => ({ correct: c.sel() === ex.k, expected: ex.k.hv + ' · on: ' + ex.k.on + ' · kun: ' + ex.k.kun });
     } else if (ex.type === 'quiz') {
-      const opts = shuffle(ex.q.o.map((o, k) => ({ o, k })));
+      const opts = shuffle(ex.q.o.map((o, k) => ({ o, k, r: (ex.q.r && ex.q.r[k]) || '' })));
       const c = choose(opts, (x) => h('span', { lang: code === 'en' ? 'en' : LANGS[code].lang }, x.o));
       c.setCorrect(opts.find((x) => x.k === ex.q.a));
+      const origAfter = after;
+      after = () => {
+        origAfter();
+        c.buttons.forEach((b, j) => {
+          if (opts[j].r) {
+            b.appendChild(h('span', { class: 'small read', style: { display: 'block', color: 'var(--teal)', fontWeight: 600, fontSize: '.92rem', marginTop: '3px', textAlign: 'left' } }, opts[j].r));
+          }
+        });
+      };
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Tình huống'), h('p', { class: 'q' }, ex.q.q), c.el);
       gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: ex.q.o[ex.q.a], note: ex.q.why });
     } else if (ex.type === 'order') {
@@ -1294,9 +1321,10 @@ function lessonView(t, i) {
         h('strong', {}, r.self ? 'Tốt lắm!' : r.correct ? 'Chính xác!' : 'Chưa đúng'),
         r.align && h('div', { class: 'words', lang: LANGS[code].lang }, r.align.units.map((w, k) => h('span', { class: r.align.hit[k] ? 'hit' : 'miss' }, w))),
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
-        !r.correct && !r.align && r.expected && ex.type !== 'order' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
-        r.note && h('p', { class: 'small' }, r.note),
+        !r.correct && !r.align && r.expected && ex.type !== 'order' && ex.type !== 'quiz' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
+        r.note && ex.type !== 'quiz' && h('p', { class: 'small' }, r.note),
         ex.type === 'order' ? orderFeedback(code, ex, r) : null,
+        ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
         ex.type === 'reverse' && code !== 'en' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
           h('p', { class: 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
           h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
@@ -1304,6 +1332,7 @@ function lessonView(t, i) {
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
       if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
+      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
