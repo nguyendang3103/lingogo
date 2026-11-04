@@ -848,6 +848,13 @@ function welcomeView() {
       h('h1', {}, 'Học để nói được, mỗi ngày một chút'),
       h('p', { class: 'muted' }, 'Ba thứ tiếng trong một app: bài học theo chủ đề, ôn tập đúng lúc, luyện nói và tập viết chữ Hán, kana.'),
       had && h('p', { class: 'note' }, 'Đã có tiến độ cũ của bạn. Bạn sẽ học tiếp từ chỗ đã dừng.')),
+    h('div', { style: { background: 'var(--sunk)', padding: '12px 14px', borderRadius: '14px', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' } },
+      h('div', { style: { minWidth: 0, flex: 1 } },
+        h('b', { style: { fontSize: '.88rem', display: 'block' } }, 'Đã học trên máy khác?'),
+        h('span', { class: 'small muted', style: { fontSize: '.78rem', display: 'block' } }, 'Quét mã QR hoặc nhận bài học cũ')
+      ),
+      h('button', { class: 'primary mini', onclick: showSyncModal }, 'Đồng bộ ngay')
+    ),
     h('div', { class: 'stack' }, h('label', { for: 'name', class: 'label' }, 'Tên của bạn'), name),
     h('div', { class: 'stack' }, h('span', { class: 'label' }, 'Bạn muốn học thứ tiếng nào trước?'), langs, h('p', { class: 'small muted' }, 'Có thể đổi sang thứ tiếng khác bất cứ lúc nào.')),
     h('div', { class: 'stack' }, h('span', { class: 'label' }, 'Mục tiêu mỗi ngày, cho từng thứ tiếng'), goals),
@@ -1551,6 +1558,64 @@ async function pasteProgress() {
     return true;
   } catch (e) { toast(e.message || 'Không đọc được mã.'); return false; }
 }
+async function getSyncUrl() {
+  const cfg = getGhConfig();
+  let payload = {};
+  if (cfg.token && cfg.gistId) {
+    payload = { v: 2, token: cfg.token, gistId: cfg.gistId, user: cfg.user };
+  } else {
+    payload = { v: 2, code: await exportCode() };
+  }
+  const str = encodeURIComponent(JSON.stringify(payload));
+  return window.location.origin + window.location.pathname + '#sync=' + str;
+}
+async function handleUrlSync() {
+  const hash = window.location.hash;
+  if (!hash || !hash.includes('sync=')) return false;
+  const match = hash.match(/sync=([^&]+)/);
+  if (!match) return false;
+  try {
+    const raw = decodeURIComponent(match[1]);
+    let parsed = null;
+    try { parsed = JSON.parse(raw); } catch (e) {
+      try { parsed = JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch (e2) { parsed = null; }
+    }
+    if (!parsed && raw.startsWith('LGG1')) {
+      parsed = { code: raw };
+    }
+    if (!parsed) return false;
+
+    let imported = false;
+    // 1. Cấu hình GitHub Gist nếu có trong link
+    if (parsed.token) {
+      saveGhConfig({ token: parsed.token, gistId: parsed.gistId || '', user: parsed.user || '' });
+      try {
+        const pulled = await pullGhSync(false);
+        if (pulled) imported = true;
+      } catch (e) {}
+    }
+
+    // 2. Mã tiến độ
+    if (parsed.code) {
+      try {
+        const inc = await importCode(parsed.code);
+        S = mergeState(S, inc);
+        save();
+        imported = true;
+      } catch (e) {}
+    }
+
+    if (imported) {
+      toast('Đồng bộ thành công! Chào mừng ' + (S.name || 'bạn') + '.');
+    }
+
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    return true;
+  } catch (err) {
+    console.warn('Lỗi xử lý URL sync:', err);
+    return false;
+  }
+}
 async function autoSync() {
   const btn = document.querySelector('.sync-btn');
   if (btn) btn.classList.add('spinning');
@@ -1633,6 +1698,14 @@ async function autoSync() {
       }
     }
 
+    // Nếu máy này chưa có bài học nào và chưa kết nối GitHub: mở modal hướng dẫn
+    const lessonCount = Object.keys(S.lessons || {}).length;
+    if (!cfg.token && lessonCount === 0 && !inc) {
+      toast('Điện thoại này chưa có tiến độ. Đang mở hộp thoại đồng bộ...');
+      showSyncModal();
+      return;
+    }
+
     // PUSH: Máy này có tiến độ mới nhất -> Xuất mã ra bộ nhớ tạm để chuyển sang máy khác
     const code = await exportCode();
     let ok = false;
@@ -1655,6 +1728,41 @@ function showSyncModal() {
   const overlay = h('div', { class: 'modal-mask', onclick: (e) => { if (e.target === overlay) close(); } });
   const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
   window.addEventListener('keydown', onKey);
+
+  // Khối chia sẻ sang điện thoại bằng QR code
+  const qrBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '12px 14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '8px' } });
+  const qrArea = h('div', { class: 'stack', style: { alignItems: 'center', gap: '8px', textAlign: 'center' } });
+  let qrOpen = false;
+  const qrBtn = h('button', { class: 'ghost mini block', style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontWeight: 600 }, onclick: async () => {
+    qrOpen = !qrOpen;
+    if (qrOpen) {
+      qrBtn.textContent = 'Thu gọn mã QR';
+      qrArea.hidden = false;
+      qrArea.innerHTML = '<span class="small muted">Đang tạo mã QR...</span>';
+      const syncUrl = await getSyncUrl();
+      qrArea.innerHTML = '';
+      const qrImg = h('img', {
+        src: 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(syncUrl),
+        alt: 'Mã QR đồng bộ',
+        style: { width: '170px', height: '170px', borderRadius: '12px', background: '#fff', padding: '6px', border: '1px solid var(--line)', margin: '4px auto' }
+      });
+      const copyLinkBtn = h('button', { class: 'ghost mini', onclick: async () => {
+        let ok = false;
+        try { await navigator.clipboard.writeText(syncUrl); ok = true; } catch (e) {}
+        toast(ok ? 'Đã sao chép link đồng bộ! Bạn có thể dán gửi qua Zalo/Messenger.' : 'Không sao chép tự động được.');
+      } }, '📋 Sao chép link để gửi qua Zalo / Messenger');
+      qrArea.append(
+        qrImg,
+        h('p', { class: 'small muted', style: { margin: '2px 0 4px 0', fontSize: '.78rem' } }, 'Mở Camera điện thoại quét mã này để học tiếp ngay.'),
+        copyLinkBtn
+      );
+    } else {
+      qrBtn.textContent = '📱 Quét mã QR để chuyển sang điện thoại';
+      qrArea.hidden = true;
+    }
+  } }, '📱 Quét mã QR để chuyển sang điện thoại');
+  qrArea.hidden = true;
+  qrBox.append(qrBtn, qrArea);
 
   const ghBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '10px' } });
 
@@ -1733,15 +1841,29 @@ function showSyncModal() {
   const manualBox = h('div', { class: 'stack', hidden: true });
   const manualInp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây' });
   const manualBtn = h('button', { class: 'primary block', onclick: async () => {
+    const val = manualInp.value.trim();
+    if (!val) return;
     try {
-      const inc = await importCode(manualInp.value);
+      if (val.includes('sync=')) {
+        window.location.hash = val.substring(val.indexOf('sync=') - 1);
+        const ok = await handleUrlSync();
+        if (ok) { close(); route(); return; }
+      }
+      if (val.startsWith('ghp_') || val.startsWith('github_pat_')) {
+        const res = await findOrCreateGhGist(val);
+        saveGhConfig({ token: val, gistId: res.gistId, user: res.user });
+        await pullGhSync(false);
+        toast('Đã kết nối GitHub thành công!');
+        close(); route(); return;
+      }
+      const inc = await importCode(val);
       const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length;
       S = mergeState(S, inc); save();
       const dl = Object.keys(S.lessons).length - nL, ds = Object.keys(S.srs).length - nS;
       toast(dl || ds ? 'Đã gộp (Pull): thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp. Tiến độ đã đồng bộ.');
       close(); route();
-    } catch (e) { toast(e.message || 'Mã không hợp lệ.'); }
-  } }, 'Gộp mã này');
+    } catch (e) { toast(e.message || 'Mã hoặc liên kết không hợp lệ.'); }
+  } }, 'Gộp tiến độ');
   manualBox.append(
     h('p', { class: 'small muted', style: { margin: 0, fontSize: '.82rem' } }, 'Dán mã LGG1… từ thiết bị khác vào ô dưới rồi bấm Gộp:'),
     manualInp, manualBtn
@@ -1758,6 +1880,7 @@ function showSyncModal() {
       h('h3', { style: { fontSize: '1.15rem', margin: 0 } }, 'Đồng bộ tiến độ'),
       h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', width: '32px', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', fontSize: '1rem' } }, '✕')
     ),
+    qrBox,
     ghBox,
     h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '10px', opacity: .5 } },
       h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } }),
@@ -1883,9 +2006,12 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ===== Khởi động =====
-route();
-startSync();
-startGhSync();
+(async () => {
+  await handleUrlSync();
+  route();
+  startSync();
+  startGhSync();
+})();
 </script>
 </body>
 </html>
