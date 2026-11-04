@@ -247,7 +247,10 @@ textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospac
 .modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
 .modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
 .sync-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; }
-.sync-btn:hover { background: var(--sunk); transform: rotate(90deg); }
+.sync-btn:hover { background: var(--sunk); }
+.sync-btn:active { transform: scale(.92); }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.sync-btn.spinning svg { animation: spin .6s linear infinite; }
 .sync-btn svg { width: 18px; height: 18px; }
 
 .tabs {
@@ -858,8 +861,8 @@ function homeView() {
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
     h('div', { class: 'row between small' },
-      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: showSyncModal }, 'Đồng bộ'),
-      h('button', { class: 'sync-btn', 'aria-label': 'Đồng bộ (Pull / Push)', title: 'Đồng bộ (Pull / Push)', onclick: showSyncModal }, icon(ICON.sync))),
+      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync }, 'Đồng bộ'),
+      h('button', { class: 'sync-btn', 'aria-label': 'Tự động đồng bộ (Push / Pull)', title: 'Tự động đồng bộ (Push / Pull)', onclick: autoSync }, icon(ICON.sync))),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
@@ -1500,6 +1503,52 @@ async function pasteProgress() {
     route();
     return true;
   } catch (e) { toast(e.message || 'Không đọc được mã.'); return false; }
+}
+async function autoSync() {
+  const btn = document.querySelector('.sync-btn');
+  if (btn) btn.classList.add('spinning');
+  try {
+    let clipText = '';
+    try { clipText = await navigator.clipboard.readText(); } catch (e) { /* trình duyệt không cho đọc tự động */ }
+    let inc = null;
+    if (clipText && clipText.trim().startsWith('LGG1')) {
+      try { inc = await importCode(clipText.trim()); } catch (e) { inc = null; }
+    }
+
+    if (inc) {
+      const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length, nW = Object.keys(S.written).length;
+      const remoteIsNewer = (inc.t || 0) > (S.t || 0);
+      const merged = mergeState(S, inc);
+      const dl = Object.keys(merged.lessons).length - nL;
+      const ds = Object.keys(merged.srs).length - nS;
+      const dw = Object.keys(merged.written).length - nW;
+      const hasNewData = dl > 0 || ds > 0 || dw > 0;
+
+      if (remoteIsNewer || hasNewData) {
+        // PULL: Bản trong bộ nhớ tạm mới hơn hoặc có thêm bài học -> Kéo về gộp ngay
+        S = merged; save(); route();
+        const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
+        toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + '.' : 'tiến độ đã cập nhật mới nhất.'));
+        return;
+      }
+    }
+
+    // PUSH: Máy này có tiến độ mới nhất -> Xuất mã ra bộ nhớ tạm để chuyển sang máy khác
+    const code = await exportCode();
+    let ok = false;
+    try { await navigator.clipboard.writeText(code); ok = true; }
+    catch (e) {
+      try {
+        const ta = h('textarea', { readonly: true }); ta.value = code;
+        document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove();
+      } catch (e2) { ok = false; }
+    }
+    toast(ok ? 'Đã đẩy (Push): Tiến độ máy này mới nhất, đã chép vào bộ nhớ tạm.' : 'Đã tạo mã tiến độ mới nhất.');
+  } catch (err) {
+    toast('Lỗi đồng bộ: ' + (err.message || 'Không thể đồng bộ.'));
+  } finally {
+    if (btn) setTimeout(() => btn.classList.remove('spinning'), 600);
+  }
 }
 function showSyncModal() {
   const onKey = (e) => { if (e.key === 'Escape') close(); };
