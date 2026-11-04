@@ -1479,11 +1479,12 @@ function charView(code, c, list) {
 function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
   const spoken = full.replace(/^[AB][：:]\s*/gm, '');
-  const mailSrc = fill.audio || (code === 'en' && tid ? 'audio/mail/en-' + tid + '.mp3' : null);
+  const mailSrc = fill.audio || (tid ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  const badgeLabel = code === 'zh' ? '🎧 Giọng người Trung Quốc đọc' : (code === 'en' ? '🎧 Giọng Studio người thật' : '🎧 Giọng bản xứ');
   return h('div', { class: 'panel stack', style: { gap: '8px' } },
     h('div', { class: 'row between', style: { alignItems: 'center' } },
       h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? 'Email hoàn chỉnh' : 'Đoạn hoàn chỉnh · nghe và đọc to'),
-      mailSrc && h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 8px' } }, '🎧 Giọng Studio người thật')
+      mailSrc && h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 8px' } }, badgeLabel)
     ),
     ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && code === 'zh' && h('p', { class: 'small read', style: { textAlign: 'left' } }, rl[i]))),
     h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big', src: mailSrc }), spk(code, spoken, { slow: true, cls: 'big', src: mailSrc })));
