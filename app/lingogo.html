@@ -1018,6 +1018,37 @@ function itemCard(code, v, tip) {
       v.exm && h('p', { class: 'small muted' }, v.exm),
       h('div', { class: 'listen' }, spk(code, v.ex))));
 }
+function getOrderPinyin(code, ex) {
+  if (ex.r) return ex.r;
+  if (ex.v && ex.v.exr) return ex.v.exr;
+  if (code === 'zh' && DATA.zh && DATA.zh.topics) {
+    for (const t of DATA.zh.topics) {
+      for (const v of (t.vocab || [])) {
+        if (v.ex === ex.text && v.exr) return v.exr;
+      }
+    }
+  }
+  return '';
+}
+function orderFeedback(code, ex, r) {
+  const pinyinOrRead = getOrderPinyin(code, ex);
+  const transText = ex.trans || (ex.v && ex.v.exm) || '';
+  return h('div', { class: 'order-reveal stack', style: { gap: '6px', marginTop: '6px' } },
+    code === 'ja' && ex.raw
+      ? h('p', { class: 'big', lang: 'ja', style: { fontSize: '1.25rem', margin: 0, textAlign: 'left' } }, ruby(ex.raw))
+      : h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: '1.25rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, plain(ex.text)),
+    pinyinOrRead ? h('p', {
+      class: 'read',
+      lang: code === 'ja' ? 'ja' : null,
+      style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
+    }, pinyinOrRead) : null,
+    transText ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left' } }, transText) : null,
+    h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
+      listenBtns(code, ex.text)
+    )
+  );
+}
+
 // Tách câu thành các mảnh để sắp xếp
 function tokensOf(code, text) {
   if (code === 'en') return text.split(/\s+/).filter(Boolean);
@@ -1060,8 +1091,8 @@ function buildSteps(t, i) {
     sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
-    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); }
+    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
+    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || '', tokens: s.chunks, raw: s.raw }); }
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
@@ -1077,10 +1108,10 @@ function buildSteps(t, i) {
     l.quiz.forEach((q) => steps.push({ type: 'quiz', q }));
   } else if (l.kind === 'fill') {
     steps.push({ type: 'fill', fill: t.fill });
-    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
+    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
-    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
+    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
     (t.coach || []).slice(0, 2).forEach((c) => steps.push({ type: 'speak', text: c.sa, m: c.q + (c.vi ? ' · ' + c.vi : ''), scene: 'Trả lời câu hỏi' }));
   } else {
     const weak = topicWords.slice().sort((a, b) => ((S.srs[sid(code, a.id)] || { b: 0 }).b - (S.srs[sid(code, b.id)] || { b: 0 }).b));
@@ -1169,8 +1200,22 @@ function lessonView(t, i) {
       const typed = h('input', { type: 'text', lang: LANGS[code].lang, placeholder: 'Hoặc gõ cả câu vào đây', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Gõ cả câu',
         oninput: update, onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } } });
       const typedOn = () => typed.value.trim().length > 0;
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), ex.trans && h('p', { class: 'q' }, ex.trans), ans, pool, typed);
-      ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; };
+      const pinyinHint = getOrderPinyin(code, ex);
+      let showHint = false;
+      const hintEl = h('p', { class: 'small read', style: { color: 'var(--teal)', fontWeight: 600, display: 'none', margin: '2px 0 6px 0', fontSize: '1.02rem' } }, pinyinHint);
+      const hintBtn = pinyinHint ? h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: { alignSelf: 'flex-start', padding: '2px 8px', fontSize: '.78rem', color: 'var(--muted)', minHeight: 'auto', border: '1px dashed var(--line)', borderRadius: '8px' },
+        onclick: (e) => {
+          e.preventDefault();
+          showHint = !showHint;
+          hintEl.style.display = showHint ? 'block' : 'none';
+          hintBtn.textContent = showHint ? 'Ẩn gợi ý Pinyin' : '💡 Gợi ý Pinyin';
+        }
+      }, '💡 Gợi ý Pinyin') : null;
+      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), ex.trans && h('p', { class: 'q' }, ex.trans), hintBtn, hintEl, ans, pool, typed);
+      ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; if (hintBtn) hintBtn.remove(); if (hintEl) hintEl.remove(); };
       const joined = (arr) => code === 'en' ? normEn(arr.join(' ')) : arr.join('').replace(/\s/g, '');
       const strip = (s) => code === 'en' ? normEn(s) : s.replace(/[\s。，！？、,.!?：:；;“”"']/g, '');
       gradeFn = () => ({ correct: typedOn() ? strip(typed.value) === strip(code === 'en' ? ex.tokens.join(' ') : ex.tokens.join('')) : joined(chosen.map((c) => c.t)) === joined(ex.tokens), expected: code === 'en' ? ex.text : ex.tokens.join('') });
@@ -1246,10 +1291,16 @@ function lessonView(t, i) {
         h('strong', {}, r.self ? 'Tốt lắm!' : r.correct ? 'Chính xác!' : 'Chưa đúng'),
         r.align && h('div', { class: 'words', lang: LANGS[code].lang }, r.align.units.map((w, k) => h('span', { class: r.align.hit[k] ? 'hit' : 'miss' }, w))),
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
-        !r.correct && !r.align && r.expected && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
+        !r.correct && !r.align && r.expected && ex.type !== 'order' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
         r.note && h('p', { class: 'small' }, r.note),
-        ex.type === 'order' && h('div', {}, spk(code, ex.text))),
-        ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
+        ex.type === 'order' ? orderFeedback(code, ex, r) : null,
+        ex.type === 'reverse' && code !== 'en' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
+          h('p', { class: 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
+          h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
+        ) : null
+      ),
+      ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
+      if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
