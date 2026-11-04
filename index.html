@@ -751,10 +751,35 @@ const ICON = {
   pull: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3',
 };
 // Nút loa: phát âm; slow = phát chậm (biểu tượng con rùa như app cũ)
+async function playAudio(src, slow = false) {
+  AUD.pause();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  AUD.src = src;
+  AUD.playbackRate = slow ? 0.75 : 1.0;
+  try {
+    await AUD.play();
+    return true;
+  } catch (e) {
+    console.warn('Lỗi phát file audio:', src, e);
+    return false;
+  }
+}
 function spk(code, text, opts = {}) {
   const slow = !!opts.slow;
-  return h('button', { class: 'spk' + (opts.cls ? ' ' + opts.cls : ''), 'aria-label': slow ? 'Nghe chậm' : 'Nghe', title: slow ? 'Nghe chậm' : 'Nghe',
-    onclick: (e) => { e.stopPropagation(); say(code, text, slow); } }, slow ? h('span', { class: 'turtle', 'aria-hidden': 'true' }, '🐢') : icon(ICON.speaker));
+  const src = opts.src;
+  return h('button', {
+    class: 'spk' + (opts.cls ? ' ' + opts.cls : ''),
+    'aria-label': slow ? 'Nghe chậm' : (src ? 'Nghe giọng người thật' : 'Nghe'),
+    title: slow ? 'Nghe chậm' : (src ? 'Nghe giọng đọc người thật (Studio)' : 'Nghe'),
+    onclick: async (e) => {
+      e.stopPropagation();
+      if (src) {
+        const ok = await playAudio(src, slow);
+        if (ok) return;
+      }
+      say(code, text, slow);
+    }
+  }, slow ? h('span', { class: 'turtle', 'aria-hidden': 'true' }, '🐢') : icon(ICON.speaker));
 }
 function icon(d, opts = {}) {
   const size = typeof opts === 'number' ? opts : (opts.size || 20);
@@ -1191,7 +1216,7 @@ function lessonView(t, i) {
         !r.correct && !r.align && r.expected && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
         r.note && h('p', { class: 'small' }, r.note),
         ex.type === 'order' && h('div', {}, spk(code, ex.text))),
-        ex.type === 'fill' ? fillReveal(code, ex.fill) : '');
+        ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
@@ -1451,12 +1476,17 @@ function charView(code, c, list) {
     quiz(false);
   }, 50);
 }
-function fillReveal(code, fill) {
+function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
   const spoken = full.replace(/^[AB][：:]\s*/gm, '');
-  return h('div', { class: 'panel stack', style: { gap: '6px' } }, h('p', { class: 'label' }, 'Đoạn hoàn chỉnh · nghe và đọc to'),
+  const mailSrc = fill.audio || (code === 'en' && tid ? 'audio/mail/en-' + tid + '.mp3' : null);
+  return h('div', { class: 'panel stack', style: { gap: '8px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? 'Email hoàn chỉnh' : 'Đoạn hoàn chỉnh · nghe và đọc to'),
+      mailSrc && h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 8px' } }, '🎧 Giọng Studio người thật')
+    ),
     ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && code === 'zh' && h('p', { class: 'small read', style: { textAlign: 'left' } }, rl[i]))),
-    h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big' }), spk(code, spoken, { slow: true, cls: 'big' })));
+    h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big', src: mailSrc }), spk(code, spoken, { slow: true, cls: 'big', src: mailSrc })));
 }
 function fillBlock(t) {
   const code = t.lang, parts = t.fill.text.split(/(\[\[[^\]]+\]\])/), sels = [];
@@ -1477,7 +1507,7 @@ function fillBlock(t) {
       const ok = sels.filter((s) => s.value === s.dataset.ok).length;
       if (ok >= parseInt(S.fill[key] || '0', 10)) S.fill[key] = ok + '/' + sels.length; // lưu kết quả tốt nhất dạng "4/5"
       addXp(XP_ITEM * ok, code);
-      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''), fillReveal(code, t.fill));
+      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''), fillReveal(code, t.fill, t.id));
     } }, 'Kiểm tra'), res);
 }
 
