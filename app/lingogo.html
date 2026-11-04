@@ -89,7 +89,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .ghost { background: transparent; border-color: transparent; color: var(--teal); }
 .block { width: 100%; }
 .mini { min-height: 36px; padding: 6px 12px; font-size: .88rem; border-radius: 10px; }
-input[type=text], textarea {
+input[type=text], input[type=password], textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink); background: var(--surface);
   border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-height: 50px;
 }
@@ -245,7 +245,7 @@ textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospac
 /* Thanh tab */
 /* Modal đồng bộ & nút sync */
 .modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
-.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 420px; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
+.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
 .sync-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; }
 .sync-btn:hover { background: var(--sunk); }
 .sync-btn:active { transform: scale(.92); }
@@ -294,6 +294,7 @@ function save() {
   S.t = Date.now();
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* bỏ qua */ }
   if (SYNC.ref) { clearTimeout(SYNC.timer); SYNC.timer = setTimeout(pushSync, 1500); }
+  scheduleGhPush();
 }
 // Gộp hai bản tiến độ (điện thoại và máy tính): giữ phần học nhiều hơn ở mỗi mục
 function mergeState(a, b) {
@@ -338,6 +339,133 @@ async function startSync() {
   } catch (e) { /* không đồng bộ được: vẫn dùng bản trên máy */ }
 }
 
+// ===== Đồng bộ GitHub Gist (tự động sao lưu tiến độ lên tài khoản GitHub) =====
+const GH_KEY = 'lingogo-github-sync';
+const GH_SYNC = { timer: 0, seen: -1, running: false };
+function getGhConfig() {
+  try { const raw = localStorage.getItem(GH_KEY); return raw ? JSON.parse(raw) : { token: '', gistId: '', user: '' }; } catch (e) { return { token: '', gistId: '', user: '' }; }
+}
+function saveGhConfig(cfg) {
+  try { localStorage.setItem(GH_KEY, JSON.stringify(cfg)); } catch (e) {}
+}
+function ghHeaders(token) {
+  const clean = (token || '').trim();
+  const auth = clean.startsWith('Bearer ') || clean.startsWith('token ') ? clean : ('Bearer ' + clean);
+  return { 'Accept': 'application/vnd.github+json', 'Authorization': auth, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' };
+}
+async function findOrCreateGhGist(token) {
+  const h = ghHeaders(token);
+  const uRes = await fetch('https://api.github.com/user', { headers: h });
+  if (!uRes.ok) throw new Error('Token không hợp lệ hoặc thiếu quyền gist (lỗi ' + uRes.status + ')');
+  const uData = await uRes.json();
+  const username = uData.login || '';
+  const lRes = await fetch('https://api.github.com/gists?per_page=50', { headers: h });
+  if (lRes.ok) {
+    const list = await lRes.json();
+    const found = list.find((g) => g.files && g.files['lingogo-progress.json']);
+    if (found) return { gistId: found.id, user: username, isNew: false };
+  }
+  const cRes = await fetch('https://api.github.com/gists', {
+    method: 'POST',
+    headers: h,
+    body: JSON.stringify({
+      description: 'Lingogo Learning Progress Backup (Tự động đồng bộ)',
+      public: false,
+      files: { 'lingogo-progress.json': { content: JSON.stringify(S) } }
+    })
+  });
+  if (!cRes.ok) throw new Error('Không thể tạo Gist (lỗi ' + cRes.status + ')');
+  const created = await cRes.json();
+  return { gistId: created.id, user: username, isNew: true };
+}
+async function pullGhSync(quiet = false) {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId || GH_SYNC.running) return false;
+  try {
+    GH_SYNC.running = true;
+    const res = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+    if (!res.ok) {
+      if (res.status === 404) {
+        const found = await findOrCreateGhGist(cfg.token);
+        cfg.gistId = found.gistId; saveGhConfig(cfg);
+      }
+      return false;
+    }
+    const gist = await res.json();
+    const f = gist.files && gist.files['lingogo-progress.json'];
+    if (!f || !f.content) return false;
+    const remote = JSON.parse(f.content);
+    if (remote && (remote.t || 0) !== GH_SYNC.seen) {
+      const prevL = Object.keys(S.lessons || {}).length, prevS = Object.keys(S.srs || {}).length;
+      S = mergeState(S, remote);
+      GH_SYNC.seen = S.t || Date.now();
+      try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+      const dl = Object.keys(S.lessons || {}).length - prevL, ds = Object.keys(S.srs || {}).length - prevS;
+      if (!quiet) toast(dl || ds ? ('Đồng bộ GitHub: nhận thêm ' + dl + ' bài, ' + ds + ' mục ôn.') : 'Tiến độ đã đồng bộ mới nhất từ GitHub.');
+      if (typeof route === 'function' && VIEW !== 'lesson') route();
+      return true;
+    }
+    return false;
+  } catch (e) {
+    if (!quiet) toast('Lỗi đọc tiến độ từ GitHub: ' + (e.message || ''));
+    return false;
+  } finally {
+    GH_SYNC.running = false;
+  }
+}
+async function pushGhSync(quiet = true) {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId || GH_SYNC.running) return false;
+  try {
+    GH_SYNC.running = true;
+    try {
+      const getRes = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+      if (getRes.ok) {
+        const gist = await getRes.json();
+        const f = gist.files && gist.files['lingogo-progress.json'];
+        if (f && f.content) {
+          const remote = JSON.parse(f.content);
+          if (remote && (remote.t || 0) > (S.t || 0)) S = mergeState(S, remote);
+        }
+      }
+    } catch (e) {}
+    S.t = Math.max(Date.now(), (S.t || 0) + 1);
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    const res = await fetch('https://api.github.com/gists/' + cfg.gistId, {
+      method: 'PATCH',
+      headers: ghHeaders(cfg.token),
+      body: JSON.stringify({ files: { 'lingogo-progress.json': { content: JSON.stringify(S) } } })
+    });
+    if (!res.ok) throw new Error('Mã ' + res.status);
+    GH_SYNC.seen = S.t;
+    if (!quiet) toast('Đã sao lưu tiến độ lên GitHub!');
+    return true;
+  } catch (e) {
+    if (!quiet) toast('Chưa thể lưu lên GitHub: ' + (e.message || ''));
+    return false;
+  } finally {
+    GH_SYNC.running = false;
+  }
+}
+function scheduleGhPush() {
+  const cfg = getGhConfig();
+  if (!cfg.token || !cfg.gistId) return;
+  clearTimeout(GH_SYNC.timer);
+  GH_SYNC.timer = setTimeout(() => { pushGhSync(true); }, 2500);
+}
+async function startGhSync() {
+  const cfg = getGhConfig();
+  if (!cfg.token) return;
+  try {
+    if (!cfg.gistId) {
+      const res = await findOrCreateGhGist(cfg.token);
+      cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
+    }
+    await pullGhSync(true);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) pullGhSync(true); });
+  } catch (e) { /* yên lặng khi khởi động nếu offline */ }
+}
+
 // ===== Ngày, streak, XP (ngày tính theo giờ máy, đánh số như các app cũ) =====
 const todayN = () => { const n = new Date(); return Math.floor((n.getTime() - n.getTimezoneOffset() * 6e4) / 864e5); };
 const dayDate = (n) => new Date(n * 864e5);
@@ -379,11 +507,18 @@ const ivText = (s) => { const n = s.due - todayN(); return n <= 1 ? 'ngày mai' 
 
 // ===== Tải dữ liệu =====
 const DATA = {}, STROKES = {}, BUNDLES = {};
+// Đọc file dữ liệu: ưu tiên bản nhúng sẵn trong trang (<script type="application/json" data-file="data/en.json">, do tools/inline.py chèn vào bản artifact),
+// vì một số trình duyệt (ví dụ iPad) bị chặn khi tải thêm file riêng (lỗi 403). Không có bản nhúng thì tải qua mạng như bình thường.
+async function getJSON(path) {
+  const el = document.querySelector('script[type="application/json"][data-file="' + path + '"]');
+  if (el) { try { return JSON.parse(el.textContent); } catch (e) { /* hỏng thì rơi về tải mạng */ } }
+  const r = await fetch(path);
+  if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
+  return r.json();
+}
 async function loadLang(code) {
   if (!DATA[code]) {
-    const r = await fetch('data/' + code + '.json');
-    if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
-    const d = await r.json();
+    const d = await getJSON('data/' + code + '.json');
     d.topics.forEach((t) => { t.lang = code; t.lessons = planTopic(d, t); });
     DATA[code] = d;
     remapLessons(d);
@@ -392,7 +527,7 @@ async function loadLang(code) {
 }
 async function loadStrokes(code) {
   if (!STROKES[code]) {
-    try { const r = await fetch('data/strokes-' + code + '.json'); STROKES[code] = r.ok ? await r.json() : {}; } catch (e) { STROKES[code] = {}; }
+    try { STROKES[code] = await getJSON('data/strokes-' + code + '.json'); } catch (e) { STROKES[code] = {}; }
   }
   return STROKES[code];
 }
@@ -410,7 +545,7 @@ function bundleOf(code, text) {
 }
 async function clipFor(code, text) {
   const b = bundleOf(code, text); if (!b) return null;
-  if (!(b.file in BUNDLES)) BUNDLES[b.file] = fetch(b.file).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+  if (!(b.file in BUNDLES)) BUNDLES[b.file] = getJSON(b.file).catch(() => ({}));
   const m = await BUNDLES[b.file];
   return m && m[b.key] ? 'data:audio/mpeg;base64,' + m[b.key] : null;
 }
@@ -597,6 +732,7 @@ function mount(...nodes) { app.replaceChildren(...nodes.flat(9).filter((n) => n 
 let tt;
 function toast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600); }
 const ICON = {
+  github: 'M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z',
   home: 'M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z',
   speak: 'M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm6-3a6 6 0 0 1-12 0M12 18v3',
   cards: 'M4 7h12v13H4zM8 4h12v13',
@@ -702,6 +838,35 @@ function welcomeView() {
 
 // ===== Trang Học =====
 const openTopics = new Set();
+function syncButton() {
+  let lp = null;
+  const btn = h('button', {
+    class: 'sync-btn',
+    'aria-label': 'Tự động đồng bộ (Push / Pull)',
+    title: 'Tự động đồng bộ (Nhấn giữ hoặc chuột phải để cài đặt)',
+    onclick: () => {
+      if (btn.dataset.longPressed === 'true') {
+        delete btn.dataset.longPressed;
+        return;
+      }
+      autoSync();
+    },
+    oncontextmenu: (e) => {
+      e.preventDefault();
+      showSyncModal();
+    },
+    ontouchstart: () => {
+      lp = setTimeout(() => {
+        lp = null;
+        btn.dataset.longPressed = 'true';
+        showSyncModal();
+      }, 550);
+    },
+    ontouchend: () => { if (lp) { clearTimeout(lp); lp = null; } },
+    ontouchcancel: () => { if (lp) { clearTimeout(lp); lp = null; } }
+  }, icon(ICON.sync));
+  return btn;
+}
 function homeView() {
   const d = DATA[S.lang], st = streak(), xp = xpOf(todayN(), S.lang), due = dueIn(S.lang);
   const nx = nextLesson(d);
@@ -725,8 +890,8 @@ function homeView() {
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
     h('div', { class: 'row between small' },
-      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync }, 'Đồng bộ'),
-      h('button', { class: 'sync-btn', 'aria-label': 'Tự động đồng bộ (Push / Pull)', title: 'Tự động đồng bộ (Push / Pull)', onclick: autoSync }, icon(ICON.sync))),
+      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync, title: 'Bấm để tự động đồng bộ' }, 'Đồng bộ'),
+      syncButton()),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
@@ -817,7 +982,7 @@ function buildSteps(t, i) {
     sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || v.m, tokens: tokensOf(code, v.ex), v }); }
+    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
     else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); }
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
@@ -834,7 +999,7 @@ function buildSteps(t, i) {
     l.quiz.forEach((q) => steps.push({ type: 'quiz', q }));
   } else if (l.kind === 'fill') {
     steps.push({ type: 'fill', fill: t.fill });
-    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || v.m, tokens: tokensOf(code, v.ex), v }));
+    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
     (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
@@ -942,20 +1107,23 @@ function lessonView(t, i) {
       gradeFn = () => { const ok = sels.filter((s) => s.value === s.dataset.ok).length; return { correct: ok === sels.length, ok, expected: sels.map((s) => s.dataset.ok).join(' · '), note: ok + '/' + sels.length + ' chỗ đúng' }; };
     } else if (ex.type === 'write') {
       const wbox = h('div', { class: 'charbox' });
-      const info = h('p', { class: 'small muted center', 'aria-live': 'polite' }, 'Xem thứ tự nét, rồi tự viết vào ô.');
+      const info = h('p', { class: 'small muted center', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
       let mistakes = 0, completed = false, writer = null;
-      const startQuiz = () => { if (!writer) return; mistakes = 0; writer.quiz({ showHintAfterMisses: 2, onMistake: () => { mistakes++; }, onComplete: (s) => { completed = true; mistakes = s.totalMistakes; info.textContent = 'Xong! Sai ' + mistakes + ' lần.'; update(); submit(); } }); };
+      // blind = true: ẩn nét mờ, viết từ trí nhớ. Mặc định: có nét mờ để đồ, viết được ngay khi vào bước này.
+      const startQuiz = (blind) => { if (!writer) return; mistakes = 0; blind ? writer.hideOutline() : writer.showOutline();
+        info.textContent = blind ? 'Viết lại không có nét mờ: nhớ chữ rồi viết từng nét. Sai 2 lần máy sẽ gợi ý.' : 'Đồ theo nét mờ, viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem cách viết.';
+        writer.quiz({ showHintAfterMisses: 2, onMistake: () => { mistakes++; }, onComplete: (s) => { completed = true; mistakes = s.totalMistakes; info.textContent = 'Xong! Sai ' + mistakes + ' lần.'; update(); submit(); } }); };
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Tập viết'), ex.v && h('p', { class: 'center' }, h('b', { lang: LANGS[code].lang }, plain(ex.v.w)), ' · ', ex.v.m), ex.k && h('p', { class: 'center' }, h('b', { lang: 'ja' }, ex.k.k), ' · ', ex.k.hv), wbox, info,
-        h('div', { class: 'listen' }, h('button', { onclick: () => writer && writer.animateCharacter({ onComplete: startQuiz }) }, 'Xem thứ tự nét'), h('button', { onclick: startQuiz }, 'Viết lại')));
+        h('div', { class: 'listen' }, h('button', { onclick: () => { if (writer) { writer.showOutline(); writer.animateCharacter({ onComplete: (r) => { if (!(r && r.canceled)) startQuiz(false); } }); } } }, 'Xem thứ tự nét'), h('button', { onclick: () => startQuiz(true) }, 'Viết lại')));
       btn.textContent = 'Bỏ qua'; ready = () => true;
       setTimeout(async () => {
         const data = (await loadStrokes(code))[ex.ch];
         if (!data || !window.HanziWriter) { info.textContent = 'Chưa có dữ liệu nét cho chữ này.'; return; }
         const size = wbox.clientWidth || 260;
         writer = HanziWriter.create(wbox, ex.ch, { width: size, height: size, padding: 12, showCharacter: false, showOutline: true,
-          strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222', outlineColor: getComputedStyle(document.documentElement).getPropertyValue('--line').trim() || '#ddd',
+          strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222', outlineColor: guideColor(),
           drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257', charDataLoader: (c, ok) => ok(data) });
-        writer.animateCharacter({ onComplete: startQuiz });
+        startQuiz(false);
       }, 50);
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
     } else if (ex.type === 'speak') {
@@ -1216,33 +1384,46 @@ function charHint(code, c) {
   const k = DATA.ja.topics.flatMap((t) => t.kanji || []).find((x) => x.k === c); if (k) return k.hv;
   let i = KANA.hira.indexOf(c); if (i < 0) i = KANA.kata.indexOf(c); return i >= 0 ? ROMA[i] : '';
 }
+// Màu chữ mờ để đồ nét: trộn màu chữ với màu nền (hex đặc, không dùng độ trong suốt) cho đủ thấy ở cả giao diện sáng và tối
+function guideColor() {
+  const css = getComputedStyle(document.documentElement);
+  const rgb = (v, d) => { const m = /^#?([0-9a-f]{6})$/i.exec(css.getPropertyValue(v).trim()); if (!m) return d; const n = parseInt(m[1], 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
+  const a = rgb('--ink', [27, 42, 44]), b = rgb('--surface', [255, 255, 255]);
+  return '#' + a.map((x, i) => Math.round(x * 0.28 + b[i] * 0.72).toString(16).padStart(2, '0')).join('');
+}
 function charView(code, c, list) {
   const idx = list.indexOf(c), box = h('div', { class: 'charbox' });
   const status = h('p', { class: 'center small muted', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
   let writer = null;
-  const quiz = () => { if (!writer) return; writer.showOutline(); status.textContent = 'Đồ theo chữ mờ, viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
+  const again = h('button', { hidden: true, onclick: () => quiz(true) }, 'Viết lại'); // chỉ hiện sau khi viết xong một lượt; bấm vào là viết không còn nét mờ
+  // Vào màn là viết ngay: đồ theo chữ mờ, không cần bấm nút
+  const quiz = (blind) => { if (!writer) return; again.hidden = true; blind ? writer.hideOutline() : writer.showOutline();
+    status.textContent = blind ? 'Viết lại không có nét mờ: nhớ chữ rồi viết từng nét. Sai 2 lần máy sẽ gợi ý.' : 'Đồ theo chữ mờ, viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'; writer.quiz({ showHintAfterMisses: 2, onComplete: (s) => {
     const k = sid(code, c); S.written[k] = (S.written[k] || 0) + 1; addXp(XP_ITEM, code); checkAch();
-    status.textContent = s.totalMistakes === 0 ? 'Hoàn hảo! Không sai nét nào.' : 'Xong! Sai ' + s.totalMistakes + ' lần. Viết lại cho nhớ nhé.';
+    status.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Không sai nét nào.' : 'Xong! Sai ' + s.totalMistakes + ' lần.') + ' Bấm “Viết lại” để thử viết không có nét mờ.';
+    again.hidden = false;
   } }); };
+  // Chữ đứng một mình mà giọng đọc dễ đọc sai (chữ nhiều âm): data/zh.json có thể ghi "say" = từ có bản thu đúng để phát thay
+  const sayText = (code === 'zh' && DATA.zh.chars[c] && DATA.zh.chars[c].say) || c;
   let info;
-  if (code === 'zh') { const i = DATA.zh.chars[c] || {}; const v = DATA.zh.topics.flatMap((t) => t.vocab).find((x) => plain(x.w).includes(c)); info = [i.hv && h('p', {}, 'Hán Việt: ', h('b', {}, i.hv)), i.m && h('p', { class: 'muted' }, i.m), v && h('p', { class: 'small' }, h('span', { lang: 'zh-Hans' }, v.w), ' ', h('span', { class: 'read' }, v.r), ' · ', v.m)]; }
+  if (code === 'zh') { const i = DATA.zh.chars[c] || {}; const v = DATA.zh.topics.flatMap((t) => t.vocab).find((x) => plain(x.w).includes(c)); info = [i.hv && h('p', {}, 'Hán Việt: ', h('b', {}, i.hv)), i.m && h('p', { class: 'muted' }, i.m), i.say && h('p', { class: 'small muted' }, 'Loa phát từ ', h('span', { lang: 'zh-Hans' }, i.say), ' để đọc đúng âm.'), v && h('p', { class: 'small' }, h('span', { lang: 'zh-Hans' }, v.w), ' ', h('span', { class: 'read' }, v.r), ' · ', v.m)]; }
   else { const k = DATA.ja.topics.flatMap((t) => t.kanji || []).find((x) => x.k === c);
     info = k ? [h('p', {}, 'Hán Việt: ', h('b', {}, k.hv)), h('p', { class: 'small', lang: 'ja' }, 'On: ' + k.on + ' · Kun: ' + k.kun), ...(k.ex || []).slice(0, 3).map((e) => h('p', { class: 'small', lang: 'ja' }, ruby(e[0]), ' · ', h('span', { class: 'muted' }, e[1])))]
       : [h('p', {}, 'Cách đọc: ', h('b', {}, charHint('ja', c)))]; }
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: writeView }, 'Danh sách chữ'), h('span', { class: 'muted small' }, (idx + 1) + '/' + list.length)),
     h('div', { class: 'center' }, h('span', { class: 'big', lang: L().lang }, c)), box, status,
-    h('div', { class: 'listen' }, h('button', { onclick: () => { if (!writer) return; writer.cancelQuiz(); writer.showOutline(); writer.animateCharacter(); status.textContent = 'Xem từng nét, rồi bấm “Tự viết” để tự tập.'; } }, 'Xem thứ tự nét'), h('button', { class: 'primary', onclick: quiz }, 'Tự viết'), spk(code, c, { cls: 'big' })),
-    h('div', { class: 'panel stack' }, info),
-    h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →'))));
+    h('div', { class: 'listen' }, h('button', { onclick: () => { if (!writer) return; writer.cancelQuiz(); again.hidden = true; writer.showOutline(); writer.animateCharacter({ onComplete: (r) => { if (!(r && r.canceled)) quiz(false); } }); status.textContent = 'Xem từng nét, xong thì tự viết lại vào ô.'; } }, 'Xem thứ tự nét'), again, spk(code, sayText, { cls: 'big' })),
+    h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →')),
+    h('div', { class: 'panel stack' }, info)));
   setTimeout(async () => {
     const data = (await loadStrokes(code))[c];
     if (!data || !window.HanziWriter) { status.textContent = window.HanziWriter ? 'Chưa có dữ liệu nét cho chữ này.' : 'Không tải được công cụ viết. Kiểm tra mạng rồi mở lại.'; return; }
     const css = getComputedStyle(document.documentElement), size = box.clientWidth || 280;
-    writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
-      strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: css.getPropertyValue('--line').trim(), drawingColor: css.getPropertyValue('--teal').trim(),
+    writer = HanziWriter.create(box, c, { width: size, height: size, padding: 14, showCharacter: false, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
+      strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: guideColor(), drawingColor: css.getPropertyValue('--teal').trim(),
       highlightColor: css.getPropertyValue('--amber').trim(), charDataLoader: (ch, ok) => ok(data) });
-    status.textContent = 'Bấm “Tự viết” rồi đồ theo chữ mờ, hoặc “Xem thứ tự nét” khi cần xem cách viết.';
+    quiz(false);
   }, 50);
 }
 function fillReveal(code, fill) {
@@ -1356,6 +1537,59 @@ async function autoSync() {
   const btn = document.querySelector('.sync-btn');
   if (btn) btn.classList.add('spinning');
   try {
+    const cfg = getGhConfig();
+    // 1. Tự động đồng bộ qua GitHub Gist nếu đã thiết lập
+    if (cfg.token) {
+      if (!cfg.gistId) {
+        try {
+          const res = await findOrCreateGhGist(cfg.token);
+          cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
+        } catch (e) {}
+      }
+      if (cfg.gistId) {
+        try {
+          const res = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+          if (res.ok) {
+            const gist = await res.json();
+            const f = gist.files && gist.files['lingogo-progress.json'];
+            if (f && f.content) {
+              const remote = JSON.parse(f.content);
+              const prevL = Object.keys(S.lessons || {}).length;
+              const prevS = Object.keys(S.srs || {}).length;
+              const prevW = Object.keys(S.written || {}).length;
+              const remoteT = remote.t || 0;
+              const localT = S.t || 0;
+
+              const merged = mergeState(S, remote);
+              const dl = Object.keys(merged.lessons || {}).length - prevL;
+              const ds = Object.keys(merged.srs || {}).length - prevS;
+              const dw = Object.keys(merged.written || {}).length - prevW;
+              const remoteHasMore = dl > 0 || ds > 0 || dw > 0;
+
+              if (remoteT > localT || remoteHasMore) {
+                // PULL từ GitHub: trên đám mây có tiến độ mới hơn
+                S = merged;
+                GH_SYNC.seen = S.t || Date.now();
+                save();
+                route();
+                const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
+                toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ GitHub.' : 'tiến độ đã cập nhật mới nhất từ GitHub.'));
+                return;
+              } else {
+                // PUSH lên GitHub: máy này mới nhất -> đẩy lên GitHub
+                await pushGhSync(true);
+                toast('Đã đẩy (Push): Tiến độ máy này mới nhất, đã lưu lên GitHub.');
+                return;
+              }
+            }
+          }
+        } catch (ghErr) {
+          console.warn('Lỗi kết nối GitHub Gist, chuyển sang kiểm tra bộ nhớ tạm...', ghErr);
+        }
+      }
+    }
+
+    // 2. Tự động đồng bộ qua bộ nhớ tạm (Clipboard) nếu chưa cấu hình GitHub hoặc offline
     let clipText = '';
     try { clipText = await navigator.clipboard.readText(); } catch (e) { /* trình duyệt không cho đọc tự động */ }
     let inc = null;
@@ -1376,7 +1610,7 @@ async function autoSync() {
         // PULL: Bản trong bộ nhớ tạm mới hơn hoặc có thêm bài học -> Kéo về gộp ngay
         S = merged; save(); route();
         const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
-        toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + '.' : 'tiến độ đã cập nhật mới nhất.'));
+        toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ bộ nhớ tạm.' : 'tiến độ đã cập nhật mới nhất.'));
         return;
       }
     }
@@ -1403,6 +1637,80 @@ function showSyncModal() {
   const overlay = h('div', { class: 'modal-mask', onclick: (e) => { if (e.target === overlay) close(); } });
   const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
   window.addEventListener('keydown', onKey);
+
+  const ghBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '10px' } });
+
+  function renderGh() {
+    ghBox.innerHTML = '';
+    const cfg = getGhConfig();
+    if (cfg.token && cfg.gistId) {
+      ghBox.append(
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+            icon(ICON.github),
+            h('div', {},
+              h('b', { style: { display: 'block', fontSize: '.9rem' } }, 'Đồng bộ GitHub (Tự động)'),
+              h('span', { class: 'small muted' }, 'Đã kết nối: @' + (cfg.user || 'GitHub User'))
+            )
+          ),
+          h('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }, title: 'Đang hoạt động' })
+        ),
+        h('div', { class: 'row', style: { gap: '8px' } },
+          h('button', { class: 'primary mini grow', onclick: async () => {
+            toast('Đang kiểm tra và đồng bộ GitHub...');
+            await pullGhSync(false);
+            await pushGhSync(false);
+          } }, icon(ICON.sync), ' Đồng bộ ngay'),
+          h('button', { class: 'ghost mini', onclick: () => {
+            if (confirm('Ngắt kết nối đồng bộ GitHub trên trình duyệt này?')) {
+              saveGhConfig({ token: '', gistId: '', user: '' });
+              renderGh();
+              toast('Đã ngắt kết nối GitHub.');
+            }
+          } }, 'Ngắt kết nối')
+        )
+      );
+    } else {
+      const inp = h('input', { type: 'password', placeholder: 'Dán GitHub Token (ghp_... hoặc github_pat_...)', style: { fontSize: '.86rem', minHeight: '38px', padding: '8px 10px' } });
+      const connBtn = h('button', { class: 'primary mini block', onclick: async () => {
+        const val = inp.value.trim();
+        if (!val) { toast('Vui lòng dán GitHub Token.'); return; }
+        connBtn.disabled = true; connBtn.textContent = 'Đang kết nối...';
+        try {
+          const res = await findOrCreateGhGist(val);
+          saveGhConfig({ token: val, gistId: res.gistId, user: res.user });
+          await pullGhSync(false);
+          await pushGhSync(false);
+          renderGh();
+          toast('Đã kết nối GitHub thành công (@' + res.user + ')!');
+        } catch (err) {
+          toast(err.message || 'Lỗi kết nối GitHub.');
+        } finally {
+          connBtn.disabled = false; connBtn.textContent = 'Kết nối & Tự động sao lưu';
+        }
+      } }, 'Kết nối & Tự động sao lưu');
+
+      ghBox.append(
+        h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+          icon(ICON.github),
+          h('b', { style: { fontSize: '.92rem' } }, 'Đồng bộ GitHub (Khuyên dùng)')
+        ),
+        h('p', { class: 'small muted', style: { margin: 0 } },
+          'Tự động sao lưu lên GitHub Gist. Chuyển máy chỉ cần nhập token là tự lấy lại bài.'
+        ),
+        inp,
+        connBtn,
+        h('a', {
+          href: 'https://github.com/settings/tokens/new?description=Lingogo%20Sync&scopes=gist',
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'small',
+          style: { color: 'var(--teal)', textDecoration: 'none', display: 'inline-block' }
+        }, '↗ Nhấn vào đây để tạo nhanh Token (đã chọn sẵn quyền gist)')
+      );
+    }
+  }
+  renderGh();
 
   const manualBox = h('div', { class: 'stack', hidden: true });
   const manualInp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây' });
@@ -1432,17 +1740,22 @@ function showSyncModal() {
       h('h3', { style: { fontSize: '1.15rem' } }, 'Đồng bộ tiến độ'),
       h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', padding: '4px 10px', fontSize: '1.1rem' } }, '✕')
     ),
-    h('p', { class: 'small muted' }, 'Chuyển tiến độ giữa các thiết bị (máy tính, điện thoại):'),
-    h('button', { class: 'primary block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+    ghBox,
+    h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '8px', opacity: .5 } },
+      h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } }),
+      h('span', { class: 'small' }, 'hoặc chuyển thủ công'),
+      h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } })
+    ),
+    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
       await copyProgress(); close();
     } },
       icon(ICON.push),
       h('span', { class: 'grow' },
-        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Gửi tiến độ (Push)'),
-        h('span', { class: 'small', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
+        h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Gửi tiến độ (Push)'),
+        h('span', { class: 'small muted', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
       )
     ),
-    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '12px 14px', gap: '14px' }, onclick: async () => {
+    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
       const ok = await pasteProgress();
       if (ok) close();
       else {
@@ -1453,7 +1766,7 @@ function showSyncModal() {
     } },
       icon(ICON.pull),
       h('span', { class: 'grow' },
-        h('b', { style: { display: 'block', fontSize: '.95rem' } }, 'Nhận tiến độ (Pull)'),
+        h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Nhận tiến độ (Pull)'),
         h('span', { class: 'small muted', style: { display: 'block', fontWeight: 400 } }, 'Đọc mã từ bộ nhớ tạm và gộp vào máy này')
       )
     ),
@@ -1485,6 +1798,7 @@ function transferPanel() {
   } }, 'Dán mã để gộp');
   return h('div', { class: 'panel stack' }, h('h3', {}, 'Chuyển tiến độ'),
     h('p', { class: 'small muted' }, 'Dùng khi học cả bản trên Claude và bản web. Sao chép mã ở bản này, dán vào bản kia. Tiến độ được gộp, không bị ghi đè.'),
+    h('button', { class: 'primary mini block', onclick: showSyncModal }, '⚙ Cấu hình tự động đồng bộ (GitHub Gist)'),
     copyBtn, out, inp, mergeBtn);
 }
 
@@ -1553,6 +1867,7 @@ document.addEventListener('keydown', (e) => {
 // ===== Khởi động =====
 route();
 startSync();
+startGhSync();
 </script>
 </body>
 </html>

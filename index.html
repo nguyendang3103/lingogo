@@ -838,6 +838,35 @@ function welcomeView() {
 
 // ===== Trang Học =====
 const openTopics = new Set();
+function syncButton() {
+  let lp = null;
+  const btn = h('button', {
+    class: 'sync-btn',
+    'aria-label': 'Tự động đồng bộ (Push / Pull)',
+    title: 'Tự động đồng bộ (Nhấn giữ hoặc chuột phải để cài đặt)',
+    onclick: () => {
+      if (btn.dataset.longPressed === 'true') {
+        delete btn.dataset.longPressed;
+        return;
+      }
+      autoSync();
+    },
+    oncontextmenu: (e) => {
+      e.preventDefault();
+      showSyncModal();
+    },
+    ontouchstart: () => {
+      lp = setTimeout(() => {
+        lp = null;
+        btn.dataset.longPressed = 'true';
+        showSyncModal();
+      }, 550);
+    },
+    ontouchend: () => { if (lp) { clearTimeout(lp); lp = null; } },
+    ontouchcancel: () => { if (lp) { clearTimeout(lp); lp = null; } }
+  }, icon(ICON.sync));
+  return btn;
+}
 function homeView() {
   const d = DATA[S.lang], st = streak(), xp = xpOf(todayN(), S.lang), due = dueIn(S.lang);
   const nx = nextLesson(d);
@@ -861,8 +890,8 @@ function homeView() {
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
     h('div', { class: 'row between small' },
-      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync }, 'Đồng bộ'),
-      h('button', { class: 'sync-btn', 'aria-label': 'Tự động đồng bộ (Push / Pull)', title: 'Tự động đồng bộ (Push / Pull)', onclick: autoSync }, icon(ICON.sync))),
+      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync, title: 'Bấm để tự động đồng bộ' }, 'Đồng bộ'),
+      syncButton()),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
@@ -1508,6 +1537,59 @@ async function autoSync() {
   const btn = document.querySelector('.sync-btn');
   if (btn) btn.classList.add('spinning');
   try {
+    const cfg = getGhConfig();
+    // 1. Tự động đồng bộ qua GitHub Gist nếu đã thiết lập
+    if (cfg.token) {
+      if (!cfg.gistId) {
+        try {
+          const res = await findOrCreateGhGist(cfg.token);
+          cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
+        } catch (e) {}
+      }
+      if (cfg.gistId) {
+        try {
+          const res = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+          if (res.ok) {
+            const gist = await res.json();
+            const f = gist.files && gist.files['lingogo-progress.json'];
+            if (f && f.content) {
+              const remote = JSON.parse(f.content);
+              const prevL = Object.keys(S.lessons || {}).length;
+              const prevS = Object.keys(S.srs || {}).length;
+              const prevW = Object.keys(S.written || {}).length;
+              const remoteT = remote.t || 0;
+              const localT = S.t || 0;
+
+              const merged = mergeState(S, remote);
+              const dl = Object.keys(merged.lessons || {}).length - prevL;
+              const ds = Object.keys(merged.srs || {}).length - prevS;
+              const dw = Object.keys(merged.written || {}).length - prevW;
+              const remoteHasMore = dl > 0 || ds > 0 || dw > 0;
+
+              if (remoteT > localT || remoteHasMore) {
+                // PULL từ GitHub: trên đám mây có tiến độ mới hơn
+                S = merged;
+                GH_SYNC.seen = S.t || Date.now();
+                save();
+                route();
+                const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
+                toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ GitHub.' : 'tiến độ đã cập nhật mới nhất từ GitHub.'));
+                return;
+              } else {
+                // PUSH lên GitHub: máy này mới nhất -> đẩy lên GitHub
+                await pushGhSync(true);
+                toast('Đã đẩy (Push): Tiến độ máy này mới nhất, đã lưu lên GitHub.');
+                return;
+              }
+            }
+          }
+        } catch (ghErr) {
+          console.warn('Lỗi kết nối GitHub Gist, chuyển sang kiểm tra bộ nhớ tạm...', ghErr);
+        }
+      }
+    }
+
+    // 2. Tự động đồng bộ qua bộ nhớ tạm (Clipboard) nếu chưa cấu hình GitHub hoặc offline
     let clipText = '';
     try { clipText = await navigator.clipboard.readText(); } catch (e) { /* trình duyệt không cho đọc tự động */ }
     let inc = null;
@@ -1528,7 +1610,7 @@ async function autoSync() {
         // PULL: Bản trong bộ nhớ tạm mới hơn hoặc có thêm bài học -> Kéo về gộp ngay
         S = merged; save(); route();
         const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
-        toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + '.' : 'tiến độ đã cập nhật mới nhất.'));
+        toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ bộ nhớ tạm.' : 'tiến độ đã cập nhật mới nhất.'));
         return;
       }
     }
@@ -1716,6 +1798,7 @@ function transferPanel() {
   } }, 'Dán mã để gộp');
   return h('div', { class: 'panel stack' }, h('h3', {}, 'Chuyển tiến độ'),
     h('p', { class: 'small muted' }, 'Dùng khi học cả bản trên Claude và bản web. Sao chép mã ở bản này, dán vào bản kia. Tiến độ được gộp, không bị ghi đè.'),
+    h('button', { class: 'primary mini block', onclick: showSyncModal }, '⚙ Cấu hình tự động đồng bộ (GitHub Gist)'),
     copyBtn, out, inp, mergeBtn);
 }
 
