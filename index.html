@@ -965,14 +965,9 @@ function homeView() {
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
-    h('div', { class: 'row between small', style: { alignItems: 'center' } },
-      h('div', { class: 'row', style: { gap: '14px', alignItems: 'center' } },
-        h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: autoSync, title: 'Bấm để tự động đồng bộ' }, 'Đồng bộ'),
-        h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: () => showFeedbackModal(), title: 'Góp ý hoặc báo lỗi cho AI' }, '💬 Góp ý & Báo lỗi')
-      ),
-      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-        feedbackBtn(),
-        syncButton())),
+    h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
+      feedbackBtn(),
+      syncButton()),
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx))))));
