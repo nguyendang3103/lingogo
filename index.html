@@ -988,7 +988,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.4 · Cập nhật 05/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.5 · Cập nhật 05/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1885,12 +1885,20 @@ function showSyncModal() {
           ),
           h('span', { style: { width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', flexShrink: 0 }, title: 'Đang hoạt động' })
         ),
-        h('div', { class: 'row', style: { gap: '8px' } },
+        h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap' } },
           h('button', { class: 'primary mini grow', onclick: async () => {
             toast('Đang kiểm tra và đồng bộ GitHub...');
             await pullGhSync(false);
             await pushGhSync(false);
           } }, icon(ICON.sync, { size: 16 }), ' Đồng bộ ngay'),
+          h('button', { class: 'ghost mini', onclick: async () => {
+            try {
+              await navigator.clipboard.writeText(cfg.token);
+              toast('Đã sao chép GitHub Token! Bạn có thể dán sang máy khác.');
+            } catch (e) {
+              prompt('Mã GitHub Token của bạn (bấm Ctrl+C để chép):', cfg.token);
+            }
+          }, title: 'Sao chép Token này để dán sang máy tính hoặc điện thoại khác' }, '📋 Chép Token sang máy khác'),
           h('button', { class: 'ghost mini', onclick: () => {
             if (confirm('Ngắt kết nối đồng bộ GitHub trên trình duyệt này?')) {
               saveGhConfig({ token: '', gistId: '', user: '' });
@@ -2340,7 +2348,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261105-1615';
+const APP_BUILD_ID = '20261105-1625';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
