@@ -890,7 +890,7 @@ function welcomeView() {
     h('div', { style: { background: 'var(--sunk)', padding: '12px 14px', borderRadius: '14px', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' } },
       h('div', { style: { minWidth: 0, flex: 1 } },
         h('b', { style: { fontSize: '.88rem', display: 'block' } }, 'Đã học trên máy khác?'),
-        h('span', { class: 'small muted', style: { fontSize: '.78rem', display: 'block' } }, 'Quét mã QR hoặc nhận bài học cũ')
+        h('span', { class: 'small muted', style: { fontSize: '.78rem', display: 'block' } }, 'Tự động đồng bộ bài học qua GitHub')
       ),
       h('button', { class: 'primary mini', onclick: showSyncModal }, 'Đồng bộ ngay')
     ),
@@ -1872,40 +1872,6 @@ function showSyncModal() {
   const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
   window.addEventListener('keydown', onKey);
 
-  // Khối chia sẻ sang điện thoại bằng QR code
-  const qrBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '12px 14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '8px' } });
-  const qrArea = h('div', { class: 'stack', style: { alignItems: 'center', gap: '8px', textAlign: 'center' } });
-  let qrOpen = false;
-  const qrBtn = h('button', { class: 'ghost mini block', style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontWeight: 600 }, onclick: async () => {
-    qrOpen = !qrOpen;
-    if (qrOpen) {
-      qrBtn.textContent = 'Thu gọn mã QR';
-      qrArea.hidden = false;
-      qrArea.innerHTML = '<span class="small muted">Đang tạo mã QR...</span>';
-      const syncUrl = await getSyncUrl();
-      qrArea.innerHTML = '';
-      const qrImg = h('img', {
-        src: 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(syncUrl),
-        alt: 'Mã QR đồng bộ',
-        style: { width: '170px', height: '170px', borderRadius: '12px', background: '#fff', padding: '6px', border: '1px solid var(--line)', margin: '4px auto' }
-      });
-      const copyLinkBtn = h('button', { class: 'ghost mini', onclick: async () => {
-        let ok = false;
-        try { await navigator.clipboard.writeText(syncUrl); ok = true; } catch (e) {}
-        toast(ok ? 'Đã sao chép link đồng bộ! Bạn có thể dán gửi qua Zalo/Messenger.' : 'Không sao chép tự động được.');
-      } }, '📋 Sao chép link để gửi qua Zalo / Messenger');
-      qrArea.append(
-        qrImg,
-        h('p', { class: 'small muted', style: { margin: '2px 0 4px 0', fontSize: '.78rem' } }, 'Mở Camera điện thoại quét mã này để học tiếp ngay.'),
-        copyLinkBtn
-      );
-    } else {
-      qrBtn.textContent = '📱 Quét mã QR để chuyển sang điện thoại';
-      qrArea.hidden = true;
-    }
-  } }, '📱 Quét mã QR để chuyển sang điện thoại');
-  qrArea.hidden = true;
-  qrBox.append(qrBtn, qrArea);
 
   const ghBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '10px' } });
 
@@ -2023,7 +1989,6 @@ function showSyncModal() {
       h('h3', { style: { fontSize: '1.15rem', margin: 0 } }, 'Đồng bộ tiến độ'),
       h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', width: '32px', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', fontSize: '1rem' } }, '✕')
     ),
-    qrBox,
     ghBox,
     h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '10px', opacity: .5 } },
       h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } }),
