@@ -988,7 +988,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.3 · Cập nhật 05/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.4 · Cập nhật 05/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1118,7 +1118,14 @@ function buildSteps(t, i) {
       const chars = [...new Map(l.words.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
       const pool = [...new Set(allWords.flatMap((w) => hvParts(code, w.w)).map((x) => x.hv).filter(Boolean))];
       sample(chars, 2).forEach((x) => {
-        const dis = sample(pool.filter((q) => q !== x.hv), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
+        const meanLower = (x.m || '').toLowerCase().normalize('NFC');
+        const meanWords = meanLower.split(/[\s,;/()]+/).filter(Boolean);
+        const dis = sample(pool.filter((q) => {
+          if (q === x.hv) return false;
+          const qLower = q.toLowerCase().normalize('NFC');
+          if (meanWords.includes(qLower) || meanLower === qLower) return false;
+          return true;
+        }), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
         if (dis.length === 3) steps.push({ type: 'hvw', v: x.v, c: x.c, m: x.m, correct, opts: shuffle([correct, ...dis]) });
       });
     }
@@ -1204,7 +1211,7 @@ function lessonView(t, i) {
       c.setCorrect(ex.correct);
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Chữ này đọc Hán Việt là gì?'),
         h('div', { class: 'big', lang: LANGS[code].lang }, ex.c), h('p', { class: 'small muted center', lang: LANGS[code].lang }, 'trong từ ' + plain(ex.v.w) + ' (' + ex.v.m + ')'), c.el);
-      gradeFn = () => ({ correct: c.sel() === ex.correct, expected: ex.correct.hv, note: ex.m ? 'Nghĩa của chữ: ' + ex.m : '' });
+      gradeFn = () => ({ correct: c.sel() === ex.correct, expected: ex.correct.hv, note: ex.m ? ('Âm Hán Việt: ' + ex.correct.hv + ' (nghĩa: ' + ex.m + ')') : '' });
     } else if (ex.type === 'kintro') {
       const k = ex.k; btn.textContent = 'Tiếp tục'; ready = () => true;
       body = h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, 'Kanji mới'), h('div', { class: 'big', lang: 'ja' }, k.k),
@@ -2333,7 +2340,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261105-1510';
+const APP_BUILD_ID = '20261105-1615';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
