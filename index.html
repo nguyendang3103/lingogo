@@ -988,7 +988,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.5 · Cập nhật 05/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.6 · Cập nhật 05/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -2348,7 +2348,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261105-1625';
+const APP_BUILD_ID = '20261105-1710';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
