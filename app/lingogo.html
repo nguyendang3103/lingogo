@@ -417,7 +417,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261106-1145';
+const APP_BUILD_ID = '20261106-1155';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -434,11 +434,13 @@ const CATEGORIES = {
     { id: 'all', name: 'Tất cả chủ đề', short: 'Tất cả', icon: '🌐', level: 'A1–B2+', count: '44 bài', desc: 'Lộ trình toàn diện 44 bài học từ cơ bản A1 đến nâng cao B2+' }
   ],
   zh: [
-    { id: 'basic', name: 'Nền tảng & Đời sống', short: 'Nền tảng', icon: '🌱', level: 'HSK 1–2', count: '14 bài', desc: 'Phát âm Pinyin, chào hỏi, số đếm, gọi món ăn, mua sắm, hỏi đường, khách sạn' },
-    { id: 'comm', name: 'Giao tiếp & Sở thích', short: 'Giao tiếp', icon: '🎨', level: 'HSK 2–4', count: '13 bài', desc: 'Sở thích, phim ảnh, âm nhạc, du lịch, WeChat & thanh toán, sinh hoạt hàng ngày' },
-    { id: 'business', name: 'Thương mại & Đi làm', short: 'Thương mại', icon: '💼', level: 'HSK 3–5', count: '13 bài', desc: 'Hỏi giá & báo giá, đơn hàng, vận chuyển, hợp đồng, đàm phán, tiếp khách' },
-    { id: 'advanced', name: 'Nâng cao & Thành ngữ', short: 'Nâng cao', icon: '🚀', level: 'HSK 5–6', count: '5 bài', desc: 'Email trang trọng, thuyết trình, vấn đề xã hội, công nghệ AI, thành ngữ cổ' },
-    { id: 'all', name: 'Tất cả chủ đề', short: 'Tất cả', icon: '🌐', level: 'HSK 1–6', count: '45 bài', desc: 'Toàn bộ 45 chủ đề theo lộ trình chuẩn từ HSK 1 đến HSK 6' }
+    { id: 'hsk1', name: 'HSK 1 · Sơ cấp 1', short: 'HSK 1', icon: '🌱', level: 'HSK 1', count: '7 bài', desc: 'Nền tảng phát âm Pinyin, chào hỏi, số đếm, gia đình, ngày giờ, đại từ' },
+    { id: 'hsk2', name: 'HSK 2 · Sơ cấp 2', short: 'HSK 2', icon: '🌿', level: 'HSK 2', count: '10 bài', desc: 'Động từ, ăn uống, mua sắm, hỏi đường, khách sạn, công việc, WeChat' },
+    { id: 'hsk3', name: 'HSK 3 · Sơ cấp 3', short: 'HSK 3', icon: '🍃', level: 'HSK 3', count: '10 bài', desc: 'Du lịch, so sánh, phim ảnh, thể thao, trường học, sinh hoạt, hỏi giá báo giá' },
+    { id: 'hsk4', name: 'HSK 4 · Trung cấp 1', short: 'HSK 4', icon: '💼', level: 'HSK 4', count: '8 bài', desc: 'Bốn mùa, đơn hàng, thanh toán, vận chuyển, thủ tục hải quan, kiểm hàng' },
+    { id: 'hsk5', name: 'HSK 5 · Trung cấp 2', short: 'HSK 5', icon: '👔', level: 'HSK 5', count: '6 bài', desc: 'Họp tiến độ, đàm phán hợp đồng, hội chợ quốc tế, văn hóa, email trang trọng' },
+    { id: 'hsk6', name: 'HSK 6 · Trung cấp 3', short: 'HSK 6', icon: '🚀', level: 'HSK 6', count: '4 bài', desc: 'Thuyết trình, vấn đề xã hội, công nghệ AI, thành ngữ 4 chữ thông dụng' },
+    { id: 'all', name: 'Tất cả cấp độ', short: 'Tất cả', icon: '🌐', level: 'HSK 1–6', count: '45 bài', desc: 'Toàn bộ 45 bài học theo chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 6' }
   ],
   ja: [
     { id: 'basic', name: 'Nền tảng & Đời sống', short: 'Nền tảng', icon: '🌱', level: 'N5', count: '7 bài', desc: 'Chào hỏi, ngày tháng, mua sắm, gia đình, đồ vật, sinh hoạt, nghỉ hè' },
@@ -449,7 +451,7 @@ const CATEGORIES = {
 };
 const EN_CATEGORIES = CATEGORIES.en;
 let subjectsOpen = false;
-const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'life', zhCat: 'basic', jaCat: 'basic', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
+const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'life', zhCat: 'hsk1', jaCat: 'basic', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
 const SYNC = { ref: null, timer: 0, seen: -1 };
@@ -848,9 +850,9 @@ const topicDone = (t) => t.lessons.every((l, i) => lessonDone(t, i));
 function nextLesson(d, cat) {
   const code = d && d.code;
   const langCats = CATEGORIES[code];
-  const defaultCat = code === 'ja' ? (S.jaCat || 'basic') : (code === 'zh' ? (S.zhCat || 'basic') : (code === 'en' ? (S.enCat || 'life') : 'all'));
+  const defaultCat = code === 'ja' ? (S.jaCat || 'basic') : (code === 'zh' ? (S.zhCat || 'hsk1') : (code === 'en' ? (S.enCat || 'life') : 'all'));
   const curCat = cat !== undefined ? cat : (langCats ? defaultCat : 'all');
-  const defCategory = (code === 'zh' || code === 'ja') ? 'basic' : 'business';
+  const defCategory = code === 'zh' ? 'hsk1' : (code === 'ja' ? 'basic' : 'business');
   const topics = (curCat && curCat !== 'all') ? d.topics.filter((t) => (t.category || defCategory) === curCat) : d.topics;
   for (const t of topics) for (let i = 0; i < t.lessons.length; i++) if (!lessonDone(t, i)) return { t, i };
   return null;
@@ -1002,7 +1004,7 @@ async function route() {
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
-const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
+const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–6)', ja: 'Tiếng Nhật · N5–N4' };
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -1117,18 +1119,20 @@ function homeView() {
     const hasBusiness = Object.keys(S.lessons).some((k) => k.startsWith('en:') && parseInt(k.split('-')[0].replace('en:', '')) <= 33);
     S.enCat = hasBusiness ? 'business' : 'life';
   }
-  if (S.lang === 'zh' && !S.zhCat) {
-    const hasBusiness = Object.keys(S.lessons).some((k) => k.startsWith('zh:') && [25,26,27,28,29,30,31,32,33,20,34,35,17].includes(parseInt(k.split('-')[0].replace('zh:', ''))));
-    S.zhCat = hasBusiness ? 'business' : 'basic';
+  if (S.lang === 'zh') {
+    if (!S.zhCat || S.zhCat === 'basic') S.zhCat = 'hsk1';
+    else if (S.zhCat === 'comm') S.zhCat = 'hsk2';
+    else if (S.zhCat === 'business') S.zhCat = 'hsk4';
+    else if (S.zhCat === 'advanced') S.zhCat = 'hsk5';
   }
   if (S.lang === 'ja' && !S.jaCat) {
     S.jaCat = 'basic';
   }
-  const curCat = langCats ? (S.lang === 'en' ? (S.enCat || 'life') : (S.lang === 'zh' ? (S.zhCat || 'basic') : (S.jaCat || 'basic'))) : 'all';
+  const curCat = langCats ? (S.lang === 'en' ? (S.enCat || 'life') : (S.lang === 'zh' ? (S.zhCat || 'hsk1') : (S.jaCat || 'basic'))) : 'all';
   const nx = nextLesson(d, curCat);
   const gf = h('i'); requestAnimationFrame(() => { gf.style.width = Math.min(100, Math.round((xp / goal()) * 100)) + '%'; });
 
-  const defCategory = (S.lang === 'zh' || S.lang === 'ja') ? 'basic' : 'business';
+  const defCategory = S.lang === 'zh' ? 'hsk1' : (S.lang === 'ja' ? 'basic' : 'business');
   const filteredTopics = (langCats && curCat !== 'all')
     ? d.topics.filter((t) => (t.category || defCategory) === curCat)
     : d.topics;
@@ -1236,7 +1240,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.11 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.12 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1717,7 +1721,7 @@ function topicPicker(code, store, onChange) {
   if (!store[code]) store[code] = (nx ? nx.t : d.topics[0]).id;
   const cats = CATEGORIES[code];
   if (cats) {
-    const defCat = (code === 'zh' || code === 'ja') ? 'basic' : 'business';
+    const defCat = code === 'zh' ? 'hsk1' : (code === 'ja' ? 'basic' : 'business');
     return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
       ...cats.filter((c) => c.id !== 'all').map((c) => {
         const ts = d.topics.filter((t) => (t.category || defCat) === c.id);
