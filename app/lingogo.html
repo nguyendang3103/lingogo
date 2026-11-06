@@ -138,6 +138,11 @@ select { width: 100%; }
 .extras { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip { display: inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 99px; background: var(--sunk); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .chip.good { background: var(--good-bg); color: var(--good); }
+.chip.level { font-size: .74rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; letter-spacing: .02em; flex: none; text-transform: uppercase; }
+.chip.level.a1 { background: #e6f7ec; color: #0d8a43; border: 1px solid #b7ebc6; }
+.chip.level.a2 { background: #e6f4ff; color: #096dd9; border: 1px solid #91caff; }
+.chip.level.b1 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
+.chip.level.b2 { background: #fff7e6; color: #d46b08; border: 1px solid #ffd591; }
 .kbd { flex: none; display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; font: 600 .8rem/1 var(--font); color: var(--muted); background: var(--bg); font-variant-numeric: tabular-nums; }
 .options button { gap: 12px; }
 .options button[aria-pressed="true"] .kbd { border-color: var(--teal); color: var(--teal); }
@@ -313,7 +318,7 @@ const LANGS = {
 
 // ===== Trạng thái học tập (lưu trên máy + đồng bộ tài khoản khi có) =====
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
-const EN_CATEGORIES = [{ id: 'all', label: 'Tất cả (44)' }, { id: 'business', label: '💼 Thương mại (32)' }, { id: 'life', label: '🏡 Cuộc sống (6)' }, { id: 'hobbies', label: '🎨 Sở thích (6)' }];
+const EN_CATEGORIES = [{ id: 'life', label: '🏡 Đời sống · A1–A2' }, { id: 'hobbies', label: '🎨 Sở thích · A2–B1' }, { id: 'business', label: '💼 Thương mại · B1–B2' }, { id: 'all', label: 'Tất cả (A1–B2)' }];
 const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'all', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
@@ -862,7 +867,7 @@ async function route() {
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
-const SUBTITLE = { en: 'Thương mại · Cuộc sống · Sở thích', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
+const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -874,37 +879,11 @@ function pickView() {
       const x = xpOf(t, c), f = h('i');
       requestAnimationFrame(() => { f.style.width = Math.min(100, Math.round((x / goal()) * 100)) + '%'; });
       const lessons = Object.keys(S.lessons).filter((k) => k.startsWith(c + ':')).length;
-      const topicPills = c === 'en' ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', marginTop: '6px' } },
-        h('button', {
-          class: 'cat-pill' + ((S.enCat || 'all') === 'business' ? ' active' : ''),
-          style: { padding: '4px 10px', fontSize: '.78rem' },
-          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'business'; save(); go('home'); }
-        }, '💼 Thương mại (32)'),
-        h('button', {
-          class: 'cat-pill' + (S.enCat === 'life' ? ' active' : ''),
-          style: { padding: '4px 10px', fontSize: '.78rem' },
-          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'life'; save(); go('home'); }
-        }, '🏡 Cuộc sống (6)'),
-        h('button', {
-          class: 'cat-pill' + (S.enCat === 'hobbies' ? ' active' : ''),
-          style: { padding: '4px 10px', fontSize: '.78rem' },
-          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'hobbies'; save(); go('home'); }
-        }, '🎨 Sở thích (6)')
-      ) : null;
-      return h('div', {
-        class: 'langcard' + (c === S.lang ? ' cur' : ''),
-        role: 'button',
-        tabIndex: 0,
-        style: { cursor: 'pointer' },
-        'aria-keyshortcuts': String(i + 1),
-        onclick: () => { S.lang = c; save(); go('home'); },
-        onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); S.lang = c; save(); go('home'); } }
-      },
-        h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: c === 'en' ? { gridRow: 'span 4' } : null }, GLYPH[c]),
+      return h('button', { class: 'langcard' + (c === S.lang ? ' cur' : ''), 'aria-keyshortcuts': String(i + 1), onclick: () => { S.lang = c; save(); go('home'); } },
+        h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true' }, GLYPH[c]),
         h('span', {}, h('span', { class: 'name', lang: v.lang }, v.label), h('span', { class: 'muted small' }, '  ' + SUBTITLE[c])),
         h('span', { class: 'small muted' }, (metGoal(t, c) ? 'Đã đạt mục tiêu hôm nay' : x + '/' + goal() + ' XP hôm nay') + ' · chuỗi ' + streak(c) + ' ngày · ' + lessons + ' bài đã học'),
-        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': goal() }, f),
-        topicPills);
+        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': goal() }, f));
     })),
     h('p', { class: 'small muted center' }, 'Mục tiêu mỗi thứ tiếng ' + goal() + ' XP/ngày · đổi ngôn ngữ bất cứ lúc nào bằng nút ở đầu trang')));
 }
@@ -998,7 +977,11 @@ function syncButton() {
 }
 function homeView() {
   const d = DATA[S.lang], st = streak(), xp = xpOf(todayN(), S.lang), due = dueIn(S.lang);
-  const curCat = S.lang === 'en' ? (S.enCat || 'all') : 'all';
+  if (S.lang === 'en' && !S.enCat) {
+    const hasBusiness = Object.keys(S.lessons).some((k) => k.startsWith('en:') && parseInt(k.split('-')[0].replace('en:', '')) <= 33);
+    S.enCat = hasBusiness ? 'business' : 'life';
+  }
+  const curCat = S.lang === 'en' ? (S.enCat || 'life') : 'all';
   const nx = nextLesson(d, curCat);
   const gf = h('i'); requestAnimationFrame(() => { gf.style.width = Math.min(100, Math.round((xp / goal()) * 100)) + '%'; });
 
@@ -1015,17 +998,28 @@ function homeView() {
     cur.topics.push(t);
   }
 
-  const catBar = S.lang === 'en' ? h('div', { class: 'cat-bar' },
-    ...EN_CATEGORIES.map((c) => h('button', {
-      class: 'cat-pill' + (curCat === c.id ? ' active' : ''),
-      onclick: () => {
-        S.enCat = c.id;
-        save();
-        const nextNx = nextLesson(d, c.id);
-        if (nextNx) openTopics.add(S.lang + ':' + nextNx.t.id);
-        homeView();
-      }
-    }, c.label))
+  const catDesc = {
+    life: 'Cơ bản (Level A1–A2) · Dành cho người mới bắt đầu',
+    hobbies: 'Trung cấp (Level A2–B1) · Mở rộng vốn từ & sở thích',
+    business: 'Thương mại (Level B1–B2+) · Đàm phán, email & công việc',
+    all: 'Toàn bộ 44 chủ đề theo lộ trình từ A1 đến B2+'
+  }[curCat] || '';
+
+  const catBar = S.lang === 'en' ? h('div', { class: 'stack', style: { gap: '6px', margin: '8px 0 4px 0' } },
+    h('div', { class: 'row between', style: { alignItems: 'baseline' } },
+      h('span', { class: 'label', style: { margin: 0, fontWeight: 700 } }, 'Chủ đề & Trình độ học'),
+      h('span', { class: 'small muted' }, catDesc)),
+    h('div', { class: 'cat-bar' },
+      ...EN_CATEGORIES.map((c) => h('button', {
+        class: 'cat-pill' + (curCat === c.id ? ' active' : ''),
+        onclick: () => {
+          S.enCat = c.id;
+          save();
+          const nextNx = nextLesson(d, c.id);
+          if (nextNx) openTopics.add(S.lang + ':' + nextNx.t.id);
+          homeView();
+        }
+      }, c.label)))
   ) : null;
 
   mount(h('div', { class: 'stack-lg' },
@@ -1050,7 +1044,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.8 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.9 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1067,10 +1061,12 @@ function topicCard(t, nx) {
       (t.kanji && t.kanji.length) && h('button', { class: 'mini', onclick: () => kanjiView(t) }, 'Kanji (' + t.kanji.length + ')'),
       h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Luyện nói'),
       (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết')));
+  const displayNum = t.catPos || t.pos;
   return h('section', { class: 'topic' + (isCur ? ' cur' : '') + (done === t.lessons.length ? ' done' : '') },
     h('button', { class: 'head', 'aria-expanded': String(open), onclick: () => { open ? openTopics.delete(ok) : openTopics.add(ok); homeView(); } },
-      h('span', { class: 'num' }, done === t.lessons.length ? '✓' : t.pos),
+      h('span', { class: 'num' }, done === t.lessons.length ? '✓' : displayNum),
       h('span', { class: 'meta' }, h('b', { lang: L().lang }, t.title), t.sub && t.sub !== t.title && h('span', { class: 'small muted' }, t.sub)),
+      t.level && h('span', { class: 'chip level ' + t.level.toLowerCase().replace('+', '') }, t.level),
       h('span', { class: 'chip' + (done === t.lessons.length ? ' good' : '') }, done + '/' + t.lessons.length)),
     body);
 }
@@ -1529,16 +1525,16 @@ function topicPicker(code, store, onChange) {
   const hasCat = d.topics.some((t) => t.category);
   if (hasCat) {
     const cats = [
-      { id: 'business', name: '💼 Thương mại & Công việc' },
-      { id: 'life', name: '🏡 Đời sống hàng ngày' },
-      { id: 'hobbies', name: '🎨 Sở thích & Giải trí' },
+      { id: 'life', name: '🏡 Đời sống hàng ngày (Level A1–A2)' },
+      { id: 'hobbies', name: '🎨 Sở thích & Giải trí (Level A2–B1)' },
+      { id: 'business', name: '💼 Thương mại & Công việc (Level B1–B2+)' },
     ];
     return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
       ...cats.map((c) => {
         const ts = d.topics.filter((t) => (t.category || 'business') === c.id);
         if (!ts.length) return null;
         return h('optgroup', { label: c.name },
-          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, t.pos + '. ' + (t.sub || t.title))));
+          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, (t.level ? '[' + t.level + '] ' : '') + (t.catPos || t.pos) + '. ' + (t.sub || t.title))));
       }).filter(Boolean));
   }
   return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
@@ -2425,7 +2421,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261106-1050';
+const APP_BUILD_ID = '20261106-1100';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
