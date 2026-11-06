@@ -145,6 +145,13 @@ select { width: 100%; }
 .keyhint { text-align: center; font-size: .75rem; color: var(--muted); }
 @media (hover: none) { .keyhint { display: none; } }
 
+/* Phân loại chủ đề */
+.cat-bar { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 8px; margin-top: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.cat-bar::-webkit-scrollbar { display: none; }
+.cat-pill { flex: none; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); font-size: .88rem; font-weight: 500; cursor: pointer; transition: all .15s ease; white-space: nowrap; line-height: 1.2; }
+.cat-pill:hover { border-color: var(--teal); color: var(--ink); }
+.cat-pill.active { background: var(--teal); color: #fff; border-color: var(--teal); font-weight: 600; box-shadow: 0 2px 6px rgba(0, 128, 128, 0.25); }
+
 /* Bài học */
 .topbar { display: flex; align-items: center; gap: 12px; }
 .topbar .bar { flex: 1; }
@@ -306,7 +313,8 @@ const LANGS = {
 
 // ===== Trạng thái học tập (lưu trên máy + đồng bộ tài khoản khi có) =====
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
-const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
+const EN_CATEGORIES = [{ id: 'all', label: 'Tất cả' }, { id: 'business', label: '💼 Thương mại' }, { id: 'life', label: '🏡 Cuộc sống' }, { id: 'hobbies', label: '🎨 Sở thích' }];
+const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'all', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
 const SYNC = { ref: null, timer: 0, seen: -1 };
@@ -701,8 +709,10 @@ function remapLessons(d) {
 const lkey = (t, i) => t.lang + ':' + t.id + '-' + i;
 const lessonDone = (t, i) => S.lessons[lkey(t, i)] != null;
 const topicDone = (t) => t.lessons.every((l, i) => lessonDone(t, i));
-function nextLesson(d) {
-  for (const t of d.topics) for (let i = 0; i < t.lessons.length; i++) if (!lessonDone(t, i)) return { t, i };
+function nextLesson(d, cat) {
+  const curCat = cat !== undefined ? cat : (d && d.code === 'en' ? (S.enCat || 'all') : 'all');
+  const topics = (curCat && curCat !== 'all') ? d.topics.filter((t) => (t.category || 'business') === curCat) : d.topics;
+  for (const t of topics) for (let i = 0; i < t.lessons.length; i++) if (!lessonDone(t, i)) return { t, i };
   return null;
 }
 function lessonTitle(t, i) {
@@ -962,11 +972,36 @@ function syncButton() {
 }
 function homeView() {
   const d = DATA[S.lang], st = streak(), xp = xpOf(todayN(), S.lang), due = dueIn(S.lang);
-  const nx = nextLesson(d);
+  const curCat = S.lang === 'en' ? (S.enCat || 'all') : 'all';
+  const nx = nextLesson(d, curCat);
   const gf = h('i'); requestAnimationFrame(() => { gf.style.width = Math.min(100, Math.round((xp / goal()) * 100)) + '%'; });
-  if (nx && ![...openTopics].some((k) => k.startsWith(S.lang + ':'))) openTopics.add(S.lang + ':' + nx.t.id);
+
+  const filteredTopics = (S.lang === 'en' && curCat !== 'all')
+    ? d.topics.filter((t) => (t.category || 'business') === curCat)
+    : d.topics;
+
+  const filteredHasOpen = [...openTopics].some((k) => filteredTopics.some((t) => k === S.lang + ':' + t.id));
+  if (!filteredHasOpen && nx) openTopics.add(S.lang + ':' + nx.t.id);
+
   const phases = []; let cur = null;
-  for (const t of d.topics) { if (!cur || cur.name !== t.phase) { cur = { name: t.phase, topics: [] }; phases.push(cur); } cur.topics.push(t); }
+  for (const t of filteredTopics) {
+    if (!cur || cur.name !== t.phase) { cur = { name: t.phase, topics: [] }; phases.push(cur); }
+    cur.topics.push(t);
+  }
+
+  const catBar = S.lang === 'en' ? h('div', { class: 'cat-bar' },
+    ...EN_CATEGORIES.map((c) => h('button', {
+      class: 'cat-pill' + (curCat === c.id ? ' active' : ''),
+      onclick: () => {
+        S.enCat = c.id;
+        save();
+        const nextNx = nextLesson(d, c.id);
+        if (nextNx) openTopics.add(S.lang + ':' + nextNx.t.id);
+        homeView();
+      }
+    }, c.label))
+  ) : null;
+
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'row between' }, h('h1', {}, 'Chào ' + S.name + '!'), langSwitch()),
     h('div', { class: 'stats' },
@@ -981,14 +1016,15 @@ function homeView() {
       due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' thẻ ngay'),
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
-        : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
+        : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
     h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
       feedbackBtn(),
       syncButton()),
+    catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.7 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.8 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1464,6 +1500,21 @@ const SPEAK_TOPIC = {}, WRITE_TOPIC = {};
 function topicPicker(code, store, onChange) {
   const d = DATA[code]; const nx = nextLesson(d);
   if (!store[code]) store[code] = (nx ? nx.t : d.topics[0]).id;
+  const hasCat = d.topics.some((t) => t.category);
+  if (hasCat) {
+    const cats = [
+      { id: 'business', name: '💼 Thương mại & Công việc' },
+      { id: 'life', name: '🏡 Đời sống hàng ngày' },
+      { id: 'hobbies', name: '🎨 Sở thích & Giải trí' },
+    ];
+    return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
+      ...cats.map((c) => {
+        const ts = d.topics.filter((t) => (t.category || 'business') === c.id);
+        if (!ts.length) return null;
+        return h('optgroup', { label: c.name },
+          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, t.pos + '. ' + (t.sub || t.title))));
+      }).filter(Boolean));
+  }
   return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
     d.topics.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, t.pos + '. ' + (t.sub || t.title))));
 }
@@ -2348,7 +2399,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261106-1025';
+const APP_BUILD_ID = '20261106-1045';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
