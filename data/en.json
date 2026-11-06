@@ -30402,6 +30402,1906 @@
       "category": "b2",
       "catPos": 34,
       "level": "B2"
+    },
+    {
+      "id": "151",
+      "pos": 78,
+      "catPos": 1,
+      "category": "c1",
+      "level": "C1",
+      "phase": "C1 · Cao cấp & Học thuật",
+      "title": "Academic Research and Literature Review",
+      "sub": "Nghiên cứu học thuật, phương pháp luận và tổng quan tài liệu",
+      "vocab": [
+        {
+          "w": "hypothesis",
+          "m": "giả thuyết nghiên cứu",
+          "d": "a proposed explanation made on the basis of limited evidence as a starting point for further investigation",
+          "ex": "The researchers formulated a testable hypothesis regarding cognitive development.",
+          "exm": "Các nhà nghiên cứu đã đưa ra một giả thuyết có thể kiểm chứng về sự phát triển nhận thức.",
+          "id": "w151-0",
+          "r": "/haɪˈpɒθ.ə.sɪs/",
+          "exr": ""
+        },
+        {
+          "w": "methodology",
+          "m": "phương pháp luận",
+          "d": "a system of methods used in a particular area of study or activity",
+          "ex": "A rigorous methodology is essential to ensure the validity of scientific findings.",
+          "exm": "Phương pháp luận chặt chẽ là điều cốt yếu để đảm bảo tính xác thực của các phát hiện khoa học.",
+          "id": "w151-1",
+          "r": "/ˌmeθ.əˈdɒl.ə.dʒi/",
+          "exr": ""
+        },
+        {
+          "w": "empirical",
+          "m": "thực nghiệm, dựa trên bằng chứng",
+          "d": "based on, concerned with, or verifiable by observation or experience rather than theory",
+          "ex": "The study provides solid empirical evidence supporting the new educational model.",
+          "exm": "Nghiên cứu cung cấp bằng chứng thực nghiệm vững chắc ủng hộ mô hình giáo dục mới.",
+          "id": "w151-2",
+          "r": "/ɪmˈpɪr.ɪ.kəl/",
+          "exr": ""
+        },
+        {
+          "w": "quantitative",
+          "m": "định lượng",
+          "d": "relating to, measuring, or measured by the quantity of something rather than its quality",
+          "ex": "Quantitative analysis revealed a statistically significant increase in performance.",
+          "exm": "Phân tích định lượng cho thấy sự gia tăng hiệu suất có ý nghĩa thống kê.",
+          "id": "w151-3",
+          "r": "/ˈkwɒn.tɪ.tə.tɪv/",
+          "exr": ""
+        },
+        {
+          "w": "qualitative",
+          "m": "định tính",
+          "d": "relating to, measuring, or measured by the quality of something rather than its quantity",
+          "ex": "In-depth qualitative interviews offered deep insights into participant motivations.",
+          "exm": "Các cuộc phỏng vấn định tính chuyên sâu mang lại góc nhìn sâu sắc về động lực của người tham gia.",
+          "id": "w151-4",
+          "r": "/ˈkwɒl.ɪ.tə.tɪv/",
+          "exr": ""
+        },
+        {
+          "w": "peer-reviewed",
+          "m": "được phản biện chuyên môn",
+          "d": "evaluated by fellow scientists or academics in the same field prior to publication",
+          "ex": "Publishing in high-impact peer-reviewed journals is a benchmark of scholarly excellence.",
+          "exm": "Xuất bản trên các tạp chí có bình duyệt uy tín là thước đo của sự xuất sắc trong học thuật.",
+          "id": "w151-5",
+          "r": "/ˌpɪə.rɪˈvjuːd/",
+          "exr": ""
+        },
+        {
+          "w": "correlation",
+          "m": "mối tương quan",
+          "d": "a mutual relationship or connection between two or more things",
+          "ex": "Correlation does not necessarily imply direct causation between the two variables.",
+          "exm": "Tương quan không nhất thiết đồng nghĩa với mối quan hệ nhân quả trực tiếp giữa hai biến số.",
+          "id": "w151-6",
+          "r": "/ˌkɒr.əˈleɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "synthesize",
+          "m": "tổng hợp, đúc kết",
+          "d": "combine a number of things into a coherent whole",
+          "ex": "Scholars must synthesize existing literature before proposing novel frameworks.",
+          "exm": "Học giả phải tổng hợp các tài liệu hiện có trước khi đề xuất các khung lý thuyết mới.",
+          "id": "w151-7",
+          "r": "/ˈsɪn.θə.saɪz/",
+          "exr": ""
+        },
+        {
+          "w": "paradigm",
+          "m": "hệ hình, mô thức tư duy",
+          "d": "a typical example, pattern, or model of something in science or philosophy",
+          "ex": "The discovery prompted a major paradigm shift in modern neuroscience.",
+          "exm": "Khám phá này đã thúc đẩy một sự chuyển dịch hệ hình lớn trong khoa học thần kinh hiện đại.",
+          "id": "w151-8",
+          "r": "/ˈpær.ə.daɪm/",
+          "exr": ""
+        },
+        {
+          "w": "extrapolate",
+          "m": "ngoại suy, suy diễn",
+          "d": "extend the application of a method or conclusion to an unknown situation by assuming that existing trends will continue",
+          "ex": "We cannot reliably extrapolate these laboratory findings to large human populations.",
+          "exm": "Chúng ta không thể suy diễn một cách đáng tin cậy các phát hiện trong phòng thí nghiệm này ra quy mô dân số lớn.",
+          "id": "w151-9",
+          "r": "/ɪkˈstræp.ə.leɪt/",
+          "exr": ""
+        },
+        {
+          "w": "rigorous",
+          "m": "chặt chẽ, nghiêm ngặt",
+          "d": "extremely thorough, exhaustive, or accurate",
+          "ex": "The peer review committee praised the rigorous experimental controls of the trial.",
+          "exm": "Hội đồng bình duyệt khen ngợi sự kiểm soát thực nghiệm nghiêm ngặt của thử nghiệm.",
+          "id": "w151-10",
+          "r": "/ˈrɪɡ.ər.əs/",
+          "exr": ""
+        },
+        {
+          "w": "citation",
+          "m": "trích dẫn khoa học",
+          "d": "a quotation from or reference to a book, paper, or author in an academic work",
+          "ex": "Proper citation of sources prevents academic dishonesty and intellectual plagiarism.",
+          "exm": "Trích dẫn nguồn đúng quy chuẩn giúp ngăn ngừa hành vi gian lận học thuật và đạo văn.",
+          "id": "w151-11",
+          "r": "/saɪˈteɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "benchmark",
+          "m": "chuẩn đối sánh, tiêu chuẩn đo lường",
+          "d": "a standard or point of reference against which things may be compared or assessed",
+          "ex": "This groundbreaking study set a new benchmark for randomized controlled trials.",
+          "exm": "Nghiên cứu mang tính đột phá này đã thiết lập một chuẩn đối sánh mới cho các thử nghiệm ngẫu nhiên có đối chứng.",
+          "id": "w151-12",
+          "r": "/ˈbentʃ.mɑːk/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What does the common scientific maxim 'correlation does not imply causation' mean?",
+          "o": [
+            "Just because two variables move together does not mean one causes the other.",
+            "Correlations are always accidental errors in data collection.",
+            "Causation can never be proven in academic studies."
+          ],
+          "a": 0,
+          "why": "Tương quan chỉ biểu thị hai yếu tố cùng biến thiên, không chứng minh yếu tố này sinh ra yếu tố kia.",
+          "id": "q151-0"
+        },
+        {
+          "q": "What is the primary function of peer review in academic publishing?",
+          "o": [
+            "To ensure scientific rigor, validity, and methodological soundness before publication.",
+            "To censor opinions that disagree with the journal editor.",
+            "To proofread grammar and typography exclusively."
+          ],
+          "a": 0,
+          "why": "Phản biện chuyên môn ('peer review') giúp thẩm định độ tin cậy và chất lượng học thuật của công trình.",
+          "id": "q151-1"
+        },
+        {
+          "q": "Which research methodology relies heavily on statistical modeling and numerical datasets?",
+          "o": [
+            "Quantitative research",
+            "Qualitative research",
+            "Philosophical introspection"
+          ],
+          "a": 0,
+          "why": "'Quantitative' là nghiên cứu định lượng, đo lường bằng số liệu và mô hình thống kê.",
+          "id": "q151-2"
+        },
+        {
+          "q": "What is a 'paradigm shift' in science?",
+          "o": [
+            "A fundamental change in the basic concepts and experimental practices of a scientific discipline.",
+            "A routine update to software parameters.",
+            "A minor disagreement among co-authors."
+          ],
+          "a": 0,
+          "why": "'Paradigm shift' là bước chuyển dịch hệ hình tư duy căn bản trong một lĩnh vực khoa học.",
+          "id": "q151-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Defending a dissertation methodology",
+          "id": "s151-0",
+          "lines": [
+            {
+              "t": "Could you justify your decision to adopt a mixed-methods research design?",
+              "r": "",
+              "m": "Bạn có thể giải trình lý do lựa chọn thiết kế nghiên cứu phương pháp kết hợp không?"
+            },
+            {
+              "t": "The quantitative data provided broad statistical benchmarks, while qualitative interviews captured nuanced human contexts.",
+              "r": "",
+              "m": "Dữ liệu định lượng cung cấp các chuẩn đối sánh thống kê rộng, trong khi phỏng vấn định tính nắm bắt được ngữ cảnh con người đầy tinh tế."
+            },
+            {
+              "t": "That constitutes a very persuasive triangulation of empirical evidence.",
+              "r": "",
+              "m": "Đó quả là một sự đối chiếu tam giác chứng cứ thực nghiệm rất thuyết phục."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How do you evaluate the credibility of an academic research paper?",
+          "vi": "Làm thế nào bạn đánh giá độ tin cậy của một bài báo nghiên cứu học thuật?",
+          "st": "To evaluate research credibility, I examine...",
+          "ph": [
+            "peer-reviewed status",
+            "rigorous methodology",
+            "sample size and potential bias"
+          ],
+          "sa": "To evaluate research credibility, I examine whether the paper is published in a reputable peer-reviewed journal and scrutinize its methodology for sampling bias.",
+          "ss": [
+            "Looking at citations and reproducibility is vital.",
+            "A transparent methodology inspires confidence."
+          ],
+          "sc": "Evaluating scholarly literature.",
+          "id": "c151-0"
+        }
+      ],
+      "fill": {
+        "text": "Conducting scientific inquiry requires a [[rigorous|casual|careless]] research design.\n\nScholars must formulate a testable [[hypothesis|rumor|opinion]] and collect [[empirical|fictional|imaginary]] data to substantiate their conclusions.",
+        "trans": "Tiến hành nghiên cứu khoa học đòi hỏi một thiết kế nghiên cứu chặt chẽ.\nCác học giả phải xây dựng một giả thuyết có thể kiểm chứng và thu thập dữ liệu thực nghiệm để chứng minh các kết luận của mình.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "152",
+      "pos": 79,
+      "catPos": 2,
+      "category": "c1",
+      "level": "C1",
+      "phase": "C1 · Cao cấp & Học thuật",
+      "title": "Global Macroeconomics and Monetary Policy",
+      "sub": "Kinh tế vĩ mô toàn cầu, chính sách tiền tệ và lạm phát",
+      "vocab": [
+        {
+          "w": "monetary policy",
+          "m": "chính sách tiền tệ",
+          "d": "the macroeconomic policy laid down by the central bank involving management of money supply and interest rate",
+          "ex": "The central bank tightened monetary policy to curb runaway consumer inflation.",
+          "exm": "Ngân hàng trung ương đã thắt chặt chính sách tiền tệ để kiềm chế lạm phát tiêu dùng phi mã.",
+          "id": "w152-0",
+          "r": "/ˈmʌn.ɪ.tri ˈpɒl.ə.si/",
+          "exr": ""
+        },
+        {
+          "w": "inflation",
+          "m": "lạm phát",
+          "d": "a general increase in prices and fall in the purchasing value of money",
+          "ex": "Persistent core inflation eroded household purchasing power across the continent.",
+          "exm": "Lạm phát cốt lõi kéo dài làm xói mòn sức mua của các hộ gia đình trên toàn châu lục.",
+          "id": "w152-1",
+          "r": "/ɪnˈfleɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "liquidity",
+          "m": "tính thanh khoản",
+          "d": "the availability of liquid assets to a market or company",
+          "ex": "Interbank liquidity dried up swiftly during the initial phase of the credit squeeze.",
+          "exm": "Thanh khoản liên ngân hàng cạn kiệt nhanh chóng trong giai đoạn đầu của cuộc thắt chặt tín dụng.",
+          "id": "w152-2",
+          "r": "/lɪˈkwɪd.ə.ti/",
+          "exr": ""
+        },
+        {
+          "w": "quantitative easing",
+          "m": "nới lỏng định lượng (QE)",
+          "d": "the introduction of new money into the money supply by a central bank through bond purchases",
+          "ex": "The Federal Reserve engaged in quantitative easing to inject liquidity into financial markets.",
+          "exm": "Cục Dự trữ Liên bang đã áp dụng nới lỏng định lượng để bơm thanh khoản vào các thị trường tài chính.",
+          "id": "w152-3",
+          "r": "/ˈkwɒn.tɪ.tə.tɪv ˈiː.zɪŋ/",
+          "exr": ""
+        },
+        {
+          "w": "fiscal deficit",
+          "m": "thâm hụt ngân sách",
+          "d": "the difference between total government expenditure and total revenue",
+          "ex": "Widening fiscal deficits pushed sovereign bond yields to unprecedented highs.",
+          "exm": "Thâm hụt ngân sách nới rộng đã đẩy lợi suất trái phiếu chính phủ lên mức cao chưa từng có.",
+          "id": "w152-4",
+          "r": "/ˈfɪs.kəl ˈdef.ɪ.sɪt/",
+          "exr": ""
+        },
+        {
+          "w": "recession",
+          "m": "suy thoái kinh tế",
+          "d": "a period of temporary economic decline during which trade and industrial activity are reduced",
+          "ex": "Two consecutive quarters of negative GDP contraction signaled a technical recession.",
+          "exm": "Hai quý liên tiếp suy giảm GDP báo hiệu một cuộc suy thoái kỹ thuật.",
+          "id": "w152-5",
+          "r": "/rɪˈseʃ.ən/",
+          "exr": ""
+        },
+        {
+          "w": "yield curve",
+          "m": "đường cong lợi suất",
+          "d": "a line that plots yields of bonds having equal credit quality but differing maturity dates",
+          "ex": "An inverted yield curve has historically been a reliable harbinger of impending recession.",
+          "exm": "Đường cong lợi suất đảo ngược trong lịch sử luôn là điềm báo đáng tin cậy về suy thoái cận kề.",
+          "id": "w152-6",
+          "r": "/jiːld kɜːv/",
+          "exr": ""
+        },
+        {
+          "w": "stagflation",
+          "m": "lạm phát đình trệ (đình lạm)",
+          "d": "persistent high inflation combined with high unemployment and stagnant demand in a country's economy",
+          "ex": "Policymakers fear stagflation because raising rates to fight inflation may worsen unemployment.",
+          "exm": "Các nhà hoạch định chính sách lo sợ đình lạm vì tăng lãi suất để chống lạm phát có thể làm trầm trọng thêm nạn thất nghiệp.",
+          "id": "w152-7",
+          "r": "/stæɡˈfleɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "capital expenditure",
+          "m": "chi phí vốn đầu tư (CapEx)",
+          "d": "funds used by a company to acquire, upgrade, and maintain physical assets",
+          "ex": "Corporations curtailed capital expenditure amid rising borrowing costs and geopolitical uncertainty.",
+          "exm": "Các tập đoàn đã cắt giảm chi phí vốn đầu tư giữa lúc chi phí đi vay tăng cao và bất định địa chính trị.",
+          "id": "w152-8",
+          "r": "/ˈkæp.ɪ.təl ɪkˈspen.dɪ.tʃər/",
+          "exr": ""
+        },
+        {
+          "w": "sovereign debt",
+          "m": "nợ công, nợ quốc gia",
+          "d": "the amount of money that a country's government has borrowed",
+          "ex": "Managing sovereign debt sustainably requires prudent fiscal restructuring.",
+          "exm": "Quản lý nợ công một cách bền vững đòi hỏi phải tái cơ cấu tài khóa một cách thận trọng.",
+          "id": "w152-9",
+          "r": "/ˈsɒv.rɪn det/",
+          "exr": ""
+        },
+        {
+          "w": "foreign exchange reserve",
+          "m": "dự trữ ngoại hối",
+          "d": "foreign currency deposits held by national central banks",
+          "ex": "Robust foreign exchange reserves provide a crucial buffer against currency volatility.",
+          "exm": "Dự trữ ngoại hối dồi dào tạo ra vùng đệm quan trọng chống lại sự biến động tiền tệ.",
+          "id": "w152-10",
+          "r": "/ˌfɒr.ən ɪksˈtʃeɪndʒ rɪˈzɜːv/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What economic dilemma defines 'stagflation'?",
+          "o": [
+            "Stagnant economic growth accompanied by persistently elevated inflation and unemployment.",
+            "Rapid economic growth paired with deflation.",
+            "Zero interest rates with a balanced fiscal budget."
+          ],
+          "a": 0,
+          "why": "'Stagflation' (đình lạm) là sự kết hợp nguy hiểm giữa tăng trưởng đình trệ và lạm phát cao.",
+          "id": "q152-0"
+        },
+        {
+          "q": "Why is an 'inverted yield curve' closely monitored by macroeconomic analysts?",
+          "o": [
+            "It often acts as an empirical precursor to an upcoming economic recession.",
+            "It guarantees immediate stock market rallies.",
+            "It indicates that short-term interest rates have ceased to exist."
+          ],
+          "a": 0,
+          "why": "Đường cong lợi suất đảo ngược là chỉ báo hàng đầu báo hiệu rủi ro suy thoái kinh tế.",
+          "id": "q152-1"
+        },
+        {
+          "q": "What is the primary objective of Quantitative Easing (QE)?",
+          "o": [
+            "Injecting liquidity into the financial system and lowering long-term borrowing costs.",
+            "Printing physical currency to stimulate retail shopping.",
+            "Imposing higher corporate taxes on multinational conglomerates."
+          ],
+          "a": 0,
+          "why": "Nới lỏng định lượng (QE) nhằm bơm thanh khoản và hạ thấp chi phí đi vay dài hạn.",
+          "id": "q152-2"
+        },
+        {
+          "q": "How does a central bank typically react when inflation exceeds its target rate?",
+          "o": [
+            "By raising policy interest rates to cool aggregate demand.",
+            "By drastically lowering commercial reserve requirements.",
+            "By expanding budget expenditures."
+          ],
+          "a": 0,
+          "why": "Ngân hàng trung ương thường tăng lãi suất để thắt chặt dòng tiền và hạ nhiệt tổng cầu.",
+          "id": "q152-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Debating interest rate trajectory",
+          "id": "s152-0",
+          "lines": [
+            {
+              "t": "Do you anticipate another 25-basis-point rate hike from the central bank next month?",
+              "r": "",
+              "m": "Bạn có dự đoán ngân hàng trung ương sẽ tăng thêm 25 điểm cơ bản lãi suất vào tháng tới không?"
+            },
+            {
+              "t": "Given that core inflation remains stubbornly above target, further tightening seems almost inevitable.",
+              "r": "",
+              "m": "Xét thấy lạm phát cốt lõi vẫn dai dẳng ở mức cao hơn mục tiêu, việc tiếp tục thắt chặt gần như là tất yếu."
+            },
+            {
+              "t": "However, they must balance that against the growing risk of inducing a severe credit crunch.",
+              "r": "",
+              "m": "Tuy nhiên, họ phải cân đối điều đó với nguy cơ ngày càng lớn về một cuộc khủng hoảng tín dụng nghiêm trọng."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How does rising inflation impact global supply chains and consumer purchasing power?",
+          "vi": "Lạm phát tăng cao ảnh hưởng như thế nào đến chuỗi cung ứng toàn cầu và sức mua của người tiêu dùng?",
+          "st": "Elevated inflation strains the economy by...",
+          "ph": [
+            "eroding purchasing power",
+            "escalating production overheads",
+            "prompting aggressive rate hikes"
+          ],
+          "sa": "Elevated inflation strains economies by eroding real household purchasing power and compelling central banks to raise rates, which increases borrowing costs for corporations.",
+          "ss": [
+            "Consumers cut discretionary spending.",
+            "Companies delay capital expenditure."
+          ],
+          "sc": "Analyzing macroeconomic dynamics.",
+          "id": "c152-0"
+        }
+      ],
+      "fill": {
+        "text": "To combat soaring [[inflation|deflation|wealth]], central banks adjusted their [[monetary policy|vacation schedule|dress code]] by raising interest rates.\n\nThis decision helps absorb excess [[liquidity|water|paper]] but risks slowing down economic growth.",
+        "trans": "Để đối phó với lạm phát leo thang, các ngân hàng trung ương đã điều chỉnh chính sách tiền tệ bằng cách nâng lãi suất.\nQuyết định này giúp hấp thụ thanh khoản dư thừa nhưng có nguy cơ làm chậm đà tăng trưởng kinh tế.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "153",
+      "pos": 80,
+      "catPos": 3,
+      "category": "c1",
+      "level": "C1",
+      "phase": "C1 · Cao cấp & Học thuật",
+      "title": "Strategic Management and Corporate Governance",
+      "sub": "Quản trị chiến lược, điều hành doanh nghiệp và M&A",
+      "vocab": [
+        {
+          "w": "corporate governance",
+          "m": "quản trị doanh nghiệp",
+          "d": "the system of rules, practices, and processes by which a firm is directed and controlled",
+          "ex": "Strong corporate governance aligns the interests of shareholders with executive accountability.",
+          "exm": "Quản trị doanh nghiệp vững mạnh đồng bộ hóa lợi ích của cổ đông với trách nhiệm giải trình của ban điều hành.",
+          "id": "w153-0",
+          "r": "/ˈkɔː.pər.ət ˈɡʌv.ən.əns/",
+          "exr": ""
+        },
+        {
+          "w": "fiduciary duty",
+          "m": "nghĩa vụ ủy thác, trách nhiệm ủy thác",
+          "d": "a legal obligation of one party to act in the best interest of another",
+          "ex": "Board members have a fiduciary duty to safeguard the assets of equity investors.",
+          "exm": "Các thành viên hội đồng quản trị có nghĩa vụ ủy thác bảo vệ tài sản của các nhà đầu tư cổ phần.",
+          "id": "w153-1",
+          "r": "/fɪˈdʒuː.ʃi.ər.i ˈdjuː.ti/",
+          "exr": ""
+        },
+        {
+          "w": "due diligence",
+          "m": "thẩm định toàn diện (Due Diligence)",
+          "d": "comprehensive appraisal of a business undertaken by a prospective buyer",
+          "ex": "Conducting rigorous legal and financial due diligence mitigated acquisition risks.",
+          "exm": "Tiến hành thẩm định pháp lý và tài chính toàn diện đã giảm thiểu rủi ro mua lại doanh nghiệp.",
+          "id": "w153-2",
+          "r": "/ˌdjuː ˈdɪl.ɪ.dʒəns/",
+          "exr": ""
+        },
+        {
+          "w": "mergers and acquisitions",
+          "m": "sáp nhập và mua lại (M&A)",
+          "d": "the consolidation of companies or assets through various financial transactions",
+          "ex": "The cross-border merger and acquisition generated substantial operational synergies.",
+          "exm": "Thương vụ sáp nhập và mua lại xuyên biên giới đã tạo ra sức mạnh cộng hưởng vận hành đáng kể.",
+          "id": "w153-3",
+          "r": "/ˈmɜː.dʒəz ænd ˌæk.wɪˈzɪʃ.ənz/",
+          "exr": ""
+        },
+        {
+          "w": "synergy",
+          "m": "sức mạnh cộng hưởng (Synergy)",
+          "d": "the interaction or cooperation of two or more organizations to produce a combined effect greater than the sum of their separate effects",
+          "ex": "Post-merger integration focused on realizing cost synergies in logistics.",
+          "exm": "Tích hợp hậu sáp nhập tập trung vào việc hiện thực hóa sức mạnh cộng hưởng về chi phí trong logistics.",
+          "id": "w153-4",
+          "r": "/ˈsɪn.ə.dʒi/",
+          "exr": ""
+        },
+        {
+          "w": "stakeholder",
+          "m": "bên liên quan (Stakeholder)",
+          "d": "a person with an interest or concern in something, especially a business",
+          "ex": "Modern corporations must satisfy broader stakeholders, including local communities.",
+          "exm": "Doanh nghiệp hiện đại phải đáp ứng các bên liên quan rộng hơn, bao gồm cả cộng đồng địa phương.",
+          "id": "w153-5",
+          "r": "/ˈsteɪkˌhəʊl.dər/",
+          "exr": ""
+        },
+        {
+          "w": "turnaround",
+          "m": "xoay chuyển tình thế, tái thiết thành công",
+          "d": "an abrupt or unexpected change, especially an improvement in a company's financial health",
+          "ex": "The new chief executive orchestrated an extraordinary turnaround of the distressed retailer.",
+          "exm": "Vị giám đốc điều hành mới đã dàn xếp một cuộc xoay chuyển tình thế ngoạn mục cho nhà bán lẻ đang gặp khó khăn.",
+          "id": "w153-6",
+          "r": "/ˈtɜːn.ə.raʊnd/",
+          "exr": ""
+        },
+        {
+          "w": "divestiture",
+          "m": "thoái vốn, bán bớt mảng kinh doanh",
+          "d": "the partial or full disposal of a business unit through sale, exchange, or bankruptcy",
+          "ex": "The conglomerate announced the divestiture of its non-core oil exploration subsidiary.",
+          "exm": "Tập đoàn công bố việc thoái vốn khỏi công ty con thăm dò dầu khí không thuộc mảng cốt lõi.",
+          "id": "w153-7",
+          "r": "/daɪˈves.tɪ.tʃər/",
+          "exr": ""
+        },
+        {
+          "w": "competitive advantage",
+          "m": "lợi thế cạnh tranh",
+          "d": "a condition or circumstance that puts a company in a favorable or superior business position",
+          "ex": "Proprietary machine learning algorithms gave the tech startup a sustainable competitive advantage.",
+          "exm": "Các thuật toán máy học độc quyền đã mang lại cho công ty khởi nghiệp công nghệ một lợi thế cạnh tranh bền vững.",
+          "id": "w153-8",
+          "r": "/kəmˈpet.ɪ.tɪv ədˈvɑːn.tɪdʒ/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What does a 'fiduciary duty' legally require board directors to do?",
+          "o": [
+            "Act scrupulously in the best interests of the company and its shareholders.",
+            "Maximize executive bonuses regardless of performance.",
+            "Disregard environmental and community concerns entirely."
+          ],
+          "a": 0,
+          "why": "Nghĩa vụ ủy thác yêu cầu thành viên HĐQT hành động vì lợi ích cao nhất của công ty và cổ đông.",
+          "id": "q153-0"
+        },
+        {
+          "q": "What is the primary purpose of conducting 'due diligence' before an M&A deal?",
+          "o": [
+            "To investigate and verify financial records, legal liabilities, and operational health.",
+            "To negotiate advertising banners on social media.",
+            "To celebrate the transaction prematurely with shareholders."
+          ],
+          "a": 0,
+          "why": "Thẩm định toàn diện ('due diligence') nhằm xác minh tài chính, pháp lý và rủi ro tiềm ẩn trước khi mua bán.",
+          "id": "q153-1"
+        },
+        {
+          "q": "In strategic management, what represents a 'synergy'?",
+          "o": [
+            "The combined entity achieving greater value or efficiency than the two firms independently.",
+            "An immediate reduction in product quality.",
+            "A lawsuit between founding partners."
+          ],
+          "a": 0,
+          "why": "'Synergy' là giá trị cộng hưởng khi $1 + 1 > 2$ sau sáp nhập.",
+          "id": "q153-2"
+        },
+        {
+          "q": "What does 'divestiture' mean in corporate restructuring?",
+          "o": [
+            "Selling off or shedding a business unit or subsidiary to streamline operations.",
+            "Acquiring competitor shares hostilely.",
+            "Hiring additional entry-level staff."
+          ],
+          "a": 0,
+          "why": "Thoái vốn ('divestiture') là việc bán đi một đơn vị kinh doanh hoặc công ty con không cốt lõi.",
+          "id": "q153-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Board meeting on strategic acquisition",
+          "id": "s153-0",
+          "lines": [
+            {
+              "t": "Has the preliminary due diligence report identified any regulatory hurdles?",
+              "r": "",
+              "m": "Báo cáo thẩm định toàn diện sơ bộ có phát hiện rào cản pháp lý nào không?"
+            },
+            {
+              "t": "The antitrust authority may require the divestiture of two regional distribution centers.",
+              "r": "",
+              "m": "Cơ quan chống độc quyền có thể yêu cầu thoái vốn khỏi hai trung tâm phân phối khu vực."
+            },
+            {
+              "t": "Even with that concession, the projected cost synergies comfortably justify the valuation.",
+              "r": "",
+              "m": "Ngay cả khi có sự nhượng bộ đó, sức mạnh cộng hưởng chi phí dự kiến vẫn hoàn toàn chứng minh định giá là hợp lý."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "Why is robust corporate governance vital for attracting institutional investors?",
+          "vi": "Tại sao quản trị doanh nghiệp vững mạnh lại có ý nghĩa sống còn để thu hút nhà đầu tư tổ chức?",
+          "st": "Institutional investors prioritize governance because...",
+          "ph": [
+            "mitigates agency risks",
+            "ensures transparency and accountability",
+            "protects minority shareholders"
+          ],
+          "sa": "Institutional investors prioritize strong corporate governance because it protects minority shareholders, minimizes corruption risks, and ensures executive decisions maximize long-term enterprise value.",
+          "ss": [
+            "Transparency builds market confidence.",
+            "Poor governance leads to catastrophic scandals."
+          ],
+          "sc": "Discussing executive leadership.",
+          "id": "c153-0"
+        }
+      ],
+      "fill": {
+        "text": "Before finalizing any [[merger and acquisition|party|dinner]], executive leadership must perform rigorous [[due diligence|speculation|gambling]].\n\nThis ensures that anticipated operational [[synergies|penalties|taxes]] are realistically achievable.",
+        "trans": "Trước khi hoàn tất bất kỳ thương vụ sáp nhập và mua lại nào, ban lãnh đạo điều hành phải tiến hành thẩm định toàn diện nghiêm ngặt.\nĐiều này đảm bảo các giá trị cộng hưởng vận hành kỳ vọng có thể đạt được trên thực tế.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "154",
+      "pos": 81,
+      "catPos": 4,
+      "category": "c1",
+      "level": "C1",
+      "phase": "C1 · Cao cấp & Học thuật",
+      "title": "Legal Framework, Contracts and IP",
+      "sub": "Khung pháp lý, tranh chấp hợp đồng và sở hữu trí tuệ",
+      "vocab": [
+        {
+          "w": "breach of contract",
+          "m": "vi phạm hợp đồng",
+          "d": "an act of breaking the terms of a legally binding agreement",
+          "ex": "Failure to deliver the machinery on the stipulated date constituted a material breach of contract.",
+          "exm": "Việc không bàn giao máy móc đúng ngày quy định cấu thành hành vi vi phạm hợp đồng nghiêm trọng.",
+          "id": "w154-0",
+          "r": "/briːtʃ ɒv ˈkɒn.trækt/",
+          "exr": ""
+        },
+        {
+          "w": "indemnification",
+          "m": "bồi thường thiệt hại, cam kết bồi hoàn",
+          "d": "compensation for harm or loss; security against legal liability",
+          "ex": "The indemnification clause shields our firm against third-party patent infringement claims.",
+          "exm": "Điều khoản bồi hoàn bảo vệ công ty chúng tôi khỏi các khiếu nại vi phạm bằng sáng chế của bên thứ ba.",
+          "id": "w154-1",
+          "r": "/ɪnˌdem.nɪ.fɪˈkeɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "intellectual property",
+          "m": "sở hữu trí tuệ (IP)",
+          "d": "intangible property that is the result of creativity, such as patents and trademarks",
+          "ex": "Protecting our intellectual property across Asian jurisdictions is paramount for foreign licensing.",
+          "exm": "Bảo hộ sở hữu trí tuệ trên khắp các khu vực pháp lý châu Á là điều tối quan trọng để cấp phép ra nước ngoài.",
+          "id": "w154-2",
+          "r": "/ˌɪn.təlˈek.tʃu.əl ˈprɒp.ə.ti/",
+          "exr": ""
+        },
+        {
+          "w": "litigation",
+          "m": "tố tụng, tranh chấp tại tòa án",
+          "d": "the process of taking legal action in a court of law",
+          "ex": "Commercial litigation can drain financial resources and distract senior leadership for years.",
+          "exm": "Tố tụng thương mại có thể làm cạn kiệt nguồn lực tài chính và làm xao nhãng ban lãnh đạo trong nhiều năm.",
+          "id": "w154-3",
+          "r": "/ˌlɪt.ɪˈɡeɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "arbitration",
+          "m": "trọng tài thương mại",
+          "d": "the use of an independent arbitrator to settle a dispute out of court",
+          "ex": "Both parties agreed to submit any contractual dispute to binding arbitration in Singapore.",
+          "exm": "Hai bên nhất trí đưa mọi tranh chấp hợp đồng ra giải quyết bằng trọng tài có tính ràng buộc tại Singapore.",
+          "id": "w154-4",
+          "r": "/ˌɑː.bɪˈtreɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "force majeure",
+          "m": "bất khả kháng (Force Majeure)",
+          "d": "unforeseeable circumstances that prevent someone from fulfilling a contract",
+          "ex": "The supplier invoked the force majeure clause due to a severe typhoon paralyzing the seaport.",
+          "exm": "Nhà cung cấp đã viện dẫn điều khoản bất khả kháng do cơn bão lớn làm tê liệt cảng biển.",
+          "id": "w154-5",
+          "r": "/ˌfɔːs mæˈʒɜːr/",
+          "exr": ""
+        },
+        {
+          "w": "liability",
+          "m": "trách nhiệm pháp lý",
+          "d": "the state of being legally responsible for something",
+          "ex": "The contract includes a limitation of liability clause capped at the total transaction value.",
+          "exm": "Hợp đồng bao gồm một điều khoản giới hạn trách nhiệm pháp lý tối đa bằng tổng giá trị giao dịch.",
+          "id": "w154-6",
+          "r": "/ˌlaɪ.əˈbɪl.ə.ti/",
+          "exr": ""
+        },
+        {
+          "w": "non-disclosure agreement",
+          "m": "thỏa thuận bảo mật thông tin (NDA)",
+          "d": "a contract through which parties agree not to disclose confidential information",
+          "ex": "Please sign this mutual non-disclosure agreement before we share proprietary architectural schematics.",
+          "exm": "Vui lòng ký thỏa thuận bảo mật hai chiều này trước khi chúng tôi chia sẻ sơ đồ kiến trúc độc quyền.",
+          "id": "w154-7",
+          "r": "/nɒn dɪsˈkləʊ.ʒər əˈɡriː.mənt/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What legal circumstance triggers a 'force majeure' clause?",
+          "o": [
+            "Unforeseeable, extraordinary events beyond human control like natural catastrophes or war.",
+            "A routine drop in company profit margins.",
+            "A change in personal employee preferences."
+          ],
+          "a": 0,
+          "why": "'Force majeure' (bất khả kháng) chỉ áp dụng cho các biến cố bất thường không thể lường trước như thiên tai, chiến sự.",
+          "id": "q154-0"
+        },
+        {
+          "q": "Why do international trade partners frequently prefer 'arbitration' over litigation in national courts?",
+          "o": [
+            "Arbitration is confidential, specialized, and awards are enforceable internationally under the New York Convention.",
+            "Arbitration is always completely free of charge.",
+            "Arbitration guarantees a victory for the buyer every time."
+          ],
+          "a": 0,
+          "why": "Trọng tài bảo mật, chuyên nghiệp và phán quyết có hiệu lực quốc tế theo Công ước New York.",
+          "id": "q154-1"
+        },
+        {
+          "q": "What is the primary function of an 'indemnification clause'?",
+          "o": [
+            "Allocating financial responsibility for losses, damages, or third-party liabilities to one party.",
+            "Setting the annual bonus pool for junior associates.",
+            "Specifying the typeface used on promotional flyers."
+          ],
+          "a": 0,
+          "why": "Điều khoản bồi hoàn ('indemnification') phân bổ nghĩa vụ chịu tổn thất và trách nhiệm pháp lý giữa các bên.",
+          "id": "q154-2"
+        },
+        {
+          "q": "What does signing an NDA (Non-Disclosure Agreement) obligate a company to do?",
+          "o": [
+            "Maintain strict confidentiality regarding proprietary trade secrets and technical data.",
+            "Publish all internal documents online openly.",
+            "Purchase stock options immediately."
+          ],
+          "a": 0,
+          "why": "Thỏa thuận NDA ràng buộc các bên phải giữ bí mật tuyệt đối về dữ liệu kinh doanh và công nghệ.",
+          "id": "q154-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Contractual dispute resolution consultation",
+          "id": "s154-0",
+          "lines": [
+            {
+              "t": "The client claims our delivery delay amounts to a fundamental breach of contract.",
+              "r": "",
+              "m": "Khách hàng cho rằng việc chậm giao hàng của chúng ta cấu thành hành vi vi phạm hợp đồng căn bản."
+            },
+            {
+              "t": "Our logistics records confirm the delay resulted directly from the nationwide port strike.",
+              "r": "",
+              "m": "Hồ sơ logistics của chúng ta chứng minh sự chậm trễ bắt nguồn trực tiếp từ cuộc bãi công tại các cảng trên toàn quốc."
+            },
+            {
+              "t": "In that case, the force majeure defense is legally solid under Article 12.",
+              "r": "",
+              "m": "Trong trường hợp đó, biện pháp phòng vệ bất khả kháng hoàn toàn vững chắc theo Điều 12."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How can technology companies safeguard their intellectual property when entering joint ventures?",
+          "vi": "Các công ty công nghệ có thể bảo vệ tài sản sở hữu trí tuệ như thế nào khi tham gia liên doanh?",
+          "st": "To protect intellectual property, firms should...",
+          "ph": [
+            "execute robust NDAs",
+            "clearly delineate background vs foreground IP",
+            "register international patents"
+          ],
+          "sa": "To safeguard intellectual property in partnerships, companies must execute comprehensive non-disclosure agreements, register patents locally, and clearly delineate background IP rights prior to collaboration.",
+          "ss": [
+            "Clear licensing agreements avoid costly litigation.",
+            "Patent audits should precede joint development."
+          ],
+          "sc": "Advising on legal asset protection.",
+          "id": "c154-0"
+        }
+      ],
+      "fill": {
+        "text": "Before entering collaborative technical talks, both corporations executed a [[non-disclosure agreement|speeding ticket|restaurant menu]] to safeguard trade secrets.\n\nThe contract contains an [[arbitration|vacation|lottery]] clause to settle any commercial disagreement outside public courts.",
+        "trans": "Trước khi bước vào đàm phán kỹ thuật hợp tác, cả hai tập đoàn đã ký thỏa thuận bảo mật để bảo vệ bí mật thương mại.\nHợp đồng có chứa một điều khoản trọng tài để giải quyết mọi bất đồng thương mại bên ngoài tòa án công.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "155",
+      "pos": 82,
+      "catPos": 5,
+      "category": "c1",
+      "level": "C1",
+      "phase": "C1 · Cao cấp & Học thuật",
+      "title": "Debate, Rhetoric and Critical Thinking",
+      "sub": "Nghệ thuật tranh biện, thuật hùng biện và tư duy phản biện",
+      "vocab": [
+        {
+          "w": "critical thinking",
+          "m": "tư duy phản biện",
+          "d": "the objective analysis and evaluation of an issue in order to form a judgment",
+          "ex": "Critical thinking enables analysts to distinguish between verified facts and rhetorical spin.",
+          "exm": "Tư duy phản biện giúp các nhà phân tích phân biệt giữa sự thật đã kiểm chứng và sự lèo lái tu từ.",
+          "id": "w155-0",
+          "r": "/ˈkrɪt.ɪ.kəl ˈθɪŋ.kɪŋ/",
+          "exr": ""
+        },
+        {
+          "w": "fallacy",
+          "m": "ngụy biện, sai lầm logic",
+          "d": "a mistaken belief, especially one based on unsound argument",
+          "ex": "Attacking the speaker personally rather than their argument is a classic ad hominem fallacy.",
+          "exm": "Công kích cá nhân người nói thay vì lập luận của họ là một ví dụ ngụy biện cổ điển.",
+          "id": "w155-1",
+          "r": "/ˈfæl.ə.si/",
+          "exr": ""
+        },
+        {
+          "w": "cognitive bias",
+          "m": "thiên kiến nhận thức",
+          "d": "a systematic pattern of deviation from norm or rationality in judgment",
+          "ex": "Confirmation bias leads individuals to selectively seek data that affirms pre-existing beliefs.",
+          "exm": "Thiên kiến xác nhận khiến mọi người chỉ chọn lọc tìm kiếm dữ liệu củng cố niềm tin có sẵn của họ.",
+          "id": "w155-2",
+          "r": "/ˈkɒɡ.nə.tɪv ˈbaɪ.əs/",
+          "exr": ""
+        },
+        {
+          "w": "rhetoric",
+          "m": "thuật hùng biện, nghệ thuật tu từ",
+          "d": "the art of effective or persuasive speaking or writing",
+          "ex": "Beyond persuasive rhetoric, public leaders must present concrete data and practical action plans.",
+          "exm": "Vượt lên trên tài hùng biện thuyết phục, các nhà lãnh đạo phải đưa ra dữ liệu cụ thể và kế hoạch hành động thực tiễn.",
+          "id": "w155-3",
+          "r": "/ˈret.ər.ɪk/",
+          "exr": ""
+        },
+        {
+          "w": "counter-argument",
+          "m": "lập luận phản bác, phản biện",
+          "d": "an argument or set of reasons put forward to oppose an idea or theory developed in another argument",
+          "ex": "Anticipating the opponent's counter-argument strengthened the debater's rebuttal.",
+          "exm": "Việc lường trước lập luận phản bác của đối thủ đã củng cố đòn đáp trả của người tranh biện.",
+          "id": "w155-4",
+          "r": "/ˈkaʊn.tər ˌɑːɡ.jə.mənt/",
+          "exr": ""
+        },
+        {
+          "w": "nuance",
+          "m": "sắc thái tinh tế, chiều sâu chi tiết",
+          "d": "a subtle difference in or shade of meaning, expression, or sound",
+          "ex": "Complex socioeconomic challenges require nuanced policies rather than simplistic soundbites.",
+          "exm": "Các thách thức kinh tế xã hội phức tạp đòi hỏi chính sách có chiều sâu tinh tế thay vì những câu khẩu hiệu đơn giản.",
+          "id": "w155-5",
+          "r": "/ˈnjuː.ɑːns/",
+          "exr": ""
+        },
+        {
+          "w": "refute",
+          "m": "bác bỏ, chứng minh là sai",
+          "d": "prove a statement or theory to be wrong or false; disprove",
+          "ex": "The scientist published statistical proofs that systematically refuted the outdated theory.",
+          "exm": "Nhà khoa học đã công bố các bằng chứng thống kê bác bỏ một cách có hệ thống lý thuyết lỗi thời.",
+          "id": "w155-6",
+          "r": "/rɪˈfjuːt/",
+          "exr": ""
+        },
+        {
+          "w": "articulate",
+          "m": "diễn đạt gãy gọn, ăn nói lưu loát",
+          "d": "having or showing the ability to speak fluently and coherently",
+          "ex": "She is an articulate advocate capable of communicating technical concepts to lay audiences.",
+          "exm": "Cô ấy là một người ủng hộ có tài ăn nói lưu loát, có khả năng truyền tải các khái niệm kỹ thuật đến công chúng phổ thông.",
+          "id": "w155-7",
+          "r": "/ɑːˈtɪk.jə.leɪt/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What constitutes an 'ad hominem fallacy' in formal debate?",
+          "o": [
+            "Attacking the opponent's personal character rather than addressing the substance of their argument.",
+            "Citing verifiable peer-reviewed data.",
+            "Constructing a valid syllogism with clear premises."
+          ],
+          "a": 0,
+          "why": "Ngụy biện 'ad hominem' là việc công kích cá nhân thay vì tập trung vào nội dung lập luận.",
+          "id": "q155-0"
+        },
+        {
+          "q": "What is 'confirmation bias'?",
+          "o": [
+            "The psychological tendency to notice and trust information that validates one's existing assumptions.",
+            "Verifying mathematical calculations twice.",
+            "Seeking independent third-party audits."
+          ],
+          "a": 0,
+          "why": "Thiên kiến xác nhận là xu hướng tâm lý chỉ chú ý đến những gì phù hợp với định kiến của mình.",
+          "id": "q155-1"
+        },
+        {
+          "q": "What does having an 'articulate' delivery signify?",
+          "o": [
+            "Expressing complex thoughts clearly, coherently, and persuasively.",
+            "Speaking at an extremely rapid pace without pausing.",
+            "Using obscure jargon intentionally to confuse listeners."
+          ],
+          "a": 0,
+          "why": "'Articulate' là khả năng diễn đạt lưu loát, khúc chiết, mạch lạc và thuyết phục.",
+          "id": "q155-2"
+        },
+        {
+          "q": "Why is recognizing 'nuance' critical when evaluating policy proposals?",
+          "o": [
+            "Real-world issues are rarely black-and-white and involve intricate trade-offs.",
+            "It allows politicians to evade making decisions.",
+            "Nuance is only relevant in fiction writing."
+          ],
+          "a": 0,
+          "why": "Nhận biết 'nuance' (sắc thái tinh tế) giúp thấy rõ các mặt cân bằng phức tạp của thực tế.",
+          "id": "q155-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Cross-examination in a policy debate",
+          "id": "s155-0",
+          "lines": [
+            {
+              "t": "While your proposal sounds noble, does it not commit a post-hoc fallacy regarding causality?",
+              "r": "",
+              "m": "Mặc dù đề xuất của bạn nghe rất cao đẹp, nhưng liệu nó có mắc lỗi ngụy biện 'sau đó nên vì thế' về quan hệ nhân quả không?"
+            },
+            {
+              "t": "Not at all; our empirical evidence demonstrates a direct causal mechanism, not mere chronological correlation.",
+              "r": "",
+              "m": "Hoàn toàn không; chứng cứ thực nghiệm của chúng tôi chứng minh cơ chế nhân quả trực tiếp, chứ không chỉ là tương quan thời gian thuần túy."
+            },
+            {
+              "t": "I appreciate your articulate clarification; let us examine the fiscal implications next.",
+              "r": "",
+              "m": "Tôi đánh giá cao sự làm rõ khúc chiết của bạn; tiếp theo chúng ta hãy cùng xem xét tác động về mặt tài khóa."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How can professionals overcome cognitive bias when making high-stakes strategic choices?",
+          "vi": "Làm thế nào để các chuyên gia vượt qua thiên kiến nhận thức khi đưa ra các lựa chọn chiến lược quan trọng?",
+          "st": "To counter cognitive bias, decision-makers should...",
+          "ph": [
+            "seek dissenting perspectives",
+            "test counter-arguments systematically",
+            "rely on objective empirical benchmarks"
+          ],
+          "sa": "To counter cognitive bias, leaders should actively solicit dissenting viewpoints, establish red teams to challenge prevailing assumptions, and test data against rigorous objective benchmarks.",
+          "ss": [
+            "Devil's advocacy exposes blind spots.",
+            "Intellectual humility is the antidote to dogma."
+          ],
+          "sc": "Fostering critical thinking.",
+          "id": "c155-0"
+        }
+      ],
+      "fill": {
+        "text": "Mastering [[critical thinking|rumors|gossip]] empowers analysts to dismantle logical [[fallacies|truths|realities]] and craft compelling, [[articulate|clumsy|vague]] arguments during debates.",
+        "trans": "Làm chủ tư duy phản biện trao quyền cho các nhà phân tích bóc trần những ngụy biện logic và xây dựng các lập luận khúc chiết, đầy sức thuyết phục trong các cuộc tranh luận.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "156",
+      "pos": 83,
+      "catPos": 1,
+      "category": "c2",
+      "level": "C2",
+      "phase": "C2 · Thành thạo & Ngoại giao",
+      "title": "International Relations and Geopolitics",
+      "sub": "Quan hệ quốc tế, chiến lược địa chính trị và ngoại giao",
+      "vocab": [
+        {
+          "w": "multilateralism",
+          "m": "chủ nghĩa đa phương",
+          "d": "the principle of participation by three or more parties, especially by the governments of different countries",
+          "ex": "Multilateralism is essential to coordinate collective responses against transnational threats.",
+          "exm": "Chủ nghĩa đa phương là điều thiết yếu để điều phối các phản ứng tập thể chống lại các hiểm họa xuyên quốc gia.",
+          "id": "w156-0",
+          "r": "/ˌmʌl.tiˈlæt.ər.əl.ɪ.zəm/",
+          "exr": ""
+        },
+        {
+          "w": "sovereignty",
+          "m": "chủ quyền quốc gia",
+          "d": "the authority of a state to govern itself or another state",
+          "ex": "Respecting national territorial sovereignty is the bedrock of the United Nations Charter.",
+          "exm": "Tôn trọng chủ quyền lãnh thổ quốc gia là nền tảng của Hiến chương Liên Hợp Quốc.",
+          "id": "w156-1",
+          "r": "/ˈsɒv.rɪn.ti/",
+          "exr": ""
+        },
+        {
+          "w": "geopolitics",
+          "m": "địa chính trị",
+          "d": "politics, especially international relations, as influenced by geographical factors",
+          "ex": "Securing strategic maritime chokepoints is a central imperative in 21st-century geopolitics.",
+          "exm": "Bảo đảm các điểm nút thắt hàng hải chiến lược là một mệnh lệnh then chốt trong địa chính trị thế kỷ 21.",
+          "id": "w156-2",
+          "r": "/ˌdʒiː.əʊˈpɒl.ɪ.tɪks/",
+          "exr": ""
+        },
+        {
+          "w": "hegemony",
+          "m": "sự bá quyền, vị thế bá chủ",
+          "d": "leadership or dominance, especially by one country or social group over others",
+          "ex": "The emerging multipolar architecture increasingly challenges historical global hegemony.",
+          "exm": "Cấu trúc đa cực đang nổi lên ngày càng thách thức vị thế bá quyền lịch sử trên toàn cầu.",
+          "id": "w156-3",
+          "r": "/hɪˈɡem.ə.ni/",
+          "exr": ""
+        },
+        {
+          "w": "deterrence",
+          "m": "sức răn đe, sự ngăn chặn",
+          "d": "the action of discouraging an action or event through instilling doubt or fear of the consequences",
+          "ex": "Strategic defense alliances rely on credible deterrence to preserve regional stability.",
+          "exm": "Các liên minh phòng thủ chiến lược dựa trên sức răn đe đáng tin cậy để duy trì sự ổn định khu vực.",
+          "id": "w156-4",
+          "r": "/dɪˈter.əns/",
+          "exr": ""
+        },
+        {
+          "w": "diplomatic immunity",
+          "m": "quyền miễn trừ ngoại giao",
+          "d": "the privilege of exemption from certain laws granted to diplomatic representatives",
+          "ex": "Diplomatic immunity allows ambassadors to carry out their duties without fear of arbitrary detention.",
+          "exm": "Quyền miễn trừ ngoại giao cho phép các đại sứ thực hiện nhiệm vụ của mình mà không sợ bị giam giữ tùy tiện.",
+          "id": "w156-5",
+          "r": "/ˌdɪp.lə.mæt.ɪk ɪˈmjuː.nɪ.ti/",
+          "exr": ""
+        },
+        {
+          "w": "bilateral",
+          "m": "song phương",
+          "d": "having or relating to two sides; affecting both sides",
+          "ex": "The two premiers signed a landmark bilateral trade pact eliminating tariff barriers.",
+          "exm": "Hai vị thủ tướng đã ký một hiệp ước thương mại song phương mang tính bước ngoặt nhằm xóa bỏ các hàng rào thuế quan.",
+          "id": "w156-6",
+          "r": "/baɪˈlæt.ər.əl/",
+          "exr": ""
+        },
+        {
+          "w": "non-proliferation",
+          "m": "chống phổ biến (vũ khí)",
+          "d": "the prevention of the spread of something, especially nuclear weapons",
+          "ex": "Upholding the international non-proliferation regime is vital for worldwide nuclear safety.",
+          "exm": "Duy trì chế độ chống phổ biến vũ khí quốc tế là điều sống còn đối với sự an toàn hạt nhân toàn cầu.",
+          "id": "w156-7",
+          "r": "/ˌnɒn.prəˌlɪf.ərˈeɪ.ʃən/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What fundamental principle does 'multilateralism' champion in world politics?",
+          "o": [
+            "Cooperation and rule-based negotiation among three or more sovereign states.",
+            "Unilateral military domination by the strongest superpower.",
+            "Isolationism and terminating all diplomatic ties."
+          ],
+          "a": 0,
+          "why": "Chủ nghĩa đa phương cổ súy sự hợp tác và đàm phán dựa trên luật pháp quốc tế giữa các quốc gia.",
+          "id": "q156-0"
+        },
+        {
+          "q": "What is the strategic objective of 'deterrence'?",
+          "o": [
+            "Preventing hostile aggression by ensuring the adversary knows the cost of attacking far exceeds any gain.",
+            "Instigating preemptive cross-border skirmishes.",
+            "Surrendering defensive capabilities completely."
+          ],
+          "a": 0,
+          "why": "'Deterrence' (răn đe) là việc ngăn chặn đối phương tấn công bằng cách chứng minh hậu quả họ gánh chịu sẽ rất tàn khốc.",
+          "id": "q156-1"
+        },
+        {
+          "q": "Under the Vienna Convention, what is the role of 'diplomatic immunity'?",
+          "o": [
+            "Enabling envoys to discharge their functions independently without foreign executive coercion.",
+            "Allowing diplomats to violate local criminal laws with impunity.",
+            "Granting diplomats commercial monopoly rights."
+          ],
+          "a": 0,
+          "why": "Quyền miễn trừ ngoại giao giúp các nhà ngoại giao hoàn thành nhiệm vụ mà không bị bức bách hay sách nhiễu.",
+          "id": "q156-2"
+        },
+        {
+          "q": "What characterizes a 'bipolar' vs 'multipolar' geopolitical order?",
+          "o": [
+            "Bipolarity centers on two dominant superpowers, whereas multipolarity distributes influence across several centers.",
+            "Bipolarity means having two capital cities.",
+            "Multipolarity refers exclusively to Arctic exploration."
+          ],
+          "a": 0,
+          "why": "Lưỡng cực tập trung vào hai siêu cường, còn đa cực là quyền lực phân bổ ở nhiều trung tâm độc lập.",
+          "id": "q156-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Diplomatic consultation on maritime security",
+          "id": "s156-0",
+          "lines": [
+            {
+              "t": "Excellency, how does your ministry view the ongoing militarization of vital shipping corridors?",
+              "r": "",
+              "m": "Thưa ngài Đại sứ, bộ của ngài nhìn nhận thế nào về việc quân sự hóa các hành lang hàng hải huyết mạch?"
+            },
+            {
+              "t": "We reaffirm our unyielding commitment to freedom of navigation under international maritime law.",
+              "r": "",
+              "m": "Chúng tôi tái khẳng định cam kết kiên định đối với quyền tự do hàng hải theo luật biển quốc tế."
+            },
+            {
+              "t": "A multilateral consensus remains the only durable path to de-escalate maritime friction.",
+              "r": "",
+              "m": "Đồng thuận đa phương vẫn là con đường bền vững duy nhất để hạ nhiệt những ma sát trên biển."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How can diplomacy navigate ideological divergences between competing global powers?",
+          "vi": "Ngoại giao có thể xử lý những bất đồng ý thức hệ giữa các cường quốc cạnh tranh như thế nào?",
+          "st": "Effective diplomacy balances ideological differences by...",
+          "ph": [
+            "identifying shared existential interests",
+            "maintaining institutional deconfliction channels",
+            "prioritizing economic interdependencies"
+          ],
+          "sa": "Effective diplomacy bridges deep ideological gulfs by isolating common interests like climate mitigation and establishing institutional communication backchannels to avoid accidental escalation.",
+          "ss": [
+            "Dialogue must continue even amidst acute tensions.",
+            "Strategic empathy does not equate to weakness."
+          ],
+          "sc": "Analyzing geopolitical diplomacy.",
+          "id": "c156-0"
+        }
+      ],
+      "fill": {
+        "text": "Preserving international order relies on commitment to [[multilateralism|unilateralism|anarchy]] and mutual respect for national [[sovereignty|subjugation|annexation]].\n\nCredible defense alliances maintain [[deterrence|chaos|surrender]] to prevent armed conflict.",
+        "trans": "Gìn giữ trật tự quốc tế dựa trên cam kết đối với chủ nghĩa đa phương và tôn trọng lẫn nhau về chủ quyền quốc gia.\nCác liên minh phòng thủ đáng tin cậy duy trì sức răn đe để ngăn chặn xung đột vũ trang.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "157",
+      "pos": 84,
+      "catPos": 2,
+      "category": "c2",
+      "level": "C2",
+      "phase": "C2 · Thành thạo & Ngoại giao",
+      "title": "Philosophy, Epistemology and Ethics",
+      "sub": "Triết học, nhận thức luận và đạo đức học ứng dụng",
+      "vocab": [
+        {
+          "w": "epistemology",
+          "m": "nhận thức luận",
+          "d": "the theory of knowledge, especially with regard to its methods, validity, and scope",
+          "ex": "Epistemology investigates the fundamental boundary between justified true belief and mere opinion.",
+          "exm": "Nhận thức luận nghiên cứu ranh giới căn bản giữa niềm tin chân thực có cơ sở và định kiến đơn thuần.",
+          "id": "w157-0",
+          "r": "/ɪˌpɪs.tɪˈmɒl.ə.dʒi/",
+          "exr": ""
+        },
+        {
+          "w": "utilitarianism",
+          "m": "thuyết vị lợi",
+          "d": "the doctrine that an action is right insofar as it promotes happiness for the greatest number",
+          "ex": "From a utilitarian perspective, the policy is justified because it maximizes net societal welfare.",
+          "exm": "Từ góc độ thuyết vị lợi, chính sách này là chính đáng vì nó tối đa hóa phúc lợi ròng của xã hội.",
+          "id": "w157-1",
+          "r": "/ˌjuː.tɪ.lɪˈteə.ri.ə.nɪ.zəm/",
+          "exr": ""
+        },
+        {
+          "w": "existentialism",
+          "m": "thuyết hiện sinh",
+          "d": "a philosophical approach that emphasizes the existence of the individual as a free and responsible agent",
+          "ex": "Existentialism posits that existence precedes essence, placing total responsibility on personal choice.",
+          "exm": "Thuyết hiện sinh khẳng định sự tồn tại đi trước bản chất, đặt toàn bộ trách nhiệm lên sự lựa chọn của cá nhân.",
+          "id": "w157-2",
+          "r": "/ˌeɡ.zɪˈsten.ʃəl.ɪ.zəm/",
+          "exr": ""
+        },
+        {
+          "w": "ontology",
+          "m": "bản thể luận",
+          "d": "the branch of metaphysics dealing with the nature of being and reality",
+          "ex": "Ontology grapples with profound questions regarding what entities fundamentally exist.",
+          "exm": "Bản thể luận vật lộn với những câu hỏi uyên thâm liên quan đến việc các thực thể nào cơ bản tồn tại.",
+          "id": "w157-3",
+          "r": "/ɒnˈtɒl.ə.dʒi/",
+          "exr": ""
+        },
+        {
+          "w": "determinism",
+          "m": "thuyết tiền định, tất định luận",
+          "d": "the doctrine that all events, including human action, are ultimately determined by causes external to the will",
+          "ex": "Philosophers debate whether strict physical determinism is compatible with genuine moral agency.",
+          "exm": "Các nhà triết học tranh luận liệu tất định luận vật lý nghiêm ngặt có tương thích với quyền tự quyết đạo đức thực sự hay không.",
+          "id": "w157-4",
+          "r": "/dɪˈtɜː.mɪ.nɪ.zəm/",
+          "exr": ""
+        },
+        {
+          "w": "egalitarian",
+          "m": "thuyết bình đẳng, theo chủ nghĩa bình đẳng",
+          "d": "believing in or based on the principle that all people are equal and deserve equal rights and opportunities",
+          "ex": "An egalitarian framework demands fair institutional distribution of social goods and justice.",
+          "exm": "Một khuôn khổ bình đẳng đòi hỏi sự phân phối công bằng các lợi ích xã hội và công lý của các thiết chế.",
+          "id": "w157-5",
+          "r": "/ɪˌɡæl.ɪˈteə.ri.ən/",
+          "exr": ""
+        },
+        {
+          "w": "skepticism",
+          "m": "thuyết hoài nghi, thái độ thận trọng",
+          "d": "a skeptical attitude; doubt as to the truth of something",
+          "ex": "Philosophical skepticism reminds us to question unverified dogmas and cognitive illusions.",
+          "exm": "Thuyết hoài nghi triết học nhắc nhở chúng ta phải chất vấn các giáo điều chưa được kiểm chứng và các ảo ảnh nhận thức.",
+          "id": "w157-6",
+          "r": "/ˈskep.tɪ.sɪ.zəm/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What is the core maxim of 'utilitarian ethics'?",
+          "o": [
+            "Maximizing overall happiness and minimizing suffering for the greatest number of people.",
+            "Preserving absolute duty regardless of real-world consequences.",
+            "Promoting individual selfishness at all costs."
+          ],
+          "a": 0,
+          "why": "Thuyết vị lợi ('utilitarianism') coi hành động đúng đắn là hành động tạo ra hạnh phúc lớn nhất cho số đông nhất.",
+          "id": "q157-0"
+        },
+        {
+          "q": "What philosophical query defines 'epistemology'?",
+          "o": [
+            "How do we know what we know, and what distinguishes knowledge from belief?",
+            "What is the physical weight of atomic particles?",
+            "How can corporations maximize quarterly revenues?"
+          ],
+          "a": 0,
+          "why": "Nhận thức luận nghiên cứu bản chất, nguồn gốc và giới hạn của tri thức nhân loại.",
+          "id": "q157-1"
+        },
+        {
+          "q": "What does Jean-Paul Sartre's existentialist slogan 'existence precedes essence' imply?",
+          "o": [
+            "Humans first exist, and through their conscious choices, they define their own purpose.",
+            "Human destiny is genetically predetermined at conception.",
+            "Society dictates all moral truths."
+          ],
+          "a": 0,
+          "why": "Hiện sinh đi trước bản chất nghĩa là con người tồn tại trước, rồi qua lựa chọn tự do mới tự định nghĩa ý nghĩa cuộc đời mình.",
+          "id": "q157-2"
+        },
+        {
+          "q": "In moral philosophy, what is an 'egalitarian' principle?",
+          "o": [
+            "All human beings possess equal moral worth and deserve equitable institutional consideration.",
+            "The ruling class should retain hereditary privileges.",
+            "Wealth should be concentrated in technological elites."
+          ],
+          "a": 0,
+          "why": "Chủ nghĩa bình đẳng khẳng định mọi cá nhân đều có giá trị đạo đức bình đẳng như nhau.",
+          "id": "q157-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Debating free will and determinism",
+          "id": "s157-0",
+          "lines": [
+            {
+              "t": "If neurochemical processes determine our decisions, can individuals remain morally culpable?",
+              "r": "",
+              "m": "Nếu các quá trình hóa thần kinh định đoạt các quyết định của chúng ta, liệu cá nhân có còn phải chịu trách nhiệm đạo đức không?"
+            },
+            {
+              "t": "Compatibilists argue that moral responsibility endures as long as one acts according to uncoerced internal desires.",
+              "r": "",
+              "m": "Những người theo phái tương thích lập luận rằng trách nhiệm đạo đức vẫn tồn tại chừng nào con người hành động theo những khao khát nội tại không bị ép buộc."
+            },
+            {
+              "t": "That epistemological reconciliation remains one of philosophy's most enduring debates.",
+              "r": "",
+              "m": "Sự hòa giải về mặt nhận thức luận đó vẫn là một trong những cuộc tranh luận trường tồn nhất của triết học."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "Can ethical dilemmas in automated decision-making be resolved purely through utilitarian algorithms?",
+          "vi": "Liệu các tiến thoái lưỡng nan về đạo đức trong việc ra quyết định tự động có thể được giải quyết chỉ bằng các thuật toán vị lợi không?",
+          "st": "Utilitarian algorithms alone are insufficient because...",
+          "ph": [
+            "sacrifice minority rights",
+            "ignore deontological duties",
+            "lack contextual moral intuition"
+          ],
+          "sa": "Utilitarian algorithms alone are inadequate because purely quantitative maximization of utility can sacrifice fundamental minority rights and disregard inviolable human dignity.",
+          "ss": [
+            "Ethics requires blending multiple philosophical traditions.",
+            "Mathematical logic cannot encapsulate human conscience."
+          ],
+          "sc": "Examining ethical philosophy.",
+          "id": "c157-0"
+        }
+      ],
+      "fill": {
+        "text": "In [[epistemology|chemistry|botany]], thinkers debate the criteria of truth, while [[utilitarianism|cynicism|nihilism]] seeks to generate the greatest well-being for the greatest number of sentient beings.",
+        "trans": "Trong nhận thức luận, các nhà tư tưởng tranh luận về các tiêu chí của chân lý, trong khi thuyết vị lợi tìm kiếm việc tạo ra phúc lợi lớn nhất cho số lượng đông đảo nhất các sinh linh hữu tri giác.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "158",
+      "pos": 85,
+      "catPos": 3,
+      "category": "c2",
+      "level": "C2",
+      "phase": "C2 · Thành thạo & Ngoại giao",
+      "title": "Advanced Translation and Stylistics",
+      "sub": "Nghệ thuật biên phiên dịch cao cấp và phong cách học ngôn ngữ",
+      "vocab": [
+        {
+          "w": "nuance",
+          "m": "sắc thái tinh tế",
+          "d": "a subtle distinction in expression or meaning",
+          "ex": "A master translator preserves stylistic nuance rather than settling for mechanical literalism.",
+          "exm": "Một dịch giả bậc thầy gìn giữ sắc thái phong cách tinh tế thay vì chấp nhận lối dịch thô sát chữ máy móc.",
+          "id": "w158-0",
+          "r": "/ˈnjuː.ɑːns/",
+          "exr": ""
+        },
+        {
+          "w": "register",
+          "m": "văn phong, thang bậc ngôn ngữ",
+          "d": "a variety of a language used for a particular purpose or in a particular social setting",
+          "ex": "Legal contracts demand a formal archaic register, whereas marketing copy requires colloquial vibrancy.",
+          "exm": "Hợp đồng pháp lý đòi hỏi văn phong trang trọng cổ kính, trong khi bản thảo tiếp thị lại cần sự sống động đời thường.",
+          "id": "w158-1",
+          "r": "/ˈredʒ.ɪ.stər/",
+          "exr": ""
+        },
+        {
+          "w": "cadence",
+          "m": "nhịp điệu câu văn, âm hưởng",
+          "d": "a modulation or inflection of the voice; a rhythmic flow of words",
+          "ex": "The poetic cadence of the original epic was meticulously preserved in the translated verse.",
+          "exm": "Nhịp điệu thi ca của bản sử thi gốc đã được lưu giữ tỉ mỉ trong các câu thơ dịch.",
+          "id": "w158-2",
+          "r": "/ˈkeɪ.dəns/",
+          "exr": ""
+        },
+        {
+          "w": "connotation",
+          "m": "nghĩa biểu cảm, nghĩa bóng hàm ẩn",
+          "d": "an idea or feeling that a word invokes in addition to its literal or primary meaning",
+          "ex": "While both terms denote 'inexpensive', the word 'cheap' carries a negative connotation of poor quality.",
+          "exm": "Mặc dù cả hai từ đều chỉ 'giá rẻ', từ 'cheap' lại mang một nghĩa biểu cảm tiêu cực về chất lượng kém.",
+          "id": "w158-3",
+          "r": "/ˌkɒn.əˈteɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "vernacular",
+          "m": "tiếng bản ngữ, tiếng địa phương",
+          "d": "the language or dialect spoken by the ordinary people in a particular country or region",
+          "ex": "Translating contemporary urban vernacular requires deep immersion in living street culture.",
+          "exm": "Dịch ngôn ngữ bản địa đường phố đương đại đòi hỏi sự đắm mình sâu sắc vào văn hóa đời sống thực tế.",
+          "id": "w158-4",
+          "r": "/vəˈnæk.jə.lər/",
+          "exr": ""
+        },
+        {
+          "w": "localization",
+          "m": "bản địa hóa ngôn ngữ",
+          "d": "the process of adapting a product or content to a specific location or market",
+          "ex": "Effective cultural localization ensures idioms resonate naturally with target domestic audiences.",
+          "exm": "Bản địa hóa văn hóa hiệu quả đảm bảo các thành ngữ có độ vang tự nhiên với khán giả bản xứ mục tiêu.",
+          "id": "w158-5",
+          "r": "/ˌləʊ.kəl.aɪˈzeɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "simultaneous interpretation",
+          "m": "dịch cabin, phiên dịch đồng thời",
+          "d": "interpreting while the speaker is speaking, with only a few seconds of delay",
+          "ex": "Simultaneous interpretation at international summits demands exceptional cognitive stamina and linguistic reflexes.",
+          "exm": "Phiên dịch đồng thời (dịch cabin) tại các hội nghị thượng đỉnh quốc tế đòi hỏi sự bền bỉ nhận thức và phản xạ ngôn ngữ phi thường.",
+          "id": "w158-6",
+          "r": "/ˌsɪm.əlˈteɪ.ni.əs ɪnˌtɜː.prɪˈteɪ.ʃən/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "In high-level translation theory, what distinguishes 'connotation' from 'denotation'?",
+          "o": [
+            "Denotation is the explicit literal meaning, whereas connotation is the emotional or cultural undertone.",
+            "Connotation is always grammatically incorrect.",
+            "Denotation applies only to poetry."
+          ],
+          "a": 0,
+          "why": "'Denotation' là nghĩa đen trực tiếp, còn 'connotation' là hàm nghĩa cảm xúc và sắc thái văn hóa đi kèm.",
+          "id": "q158-0"
+        },
+        {
+          "q": "What is the defining demand of 'simultaneous interpretation' (dịch cabin)?",
+          "o": [
+            "Translating in real-time as the speaker delivers speech with mere seconds of lag.",
+            "Taking written manuscripts home to consult dictionaries over weeks.",
+            "Typing subtitles after recording audio."
+          ],
+          "a": 0,
+          "why": "Dịch cabin diễn ra tức thời theo từng câu nói của diễn giả với độ trễ chỉ vài giây.",
+          "id": "q158-1"
+        },
+        {
+          "q": "What does linguistic 'localization' achieve beyond literal translation?",
+          "o": [
+            "Adapting idioms, humor, cultural references, and measurements to feel native to target readers.",
+            "Shortening text to fit phone screens.",
+            "Substituting nouns with random synonyms."
+          ],
+          "a": 0,
+          "why": "Bản địa hóa điều chỉnh thành ngữ, văn hóa và phong cách để người bản xứ cảm nhận hoàn toàn tự nhiên.",
+          "id": "q158-2"
+        },
+        {
+          "q": "Why is recognizing 'register' fundamental when crafting translations?",
+          "o": [
+            "It ensures the level of formality and social tone corresponds accurately to the text's purpose.",
+            "It dictates the font size in publishing.",
+            "It prevents translators from using adverbs."
+          ],
+          "a": 0,
+          "why": "'Register' quyết định mức độ trang trọng hay đời thường phù hợp với ngữ cảnh giao tiếp.",
+          "id": "q158-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Reviewing a literary translation manuscript",
+          "id": "s158-0",
+          "lines": [
+            {
+              "t": "The prose flows smoothly, but have you retained the cynical undertone of the protagonist's monologue?",
+              "r": "",
+              "m": "Văn phong dịch rất mượt, nhưng bạn đã lưu giữ được sắc thái giễu nhại ngấm ngầm trong độc thoại của nhân vật chính chưa?"
+            },
+            {
+              "t": "I replaced the literal terms with colloquial idioms to reflect that precise ironic register.",
+              "r": "",
+              "m": "Mình đã thay các từ dịch sát bằng thành ngữ khẩu ngữ để phản ánh chính xác văn phong mỉa mai đó."
+            },
+            {
+              "t": "Superb; that captures the authentic cadence and psychological depth of the original text.",
+              "r": "",
+              "m": "Tuyệt hảo; cách đó nắm bắt trọn vẹn nhịp điệu chân thực và chiều sâu tâm lý của nguyên tác."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "What is the biggest pitfall of purely literal word-for-word translation?",
+          "vi": "Cái bẫy lớn nhất của lối dịch sát từng chữ một cách máy móc là gì?",
+          "st": "Literal translation fails because...",
+          "ph": [
+            "distorts idiomatic nuances",
+            "creates unnatural robotic syntax",
+            "erodes cultural connotations"
+          ],
+          "sa": "Literal translation fails because it ignores cultural connotations, produces awkward unnatural cadence, and frequently distorts the original author's artistic intent.",
+          "ss": [
+            "Translation is an act of cultural reimagination.",
+            "Faithfulness requires capturing spirit, not just syntax."
+          ],
+          "sc": "Mastering translation craft.",
+          "id": "c158-0"
+        }
+      ],
+      "fill": {
+        "text": "A distinguished translator captures not merely literal definitions, but the emotional [[connotations|letters|drawings]] and lyrical [[cadence|noise|silence]] of the source prose.",
+        "trans": "Một dịch giả cự phách không chỉ nắm bắt định nghĩa từ điển trần trụi, mà còn truyền tải được các sắc thái nghĩa biểu cảm và âm hưởng trữ tình của áng văn nguyên tác.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "159",
+      "pos": 86,
+      "catPos": 4,
+      "category": "c2",
+      "level": "C2",
+      "phase": "C2 · Thành thạo & Ngoại giao",
+      "title": "AI Ethics and Frontier Technologies",
+      "sub": "Đạo đức Trí tuệ Nhân tạo, AGI và công nghệ tương lai",
+      "vocab": [
+        {
+          "w": "artificial general intelligence",
+          "m": "trí tuệ nhân tạo tổng quát (AGI)",
+          "d": "hypothetical software capable of understanding and learning any intellectual task that a human can",
+          "ex": "Achieving artificial general intelligence raises profound governance challenges regarding alignment with human values.",
+          "exm": "Đạt tới trí tuệ nhân tạo tổng quát đặt ra những thách thức quản trị sâu sắc liên quan đến việc đồng bộ hóa với các giá trị nhân loại.",
+          "id": "w159-0",
+          "r": "/ˌɑː.tɪˈfɪʃ.əl ˈdʒen.ər.əl ɪnˈtel.ɪ.dʒəns/",
+          "exr": ""
+        },
+        {
+          "w": "technological singularity",
+          "m": "điểm kỳ dị công nghệ (Singularity)",
+          "d": "a hypothetical future point in time at which technological growth becomes uncontrollable and irreversible",
+          "ex": "The technological singularity envisions self-improving recursive algorithms surpassing collective biological intelligence.",
+          "exm": "Điểm kỳ dị công nghệ mường tượng các thuật toán tự cải tiến đệ quy vượt qua toàn bộ trí thông minh sinh học.",
+          "id": "w159-1",
+          "r": "/ˌtek.nəˈlɒdʒ.ɪ.kəl ˌsɪŋ.ɡjʊˈlær.ə.ti/",
+          "exr": ""
+        },
+        {
+          "w": "autonomous system",
+          "m": "hệ thống tự hành",
+          "d": "a system that acts independently to perform tasks without human intervention",
+          "ex": "Deploying lethal autonomous systems in defense theaters triggers grave humanitarian concerns under international law.",
+          "exm": "Triển khai các hệ thống tự hành sát thương trong chiến trường quốc phòng làm dấy lên những lo ngại nhân đạo sâu sắc theo luật pháp quốc tế.",
+          "id": "w159-2",
+          "r": "/ɔːˈtɒn.ə.məs ˈsɪs.təm/",
+          "exr": ""
+        },
+        {
+          "w": "algorithmic bias",
+          "m": "thiên vị thuật toán",
+          "d": "systematic and repeatable errors in a computer system that create unfair outcomes",
+          "ex": "Auditing neural networks is crucial to eradicate algorithmic bias inherited from historical training datasets.",
+          "exm": "Kiểm toán mạng nơ-ron là điều tối quan trọng để xóa bỏ thiên vị thuật toán thừa hưởng từ các tập dữ liệu huấn luyện trong quá khứ.",
+          "id": "w159-3",
+          "r": "/ˌæl.ɡəˈrɪð.mɪk ˈbaɪ.əs/",
+          "exr": ""
+        },
+        {
+          "w": "quantum computing",
+          "m": "điện toán lượng tử",
+          "d": "computation using quantum-mechanical phenomena, such as superposition and entanglement",
+          "ex": "Quantum computing promises to revolutionize cryptography, materials science, and macromolecular simulation.",
+          "exm": "Điện toán lượng tử hứa hẹn sẽ cách mạng hóa mật mã học, khoa học vật liệu và mô phỏng đại phân tử.",
+          "id": "w159-4",
+          "r": "/ˈkwɒn.təm kəmˈpjuː.tɪŋ/",
+          "exr": ""
+        },
+        {
+          "w": "surveillance",
+          "m": "sự giám sát, theo dõi diện rộng",
+          "d": "close observation, especially of a suspected person or public spaces",
+          "ex": "Pervasive facial recognition surveillance raises fundamental concerns regarding civil liberties.",
+          "exm": "Giám sát nhận diện khuôn mặt khắp nơi làm dấy lên những lo ngại căn bản liên quan đến quyền tự do dân sự.",
+          "id": "w159-5",
+          "r": "/səˈveɪ.ləns/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "In AI safety research, what does the 'alignment problem' entail?",
+          "o": [
+            "Ensuring artificial intelligence systems reliably act in accordance with human moral values and societal intent.",
+            "Making robot hardware run on renewable batteries.",
+            "Aligning computer monitors on office desks."
+          ],
+          "a": 0,
+          "why": "'Alignment problem' là bài toán sống còn đảm bảo AI thông minh hành động tương thích với giá trị đạo đức con người.",
+          "id": "q159-0"
+        },
+        {
+          "q": "What is the concept of 'technological singularity'?",
+          "o": [
+            "A theoretical horizon where machine superintelligence advances uncontrollably beyond human comprehension.",
+            "The date when all computers use a single operating system.",
+            "A period when computer chips become completely free."
+          ],
+          "a": 0,
+          "why": "Điểm kỳ dị công nghệ là thời điểm siêu trí tuệ máy móc phát triển bùng nổ vượt ngoài tầm hiểu biết của con người.",
+          "id": "q159-1"
+        },
+        {
+          "q": "How does 'algorithmic bias' typically contaminate machine learning models?",
+          "o": [
+            "By training models on historical datasets that contain human prejudices and unrepresentative sampling.",
+            "Through physical dust particles inside the processor.",
+            "By writing code exclusively in capital letters."
+          ],
+          "a": 0,
+          "why": "Thiên kiến thuật toán bắt nguồn từ việc dữ liệu huấn luyện trong quá khứ chứa sẵn các định kiến của con người.",
+          "id": "q159-2"
+        },
+        {
+          "q": "What computational leap distinguishes 'quantum computing' from classical computing?",
+          "o": [
+            "Utilizing quantum superposition and entanglement to solve specific complex problems exponentially faster.",
+            "Having screens with higher pixel resolution.",
+            "Running without requiring electrical power."
+          ],
+          "a": 0,
+          "why": "Điện toán lượng tử tận dụng hiện tượng chồng chập và vướng víu lượng tử để tính toán nhanh vượt trội theo hàm mũ.",
+          "id": "q159-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Global summit on AI governance",
+          "id": "s159-0",
+          "lines": [
+            {
+              "t": "Should sovereign states establish a binding international agency for frontier AI oversight?",
+              "r": "",
+              "m": "Liệu các quốc gia có chủ quyền có nên thành lập một cơ quan quốc tế có tính ràng buộc để giám sát AI tiên phong không?"
+            },
+            {
+              "t": "Much like civil nuclear inspections, a global verification regime is essential to mitigate catastrophic systemic risks.",
+              "r": "",
+              "m": "Giống như thanh sát hạt nhân dân sự, một chế độ kiểm chứng toàn cầu là điều cốt yếu để giảm thiểu các rủi ro thảm họa mang tính hệ thống."
+            },
+            {
+              "t": "Yet governance must remain agile to avoid stifling foundational open-source innovation.",
+              "r": "",
+              "m": "Tuy nhiên, công tác quản trị phải giữ được sự linh hoạt để tránh bóp nghẹt sự đổi mới mã nguồn mở nền tảng."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How should society manage the transition as autonomous systems displace cognitive labor?",
+          "vi": "Xã hội nên quản lý quá trình chuyển đổi như thế nào khi các hệ thống tự hành thay thế lao động trí óc?",
+          "st": "Managing AI disruption demands...",
+          "ph": [
+            "proactive educational reskilling",
+            "universal social safety nets",
+            "ethical governance frameworks"
+          ],
+          "sa": "Managing technological disruption requires proactive educational reskilling, progressive social safety nets, and democratic oversight to distribute productivity dividends equitably.",
+          "ss": [
+            "Human creativity must be augmented, not replaced.",
+            "Public policy must outpace technological disruption."
+          ],
+          "sc": "Discussing the societal impact of AI.",
+          "id": "c159-0"
+        }
+      ],
+      "fill": {
+        "text": "As humanity progresses toward [[artificial general intelligence|manual typewriter|steam engine]], establishing strict ethical [[governance|neglect|ignorance]] is critical to eliminate algorithmic [[bias|accuracy|perfection]].",
+        "trans": "Khi nhân loại tiến gần tới trí tuệ nhân tạo tổng quát, việc thiết lập quản trị đạo đức nghiêm ngặt là điều quyết định để loại bỏ thiên kiến thuật toán.",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "160",
+      "pos": 87,
+      "catPos": 5,
+      "category": "c2",
+      "level": "C2",
+      "phase": "C2 · Thành thạo & Ngoại giao",
+      "title": "Crisis Communication and High-Stakes Diplomacy",
+      "sub": "Truyền thông khủng hoảng, ngoại giao cấp cao và đàm phán ngầm",
+      "vocab": [
+        {
+          "w": "crisis management",
+          "m": "quản trị khủng hoảng",
+          "d": "the application of strategies designed to help an organization deal with a sudden and significant negative event",
+          "ex": "Decisive crisis management prevented the industrial leak from escalating into an international scandal.",
+          "exm": "Quản trị khủng hoảng quyết đoán đã ngăn ngừa vụ rò rỉ công nghiệp leo thang thành một vụ bê bối quốc tế.",
+          "id": "w160-0",
+          "r": "/ˈkraɪ.sɪs ˈmæn.ɪdʒ.mənt/",
+          "exr": ""
+        },
+        {
+          "w": "de-escalation",
+          "m": "sự hạ nhiệt, giảm căng thẳng",
+          "d": "the reduction of the intensity of a conflict or potentially violent situation",
+          "ex": "Backchannel negotiations achieved immediate de-escalation along the disputed border.",
+          "exm": "Đàm phán kênh ngầm đã đạt được sự hạ nhiệt căng thẳng tức thì dọc theo đường biên giới tranh chấp.",
+          "id": "w160-1",
+          "r": "/diːˌes.kəˈleɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "damage control",
+          "m": "kiểm soát thiệt hại, xử lý khủng hoảng truyền thông",
+          "d": "action taken to limit the damaging effects of an accident or error",
+          "ex": "The executive team conducted round-the-clock damage control to restore public trust.",
+          "exm": "Ban điều hành đã tiến hành kiểm soát thiệt hại suốt ngày đêm để khôi phục niềm tin của công chúng.",
+          "id": "w160-2",
+          "r": "/ˈdæm.ɪdʒ kənˌtrəʊl/",
+          "exr": ""
+        },
+        {
+          "w": "communique",
+          "m": "thông cáo chung, tuyên bố chính thức",
+          "d": "an official announcement or statement, especially one made to the media",
+          "ex": "Leaders signed a joint communique pledging bilateral cooperation on cyber defense.",
+          "exm": "Các nhà lãnh đạo đã ký một bản thông cáo chung cam kết hợp tác song phương về phòng thủ an ninh mạng.",
+          "id": "w160-3",
+          "r": "/kəˈmjuː.nɪ.keɪ/",
+          "exr": ""
+        },
+        {
+          "w": "transparency",
+          "m": "tính minh bạch",
+          "d": "the condition of being open, honest, and accessible without hidden agendas",
+          "ex": "Unflinching transparency during product recalls is the hallmark of ethical enterprise leadership.",
+          "exm": "Sự minh bạch kiên định trong các đợt thu hồi sản phẩm là dấu ấn của sự lãnh đạo doanh nghiệp có đạo đức.",
+          "id": "w160-4",
+          "r": "/trænˈspær.ən.si/",
+          "exr": ""
+        },
+        {
+          "w": "mediation",
+          "m": "sự hòa giải, trung gian hòa giải",
+          "d": "intervention in a dispute in order to resolve it; arbitration",
+          "ex": "Neutral diplomatic mediation prevented cross-border tensions from spilling over into open warfare.",
+          "exm": "Sự trung gian hòa giải ngoại giao trung lập đã ngăn không cho các căng thẳng biên giới biến thành chiến tranh mở.",
+          "id": "w160-5",
+          "r": "/ˌmiː.diˈeɪ.ʃən/",
+          "exr": ""
+        },
+        {
+          "w": "accountability",
+          "m": "trách nhiệm giải trình",
+          "d": "the fact or condition of being accountable; responsibility",
+          "ex": "Holding institutions accountable to independent oversight reinforces the rule of law.",
+          "exm": "Buộc các thiết chế phải có trách nhiệm giải trình trước sự giám sát độc lập sẽ củng cố nhà nước pháp quyền.",
+          "id": "w160-6",
+          "r": "/əˌkaʊn.təˈbɪl.ə.ti/",
+          "exr": ""
+        }
+      ],
+      "quiz": [
+        {
+          "q": "What is the primary golden rule of corporate crisis communication?",
+          "o": [
+            "Communicate transparently, acknowledge accountability swiftly, and present verified remediation steps.",
+            "Deny all allegations indefinitely until compelled by court subpoena.",
+            "Blame external suppliers and conceal documents."
+          ],
+          "a": 0,
+          "why": "Nguyên tắc vàng của xử lý khủng hoảng là minh bạch, nhận trách nhiệm nhanh chóng và đưa ra giải pháp khắc phục thực tế.",
+          "id": "q150-0"
+        },
+        {
+          "q": "What role do 'backchannel diplomacy' communications play during acute geopolitical flashpoints?",
+          "o": [
+            "Enabling frank off-the-record consultations away from domestic political pressures to facilitate de-escalation.",
+            "Leaking classified files to tabloid media.",
+            "Canceling all peace talks permanently."
+          ],
+          "a": 0,
+          "why": "Kênh ngoại giao ngầm giúp các bên trao đổi thẳng thắn kín đáo nhằm giải nhiệt căng thẳng mà không bị áp lực chính trị dư luận.",
+          "id": "q160-1"
+        },
+        {
+          "q": "What is a 'joint communique' in international diplomacy?",
+          "o": [
+            "An official public consensus document issued by participating heads of state at the conclusion of a summit.",
+            "A secret spy directive.",
+            "A private bill for hotel accommodations."
+          ],
+          "a": 0,
+          "why": "Thông cáo chung là văn kiện chính thức ghi nhận đồng thuận giữa các nguyên thủ quốc gia sau hội nghị cấp cao.",
+          "id": "q160-2"
+        },
+        {
+          "q": "Why is 'de-escalation' prioritized during high-stakes brinkmanship?",
+          "o": [
+            "To avert miscalculation that could trigger irreversible catastrophic escalation.",
+            "To prolong military conflict for corporate profit.",
+            "To demonstrate complete weakness to adversaries."
+          ],
+          "a": 0,
+          "why": "Hạ nhiệt căng thẳng nhằm ngăn chặn sự tính toán sai lầm có thể châm ngòi cho xung đột thảm khốc không thể cứu vãn.",
+          "id": "q160-3"
+        }
+      ],
+      "speak": [
+        {
+          "title": "Press conference during a major crisis",
+          "id": "s160-0",
+          "lines": [
+            {
+              "t": "What immediate measures has your executive board implemented to guarantee customer data integrity?",
+              "r": "",
+              "m": "Hội đồng quản trị của quý vị đã thực hiện những biện pháp cấp bách nào để bảo đảm tính toàn vẹn dữ liệu khách hàng?"
+            },
+            {
+              "t": "We isolated the compromised server within twelve minutes and engaged independent cybersecurity auditors.",
+              "r": "",
+              "m": "Chúng tôi đã cách ly máy chủ bị xâm nhập trong vòng mười hai phút và mời các kiểm toán viên an ninh mạng độc lập vào cuộc."
+            },
+            {
+              "t": "Our paramount priority remains complete transparency and making affected users whole.",
+              "r": "",
+              "m": "Ưu tiên tối thượng của chúng tôi vẫn là sự minh bạch tuyệt đối và bồi thường thỏa đáng cho những người dùng bị ảnh hưởng."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "How can leaders maintain institutional credibility when navigating an unforeseen catastrophe?",
+          "vi": "Làm thế nào để các nhà lãnh đạo duy trì uy tín của tổ chức khi đối mặt với một thảm họa không lường trước?",
+          "st": "Preserving credibility demands...",
+          "ph": [
+            "immediate factual candor",
+            "empathy for affected stakeholders",
+            "decisive corrective action"
+          ],
+          "sa": "Preserving institutional credibility demands swift factual candor, visible empathy for affected parties, and demonstrable accountability through decisive corrective investments.",
+          "ss": [
+            "Never prioritize public relations over truthful disclosure.",
+            "Accountability under scrutiny transforms crises into opportunities for reform."
+          ],
+          "sc": "Mastering crisis leadership.",
+          "id": "c160-0"
+        }
+      ],
+      "fill": {
+        "text": "Navigating acute friction requires skilled [[de-escalation|aggression|negligence]] and uncompromised [[transparency|deception|rumors]] to safeguard public trust and regional stability.",
+        "trans": "Xử lý những va chạm gay gắt đòi hỏi kỹ năng hạ nhiệt căng thẳng điêu luyện và sự minh bạch kiên định để bảo vệ niềm tin của công chúng và sự ổn định khu vực.",
+        "audio": ""
+      },
+      "gram": []
     }
   ],
   "audio": {
