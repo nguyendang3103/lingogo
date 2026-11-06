@@ -310,6 +310,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
+const APP_BUILD_ID = '20261106-1110';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -548,7 +549,8 @@ const DATA = {}, STROKES = {}, BUNDLES = {};
 async function getJSON(path) {
   const el = document.querySelector('script[type="application/json"][data-file="' + path + '"]');
   if (el) { try { return JSON.parse(el.textContent); } catch (e) { /* hỏng thì rơi về tải mạng */ } }
-  const r = await fetch(path);
+  const url = path + (path.includes('?') ? '&' : '?') + 'v=' + APP_BUILD_ID;
+  const r = await fetch(url);
   if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
   return r.json();
 }
@@ -1043,10 +1045,10 @@ function homeView() {
     catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
-      ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.9 · Cập nhật 06/11/2026')));
+      ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.9.1 · Cập nhật 06/11/2026')));
 }
-function topicCard(t, nx) {
+function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
   const body = open && h('div', { class: 'body' },
     ...t.lessons.map((l, i) => {
@@ -1061,12 +1063,13 @@ function topicCard(t, nx) {
       (t.kanji && t.kanji.length) && h('button', { class: 'mini', onclick: () => kanjiView(t) }, 'Kanji (' + t.kanji.length + ')'),
       h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Luyện nói'),
       (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết')));
-  const displayNum = t.catPos || t.pos;
+  const displayNum = num != null ? num : (t.catPos || t.pos);
+  const lvl = t.level || (t.category === 'life' ? 'A1' : t.category === 'hobbies' ? 'A2' : (t.category === 'business' ? 'B1' : null));
   return h('section', { class: 'topic' + (isCur ? ' cur' : '') + (done === t.lessons.length ? ' done' : '') },
     h('button', { class: 'head', 'aria-expanded': String(open), onclick: () => { open ? openTopics.delete(ok) : openTopics.add(ok); homeView(); } },
       h('span', { class: 'num' }, done === t.lessons.length ? '✓' : displayNum),
       h('span', { class: 'meta' }, h('b', { lang: L().lang }, t.title), t.sub && t.sub !== t.title && h('span', { class: 'small muted' }, t.sub)),
-      t.level && h('span', { class: 'chip level ' + t.level.toLowerCase().replace('+', '') }, t.level),
+      lvl && h('span', { class: 'chip level ' + lvl.toLowerCase().replace('+', '') }, lvl),
       h('span', { class: 'chip' + (done === t.lessons.length ? ' good' : '') }, done + '/' + t.lessons.length)),
     body);
 }
@@ -2421,7 +2424,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261106-1100';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
