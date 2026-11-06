@@ -154,6 +154,9 @@ select { width: 100%; }
 .chip.level.hsk9 { background: #feffe6; color: #ad8b00; border: 1px solid #ffe58f; font-weight: 800; box-shadow: 0 0 4px rgba(250,219,20,.4); }
 .chip.level.n5 { background: #e6f7ec; color: #0d8a43; border: 1px solid #b7ebc6; }
 .chip.level.n4 { background: #e6f4ff; color: #096dd9; border: 1px solid #91caff; }
+.chip.level.n3 { background: #f0f5ff; color: #1d39c4; border: 1px solid #adc6ff; }
+.chip.level.n2 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
+.chip.level.n1 { background: #feffe6; color: #ad8b00; border: 1px solid #ffe58f; font-weight: 800; box-shadow: 0 0 4px rgba(250,219,20,.4); }
 .kbd { flex: none; display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; font: 600 .8rem/1 var(--font); color: var(--muted); background: var(--bg); font-variant-numeric: tabular-nums; }
 .options button { gap: 12px; }
 .options button[aria-pressed="true"] .kbd { border-color: var(--teal); color: var(--teal); }
@@ -420,7 +423,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261106-1200';
+const APP_BUILD_ID = '20261106-1330';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -449,15 +452,17 @@ const CATEGORIES = {
     { id: 'all', name: 'Tất cả 9 cấp độ', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '51 bài', desc: 'Toàn bộ 51 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
   ],
   ja: [
-    { id: 'basic', name: 'Nền tảng & Đời sống', short: 'Nền tảng', icon: '🌱', level: 'N5', count: '7 bài', desc: 'Chào hỏi, ngày tháng, mua sắm, gia đình, đồ vật, sinh hoạt, nghỉ hè' },
-    { id: 'comm', name: 'Giao tiếp & Xã hội', short: 'Giao tiếp', icon: '🎨', level: 'N4', count: '7 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, trường học, tiền bạc' },
-    { id: 'kanji', name: 'Kanji & Thể động từ', short: 'Kanji', icon: '⛩️', level: 'N5–N4', count: '2 bài', desc: 'Chữ Hán căn bản N5 và các dạng biến thể của động từ tiếng Nhật' },
-    { id: 'all', name: 'Tất cả chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N4', count: '16 bài', desc: 'Toàn bộ 16 bài học theo lộ trình tiếng Nhật sơ cấp N5–N4' }
+    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Chào hỏi, ngày giờ, mua sắm, gia đình, đồ vật, sinh hoạt, du lịch và Kanji N5 căn bản' },
+    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '8 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, trường học, tiền tệ và biến cách động từ' },
+    { id: 'n3', name: 'N3 · Trung cấp 1', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Văn phòng & công việc, đời sống & xử lý sự cố, trải nghiệm văn hóa và du lịch Nhật Bản' },
+    { id: 'n2', name: 'N2 · Trung cấp 2', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Đàm phán kinh doanh, kính ngữ thương mại & tác phong công sở, xã hội & công nghệ' },
+    { id: 'n1', name: 'N1 · Cao cấp', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Kinh tế vĩ mô & toàn cầu, pháp chế & quản trị doanh nghiệp, tư tưởng & mỹ học Nhật Bản' },
+    { id: 'all', name: 'Tất cả 5 cấp độ', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '25 bài', desc: 'Lộ trình tiếng Nhật toàn diện 25 bài học từ sơ cấp N5 đến cao cấp N1' }
   ]
 };
 const EN_CATEGORIES = CATEGORIES.en;
 let subjectsOpen = false;
-const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'life', zhCat: 'hsk1', jaCat: 'basic', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
+const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'life', zhCat: 'hsk1', jaCat: 'n5', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
 const SYNC = { ref: null, timer: 0, seen: -1 };
@@ -856,7 +861,7 @@ const topicDone = (t) => t.lessons.every((l, i) => lessonDone(t, i));
 function nextLesson(d, cat) {
   const code = d && d.code;
   const langCats = CATEGORIES[code];
-  const defaultCat = code === 'ja' ? (S.jaCat || 'basic') : (code === 'zh' ? (S.zhCat || 'hsk1') : (code === 'en' ? (S.enCat || 'life') : 'all'));
+  const defaultCat = code === 'ja' ? (S.jaCat || 'n5') : (code === 'zh' ? (S.zhCat || 'hsk1') : (code === 'en' ? (S.enCat || 'life') : 'all'));
   const curCat = cat !== undefined ? cat : (langCats ? defaultCat : 'all');
   const defCategory = code === 'zh' ? 'hsk1' : (code === 'ja' ? 'basic' : 'business');
   const topics = (curCat && curCat !== 'all') ? d.topics.filter((t) => (t.category || defCategory) === curCat) : d.topics;
@@ -1010,7 +1015,7 @@ async function route() {
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
-const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–9)', ja: 'Tiếng Nhật · N5–N4' };
+const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–9)', ja: 'Tiếng Nhật · JLPT N5–N1' };
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -1131,14 +1136,16 @@ function homeView() {
     else if (S.zhCat === 'business') S.zhCat = 'hsk4';
     else if (S.zhCat === 'advanced') S.zhCat = 'hsk5';
   }
-  if (S.lang === 'ja' && !S.jaCat) {
-    S.jaCat = 'basic';
+  if (S.lang === 'ja') {
+    if (!S.jaCat || S.jaCat === 'basic') S.jaCat = 'n5';
+    else if (S.jaCat === 'comm') S.jaCat = 'n4';
+    else if (S.jaCat === 'kanji') S.jaCat = 'n5';
   }
-  const curCat = langCats ? (S.lang === 'en' ? (S.enCat || 'life') : (S.lang === 'zh' ? (S.zhCat || 'hsk1') : (S.jaCat || 'basic'))) : 'all';
+  const curCat = langCats ? (S.lang === 'en' ? (S.enCat || 'life') : (S.lang === 'zh' ? (S.zhCat || 'hsk1') : (S.jaCat || 'n5'))) : 'all';
   const nx = nextLesson(d, curCat);
   const gf = h('i'); requestAnimationFrame(() => { gf.style.width = Math.min(100, Math.round((xp / goal()) * 100)) + '%'; });
 
-  const defCategory = S.lang === 'zh' ? 'hsk1' : (S.lang === 'ja' ? 'basic' : 'business');
+  const defCategory = S.lang === 'zh' ? 'hsk1' : (S.lang === 'ja' ? 'n5' : 'business');
   const filteredTopics = (langCats && curCat !== 'all')
     ? d.topics.filter((t) => (t.category || defCategory) === curCat)
     : d.topics;
@@ -1246,7 +1253,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.13 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.14 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
