@@ -157,7 +157,7 @@ select { width: 100%; }
 .big { font-size: 2.2rem; font-weight: 700; text-align: center; line-height: 1.25; overflow-wrap: anywhere; }
 .big[lang="zh-Hans"], .big[lang="ja"] { font-size: 2.8rem; font-weight: 500; }
 .read { color: var(--teal); text-align: center; font-size: 1rem; }
-.ipa { font-family: var(--mono); color: var(--muted); text-align: center; font-size: .95rem; }
+.ipa { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--teal); font-weight: 600; text-align: center; font-size: 1.05rem; letter-spacing: .25px; }
 .hv { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 12px; border-radius: 12px; background: var(--sunk); }
 .hv .hvw { color: var(--teal); font-size: 1.25rem; letter-spacing: .02em; }
 .hvrows { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 320px; }
@@ -988,7 +988,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx)))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.6 · Cập nhật 05/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.7 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1345,8 +1345,8 @@ function lessonView(t, i) {
         r.note && ex.type !== 'quiz' && h('p', { class: 'small' }, r.note),
         ex.type === 'order' ? orderFeedback(code, ex, r) : null,
         ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
-        ex.type === 'reverse' && code !== 'en' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
-          h('p', { class: 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
+        ex.type === 'reverse' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
+          h('p', { class: code === 'en' ? 'ipa' : 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
           h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
         ) : null
       ),
@@ -1393,7 +1393,7 @@ function lessonView(t, i) {
     h('h1', { lang: t.lessons[i].kind === 'learn' ? LANGS[code].lang : null }, lessonTitle(t, i)),
     t.lessons[i].words.length > 0 && h('div', { class: 'panel stack' }, h('h3', {}, 'Từ mới trong bài'),
       ...t.lessons[i].words.map((v) => h('button', { class: 'lesson', onclick: () => say(code, v.w) },
-        h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small muted' }, '  ' + v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
+        h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small' + (code === 'en' ? ' ipa' : ' muted'), style: code === 'en' ? { color: 'var(--teal)', fontWeight: 600, display: 'inline-block', marginLeft: '6px' } : null }, v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
         h('span', { class: 'spk', 'aria-hidden': 'true' }, icon(ICON.speaker))))),
     t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Điền từ vào email, rồi sắp xếp câu ví dụ.' : 'Điền từ vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind]),
     h('div', { class: 'dock' }, h('button', { class: 'primary block', onclick: step }, 'Bắt đầu · ' + steps.filter((s) => s.type !== 'intro').length + ' câu'))));
@@ -2348,7 +2348,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261105-1710';
+const APP_BUILD_ID = '20261106-1025';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
