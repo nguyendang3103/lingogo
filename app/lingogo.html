@@ -313,7 +313,7 @@ const LANGS = {
 
 // ===== Trạng thái học tập (lưu trên máy + đồng bộ tài khoản khi có) =====
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
-const EN_CATEGORIES = [{ id: 'all', label: 'Tất cả' }, { id: 'business', label: '💼 Thương mại' }, { id: 'life', label: '🏡 Cuộc sống' }, { id: 'hobbies', label: '🎨 Sở thích' }];
+const EN_CATEGORIES = [{ id: 'all', label: 'Tất cả (44)' }, { id: 'business', label: '💼 Thương mại (32)' }, { id: 'life', label: '🏡 Cuộc sống (6)' }, { id: 'hobbies', label: '🎨 Sở thích (6)' }];
 const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'all', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
@@ -862,7 +862,7 @@ async function route() {
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
-const SUBTITLE = { en: 'Tiếng Anh thương mại', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
+const SUBTITLE = { en: 'Thương mại · Cuộc sống · Sở thích', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -874,11 +874,37 @@ function pickView() {
       const x = xpOf(t, c), f = h('i');
       requestAnimationFrame(() => { f.style.width = Math.min(100, Math.round((x / goal()) * 100)) + '%'; });
       const lessons = Object.keys(S.lessons).filter((k) => k.startsWith(c + ':')).length;
-      return h('button', { class: 'langcard' + (c === S.lang ? ' cur' : ''), 'aria-keyshortcuts': String(i + 1), onclick: () => { S.lang = c; save(); go('home'); } },
-        h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true' }, GLYPH[c]),
+      const topicPills = c === 'en' ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', marginTop: '6px' } },
+        h('button', {
+          class: 'cat-pill' + ((S.enCat || 'all') === 'business' ? ' active' : ''),
+          style: { padding: '4px 10px', fontSize: '.78rem' },
+          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'business'; save(); go('home'); }
+        }, '💼 Thương mại (32)'),
+        h('button', {
+          class: 'cat-pill' + (S.enCat === 'life' ? ' active' : ''),
+          style: { padding: '4px 10px', fontSize: '.78rem' },
+          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'life'; save(); go('home'); }
+        }, '🏡 Cuộc sống (6)'),
+        h('button', {
+          class: 'cat-pill' + (S.enCat === 'hobbies' ? ' active' : ''),
+          style: { padding: '4px 10px', fontSize: '.78rem' },
+          onclick: (e) => { e.stopPropagation(); S.lang = 'en'; S.enCat = 'hobbies'; save(); go('home'); }
+        }, '🎨 Sở thích (6)')
+      ) : null;
+      return h('div', {
+        class: 'langcard' + (c === S.lang ? ' cur' : ''),
+        role: 'button',
+        tabIndex: 0,
+        style: { cursor: 'pointer' },
+        'aria-keyshortcuts': String(i + 1),
+        onclick: () => { S.lang = c; save(); go('home'); },
+        onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); S.lang = c; save(); go('home'); } }
+      },
+        h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: c === 'en' ? { gridRow: 'span 4' } : null }, GLYPH[c]),
         h('span', {}, h('span', { class: 'name', lang: v.lang }, v.label), h('span', { class: 'muted small' }, '  ' + SUBTITLE[c])),
         h('span', { class: 'small muted' }, (metGoal(t, c) ? 'Đã đạt mục tiêu hôm nay' : x + '/' + goal() + ' XP hôm nay') + ' · chuỗi ' + streak(c) + ' ngày · ' + lessons + ' bài đã học'),
-        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': goal() }, f));
+        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': goal() }, f),
+        topicPills);
     })),
     h('p', { class: 'small muted center' }, 'Mục tiêu mỗi thứ tiếng ' + goal() + ' XP/ngày · đổi ngôn ngữ bất cứ lúc nào bằng nút ở đầu trang')));
 }
@@ -2093,7 +2119,7 @@ function showFeedbackModal(customCtx) {
   window.addEventListener('keydown', onKey);
 
   const cur = { ...getFeedbackContext(), ...(customCtx || {}) };
-  const langName = { en: 'Tiếng Anh thương mại', zh: 'Tiếng Trung', ja: 'Tiếng Nhật' }[S.lang] || S.lang;
+  const langName = { en: 'Tiếng Anh', zh: 'Tiếng Trung', ja: 'Tiếng Nhật' }[S.lang] || S.lang;
   
   let locText = 'Trang chính';
   if (cur.mode === 'lesson' || cur.topicTitle) {
@@ -2399,7 +2425,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-const APP_BUILD_ID = '20261106-1045';
+const APP_BUILD_ID = '20261106-1050';
 async function checkAppUpdate() {
   try {
     const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
