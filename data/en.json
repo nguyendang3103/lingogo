@@ -30404,8 +30404,1289 @@
       "level": "B2"
     },
     {
-      "id": "151",
+      "id": "171",
+      "title": "Construction Equipment and Heavy Machinery",
+      "sub": "Thiết bị và máy móc thi công xây dựng",
+      "category": "b2",
+      "level": "B2",
+      "catPos": 35,
       "pos": 78,
+      "vocab": [
+        {
+          "id": "w171-1",
+          "w": "Excavator",
+          "r": "/ˈek.skə.veɪ.tɚ/",
+          "d": "(noun)",
+          "m": "Máy đào, máy xúc",
+          "ex": "The heavy excavator is digging the foundation trenches according to the excavation plan.",
+          "exr": "",
+          "exm": "Máy đào hạng nặng đang đào móng hào theo đúng sơ đồ đào."
+        },
+        {
+          "id": "w171-2",
+          "w": "Bulldozer",
+          "r": "/ˈbʊlˌdoʊ.zɚ/",
+          "d": "(noun)",
+          "m": "Máy ủi đất",
+          "ex": "The bulldozer leveled the rough ground before compaction began.",
+          "exr": "",
+          "exm": "Máy ủi đã san phẳng mặt đất gồ ghề trước khi bắt đầu lu lèn."
+        },
+        {
+          "id": "w171-3",
+          "w": "Tower crane",
+          "r": "/ˈtaʊ.ɚ kreɪn/",
+          "d": "(noun)",
+          "m": "Cần trục tháp",
+          "ex": "The tower crane lifted structural steel beams to the thirty-second floor.",
+          "exr": "",
+          "exm": "Cần trục tháp đã nâng các dầm thép kết cấu lên tầng ba mươi hai."
+        },
+        {
+          "id": "w171-4",
+          "w": "Mobile crane",
+          "r": "/ˈmoʊ.bəl kreɪn/",
+          "d": "(noun)",
+          "m": "Cần cẩu di động, xe cẩu bánh lốp",
+          "ex": "A mobile crane was deployed to position the precast concrete girders quickly.",
+          "exr": "",
+          "exm": "Xe cẩu di động đã được điều động để định vị nhanh các dầm bê tông đúc sẵn."
+        },
+        {
+          "id": "w171-5",
+          "w": "Concrete mixer truck",
+          "r": "/ˈkɑːn.kriːt ˈmɪk.sɚ trʌk/",
+          "d": "(noun)",
+          "m": "Xe bồn trộn bê tông",
+          "ex": "Five concrete mixer trucks arrived on site for the continuous slab pour.",
+          "exr": "",
+          "exm": "Năm xe bồn trộn bê tông đã đến công trường để đổ sàn liên tục."
+        },
+        {
+          "id": "w171-6",
+          "w": "Concrete pump truck",
+          "r": "/ˈkɑːn.kriːt pʌmp trʌk/",
+          "d": "(noun)",
+          "m": "Xe bơm bê tông cần",
+          "ex": "The concrete pump truck extended its boom to reach the top deck.",
+          "exr": "",
+          "exm": "Xe bơm bê tông đã vươn cần để tiếp cận sàn trên cùng."
+        },
+        {
+          "id": "w171-7",
+          "w": "Backhoe loader",
+          "r": "/ˈbækˌhoʊ ˈloʊ.dɚ/",
+          "d": "(noun)",
+          "m": "Máy xúc đào kết hợp",
+          "ex": "The backhoe loader cleared utility trenches and loaded rubble onto trucks.",
+          "exr": "",
+          "exm": "Xe xúc đào kết hợp đã dọn rãnh kỹ thuật và bốc xà bần lên xe tải."
+        },
+        {
+          "id": "w171-8",
+          "w": "Compactor",
+          "r": "/kəmˈpæk.tɚ/",
+          "d": "(noun)",
+          "m": "Máy đầm, máy lu rung",
+          "ex": "The vibrating roller compactor achieved ninety-eight percent soil density.",
+          "exr": "",
+          "exm": "Máy lu rung đã đạt độ đầm chặt đất chín mươi tám phần trăm."
+        },
+        {
+          "id": "w171-9",
+          "w": "Dump truck",
+          "r": "/ˈdʌmp trʌk/",
+          "d": "(noun)",
+          "m": "Xe ben, xe tải tự đổ",
+          "ex": "A fleet of dump trucks hauled excavated earth to the designated dump site.",
+          "exr": "",
+          "exm": "Đoàn xe ben đã vận chuyển đất đào đến bãi đổ quy định."
+        },
+        {
+          "id": "w171-10",
+          "w": "Skid-steer loader",
+          "r": "/ˌskɪdˈstɪr ˈloʊ.dɚ/",
+          "d": "(noun)",
+          "m": "Xe xúc lật mini",
+          "ex": "The compact skid-steer loader maneuvered easily inside the tight basement area.",
+          "exr": "",
+          "exm": "Xe xúc lật mini xoay trở dễ dàng trong khu vực tầng hầm chật hẹp."
+        },
+        {
+          "id": "w171-11",
+          "w": "Piling rig",
+          "r": "/ˈpaɪ.lɪŋ rɪɡ/",
+          "d": "(noun)",
+          "m": "Dàn khoan cọc nhồi, máy ép cọc",
+          "ex": "The hydraulic piling rig drove deep foundation piles into solid bedrock.",
+          "exr": "",
+          "exm": "Dàn khoan cọc nhồi thủy lực đã khoan cọc móng sâu vào tầng đá gốc vững chắc."
+        },
+        {
+          "id": "w171-12",
+          "w": "Scissor lift",
+          "r": "/ˈsɪz.ɚ lɪft/",
+          "d": "(noun)",
+          "m": "Xe nâng người cắt kéo",
+          "ex": "Electricians operated the scissor lift to install high-bay ceiling lighting.",
+          "exr": "",
+          "exm": "Thợ điện đã vận hành xe nâng cắt kéo để lắp đèn trần tầm cao."
+        },
+        {
+          "id": "w171-13",
+          "w": "Boom lift",
+          "r": "/ˈbuːm lɪft/",
+          "d": "(noun)",
+          "m": "Xe thang nâng cần gập",
+          "ex": "The articulated boom lift allowed workers to inspect the exterior facade safely.",
+          "exr": "",
+          "exm": "Xe thang nâng cần gập cho phép công nhân kiểm tra mặt ngoài tòa nhà an toàn."
+        },
+        {
+          "id": "w171-14",
+          "w": "Scaffolding",
+          "r": "/ˈskæf.əl.dɪŋ/",
+          "d": "(noun)",
+          "m": "Giàn giáo xây dựng",
+          "ex": "Certified inspectors tagged the steel scaffolding safe for masonry installation.",
+          "exr": "",
+          "exm": "Kỹ thuật viên được cấp chứng chỉ đã dán thẻ an toàn cho hệ giàn giáo thép."
+        },
+        {
+          "id": "w171-15",
+          "w": "Jackhammer",
+          "r": "/ˈdʒækˌhæm.ɚ/",
+          "d": "(noun)",
+          "m": "Máy đục bê tông khí nén",
+          "ex": "Workers broke up the old concrete pavement using a heavy pneumatic jackhammer.",
+          "exr": "",
+          "exm": "Công nhân phá bỏ mặt đường bê tông cũ bằng máy đục khí nén công suất lớn."
+        },
+        {
+          "id": "w171-16",
+          "w": "Concrete vibrator",
+          "r": "/ˈkɑːn.kriːt ˈvaɪ.breɪ.tɚ/",
+          "d": "(noun)",
+          "m": "Đầm dùi bê tông",
+          "ex": "Operate the internal concrete vibrator properly to eliminate air pockets and voids.",
+          "exr": "",
+          "exm": "Vận hành đầm dùi bê tông đúng cách để loại bỏ túi khí và lỗ rỗng."
+        },
+        {
+          "id": "w171-17",
+          "w": "Troweling machine",
+          "r": "/ˈtraʊ.əl.ɪŋ məˈʃiːn/",
+          "d": "(noun)",
+          "m": "Máy xoa nền bê tông",
+          "ex": "Power troweling machines polished the warehouse concrete floor to a smooth finish.",
+          "exr": "",
+          "exm": "Máy xoa nền công nghiệp đã đánh bóng sàn bê tông nhà kho đạt bề mặt nhẵn bóng."
+        },
+        {
+          "id": "w171-18",
+          "w": "Generator set",
+          "r": "/ˈdʒen.ə.reɪ.tɚ set/",
+          "d": "(noun)",
+          "m": "Máy phát điện công trường",
+          "ex": "A heavy diesel generator set powered temporary site lighting and heavy tools.",
+          "exr": "",
+          "exm": "Tổ máy phát điện diesel công suất lớn cung cấp điện cho chiếu sáng tạm và máy móc."
+        },
+        {
+          "id": "w171-19",
+          "w": "Submersible pump",
+          "r": "/səbˈmɝː.sə.bəl pʌmp/",
+          "d": "(noun)",
+          "m": "Máy bơm chìm thoát nước",
+          "ex": "The submersible pump removed accumulated rainwater from the excavation pit.",
+          "exr": "",
+          "exm": "Máy bơm chìm đã hút cạn nước mưa đọng lại trong hố móng sâu."
+        },
+        {
+          "id": "w171-20",
+          "w": "Air compressor",
+          "r": "/ˈer kəmˈpres.ɚ/",
+          "d": "(noun)",
+          "m": "Máy nén khí",
+          "ex": "The mobile air compressor powers pneumatic nail guns and sandblasting rigs.",
+          "exr": "",
+          "exm": "Máy nén khí di động cấp nguồn cho súng bắn đinh khí nén và giàn phun cát."
+        },
+        {
+          "id": "w171-21",
+          "w": "Rebar bender",
+          "r": "/ˈriːˌbɑːr ˈben.dɚ/",
+          "d": "(noun)",
+          "m": "Máy uốn sắt thép xây dựng",
+          "ex": "The hydraulic rebar bender formed reinforcing steel into stirrups effortlessly.",
+          "exr": "",
+          "exm": "Máy uốn thép thủy lực tạo hình đai cốt thép nhanh chóng và chuẩn xác."
+        },
+        {
+          "id": "w171-22",
+          "w": "Total station",
+          "r": "/ˈtoʊ.təl ˈsteɪ.ʃən/",
+          "d": "(noun)",
+          "m": "Máy toàn đạc điện tử",
+          "ex": "The surveyor set up the total station to establish precise building alignment lines.",
+          "exr": "",
+          "exm": "Kỹ sư trắc địa đặt máy toàn đạc để định vị chính xác tim trục công trình."
+        },
+        {
+          "id": "w171-23",
+          "w": "Laser level",
+          "r": "/ˈleɪ.zɚ ˈlev.əl/",
+          "d": "(noun)",
+          "m": "Máy cân mực laser",
+          "ex": "Drywall contractors used a rotary laser level to align interior partition walls.",
+          "exr": "",
+          "exm": "Nhà thầu vách thạch cao dùng máy cân mực laser để căn thẳng tường ngăn."
+        },
+        {
+          "id": "w171-24",
+          "w": "Site dumper",
+          "r": "/ˈsaɪt ˈdʌm.pɚ/",
+          "d": "(noun)",
+          "m": "Xe rùa tự hành",
+          "ex": "The motorized site dumper ferried fresh mortar through narrow jobsite corridors.",
+          "exr": "",
+          "exm": "Xe rùa tự hành vận chuyển vữa tươi qua các lối đi hẹp trong công trường."
+        },
+        {
+          "id": "w171-25",
+          "w": "Forklift truck",
+          "r": "/ˈfɔːrkˌlɪft trʌk/",
+          "d": "(noun)",
+          "m": "Xe nâng hàng",
+          "ex": "The rough-terrain forklift unloaded pallets of cement sacks directly from the flatbed.",
+          "exr": "",
+          "exm": "Xe nâng địa hình gồ ghề dỡ các kiện bao xi măng trực tiếp từ xe sàn."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "The tower crane is about to lift heavy steel girders over an active jobsite. What must the site supervisor do first?",
+          "o": [
+            "Establish a designated exclusion zone with barricades and warning signs below the swing radius.",
+            "Instruct all ground workers to walk faster beneath the suspended load.",
+            "Turn off the crane warning siren so workers can concentrate on their tasks.",
+            "Begin welding the girders while they are still hanging in mid-air."
+          ],
+          "a": 0,
+          "r": [
+            "Establish an exclusion zone with barricades below the crane swing radius.",
+            "Never allow workers to walk beneath a suspended load.",
+            "The crane siren is a crucial audible safety alarm.",
+            "Welding suspended loads violates all safety standards."
+          ]
+        },
+        {
+          "q": "Three concrete mixer trucks arrive at the site, but the concrete pump operator is delayed by 45 minutes. What is the primary technical risk?",
+          "o": [
+            "The ready-mix concrete will begin its initial set and lose required workability.",
+            "The truck tires will lose air pressure while idling.",
+            "The truck drums will rotate in reverse and spill concrete onto the road.",
+            "The aggregates will turn into fine dust inside the mixer."
+          ],
+          "a": 0,
+          "r": [
+            "Concrete has a limited hydration window before initial set occurs.",
+            "Idling does not affect tire pressure.",
+            "Mixer rotation direction is mechanically controlled.",
+            "Aggregates do not disintegrate during drum mixing."
+          ]
+        },
+        {
+          "q": "An excavator is digging a deep utility trench adjacent to an active roadway. Which safety measure is mandatory?",
+          "o": [
+            "Have a certified banksman spotter guide the operator and monitor trench edge clearances.",
+            "Allow the operator to wear headphones to block loud street noise.",
+            "Place the excavated soil pile directly on the edge of the unreinforced trench.",
+            "Operate the boom at maximum speed to finish before rush hour."
+          ],
+          "a": 0,
+          "r": [
+            "A dedicated banksman ensures blind spots and trench edges are protected.",
+            "Operators must maintain full situational and acoustic awareness.",
+            "Spoil piles near trench edges cause sudden wall collapse.",
+            "Rushing heavy excavation causes strikes on underground utilities."
+          ]
+        },
+        {
+          "q": "Before technicians ascend in a scissor lift to install high-bay warehouse ductwork, what must be confirmed?",
+          "o": [
+            "The ground is firm and level, potholes are covered, and safety harnesses are securely clipped to approved anchor points.",
+            "The technicians climb onto the mid-rails to gain extra working height.",
+            "The emergency lowering valve is welded shut so no one can tamper with it.",
+            "The lift is pushed manually while workers are fully elevated inside the basket."
+          ],
+          "a": 0,
+          "r": [
+            "Ground stability and harness tie-off are mandatory scissor lift rules.",
+            "Never stand on railings or mid-rails.",
+            "Emergency lowering must remain functional at all times.",
+            "Never drive or push lifts across uneven ground while extended."
+          ]
+        },
+        {
+          "q": "The concrete placement crew is using an internal immersion vibrator on a thick structural footing. How should they operate it?",
+          "o": [
+            "Insert vertically at spaced intervals and withdraw slowly without dragging laterally through concrete.",
+            "Drag the vibrating head horizontally through the concrete to move it across the formwork.",
+            "Hold the vibrator against the plywood formwork until the surface turns completely liquid.",
+            "Leave the vibrator submerged in one spot for ten minutes to maximize compaction."
+          ],
+          "a": 0,
+          "r": [
+            "Vertical insertion and slow withdrawal remove entrapped air without segregation.",
+            "Dragging causes severe aggregate segregation and sand streaks.",
+            "Vibrating against forms damages formwork and causes surface blemishes.",
+            "Over-vibrating in one spot causes heavy aggregates to sink to the bottom."
+          ]
+        },
+        {
+          "q": "An equipment operator discovers a leaking hydraulic hose on the backhoe loader during pre-start check. What is the correct protocol?",
+          "o": [
+            "Lock out and tag out the machine, record the leak in the plant log, and notify the site mechanic immediately.",
+            "Cover the hydraulic leak with duct tape and complete the morning shift anyway.",
+            "Add motor oil into the hydraulic reservoir and ignore the leak.",
+            "Wipe off the oil and hand the keys to another unsuspecting worker."
+          ],
+          "a": 0,
+          "r": [
+            "Lockout-tagout ensures dangerous pressurized equipment is not operated.",
+            "High-pressure hydraulic leaks can pierce human skin and cause fire.",
+            "Mixing oil types damages hydraulic pumps and valves.",
+            "Concealing equipment faults endangers coworker lives."
+          ]
+        }
+      ],
+      "speak": [
+        {
+          "title": "Coordinating crane lifting and site logistics",
+          "lines": [
+            {
+              "t": "Tower crane operator, this is site engineer Alex on channel two. Do you copy?",
+              "r": "/ˈtaʊ.ɚ kreɪn ˈɑː.pə.reɪ.tɚ, ðɪs ɪz saɪt ˌen.dʒəˈnɪr ˈæl.ɪks ɑːn ˈtʃæn.əl tuː. duː juː ˈkɑː.pi/",
+              "m": "Người lái cẩu tháp, tôi là kỹ sư công trường Alex trên kênh 2. Anh nghe rõ không?"
+            },
+            {
+              "t": "Loud and clear, Alex. The exclusion zone below the west wing is secured and clear of personnel.",
+              "r": "/laʊd ənd klɪr, ˈæl.ɪks. ði ɪkˈskluː.ʒən zoʊn bəˈloʊ ðə west wɪŋ ɪz səˈkjʊrd ənd klɪr əv ˌpɝː.sənˈel/",
+              "m": "Nghe to và rõ, Alex. Vùng cách ly an toàn dưới cánh phía tây đã được thiết lập và không có người."
+            },
+            {
+              "t": "Excellent. Our rigger has hooked up the first bundle of structural steel girders. Proceed with the test lift.",
+              "r": "/ˈek.səl.ənt. ˈaʊ.ɚ ˈrɪɡ.ɚ hæz hʊkt ʌp ðə fɝːst ˈbʌn.dəl əv ˈstrʌk.tʃɚ.əl stiːl ˈɡɝː.dɚz. prəˈsiːd wɪð ðə test lɪft/",
+              "m": "Xuất sắc. Thợ móc cáp đã móc xong bó dầm thép kết cấu đầu tiên. Tiến hành nâng thử 30cm nhé."
+            },
+            {
+              "t": "Understood. Hoisting slowly to verify sling balance. Rigging is stable and brakes are holding firm.",
+              "r": "/ˌʌn.dɚˈstʊd. ˈhɔɪ.stɪŋ ˈsloʊ.li tuː ˈver.ə.faɪ slɪŋ ˈbæl.əns. ˈrɪɡ.ɪŋ ɪz ˈsteɪ.bəl ənd breɪks ɑːr ˈhoʊl.dɪŋ fɝːm/",
+              "m": "Rõ rồi. Đang nâng chậm để kiểm tra cân bằng cáp. Dây cáp ổn định và phanh hãm rất chắc chắn."
+            }
+          ]
+        },
+        {
+          "title": "Managing concrete mixer truck delivery on site",
+          "lines": [
+            {
+              "t": "Dispatch, we have three mixer trucks queued at the site gate. Are the slump test results ready?",
+              "r": "/dɪˈspætʃ, wiː hæv θriː ˈmɪk.sɚ trʌks kjuːd æt ðə saɪt ɡeɪt. ɑːr ðə slʌmp test rɪˈzʌlts ˈred.i/",
+              "m": "Điều độ ơi, chúng tôi có ba xe bồn trộn đang xếp hàng ở cổng công trường. Kết quả độ sụt đã xong chưa?"
+            },
+            {
+              "t": "Yes, truck number four tested at one hundred and sixty millimeters slump, which is well within specification.",
+              "r": "/jes, trʌk ˈnʌm.bɚ fɔːr ˈtes.tɪd æt wʌn ˈhʌn.drəd ənd ˈsɪks.ti ˈmɪl.əˌmiː.t̬ɚz slʌmp, wɪtʃ ɪz wel wɪˈðɪn ˌspes.ə.fəˈkeɪ.ʃən/",
+              "m": "Rồi nhé, xe số 4 đạt độ sụt 160 mm, hoàn toàn đúng quy chuẩn thiết kế."
+            },
+            {
+              "t": "Direct truck number four to reverse toward the concrete pump hopper. The banksman is ready to guide him.",
+              "r": "/dəˈrekt trʌk ˈnʌm.bɚ fɔːr tuː rəˈvɝːs təˈwɔːrd ðə ˈkɑːn.kriːt pʌmp ˈhɑː.pɚ. ðə ˈbæŋks.mən ɪz ˈred.i tuː ɡaɪd hɪm/",
+              "m": "Hãy hướng dẫn xe số 4 lùi về phễu bơm bê tông. Người xi-nhan đã sẵn sàng dẫn hướng rồi."
+            },
+            {
+              "t": "Copy that. Pumping will commence immediately to maintain continuous delivery without cold joints.",
+              "r": "/ˈkɑː.pi ðæt. ˈpʌm.pɪŋ wɪl kəˈmens ɪˈmiː.di.ət.li tuː meɪnˈteɪn kənˈtɪn.ju.əs dɪˈlɪv.ɚ.i wɪˈðaʊt koʊld dʒɔɪnts/",
+              "m": "Rõ rồi. Việc bơm sẽ bắt đầu ngay lập tức để duy trì cấp liệu liên tục không bị mạch ngừng."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "A subcontractor wants to operate a scissor lift on soft, uneven soil without outriggers. How do you respond?",
+          "vi": "Một nhà thầu phụ muốn vận hành xe nâng cắt kéo trên nền đất mềm, gồ ghề mà không hạ chân chống phụ. Bạn xử lý thế nào?",
+          "sa": "I firmly stop the work and explain that operating a scissor lift on soft or uneven ground creates a severe tip-over hazard. They must move the lift to compacted, level ground or use outrigger spreader plates before any elevation is permitted."
+        },
+        {
+          "q": "The concrete pour is halfway done, but the next mixer truck is delayed in heavy traffic for one hour. What immediate action do you take?",
+          "vi": "Việc đổ bê tông đang được một nửa thì xe bồn tiếp theo bị kẹt xe mất một tiếng. Bạn chỉ đạo xử lý khẩn cấp ra sao?",
+          "sa": "I immediately notify the site engineer and batching plant. We create a temporary bulkhead stop-end at an approved structural location to form a proper construction joint, rather than allowing an uncontrolled cold joint to form in the middle of the slab."
+        }
+      ],
+      "fill": {
+        "text": "Before beginning heavy earthworks, the site engineer inspected all mobile [[equipment|materials|drawings]] on site. The hydraulic [[excavator|ladder|scaffold]] was assigned to dig the main foundation trench, while two [[dump trucks|trowels|levels]] hauled the excavated soil away. A certified banksman was posted to guide reversing machinery and enforce safety [[exclusion zones|office breaks|parking tickets]] around the tower crane swing path.",
+        "trans": "Trước khi bắt đầu đào đất lớn, kỹ sư công trường đã kiểm tra toàn bộ máy móc cơ giới tại hiện trường. Máy đào thủy lực được giao đào hố móng chính, trong khi hai xe ben vận chuyển đất đào đi. Một người xi-nhan được bố trí để dẫn hướng máy móc lùi xe và thiết lập các vùng cách ly an toàn quanh bán kính quay của cần trục tháp."
+      }
+    },
+    {
+      "id": "172",
+      "title": "Advanced Building Materials and Concrete Technology",
+      "sub": "Vật liệu xây dựng chuyên sâu và công nghệ bê tông",
+      "category": "b2",
+      "level": "B2",
+      "catPos": 36,
+      "pos": 79,
+      "vocab": [
+        {
+          "id": "w172-1",
+          "w": "Portland cement",
+          "r": "/ˌpɔːrt.lənd sɪˈment/",
+          "d": "(noun)",
+          "m": "Xi măng Poóc-lăng",
+          "ex": "Ordinary Portland cement was mixed with pozzolans to reduce hydration heat.",
+          "exr": "",
+          "exm": "Xi măng Poóc-lăng thông thường được trộn với phụ gia puzơlan để giảm nhiệt thủy hóa."
+        },
+        {
+          "id": "w172-2",
+          "w": "Mortar",
+          "r": "/ˈmɔːr.tɚ/",
+          "d": "(noun)",
+          "m": "Vữa xây trát",
+          "ex": "Bricklayers mixed fresh mortar with the correct water-to-cement ratio for masonry work.",
+          "exr": "",
+          "exm": "Thợ xây trộn vữa tươi với tỷ lệ nước trên xi măng chuẩn cho công tác xây gạch."
+        },
+        {
+          "id": "w172-3",
+          "w": "Aggregate",
+          "r": "/ˈæɡ.rə.ɡət/",
+          "d": "(noun)",
+          "m": "Cốt liệu (đá dăm, sỏi, cát)",
+          "ex": "Coarse aggregate must be thoroughly washed to remove clay and organic impurities.",
+          "exr": "",
+          "exm": "Cốt liệu lớn phải được rửa sạch nhằm loại bỏ đất sét và tạp chất hữu cơ."
+        },
+        {
+          "id": "w172-4",
+          "w": "Ready-mix concrete",
+          "r": "/ˌred.i.mɪks ˈkɑːn.kriːt/",
+          "d": "(noun)",
+          "m": "Bê tông thương phẩm (bê tông tươi)",
+          "ex": "The batching plant guaranteed ready-mix concrete batch deliveries within ninety minutes.",
+          "exr": "",
+          "exm": "Trạm trộn cam kết giao các mẻ bê tông thương phẩm trong vòng chín mươi phút."
+        },
+        {
+          "id": "w172-5",
+          "w": "Slump test",
+          "r": "/ˈslʌmp test/",
+          "d": "(noun)",
+          "m": "Thí nghiệm độ sụt bê tông",
+          "ex": "The QA technician performed a slump test on site to verify concrete workability before pouring.",
+          "exr": "",
+          "exm": "Kỹ thuật viên QA đã thí nghiệm độ sụt tại hiện trường để kiểm tra độ dẻo trước khi đổ."
+        },
+        {
+          "id": "w172-6",
+          "w": "Admixture",
+          "r": "/ædˈmɪks.tʃɚ/",
+          "d": "(noun)",
+          "m": "Phụ gia bê tông",
+          "ex": "A superplasticizer admixture was added to enhance flowability without increasing water content.",
+          "exr": "",
+          "exm": "Phụ gia siêu dẻo đã được thêm vào để tăng độ chảy mà không cần tăng lượng nước."
+        },
+        {
+          "id": "w172-7",
+          "w": "Precast concrete",
+          "r": "/ˌpriːˈkæst ˈkɑːn.kriːt/",
+          "d": "(noun)",
+          "m": "Bê tông đúc sẵn",
+          "ex": "Installing precast concrete wall panels drastically accelerated the construction schedule.",
+          "exr": "",
+          "exm": "Việc lắp ghép các tấm tường bê tông đúc sẵn giúp rút ngắn đáng kể tiến độ thi công."
+        },
+        {
+          "id": "w172-8",
+          "w": "Reinforced steel beam",
+          "r": "/ˌriː.ənˈfɔːrst stiːl biːm/",
+          "d": "(noun)",
+          "m": "Dầm thép chịu lực kết cấu",
+          "ex": "High-strength reinforced steel beams supported the wide-span column-free auditorium.",
+          "exr": "",
+          "exm": "Các dầm thép kết cấu cường độ cao đỡ toàn bộ khán phòng khẩu độ lớn không cột."
+        },
+        {
+          "id": "w172-9",
+          "w": "Structural steel girder",
+          "r": "/ˈstrʌk.tʃɚ.əl stiːl ˈɡɝː.dɚ/",
+          "d": "(noun)",
+          "m": "Dầm cái thép chịu lực chính",
+          "ex": "Heavy steel girders were welded and bolted securely to the main transfer slab.",
+          "exr": "",
+          "exm": "Các dầm cái thép nặng được hàn và bắt bu-lông kiên cố vào sàn chuyển chính."
+        },
+        {
+          "id": "w172-10",
+          "w": "Drywall",
+          "r": "/ˈdraɪˌwɑːl/",
+          "d": "(noun)",
+          "m": "Tấm vách thạch cao",
+          "ex": "Fire-rated drywall panels were installed around elevator shafts and fire staircases.",
+          "exr": "",
+          "exm": "Các tấm vách thạch cao chống cháy được lắp xung quanh giếng thang máy và buồng thang thoát hiểm."
+        },
+        {
+          "id": "w172-11",
+          "w": "Thermal insulation",
+          "r": "/ˈθɝː.məl ˌɪn.səˈleɪ.ʃən/",
+          "d": "(noun)",
+          "m": "Vật liệu cách nhiệt",
+          "ex": "Mineral wool thermal insulation inside the cavity wall reduces heating and cooling costs.",
+          "exr": "",
+          "exm": "Lớp cách nhiệt bông khoáng trong khe tường giúp giảm chi phí sưởi ấm và làm mát."
+        },
+        {
+          "id": "w172-12",
+          "w": "Waterproofing membrane",
+          "r": "/ˈwɑː.t̬ɚˌpruː.fɪŋ ˈmem.breɪn/",
+          "d": "(noun)",
+          "m": "Màng chống thấm",
+          "ex": "Workers applied a bituminous waterproofing membrane over the basement retaining walls.",
+          "exr": "",
+          "exm": "Công nhân đã dán màng chống thấm gốc bitum lên tường vây tầng hầm."
+        },
+        {
+          "id": "w172-13",
+          "w": "Asphalt",
+          "r": "/ˈæs.fɑːlt/",
+          "d": "(noun)",
+          "m": "Bê tông nhựa đường, bitum",
+          "ex": "Heavy rollers compacted hot-mix asphalt across the newly constructed access road.",
+          "exr": "",
+          "exm": "Xe lu nặng lu lèn thảm bê tông nhựa nóng trên tuyến đường dẫn mới thi công."
+        },
+        {
+          "id": "w172-14",
+          "w": "Sealant",
+          "r": "/ˈsiː.lənt/",
+          "d": "(noun)",
+          "m": "Keo trám khe, chất trám trét",
+          "ex": "Apply flexible polyurethane sealant to expansion joints to prevent moisture infiltration.",
+          "exr": "",
+          "exm": "Bơm keo trám polyurethane đàn hồi vào khe co giãn để ngăn nước thấm qua."
+        },
+        {
+          "id": "w172-15",
+          "w": "Geotextile fabric",
+          "r": "/ˌdʒiː.oʊˈtek.staɪl ˈfæb.rɪk/",
+          "d": "(noun)",
+          "m": "Vải địa kỹ thuật",
+          "ex": "Geotextile fabric was laid beneath the road base to prevent subgrade soil intermixing.",
+          "exr": "",
+          "exm": "Vải địa kỹ thuật được trải dưới lớp móng đường nhằm ngăn lẫn bùn đất nền hạ."
+        },
+        {
+          "id": "w172-16",
+          "w": "Structural timber",
+          "r": "/ˈstrʌk.tʃɚ.əl ˈtɪm.bɚ/",
+          "d": "(noun)",
+          "m": "Gỗ kết cấu chịu lực",
+          "ex": "Pressure-treated structural timber was specified for external roof framing and pergolas.",
+          "exr": "",
+          "exm": "Gỗ kết cấu xử lý áp lực được chỉ định cho hệ khung mái ngoài trời và giàn hoa."
+        },
+        {
+          "id": "w172-17",
+          "w": "Formwork",
+          "r": "/ˈfɔːrmˌwɝːk/",
+          "d": "(noun)",
+          "m": "Ván khuôn cốp pha",
+          "ex": "Aluminum formwork panels allow fast turnaround cycles on high-rise residential towers.",
+          "exr": "",
+          "exm": "Hệ cốp pha nhôm cho phép luân chuyển nhanh chu kỳ thi công nhà cao tầng."
+        },
+        {
+          "id": "w172-18",
+          "w": "Rebar tie wire",
+          "r": "/ˈriːˌbɑːr ˈtaɪ waɪ.ɚ/",
+          "d": "(noun)",
+          "m": "Kẽm buộc cốt thép",
+          "ex": "Steel fixers used annealed tie wire to fasten the rebar cages firmly into position.",
+          "exr": "",
+          "exm": "Thợ sắt dùng kẽm buộc ủ mềm để cố định khung cốt thép chắc chắn vào vị trí."
+        },
+        {
+          "id": "w172-19",
+          "w": "Curing compound",
+          "r": "/ˈkjʊr.ɪŋ ˈkɑːm.paʊnd/",
+          "d": "(noun)",
+          "m": "Hợp chất bảo dưỡng bê tông",
+          "ex": "Spraying a curing compound on fresh concrete retains hydration moisture and prevents shrinkage cracks.",
+          "exr": "",
+          "exm": "Phun hợp chất bảo dưỡng lên bề mặt bê tông mới đổ giúp giữ ẩm và ngừa nứt co ngót."
+        },
+        {
+          "id": "w172-20",
+          "w": "Expansion joint",
+          "r": "/ɪkˈspæn.ʃən dʒɔɪnt/",
+          "d": "(noun)",
+          "m": "Khe co giãn nhiệt, khe lún",
+          "ex": "Expansion joints accommodate thermal movement and prevent structural cracking.",
+          "exr": "",
+          "exm": "Khe co giãn hấp thụ biến dạng nhiệt và ngăn nứt kết cấu công trình."
+        },
+        {
+          "id": "w172-21",
+          "w": "Compressive strength",
+          "r": "/kəmˈpres.ɪv streŋkθ/",
+          "d": "(noun)",
+          "m": "Cường độ chịu nén (mác bê tông)",
+          "ex": "Concrete test cylinders reached the design compressive strength of forty megapascals after twenty-eight days.",
+          "exr": "",
+          "exm": "Các mẫu trụ bê tông thử nghiệm đạt cường độ chịu nén thiết kế bốn mươi MPa sau hai mươi tám ngày."
+        },
+        {
+          "id": "w172-22",
+          "w": "Epoxy grout",
+          "r": "/ɪˈpɑːk.si ɡraʊt/",
+          "d": "(noun)",
+          "m": "Vữa rót không co ngót gốc epoxy",
+          "ex": "Non-shrink epoxy grout was poured under heavy machinery baseplates for rigid support.",
+          "exr": "",
+          "exm": "Vữa epoxy không co ngót được rót dưới bản đế máy móc nặng để tạo điểm tựa vững chãi."
+        },
+        {
+          "id": "w172-23",
+          "w": "Corrugated metal sheet",
+          "r": "/ˈkɔːr.ə.ɡeɪ.t̬ɪd ˈmet̬.əl ʃiːt/",
+          "d": "(noun)",
+          "m": "Tôn dập sóng lợp mái",
+          "ex": "Corrugated metal sheets were fastened with weatherproof screws on the warehouse roof.",
+          "exr": "",
+          "exm": "Các tấm tôn kim loại dập sóng được bắt vít chống thấm nước trên mái nhà kho."
+        },
+        {
+          "id": "w172-24",
+          "w": "Concrete spacer",
+          "r": "/ˈkɑːn.kriːt ˈspeɪ.sɚ/",
+          "d": "(noun)",
+          "m": "Con kê bê tông bảo vệ cốt thép",
+          "ex": "Place concrete spacers under rebar mats to guarantee the required concrete cover depth.",
+          "exr": "",
+          "exm": "Đặt con kê bê tông dưới lưới thép để đảm bảo chiều dày lớp bê tông bảo vệ theo quy chuẩn."
+        },
+        {
+          "id": "w172-25",
+          "w": "Vapor barrier",
+          "r": "/ˈveɪ.pɚ ˌbær.i.ɚ/",
+          "d": "(noun)",
+          "m": "Màng ngăn ẩm, màng chống thấm hơi",
+          "ex": "A polyethylene vapor barrier was installed under the ground slab to block rising damp.",
+          "exr": "",
+          "exm": "Tấm màng PE ngăn hơi ẩm được trải dưới sàn tầng trệt để ngăn hơi ẩm thấm ngược."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "The site slump test for a ready-mix concrete batch measures 230mm, while the specification permits only 150mm ± 25mm. What is the required QA action?",
+          "o": [
+            "Reject the entire batch and instruct the driver to return to the batching plant.",
+            "Accept the delivery and add extra water on site to improve pump speed.",
+            "Pour the concrete only into critical foundation load-bearing columns.",
+            "Wait three hours until the water naturally evaporates before pumping."
+          ],
+          "a": 0,
+          "r": [
+            "Excessive slump indicates an unapproved high water ratio, causing severe strength reduction.",
+            "Adding water on site directly violates building codes.",
+            "Columns are the most critical compression members and need maximum strength.",
+            "Waiting on site causes segregation and unpredictable hydration."
+          ]
+        },
+        {
+          "q": "Why is concrete curing compound sprayed on a freshly finished concrete slab during windy weather?",
+          "o": [
+            "To form an impermeable membrane that seals in moisture and prevents plastic shrinkage cracks.",
+            "To change the color of the concrete to bright yellow for safety inspection.",
+            "To accelerate concrete drying so workers can walk on it immediately.",
+            "To dissolve leftover aggregates on the concrete surface."
+          ],
+          "a": 0,
+          "r": [
+            "Curing compounds seal moisture inside, allowing complete cement hydration.",
+            "Curing compounds are not meant for coloring.",
+            "Curing is meant to retard drying, not accelerate it.",
+            "Curing compounds do not dissolve rock aggregates."
+          ]
+        },
+        {
+          "q": "During rebar cage pre-pour inspection, the engineer notices rebar resting directly against formwork plywood without cover blocks. What must happen?",
+          "o": [
+            "Insert approved concrete spacers to maintain the specified clear concrete cover before pouring.",
+            "Proceed with concrete pouring and patch the exposed steel after stripping forms.",
+            "Bend the steel bars inward with a sledgehammer until they clear the wood.",
+            "Spray black paint on the steel bars so they resist outdoor corrosion."
+          ],
+          "a": 0,
+          "r": [
+            "Concrete cover protects rebar from carbonation, fire, and steel corrosion.",
+            "Never pour without verified cover spacers.",
+            "Bending installed bars distorts structural spacing and yield strength.",
+            "Paint does not replace the protective alkalinity of concrete cover."
+          ]
+        },
+        {
+          "q": "Before torching an SBS waterproofing membrane onto a concrete roof slab, what surface condition must be verified?",
+          "o": [
+            "The concrete substrate must be fully cured, dry, clean of debris, and coated with primer.",
+            "The roof slab must have standing puddles of water to keep the torch cool.",
+            "The slab should be freshly poured within the past twelve hours.",
+            "The surface should be covered with loose sand and gravel."
+          ],
+          "a": 0,
+          "r": [
+            "Waterproofing membranes require a dry, primed substrate for 100% adhesion.",
+            "Moisture turns to steam under the torch, creating blister bubbles.",
+            "Fresh concrete contains too much evaporable moisture.",
+            "Loose gravel prevents the membrane from bonding to the concrete deck."
+          ]
+        },
+        {
+          "q": "A structural footing pour suffers a two-hour delivery interruption. How should the team prevent an unwanted cold joint?",
+          "o": [
+            "Vibrate the newly arrived batch deeply into the previous layer while it is still workable, or treat the interface with a bonding agent.",
+            "Simply pour the fresh concrete directly on top of the hardened layer without vibration.",
+            "Cover the set concrete with wet sawdust and leave it permanently.",
+            "Chip away the entire footing with jackhammers and discard it."
+          ],
+          "a": 0,
+          "r": [
+            "Proper interpenetration through vibration or approved bonding agents prevents shear plane weakness.",
+            "Pouring over a set layer without preparation creates an unbonded structural fault line.",
+            "Sawdust creates organic contamination inside concrete.",
+            "Cold joint management techniques avoid demolishing healthy footings."
+          ]
+        },
+        {
+          "q": "A shipment of 30 tons of high-yield deformed steel rebar arrives on site. Which document must be verified before unloading?",
+          "o": [
+            "Mill Test Certificates (MTC) verifying heat number, tensile yield strength, and chemical composition.",
+            "The driver's personal car registration card.",
+            "A brochure advertising the steel mill's anniversary celebration.",
+            "An invoice for previous project hardware supplies."
+          ],
+          "a": 0,
+          "r": [
+            "MTC certificates verify compliance with structural engineering standards.",
+            "Driver registration does not verify metallurgical quality.",
+            "Advertising brochures hold no engineering validity.",
+            "Invoices from old projects do not prove current batch testing."
+          ]
+        }
+      ],
+      "speak": [
+        {
+          "title": "Performing a concrete slump test at the site gate",
+          "lines": [
+            {
+              "t": "Good morning. Please present your delivery ticket with the batch time and concrete grade.",
+              "r": "/ɡʊd ˈmɔːr.nɪŋ. pliːz prɪˈzent jʊr dɪˈlɪv.ɚ.i ˈtɪk.ɪt wɪð ðə bætʃ taɪm ənd ˈkɑːn.kriːt ɡreɪd/",
+              "m": "Chào buổi sáng. Xin xuất trình phiếu xuất xưởng có giờ trộn và mác bê tông."
+            },
+            {
+              "t": "Here is the ticket, engineer. Grade C35 with maximum aggregate size of twenty millimeters, batched forty minutes ago.",
+              "r": "/hɪr ɪz ðə ˈtɪk.ɪt, ˌen.dʒəˈnɪr. ɡreɪd siː ˈθɝː.t̬i faɪv wɪð ˈmæk.sə.məm ˈæɡ.rə.ɡət saɪz əv ˈtwen.t̬i ˈmɪl.əˌmiː.t̬ɚz, bætʃt ˈfɔːr.t̬i ˈmɪn.ɪts əˈɡoʊ/",
+              "m": "Phiếu đây kỹ sư. Mác C35 cốt liệu lớn nhất 20 mm, vừa trộn cách đây 40 phút."
+            },
+            {
+              "t": "Great. We will sample the concrete now and perform a slump cone test. Fill the cone in three equal layers.",
+              "r": "/ɡreɪt. wiː wɪl ˈsæm.pəl ðə ˈkɑːn.kriːt naʊ ənd pɚˈfɔːrm ə slʌmp koʊn test. fɪl ðə koʊn ɪn θriː ˈiː.kwəl ˈleɪ.ɚz/",
+              "m": "Tốt. Chúng tôi sẽ lấy mẫu và thử độ sụt hình nón ngay. Hãy đổ vào nón làm ba lớp bằng nhau."
+            },
+            {
+              "t": "Slump measures one hundred and forty-five millimeters. That complies perfectly with our specification. You may proceed to pump.",
+              "r": "/slʌmp ˈmeʒ.ɚz wʌn ˈhʌn.drəd ənd ˈfɔːr.t̬i faɪv ˈmɪl.əˌmiː.t̬ɚz. ðæt kəmˈplaɪz ˈpɝː.fɪkt.li wɪð ˈaʊ.ɚ ˌspes.ə.fəˈkeɪ.ʃən. juː meɪ prəˈsiːd tuː pʌmp/",
+              "m": "Độ sụt đo được 145 mm. Hoàn toàn phù hợp quy chuẩn kỹ thuật. Mời xe vào vị trí bơm."
+            }
+          ]
+        },
+        {
+          "title": "Inspecting rebar placement and concrete cover before pour",
+          "lines": [
+            {
+              "t": "We are conducting the pre-pour inspection on slab level four. How is the reinforcement fixing progress?",
+              "r": "/wiː ɑːr kənˈdʌk.tɪŋ ðə ˌpriːˈpɔːr ˌɪnsˈpek.ʃən ɑːn slæb ˈlev.əl fɔːr. haʊ ɪz ðə ˌriː.ɪnˈfɔːrs.mənt ˈfɪk.sɪŋ ˈprɑːˌɡres/",
+              "m": "Chúng tôi đang tiến hành nghiệm thu trước khi đổ cho sàn tầng 4. Tiến độ gia công cốt thép thế nào rồi?"
+            },
+            {
+              "t": "All top and bottom rebar mats are tied securely with tie wire according to structural drawings.",
+              "r": "/ɔːl tɑːp ənd ˈbɑː.t̬əm ˈriːˌbɑːr mæts ɑːr taɪd səˈkjʊr.li wɪð taɪ waɪ.ɚ əˈkɔːr.dɪŋ tuː ˈstrʌk.tʃɚ.əl ˈdrɔː.ɪŋz/",
+              "m": "Toàn bộ lưới thép lớp trên và lớp dưới đã được buộc chắc chắn bằng kẽm buộc theo đúng bản vẽ kết cấu."
+            },
+            {
+              "t": "I noticed some steel chairs are displaced near the column strips. Ensure concrete spacer blocks maintain thirty millimeters cover.",
+              "r": "/aɪ ˈnoʊ.t̬ɪst sʌm stiːl tʃerz ɑːr dɪsˈpleɪst nɪr ðə ˈkɑː.ləm strɪps. ɪnˈʃʊr ˈkɑːn.kriːt ˈspeɪ.sɚ blɑːks meɪnˈteɪn ˈθɝː.t̬i ˈmɪl.əˌmiː.t̬ɚz ˈkʌv.ɚ/",
+              "m": "Tôi thấy một số con kê thép bị xê dịch gần dải cột. Phải đảm bảo con kê bê tông duy trì lớp bảo vệ 30 mm."
+            },
+            {
+              "t": "Understood. Our steel fixers will replace the displaced spacers immediately before we sign off the pour card.",
+              "r": "/ˌʌn.dɚˈstʊd. ˈaʊ.ɚ stiːl ˈfɪk.sɚz wɪl rəˈpleɪs ðə dɪsˈpleɪst ˈspeɪ.sɚz ɪˈmiː.di.ət.li bəˈfɔːr wiː saɪn ɔːf ðə pɔːr kɑːrd/",
+              "m": "Rõ rồi. Đội thợ sắt sẽ thay thế các con kê bị lệch ngay lập tức trước khi chúng ta ký phiếu đổ bê tông."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "The ready-mix supplier suggests adding 50 liters of water into the truck drum on site to help the pump push the concrete faster. What is your decision?",
+          "vi": "Nhà cung cấp bê tông thương phẩm đề nghị châm thêm 50 lít nước vào bồn xe tại công trường để bơm đẩy nhanh hơn. Quyết định của bạn là gì?",
+          "sa": "I strictly prohibit adding unauthorized water on site because it directly dilutes the water-cement ratio, increases porosity, and severely reduces the concrete's ultimate compressive strength. If workability must be improved, an approved superplasticizer admixture must be used under QA supervision."
+        },
+        {
+          "q": "During post-pour curing, you observe micro-cracks spreading across the surface of the floor slab. How do you investigate?",
+          "vi": "Trong quá trình bảo dưỡng sau đổ, bạn phát hiện các vết nứt vi mô lan trên bề mặt sàn. Bạn điều tra nguyên nhân thế nào?",
+          "sa": "I check the ambient weather logs for high wind or low humidity during placement to determine if plastic shrinkage occurred. I also inspect whether curing compound was applied promptly, evaluate the depth of the cracks using non-destructive ultrasonic testing, and review core drill samples if structural integrity is concerned."
+        }
+      ],
+      "fill": {
+        "text": "Before granting approval for concrete placement, the engineer inspected the steel [[formwork|carpet|paint]] and reinforcement mats. Technicians verified that concrete [[spacers|cushions|balloons]] provided adequate cover beneath the rebar cages. During unloading, a standard [[slump test|tensile test|hardness test]] confirmed optimal workability before the [[ready-mix concrete|sandstone block|plasterboard]] was pumped into the foundation footing.",
+        "trans": "Trước khi phê duyệt đổ bê tông, kỹ sư đã nghiệm thu cốp pha thép và lưới cốt thép. Kỹ thuật viên kiểm tra con kê bê tông đảm bảo lớp bảo vệ theo quy định dưới khung cốt thép. Trong quá trình xả hàng, thí nghiệm độ sụt tiêu chuẩn xác nhận độ dẻo tối ưu trước khi bê tông thương phẩm được bơm vào móng công trình."
+      }
+    },
+    {
+      "id": "173",
+      "title": "Jobsite Operations, Safety and Situations",
+      "sub": "Vận hành hiện trường, an toàn lao động và tình huống thi công",
+      "category": "b2",
+      "level": "B2",
+      "catPos": 37,
+      "pos": 80,
+      "vocab": [
+        {
+          "id": "w173-1",
+          "w": "Personal protective equipment (PPE)",
+          "r": "/ˈpɝː.sən.əl prəˈtek.tɪv ɪˈkwɪp.mənt/",
+          "d": "(noun)",
+          "m": "Trang thiết bị bảo hộ cá nhân (PPE)",
+          "ex": "Anyone entering the active construction zone must wear full PPE including safety boots and hard hats.",
+          "exr": "",
+          "exm": "Bất kỳ ai vào khu vực thi công đều phải mang đầy đủ bảo hộ bao gồm giày an toàn và mũ bảo hộ."
+        },
+        {
+          "id": "w173-2",
+          "w": "Toolbox meeting",
+          "r": "/ˈtuːl.bɑːks ˈmiː.tɪŋ/",
+          "d": "(noun)",
+          "m": "Buổi họp an toàn đầu ca",
+          "ex": "The safety officer reviewed fall protection procedures during the morning toolbox meeting.",
+          "exr": "",
+          "exm": "Cán bộ an toàn đã phổ biến quy trình chống ngã cao trong buổi họp đầu ca sáng."
+        },
+        {
+          "id": "w173-3",
+          "w": "Safety harness",
+          "r": "/ˈseɪf.ti ˈhɑːr.nəs/",
+          "d": "(noun)",
+          "m": "Dây đai an toàn toàn thân",
+          "ex": "Ironworkers must anchor their full-body safety harness to certified lifelines above two meters.",
+          "exr": "",
+          "exm": "Thợ kết cấu thép phải móc dây đai an toàn toàn thân vào dây cứu sinh trên độ cao từ hai mét."
+        },
+        {
+          "id": "w173-4",
+          "w": "Trench shoring",
+          "r": "/trentʃ ˈʃɔːr.ɪŋ/",
+          "d": "(noun)",
+          "m": "Hệ chống vách hố đào",
+          "ex": "Hydraulic trench shoring boxes were installed to prevent excavation cave-ins.",
+          "exr": "",
+          "exm": "Hệ thống chống vách hố đào thủy lực được lắp đặt để ngăn sạt lở đất hố móng."
+        },
+        {
+          "id": "w173-5",
+          "w": "Lockout / Tagout",
+          "r": "/ˈlɑːkˌaʊt ˈtæɡˌaʊt/",
+          "d": "(noun)",
+          "m": "Khóa ngắt điện và treo biển cảnh báo",
+          "ex": "Technicians executed lockout tagout on the main circuit breaker before servicing heavy machinery.",
+          "exr": "",
+          "exm": "Kỹ thuật viên đã khóa ngắt điện và treo biển cảnh báo trước khi bảo trì máy móc lớn."
+        },
+        {
+          "id": "w173-6",
+          "w": "Permit to work",
+          "r": "/ˈpɝː.mɪt tuː wɝːk/",
+          "d": "(noun)",
+          "m": "Giấy phép làm việc công việc nguy hiểm",
+          "ex": "A hot work permit to work was approved before welders began cutting steel beams.",
+          "exr": "",
+          "exm": "Giấy phép làm việc sinh nhiệt đã được phê duyệt trước khi thợ hàn cắt dầm thép."
+        },
+        {
+          "id": "w173-7",
+          "w": "Confined space",
+          "r": "/kənˈfaɪnd speɪs/",
+          "d": "(noun)",
+          "m": "Không gian hạn chế, không gian kín",
+          "ex": "Oxygen levels and hazardous gases were tested prior to personnel entering the confined space.",
+          "exr": "",
+          "exm": "Nồng độ oxy và khí độc đã được đo đạc trước khi công nhân bước vào không gian kín."
+        },
+        {
+          "id": "w173-8",
+          "w": "Housekeeping",
+          "r": "/ˈhaʊsˌkiː.pɪŋ/",
+          "d": "(noun)",
+          "m": "Vệ sinh ngăn nắp công trường",
+          "ex": "Good jobsite housekeeping prevents trip hazards and maintains unobstructed emergency exit routes.",
+          "exr": "",
+          "exm": "Vệ sinh công trường tốt giúp phòng tránh nguy cơ vấp ngã và giữ thông thoáng lối thoát hiểm."
+        },
+        {
+          "id": "w173-9",
+          "w": "Banksman",
+          "r": "/ˈbæŋks.mən/",
+          "d": "(noun)",
+          "m": "Người xi-nhan điều phối máy cơ giới",
+          "ex": "The designated banksman guided the reversing dump truck safely around ground workers.",
+          "exr": "",
+          "exm": "Người xi-nhan đã điều hướng xe ben lùi xe an toàn tránh công nhân dưới mặt đất."
+        },
+        {
+          "id": "w173-10",
+          "w": "MEP rough-in",
+          "r": "/ˌem.iːˈpiː ˈrʌf.ɪn/",
+          "d": "(noun)",
+          "m": "Thi công phần thô cơ điện lạnh",
+          "ex": "The project manager coordinated MEP rough-ins before ceiling grid installation started.",
+          "exr": "",
+          "exm": "Giám đốc dự án điều phối thi công phần thô hệ MEP trước khi lắp khung trần."
+        },
+        {
+          "id": "w173-11",
+          "w": "Clash detection",
+          "r": "/klæʃ dɪˈtek.ʃən/",
+          "d": "(noun)",
+          "m": "Kiểm tra xung đột mô hình BIM",
+          "ex": "BIM clash detection identified interference between HVAC ducts and primary structural steel beams.",
+          "exr": "",
+          "exm": "Kiểm tra va chạm trên mô hình BIM đã phát hiện đường ống gió va chạm dầm thép chịu lực chính."
+        },
+        {
+          "id": "w173-12",
+          "w": "Shop drawing",
+          "r": "/ˈʃɑːp ˌdrɔː.ɪŋ/",
+          "d": "(noun)",
+          "m": "Bản vẽ triển khai thi công chi tiết",
+          "ex": "The MEP subcontractor submitted approved shop drawings for pipe penetrations through concrete walls.",
+          "exr": "",
+          "exm": "Nhà thầu phụ cơ điện đã nộp bản vẽ thi công chi tiết cho các lỗ ống xuyên tường bê tông."
+        },
+        {
+          "id": "w173-13",
+          "w": "As-built drawing",
+          "r": "/ˌæzˈbɪlt ˌdrɔː.ɪŋ/",
+          "d": "(noun)",
+          "m": "Bản vẽ hoàn công",
+          "ex": "Engineers updated the as-built drawings to reflect the actual routing of electrical conduits.",
+          "exr": "",
+          "exm": "Kỹ sư đã cập nhật bản vẽ hoàn công phản ánh đúng hướng đi thực tế của tuyến ống điện."
+        },
+        {
+          "id": "w173-14",
+          "w": "Snagging list",
+          "r": "/ˈsnæɡ.ɪŋ lɪst/",
+          "d": "(noun)",
+          "m": "Danh sách lỗi tồn đọng trước bàn giao",
+          "ex": "The contractor spent three days rectifying all minor paint and tile items on the snagging list.",
+          "exr": "",
+          "exm": "Nhà thầu đã dành ba ngày sửa xong tất cả các lỗi sơn bả và gạch men trong danh sách tồn đọng."
+        },
+        {
+          "id": "w173-15",
+          "w": "Method statement",
+          "r": "/ˈmeθ.əd ˌsteɪt.mənt/",
+          "d": "(noun)",
+          "m": "Biện pháp thi công chi tiết",
+          "ex": "The structural method statement outlined the exact sequence for post-tensioned slab jacking.",
+          "exr": "",
+          "exm": "Thuyết minh biện pháp thi công kết cấu nêu rõ trình tự căng cáp sàn dự ứng lực."
+        },
+        {
+          "id": "w173-16",
+          "w": "Quality assurance",
+          "r": "/ˈkwɑː.lə.t̬i əˈʃʊr.əns/",
+          "d": "(noun)",
+          "m": "Đảm bảo chất lượng (QA)",
+          "ex": "QA/QC engineers inspected the rebar cage spacing against structural design specifications.",
+          "exr": "",
+          "exm": "Kỹ sư QA/QC kiểm tra khoảng cách đan cốt thép so với hồ sơ thiết kế kết cấu."
+        },
+        {
+          "id": "w173-17",
+          "w": "Non-conformance report (NCR)",
+          "r": "/ˌnɑːn kənˈfɔːr.məns riˈpɔːrt/",
+          "d": "(noun)",
+          "m": "Biên bản xử lý không phù hợp kỹ thuật",
+          "ex": "The consultant issued an NCR after finding honeycomb voids in the stripped concrete column.",
+          "exr": "",
+          "exm": "Tư vấn đã lập biên bản không phù hợp NCR khi phát hiện rỗ tổ ong ở cột bê tông sau khi dỡ khuôn."
+        },
+        {
+          "id": "w173-18",
+          "w": "Cold joint",
+          "r": "/ˈkoʊld dʒɔɪnt/",
+          "d": "(noun)",
+          "m": "Mạch ngừng bê tông nguội",
+          "ex": "A bonding adhesive was required to repair the unexpected cold joint on the structural wall.",
+          "exr": "",
+          "exm": "Cần dùng keo kết nối đặc chủng để xử lý mạch ngừng bê tông ngoài ý muốn trên tường kết cấu."
+        },
+        {
+          "id": "w173-19",
+          "w": "Honeycomb void",
+          "r": "/ˈhʌn.i.koʊm vɔɪd/",
+          "d": "(noun)",
+          "m": "Rỗ tổ ong bê tông",
+          "ex": "Inadequate vibration caused deep honeycomb voids around congested rebar intersections.",
+          "exr": "",
+          "exm": "Đầm dùi không kỹ đã gây rỗ tổ ong sâu quanh các vị trí giao nhau dày đặc cốt thép."
+        },
+        {
+          "id": "w173-20",
+          "w": "Shoring prop",
+          "r": "/ˈʃɔːr.ɪŋ prɑːp/",
+          "d": "(noun)",
+          "m": "Cây chống tăng chịu lực sàn",
+          "ex": "Heavy-duty steel props remained in position until the upper slab reached full curing strength.",
+          "exr": "",
+          "exm": "Các cây chống tăng thép chịu lực được giữ nguyên vị trí cho đến khi sàn trên đạt đủ cường độ bảo dưỡng."
+        },
+        {
+          "id": "w173-21",
+          "w": "Stripping formwork",
+          "r": "/ˈstrɪp.ɪŋ ˈfɔːrmˌwɝːk/",
+          "d": "(noun)",
+          "m": "Tháo dỡ ván khuôn cốp pha",
+          "ex": "Premature stripping of soffit formwork can cause excessive deflection and structural micro-cracks.",
+          "exr": "",
+          "exm": "Tháo ván khuôn đáy sàn quá sớm có thể gây võng quá mức và nứt vi mô kết cấu."
+        },
+        {
+          "id": "w173-22",
+          "w": "Material testing lab",
+          "r": "/məˈtɪr.i.əl ˈtes.tɪŋ læb/",
+          "d": "(noun)",
+          "m": "Phòng kiểm định vật liệu xây dựng",
+          "ex": "Concrete test cubes were sent to an accredited material testing lab for compressive crush testing.",
+          "exr": "",
+          "exm": "Các khối mẫu bê tông được gửi đến phòng kiểm định để nén phá hủy mẫu thử nghiệm."
+        },
+        {
+          "id": "w173-23",
+          "w": "Bar bending schedule",
+          "r": "/ˈbɑːr ˌben.dɪŋ ˈskedʒ.uːl/",
+          "d": "(noun)",
+          "m": "Bảng thống kê thép",
+          "ex": "The site engineer reviewed the bar bending schedule to optimize rebar cutting lengths and minimize scrap.",
+          "exr": "",
+          "exm": "Kỹ sư hiện trường duyệt bảng thống kê cốt thép để tối ưu hóa chiều dài cắt và giảm phế liệu."
+        },
+        {
+          "id": "w173-24",
+          "w": "Site diary",
+          "r": "/ˈsaɪt ˈdaɪ.ɚ.i/",
+          "d": "(noun)",
+          "m": "Nhật ký thi công công trình",
+          "ex": "The site supervisor recorded weather conditions, workforce headcount, and machinery hours in the daily site diary.",
+          "exr": "",
+          "exm": "Chỉ huy phó ghi nhận thời tiết, quân số công nhân và số giờ chạy máy vào nhật ký công trường hàng ngày."
+        },
+        {
+          "id": "w173-25",
+          "w": "Handover certificate",
+          "r": "/ˈhæn.doʊ.vɚ sɚˈtɪf.ə.kət/",
+          "d": "(noun)",
+          "m": "Biên bản nghiệm thu bàn giao",
+          "ex": "The owner and general contractor signed the final handover certificate after snagging items were closed out.",
+          "exr": "",
+          "exm": "Chủ đầu tư và tổng thầu ký biên bản bàn giao sau khi các mục lỗi tồn đọng được khắc phục xong."
+        }
+      ],
+      "quiz": [
+        {
+          "q": "You observe a subcontractor fixing rebar on a fifth-floor slab perimeter edge without hooking their safety harness to a lifeline. What must you do immediately?",
+          "o": [
+            "Order the worker to halt immediately, step back from the edge, and secure their lanyard before continuing.",
+            "Wait until lunch break to politely mention the oversight in private.",
+            "Take a photo from afar and send an email report next week.",
+            "Ask another worker to hold onto the subcontractor's belt while they work."
+          ],
+          "a": 0,
+          "r": [
+            "Imminent fall hazards require instant stop-work intervention to prevent fatal accidents.",
+            "Waiting until lunch risks a fatal fall before the shift ends.",
+            "Weekly emails fail to prevent real-time catastrophic incidents.",
+            "Holding coworker clothing offers zero certified fall arrest capability."
+          ]
+        },
+        {
+          "q": "After stripping column forms, the QC engineer discovers severe honeycombing at the base of a structural column. What is the strictly forbidden action?",
+          "o": [
+            "Plastering over the honeycomb defect cosmetically with mortar before the supervising consultant inspects it.",
+            "Issuing a Non-Conformance Report (NCR) and photographic log.",
+            "Chipping away loose aggregate until sound concrete is reached under supervision.",
+            "Preparing a non-shrink structural epoxy grout repair method statement."
+          ],
+          "a": 0,
+          "r": [
+            "Concealing structural honeycomb voids hides load-bearing defects and endangers building stability.",
+            "NCR issuance is the mandatory engineering procedure.",
+            "Sound concrete exposure is necessary for proper structural repair.",
+            "Structural epoxy repair procedures ensure structural design integrity."
+          ]
+        },
+        {
+          "q": "An excavation contractor attempts to dig a 3-meter deep trench in saturated sand without trench boxes, shoring, or stepped benching. What is the extreme danger?",
+          "o": [
+            "Catastrophic trench collapse and fatal worker entrapment under tons of shifting earth.",
+            "Water evaporating too quickly from the bottom of the trench.",
+            "The excavator boom getting dirty from muddy soil.",
+            "Workers getting sunburned inside the trench."
+          ],
+          "a": 0,
+          "r": [
+            "Unshored trenches in saturated sand are prone to sudden, fatal wall collapses.",
+            "Deep trenches trap humidity rather than evaporate rapidly.",
+            "Excavator cleanliness is trivial compared to human life.",
+            "Sunburn is minor compared to the imminent risk of suffocation."
+          ]
+        },
+        {
+          "q": "During ceiling rough-in inspection, an MEP sanitary pipe is found clashing straight through a primary structural beam web hole that was not engineered. How is this resolved?",
+          "o": [
+            "Halt drilling, raise a formal Request for Information (RFI), and coordinate with the structural engineer for approved sleeve routing.",
+            "Tell the plumber to drill an even larger hole through the beam flange to make the pipe fit.",
+            "Cut the pipe in half and leave a gap inside the beam.",
+            "Pour concrete over the pipe and seal it permanently inside the beam."
+          ],
+          "a": 0,
+          "r": [
+            "Unauthorized beam web penetrations destroy shear capacity; formal RFI re-engineering is mandatory.",
+            "Cutting beam flanges compromises primary flexural steel strength.",
+            "Gapped drainage pipes cause catastrophic building flooding.",
+            "Enclosing open pipes inside structural beams destroys both pipe and beam."
+          ]
+        },
+        {
+          "q": "The site supervisor discovers that the night crew stripped basement slab soffit props only 48 hours after pouring, while design strength is only at 35%. What is the hazard?",
+          "o": [
+            "Excessive deflection, severe tension cracking, or catastrophic structural slab punch-through failure.",
+            "The formwork plywood smelling like damp pine wood.",
+            "The concrete color turning slightly darker gray than expected.",
+            "The floor feeling cold when walking in bare feet."
+          ],
+          "a": 0,
+          "r": [
+            "Immature concrete lacks compressive and flexural tensile strength to carry self-weight.",
+            "Plywood scent is completely irrelevant to structural safety.",
+            "Color tone changes do not cause collapse.",
+            "Temperature sensation has no bearing on load capacity."
+          ]
+        },
+        {
+          "q": "During the pre-handover walkthrough with the building owner, ten hollow floor tiles and damaged paint are marked on the snagging list. What must the general contractor do?",
+          "o": [
+            "Issue targeted rectification orders to finishes subcontractors with a strict 48-hour completion deadline.",
+            "Argue that hollow tiles and chipped paint are natural artistic features of modern architecture.",
+            "Demand full retention payout before touching any snagging items.",
+            "Close the site gates and refuse the owner access until they sign the handover certificate."
+          ],
+          "a": 0,
+          "r": [
+            "Closing out snag list defects is required under standard construction handover contracts.",
+            "Claiming defects are artistic features will be rejected by any inspector.",
+            "Retention money is specifically held to enforce defect rectification.",
+            "Denying owner access triggers legal breach of contract and delay penalties."
+          ]
+        }
+      ],
+      "speak": [
+        {
+          "title": "Conducting a pre-shift safety toolbox meeting on site",
+          "lines": [
+            {
+              "t": "Good morning team. Today we have high-risk steel erection on floor seven and hot works in the basement.",
+              "r": "/ɡʊd ˈmɔːr.nɪŋ tiːm. təˈdeɪ wiː hæv haɪ rɪsk stiːl ɪˈrek.ʃən ɑːn flɔːr ˈsev.ən ənd hɑːt wɝːks ɪn ðə ˈbeɪs.mənt/",
+              "m": "Chào buổi sáng cả đội. Hôm nay chúng ta có công tác lắp dựng thép trên cao ở tầng 7 và hàn nhiệt dưới hầm."
+            },
+            {
+              "t": "All ironworkers must inspect safety harnesses, double lanyards, and anchor to certified lifelines at all times.",
+              "r": "/ɔːl ˈaɪ.ɚnˌwɝː.kɚz mʌst ˌɪnsˈpekt ˈseɪf.ti ˈhɑːr.nəs.ɪz, ˈdʌb.əl ˈlæn.jɚdz, ənd ˈæŋ.kɚ tuː ˈsɝː.t̬ə.faɪd ˈlaɪf.laɪnz æt ɔːl taɪmz/",
+              "m": "Toàn bộ thợ kết cấu thép phải kiểm tra dây đai an toàn, móc kép và luôn móc vào dây cứu sinh đã kiểm định."
+            },
+            {
+              "t": "For hot works, have you verified fire extinguishers and obtained the signed permit to work from the safety officer?",
+              "r": "/fɔːr hɑːt wɝːks, hæv juː ˈver.ə.faɪd ˈfaɪr ɪkˈstɪŋ.ɡwɪ.ʃɚz ənd əbˈteɪnd ðə saɪnd ˈpɝː.mɪt tuː wɝːk frɑːm ðə ˈseɪf.ti ˈɑː.fə.sɚ/",
+              "m": "Đối với công tác hàn sinh nhiệt, các bạn đã kiểm tra bình chữa cháy và xin giấy phép làm việc có chữ ký chưa?"
+            },
+            {
+              "t": "Yes, two fire blankets and ten-kilogram dry powder extinguishers are in position, and hot work permit number twelve is posted.",
+              "r": "/jes, tuː ˈfaɪr ˈblæŋ.kɪts ənd ten ˈkɪl.ə.ɡræm draɪ ˈpaʊ.dɚ ɪkˈstɪŋ.ɡwɪ.ʃɚz ɑːr ɪn pəˈzɪʃ.ən, ənd hɑːt wɝːk ˈpɝː.mɪt ˈnʌm.bɚ twelv ɪz ˈpoʊ.stɪd/",
+              "m": "Vâng, hai chăn chống cháy và bình bột 10kg đã đặt đúng vị trí, và giấy phép hàn số 12 đã được niêm yết."
+            }
+          ]
+        },
+        {
+          "title": "Joint site inspection of concrete honeycomb defect and NCR rectification",
+          "lines": [
+            {
+              "t": "Site engineer, we found deep honeycombing at the foot of column C3 after formwork stripping. Why did this occur?",
+              "r": "/saɪt ˌen.dʒəˈnɪr, wiː faʊnd diːp ˈhʌn.i.koʊ.mɪŋ æt ðə fʊt əv ˈkɑː.ləm siː θriː ˈæf.tɚ ˈfɔːrmˌwɝːk ˈstrɪp.ɪŋ. waɪ dɪd ðɪs əˈkɝː/",
+              "m": "Kỹ sư công trường, chúng tôi phát hiện rỗ tổ ong sâu ở chân cột C3 sau khi tháo cốp pha. Tại sao lại xảy ra thế này?"
+            },
+            {
+              "t": "Heavy rebar congestion at the starter bars prevented the vibrator head from penetrating to the very bottom.",
+              "r": "/ˈhev.i ˈriːˌbɑːr kənˈdʒes.tʃən æt ðə ˈstɑːr.t̬ɚ bɑːrz prəˈven.tɪd ðə ˈvaɪ.breɪ.tɚ hed frɑːm ˈpen.ə.treɪ.tɪŋ tuː ðə ˈver.i ˈbɑː.t̬əm/",
+              "m": "Mật độ cốt thép chờ quá dày đặc khiến đầu đầm dùi không xuống sâu tới tận đáy được."
+            },
+            {
+              "t": "I am issuing an official NCR. You must submit a structural repair method statement specifying non-shrink repair mortar before any work.",
+              "r": "/aɪ æm ˈɪʃ.uː.ɪŋ ən əˈfɪʃ.əl en siː ɑːr. juː mʌst səbˈmɪt ə ˈstrʌk.tʃɚ.əl rəˈper ˈmeθ.əd ˌsteɪt.mənt ˈspes.ə.faɪ.ɪŋ ˌnɑːn ʃrɪŋk rəˈper ˈmɔːr.tɚ bəˈfɔːr ˈen.i wɝːk/",
+              "m": "Tôi đang lập biên bản NCR chính thức. Các anh phải nộp biện pháp sửa chữa kết cấu dùng vữa không co ngót trước khi thi công."
+            },
+            {
+              "t": "Understood, consultant. We will chip back to sound concrete, apply bonding primer, and pressure grout with high-strength epoxy compound.",
+              "r": "/ˌʌn.dɚˈstʊd, kənˈsʌl.tənt. wiː wɪl tʃɪp bæk tuː saʊnd ˈkɑːn.kriːt, əˈplaɪ ˈbɑːn.dɪŋ ˈpraɪ.mɚ, ənd ˈpreʃ.ɚ ɡraʊt wɪð haɪ streŋkθ ɪˈpɑːk.si ˈkɑːm.paʊnd/",
+              "m": "Rõ rồi thưa tư vấn. Chúng tôi sẽ đục tẩy đến phần bê tông đặc chắc, quét lớp lót kết nối và bơm vữa epoxy cường độ cao."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "q": "A contractor wants to strip beam soffit props just 4 days after pouring to reuse the forms on the floor above. What is your response?",
+          "vi": "Nhà thầu muốn tháo cây chống đáy dầm chỉ sau 4 ngày đổ để tái sử dụng cốp pha cho tầng trên. Bạn trả lời thế nào?",
+          "sa": "I firmly reject the request because concrete requires adequate curing time to reach design compressive and flexural tensile strength. Premature removal of soffit props places full dead load on immature concrete, risking catastrophic deflection, severe structural cracking, or collapse. Props must stay in place until concrete test cubes prove the required stripping strength has been achieved."
+        },
+        {
+          "q": "A torrential rainstorm starts right in the middle of casting a large foundation slab. What immediate actions do you order on site?",
+          "vi": "Một cơn mưa rào lớn bất ngờ trút xuống ngay giữa lúc đang đổ móng sàn lớn. Bạn chỉ đạo các hành động khẩn cấp nào tại công trường?",
+          "sa": "I immediately halt the concrete pour and instruct the crew to cover freshly placed concrete with waterproof tarpaulins to prevent rainwater from washing away cement paste and weakening the surface. If rain persists, we form a proper construction joint at an approved location, divert surface runoff with pumps, and only resume pouring once excess water is cleared and the joint interface is prepared."
+        }
+      ],
+      "fill": {
+        "text": "Every morning starts with a mandatory [[toolbox meeting|birthday party|holiday lunch]] where the safety officer reinforces PPE compliance. All technicians working on elevated platforms must wear a full-body [[safety harness|cotton t-shirt|baseball cap]] hooked to certified lifelines. Before servicing high-voltage machinery, maintenance crews execute strict [[lockout tagout|water spraying|loud whistling]] protocols to prevent accidental energization.",
+        "trans": "Mỗi buổi sáng đều bắt đầu bằng buổi họp an toàn đầu ca bắt buộc, nơi cán bộ an toàn nhắc nhở việc tuân thủ trang bị bảo hộ cá nhân. Mọi kỹ thuật viên làm việc trên sàn nâng cao phải đeo dây đai an toàn toàn thân móc vào dây cứu sinh đã kiểm định. Trước khi bảo trì máy móc điện áp cao, đội ngũ bảo dưỡng thực hiện quy trình khóa ngắt điện nghiêm ngặt để ngừa sự cố đóng điện ngoài ý muốn."
+      }
+    },
+    {
+      "id": "151",
+      "pos": 81,
       "catPos": 1,
       "category": "c1",
       "level": "C1",
@@ -30641,7 +31922,7 @@
     },
     {
       "id": "152",
-      "pos": 79,
+      "pos": 82,
       "catPos": 2,
       "category": "c1",
       "level": "C1",
@@ -30857,7 +32138,7 @@
     },
     {
       "id": "153",
-      "pos": 80,
+      "pos": 83,
       "catPos": 3,
       "category": "c1",
       "level": "C1",
@@ -31053,7 +32334,7 @@
     },
     {
       "id": "154",
-      "pos": 81,
+      "pos": 84,
       "catPos": 4,
       "category": "c1",
       "level": "C1",
@@ -31239,7 +32520,7 @@
     },
     {
       "id": "155",
-      "pos": 82,
+      "pos": 85,
       "catPos": 5,
       "category": "c1",
       "level": "C1",
@@ -31425,7 +32706,7 @@
     },
     {
       "id": "156",
-      "pos": 83,
+      "pos": 86,
       "catPos": 1,
       "category": "c2",
       "level": "C2",
@@ -31611,7 +32892,7 @@
     },
     {
       "id": "157",
-      "pos": 84,
+      "pos": 87,
       "catPos": 2,
       "category": "c2",
       "level": "C2",
@@ -31787,7 +33068,7 @@
     },
     {
       "id": "158",
-      "pos": 85,
+      "pos": 88,
       "catPos": 3,
       "category": "c2",
       "level": "C2",
@@ -31963,7 +33244,7 @@
     },
     {
       "id": "159",
-      "pos": 86,
+      "pos": 89,
       "catPos": 4,
       "category": "c2",
       "level": "C2",
@@ -32129,7 +33410,7 @@
     },
     {
       "id": "160",
-      "pos": 87,
+      "pos": 90,
       "catPos": 5,
       "category": "c2",
       "level": "C2",

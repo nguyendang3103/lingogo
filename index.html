@@ -423,7 +423,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261106-1500';
+const APP_BUILD_ID = '20261106-1515';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -437,10 +437,10 @@ const CATEGORIES = {
     { id: 'a1', name: 'A1 · Khởi động & Cơ bản', short: 'A1 Sơ cấp 1', icon: '🐣', level: 'A1', count: '13 bài', desc: 'Chào hỏi, số đếm, màu sắc, gia đình, đồ dùng học tập, động vật, hoa quả, rau củ, đồ ăn, đồ uống, quần áo, sinh hoạt' },
     { id: 'a2', name: 'A2 · Đời sống & Giao tiếp', short: 'A2 Sơ cấp 2', icon: '🌿', level: 'A2', count: '17 bài', desc: 'Thời tiết, nhà bếp, ngoại hình, cảm xúc, hành động cơ thể, giao thông, trường học, mua sắm, quê hương, quốc gia, côn trùng, hoa cỏ, hải sản, lễ Tết' },
     { id: 'b1', name: 'B1 · Trung cấp & Đời sống xã hội', short: 'B1 Trung cấp', icon: '🎨', level: 'B1', count: '13 bài', desc: 'Nghề nghiệp, tính cách, công việc, thể thao, bóng đá, phim ảnh, du lịch, thời trang, bệnh viện, bưu điện, ngân hàng, sách ảnh, công nghệ' },
-    { id: 'b2', name: 'B2 · Thương mại & Đi làm', short: 'B2 Thương mại', icon: '💼', level: 'B2–B2+', count: '34 bài', desc: 'Môi trường, quân đội, và trọn bộ 32 bài Tiếng Anh Thương mại: họp hành, email đối tác, đàm phán, Incoterms, chuỗi cung ứng, hợp đồng' },
+    { id: 'b2', name: 'B2 · Thương mại & Đi làm', short: 'B2 Thương mại', icon: '💼', level: 'B2–B2+', count: '37 bài', desc: 'Môi trường, quân đội, máy móc & vật liệu xây dựng, an toàn công trường và trọn bộ Tiếng Anh Thương mại: đàm phán, chuỗi cung ứng, hợp đồng' },
     { id: 'c1', name: 'C1 · Cao cấp & Học thuật', short: 'C1 Cao cấp', icon: '🏛️', level: 'C1', count: '5 bài', desc: 'Nghiên cứu học thuật, kinh tế vĩ mô toàn cầu, quản trị chiến lược M&A, khung pháp lý & IP, nghệ thuật tranh biện phản biện' },
     { id: 'c2', name: 'C2 · Thành thạo & Ngoại giao', short: 'C2 Bậc thầy', icon: '👑', level: 'C2', count: '5 bài', desc: 'Quan hệ quốc tế & địa chính trị, triết học & nhận thức luận, nghệ thuật biên dịch, đạo đức AI tương lai, truyền thông khủng hoảng' },
-    { id: 'all', name: 'Tất cả 6 cấp độ', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '87 bài', desc: 'Toàn bộ 87 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
+    { id: 'all', name: 'Tất cả 6 cấp độ', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '90 bài', desc: 'Toàn bộ 90 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
   ],
   zh: [
     { id: 'hsk1', name: 'HSK 1 · Sơ cấp 1', short: 'HSK 1', icon: '🌱', level: 'HSK 1', count: '7 bài', desc: 'Nền tảng phát âm Pinyin, chào hỏi, số đếm, gia đình, ngày giờ, đại từ' },
@@ -1257,7 +1257,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.19 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.20 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
