@@ -423,7 +423,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261106-1400';
+const APP_BUILD_ID = '20261106-1415';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1253,7 +1253,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.15 · Cập nhật 06/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.16 · Cập nhật 06/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -1316,7 +1316,8 @@ function getOrderPinyin(code, ex) {
 }
 function orderFeedback(code, ex, r) {
   const pinyinOrRead = getOrderPinyin(code, ex);
-  const transText = ex.trans || (ex.v && ex.v.exm) || '';
+  const transText = ex.trans || (ex.v && ex.v.exm) || (ex.s && (ex.s.m || ex.s.trans)) || '';
+  const labelPrefix = (transText.startsWith('Câu có từ') || transText.startsWith('Dịch:')) ? '' : 'Dịch: ';
   return h('div', { class: 'order-reveal stack', style: { gap: '6px', marginTop: '6px' } },
     code === 'ja' && ex.raw
       ? h('p', { class: 'big', lang: 'ja', style: { fontSize: '1.25rem', margin: 0, textAlign: 'left' } }, ruby(ex.raw))
@@ -1326,7 +1327,7 @@ function orderFeedback(code, ex, r) {
       lang: code === 'ja' ? 'ja' : null,
       style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
     }, pinyinOrRead) : null,
-    transText ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left' } }, transText) : null,
+    transText ? h('p', { class: 'order-trans', style: { fontSize: '1.05rem', color: 'var(--ink)', fontWeight: 500, margin: '4px 0 0 0', textAlign: 'left', lineHeight: 1.4 } }, labelPrefix + transText) : null,
     h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
       listenBtns(code, ex.text)
     )
@@ -1401,7 +1402,7 @@ function buildSteps(t, i) {
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
     if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
-    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || '', tokens: s.chunks, raw: s.raw }); }
+    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); }
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
@@ -1420,7 +1421,7 @@ function buildSteps(t, i) {
     sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
-    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
+    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '' }); });
     (t.coach || []).slice(0, 2).forEach((c) => steps.push({ type: 'speak', text: c.sa, m: c.q + (c.vi ? ' · ' + c.vi : ''), scene: 'Trả lời câu hỏi' }));
   } else {
     const weak = topicWords.slice().sort((a, b) => ((S.srs[sid(code, a.id)] || { b: 0 }).b - (S.srs[sid(code, b.id)] || { b: 0 }).b));
@@ -1532,7 +1533,8 @@ function lessonView(t, i) {
           hintBtn.textContent = showHint ? 'Ẩn gợi ý Pinyin' : '💡 Gợi ý Pinyin';
         }
       }, '💡 Gợi ý Pinyin') : null;
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), ex.trans && h('p', { class: 'q' }, ex.trans), hintBtn, hintEl, ans, pool, typed);
+      const transText = ex.trans || (ex.v && ex.v.exm) || (ex.s && (ex.s.m || ex.s.trans)) || '';
+      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), transText ? h('p', { class: 'q', style: { fontSize: '1.18rem', fontWeight: 600, color: 'var(--teal)', margin: '4px 0 10px 0' } }, transText) : null, hintBtn, hintEl, ans, pool, typed);
       ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; if (hintBtn) hintBtn.remove(); if (hintEl) hintEl.remove(); };
       const joined = (arr) => code === 'en' ? normEn(arr.join(' ')) : arr.join('').replace(/\s/g, '');
       const strip = (s) => code === 'en' ? normEn(s) : s.replace(/[\s。，！？、,.!?：:；;“”"']/g, '');
@@ -1749,7 +1751,7 @@ function topicPicker(code, store, onChange) {
 function speakItems(code, t) {
   const out = [];
   t.speak.forEach((sc) => sc.lines.forEach((ln) => out.push({ kind: 'line', text: ln.t, r: ln.r, m: ln.m, group: sc.title })));
-  if (code === 'ja') (t.sents || []).forEach((s) => out.push({ kind: 'line', text: s.chunks.join(''), raw: s.raw, group: 'Câu mẫu trong bài' }));
+  if (code === 'ja') (t.sents || []).forEach((s) => out.push({ kind: 'line', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '', group: 'Câu mẫu trong bài' }));
   t.vocab.filter((v) => v.ex).forEach((v) => out.push({ kind: 'line', text: v.ex, r: v.exr, m: v.exm, group: 'Câu ví dụ từ vựng' }));
   if (code === 'ja') t.vocab.slice(0, 30).forEach((v) => out.push({ kind: 'line', text: v.w, r: v.r, m: v.m, group: 'Từ vựng' }));
   (t.coach || []).forEach((c) => out.push({ kind: 'coach', c, group: 'Coach · trả lời câu hỏi' }));
