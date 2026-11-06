@@ -16455,9 +16455,9 @@
     {
       "id": "132",
       "pos": 44,
-      "catPos": 1,
-      "category": "b2",
-      "level": "B2",
+      "catPos": 14,
+      "category": "b1",
+      "level": "B1",
       "phase": "B2 · Thương mại & Chuyên sâu",
       "title": "Environment and Nature",
       "sub": "Môi trường, thiên nhiên và bảo tồn",
@@ -16851,9 +16851,9 @@
     {
       "id": "133",
       "pos": 45,
-      "catPos": 2,
-      "category": "b2",
-      "level": "B2",
+      "catPos": 15,
+      "category": "b1",
+      "level": "B1",
       "phase": "B2 · Thương mại & Chuyên sâu",
       "title": "Military and National Defense",
       "sub": "Quân đội, quốc phòng và an ninh",
@@ -17643,7 +17643,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 3,
+      "catPos": 1,
       "level": "B2"
     },
     {
@@ -18155,7 +18155,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 4,
+      "catPos": 2,
       "level": "B2"
     },
     {
@@ -18647,7 +18647,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 5,
+      "catPos": 3,
       "level": "B2"
     },
     {
@@ -19035,7 +19035,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 6,
+      "catPos": 4,
       "level": "B2"
     },
     {
@@ -19636,7 +19636,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 7,
+      "catPos": 5,
       "level": "B2"
     },
     {
@@ -20024,7 +20024,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 8,
+      "catPos": 6,
       "level": "B2"
     },
     {
@@ -20412,7 +20412,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 9,
+      "catPos": 7,
       "level": "B2"
     },
     {
@@ -20800,7 +20800,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 10,
+      "catPos": 8,
       "level": "B2"
     },
     {
@@ -21188,7 +21188,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 11,
+      "catPos": 9,
       "level": "B2"
     },
     {
@@ -21590,7 +21590,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 12,
+      "catPos": 10,
       "level": "B2"
     },
     {
@@ -22056,7 +22056,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 13,
+      "catPos": 11,
       "level": "B2"
     },
     {
@@ -22640,7 +22640,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 14,
+      "catPos": 12,
       "level": "B2"
     },
     {
@@ -23028,7 +23028,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 15,
+      "catPos": 13,
       "level": "B2"
     },
     {
@@ -23416,7 +23416,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 16,
+      "catPos": 14,
       "level": "B2"
     },
     {
@@ -23804,7 +23804,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 17,
+      "catPos": 15,
       "level": "B2"
     },
     {
@@ -24192,7 +24192,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 18,
+      "catPos": 16,
       "level": "B2"
     },
     {
@@ -24580,7 +24580,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 19,
+      "catPos": 17,
       "level": "B2"
     },
     {
@@ -24968,7 +24968,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 20,
+      "catPos": 18,
       "level": "B2"
     },
     {
@@ -25356,7 +25356,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 21,
+      "catPos": 19,
       "level": "B2"
     },
     {
@@ -25744,7 +25744,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 22,
+      "catPos": 20,
       "level": "B2"
     },
     {
@@ -26132,7 +26132,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 23,
+      "catPos": 21,
       "level": "B2"
     },
     {
@@ -26520,7 +26520,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 24,
+      "catPos": 22,
       "level": "B2"
     },
     {
@@ -26908,7 +26908,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 25,
+      "catPos": 23,
       "level": "B2"
     },
     {
@@ -27296,7 +27296,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 26,
+      "catPos": 24,
       "level": "B2"
     },
     {
@@ -27684,7 +27684,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 27,
+      "catPos": 25,
       "level": "B2"
     },
     {
@@ -28072,7 +28072,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 28,
+      "catPos": 26,
       "level": "B2"
     },
     {
@@ -28460,7 +28460,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 29,
+      "catPos": 27,
       "level": "B2"
     },
     {
@@ -28848,7 +28848,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 30,
+      "catPos": 28,
       "level": "B2"
     },
     {
@@ -29236,7 +29236,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 31,
+      "catPos": 29,
       "level": "B2"
     },
     {
@@ -29624,7 +29624,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 32,
+      "catPos": 30,
       "level": "B2"
     },
     {
@@ -30012,7 +30012,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 33,
+      "catPos": 31,
       "level": "B2"
     },
     {
@@ -30400,7 +30400,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 34,
+      "catPos": 32,
       "level": "B2"
     },
     {
@@ -30409,7 +30409,7 @@
       "sub": "Thiết bị và máy móc thi công xây dựng",
       "category": "b2",
       "level": "B2",
-      "catPos": 35,
+      "catPos": 33,
       "pos": 78,
       "vocab": [
         {
@@ -30836,7 +30836,7 @@
       "sub": "Vật liệu xây dựng chuyên sâu và công nghệ bê tông",
       "category": "b2",
       "level": "B2",
-      "catPos": 36,
+      "catPos": 34,
       "pos": 79,
       "vocab": [
         {
@@ -31263,7 +31263,7 @@
       "sub": "Vận hành hiện trường, an toàn lao động và tình huống thi công",
       "category": "b2",
       "level": "B2",
-      "catPos": 37,
+      "catPos": 35,
       "pos": 80,
       "vocab": [
         {
