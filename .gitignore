@@ -5,6 +5,7 @@ index-inline.html
 
 # Raw heavy media (rule 10: keep out of git)
 *.mp3
+!audio/mail/*.mp3
 *.wav
 *.m4a
 source/audio-nghe-N5/

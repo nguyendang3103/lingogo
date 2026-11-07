@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="vi">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,12 +138,137 @@ select { width: 100%; }
 .extras { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip { display: inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 99px; background: var(--sunk); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .chip.good { background: var(--good-bg); color: var(--good); }
+.chip.level { font-size: .74rem; font-weight: 700; padding: 2px 7px; border-radius: 6px; letter-spacing: .02em; flex: none; text-transform: uppercase; }
+.chip.level.a1 { background: #e6f7ec; color: #0d8a43; border: 1px solid #b7ebc6; }
+.chip.level.a2 { background: #e6f4ff; color: #096dd9; border: 1px solid #91caff; }
+.chip.level.b1 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
+.chip.level.b2 { background: #fff7e6; color: #d46b08; border: 1px solid #ffd591; }
+.chip.level.hsk1 { background: #e6f7ec; color: #0d8a43; border: 1px solid #b7ebc6; }
+.chip.level.hsk2 { background: #e6f4ff; color: #096dd9; border: 1px solid #91caff; }
+.chip.level.hsk3 { background: #f0f5ff; color: #1d39c4; border: 1px solid #adc6ff; }
+.chip.level.hsk4 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
+.chip.level.hsk5 { background: #fff7e6; color: #d46b08; border: 1px solid #ffd591; }
+.chip.level.hsk6 { background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; }
+.chip.level.hsk7 { background: #f0f0ff; color: #391085; border: 1px solid #d3adf7; }
+.chip.level.hsk8 { background: #fff0f6; color: #c41d7f; border: 1px solid #ffadd2; }
+.chip.level.hsk9 { background: #feffe6; color: #ad8b00; border: 1px solid #ffe58f; font-weight: 800; box-shadow: 0 0 4px rgba(250,219,20,.4); }
+.chip.level.n5 { background: #e6f7ec; color: #0d8a43; border: 1px solid #b7ebc6; }
+.chip.level.n4 { background: #e6f4ff; color: #096dd9; border: 1px solid #91caff; }
+.chip.level.n3 { background: #f0f5ff; color: #1d39c4; border: 1px solid #adc6ff; }
+.chip.level.n2 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
+.chip.level.n1 { background: #feffe6; color: #ad8b00; border: 1px solid #ffe58f; font-weight: 800; box-shadow: 0 0 4px rgba(250,219,20,.4); }
 .kbd { flex: none; display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; font: 600 .8rem/1 var(--font); color: var(--muted); background: var(--bg); font-variant-numeric: tabular-nums; }
 .options button { gap: 12px; }
 .options button[aria-pressed="true"] .kbd { border-color: var(--teal); color: var(--teal); }
 .grades .kbd { min-width: 20px; height: 20px; font-size: .7rem; margin-bottom: 2px; }
 .keyhint { text-align: center; font-size: .75rem; color: var(--muted); }
 @media (hover: none) { .keyhint { display: none; } }
+
+/* Phân loại chủ đề */
+.cat-bar { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 8px; margin-top: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.cat-bar::-webkit-scrollbar { display: none; }
+.cat-pill { flex: none; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); font-size: .88rem; font-weight: 500; cursor: pointer; transition: all .15s ease; white-space: nowrap; line-height: 1.2; }
+.cat-pill:hover { border-color: var(--teal); color: var(--ink); }
+.cat-pill.active { background: var(--teal); color: #fff; border-color: var(--teal); font-weight: 600; box-shadow: 0 2px 6px rgba(0, 128, 128, 0.25); }
+/* Nút Subjects & menu chọn chủ đề */
+.subjects-box { position: relative; width: 100%; }
+.subjects-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all .15s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.subjects-trigger:hover, .subjects-trigger.open {
+  border-color: var(--teal);
+  box-shadow: 0 2px 8px rgba(15,82,87,.12);
+}
+.subjects-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  background: var(--teal);
+  color: var(--teal-ink);
+  padding: 3px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  flex: none;
+}
+.subjects-name {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subjects-arrow {
+  font-size: .75rem;
+  color: var(--muted);
+  flex: none;
+  transition: transform .15s ease;
+}
+.subjects-dropdown {
+  position: relative;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  padding: 6px;
+  gap: 4px;
+  margin-top: 6px;
+  z-index: 10;
+  animation: fadeInDown .15s ease;
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.subjects-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all .12s ease;
+}
+.subjects-item:hover {
+  background: var(--sunk);
+}
+.subjects-item.selected {
+  background: var(--sunk);
+  border-color: var(--teal);
+}
+.subjects-check {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 99px;
+  background: var(--teal);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  flex: none;
+}
+
 
 /* Bài học */
 .topbar { display: flex; align-items: center; gap: 12px; }
@@ -154,7 +282,7 @@ select { width: 100%; }
 .big { font-size: 2.2rem; font-weight: 700; text-align: center; line-height: 1.25; overflow-wrap: anywhere; }
 .big[lang="zh-Hans"], .big[lang="ja"] { font-size: 2.8rem; font-weight: 500; }
 .read { color: var(--teal); text-align: center; font-size: 1rem; }
-.ipa { font-family: var(--mono); color: var(--muted); text-align: center; font-size: .95rem; }
+.ipa { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--teal); font-weight: 600; text-align: center; font-size: 1.05rem; letter-spacing: .25px; }
 .hv { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 12px; border-radius: 12px; background: var(--sunk); }
 .hv .hvw { color: var(--teal); font-size: 1.25rem; letter-spacing: .02em; }
 .hvrows { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 320px; }
@@ -244,11 +372,31 @@ textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospac
 
 /* Thanh tab */
 /* Modal đồng bộ & nút sync */
+/* Toàn bộ SVG luôn có kích thước chuẩn, không bao giờ bị phình to */
+svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; flex-shrink: 0; }
 .modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
-.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; padding: 20px; box-shadow: 0 12px 32px rgba(0,0,0,.22); }
-.sync-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; }
-.sync-btn:hover { background: var(--sunk); transform: rotate(90deg); }
+.modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,.22); box-sizing: border-box; }
+.sync-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; flex-shrink: 0; }
+.sync-btn .sync-dot { position: absolute; top: -1px; right: -1px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--card); }
+.sync-btn .sync-dot.on { background: #10b981; }
+.sync-btn .sync-dot.off { background: #f59e0b; }
+.sync-btn:hover { background: var(--sunk); }
+.sync-btn:active { transform: scale(.92); }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.sync-btn.spinning svg { animation: spin .6s linear infinite; }
 .sync-btn svg { width: 18px; height: 18px; }
+.feedback-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease, border-color .15s; flex-shrink: 0; }
+.feedback-btn:hover { background: var(--sunk); border-color: var(--teal); }
+.feedback-btn:active { transform: scale(.92); }
+.feedback-btn svg { width: 18px; height: 18px; }
+.feedback-tag { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--line); background: var(--surface); font-size: .82rem; cursor: pointer; transition: all .15s; color: var(--ink); }
+.feedback-tag:hover { background: var(--sunk); }
+.feedback-tag.active { background: rgba(14, 116, 144, .12); border-color: var(--teal); color: var(--teal); font-weight: 600; }
+.sync-item-btn { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); text-align: left; cursor: pointer; transition: background .15s, border-color .15s, transform .1s; box-sizing: border-box; }
+.sync-item-btn:hover { background: var(--sunk); border-color: var(--teal); }
+.sync-item-btn:active { transform: scale(.98); }
+.sync-badge-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(14, 116, 144, .08); color: var(--teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.sync-badge-icon svg { width: 20px; height: 20px; }
 
 .tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; display: flex; justify-content: center;
@@ -275,6 +423,7 @@ textarea.code { width: 100%; box-sizing: border-box; font: .8rem/1.4 ui-monospac
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
+const APP_BUILD_ID = '20261106-1645';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -283,7 +432,40 @@ const LANGS = {
 
 // ===== Trạng thái học tập (lưu trên máy + đồng bộ tài khoản khi có) =====
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
-const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
+const CATEGORIES = {
+  en: [
+    { id: 'a1', name: 'A1 · Khởi động & Cơ bản', short: 'A1 Sơ cấp 1', icon: '🐣', level: 'A1', count: '13 bài', desc: 'Chào hỏi, số đếm, màu sắc, gia đình, đồ dùng học tập, động vật, hoa quả, rau củ, đồ ăn, đồ uống, quần áo, sinh hoạt' },
+    { id: 'a2', name: 'A2 · Đời sống & Giao tiếp', short: 'A2 Sơ cấp 2', icon: '🌿', level: 'A2', count: '17 bài', desc: 'Thời tiết, nhà bếp, ngoại hình, cảm xúc, hành động cơ thể, giao thông, trường học, mua sắm, quê hương, quốc gia, côn trùng, hoa cỏ, hải sản, lễ Tết' },
+    { id: 'b1', name: 'B1 · Trung cấp & Đời sống xã hội', short: 'B1 Trung cấp', icon: '🎨', level: 'B1', count: '15 bài', desc: 'Nghề nghiệp, tính cách, công việc, thể thao, bóng đá, phim ảnh, du lịch, thời trang, y tế, bưu điện, ngân hàng, nghệ thuật, công nghệ, môi trường & tự nhiên, quân đội' },
+    { id: 'b2', name: 'B2 · Thương mại & Đi làm', short: 'B2 Thương mại', icon: '💼', level: 'B2–B2+', count: '35 bài', desc: 'Trọn bộ Tiếng Anh Thương mại chuyên sâu (họp hành, đàm phán, Incoterms, chuỗi cung ứng, hợp đồng) cùng thiết bị máy móc, vật liệu xây dựng và an toàn công trường' },
+    { id: 'c1', name: 'C1 · Cao cấp & Học thuật', short: 'C1 Cao cấp', icon: '🏛️', level: 'C1', count: '5 bài', desc: 'Nghiên cứu học thuật, kinh tế vĩ mô toàn cầu, quản trị chiến lược M&A, khung pháp lý & IP, nghệ thuật tranh biện phản biện' },
+    { id: 'c2', name: 'C2 · Thành thạo & Ngoại giao', short: 'C2 Bậc thầy', icon: '👑', level: 'C2', count: '5 bài', desc: 'Quan hệ quốc tế & địa chính trị, triết học & nhận thức luận, nghệ thuật biên dịch, đạo đức AI tương lai, truyền thông khủng hoảng' },
+    { id: 'all', name: 'Tất cả 6 cấp độ', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '90 bài', desc: 'Toàn bộ 90 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
+  ],
+  zh: [
+    { id: 'hsk1', name: 'HSK 1 · Sơ cấp 1', short: 'HSK 1', icon: '🌱', level: 'HSK 1', count: '7 bài', desc: 'Nền tảng phát âm Pinyin, chào hỏi, số đếm, gia đình, ngày giờ, đại từ' },
+    { id: 'hsk2', name: 'HSK 2 · Sơ cấp 2', short: 'HSK 2', icon: '🌿', level: 'HSK 2', count: '10 bài', desc: 'Động từ, ăn uống, mua sắm, hỏi đường, khách sạn, công việc, WeChat' },
+    { id: 'hsk3', name: 'HSK 3 · Sơ cấp 3', short: 'HSK 3', icon: '🍃', level: 'HSK 3', count: '10 bài', desc: 'Du lịch, so sánh, phim ảnh, thể thao, trường học, sinh hoạt, hỏi giá báo giá' },
+    { id: 'hsk4', name: 'HSK 4 · Trung cấp 1', short: 'HSK 4', icon: '💼', level: 'HSK 4', count: '8 bài', desc: 'Bốn mùa, đơn hàng, thanh toán, vận chuyển, thủ tục hải quan, kiểm hàng' },
+    { id: 'hsk5', name: 'HSK 5 · Trung cấp 2', short: 'HSK 5', icon: '👔', level: 'HSK 5', count: '6 bài', desc: 'Họp tiến độ, đàm phán hợp đồng, hội chợ quốc tế, văn hóa, email trang trọng' },
+    { id: 'hsk6', name: 'HSK 6 · Trung cấp 3', short: 'HSK 6', icon: '🚀', level: 'HSK 6', count: '4 bài', desc: 'Thuyết trình, vấn đề xã hội, công nghệ AI, thành ngữ 4 chữ thông dụng' },
+    { id: 'hsk7', name: 'HSK 7 · Cao cấp 1', short: 'HSK 7', icon: '🎓', level: 'HSK 7', count: '2 bài', desc: 'Phương pháp nghiên cứu học thuật, tổng quan tài liệu và kinh tế vĩ mô toàn cầu' },
+    { id: 'hsk8', name: 'HSK 8 · Cao cấp 2', short: 'HSK 8', icon: '🏛️', level: 'HSK 8', count: '2 bài', desc: 'Quan hệ quốc tế, ngoại giao đa phương, pháp luật và sở hữu trí tuệ' },
+    { id: 'hsk9', name: 'HSK 9 · Cao cấp 3', short: 'HSK 9', icon: '👑', level: 'HSK 9', count: '2 bài', desc: 'Tư biện triết học, tư tưởng truyền thống và nghệ thuật dịch thuật Tín - Đạt - Nhã' },
+    { id: 'all', name: 'Tất cả 9 cấp độ', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '51 bài', desc: 'Toàn bộ 51 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
+  ],
+  ja: [
+    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Chào hỏi, ngày giờ, mua sắm, gia đình, sinh hoạt, du lịch và trọn bộ 101 chữ Hán Kanji N5' },
+    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, tiền tệ, 12 thể động từ và Kanji N4' },
+    { id: 'n3', name: 'N3 · Trung cấp 1', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Văn phòng & công việc, đời sống & xử lý sự cố, trải nghiệm văn hóa và du lịch Nhật Bản' },
+    { id: 'n2', name: 'N2 · Trung cấp 2', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Đàm phán kinh doanh, kính ngữ thương mại & tác phong công sở, xã hội & công nghệ' },
+    { id: 'n1', name: 'N1 · Cao cấp', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Kinh tế vĩ mô & toàn cầu, pháp chế & quản trị doanh nghiệp, tư tưởng & mỹ học Nhật Bản' },
+    { id: 'all', name: 'Tất cả 5 cấp độ', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Lộ trình tiếng Nhật toàn diện 26 bài học từ sơ cấp N5 đến cao cấp N1' }
+  ]
+};
+const EN_CATEGORIES = CATEGORIES.en;
+let subjectsOpen = false;
+const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'a1', zhCat: 'hsk1', jaCat: 'n5', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, ach: {}, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
 const SYNC = { ref: null, timer: 0, seen: -1 };
@@ -458,7 +640,10 @@ async function startGhSync() {
       const res = await findOrCreateGhGist(cfg.token);
       cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
     }
-    await pullGhSync(true);
+    const updated = await pullGhSync(true);
+    if (updated) {
+      toast('Đã tự động nạp tiến độ mới nhất từ GitHub (@' + (cfg.user || 'User') + ')');
+    }
     document.addEventListener('visibilitychange', () => { if (!document.hidden) pullGhSync(true); });
   } catch (e) { /* yên lặng khi khởi động nếu offline */ }
 }
@@ -509,7 +694,8 @@ const DATA = {}, STROKES = {}, BUNDLES = {};
 async function getJSON(path) {
   const el = document.querySelector('script[type="application/json"][data-file="' + path + '"]');
   if (el) { try { return JSON.parse(el.textContent); } catch (e) { /* hỏng thì rơi về tải mạng */ } }
-  const r = await fetch(path);
+  const url = path + (path.includes('?') ? '&' : '?') + 'v=' + APP_BUILD_ID;
+  const r = await fetch(url);
   if (!r.ok) throw new Error('Không tải được bài học (' + r.status + ')');
   return r.json();
 }
@@ -740,8 +926,14 @@ function remapLessons(d) {
 const lkey = (t, i) => t.lang + ':' + t.id + '-' + i;
 const lessonDone = (t, i) => S.lessons[lkey(t, i)] != null;
 const topicDone = (t) => t.lessons.every((l, i) => lessonDone(t, i));
-function nextLesson(d) {
-  for (const t of d.topics) for (let i = 0; i < t.lessons.length; i++) if (!lessonDone(t, i)) return { t, i };
+function nextLesson(d, cat) {
+  const code = d && d.code;
+  const langCats = CATEGORIES[code];
+  const defaultCat = code === 'ja' ? (S.jaCat || 'n5') : (code === 'zh' ? (S.zhCat || 'hsk1') : (code === 'en' ? (S.enCat || 'a1') : 'all'));
+  const curCat = cat !== undefined ? cat : (langCats ? defaultCat : 'all');
+  const defCategory = code === 'zh' ? 'hsk1' : (code === 'ja' ? 'n5' : 'a1');
+  const topics = (curCat && curCat !== 'all') ? d.topics.filter((t) => (t.category || defCategory) === curCat) : d.topics;
+  for (const t of topics) for (let i = 0; i < t.lessons.length; i++) if (!lessonDone(t, i)) return { t, i };
   return null;
 }
 function lessonTitle(t, i) {
@@ -804,18 +996,58 @@ const ICON = {
   sync: 'M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5',
   push: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12',
   pull: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3',
+  feedback: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
 };
+let CURRENT_CTX = null;
+function setFeedbackContext(ctx) { CURRENT_CTX = ctx; }
+function getFeedbackContext() { return CURRENT_CTX || {}; }
 // Nút loa: phát âm; slow = phát chậm (biểu tượng con rùa như app cũ)
+async function playAudio(src, slow = false) {
+  AUD.pause();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  AUD.src = src;
+  AUD.playbackRate = slow ? 0.75 : 1.0;
+  try {
+    await AUD.play();
+    return true;
+  } catch (e) {
+    console.warn('Lỗi phát file audio:', src, e);
+    return false;
+  }
+}
 function spk(code, text, opts = {}) {
   const slow = !!opts.slow;
-  return h('button', { class: 'spk' + (opts.cls ? ' ' + opts.cls : ''), 'aria-label': slow ? 'Nghe chậm' : 'Nghe', title: slow ? 'Nghe chậm' : 'Nghe',
-    onclick: (e) => { e.stopPropagation(); say(code, text, slow); } }, slow ? h('span', { class: 'turtle', 'aria-hidden': 'true' }, '🐢') : icon(ICON.speaker));
+  const src = opts.src;
+  return h('button', {
+    class: 'spk' + (opts.cls ? ' ' + opts.cls : ''),
+    'aria-label': slow ? 'Nghe chậm' : (src ? 'Nghe giọng người thật' : 'Nghe'),
+    title: slow ? 'Nghe chậm' : (src ? 'Nghe giọng đọc người thật (Studio)' : 'Nghe'),
+    onclick: async (e) => {
+      e.stopPropagation();
+      if (src) {
+        const ok = await playAudio(src, slow);
+        if (ok) return;
+      }
+      say(code, text, slow);
+    }
+  }, slow ? h('span', { class: 'turtle', 'aria-hidden': 'true' }, '🐢') : icon(ICON.speaker));
 }
-function icon(d) {
-  const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true');
+function icon(d, opts = {}) {
+  const size = typeof opts === 'number' ? opts : (opts.size || 20);
+  const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  s.setAttribute('viewBox', '0 0 24 24');
+  s.setAttribute('width', String(size));
+  s.setAttribute('height', String(size));
+  s.setAttribute('aria-hidden', 'true');
+  if (typeof opts === 'object' && opts.cls) s.setAttribute('class', opts.cls);
   const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  for (const [k, v] of Object.entries({ d, fill: 'none', stroke: 'currentColor', 'stroke-width': '1.8', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })) p.setAttribute(k, v);
-  s.append(p); return s;
+  const isGithub = d === ICON.github;
+  const attrs = isGithub || (typeof opts === 'object' && opts.fill)
+    ? { d, fill: 'currentColor', stroke: 'none' }
+    : { d, fill: 'none', stroke: 'currentColor', 'stroke-width': (typeof opts === 'object' && opts.stroke) || '1.8', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+  for (const [k, v] of Object.entries(attrs)) p.setAttribute(k, v);
+  s.append(p);
+  return s;
 }
 const L = () => LANGS[S.lang];
 const tw = (text, cls, extra) => h('span', Object.assign({ class: cls || '', lang: L().lang }, extra || {}), text); // chữ ngôn ngữ đích
@@ -851,7 +1083,7 @@ async function route() {
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
-const SUBTITLE = { en: 'Tiếng Anh thương mại', zh: 'Tiếng Trung · HSK 1–6', ja: 'Tiếng Nhật · N5–N4' };
+const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến B2+', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–9)', ja: 'Tiếng Nhật · JLPT N5–N1' };
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -892,6 +1124,13 @@ function welcomeView() {
       h('h1', {}, 'Học để nói được, mỗi ngày một chút'),
       h('p', { class: 'muted' }, 'Ba thứ tiếng trong một app: bài học theo chủ đề, ôn tập đúng lúc, luyện nói và tập viết chữ Hán, kana.'),
       had && h('p', { class: 'note' }, 'Đã có tiến độ cũ của bạn. Bạn sẽ học tiếp từ chỗ đã dừng.')),
+    h('div', { style: { background: 'var(--sunk)', padding: '12px 14px', borderRadius: '14px', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' } },
+      h('div', { style: { minWidth: 0, flex: 1 } },
+        h('b', { style: { fontSize: '.88rem', display: 'block' } }, 'Đã học trên máy khác?'),
+        h('span', { class: 'small muted', style: { fontSize: '.78rem', display: 'block' } }, 'Tự động đồng bộ bài học qua GitHub')
+      ),
+      h('button', { class: 'primary mini', onclick: showSyncModal }, 'Đồng bộ ngay')
+    ),
     h('div', { class: 'stack' }, h('label', { for: 'name', class: 'label' }, 'Tên của bạn'), name),
     h('div', { class: 'stack' }, h('span', { class: 'label' }, 'Bạn muốn học thứ tiếng nào trước?'), langs, h('p', { class: 'small muted' }, 'Có thể đổi sang thứ tiếng khác bất cứ lúc nào.')),
     h('div', { class: 'stack' }, h('span', { class: 'label' }, 'Mục tiêu mỗi ngày, cho từng thứ tiếng'), goals),
@@ -900,15 +1139,169 @@ function welcomeView() {
 
 // ===== Trang Học =====
 const openTopics = new Set();
+function feedbackBtn(customCtx) {
+  return h('button', {
+    class: 'feedback-btn',
+    'aria-label': 'Góp ý hoặc báo lỗi cho AI',
+    title: 'Góp ý & Báo lỗi cho AI',
+    onclick: (e) => {
+      e.stopPropagation();
+      showFeedbackModal(customCtx);
+    }
+  }, icon(ICON.feedback));
+}
+
+function syncButton() {
+  const cfg = getGhConfig();
+  const isConnected = !!(cfg.token && cfg.gistId);
+  let lp = null;
+  const dot = h('span', {
+    class: 'sync-dot ' + (isConnected ? 'on' : 'off'),
+    title: isConnected ? ('Đã kết nối GitHub (@' + (cfg.user || 'User') + ')') : 'Chưa kết nối đồng bộ đám mây (bấm để kết nối)'
+  });
+  const btn = h('button', {
+    class: 'sync-btn',
+    'aria-label': isConnected ? 'Tự động đồng bộ' : 'Cài đặt đồng bộ',
+    title: isConnected ? ('Đã kết nối GitHub (@' + (cfg.user || 'User') + ') · Bấm để đồng bộ ngay (Nhấn giữ để cài đặt)') : 'Chưa kết nối GitHub · Bấm để cài đặt đồng bộ',
+    onclick: () => {
+      if (btn.dataset.longPressed === 'true') {
+        delete btn.dataset.longPressed;
+        return;
+      }
+      if (!isConnected) {
+        toast('Chưa kết nối GitHub! Vui lòng nhập Token một lần để đồng bộ.');
+        showSyncModal();
+      } else {
+        autoSync();
+      }
+    },
+    oncontextmenu: (e) => {
+      e.preventDefault();
+      showSyncModal();
+    },
+    ontouchstart: () => {
+      lp = setTimeout(() => {
+        lp = null;
+        btn.dataset.longPressed = 'true';
+        showSyncModal();
+      }, 450);
+    },
+    ontouchend: () => { if (lp) { clearTimeout(lp); lp = null; } },
+    ontouchcancel: () => { if (lp) { clearTimeout(lp); lp = null; } }
+  }, icon(ICON.sync), dot);
+  return btn;
+}
 function homeView() {
   const d = DATA[S.lang], st = streak(), xp = xpOf(todayN(), S.lang), due = dueIn(S.lang);
-  const nx = nextLesson(d);
+  const langCats = CATEGORIES[S.lang];
+  if (S.lang === 'en') {
+    if (!S.enCat || S.enCat === 'life') S.enCat = 'a1';
+    else if (S.enCat === 'hobbies') S.enCat = 'b1';
+    else if (S.enCat === 'business') S.enCat = 'b2';
+  }
+  if (S.lang === 'zh') {
+    if (!S.zhCat || S.zhCat === 'basic') S.zhCat = 'hsk1';
+    else if (S.zhCat === 'comm') S.zhCat = 'hsk2';
+    else if (S.zhCat === 'business') S.zhCat = 'hsk4';
+    else if (S.zhCat === 'advanced') S.zhCat = 'hsk5';
+  }
+  if (S.lang === 'ja') {
+    if (!S.jaCat || S.jaCat === 'basic') S.jaCat = 'n5';
+    else if (S.jaCat === 'comm') S.jaCat = 'n4';
+    else if (S.jaCat === 'kanji') S.jaCat = 'n5';
+  }
+  const curCat = langCats ? (S.lang === 'en' ? (S.enCat || 'a1') : (S.lang === 'zh' ? (S.zhCat || 'hsk1') : (S.jaCat || 'n5'))) : 'all';
+  const nx = nextLesson(d, curCat);
   const gf = h('i'); requestAnimationFrame(() => { gf.style.width = Math.min(100, Math.round((xp / goal()) * 100)) + '%'; });
-  if (nx && ![...openTopics].some((k) => k.startsWith(S.lang + ':'))) openTopics.add(S.lang + ':' + nx.t.id);
+
+  const defCategory = S.lang === 'zh' ? 'hsk1' : (S.lang === 'ja' ? 'n5' : 'a1');
+  const filteredTopics = (langCats && curCat !== 'all')
+    ? d.topics.filter((t) => (t.category || defCategory) === curCat)
+    : d.topics;
+
+  const filteredHasOpen = [...openTopics].some((k) => filteredTopics.some((t) => k === S.lang + ':' + t.id));
+  if (!filteredHasOpen && nx) openTopics.add(S.lang + ':' + nx.t.id);
+
   const phases = []; let cur = null;
-  for (const t of d.topics) { if (!cur || cur.name !== t.phase) { cur = { name: t.phase, topics: [] }; phases.push(cur); } cur.topics.push(t); }
+  for (const t of filteredTopics) {
+    if (!cur || cur.name !== t.phase) { cur = { name: t.phase, topics: [] }; phases.push(cur); }
+    cur.topics.push(t);
+  }
+
+  const curCatObj = langCats ? (langCats.find((c) => c.id === curCat) || langCats[0]) : null;
+  const catBar = langCats ? h('div', { class: 'subjects-box stack', style: { gap: '6px', margin: '8px 0 4px 0' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('span', { class: 'label', style: { margin: 0, fontWeight: 700 } }, 'Chủ đề học'),
+      h('span', { class: 'small muted' }, curCatObj.count + ' · Level ' + curCatObj.level)),
+    h('button', {
+      class: 'subjects-trigger' + (subjectsOpen ? ' open' : ''),
+      'aria-expanded': String(subjectsOpen),
+      'aria-haspopup': 'listbox',
+      onclick: (e) => {
+        e.stopPropagation();
+        subjectsOpen = !subjectsOpen;
+        homeView();
+      }
+    },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', overflow: 'hidden' } },
+        h('span', { class: 'subjects-name' }, curCatObj.icon + ' ' + curCatObj.name),
+        h('span', { class: 'chip level ' + curCatObj.level.split('–')[0].toLowerCase().replace(/\s+/g, '') }, curCatObj.level)
+      ),
+      h('span', { class: 'subjects-arrow' }, subjectsOpen ? '▲' : '▼')
+    ),
+    subjectsOpen && h('div', { class: 'subjects-dropdown stack', role: 'listbox' },
+      ...langCats.map((c) => {
+        const isSelected = curCat === c.id;
+        return h('button', {
+          class: 'subjects-item' + (isSelected ? ' selected' : ''),
+          role: 'option',
+          'aria-selected': String(isSelected),
+          onclick: (e) => {
+            e.stopPropagation();
+            if (S.lang === 'en') S.enCat = c.id;
+            else if (S.lang === 'zh') S.zhCat = c.id;
+            else if (S.lang === 'ja') S.jaCat = c.id;
+            subjectsOpen = false;
+            save();
+            const nextNx = nextLesson(d, c.id);
+            if (nextNx) openTopics.add(S.lang + ':' + nextNx.t.id);
+            homeView();
+          }
+        },
+          h('div', { class: 'row between', style: { alignItems: 'center', width: '100%' } },
+            h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+              h('span', { style: { fontSize: '1.25rem', lineHeight: 1 } }, c.icon),
+              h('b', { style: { fontSize: '.95rem' } }, c.name),
+              h('span', { class: 'chip level ' + c.level.split('–')[0].toLowerCase().replace(/\s+/g, '') }, c.level)
+            ),
+            h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+              h('span', { class: 'small muted' }, c.count),
+              isSelected && h('span', { class: 'subjects-check' }, '✓')
+            )
+          ),
+          h('p', { class: 'small muted', style: { margin: '4px 0 0 28px', textAlign: 'left', lineHeight: 1.35 } }, c.desc)
+        );
+      })
+    )
+  ) : null;
+
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'row between' }, h('h1', {}, 'Chào ' + S.name + '!'), langSwitch()),
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h1', { style: { margin: 0 } }, 'Chào ' + S.name + '!'),
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+        langCats && h('button', {
+          class: 'langchip',
+          title: 'Chọn chủ đề học',
+          onclick: () => {
+            subjectsOpen = !subjectsOpen;
+            homeView();
+            const el = document.querySelector('.subjects-box');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        }, h('span', {}, curCatObj.icon + ' ' + curCatObj.short), h('span', { class: 'caret' }, subjectsOpen ? '▲' : '▼')),
+        langSwitch()
+      )
+    ),
     h('div', { class: 'stats' },
       h('div', { class: 'stat' }, h('b', {}, st), h('span', {}, 'ngày đạt mục tiêu')),
       h('div', { class: 'stat' }, h('b', {}, xp), h('span', {}, 'XP hôm nay')),
@@ -921,15 +1314,17 @@ function homeView() {
       due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' thẻ ngay'),
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
-        : h('p', { class: 'muted center' }, 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
-    h('div', { class: 'row between small' },
-      h('span', { class: 'muted', style: { cursor: 'pointer' }, onclick: showSyncModal }, 'Đồng bộ'),
-      h('button', { class: 'sync-btn', 'aria-label': 'Đồng bộ (Pull / Push)', title: 'Đồng bộ (Pull / Push)', onclick: showSyncModal }, icon(ICON.sync))),
+        : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
+    h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
+      feedbackBtn(),
+      syncButton()),
+    catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
-      ...ph.topics.map((t) => topicCard(t, nx))))));
+      ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.21 · Cập nhật 06/11/2026')));
 }
-function topicCard(t, nx) {
+function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
   const body = open && h('div', { class: 'body' },
     ...t.lessons.map((l, i) => {
@@ -944,10 +1339,13 @@ function topicCard(t, nx) {
       (t.kanji && t.kanji.length) && h('button', { class: 'mini', onclick: () => kanjiView(t) }, 'Kanji (' + t.kanji.length + ')'),
       h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Luyện nói'),
       (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết')));
+  const displayNum = num != null ? num : (t.catPos || t.pos);
+  const lvl = t.level || (t.category === 'life' ? 'A1' : t.category === 'hobbies' ? 'A2' : (t.category === 'business' ? 'B1' : null));
   return h('section', { class: 'topic' + (isCur ? ' cur' : '') + (done === t.lessons.length ? ' done' : '') },
     h('button', { class: 'head', 'aria-expanded': String(open), onclick: () => { open ? openTopics.delete(ok) : openTopics.add(ok); homeView(); } },
-      h('span', { class: 'num' }, done === t.lessons.length ? '✓' : t.pos),
+      h('span', { class: 'num' }, done === t.lessons.length ? '✓' : displayNum),
       h('span', { class: 'meta' }, h('b', { lang: L().lang }, t.title), t.sub && t.sub !== t.title && h('span', { class: 'small muted' }, t.sub)),
+      lvl && h('span', { class: 'chip level ' + lvl.toLowerCase().replace('+', '').replace(/\s+/g, '') }, lvl),
       h('span', { class: 'chip' + (done === t.lessons.length ? ' good' : '') }, done + '/' + t.lessons.length)),
     body);
 }
@@ -958,7 +1356,6 @@ function wordBlock(code, v, opts = {}) {
     h('div', { class: 'big', lang: LANGS[code].lang }, plain(v.w)),
     v.r && (code === 'en' ? h('div', { class: 'ipa' }, v.r) : (v.r !== v.w && h('div', { class: 'read', lang: code === 'ja' ? 'ja' : null }, v.r))),
     code !== 'en' && hvBlock(code, v),
-    code === 'en' && v.d && opts.hideMeaning && h('p', { class: 'endef' }, v.d),
     !opts.hideMeaning && h('p', {}, h('b', {}, v.m), v.d && code === 'en' && h('span', { class: 'small muted', style: { display: 'block' } }, v.d)));
 }
 function itemCard(code, v, tip) {
@@ -973,6 +1370,56 @@ function itemCard(code, v, tip) {
       v.exm && h('p', { class: 'small muted' }, v.exm),
       h('div', { class: 'listen' }, spk(code, v.ex))));
 }
+function getOrderPinyin(code, ex) {
+  if (ex.r) return ex.r;
+  if (ex.v && ex.v.exr) return ex.v.exr;
+  if (code === 'zh' && DATA.zh && DATA.zh.topics) {
+    for (const t of DATA.zh.topics) {
+      for (const v of (t.vocab || [])) {
+        if (v.ex === ex.text && v.exr) return v.exr;
+      }
+    }
+  }
+  return '';
+}
+function orderFeedback(code, ex, r) {
+  const pinyinOrRead = getOrderPinyin(code, ex);
+  const transText = ex.trans || (ex.v && ex.v.exm) || (ex.s && (ex.s.m || ex.s.trans)) || '';
+  const labelPrefix = (transText.startsWith('Câu có từ') || transText.startsWith('Dịch:')) ? '' : 'Dịch: ';
+  return h('div', { class: 'order-reveal stack', style: { gap: '6px', marginTop: '6px' } },
+    code === 'ja' && ex.raw
+      ? h('p', { class: 'big', lang: 'ja', style: { fontSize: '1.25rem', margin: 0, textAlign: 'left' } }, ruby(ex.raw))
+      : h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: '1.25rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, plain(ex.text)),
+    pinyinOrRead ? h('p', {
+      class: 'read',
+      lang: code === 'ja' ? 'ja' : null,
+      style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
+    }, pinyinOrRead) : null,
+    transText ? h('p', { class: 'order-trans', style: { fontSize: '1.05rem', color: 'var(--ink)', fontWeight: 500, margin: '4px 0 0 0', textAlign: 'left', lineHeight: 1.4 } }, labelPrefix + transText) : null,
+    h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
+      listenBtns(code, ex.text)
+    )
+  );
+}
+function quizFeedback(code, ex, r) {
+  const correctOpt = ex.q.o[ex.q.a];
+  const correctPinyin = (ex.q.r && ex.q.r[ex.q.a]) || '';
+  const hasAudio = (code === 'zh' || code === 'en' || code === 'ja') && /[一-鿿\w]/.test(correctOpt);
+  return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
+    h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: '1.25rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, plain(correctOpt)),
+    correctPinyin ? h('p', {
+      class: 'read',
+      lang: code === 'ja' ? 'ja' : null,
+      style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
+    }, correctPinyin) : null,
+    r.note ? h('p', { class: 'small', style: { margin: '2px 0 0 0', textAlign: 'left', lineHeight: 1.4 } }, r.note) : null,
+    hasAudio ? h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
+      listenBtns(code, correctOpt)
+    ) : null
+  );
+}
+
+
 // Tách câu thành các mảnh để sắp xếp
 function tokensOf(code, text) {
   if (code === 'en') return text.split(/\s+/).filter(Boolean);
@@ -1008,15 +1455,22 @@ function buildSteps(t, i) {
       const chars = [...new Map(l.words.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
       const pool = [...new Set(allWords.flatMap((w) => hvParts(code, w.w)).map((x) => x.hv).filter(Boolean))];
       sample(chars, 2).forEach((x) => {
-        const dis = sample(pool.filter((q) => q !== x.hv), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
+        const meanLower = (x.m || '').toLowerCase().normalize('NFC');
+        const meanWords = meanLower.split(/[\s,;/()]+/).filter(Boolean);
+        const dis = sample(pool.filter((q) => {
+          if (q === x.hv) return false;
+          const qLower = q.toLowerCase().normalize('NFC');
+          if (meanWords.includes(qLower) || meanLower === qLower) return false;
+          return true;
+        }), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
         if (dis.length === 3) steps.push({ type: 'hvw', v: x.v, c: x.c, m: x.m, correct, opts: shuffle([correct, ...dis]) });
       });
     }
     sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
-    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); }
+    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
+    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); }
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
@@ -1032,10 +1486,10 @@ function buildSteps(t, i) {
     l.quiz.forEach((q) => steps.push({ type: 'quiz', q }));
   } else if (l.kind === 'fill') {
     steps.push({ type: 'fill', fill: t.fill });
-    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
+    sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
-    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), trans: '', tokens: s.chunks, raw: s.raw }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw }); });
+    (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '' }); });
     (t.coach || []).slice(0, 2).forEach((c) => steps.push({ type: 'speak', text: c.sa, m: c.q + (c.vi ? ' · ' + c.vi : ''), scene: 'Trả lời câu hỏi' }));
   } else {
     const weak = topicWords.slice().sort((a, b) => ((S.srs[sid(code, a.id)] || { b: 0 }).b - (S.srs[sid(code, b.id)] || { b: 0 }).b));
@@ -1049,14 +1503,19 @@ function buildSteps(t, i) {
 
 function lessonView(t, i) {
   VIEW = 'lesson'; setTabs(false);
+  setFeedbackContext({ mode: 'lesson', topicId: t.id, topicTitle: t.sub || t.title, lessonIndex: i, lessonKind: t.lessons[i].kind, lessonTitle: lessonTitle(t, i) });
   const code = t.lang, steps = buildSteps(t, i), first = new Map(), retried = new Set(), queue = steps.map((s, n) => ({ ...s, n }));
   let done = 0;
   if (LANGS[code].cjk) loadStrokes(code);
-  const exit = () => go('home');
+  const exit = () => { setFeedbackContext(null); go('home'); };
 
   function step() {
     const ex = queue.shift();
     if (!ex) return finish();
+    if (CURRENT_CTX) {
+      CURRENT_CTX.stepType = ex.type;
+      CURRENT_CTX.stepItem = ex.v ? (plain(ex.v.w) + (ex.v.m ? ' (' + ex.v.m + ')' : '')) : (ex.text || (ex.k ? ex.k.k : ''));
+    }
     let checked = false, ready = () => false, resp = null, after = () => {}, body, gradeFn = () => ({ correct: true });
     const btn = h('button', { class: 'primary block' }, 'Kiểm tra');
     const fb = h('div', { 'aria-live': 'assertive' });
@@ -1068,7 +1527,7 @@ function lessonView(t, i) {
       ready = () => sel !== null;
       after = () => bs.forEach((b, j) => { b.disabled = true; if (opts[j] === correctOpt) b.classList.add('right'); else if (j === sel) b.classList.add('wrong'); });
       let correctOpt = null;
-      return { el: h('div', { class: 'options' }, bs), setCorrect: (o) => { correctOpt = o; }, sel: () => opts[sel] };
+      return { el: h('div', { class: 'options' }, bs), setCorrect: (o) => { correctOpt = o; }, sel: () => opts[sel], buttons: bs };
     };
 
     if (ex.type === 'intro') {
@@ -1080,7 +1539,7 @@ function lessonView(t, i) {
       c.setCorrect(ex.v);
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, isMeaning ? 'Chọn nghĩa đúng' : ex.type === 'listen' ? 'Nghe và chọn từ bạn nghe thấy' : 'Chọn từ có nghĩa này'),
-        isMeaning ? wordBlock(code, ex.v, { hideMeaning: true }) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m), code === 'en' && ex.v.d && h('p', { class: 'endef' }, ex.v.d)),
+        isMeaning ? wordBlock(code, ex.v, { hideMeaning: true }) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m)),
         c.el);
       gradeFn = () => ({ correct: c.sel() === ex.v, expected: isMeaning ? ex.v.m : plain(ex.v.w) });
       if (ex.type === 'listen' || isMeaning) setTimeout(() => say(code, ex.v.w), 300);
@@ -1089,7 +1548,7 @@ function lessonView(t, i) {
       c.setCorrect(ex.correct);
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Chữ này đọc Hán Việt là gì?'),
         h('div', { class: 'big', lang: LANGS[code].lang }, ex.c), h('p', { class: 'small muted center', lang: LANGS[code].lang }, 'trong từ ' + plain(ex.v.w) + ' (' + ex.v.m + ')'), c.el);
-      gradeFn = () => ({ correct: c.sel() === ex.correct, expected: ex.correct.hv, note: ex.m ? 'Nghĩa của chữ: ' + ex.m : '' });
+      gradeFn = () => ({ correct: c.sel() === ex.correct, expected: ex.correct.hv, note: ex.m ? ('Âm Hán Việt: ' + ex.correct.hv + ' (nghĩa: ' + ex.m + ')') : '' });
     } else if (ex.type === 'kintro') {
       const k = ex.k; btn.textContent = 'Tiếp tục'; ready = () => true;
       body = h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, 'Kanji mới'), h('div', { class: 'big', lang: 'ja' }, k.k),
@@ -1101,9 +1560,18 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Kanji này đọc Hán Việt là gì?'), h('div', { class: 'big', lang: 'ja' }, ex.k.k), c.el);
       gradeFn = () => ({ correct: c.sel() === ex.k, expected: ex.k.hv + ' · on: ' + ex.k.on + ' · kun: ' + ex.k.kun });
     } else if (ex.type === 'quiz') {
-      const opts = shuffle(ex.q.o.map((o, k) => ({ o, k })));
+      const opts = shuffle(ex.q.o.map((o, k) => ({ o, k, r: (ex.q.r && ex.q.r[k]) || '' })));
       const c = choose(opts, (x) => h('span', { lang: code === 'en' ? 'en' : LANGS[code].lang }, x.o));
       c.setCorrect(opts.find((x) => x.k === ex.q.a));
+      const origAfter = after;
+      after = () => {
+        origAfter();
+        c.buttons.forEach((b, j) => {
+          if (opts[j].r) {
+            b.appendChild(h('span', { class: 'small read', style: { display: 'block', color: 'var(--teal)', fontWeight: 600, fontSize: '.92rem', marginTop: '3px', textAlign: 'left' } }, opts[j].r));
+          }
+        });
+      };
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Tình huống'), h('p', { class: 'q' }, ex.q.q), c.el);
       gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: ex.q.o[ex.q.a], note: ex.q.why });
     } else if (ex.type === 'order') {
@@ -1119,8 +1587,23 @@ function lessonView(t, i) {
       const typed = h('input', { type: 'text', lang: LANGS[code].lang, placeholder: 'Hoặc gõ cả câu vào đây', autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', 'aria-label': 'Gõ cả câu',
         oninput: update, onkeydown: (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } } });
       const typedOn = () => typed.value.trim().length > 0;
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), ex.trans && h('p', { class: 'q' }, ex.trans), ans, pool, typed);
-      ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; };
+      const pinyinHint = getOrderPinyin(code, ex);
+      let showHint = false;
+      const hintEl = h('p', { class: 'small read', style: { color: 'var(--teal)', fontWeight: 600, display: 'none', margin: '2px 0 6px 0', fontSize: '1.02rem' } }, pinyinHint);
+      const hintBtn = pinyinHint ? h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: { alignSelf: 'flex-start', padding: '2px 8px', fontSize: '.78rem', color: 'var(--muted)', minHeight: 'auto', border: '1px dashed var(--line)', borderRadius: '8px' },
+        onclick: (e) => {
+          e.preventDefault();
+          showHint = !showHint;
+          hintEl.style.display = showHint ? 'block' : 'none';
+          hintBtn.textContent = showHint ? 'Ẩn gợi ý Pinyin' : '💡 Gợi ý Pinyin';
+        }
+      }, '💡 Gợi ý Pinyin') : null;
+      const transText = ex.trans || (ex.v && ex.v.exm) || (ex.s && (ex.s.m || ex.s.trans)) || '';
+      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Sắp xếp thành câu đúng, hoặc gõ cả câu'), transText ? h('p', { class: 'q', style: { fontSize: '1.18rem', fontWeight: 600, color: 'var(--teal)', margin: '4px 0 10px 0' } }, transText) : null, hintBtn, hintEl, ans, pool, typed);
+      ready = () => typedOn() || chosen.length === bank.length; after = () => { pool.replaceChildren(); typed.disabled = true; if (hintBtn) hintBtn.remove(); if (hintEl) hintEl.remove(); };
       const joined = (arr) => code === 'en' ? normEn(arr.join(' ')) : arr.join('').replace(/\s/g, '');
       const strip = (s) => code === 'en' ? normEn(s) : s.replace(/[\s。，！？、,.!?：:；;“”"']/g, '');
       gradeFn = () => ({ correct: typedOn() ? strip(typed.value) === strip(code === 'en' ? ex.tokens.join(' ') : ex.tokens.join('')) : joined(chosen.map((c) => c.t)) === joined(ex.tokens), expected: code === 'en' ? ex.text : ex.tokens.join('') });
@@ -1205,16 +1688,24 @@ function lessonView(t, i) {
         h('strong', {}, r.self ? 'Tốt lắm!' : r.correct ? 'Chính xác!' : 'Chưa đúng'),
         r.align && h('div', { class: 'words', lang: LANGS[code].lang }, r.align.units.map((w, k) => h('span', { class: r.align.hit[k] ? 'hit' : 'miss' }, w))),
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
-        !r.correct && !r.align && r.expected && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
-        r.note && h('p', { class: 'small' }, r.note),
-        ex.type === 'order' && h('div', {}, spk(code, ex.text))),
-        ex.type === 'fill' ? fillReveal(code, ex.fill) : '');
+        !r.correct && !r.align && r.expected && ex.type !== 'order' && ex.type !== 'quiz' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
+        r.note && ex.type !== 'quiz' && h('p', { class: 'small' }, r.note),
+        ex.type === 'order' ? orderFeedback(code, ex, r) : null,
+        ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
+        ex.type === 'reverse' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
+          h('p', { class: code === 'en' ? 'ipa' : 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
+          h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
+        ) : null
+      ),
+      ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
+      if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
+      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
     const total = done + queue.length + 1;
     mount(h('div', { class: 'stack-lg' },
-      h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('div', { class: 'bar' }, h('i', { style: { width: (done / total * 100) + '%' } }))),
+      h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('div', { class: 'bar' }, h('i', { style: { width: (done / total * 100) + '%' } })), feedbackBtn()),
       retried.has(ex.n) && first.has(ex.n) && h('span', { class: 'chip', style: { alignSelf: 'flex-start' } }, 'Làm lại câu chưa đúng'),
       body, fb, h('div', { class: 'dock stack', style: { gap: '6px' } }, btn, h('p', { class: 'keyhint' }, 'Phím 1–4 để chọn · Enter để kiểm tra / tiếp tục'))));
     update();
@@ -1233,6 +1724,7 @@ function lessonView(t, i) {
     S.lessons[k] = Math.max(pct, typeof S.lessons[k] === 'number' ? S.lessons[k] : 0);
     addXp(xp, code); checkAch();
     const nx = nextLesson(DATA[code]);
+    setFeedbackContext(null);
     VIEW = 'home';
     mount(h('div', { class: 'panel stack center', style: { marginTop: '24px' } },
       h('p', { class: 'label' }, t.sub || t.title),
@@ -1244,11 +1736,11 @@ function lessonView(t, i) {
   }
 
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('span', { class: 'muted small' }, t.sub || t.title)),
+    h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('span', { class: 'muted small grow' }, t.sub || t.title), feedbackBtn()),
     h('h1', { lang: t.lessons[i].kind === 'learn' ? LANGS[code].lang : null }, lessonTitle(t, i)),
     t.lessons[i].words.length > 0 && h('div', { class: 'panel stack' }, h('h3', {}, 'Từ mới trong bài'),
       ...t.lessons[i].words.map((v) => h('button', { class: 'lesson', onclick: () => say(code, v.w) },
-        h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small muted' }, '  ' + v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
+        h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small' + (code === 'en' ? ' ipa' : ' muted'), style: code === 'en' ? { color: 'var(--teal)', fontWeight: 600, display: 'inline-block', marginLeft: '6px' } : null }, v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
         h('span', { class: 'spk', 'aria-hidden': 'true' }, icon(ICON.speaker))))),
     t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Điền từ vào email, rồi sắp xếp câu ví dụ.' : 'Điền từ vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind]),
     h('div', { class: 'dock' }, h('button', { class: 'primary block', onclick: step }, 'Bắt đầu · ' + steps.filter((s) => s.type !== 'intro').length + ' câu'))));
@@ -1260,7 +1752,7 @@ function reviewView() {
   const queue = Object.keys(S.srs).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t0 && idx[k.slice(code.length + 1)])
     .sort((a, b) => S.srs[a].due - S.srs[b].due || S.srs[a].b - S.srs[b].b).slice(0, 30);
   let count = 0;
-  const head = () => h('div', { class: 'row between' }, h('h1', {}, 'Ôn tập'), langSwitch());
+  const head = () => h('div', { class: 'row between' }, h('h1', {}, 'Ôn tập'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'review' }), langSwitch()));
   if (!queue.length) {
     const total = Object.keys(S.srs).filter((k) => k.startsWith(code + ':') && idx[k.slice(code.length + 1)]).length;
     mount(h('div', { class: 'stack-lg' }, head(), h('div', { class: 'panel stack center' },
@@ -1319,13 +1811,24 @@ const SPEAK_TOPIC = {}, WRITE_TOPIC = {};
 function topicPicker(code, store, onChange) {
   const d = DATA[code]; const nx = nextLesson(d);
   if (!store[code]) store[code] = (nx ? nx.t : d.topics[0]).id;
+  const cats = CATEGORIES[code];
+  if (cats) {
+    const defCat = code === 'zh' ? 'hsk1' : (code === 'ja' ? 'n5' : 'a1');
+    return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
+      ...cats.filter((c) => c.id !== 'all').map((c) => {
+        const ts = d.topics.filter((t) => (t.category || defCat) === c.id);
+        if (!ts.length) return null;
+        return h('optgroup', { label: c.icon + ' ' + c.name + ' (' + c.level + ')' },
+          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, (t.level ? '[' + t.level + '] ' : '') + (t.catPos || t.pos) + '. ' + (t.sub || t.title))));
+      }).filter(Boolean));
+  }
   return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
     d.topics.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, t.pos + '. ' + (t.sub || t.title))));
 }
 function speakItems(code, t) {
   const out = [];
   t.speak.forEach((sc) => sc.lines.forEach((ln) => out.push({ kind: 'line', text: ln.t, r: ln.r, m: ln.m, group: sc.title })));
-  if (code === 'ja') (t.sents || []).forEach((s) => out.push({ kind: 'line', text: s.chunks.join(''), raw: s.raw, group: 'Câu mẫu trong bài' }));
+  if (code === 'ja') (t.sents || []).forEach((s) => out.push({ kind: 'line', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '', group: 'Câu mẫu trong bài' }));
   t.vocab.filter((v) => v.ex).forEach((v) => out.push({ kind: 'line', text: v.ex, r: v.exr, m: v.exm, group: 'Câu ví dụ từ vựng' }));
   if (code === 'ja') t.vocab.slice(0, 30).forEach((v) => out.push({ kind: 'line', text: v.w, r: v.r, m: v.m, group: 'Từ vựng' }));
   (t.coach || []).forEach((c) => out.push({ kind: 'coach', c, group: 'Coach · trả lời câu hỏi' }));
@@ -1337,7 +1840,7 @@ function speakView() {
   const t = d.topics.find((x) => x.id === SPEAK_TOPIC[code]) || d.topics[0];
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), langSwitch()), pick),
+    h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'speak', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())), pick),
     !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
       if (it.kind === 'coach') return h('button', { class: 'sentence', onclick: () => coachView(t, it.c) }, h('span', { class: 'meta' }, h('b', { lang: 'en', style: { display: 'block' } }, it.c.q), it.c.vi && h('span', { class: 'small muted' }, it.c.vi)), h('span', { class: 'chip' }, 'Coach'));
@@ -1410,7 +1913,7 @@ function writeView() {
   const code = S.lang, d = DATA[code];
   const pick = topicPicker(code, WRITE_TOPIC, writeView);
   const t = d.topics.find((x) => x.id === WRITE_TOPIC[code]) || d.topics[0];
-  const head = h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Viết'), langSwitch()), pick);
+  const head = h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Viết'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'write', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())), pick);
   if (code === 'en') {
     if (!t.fill) { mount(h('div', { class: 'stack-lg' }, head, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.'))); return; }
     return mount(h('div', { class: 'stack-lg' }, head, fillBlock(t)));
@@ -1476,12 +1979,18 @@ function charView(code, c, list) {
     quiz(false);
   }, 50);
 }
-function fillReveal(code, fill) {
+function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
   const spoken = full.replace(/^[AB][：:]\s*/gm, '');
-  return h('div', { class: 'panel stack', style: { gap: '6px' } }, h('p', { class: 'label' }, 'Đoạn hoàn chỉnh · nghe và đọc to'),
+  const mailSrc = fill.audio || (tid ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  const badgeLabel = code === 'zh' ? '🎧 Giọng người Trung Quốc đọc' : (code === 'en' ? '🎧 Giọng Studio người thật' : '🎧 Giọng bản xứ');
+  return h('div', { class: 'panel stack', style: { gap: '8px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? 'Email hoàn chỉnh' : 'Đoạn hoàn chỉnh · nghe và đọc to'),
+      mailSrc && h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 8px' } }, badgeLabel)
+    ),
     ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && code === 'zh' && h('p', { class: 'small read', style: { textAlign: 'left' } }, rl[i]))),
-    h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big' }), spk(code, spoken, { slow: true, cls: 'big' })));
+    h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big', src: mailSrc }), spk(code, spoken, { slow: true, cls: 'big', src: mailSrc })));
 }
 function fillBlock(t) {
   const code = t.lang, parts = t.fill.text.split(/(\[\[[^\]]+\]\])/), sels = [];
@@ -1502,13 +2011,13 @@ function fillBlock(t) {
       const ok = sels.filter((s) => s.value === s.dataset.ok).length;
       if (ok >= parseInt(S.fill[key] || '0', 10)) S.fill[key] = ok + '/' + sels.length; // lưu kết quả tốt nhất dạng "4/5"
       addXp(XP_ITEM * ok, code);
-      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''), fillReveal(code, t.fill));
+      res.replaceChildren(h('p', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') }, h('strong', {}, ok + '/' + sels.length + ' chỗ đúng'), ok < sels.length ? ' · Ô đỏ là chỗ cần sửa.' : ''), fillReveal(code, t.fill, t.id));
     } }, 'Kiểm tra'), res);
 }
 
 // ===== Ngữ pháp và kanji =====
 function grammarView(t) {
-  const code = t.lang, back = h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go('home') }, '← Về trang Học'));
+  const code = t.lang, back = h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go('home') }, '← Về trang Học'), h('span', { class: 'grow' }), feedbackBtn({ mode: 'grammar', topicId: t.id, topicTitle: t.sub || t.title }));
   if (code === 'zh') {
     return mount(h('div', { class: 'stack-lg' }, back, h('h1', {}, 'Ngữ pháp · ' + t.sub),
       ...t.gram.map((gid) => { const g = DATA.zh.grammar[gid]; return h('div', { class: 'panel gram' },
@@ -1528,7 +2037,7 @@ function grammarView(t) {
 }
 function kanjiView(t) {
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go('home') }, '← Về trang Học')),
+    h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go('home') }, '← Về trang Học'), h('span', { class: 'grow' }), feedbackBtn({ mode: 'kanji', topicId: t.id, topicTitle: t.sub || t.title })),
     h('h1', {}, 'Kanji · ' + t.sub),
     ...t.kanji.map((k) => h('div', { class: 'panel kj' }, h('button', { class: 'k ghost', lang: 'ja', 'aria-label': 'Tập viết ' + k.k, onclick: () => { S.lang = 'ja'; charView('ja', k.k, t.kanji.map((x) => x.k)); } }, k.k),
       h('div', { class: 'grow stack', style: { gap: '4px' } }, h('b', {}, k.hv), h('p', { class: 'small', lang: 'ja' }, 'On: ' + k.on), h('p', { class: 'small', lang: 'ja' }, 'Kun: ' + k.kun),
@@ -1583,11 +2092,147 @@ async function pasteProgress() {
     return true;
   } catch (e) { toast(e.message || 'Không đọc được mã.'); return false; }
 }
+async function getSyncUrl() {
+  const cfg = getGhConfig();
+  let payload = {};
+  if (cfg.token && cfg.gistId) {
+    payload = { v: 2, token: cfg.token, gistId: cfg.gistId, user: cfg.user };
+  } else {
+    payload = { v: 2, code: await exportCode() };
+  }
+  const str = encodeURIComponent(JSON.stringify(payload));
+  return window.location.origin + window.location.pathname + '#sync=' + str;
+}
+async function handleUrlSync() {
+  const hash = window.location.hash;
+  if (!hash || !hash.includes('sync=')) return false;
+  const match = hash.match(/sync=([^&]+)/);
+  if (!match) return false;
+  try {
+    const raw = decodeURIComponent(match[1]);
+    let parsed = null;
+    try { parsed = JSON.parse(raw); } catch (e) {
+      try { parsed = JSON.parse(decodeURIComponent(escape(atob(raw)))); } catch (e2) { parsed = null; }
+    }
+    if (!parsed && raw.startsWith('LGG1')) {
+      parsed = { code: raw };
+    }
+    if (!parsed) return false;
+
+    let imported = false;
+    // 1. Cấu hình GitHub Gist nếu có trong link
+    if (parsed.token) {
+      saveGhConfig({ token: parsed.token, gistId: parsed.gistId || '', user: parsed.user || '' });
+      try {
+        const pulled = await pullGhSync(false);
+        if (pulled) imported = true;
+      } catch (e) {}
+    }
+
+    // 2. Mã tiến độ
+    if (parsed.code) {
+      try {
+        const inc = await importCode(parsed.code);
+        S = mergeState(S, inc);
+        save();
+        imported = true;
+      } catch (e) {}
+    }
+
+    if (imported) {
+      toast('Đồng bộ thành công! Chào mừng ' + (S.name || 'bạn') + '.');
+    }
+
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    return true;
+  } catch (err) {
+    console.warn('Lỗi xử lý URL sync:', err);
+    return false;
+  }
+}
+async function autoSync() {
+  const btn = document.querySelector('.sync-btn');
+  if (btn) btn.classList.add('spinning');
+  try {
+    const cfg = getGhConfig();
+    if (!cfg.token) {
+      toast('Chưa kết nối GitHub! Vui lòng nhập Token một lần để đồng bộ.');
+      showSyncModal();
+      return;
+    }
+    // 1. Tự động đồng bộ qua GitHub Gist nếu đã thiết lập
+    if (!cfg.gistId) {
+      try {
+        const res = await findOrCreateGhGist(cfg.token);
+        cfg.gistId = res.gistId; cfg.user = res.user; saveGhConfig(cfg);
+      } catch (e) {
+        toast('Lỗi xác thực GitHub: ' + (e.message || ''));
+        return;
+      }
+    }
+    if (cfg.gistId) {
+      try {
+        const res = await fetch('https://api.github.com/gists/' + cfg.gistId, { headers: ghHeaders(cfg.token) });
+        if (!res.ok) {
+          if (res.status === 401) {
+            toast('GitHub Token không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại!');
+            showSyncModal();
+            return;
+          }
+          if (res.status === 404) {
+            toast('Không tìm thấy bản sao lưu cũ trên GitHub. Đang tạo mới...');
+            const found = await findOrCreateGhGist(cfg.token);
+            cfg.gistId = found.gistId; cfg.user = found.user; saveGhConfig(cfg);
+          }
+        } else {
+          const gist = await res.json();
+          const f = gist.files && gist.files['lingogo-progress.json'];
+          if (f && f.content) {
+            const remote = JSON.parse(f.content);
+            const prevL = Object.keys(S.lessons || {}).length;
+            const prevS = Object.keys(S.srs || {}).length;
+            const prevW = Object.keys(S.written || {}).length;
+            const remoteT = remote.t || 0;
+            const localT = S.t || 0;
+
+            const merged = mergeState(S, remote);
+            const dl = Object.keys(merged.lessons || {}).length - prevL;
+            const ds = Object.keys(merged.srs || {}).length - prevS;
+            const dw = Object.keys(merged.written || {}).length - prevW;
+            const remoteHasMore = dl > 0 || ds > 0 || dw > 0;
+
+            if (remoteT > localT || remoteHasMore) {
+              S = merged;
+              GH_SYNC.seen = S.t || Date.now();
+              save();
+              route();
+              const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
+              toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ GitHub.' : 'tiến độ đã cập nhật mới nhất từ GitHub.'));
+              return;
+            } else {
+              await pushGhSync(true);
+              toast('Đã đẩy (Push): Tiến độ máy này mới nhất, đã lưu lên GitHub (@' + (cfg.user || 'User') + ').');
+              return;
+            }
+          }
+        }
+      } catch (ghErr) {
+        toast('Lỗi kết nối GitHub: ' + (ghErr.message || 'Kiểm tra mạng'));
+        return;
+      }
+    }
+  } catch (err) {
+    toast('Lỗi đồng bộ: ' + (err.message || 'Không thể đồng bộ.'));
+  } finally {
+    if (btn) setTimeout(() => btn.classList.remove('spinning'), 600);
+  }
+}
 function showSyncModal() {
   const onKey = (e) => { if (e.key === 'Escape') close(); };
   const overlay = h('div', { class: 'modal-mask', onclick: (e) => { if (e.target === overlay) close(); } });
   const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
   window.addEventListener('keydown', onKey);
+
 
   const ghBox = h('div', { class: 'stack', style: { background: 'var(--sunk)', padding: '14px', borderRadius: '16px', border: '1px solid var(--line)', gap: '10px' } });
 
@@ -1597,21 +2242,29 @@ function showSyncModal() {
     if (cfg.token && cfg.gistId) {
       ghBox.append(
         h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
-            icon(ICON.github),
-            h('div', {},
-              h('b', { style: { display: 'block', fontSize: '.9rem' } }, 'Đồng bộ GitHub (Tự động)'),
-              h('span', { class: 'small muted' }, 'Đã kết nối: @' + (cfg.user || 'GitHub User'))
+          h('div', { class: 'row', style: { alignItems: 'center', gap: '10px' } },
+            h('span', { class: 'sync-badge-icon' }, icon(ICON.github, { size: 20 })),
+            h('div', { style: { minWidth: 0 } },
+              h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Đồng bộ GitHub (Tự động)'),
+              h('span', { class: 'small muted', style: { fontSize: '.8rem' } }, 'Đã kết nối: @' + (cfg.user || 'GitHub User'))
             )
           ),
-          h('span', { style: { width: '10px', height: '10px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }, title: 'Đang hoạt động' })
+          h('span', { style: { width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block', flexShrink: 0 }, title: 'Đang hoạt động' })
         ),
-        h('div', { class: 'row', style: { gap: '8px' } },
+        h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap' } },
           h('button', { class: 'primary mini grow', onclick: async () => {
             toast('Đang kiểm tra và đồng bộ GitHub...');
             await pullGhSync(false);
             await pushGhSync(false);
-          } }, icon(ICON.sync), ' Đồng bộ ngay'),
+          } }, icon(ICON.sync, { size: 16 }), ' Đồng bộ ngay'),
+          h('button', { class: 'ghost mini', onclick: async () => {
+            try {
+              await navigator.clipboard.writeText(cfg.token);
+              toast('Đã sao chép GitHub Token! Bạn có thể dán sang máy khác.');
+            } catch (e) {
+              prompt('Mã GitHub Token của bạn (bấm Ctrl+C để chép):', cfg.token);
+            }
+          }, title: 'Sao chép Token này để dán sang máy tính hoặc điện thoại khác' }, '📋 Chép Token sang máy khác'),
           h('button', { class: 'ghost mini', onclick: () => {
             if (confirm('Ngắt kết nối đồng bộ GitHub trên trình duyệt này?')) {
               saveGhConfig({ token: '', gistId: '', user: '' });
@@ -1622,7 +2275,7 @@ function showSyncModal() {
         )
       );
     } else {
-      const inp = h('input', { type: 'password', placeholder: 'Dán GitHub Token (ghp_... hoặc github_pat_...)', style: { fontSize: '.86rem', minHeight: '38px', padding: '8px 10px' } });
+      const inp = h('input', { type: 'password', placeholder: 'Dán GitHub Token (ghp_... hoặc github_pat_...)', style: { fontSize: '.86rem', minHeight: '38px', padding: '8px 10px', boxSizing: 'border-box' } });
       const connBtn = h('button', { class: 'primary mini block', onclick: async () => {
         const val = inp.value.trim();
         if (!val) { toast('Vui lòng dán GitHub Token.'); return; }
@@ -1642,12 +2295,15 @@ function showSyncModal() {
       } }, 'Kết nối & Tự động sao lưu');
 
       ghBox.append(
-        h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
-          icon(ICON.github),
-          h('b', { style: { fontSize: '.92rem' } }, 'Đồng bộ GitHub (Khuyên dùng)')
+        h('div', { class: 'row', style: { alignItems: 'center', gap: '10px' } },
+          h('span', { class: 'sync-badge-icon' }, icon(ICON.github, { size: 20 })),
+          h('div', { style: { minWidth: 0, flex: 1 } },
+            h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Đồng bộ GitHub (Tự động)'),
+            h('span', { class: 'small muted', style: { display: 'block', fontSize: '.78rem' } }, 'Tự sao lưu & gộp tiến độ qua đám mây')
+          )
         ),
-        h('p', { class: 'small muted', style: { margin: 0 } },
-          'Tự động sao lưu lên GitHub Gist. Chuyển máy chỉ cần nhập token là tự lấy lại bài.'
+        h('p', { class: 'small muted', style: { margin: 0, fontSize: '.8rem', lineHeight: 1.4 } },
+          'Để đồng bộ qua lại giữa điện thoại và máy tính, chỉ cần dán GitHub Token (chỉ làm 1 lần):'
         ),
         inp,
         connBtn,
@@ -1656,8 +2312,11 @@ function showSyncModal() {
           target: '_blank',
           rel: 'noopener noreferrer',
           class: 'small',
-          style: { color: 'var(--teal)', textDecoration: 'none', display: 'inline-block' }
-        }, '↗ Nhấn vào đây để tạo nhanh Token (đã chọn sẵn quyền gist)')
+          style: { color: 'var(--teal)', textDecoration: 'none', display: 'inline-block', fontSize: '.8rem', fontWeight: 600 }
+        }, '↗ 1. Bấm vào đây để tạo nhanh Token (quyền gist)'),
+        h('span', { class: 'small muted', style: { fontSize: '.76rem', lineHeight: 1.35 } },
+          '2. Kéo xuống cuối trang GitHub bấm "Generate token", sao chép mã (bắt đầu bằng ghp_...) và dán vào ô trên rồi bấm "Kết nối".'
+        )
       );
     }
   }
@@ -1666,17 +2325,31 @@ function showSyncModal() {
   const manualBox = h('div', { class: 'stack', hidden: true });
   const manualInp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây' });
   const manualBtn = h('button', { class: 'primary block', onclick: async () => {
+    const val = manualInp.value.trim();
+    if (!val) return;
     try {
-      const inc = await importCode(manualInp.value);
+      if (val.includes('sync=')) {
+        window.location.hash = val.substring(val.indexOf('sync=') - 1);
+        const ok = await handleUrlSync();
+        if (ok) { close(); route(); return; }
+      }
+      if (val.startsWith('ghp_') || val.startsWith('github_pat_')) {
+        const res = await findOrCreateGhGist(val);
+        saveGhConfig({ token: val, gistId: res.gistId, user: res.user });
+        await pullGhSync(false);
+        toast('Đã kết nối GitHub thành công!');
+        close(); route(); return;
+      }
+      const inc = await importCode(val);
       const nL = Object.keys(S.lessons).length, nS = Object.keys(S.srs).length;
       S = mergeState(S, inc); save();
       const dl = Object.keys(S.lessons).length - nL, ds = Object.keys(S.srs).length - nS;
       toast(dl || ds ? 'Đã gộp (Pull): thêm ' + dl + ' bài, ' + ds + ' mục ôn.' : 'Đã gộp. Tiến độ đã đồng bộ.');
       close(); route();
-    } catch (e) { toast(e.message || 'Mã không hợp lệ.'); }
-  } }, 'Gộp mã này');
+    } catch (e) { toast(e.message || 'Mã hoặc liên kết không hợp lệ.'); }
+  } }, 'Gộp tiến độ');
   manualBox.append(
-    h('p', { class: 'small muted' }, 'Dán mã LGG1… từ thiết bị khác vào ô dưới rồi bấm Gộp:'),
+    h('p', { class: 'small muted', style: { margin: 0, fontSize: '.82rem' } }, 'Dán mã LGG1… từ thiết bị khác vào ô dưới rồi bấm Gộp:'),
     manualInp, manualBtn
   );
 
@@ -1687,26 +2360,26 @@ function showSyncModal() {
   } }, 'Nhập mã thủ công…');
 
   const box = h('div', { class: 'modal-box stack' },
-    h('div', { class: 'row between' },
-      h('h3', { style: { fontSize: '1.15rem' } }, 'Đồng bộ tiến độ'),
-      h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', padding: '4px 10px', fontSize: '1.1rem' } }, '✕')
+    h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '2px' } },
+      h('h3', { style: { fontSize: '1.15rem', margin: 0 } }, 'Đồng bộ tiến độ'),
+      h('button', { class: 'ghost', 'aria-label': 'Đóng', onclick: close, style: { minHeight: '32px', width: '32px', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', fontSize: '1rem' } }, '✕')
     ),
     ghBox,
-    h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '8px', opacity: .5 } },
+    h('div', { style: { display: 'flex', alignItems: 'center', margin: '4px 0', gap: '10px', opacity: .5 } },
       h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } }),
-      h('span', { class: 'small' }, 'hoặc chuyển thủ công'),
+      h('span', { class: 'small muted', style: { fontSize: '.8rem' } }, 'hoặc chuyển thủ công'),
       h('div', { style: { flex: 1, height: '1px', background: 'var(--line)' } })
     ),
-    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
+    h('button', { class: 'sync-item-btn', onclick: async () => {
       await copyProgress(); close();
     } },
-      icon(ICON.push),
-      h('span', { class: 'grow' },
+      h('span', { class: 'sync-badge-icon' }, icon(ICON.push, { size: 20 })),
+      h('div', { style: { minWidth: 0, flex: 1 } },
         h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Gửi tiến độ (Push)'),
-        h('span', { class: 'small muted', style: { opacity: .9, display: 'block', fontWeight: 400 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
+        h('span', { class: 'small muted', style: { display: 'block', fontSize: '.8rem', lineHeight: 1.3 } }, 'Sao chép mã tiến độ từ máy này để đưa sang máy khác')
       )
     ),
-    h('button', { class: 'block', style: { justifyContent: 'flex-start', textAlign: 'left', padding: '10px 14px', gap: '14px' }, onclick: async () => {
+    h('button', { class: 'sync-item-btn', onclick: async () => {
       const ok = await pasteProgress();
       if (ok) close();
       else {
@@ -1715,10 +2388,10 @@ function showSyncModal() {
         setTimeout(() => manualInp.focus(), 50);
       }
     } },
-      icon(ICON.pull),
-      h('span', { class: 'grow' },
+      h('span', { class: 'sync-badge-icon' }, icon(ICON.pull, { size: 20 })),
+      h('div', { style: { minWidth: 0, flex: 1 } },
         h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Nhận tiến độ (Pull)'),
-        h('span', { class: 'small muted', style: { display: 'block', fontWeight: 400 } }, 'Đọc mã từ bộ nhớ tạm và gộp vào máy này')
+        h('span', { class: 'small muted', style: { display: 'block', fontSize: '.8rem', lineHeight: 1.3 } }, 'Đọc mã từ bộ nhớ tạm và gộp vào máy này')
       )
     ),
     manualBox,
@@ -1728,6 +2401,220 @@ function showSyncModal() {
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 }
+function showFeedbackModal(customCtx) {
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const overlay = h('div', { class: 'modal-mask', onclick: (e) => { if (e.target === overlay) close(); } });
+  const close = () => { window.removeEventListener('keydown', onKey); overlay.remove(); };
+  window.addEventListener('keydown', onKey);
+
+  const cur = { ...getFeedbackContext(), ...(customCtx || {}) };
+  const langName = { en: 'Tiếng Anh', zh: 'Tiếng Trung', ja: 'Tiếng Nhật' }[S.lang] || S.lang;
+  
+  let locText = 'Trang chính';
+  if (cur.mode === 'lesson' || cur.topicTitle) {
+    locText = 'Chủ đề: ' + (cur.topicTitle || ('Bài ' + cur.topicId));
+    if (cur.lessonTitle) locText += ' · ' + cur.lessonTitle;
+    if (cur.stepType) locText += ' (' + cur.stepType + ')';
+    if (cur.stepItem) locText += ' [' + cur.stepItem + ']';
+  } else if (cur.mode === 'review' || VIEW === 'review') {
+    locText = 'Ôn tập thẻ từ' + (cur.card ? ' [' + cur.card + ']' : '');
+  } else if (cur.mode === 'speak' || VIEW === 'speak') {
+    locText = 'Luyện nói phát âm' + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
+  } else if (cur.mode === 'write' || VIEW === 'write') {
+    locText = 'Tập viết chữ' + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
+  } else if (cur.mode === 'grammar') {
+    locText = 'Ngữ pháp · ' + (cur.topicTitle || '');
+  } else if (cur.mode === 'kanji') {
+    locText = 'Kanji · ' + (cur.topicTitle || '');
+  } else if (VIEW === 'progress') {
+    locText = 'Tiến độ & Cài đặt';
+  }
+
+  const device = /iPhone|iPad|iPod/.test(navigator.userAgent) ? 'iPhone/iPad (iOS)' :
+                 /Android/.test(navigator.userAgent) ? 'Android' :
+                 /Macintosh/.test(navigator.userAgent) ? 'Mac (macOS)' :
+                 /Windows/.test(navigator.userAgent) ? 'Windows' : 'Khác';
+
+  const browser = /CriOS|Chrome/.test(navigator.userAgent) ? 'Chrome' :
+                  /Safari/.test(navigator.userAgent) ? 'Safari' :
+                  /Firefox/.test(navigator.userAgent) ? 'Firefox' : 'Browser';
+
+  const TAGS = [
+    { id: 'audio', label: '🔊 Lỗi âm thanh / giọng đọc' },
+    { id: 'content', label: '✏️ Sai đáp án / từ vựng' },
+    { id: 'ui', label: '📱 Lỗi giao diện / hiển thị' },
+    { id: 'feature', label: '💡 Đề xuất tính năng mới' },
+    { id: 'other', label: '❓ Khác' }
+  ];
+  let selectedTag = 'audio';
+
+  const tagContainer = h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '8px' } });
+  const renderTags = () => {
+    tagContainer.replaceChildren(...TAGS.map(t => {
+      return h('button', {
+        class: 'feedback-tag' + (selectedTag === t.id ? ' active' : ''),
+        onclick: () => { selectedTag = t.id; renderTags(); }
+      }, t.label);
+    }));
+  };
+  renderTags();
+
+  const textarea = h('textarea', {
+    rows: 4,
+    placeholder: 'Mô tả chi tiết lỗi bạn gặp phải (ví dụ: giọng đọc topic 21 bị đánh vần từng chữ, câu này thiếu đáp án đúng, giao diện bị lệch...)',
+    style: {
+      width: '100%',
+      padding: '12px',
+      borderRadius: '12px',
+      border: '1px solid var(--line)',
+      background: 'var(--surface)',
+      color: 'var(--ink)',
+      fontFamily: 'inherit',
+      fontSize: '.9rem',
+      lineHeight: '1.4',
+      boxSizing: 'border-box',
+      resize: 'vertical'
+    }
+  });
+
+  const statusArea = h('div', { class: 'small', style: { minHeight: '18px', transition: 'all .2s' } });
+
+  function buildReportText() {
+    const tagObj = TAGS.find(t => t.id === selectedTag) || TAGS[0];
+    const desc = textarea.value.trim() || 'Không có mô tả chi tiết';
+    return (
+      `### 💬 [Báo lỗi Lingogo] ${tagObj.label}\n` +
+      `- **Ngôn ngữ:** ${langName} (${S.lang})\n` +
+      `- **Vị trí bài học:** ${locText}\n` +
+      `- **Thiết bị:** ${device} · ${browser} (${window.innerWidth}x${window.innerHeight})\n` +
+      `- **Thời gian:** ${new Date().toLocaleString('vi-VN')}\n\n` +
+      `**Mô tả của người học:**\n` +
+      `${desc}\n`
+    );
+  }
+
+  const copyBtn = h('button', {
+    class: 'primary block',
+    style: { fontWeight: 600 },
+    onclick: async () => {
+      const text = buildReportText();
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        ta.remove();
+      }
+      if (ok) {
+        statusArea.innerHTML = '<span style="color:#10b981;font-weight:600">✅ Đã sao chép! Bạn dán (Ctrl+V) vào khung chat với AI để AI sửa ngay nhé!</span>';
+        toast('Đã sao chép báo lỗi cho AI!');
+      } else {
+        statusArea.innerHTML = '<span style="color:#ef4444">Không sao chép tự động được, bạn vui lòng copy thủ công.</span>';
+      }
+    }
+  }, '📋 Sao chép nội dung gửi AI');
+
+  const ghIssueBtn = h('button', {
+    class: 'ghost block',
+    style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' },
+    onclick: () => {
+      const tagObj = TAGS.find(t => t.id === selectedTag) || TAGS[0];
+      const title = `[Báo lỗi] ${tagObj.label.replace(/^.+?\s/, '')} - ${locText.split('·')[0].trim()}`;
+      const body = buildReportText();
+      const issueUrl = `https://github.com/nguyendang3103/lingogo/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+      window.open(issueUrl, '_blank');
+      statusArea.innerHTML = '<span class="muted">Đã mở trang tạo Issue trên GitHub. Bạn bấm "Submit new issue" nhé!</span>';
+    }
+  }, icon(ICON.github, { size: 18 }), ' Mở GitHub Issue');
+
+  const cfg = getGhConfig();
+  const autoGhBtn = cfg.token ? h('button', {
+    class: 'ghost mini block',
+    style: { color: 'var(--teal)' },
+    onclick: async () => {
+      autoGhBtn.disabled = true;
+      autoGhBtn.textContent = 'Đang gửi lên GitHub...';
+      try {
+        const tagObj = TAGS.find(t => t.id === selectedTag) || TAGS[0];
+        const title = `[Báo lỗi] ${tagObj.label.replace(/^.+?\s/, '')} - ${locText.split('·')[0].trim()}`;
+        const body = buildReportText();
+        const res = await fetch('https://api.github.com/repos/nguyendang3103/lingogo/issues', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'token ' + cfg.token,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ title, body })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          statusArea.innerHTML = `<span style="color:#10b981;font-weight:600">✅ Đã tạo Issue #${data.number} trên GitHub! AI có thể kiểm tra và sửa ngay.</span>`;
+          toast(`Đã gửi Issue #${data.number} lên GitHub!`);
+        } else {
+          statusArea.innerHTML = `<span class="muted">Token GitHub cần thêm quyền repo để gửi trực tiếp. Bạn dùng nút "Mở GitHub Issue" hoặc "Sao chép nội dung gửi AI" nhé!</span>`;
+        }
+      } catch (e) {
+        statusArea.innerHTML = `<span style="color:#ef4444">Không thể kết nối GitHub: ${e.message}</span>`;
+      } finally {
+        autoGhBtn.disabled = false;
+        autoGhBtn.textContent = '🚀 Gửi thẳng qua GitHub Token đã lưu';
+      }
+    }
+  }, '🚀 Gửi thẳng qua GitHub Token đã lưu') : null;
+
+  const box = h('div', { class: 'modal-box stack', style: { gap: '16px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('div', { class: 'row', style: { gap: '10px', alignItems: 'center' } },
+        h('span', { class: 'sync-badge-icon', style: { color: '#eab308', background: 'rgba(234, 179, 8, .12)' } }, icon(ICON.feedback, { size: 20 })),
+        h('div', {},
+          h('h2', { style: { margin: 0, fontSize: '1.15rem' } }, 'Góp ý & Báo lỗi'),
+          h('span', { class: 'small muted' }, 'AI sẽ tiếp nhận và sửa lỗi ngay')
+        )
+      ),
+      h('button', { class: 'ghost mini', onclick: close, 'aria-label': 'Đóng', style: { fontSize: '1.2rem', padding: '4px 8px' } }, '✕')
+    ),
+
+    h('div', { style: { background: 'var(--sunk)', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--line)', fontSize: '.82rem' } },
+      h('div', { style: { fontWeight: 600, color: 'var(--ink)', marginBottom: '4px' } }, '📍 Vị trí đang học:'),
+      h('div', { class: 'muted' }, '• Ngôn ngữ: ' + langName),
+      h('div', { class: 'muted' }, '• Bài học: ' + locText),
+      h('div', { class: 'muted', style: { fontSize: '.75rem', marginTop: '2px' } }, '• Thiết bị: ' + device + ' (' + browser + ')')
+    ),
+
+    h('div', { class: 'stack', style: { gap: '6px' } },
+      h('span', { class: 'label', style: { fontSize: '.78rem' } }, 'Loại vấn đề'),
+      tagContainer
+    ),
+
+    h('div', { class: 'stack', style: { gap: '6px' } },
+      h('span', { class: 'label', style: { fontSize: '.78rem' } }, 'Nội dung chi tiết'),
+      textarea
+    ),
+
+    statusArea,
+
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      copyBtn,
+      ghIssueBtn,
+      autoGhBtn
+    ),
+
+    h('p', { class: 'small muted center', style: { margin: 0, fontSize: '.76rem' } },
+      'Sau khi gửi hoặc sao chép, bạn chỉ cần nhắn với AI: "AI sửa lỗi giúp mình" là AI sẽ tự động kiểm tra và cập nhật web.'
+    )
+  );
+
+  overlay.append(box);
+  document.body.append(overlay);
+  setTimeout(() => textarea.focus(), 100);
+}
+
 function transferPanel() {
   const out = h('textarea', { class: 'code', readonly: true, rows: 3, hidden: true, 'aria-label': 'Mã tiến độ', onfocus: (e) => e.target.select() });
   const inp = h('textarea', { class: 'code', rows: 3, placeholder: 'Dán mã LGG1… vào đây', 'aria-label': 'Dán mã tiến độ' });
@@ -1749,6 +2636,7 @@ function transferPanel() {
   } }, 'Dán mã để gộp');
   return h('div', { class: 'panel stack' }, h('h3', {}, 'Chuyển tiến độ'),
     h('p', { class: 'small muted' }, 'Dùng khi học cả bản trên Claude và bản web. Sao chép mã ở bản này, dán vào bản kia. Tiến độ được gộp, không bị ghi đè.'),
+    h('button', { class: 'primary mini block', onclick: showSyncModal }, '⚙ Cấu hình tự động đồng bộ (GitHub Gist)'),
     copyBtn, out, inp, mergeBtn);
 }
 
@@ -1774,7 +2662,7 @@ function progressView() {
   const xpTotal = (c) => Object.values(S.dl || {}).reduce((a, m) => a + (m[c] || 0), 0);
   const w0 = Object.keys(S.written).filter((k) => k.startsWith(c0 + ':')).length;
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'row between' }, h('h1', {}, 'Tiến độ'), langSwitch()),
+    h('div', { class: 'row between' }, h('h1', {}, 'Tiến độ'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'progress' }), langSwitch())), 
     h('div', { class: 'stats' },
       h('div', { class: 'stat' }, h('b', {}, streak(c0)), h('span', {}, 'chuỗi ngày · dài nhất ' + longest(c0))),
       h('div', { class: 'stat' }, h('b', {}, xpOf(t, c0) + '/' + goal()), h('span', {}, 'XP hôm nay')),
@@ -1790,6 +2678,18 @@ function progressView() {
       h('div', { class: 'badges' }, ACH.map(([code, title, desc]) => h('div', { class: 'badge' + (S.ach[code] ? '' : ' off') }, h('b', {}, title), h('p', { class: 'small muted' }, desc))))),
     h('div', { class: 'panel stack' }, h('h3', {}, 'Cài đặt'), h('label', { for: 'goal', class: 'label' }, 'Mục tiêu mỗi ngày'), goalSel, h('p', { class: 'small muted' }, 'Mỗi từ, kanji, câu hoặc tình huống làm đúng được 5 XP. Học lại bài cũ được nửa XP.'),
       h('p', { class: 'small muted' }, 'Thêm vào màn hình chính trên iPhone: mở link bằng Safari, bấm Chia sẻ, chọn “Thêm vào MH chính”.')),
+    h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', gap: '10px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('div', { class: 'row', style: { gap: '10px', alignItems: 'center' } },
+          h('span', { class: 'sync-badge-icon', style: { color: '#eab308', background: 'rgba(234, 179, 8, .12)' } }, icon(ICON.feedback, { size: 20 })),
+          h('div', { style: { minWidth: 0 } },
+            h('b', { style: { display: 'block', fontSize: '.92rem' } }, 'Góp ý & Báo lỗi cho AI'),
+            h('span', { class: 'small muted', style: { fontSize: '.8rem' } }, 'Phát hiện câu sai, lỗi âm thanh hay cần tính năng mới?')
+          )
+        ),
+        h('button', { class: 'primary mini', onclick: () => showFeedbackModal() }, 'Góp ý ngay')
+      )
+    ),
     transferPanel(),
     resetBtn));
 }
@@ -1808,16 +2708,44 @@ document.addEventListener('keydown', (e) => {
     if (opts[n]) { e.preventDefault(); opts[n].click(); }
     return;
   }
+  if (e.key === 'Escape' && subjectsOpen) {
+    subjectsOpen = false;
+    homeView();
+    return;
+  }
   if (e.key === 'Enter') {
     const main = [...document.querySelectorAll('.dock button')].filter((b) => visible(b) && !b.closest('.grades'))[0];
     if (main) { e.preventDefault(); main.click(); }
   }
 });
+document.addEventListener('click', (e) => {
+  if (subjectsOpen && !e.target.closest('.subjects-box') && !e.target.closest('.langchip')) {
+    subjectsOpen = false;
+    homeView();
+  }
+});
+
+async function checkAppUpdate() {
+  try {
+    const res = await fetch('version.json?_t=' + Date.now(), { cache: 'no-store' });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.build && data.build !== APP_BUILD_ID) {
+        console.log('Phát hiện bản cập nhật mới:', data.build);
+        window.location.reload(true);
+      }
+    }
+  } catch (e) {}
+}
 
 // ===== Khởi động =====
-route();
-startSync();
-startGhSync();
+(async () => {
+  await handleUrlSync();
+  route();
+  startSync();
+  startGhSync();
+  checkAppUpdate();
+})();
 </script>
 </body>
 </html>
