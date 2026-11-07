@@ -569,25 +569,90 @@ async function say(code, text, slow) {
   tts(code, text, slow);
 }
 
-// ===== Nhận dạng giọng nói (bị chặn trong khung xem của Claude → tự đánh giá) =====
+// ===== Nhận dạng giọng nói =====
 const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
 let micBlocked = !Rec;
+
+async function requestMic() {
+  if (!Rec) return false;
+  if (location.protocol === 'file:') {
+    toast('Trình duyệt chặn Micro khi chạy từ file cục bộ (file://). Hãy mở qua link web HTTPS hoặc localhost.');
+    return false;
+  }
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream.getTracks().forEach((t) => t.stop());
+      return true;
+    } catch (e) {
+      if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
+        toast('Micro bị chặn. Hãy bấm biểu tượng ổ khóa 🔒 trên thanh địa chỉ và chọn "Cho phép" (Allow) Micro.');
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function listenOnce(code) {
-  return new Promise((resolve, reject) => {
-    const r = new Rec(); r.lang = LANGS[code].rec; r.interimResults = false; r.maxAlternatives = 1;
+  return new Promise(async (resolve, reject) => {
+    if (!Rec) return reject('not-supported');
+    const ok = await requestMic();
+    if (!ok) return reject('not-allowed');
+
+    const r = new Rec();
+    r.lang = LANGS[code].rec;
+    r.interimResults = false;
+    r.maxAlternatives = 1;
     let done = false;
-    r.onresult = (e) => { done = true; resolve(e.results[0][0].transcript); };
-    r.onerror = (e) => { if (!done) { done = true; reject(e.error || 'error'); } };
-    r.onend = () => { if (!done) { done = true; resolve(''); } };
-    try { r.start(); } catch (e) { done = true; reject('not-allowed'); return; }
-    setTimeout(() => { if (!done) { try { r.stop(); } catch (e) { /* đã dừng */ } } }, code === 'en' ? 9000 : 7000);
+    r.onresult = (e) => {
+      done = true;
+      const transcript = e.results && e.results[0] && e.results[0][0] && e.results[0][0].transcript;
+      resolve(transcript || '');
+    };
+    r.onerror = (e) => {
+      if (!done) {
+        done = true;
+        reject(e.error || 'error');
+      }
+    };
+    r.onend = () => {
+      if (!done) {
+        done = true;
+        resolve('');
+      }
+    };
+    try {
+      r.start();
+    } catch (e) {
+      done = true;
+      reject('not-allowed');
+      return;
+    }
+    setTimeout(() => {
+      if (!done) {
+        try { r.stop(); } catch (e) {}
+      }
+    }, code === 'en' ? 10000 : 8000);
   });
 }
+
 async function tryListen(code) {
-  try { return await listenOnce(code); } catch (err) {
-    if (['not-allowed', 'service-not-allowed', 'audio-capture'].includes(err)) {
-      micBlocked = true; toast('Không dùng được micro ở đây. Chuyển sang chế độ tự đánh giá.');
-    } else toast('Không nghe rõ, bạn thử lại nhé.');
+  try {
+    const said = await listenOnce(code);
+    if (!said) toast('Không nghe rõ âm thanh. Bạn thử bấm lại và nói to hơn nhé.');
+    return said;
+  } catch (err) {
+    if (err === 'not-supported') {
+      micBlocked = true;
+      toast('Trình duyệt này không hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari.');
+    } else if (err === 'not-allowed' || err === 'service-not-allowed' || err === 'audio-capture') {
+      toast('Micro chưa được cấp quyền. Bấm biểu tượng ổ khóa 🔒 trên thanh địa chỉ để Cho phép (Allow).');
+    } else if (err === 'no-speech') {
+      toast('Chưa nghe thấy giọng nói. Hãy bấm mic rồi nói ngay nhé.');
+    } else {
+      toast('Chưa nghe rõ (' + err + '). Bạn thử lại nhé.');
+    }
     return null;
   }
 }
@@ -1096,12 +1161,21 @@ function lessonView(t, i) {
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
     } else if (ex.type === 'speak') {
       const status = h('div', { class: 'stack center', 'aria-live': 'polite' });
-      const drawSpeak = () => status.replaceChildren(micBlocked
-        ? h('div', { class: 'stack' }, h('p', { class: 'small muted' }, 'Nghe mẫu, đọc to 3 lần, rồi bấm nút dưới đây.'), h('button', { class: 'primary block', onclick: () => { resp = { self: true }; submit(); } }, 'Tôi đã đọc to'))
-        : h('div', { class: 'stack' }, h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-            const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
-            if (said) { resp = { said }; submit(); } else drawSpeak();
-          } }, icon(ICON.speak)), h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu')));
+      let selfMode = micBlocked;
+      const drawSpeak = () => status.replaceChildren(selfMode
+        ? h('div', { class: 'stack' },
+            h('p', { class: 'small muted' }, 'Nghe mẫu, đọc to 3 lần, rồi bấm nút dưới đây.'),
+            h('button', { class: 'primary block', onclick: () => { resp = { self: true }; submit(); } }, 'Tôi đã đọc to'),
+            Rec && h('button', { class: 'ghost mini', onclick: () => { selfMode = false; drawSpeak(); } }, 'Chuyển sang dùng Micro 🎙️')
+          )
+        : h('div', { class: 'stack' },
+            h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
+              const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
+              if (said) { resp = { said }; submit(); } else drawSpeak();
+            } }, icon(ICON.speak)),
+            h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu'),
+            h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { selfMode = true; drawSpeak(); } }, 'Tự đọc (không dùng micro)')
+          ));
       drawSpeak();
       body = h('div', { class: 'stack center' }, h('p', { class: 'label' }, ex.scene || 'Nói theo mẫu'),
         h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem' } }, ex.raw ? ruby(ex.raw) : plain(ex.text)),
@@ -1264,7 +1338,7 @@ function speakView() {
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), langSwitch()), pick),
-    micBlocked && h('p', { class: 'note' }, Rec ? 'Micro chưa dùng được ở đây nên bạn tự đánh giá sau khi đọc to. Mở app bằng link riêng (GitHub Pages) để máy chấm giọng.' : 'Trình duyệt này không có nhận dạng giọng nói. Bạn vẫn luyện được: nghe mẫu, đọc to, rồi tự đánh giá.'),
+    !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
       if (it.kind === 'coach') return h('button', { class: 'sentence', onclick: () => coachView(t, it.c) }, h('span', { class: 'meta' }, h('b', { lang: 'en', style: { display: 'block' } }, it.c.q), it.c.vi && h('span', { class: 'small muted' }, it.c.vi)), h('span', { class: 'chip' }, 'Coach'));
       const best = S.spoken[sid(code, plain(it.text))];
@@ -1275,12 +1349,20 @@ function speakView() {
 }
 function micControl(code, onResult, onSelf, selfLabels) {
   const box = h('div', { class: 'stack center' });
-  const draw = () => box.replaceChildren(micBlocked
-    ? h('div', { class: 'grades', style: { gridTemplateColumns: 'repeat(' + selfLabels.length + ', 1fr)' } }, ...selfLabels.map(([label, v]) => h('button', { onclick: () => onSelf(v) }, label)))
-    : h('div', { class: 'stack' }, h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-        const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
-        if (said) onResult(said); draw();
-      } }, icon(ICON.speak)), h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu')));
+  let useSelf = micBlocked;
+  const draw = () => box.replaceChildren(useSelf
+    ? h('div', { class: 'stack center' },
+        h('div', { class: 'grades', style: { gridTemplateColumns: 'repeat(' + selfLabels.length + ', 1fr)' } }, ...selfLabels.map(([label, v]) => h('button', { onclick: () => onSelf(v) }, label))),
+        Rec && h('button', { class: 'ghost mini', onclick: () => { useSelf = false; draw(); } }, 'Chuyển sang dùng Micro 🎙️')
+      )
+    : h('div', { class: 'stack center' },
+        h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
+          const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
+          if (said) onResult(said); draw();
+        } }, icon(ICON.speak)),
+        h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu'),
+        h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { useSelf = true; draw(); } }, 'Tự đánh giá (không dùng micro)')
+      ));
   draw(); return box;
 }
 function speakOne(t, it, all) {
