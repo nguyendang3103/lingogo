@@ -423,7 +423,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261106-1645';
+const APP_BUILD_ID = '20261107-1152';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1537,17 +1537,15 @@ function lessonView(t, i) {
 
     if (ex.type === 'intro') {
       body = itemCard(code, ex.v, ex.tip); btn.textContent = 'Tiếp tục'; ready = () => true;
-      setTimeout(() => say(code, ex.v.w), 300);
     } else if (ex.type === 'meaning' || ex.type === 'listen' || ex.type === 'reverse') {
       const isMeaning = ex.type === 'meaning';
       const c = choose(ex.opts, (o) => isMeaning ? o.m : h('span', { lang: LANGS[code].lang }, plain(o.w), o.r && o.r !== o.w && code !== 'en' ? h('span', { class: 'small muted' }, '  ' + o.r) : ''));
       c.setCorrect(ex.v);
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, isMeaning ? 'Chọn nghĩa đúng' : ex.type === 'listen' ? 'Nghe và chọn từ bạn nghe thấy' : 'Chọn từ có nghĩa này'),
-        isMeaning ? wordBlock(code, ex.v, { hideMeaning: true }) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m)),
+        isMeaning ? h('div', { class: 'stack center', style: { gap: '6px' } }, wordBlock(code, ex.v, { hideMeaning: true }), listenBtns(code, ex.v.w)) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m)),
         c.el);
       gradeFn = () => ({ correct: c.sel() === ex.v, expected: isMeaning ? ex.v.m : plain(ex.v.w) });
-      if (ex.type === 'listen' || isMeaning) setTimeout(() => say(code, ex.v.w), 300);
     } else if (ex.type === 'hvw') {
       const c = choose(ex.opts, (o) => o.hv);
       c.setCorrect(ex.correct);
@@ -1676,7 +1674,6 @@ function lessonView(t, i) {
         ex.r && h('p', { class: 'read' }, ex.r), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; ready = () => true; after = () => status.replaceChildren();
       gradeFn = () => { if (!resp || resp.self) return { correct: true, self: true }; const a = align(code, ex.text, resp.said); S.spoken[sid(code, plain(ex.text))] = Math.max(S.spoken[sid(code, plain(ex.text))] || 0, a.score); return { correct: a.score >= 80, score: a.score, align: a, said: resp.said }; };
-      setTimeout(() => say(code, ex.text), 300);
     }
 
     function check() {
@@ -1709,8 +1706,6 @@ function lessonView(t, i) {
         ) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
-      if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
-      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
@@ -1802,7 +1797,7 @@ function reviewView() {
       const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
       bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
       S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code);
-      back.hidden = false; say(code, sayText);
+      back.hidden = false;
       verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
       if (!ok) cont.dataset.wrong = '1';
       dock.hidden = false;
@@ -1901,7 +1896,6 @@ function speakOne(t, it, all) {
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: speakView }, 'Danh sách câu'), h('span', { class: 'muted small' }, (idx + 1) + '/' + lines.length)),
     h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, it.group), words, it.r && it.r !== it.text && h('p', { class: 'read' }, it.r), it.m && h('p', { class: 'muted' }, it.m), listenBtns(code, it.text)),
     ctrl, result, next && h('button', { class: 'block', onclick: () => speakOne(t, next, all) }, 'Câu tiếp theo')));
-  setTimeout(() => say(code, it.text), 300);
 }
 function coachView(t, c) {
   const phrases = h('div', { class: 'phrases' }, c.ph.map((p) => h('span', { lang: 'en' }, p)));
@@ -1922,7 +1916,6 @@ function coachView(t, c) {
     h('div', { class: 'panel stack' }, c.sc && h('p', { class: 'small muted' }, c.sc), h('p', { class: 'q', lang: 'en' }, c.q), c.vi && h('p', { class: 'muted' }, c.vi), listenBtns('en', c.q),
       c.st && h('p', { class: 'note', lang: 'en' }, 'Khung câu: ' + c.st), h('p', { class: 'label' }, 'Cụm từ gợi ý'), phrases),
     ctrl, result, h('button', { class: 'ghost', onclick: () => { sample.hidden = false; } }, 'Xem câu trả lời mẫu'), sample));
-  setTimeout(() => say('en', c.q), 300);
 }
 
 // ===== Viết =====
