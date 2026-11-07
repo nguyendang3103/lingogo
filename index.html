@@ -759,55 +759,55 @@ async function say(code, text, slow) {
 const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
 let micBlocked = !Rec;
 
-async function requestMic() {
-  if (!Rec) return false;
-  if (location.protocol === 'file:') {
-    toast('Trình duyệt chặn Micro khi chạy từ file cục bộ (file://). Hãy mở qua link web HTTPS hoặc localhost.');
-    return false;
-  }
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      stream.getTracks().forEach((t) => t.stop());
-      return true;
-    } catch (e) {
-      if (e.name === 'NotAllowedError' || e.name === 'PermissionDeniedError') {
-        toast('Micro bị chặn. Hãy bấm biểu tượng ổ khóa 🔒 trên thanh địa chỉ và chọn "Cho phép" (Allow) Micro.');
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-function listenOnce(code) {
-  return new Promise(async (resolve, reject) => {
+function listenOnce(code, onInterim) {
+  return new Promise((resolve, reject) => {
     if (!Rec) return reject('not-supported');
-    const ok = await requestMic();
-    if (!ok) return reject('not-allowed');
+    if (location.protocol === 'file:') return reject('file-protocol');
 
     const r = new Rec();
-    r.lang = LANGS[code].rec;
-    r.interimResults = false;
+    r.lang = LANGS[code] ? LANGS[code].rec : 'en-US';
+    r.interimResults = true;
     r.maxAlternatives = 1;
+    r.continuous = false;
+
     let done = false;
-    r.onresult = (e) => {
-      done = true;
-      const transcript = e.results && e.results[0] && e.results[0][0] && e.results[0][0].transcript;
-      resolve(transcript || '');
+    let transcript = '';
+
+    r.onstart = () => {
+      if (onInterim) onInterim('Đang nghe... Hãy nói to và rõ!');
     };
+
+    r.onresult = (e) => {
+      let cur = '';
+      for (let i = e.resultIndex; i < e.results.length; ++i) {
+        if (e.results[i][0] && e.results[i][0].transcript) {
+          cur += e.results[i][0].transcript;
+        }
+      }
+      if (cur) {
+        transcript = cur;
+        if (onInterim) onInterim('Đang nghe: “' + cur + '”');
+      }
+    };
+
     r.onerror = (e) => {
       if (!done) {
         done = true;
-        reject(e.error || 'error');
+        if (transcript.trim()) {
+          resolve(transcript.trim());
+        } else {
+          reject(e.error || 'error');
+        }
       }
     };
+
     r.onend = () => {
       if (!done) {
         done = true;
-        resolve('');
+        resolve(transcript.trim());
       }
     };
+
     try {
       r.start();
     } catch (e) {
@@ -815,6 +815,7 @@ function listenOnce(code) {
       reject('not-allowed');
       return;
     }
+
     setTimeout(() => {
       if (!done) {
         try { r.stop(); } catch (e) {}
@@ -823,19 +824,23 @@ function listenOnce(code) {
   });
 }
 
-async function tryListen(code) {
+async function tryListen(code, onInterim) {
   try {
-    const said = await listenOnce(code);
-    if (!said) toast('Không nghe rõ âm thanh. Bạn thử bấm lại và nói to hơn nhé.');
+    const said = await listenOnce(code, onInterim);
+    if (!said) toast('Chưa nghe rõ giọng nói. Bạn thử bấm lại và nói to hơn nhé.');
     return said;
   } catch (err) {
-    if (err === 'not-supported') {
+    if (err === 'file-protocol') {
+      toast('Trình duyệt chặn Micro khi mở trực tiếp file cục bộ. Hãy mở qua link web HTTPS.');
+    } else if (err === 'not-supported') {
       micBlocked = true;
       toast('Trình duyệt này không hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari.');
     } else if (err === 'not-allowed' || err === 'service-not-allowed' || err === 'audio-capture') {
-      toast('Micro chưa được cấp quyền. Bấm biểu tượng ổ khóa 🔒 trên thanh địa chỉ để Cho phép (Allow).');
+      toast('Micro bị chặn hoặc chưa cấp quyền. Bấm biểu tượng cài đặt / ổ khóa trên thanh địa chỉ để Cho phép (Allow).');
     } else if (err === 'no-speech') {
-      toast('Chưa nghe thấy giọng nói. Hãy bấm mic rồi nói ngay nhé.');
+      toast('Chưa nghe thấy tiếng. Bạn hãy bấm vào Micro rồi nói ngay nhé.');
+    } else if (err === 'network') {
+      toast('Lỗi kết nối mạng của bộ nhận diện giọng nói. Vui lòng kiểm tra lại mạng internet.');
     } else {
       toast('Chưa nghe rõ (' + err + '). Bạn thử lại nhé.');
     }
@@ -1651,14 +1656,20 @@ function lessonView(t, i) {
             h('button', { class: 'primary block', onclick: () => { resp = { self: true }; submit(); } }, 'Tôi đã đọc to'),
             Rec && h('button', { class: 'ghost mini', onclick: () => { selfMode = false; drawSpeak(); } }, 'Chuyển sang dùng Micro 🎙️')
           )
-        : h('div', { class: 'stack' },
-            h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-              const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
-              if (said) { resp = { said }; submit(); } else drawSpeak();
-            } }, icon(ICON.speak)),
-            h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu'),
-            h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { selfMode = true; drawSpeak(); } }, 'Tự đọc (không dùng micro)')
-          ));
+        : (() => {
+            const hint = h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu');
+            return h('div', { class: 'stack' },
+              h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
+                const b = e.currentTarget; b.classList.add('live');
+                const said = await tryListen(code, (txt) => { hint.textContent = txt; });
+                b.classList.remove('live');
+                hint.textContent = 'Bấm micro rồi nói cả câu';
+                if (said) { resp = { said }; submit(); } else drawSpeak();
+              } }, icon(ICON.speak)),
+              hint,
+              h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { selfMode = true; drawSpeak(); } }, 'Tự đọc (không dùng micro)')
+            );
+          })());
       drawSpeak();
       body = h('div', { class: 'stack center' }, h('p', { class: 'label' }, ex.scene || 'Nói theo mẫu'),
         h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem' } }, ex.raw ? ruby(ex.raw) : plain(ex.text)),
@@ -1858,14 +1869,20 @@ function micControl(code, onResult, onSelf, selfLabels) {
         h('div', { class: 'grades', style: { gridTemplateColumns: 'repeat(' + selfLabels.length + ', 1fr)' } }, ...selfLabels.map(([label, v]) => h('button', { onclick: () => onSelf(v) }, label))),
         Rec && h('button', { class: 'ghost mini', onclick: () => { useSelf = false; draw(); } }, 'Chuyển sang dùng Micro 🎙️')
       )
-    : h('div', { class: 'stack center' },
-        h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-          const b = e.currentTarget; b.classList.add('live'); const said = await tryListen(code); b.classList.remove('live');
-          if (said) onResult(said); draw();
-        } }, icon(ICON.speak)),
-        h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu'),
-        h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { useSelf = true; draw(); } }, 'Tự đánh giá (không dùng micro)')
-      ));
+    : (() => {
+        const hint = h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu');
+        return h('div', { class: 'stack center' },
+          h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
+            const b = e.currentTarget; b.classList.add('live');
+            const said = await tryListen(code, (txt) => { hint.textContent = txt; });
+            b.classList.remove('live');
+            hint.textContent = 'Bấm micro rồi nói cả câu';
+            if (said) onResult(said); draw();
+          } }, icon(ICON.speak)),
+          hint,
+          h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { useSelf = true; draw(); } }, 'Tự đánh giá (không dùng micro)')
+        );
+      })());
   draw(); return box;
 }
 function speakOne(t, it, all) {
