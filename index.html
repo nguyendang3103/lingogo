@@ -425,7 +425,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261108-1730';
+const APP_BUILD_ID = '20261108-1805';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1651,7 +1651,50 @@ function lessonView(t, i) {
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
     } else if (ex.type === 'speak') {
       const status = h('div', { class: 'stack center', 'aria-live': 'polite' });
+      const speakResult = h('div', { class: 'stack center', style: { gap: '4px' } });
+      const wordsBox = h('div', { class: 'words', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, ex.raw ? ruby(ex.raw) : plain(ex.text));
       let selfMode = micBlocked;
+      let attempts = 0;
+      let bestScore = 0;
+      let bestAlign = null;
+      let lastSaid = '';
+      const spokenKey = sid(code, plain(ex.text));
+
+      const updateSpeakFeedback = (score, said, a) => {
+        const prevBest = bestScore;
+        attempts++;
+        bestScore = Math.max(bestScore, score);
+        if (score === bestScore) { bestAlign = a; lastSaid = said; }
+        S.spoken[spokenKey] = Math.max(S.spoken[spokenKey] || 0, score);
+        addXp(score >= 70 ? XP_ITEM : 1, code);
+        checkAch();
+        save();
+
+        if (a) {
+          wordsBox.replaceChildren(...a.units.map((w, k) => h('span', { class: a.hit[k] ? 'hit' : 'miss' }, w)));
+        }
+
+        const isImproved = attempts > 1 && score > prevBest;
+        const isLower = attempts > 1 && score < bestScore;
+
+        speakResult.replaceChildren(
+          h('div', { class: 'score', style: { color: score >= 80 ? 'var(--good)' : 'var(--ink)', fontSize: '2rem' } }, score + '%'),
+          isImproved
+            ? h('p', { class: 'center small', style: { color: 'var(--good)', fontWeight: 600 } }, '🎉 Điểm tăng: ' + prevBest + '% ➔ ' + score + '% (+' + (score - prevBest) + '%)!')
+            : isLower
+            ? h('p', { class: 'center small muted' }, 'Lần này: ' + score + '% · Điểm cao nhất: ' + bestScore + '% (giữ nguyên)')
+            : h('p', { class: 'center small muted' }, bestScore > 0 ? 'Điểm cao nhất: ' + bestScore + '%' : ''),
+          said ? h('p', { class: 'center small muted', lang: LANGS[code].lang }, 'Máy nghe được: “' + said + '”') : '',
+          h('p', { class: 'center small' }, score >= 80
+            ? 'Rất tốt! Bạn có thể bấm Tiếp tục để qua câu, hoặc bấm Micro nói lại để nâng % cao hơn.'
+            : 'Chữ gạch đỏ là chữ máy chưa nghe rõ. Bạn hãy bấm Micro nói lại để cải thiện % điểm nhé!'),
+          h('p', { class: 'center small muted', style: { fontSize: '.8rem' } }, 'Đã thử ' + attempts + ' lần · Bấm Micro để nói lại không giới hạn')
+        );
+
+        resp = { said: lastSaid, align: bestAlign, score: bestScore, attempts };
+        btn.textContent = bestScore >= 80 ? 'Tiếp tục ✓' : 'Tiếp tục';
+      };
+
       const drawSpeak = () => status.replaceChildren(selfMode
         ? h('div', { class: 'stack' },
             h('p', { class: 'small muted' }, 'Nghe mẫu, đọc to 3 lần, rồi bấm nút dưới đây.'),
@@ -1659,14 +1702,18 @@ function lessonView(t, i) {
             Rec && h('button', { class: 'ghost mini', onclick: () => { selfMode = false; drawSpeak(); } }, 'Chuyển sang dùng Micro 🎙️')
           )
         : (() => {
-            const hint = h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu');
+            const hint = h('p', { class: 'small muted' }, attempts > 0 ? 'Bấm micro để nói lại và nâng cao điểm' : 'Bấm micro rồi nói cả câu');
             return h('div', { class: 'stack' },
               h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
                 const b = e.currentTarget; b.classList.add('live');
                 const said = await tryListen(code, (txt) => { hint.textContent = txt; });
                 b.classList.remove('live');
-                hint.textContent = 'Bấm micro rồi nói cả câu';
-                if (said) { resp = { said }; submit(); } else drawSpeak();
+                hint.textContent = 'Bấm micro để nói lại và nâng cao điểm';
+                if (said) {
+                  const a = align(code, ex.text, said);
+                  updateSpeakFeedback(a.score, said, a);
+                  drawSpeak();
+                } else drawSpeak();
               } }, icon(ICON.speak)),
               hint,
               h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { selfMode = true; drawSpeak(); } }, 'Tự đọc (không dùng micro)')
@@ -1674,10 +1721,13 @@ function lessonView(t, i) {
           })());
       drawSpeak();
       body = h('div', { class: 'stack center' }, h('p', { class: 'label' }, ex.scene || 'Nói theo mẫu'),
-        h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem' } }, ex.raw ? ruby(ex.raw) : plain(ex.text)),
-        ex.r && h('p', { class: 'read' }, ex.r), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status);
+        wordsBox,
+        ex.r && h('p', { class: 'read' }, ex.r), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status, speakResult);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; ready = () => true; after = () => status.replaceChildren();
-      gradeFn = () => { if (!resp || resp.self) return { correct: true, self: true }; const a = align(code, ex.text, resp.said); S.spoken[sid(code, plain(ex.text))] = Math.max(S.spoken[sid(code, plain(ex.text))] || 0, a.score); return { correct: a.score >= 80, score: a.score, align: a, said: resp.said }; };
+      gradeFn = () => {
+        if (!resp || resp.self) return { correct: true, self: true };
+        return { correct: bestScore >= 80, score: bestScore, align: bestAlign, said: lastSaid };
+      };
     }
 
     function check() {
@@ -1695,6 +1745,7 @@ function lessonView(t, i) {
       }
       if (!r.correct && !retried.has(ex.n) && ex.type !== 'write') { retried.add(ex.n); queue.push(ex); }
       if (ex.type === 'write' && !r.self) S.written[sid(code, ex.ch)] = (S.written[sid(code, ex.ch)] || 0) + 1;
+      if (ex.type === 'speak') { done++; return step(); }
       done++; after(r);
       fb.replaceChildren(h('div', { class: 'feedback ' + (r.correct ? 'ok' : 'no') },
         h('strong', {}, r.self ? 'Tốt lắm!' : r.correct ? 'Chính xác!' : 'Chưa đúng'),
@@ -1865,20 +1916,22 @@ function speakView() {
 function micControl(code, onResult, onSelf, selfLabels) {
   const box = h('div', { class: 'stack center' });
   let useSelf = micBlocked;
+  let hasSpoken = false;
   const draw = () => box.replaceChildren(useSelf
     ? h('div', { class: 'stack center' },
-        h('div', { class: 'grades', style: { gridTemplateColumns: 'repeat(' + selfLabels.length + ', 1fr)' } }, ...selfLabels.map(([label, v]) => h('button', { onclick: () => onSelf(v) }, label))),
+        h('div', { class: 'grades', style: { gridTemplateColumns: 'repeat(' + selfLabels.length + ', 1fr)' } }, ...selfLabels.map(([label, v]) => h('button', { onclick: () => { hasSpoken = true; onSelf(v); } }, label))),
         Rec && h('button', { class: 'ghost mini', onclick: () => { useSelf = false; draw(); } }, 'Chuyển sang dùng Micro 🎙️')
       )
     : (() => {
-        const hint = h('p', { class: 'small muted' }, 'Bấm micro rồi nói cả câu');
+        const hint = h('p', { class: 'small muted' }, hasSpoken ? 'Bấm micro để nói lại và nâng cao điểm số' : 'Bấm micro rồi nói cả câu');
         return h('div', { class: 'stack center' },
           h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
             const b = e.currentTarget; b.classList.add('live');
             const said = await tryListen(code, (txt) => { hint.textContent = txt; });
             b.classList.remove('live');
-            hint.textContent = 'Bấm micro rồi nói cả câu';
-            if (said) onResult(said); draw();
+            hint.textContent = 'Bấm micro để nói lại và nâng cao điểm số';
+            if (said) { hasSpoken = true; onResult(said); }
+            draw();
           } }, icon(ICON.speak)),
           hint,
           h('button', { class: 'ghost mini', style: { opacity: .7 }, onclick: () => { useSelf = true; draw(); } }, 'Tự đánh giá (không dùng micro)')
@@ -1890,14 +1943,58 @@ function speakOne(t, it, all) {
   const code = t.lang, lines = all.filter((x) => x.kind === 'line'), idx = lines.indexOf(it), next = lines[idx + 1];
   const words = h('div', { class: 'words', lang: L().lang }, it.raw ? ruby(it.raw) : plain(it.text));
   const result = h('div', { class: 'stack', 'aria-live': 'polite' });
-  const record = (score) => { const k = sid(code, plain(it.text)); S.spoken[k] = Math.max(S.spoken[k] || 0, score); addXp(score >= 70 ? XP_ITEM : 1, code); checkAch(); };
+  const k = sid(code, plain(it.text));
+  let attempts = 0;
+
+  const initBest = S.spoken[k];
+  if (initBest != null) {
+    result.replaceChildren(
+      h('div', { class: 'score', style: { color: initBest >= 80 ? 'var(--good)' : 'var(--ink)' } }, initBest + '%'),
+      h('p', { class: 'center small muted' }, 'Điểm cao nhất hiện tại: ' + initBest + '% · Bấm Micro để nói lại và nâng cao điểm số!')
+    );
+  } else {
+    result.replaceChildren(
+      h('p', { class: 'center small muted' }, 'Bấm Micro rồi nói cả câu · Bạn có thể nói nhiều lần để nâng cao % điểm!')
+    );
+  }
+
+  const record = (score) => {
+    S.spoken[k] = Math.max(S.spoken[k] || 0, score);
+    addXp(score >= 70 ? XP_ITEM : 1, code);
+    checkAch();
+  };
+
   const ctrl = micControl(code, (said) => {
+    attempts++;
+    const prevBest = S.spoken[k];
     const a = align(code, it.text, said);
-    words.replaceChildren(...a.units.map((w, k) => h('span', { class: a.hit[k] ? 'hit' : 'miss' }, w)));
-    result.replaceChildren(h('div', { class: 'score' }, a.score + '%'), h('p', { class: 'center small muted', lang: L().lang }, 'Máy nghe được: “' + said + '”'),
-      h('p', { class: 'center small' }, a.score >= 80 ? 'Rất tốt! Thử nói nhanh và tự nhiên hơn.' : 'Chỗ gạch đỏ là chỗ máy chưa nghe rõ. Nghe chậm rồi thử lại.'));
+    words.replaceChildren(...a.units.map((w, i) => h('span', { class: a.hit[i] ? 'hit' : 'miss' }, w)));
+    const isImproved = prevBest != null && a.score > prevBest;
+    const isLower = prevBest != null && a.score < prevBest;
     record(a.score);
-  }, (v) => { record(v); result.replaceChildren(h('p', { class: 'center' }, 'Đã ghi nhận. Nói lại thêm vài lần cho quen miệng nhé.')); }, [['Còn vấp', 40], ['Khá ổn', 70], ['Trôi chảy', 90]]);
+    const newBest = S.spoken[k];
+
+    result.replaceChildren(
+      h('div', { class: 'score', style: { color: a.score >= 80 ? 'var(--good)' : 'var(--ink)' } }, a.score + '%'),
+      isImproved
+        ? h('p', { class: 'center small', style: { color: 'var(--good)', fontWeight: 600 } }, '🎉 Tuyệt vời! Điểm tăng từ ' + prevBest + '% lên ' + a.score + '% (+' + (a.score - prevBest) + '%)!')
+        : isLower
+        ? h('p', { class: 'center small muted' }, 'Lần nói này: ' + a.score + '% · Điểm cao nhất của bạn: ' + newBest + '% (vẫn giữ nguyên)')
+        : h('p', { class: 'center small muted' }, newBest != null ? 'Điểm cao nhất: ' + newBest + '%' : ''),
+      h('p', { class: 'center small muted', lang: L().lang }, 'Máy nghe được: “' + said + '”'),
+      h('p', { class: 'center small' }, a.score >= 80 ? 'Rất tốt! Bạn có thể nói lại thêm để luyện phản xạ.' : 'Chữ gạch đỏ là chữ máy chưa nghe rõ. Nghe chậm rồi bấm Micro nói lại để nâng điểm!'),
+      h('p', { class: 'center small muted', style: { fontSize: '.8rem' } }, 'Đã thử ' + attempts + ' lần · Bấm Micro để nói lại không giới hạn')
+    );
+  }, (v) => {
+    attempts++;
+    record(v);
+    const newBest = S.spoken[k];
+    result.replaceChildren(
+      h('div', { class: 'score', style: { color: v >= 80 ? 'var(--good)' : 'var(--ink)' } }, v + '%'),
+      h('p', { class: 'center small' }, 'Đã ghi nhận điểm ' + v + '%. Điểm cao nhất: ' + newBest + '%. Bạn có thể bấm nói lại bất cứ lúc nào!')
+    );
+  }, [['Còn vấp', 40], ['Khá ổn', 70], ['Trôi chảy', 90]]);
+
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: speakView }, 'Danh sách câu'), h('span', { class: 'muted small' }, (idx + 1) + '/' + lines.length)),
     h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, it.group), words, it.r && it.r !== it.text && h('p', { class: 'read' }, it.r), it.m && h('p', { class: 'muted' }, it.m), listenBtns(code, it.text)),
@@ -1908,13 +2005,16 @@ function coachView(t, c) {
   const result = h('div', { class: 'stack', 'aria-live': 'polite' });
   const sample = h('div', { class: 'panel stack', hidden: true }, h('p', { class: 'label' }, 'Câu trả lời mẫu'), h('p', { lang: 'en' }, c.sa), listenBtns('en', c.sa),
     ...(c.ss || []).map((s) => h('p', { class: 'small', lang: 'en' }, s)));
+  let attempts = 0;
   const ctrl = micControl('en', (said) => {
+    attempts++;
     const hw = ' ' + normEn(said) + ' ';
     const used = c.ph.map((p) => hw.includes(' ' + normEn(p) + ' '));
     [...phrases.children].forEach((el, k) => el.classList.toggle('used', used[k]));
     const n = normEn(said).split(' ').filter(Boolean).length;
     result.replaceChildren(h('p', { class: 'small muted', lang: 'en' }, 'Máy nghe được: “' + said + '”'),
-      h('p', {}, n < 6 ? 'Câu trả lời hơi ngắn, thử nói thành câu đầy đủ theo khung.' : used.some(Boolean) ? 'Tốt! Bạn đã dùng ' + used.filter(Boolean).length + ' cụm gợi ý.' : 'Thử dùng ít nhất một cụm gợi ý ở trên.'));
+      h('p', {}, n < 6 ? 'Câu trả lời hơi ngắn, thử nói thành câu đầy đủ theo khung.' : used.some(Boolean) ? 'Tốt! Bạn đã dùng ' + used.filter(Boolean).length + ' cụm gợi ý.' : 'Thử dùng ít nhất một cụm gợi ý ở trên.'),
+      h('p', { class: 'center small muted', style: { fontSize: '.8rem' } }, 'Đã thử ' + attempts + ' lần · Bấm Micro để nói lại và bổ sung ý'));
     addXp(XP_ITEM, 'en'); sample.hidden = false;
   }, () => { addXp(2, 'en'); sample.hidden = false; }, [['Tôi đã trả lời', 1]]);
   mount(h('div', { class: 'stack-lg' },
