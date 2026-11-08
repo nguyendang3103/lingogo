@@ -425,7 +425,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261108-1925';
+const APP_BUILD_ID = '20261108-1935';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1632,78 +1632,121 @@ function lessonView(t, i) {
       const wbox = h('div', { class: 'charbox' });
       const info = h('p', { class: 'small muted center', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
       const strokeChip = h('span', { class: 'chip good', style: { marginLeft: '8px', fontSize: '.85rem', verticalAlign: 'middle' }, hidden: true });
-      const btnStroke = h('button', { onclick: () => playLessonStrokes() }, 'Xem thứ tự nét');
-      let mistakes = 0, completed = false, writer = null, totalStrokes = 0, animating = false;
+      const strokeStepBadge = h('div', { class: 'center', style: { minHeight: '32px', margin: '4px 0' } },
+        h('span', { class: 'chip', style: { fontSize: '1rem', fontWeight: 700, padding: '3px 14px' } }, 'Tập viết (không có nét mờ)')
+      );
+      const stepLabel = strokeStepBadge.firstChild;
+      let mistakes = 0, completed = false, writer = null, totalStrokes = 0, isAnimating = false, blindMode = true;
 
-      const playLessonStrokes = async () => {
-        if (!writer || animating) return;
-        animating = true;
-        writer.cancelQuiz();
-        writer.showOutline();
-        await writer.hideCharacter({ duration: 0 });
-        const total = totalStrokes || (writer._character && writer._character.strokes && writer._character.strokes.length) || 1;
-        for (let i = 0; i < total; i++) {
-          if (!animating) break;
-          info.replaceChildren(
-            h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + (i + 1) + ' / ' + total),
-            h('span', { class: 'small muted' }, 'Đang vẽ nét thứ ' + (i + 1) + '...')
-          );
-          await new Promise((res) => writer.animateStroke(i, { onComplete: res }));
-          if (i < total - 1 && animating) await new Promise((res) => setTimeout(res, 260));
-        }
-        if (animating) {
-          animating = false;
-          info.replaceChildren(
-            h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, total + ' / ' + total + ' nét'),
-            h('span', { class: 'small' }, 'Đã xem xong thứ tự nét. Hãy đồ theo chữ mờ vào ô!')
-          );
-          setTimeout(() => { if (!animating) startQuiz(false); }, 900);
-        }
-      };
+      const toggleOutlineBtn = h('button', { class: 'ghost mini', onclick: () => {
+        blindMode = !blindMode;
+        toggleOutlineBtn.textContent = blindMode ? 'Hiện nét mờ' : 'Ẩn nét mờ';
+        startQuiz(blindMode);
+      } }, 'Hiện nét mờ');
 
       const startQuiz = (blind) => {
         if (!writer) return;
-        animating = false;
+        isAnimating = false;
+        blindMode = blind;
+        toggleOutlineBtn.textContent = blind ? 'Hiện nét mờ' : 'Ẩn nét mờ';
         mistakes = 0;
         blind ? writer.hideOutline() : writer.showOutline();
-        const total = totalStrokes || (writer._character && writer._character.strokes && writer._character.strokes.length) || 0;
-        const strokeInfo = total ? ' (' + total + ' nét)' : '';
+        stepLabel.className = 'chip ' + (blind ? '' : 'good');
+        stepLabel.textContent = blind ? 'Tập viết (không có nét mờ)' : 'Tập viết (có nét mờ)';
+        const strokeInfo = totalStrokes ? ' (' + totalStrokes + ' nét)' : '';
         info.textContent = blind
-          ? 'Viết lại không có nét mờ' + strokeInfo + ': nhớ chữ rồi viết từng nét. Sai 2 lần máy sẽ gợi ý.'
-          : 'Đồ theo nét mờ' + strokeInfo + ', viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem cách viết.';
+          ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'
+          : 'Đồ theo nét mờ' + strokeInfo + ': Viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem cách viết.';
         writer.quiz({
           showHintAfterMisses: 2,
           onMistake: (s) => {
             mistakes++;
             const cur = (s && s.strokeNum != null) ? s.strokeNum + 1 : '?';
             info.replaceChildren(
-              h('span', { style: { color: 'var(--bad)', fontWeight: 600 } }, 'Sai nét thứ ' + cur + (total ? '/' + total : '') + '. '),
+              h('span', { style: { color: 'var(--bad)', fontWeight: 600 } }, 'Sai nét ' + cur + (totalStrokes ? '/' + totalStrokes : '') + '. '),
               h('span', { class: 'small muted' }, 'Thử lại nét này nhé!')
             );
           },
           onCorrectStroke: (s) => {
             const cur = (s && s.strokeNum != null) ? s.strokeNum + 1 : '?';
+            stepLabel.className = 'chip good';
+            stepLabel.textContent = 'Đúng nét ' + cur + (totalStrokes ? ' / ' + totalStrokes : '');
             info.replaceChildren(
-              h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (total ? '/' + total : '')),
-              h('span', { class: 'small muted' }, s.strokesRemaining > 0 ? 'Đúng rồi! Còn ' + s.strokesRemaining + ' nét nữa.' : 'Đã hoàn thành nét cuối!')
+              h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (totalStrokes ? '/' + totalStrokes : '')),
+              h('span', { class: 'small muted' }, s.strokesRemaining > 0 ? 'Đúng rồi! Còn ' + s.strokesRemaining + ' nét.' : 'Đã hoàn thành nét cuối!')
             );
           },
           onComplete: (s) => {
             completed = true;
             mistakes = s.totalMistakes;
-            info.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (total ? total + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (total ? total + ' ' : '') + 'nét! Sai ' + mistakes + ' lần.');
+            stepLabel.className = 'chip good';
+            stepLabel.textContent = 'Hoàn thành ' + (totalStrokes ? totalStrokes + ' nét' : '!');
+            info.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét! Sai ' + mistakes + ' lần.');
             update();
             submit();
           }
         });
       };
 
+      const playLessonAnimation = () => {
+        if (!writer) return;
+        writer.cancelQuiz();
+        isAnimating = true;
+        writer.showOutline();
+        stepLabel.className = 'chip good';
+        stepLabel.textContent = 'Nét 1' + (totalStrokes ? ' / ' + totalStrokes : '');
+        info.textContent = 'Đang chạy thứ tự nét: Nét 1' + (totalStrokes ? '/' + totalStrokes : '') + '...';
+
+        if (writer._renderState) {
+          const orig = writer._renderState._onStateChange;
+          let lastS = -1;
+          writer._renderState._onStateChange = (nextState, prevState) => {
+            orig.call(writer._renderState, nextState, prevState);
+            if (isAnimating) {
+              const strokes = nextState && nextState.character && nextState.character.main && nextState.character.main.strokes;
+              if (strokes) {
+                let cur = -1;
+                const len = totalStrokes || 30;
+                for (let i = len - 1; i >= 0; i--) {
+                  if (strokes[i] && strokes[i].opacity > 0) {
+                    cur = i;
+                    break;
+                  }
+                }
+                if (cur >= 0 && cur !== lastS) {
+                  lastS = cur;
+                  const num = cur + 1;
+                  stepLabel.className = 'chip good';
+                  stepLabel.textContent = 'Nét ' + num + (totalStrokes ? ' / ' + totalStrokes : '');
+                  info.textContent = 'Đang chạy nét ' + num + (totalStrokes ? '/' + totalStrokes : '') + '...';
+                }
+              }
+            }
+          };
+        }
+
+        writer.animateCharacter({
+          onComplete: (r) => {
+            if (r && r.canceled) return;
+            isAnimating = false;
+            stepLabel.className = 'chip good';
+            stepLabel.textContent = 'Đã chạy xong ' + (totalStrokes ? totalStrokes + ' nét' : '!');
+            info.textContent = 'Đã xem xong thứ tự nét. Hãy tự viết lại vào ô (không có nét mờ)!';
+            setTimeout(() => {
+              startQuiz(true);
+            }, 600);
+          }
+        });
+      };
+
+      const btnStroke = h('button', { onclick: playLessonAnimation }, 'Xem thứ tự nét');
+
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, 'Tập viết'),
         ex.v && h('p', { class: 'center' }, h('b', { lang: LANGS[code].lang }, plain(ex.v.w)), ' · ', ex.v.m, strokeChip),
         ex.k && h('p', { class: 'center' }, h('b', { lang: 'ja' }, ex.k.k), ' · ', ex.k.hv, strokeChip),
-        wbox, info,
-        h('div', { class: 'listen' }, btnStroke, h('button', { onclick: () => startQuiz(true) }, 'Viết lại'))
+        wbox, strokeStepBadge, info,
+        h('div', { class: 'listen' }, btnStroke, h('button', { onclick: () => startQuiz(true) }, 'Viết lại'), toggleOutlineBtn)
       );
       btn.textContent = 'Bỏ qua'; ready = () => true;
 
@@ -1718,13 +1761,13 @@ function lessonView(t, i) {
         }
         const size = wbox.clientWidth || 260;
         writer = HanziWriter.create(wbox, ex.ch, {
-          width: size, height: size, padding: 12, showCharacter: false, showOutline: true,
+          width: size, height: size, padding: 12, showCharacter: false, showOutline: false,
           strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222',
           outlineColor: guideColor(),
           drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257',
           charDataLoader: (c, ok) => ok(data)
         });
-        startQuiz(false);
+        startQuiz(true);
       }, 50);
 
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
@@ -2143,60 +2186,48 @@ function charView(code, c, list) {
   const idx = list.indexOf(c), box = h('div', { class: 'charbox' });
   const status = h('p', { class: 'center small muted', 'aria-live': 'polite' }, 'Đang tải nét chữ…');
   const strokeBadge = h('span', { class: 'chip good', style: { marginLeft: '8px', fontSize: '.85rem', verticalAlign: 'middle' }, hidden: true });
-  const btnStroke = h('button', { onclick: () => playStrokes() }, 'Xem thứ tự nét');
-  let writer = null, totalStrokes = 0, animating = false;
-  const again = h('button', { hidden: true, onclick: () => quiz(true) }, 'Viết lại');
+  const strokeStepBadge = h('div', { class: 'center', style: { minHeight: '32px', margin: '4px 0' } },
+    h('span', { class: 'chip', style: { fontSize: '1rem', fontWeight: 700, padding: '3px 14px' } }, 'Tập viết (không có nét mờ)')
+  );
+  const stepLabel = strokeStepBadge.firstChild;
+  let writer = null, totalStrokes = 0, isAnimating = false, blindMode = true;
 
-  const playStrokes = async () => {
-    if (!writer || animating) return;
-    animating = true;
-    writer.cancelQuiz();
-    again.hidden = true;
-    writer.showOutline();
-    await writer.hideCharacter({ duration: 0 });
-    const total = totalStrokes || (writer._character && writer._character.strokes && writer._character.strokes.length) || 1;
-    for (let i = 0; i < total; i++) {
-      if (!animating) break;
-      status.replaceChildren(
-        h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + (i + 1) + ' / ' + total),
-        h('span', { class: 'small muted' }, 'Đang vẽ nét thứ ' + (i + 1) + '...')
-      );
-      await new Promise((res) => writer.animateStroke(i, { onComplete: res }));
-      if (i < total - 1 && animating) await new Promise((res) => setTimeout(res, 260));
-    }
-    if (animating) {
-      animating = false;
-      status.replaceChildren(
-        h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, total + ' / ' + total + ' nét'),
-        h('span', { class: 'small' }, 'Đã xem xong cả ' + total + ' nét. Giờ bạn hãy tự viết lại vào ô nhé!')
-      );
-      setTimeout(() => { if (!animating) quiz(false); }, 900);
-    }
-  };
+  const toggleOutlineBtn = h('button', { class: 'ghost mini', onclick: () => {
+    blindMode = !blindMode;
+    toggleOutlineBtn.textContent = blindMode ? 'Hiện nét mờ' : 'Ẩn nét mờ';
+    quiz(blindMode);
+  } }, 'Hiện nét mờ');
+
+  const again = h('button', { hidden: true, onclick: () => quiz(true) }, 'Viết lại');
 
   const quiz = (blind) => {
     if (!writer) return;
-    animating = false;
+    isAnimating = false;
+    blindMode = blind;
+    toggleOutlineBtn.textContent = blind ? 'Hiện nét mờ' : 'Ẩn nét mờ';
     again.hidden = true;
     blind ? writer.hideOutline() : writer.showOutline();
-    const total = totalStrokes || (writer._character && writer._character.strokes && writer._character.strokes.length) || 0;
-    const strokeInfo = total ? ' (' + total + ' nét)' : '';
+    stepLabel.className = 'chip ' + (blind ? '' : 'good');
+    stepLabel.textContent = blind ? 'Tập viết (không có nét mờ)' : 'Tập viết (có nét mờ)';
+    const strokeInfo = totalStrokes ? ' (' + totalStrokes + ' nét)' : '';
     status.textContent = blind
-      ? 'Viết lại không có nét mờ' + strokeInfo + ': nhớ chữ rồi viết từng nét. Sai 2 lần máy sẽ gợi ý.'
-      : 'Đồ theo chữ mờ' + strokeInfo + ', viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.';
+      ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.'
+      : 'Đồ theo chữ mờ' + strokeInfo + ': Viết từng nét vào ô. Sai 2 lần máy sẽ gợi ý.';
     writer.quiz({
       showHintAfterMisses: 2,
       onMistake: (s) => {
         const cur = (s && s.strokeNum != null) ? s.strokeNum + 1 : '?';
         status.replaceChildren(
-          h('span', { style: { color: 'var(--bad)', fontWeight: 600 } }, 'Sai nét thứ ' + cur + (total ? '/' + total : '') + '. '),
-          h('span', { class: 'small muted' }, 'Hãy thử viết lại nét này!')
+          h('span', { style: { color: 'var(--bad)', fontWeight: 600 } }, 'Sai nét ' + cur + (totalStrokes ? '/' + totalStrokes : '') + '. '),
+          h('span', { class: 'small muted' }, 'Hãy thử lại nét này!')
         );
       },
       onCorrectStroke: (s) => {
         const cur = (s && s.strokeNum != null) ? s.strokeNum + 1 : '?';
+        stepLabel.className = 'chip good';
+        stepLabel.textContent = 'Đúng nét ' + cur + (totalStrokes ? ' / ' + totalStrokes : '');
         status.replaceChildren(
-          h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (total ? '/' + total : '')),
+          h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (totalStrokes ? '/' + totalStrokes : '')),
           h('span', { class: 'small muted' }, s.strokesRemaining > 0 ? 'Đúng rồi! Còn ' + s.strokesRemaining + ' nét nữa.' : 'Đã hoàn thành nét cuối!')
         );
       },
@@ -2205,12 +2236,67 @@ function charView(code, c, list) {
         S.written[k] = (S.written[k] || 0) + 1;
         addXp(XP_ITEM, code);
         checkAch();
-        status.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (total ? total + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (total ? total + ' ' : '') + 'nét! Sai ' + s.totalMistakes + ' lần.') + ' Bấm “Viết lại” để thử viết không có nét mờ.';
+        stepLabel.className = 'chip good';
+        stepLabel.textContent = 'Hoàn thành ' + (totalStrokes ? totalStrokes + ' nét' : '!');
+        status.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét! Sai ' + s.totalMistakes + ' lần.') + ' Bấm “Viết lại” để thử viết lại.';
         again.hidden = false;
       }
     });
   };
 
+  const playStrokeAnimation = () => {
+    if (!writer) return;
+    writer.cancelQuiz();
+    isAnimating = true;
+    again.hidden = true;
+    writer.showOutline();
+    stepLabel.className = 'chip good';
+    stepLabel.textContent = 'Nét 1' + (totalStrokes ? ' / ' + totalStrokes : '');
+    status.textContent = 'Đang chạy thứ tự nét: Nét 1' + (totalStrokes ? '/' + totalStrokes : '') + '...';
+
+    if (writer._renderState) {
+      const orig = writer._renderState._onStateChange;
+      let lastS = -1;
+      writer._renderState._onStateChange = (nextState, prevState) => {
+        orig.call(writer._renderState, nextState, prevState);
+        if (isAnimating) {
+          const strokes = nextState && nextState.character && nextState.character.main && nextState.character.main.strokes;
+          if (strokes) {
+            let cur = -1;
+            const len = totalStrokes || 30;
+            for (let i = len - 1; i >= 0; i--) {
+              if (strokes[i] && strokes[i].opacity > 0) {
+                cur = i;
+                break;
+              }
+            }
+            if (cur >= 0 && cur !== lastS) {
+              lastS = cur;
+              const num = cur + 1;
+              stepLabel.className = 'chip good';
+              stepLabel.textContent = 'Nét ' + num + (totalStrokes ? ' / ' + totalStrokes : '');
+              status.textContent = 'Đang chạy nét ' + num + (totalStrokes ? '/' + totalStrokes : '') + '...';
+            }
+          }
+        }
+      };
+    }
+
+    writer.animateCharacter({
+      onComplete: (r) => {
+        if (r && r.canceled) return;
+        isAnimating = false;
+        stepLabel.className = 'chip good';
+        stepLabel.textContent = 'Đã chạy xong ' + (totalStrokes ? totalStrokes + ' nét' : '!');
+        status.textContent = 'Đã xem xong thứ tự nét. Giờ hãy tự viết lại vào ô (không có nét mờ)!';
+        setTimeout(() => {
+          quiz(true);
+        }, 600);
+      }
+    });
+  };
+
+  const btnStroke = h('button', { onclick: playStrokeAnimation }, 'Xem thứ tự nét');
   const sayText = (code === 'zh' && DATA.zh.chars[c] && DATA.zh.chars[c].say) || c;
   const strokeInfoRow = h('p', { hidden: true });
   let info;
@@ -2242,8 +2328,8 @@ function charView(code, c, list) {
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: writeView }, 'Danh sách chữ'), h('span', { class: 'muted small' }, (idx + 1) + '/' + list.length)),
     h('div', { class: 'center' }, h('span', { class: 'big', lang: L().lang }, c), strokeBadge),
-    box, status,
-    h('div', { class: 'listen' }, btnStroke, again, spk(code, sayText, { cls: 'big' })),
+    box, strokeStepBadge, status,
+    h('div', { class: 'listen' }, btnStroke, again, toggleOutlineBtn, spk(code, sayText, { cls: 'big' })),
     h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →')),
     h('div', { class: 'panel stack' }, info)
   ));
@@ -2261,11 +2347,11 @@ function charView(code, c, list) {
     }
     const css = getComputedStyle(document.documentElement), size = box.clientWidth || 280;
     writer = HanziWriter.create(box, c, {
-      width: size, height: size, padding: 14, showCharacter: false, showOutline: true, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
+      width: size, height: size, padding: 14, showCharacter: false, showOutline: false, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
       strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: guideColor(), drawingColor: css.getPropertyValue('--teal').trim(),
       highlightColor: css.getPropertyValue('--amber').trim(), charDataLoader: (ch, ok) => ok(data)
     });
-    quiz(false);
+    quiz(true);
   }, 50);
 }
 function fillReveal(code, fill, tid) {
