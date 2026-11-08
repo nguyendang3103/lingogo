@@ -24196,8 +24196,427 @@
       "level": "B2"
     },
     {
-      "id": "8",
+      "id": "27",
       "pos": 62,
+      "catPos": 17,
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Furniture and wood products 1: materials, specifications and finishes",
+      "sub": "Nội thất & đồ gỗ 1: chủng loại gỗ, kết cấu mộng và hoàn thiện bề mặt",
+      "vocab": [
+        {
+          "id": "E27-0",
+          "w": "solid wood",
+          "r": "/ˌsɑː.lɪd ˈwʊd/",
+          "m": "gỗ tự nhiên / gỗ thịt",
+          "d": "natural timber cut directly from trees, not engineered or composite",
+          "ex": "The dining table is made of 100% solid oak wood.",
+          "exr": "",
+          "exm": "Bàn ăn này được làm hoàn toàn từ gỗ sồi tự nhiên 100%."
+        },
+        {
+          "id": "E27-1",
+          "w": "engineered wood",
+          "r": "/ˌen.dʒəˈnɪrd ˈwʊd/",
+          "m": "gỗ công nghiệp",
+          "d": "manufactured board made from wood fibres, chips, or veneer layers",
+          "ex": "Engineered wood offers better dimensional stability against warping.",
+          "exr": "",
+          "exm": "Gỗ công nghiệp mang lại độ ổn định kích thước tốt hơn, chống cong vênh."
+        },
+        {
+          "id": "E27-2",
+          "w": "wood veneer",
+          "r": "/ˈwʊd vəˈnɪr/",
+          "m": "lớp phủ veneer gỗ tự nhiên",
+          "d": "a thin slice of decorative hardwood bonded onto composite board",
+          "ex": "The cabinet doors feature a natural American walnut veneer.",
+          "exr": "",
+          "exm": "Cánh tủ được phủ lớp veneer gỗ óc chó tự nhiên nhập khẩu từ Mỹ."
+        },
+        {
+          "id": "E27-3",
+          "w": "moisture content",
+          "r": "/ˈmɔɪs.tʃɚ ˈkɑːn.tent/",
+          "m": "độ ẩm của gỗ",
+          "d": "the percentage of water in timber compared to dry wood weight",
+          "ex": "We strictly keep the moisture content between 8% and 12% to prevent splitting.",
+          "exr": "",
+          "exm": "Chúng tôi kiểm soát nghiêm ngặt độ ẩm gỗ từ 8% đến 12% để tránh nứt nẻ."
+        },
+        {
+          "id": "E27-4",
+          "w": "kiln-dried",
+          "r": "/ˈkɪln ˈdraɪd/",
+          "m": "sấy lò công nghiệp",
+          "d": "artificially dried in a heated, humidity-controlled kiln",
+          "ex": "All rubberwood and acacia planks are kiln-dried before machining.",
+          "exr": "",
+          "exm": "Toàn bộ phôi gỗ cao su và gỗ tràm đều được sấy lò trước khi gia công."
+        },
+        {
+          "id": "E27-5",
+          "w": "mortise and tenon",
+          "r": "/ˈmɔːr.tɪs ənd ˈten.ən/",
+          "m": "kết cấu mộng âm dương",
+          "d": "a traditional strong woodworking joint connecting two wooden members",
+          "ex": "The dining chair frame is assembled using traditional mortise and tenon joints.",
+          "exr": "",
+          "exm": "Khung ghế ăn được lắp ráp bằng kết cấu mộng âm dương truyền thống chắc chắn."
+        },
+        {
+          "id": "E27-6",
+          "w": "dovetail joint",
+          "r": "/ˈdʌv.teɪl ˈdʒɔɪnt/",
+          "m": "mộng đuôi én",
+          "d": "an interlocking wedge-shaped joint commonly used in high-end drawer construction",
+          "ex": "Solid wood drawers with dovetail joints resist heavy daily pulling.",
+          "exr": "",
+          "exm": "Ngăn kéo gỗ tự nhiên dùng mộng đuôi én chịu được lực kéo mở liên tục mỗi ngày."
+        },
+        {
+          "id": "E27-7",
+          "w": "upholstery",
+          "r": "/ʌpˈhoʊl.stɚ.i/",
+          "m": "vải/da và nệm bọc sofa ghế",
+          "d": "the padding, springs, webbing, and fabric or leather covers on seating",
+          "ex": "The armchair upholstery uses high-resilience foam and stain-resistant linen.",
+          "exr": "",
+          "exm": "Đệm bọc ghế bành sử dụng mút xốp đàn hồi cao và vải lanh chống bám bẩn."
+        },
+        {
+          "id": "E27-8",
+          "w": "PU lacquer",
+          "r": "/ˌpiːˈjuː ˈlæk.ɚ/",
+          "m": "sơn phủ PU bảo vệ",
+          "d": "polyurethane transparent or colored topcoat protecting wooden surfaces",
+          "ex": "We apply three coats of matte PU lacquer for scratch and water protection.",
+          "exr": "",
+          "exm": "Chúng tôi phủ 3 lớp sơn PU mờ để chống trầy xước và kháng nước."
+        },
+        {
+          "id": "E27-9",
+          "w": "wood grain",
+          "r": "/ˈwʊd ˈɡreɪn/",
+          "m": "vân gỗ",
+          "d": "the visible longitudinal arrangement of wood fibres and texture",
+          "ex": "The continuous grain across drawer fronts gives a seamless luxury look.",
+          "exr": "",
+          "exm": "Vân gỗ liền mạch chạy qua các mặt ngăn kéo tạo vẻ ngoài cao cấp và sang trọng."
+        },
+        {
+          "id": "E27-10",
+          "w": "load capacity",
+          "r": "/ˈloʊd kəˈpæs.ə.t̬i/",
+          "m": "tải trọng chịu lực",
+          "d": "the maximum weight a furniture unit or shelf can safely carry",
+          "ex": "Each bookshelf tier has a certified load capacity of 30 kilograms.",
+          "exr": "",
+          "exm": "Mỗi đợt giá sách có tải trọng chịu lực được chứng nhận lên tới 30 kg."
+        },
+        {
+          "id": "E27-11",
+          "w": "flat-pack",
+          "r": "/ˈflæt.pæk/",
+          "m": "đóng gói phẳng (tự lắp ráp)",
+          "d": "furniture supplied disassembled in flat cartons for customer self-assembly",
+          "ex": "Flat-pack packaging reduces container freight costs significantly.",
+          "exr": "",
+          "exm": "Quy cách đóng gói phẳng giúp giảm đáng kể chi phí cước biển container."
+        },
+        {
+          "id": "E27-12",
+          "w": "FSC certified",
+          "r": "/ˌef.esˈsiː ˈsɝː.t̬ə.faɪd/",
+          "m": "có chứng chỉ rừng bền vững FSC",
+          "d": "certified by Forest Stewardship Council as legally and sustainably harvested",
+          "ex": "European retailers require all wooden collections to be 100% FSC certified.",
+          "exr": "",
+          "exm": "Các nhà bán lẻ châu Âu yêu cầu mọi bộ sưu tập đồ gỗ phải có chứng chỉ FSC 100%."
+        },
+        {
+          "id": "E27-13",
+          "w": "particle board",
+          "r": "/ˈpɑːr.t̬ə.kəl ˈbɔːrd/",
+          "m": "ván dăm / ván MFC",
+          "d": "engineered board made from wood chips pressed together with resin glue",
+          "ex": "Melamine-faced particle board is widely used for interior wardrobe shelving.",
+          "exr": "",
+          "exm": "Ván dăm phủ melamine MFC được sử dụng rộng rãi làm các vách ngăn trong tủ áo."
+        },
+        {
+          "id": "E27-14",
+          "w": "plywood",
+          "r": "/ˈplaɪ.wʊd/",
+          "m": "gỗ ván ép / ván dán",
+          "d": "composite board made of cross-bonded thin timber plies for high strength",
+          "ex": "We use 18-millimetre birch plywood for heavy-duty sofa internal skeletons.",
+          "exr": "",
+          "exm": "Chúng tôi dùng ván ép bạch dương dày 18mm làm khung sườn chịu lực bên trong sofa."
+        },
+        {
+          "id": "E27-15",
+          "w": "distressed finish",
+          "r": "/dɪˈstrest ˈfɪn.ɪʃ/",
+          "m": "hoàn thiện bề mặt giả cổ",
+          "d": "decorative technique giving new timber an aged, vintage, or rustic patina",
+          "ex": "The rustic dining table is treated with a hand-brushed distressed finish.",
+          "exr": "",
+          "exm": "Bàn ăn mộc mạc phong cách vintage được hoàn thiện bề mặt cào xước giả cổ thủ công."
+        },
+        {
+          "id": "E27-16",
+          "w": "hardware fittings",
+          "r": "/ˈhɑːrd.wer ˈfɪt.ɪŋz/",
+          "m": "phụ kiện kim khí lắp ráp",
+          "d": "metal connectors such as cam locks, bolts, wooden dowels, and shelf pins",
+          "ex": "Each box contains zinc-plated hardware fittings and an assembly Allen key.",
+          "exr": "",
+          "exm": "Mỗi thùng hàng đều kèm phụ kiện kim khí mạ kẽm và khóa lục giác để lắp ráp."
+        },
+        {
+          "id": "E27-17",
+          "w": "soft-close hinge",
+          "r": "/ˌsɑːftˈkloʊz ˈhɪndʒ/",
+          "m": "bản lề giảm chấn",
+          "d": "concealed hydraulic cabinet hinge that prevents doors from slamming shut",
+          "ex": "We upgraded all sideboard doors with six-way adjustable soft-close hinges.",
+          "exr": "",
+          "exm": "Chúng tôi đã nâng cấp toàn bộ cánh tủ trang trí bằng bản lề giảm chấn chỉnh 6 chiều."
+        },
+        {
+          "id": "E27-18",
+          "w": "anti-tip kit",
+          "r": "/ˈæn.taɪ ˈtɪp ˈkɪt/",
+          "m": "bộ đai neo tường chống lật đổ",
+          "d": "wall safety anchor strap supplied with tall furniture to protect children",
+          "ex": "US safety standards mandate an anti-tip kit with any dresser taller than 27 inches.",
+          "exr": "",
+          "exm": "Tiêu chuẩn an toàn Mỹ bắt buộc phải kèm bộ neo chống đổ với tủ ngăn kéo cao trên 27 inch."
+        },
+        {
+          "id": "E27-19",
+          "w": "scratch resistance",
+          "r": "/ˈskrætʃ rəˈzɪs.təns/",
+          "m": "khả năng chống trầy xước",
+          "d": "the ability of a lacquer or laminate surface to resist surface abrasion",
+          "ex": "The ceramic-coated top layer provides superior scratch resistance for office desks.",
+          "exr": "",
+          "exm": "Lớp phủ phủ gốm bề mặt mang lại khả năng chống trầy xước vượt trội cho bàn làm việc."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q27-0",
+          "q": "A foreign furniture buyer asks how you prevent solid oak tables from warping and cracking during winter. Which technical response is best?",
+          "o": [
+            "All our lumber is kiln-dried to maintain a stable moisture content between 8% and 12% before production.",
+            "We put the wood in the sun for two days so all the water goes away completely.",
+            "Solid wood always cracks in winter, so buyers must accept natural movement."
+          ],
+          "a": 0,
+          "why": "In commercial woodworking, kiln drying to 8-12% moisture content is the industry standard specification to ensure dimensional stability and prevent cracking."
+        },
+        {
+          "id": "q27-1",
+          "q": "Which joint is traditionally considered the strongest and most durable for dining chair frames subjected to heavy daily stress?",
+          "o": [
+            "Mortise and tenon joint.",
+            "Stapled plastic bracket.",
+            "Single nail connection."
+          ],
+          "a": 0,
+          "why": "Mortise and tenon is the classic structural joint that provides deep glue surface and mechanical locking for load-bearing chair frames."
+        },
+        {
+          "id": "q27-2",
+          "q": "Why do major online and retail furniture importers prefer flat-pack designs over fully assembled furniture?",
+          "o": [
+            "Flat-pack drastically saves shipping volume, lowers sea container freight, and eases consumer transport.",
+            "Flat-pack furniture is made with cheaper glues that cannot dry in factories.",
+            "Fully assembled furniture is completely illegal to ship across international borders."
+          ],
+          "a": 0,
+          "why": "Flat-pack (knocked-down) drastically reduces volumetric freight (CBM) in containers and reduces transportation damage risk."
+        },
+        {
+          "id": "q27-3",
+          "q": "What does an FSC certificate prove to European and North American buyers?",
+          "o": [
+            "The wood originates from responsibly managed forests that provide environmental and social benefits.",
+            "The wood was painted with Fire Safety Chemical paint.",
+            "The furniture has a free shipping warranty worldwide."
+          ],
+          "a": 0,
+          "why": "FSC (Forest Stewardship Council) certification guarantees responsible forest management and legal timber sourcing required by international supply chain laws."
+        },
+        {
+          "id": "q27-4",
+          "q": "A high-end furniture brand wants drawers that slide smoothly and hold up under heavy weight for years. Which construction feature should you specify?",
+          "o": [
+            "English dovetail joints with undermount soft-close drawer runners.",
+            "Thin cardboard bottoms held together with masking tape.",
+            "Unfinished raw particle board without any side glides."
+          ],
+          "a": 0,
+          "why": "Dovetail joints paired with concealed undermount soft-close slides represent premium craftsmanship and long-term durability in commercial furniture."
+        },
+        {
+          "id": "q27-5",
+          "q": "Why is an anti-tip kit mandatory in the US market for tall chests of drawers and bookcases?",
+          "o": [
+            "To anchor the furniture to the wall and prevent tip-over accidents that could injure children.",
+            "To make the furniture look taller and more modern in photos.",
+            "To prevent moisture from the floor from climbing up the back panel."
+          ],
+          "a": 0,
+          "why": "Under the STURDY Act and ASTM F2057 standards in the United States, clothing storage units must include tested tip-over restraint kits to protect children."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s27-0",
+          "title": "Discussing timber species and moisture content with a furniture buyer",
+          "lines": [
+            {
+              "t": "Good morning. We are reviewing your technical specifications for the solid dining collection.",
+              "r": "",
+              "m": "Chào anh. Chúng tôi đang xem qua các yêu cầu kỹ thuật cho bộ sưu tập bàn ăn gỗ tự nhiên."
+            },
+            {
+              "t": "Could you confirm whether the table top is 100% solid white oak or oak veneer over MDF?",
+              "r": "",
+              "m": "Anh có thể xác nhận mặt bàn là 100% gỗ sồi trắng tự nhiên hay là veneer sồi dán trên cốt MDF?"
+            },
+            {
+              "t": "Our retail customers prefer 100% solid oak, provided the moisture content is strictly below 10%.",
+              "r": "",
+              "m": "Khách hàng bán lẻ của chúng tôi thích gỗ sồi tự nhiên 100%, miễn là độ ẩm được kiểm soát chặt dưới 10%."
+            },
+            {
+              "t": "Understood. All our oak timber is kiln-dried to 8 to 10% and sealed with three coats of matte PU lacquer.",
+              "r": "",
+              "m": "Đã rõ. Toàn bộ phôi gỗ sồi của chúng tôi đều được sấy lò đạt độ ẩm 8-10% và phủ 3 lớp sơn PU mờ bảo vệ."
+            }
+          ]
+        },
+        {
+          "id": "s27-1",
+          "title": "Optimizing a wardrobe design for flat-pack container shipping",
+          "lines": [
+            {
+              "t": "To optimize the container loading rate, we suggest converting this wardrobe into a KD flat-pack construction.",
+              "r": "",
+              "m": "Để tối ưu thể tích đóng container, chúng tôi đề xuất chuyển tủ quần áo này sang kết cấu đóng gói phẳng KD."
+            },
+            {
+              "t": "Will the flat-pack design compromise the frame stability when assembled by the end customer?",
+              "r": "",
+              "m": "Liệu kết cấu đóng gói phẳng có làm giảm độ chắc chắn của khung khi khách hàng tự lắp ráp tại nhà không?"
+            },
+            {
+              "t": "Not at all. We use German eccentric cam locks, beech wood dowels, and provide an illustrated step-by-step manual.",
+              "r": "",
+              "m": "Hoàn toàn không. Chúng tôi dùng ốc cam liên kết của Đức, chốt gỗ dẻ gai và sách hướng dẫn có hình minh họa từng bước."
+            },
+            {
+              "t": "Excellent. That will lower our ocean freight per unit by almost thirty-five percent.",
+              "r": "",
+              "m": "Tuyệt vời. Phương án đó sẽ giúp giảm chi phí cước biển trên mỗi sản phẩm gần 35%."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c27-0",
+          "q": "What species of timber and finishes do you recommend for our high-end dining table project?",
+          "vi": "Anh/chị đề xuất loại gỗ và kiểu hoàn thiện nào cho dự án bàn ăn phân khúc cao cấp của chúng tôi?",
+          "st": "For a high-end collection, I recommend + timber + because + finish + provides...",
+          "ph": [
+            "solid American white oak",
+            "kiln-dried moisture content",
+            "matte PU lacquer",
+            "scratch resistance"
+          ],
+          "sa": "For a high-end collection, I recommend solid American white oak or black walnut kiln-dried to 8 to 10% moisture content. Finished with three coats of matte PU lacquer, it highlights the natural wood grain while offering excellent scratch resistance.",
+          "ss": [
+            "teak",
+            "acacia",
+            "water-based coating",
+            "durability"
+          ],
+          "sc": "You are presenting material options to an international furniture importer during a trade exhibition."
+        },
+        {
+          "id": "c27-1",
+          "q": "How does your factory ensure the wood will not crack or warp when shipped to dry, cold winter climates?",
+          "vi": "Nhà máy của bạn làm thế nào để đảm bảo đồ gỗ không bị nứt hoặc cong vênh khi giao đến các nước khí hậu mùa đông hanh khô?",
+          "st": "We prevent warping by + method + and maintaining...",
+          "ph": [
+            "kiln-dried lumber",
+            "moisture content between 8% and 12%",
+            "equalized humidity chamber",
+            "sealed coating on all six faces"
+          ],
+          "sa": "We prevent warping by using strictly kiln-dried lumber with moisture content monitored between 8% and 12%. Furthermore, we seal all six faces of every wood panel with protective lacquer to prevent uneven moisture absorption.",
+          "ss": [
+            "conditioning chamber",
+            "shrinkage control",
+            "stabilization"
+          ],
+          "sc": "An overseas client from North America is concerned about winter cracking issues in heated homes."
+        },
+        {
+          "id": "c27-2",
+          "q": "Can this study desk be re-engineered into flat-pack knock-down packaging?",
+          "vi": "Chiếc bàn học này có thể thiết kế lại thành dạng đóng gói phẳng tháo rời (KD) được không?",
+          "st": "Yes, we can re-engineer the desk using + hardware + which will...",
+          "ph": [
+            "knock-down construction",
+            "cam-lock fasteners and dowels",
+            "reduce carton volume",
+            "increase container loading capacity"
+          ],
+          "sa": "Yes, we can re-engineer the desk into a knock-down flat-pack design using heavy-duty cam-lock fasteners and beech dowels. This will cut carton volume by over 30% and significantly increase container loading capacity.",
+          "ss": [
+            "flat-pack cartons",
+            "assembly manual",
+            "shipping savings"
+          ],
+          "sc": "Working with an e-commerce client who sells furniture online and needs compact packaging for parcel couriers."
+        },
+        {
+          "id": "c27-3",
+          "q": "What certifications does your timber supply chain hold for European sustainability regulations?",
+          "vi": "Chuỗi cung ứng gỗ của nhà máy bạn sở hữu các chứng chỉ nào để đáp ứng quy định bền vững của châu Âu?",
+          "st": "Our timber supply chain is + certification + which guarantees...",
+          "ph": [
+            "100% FSC certified",
+            "chain of custody",
+            "EU Deforestation Regulation (EUDR)",
+            "full traceability"
+          ],
+          "sa": "Our timber supply chain is 100% FSC certified with full chain of custody documentation. We comply strictly with the EU Deforestation Regulation, providing geographic origin coordinates and full timber traceability for every export lot.",
+          "ss": [
+            "PEFC certification",
+            "legal harvesting",
+            "due diligence"
+          ],
+          "sc": "Answering an EU compliance officer checking ESG and sustainable sourcing credentials."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Technical specifications & timber options – Scandinavian Dining Collection\n\nDear Mr. Davies,\n\nThank you for your visit to our showroom yesterday. Following your inquiry, please find our technical proposal for the Scandinavian Dining Collection.\n\nThe tabletop will be crafted from [[solid wood|plastic laminate|compressed paper]] with a certified [[moisture content|water weight|fluid degree]] between 8% and 10%. All raw planks are thoroughly [[kiln-dried|air-cooled|water-soaked]] in our computerized ovens to eliminate any internal tension.\n\nFor joint construction, the chair legs and aprons are connected using traditional [[mortise and tenon|staple gun|sticky tape]] joints, ensuring maximum stability under commercial restaurant testing. We apply three coats of water-based [[PU lacquer|cooking grease|shoe polish]] that delivers superior [[scratch resistance|heat melting|color fading]] without harmful VOC emissions.\n\nAll timber is 100% [[FSC certified|hand made|tax free]], and we can provide the full chain-of-custody certificates for customs declaration.\n\nPlease let us know if you need physical wood finish samples sent via DHL.\n\nBest regards,\nSally Nguyen\nExport Sales Manager",
+        "trans": "Tiêu đề: Thông số kỹ thuật & tùy chọn chất liệu gỗ – Bộ sưu tập bàn ăn phong cách Scandinavian\n\nKính gửi ông Davies,\n\nCảm ơn ông đã ghé thăm phòng trưng bày của chúng tôi ngày hôm qua. Tiếp theo trao đổi của ông, xin gửi đề xuất kỹ thuật cho Bộ sưu tập bàn ăn Scandinavian.\n\nMặt bàn sẽ được làm từ gỗ tự nhiên với độ ẩm được chứng nhận từ 8% đến 10%. Toàn bộ phôi gỗ đều được sấy lò kỹ lưỡng trong các buồng sấy điều khiển bằng máy tính để triệt tiêu mọi ứng suất nội tại.\n\nVề kết cấu liên kết, chân ghế và khung đỡ được ghép bằng mộng âm dương truyền thống, đảm bảo độ vững chắc tối đa khi thử nghiệm theo chuẩn nhà hàng thương mại. Chúng tôi phủ 3 lớp sơn PU gốc nước mang lại khả năng chống trầy xước vượt trội mà không phát thải khí VOC độc hại.\n\nToàn bộ nguồn gỗ đều có chứng chỉ rừng bền vững FSC 100%, và chúng tôi sẵn sàng cung cấp hồ sơ truy xuất nguồn gốc chuỗi cung ứng cho việc khai báo hải quan.\n\nXin vui lòng báo lại nếu ông cần chúng tôi gửi mẫu bề mặt gỗ thực tế qua chuyển phát nhanh DHL.\n\nTrân trọng,\nSally Nguyễn\nTrưởng phòng Kinh doanh Xuất khẩu",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
+      "id": "8",
+      "pos": 63,
       "title": "Buying through a distributor: quotes, terms and written confirmation",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -24580,12 +24999,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 17,
+      "catPos": 18,
       "level": "B2"
     },
     {
       "id": "9",
-      "pos": 63,
+      "pos": 64,
       "title": "Technical specifications: robots, sensors and software",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -24968,12 +25387,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 18,
+      "catPos": 19,
       "level": "B2"
     },
     {
       "id": "12",
-      "pos": 64,
+      "pos": 65,
       "title": "Acceptance testing, warranty and after-sales service",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -25356,12 +25775,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 19,
+      "catPos": 20,
       "level": "B2"
     },
     {
       "id": "11",
-      "pos": 65,
+      "pos": 66,
       "title": "Shipping to Australia: couriers, air cargo and biosecurity",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -25744,12 +26163,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 20,
+      "catPos": 21,
       "level": "B2"
     },
     {
       "id": "10",
-      "pos": 66,
+      "pos": 67,
       "title": "Dangerous goods and compliance: batteries, radio equipment and HS codes",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26132,12 +26551,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 21,
+      "catPos": 22,
       "level": "B2"
     },
     {
       "id": "14",
-      "pos": 67,
+      "pos": 68,
       "title": "Exporting building materials: samples, packing and quality",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26520,12 +26939,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 22,
+      "catPos": 23,
       "level": "B2"
     },
     {
       "id": "29",
-      "pos": 68,
+      "pos": 69,
       "title": "Building materials 2: orders, loading and delivery to site",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26908,12 +27327,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 23,
+      "catPos": 24,
       "level": "B2"
     },
     {
       "id": "33",
-      "pos": 69,
+      "pos": 70,
       "title": "Wine and spirits 2: price lists, orders and distribution",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -27296,12 +27715,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 24,
+      "catPos": 25,
       "level": "B2"
     },
     {
       "id": "31",
-      "pos": 70,
+      "pos": 71,
       "title": "Biomass pellets 2: bulk shipping, contracts and inspection",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -27684,12 +28103,430 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 25,
+      "catPos": 26,
       "level": "B2"
     },
     {
+      "id": "174",
+      "pos": 72,
+      "catPos": 27,
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Furniture and wood products 2: quality inspection, packaging and export",
+      "sub": "Nội thất & đồ gỗ 2: đóng gói phẳng KD, kiểm định chất lượng và xuất khẩu",
+      "vocab": [
+        {
+          "id": "E174-0",
+          "w": "drop test",
+          "r": "/ˈdrɑːp ˈtest/",
+          "m": "thử nghiệm thả rơi thùng hàng",
+          "d": "ISTA standardized impact test dropping packed cartons from set heights onto concrete",
+          "ex": "The master carton passed the ISTA 3A drop test without any internal panel damage.",
+          "exr": "",
+          "exm": "Thùng carton xuất khẩu đã vượt qua thử nghiệm thả rơi ISTA 3A mà không bị hư hại tấm ván bên trong."
+        },
+        {
+          "id": "E174-1",
+          "w": "fumigation certificate",
+          "r": "/ˌfjuː.məˈɡeɪ.ʃən sɚˈtɪf.ə.kət/",
+          "m": "chứng thư khử trùng mọt gỗ",
+          "d": "official border document proving solid timber and pallets were treated against pests",
+          "ex": "Australian biosecurity authorities require a certified fumigation certificate before container discharge.",
+          "exr": "",
+          "exm": "Cơ quan kiểm dịch sinh học Úc yêu cầu chứng thư khử trùng có xác nhận trước khi dỡ container."
+        },
+        {
+          "id": "E174-2",
+          "w": "desiccant pouch",
+          "r": "/ˈdes.ɪ.kənt ˈpaʊtʃ/",
+          "m": "gói hạt hút ẩm chống mốc",
+          "d": "calcium chloride or silica gel bag placed inside cartons to absorb ocean moisture",
+          "ex": "We insert three 50-gram desiccant pouches inside each moisture-barrier polybag.",
+          "exr": "",
+          "exm": "Chúng tôi đặt ba gói hút ẩm 50g vào bên trong mỗi túi nilon chống ẩm."
+        },
+        {
+          "id": "E174-3",
+          "w": "knock-down",
+          "r": "/ˈnɑːk.daʊn/",
+          "m": "thiết kế tháo rời KD",
+          "d": "furniture supplied in disassembled components for ease of packaging and freight",
+          "ex": "All bedframes are supplied in complete knock-down packaging with numbered panels.",
+          "exr": "",
+          "exm": "Toàn bộ khung giường đều được đóng gói tháo rời KD hoàn chỉnh với các tấm ván đánh số thứ tự."
+        },
+        {
+          "id": "E174-4",
+          "w": "assembly instructions",
+          "r": "/əˈsem.bli ɪnˈstrʌk.ʃənz/",
+          "m": "sách hướng dẫn lắp ráp",
+          "d": "illustrated graphic booklet guiding the customer through step-by-step furniture assembly",
+          "ex": "The assembly instructions must show detailed 3D exploded views of all hardware fittings.",
+          "exr": "",
+          "exm": "Sách hướng dẫn lắp ráp phải có hình vẽ bóc tách 3D chi tiết về toàn bộ phụ kiện ốc vít."
+        },
+        {
+          "id": "E174-5",
+          "w": "corrugated carton",
+          "r": "/ˈkɔːr.ə.ɡeɪ.t̬ɪd ˈkɑːr.t̬ən/",
+          "m": "thùng carton sóng chịu lực",
+          "d": "sturdy cardboard container made from fluted corrugated paper sheets",
+          "ex": "We pack heavy dining tables inside 5-ply double-wall corrugated cartons.",
+          "exr": "",
+          "exm": "Chúng tôi đóng các bàn ăn nặng trong thùng carton sóng đôi 5 lớp chịu lực cao."
+        },
+        {
+          "id": "E174-6",
+          "w": "corner protector",
+          "r": "/ˈkɔːr.nɚ prəˈtek.tɚ/",
+          "m": "miếng đệm bảo vệ góc",
+          "d": "hard foam or compressed cardboard angle pieces guarding sharp table edges against impacts",
+          "ex": "Every tabletop corner is shielded with heavy-duty L-shaped cardboard corner protectors.",
+          "exr": "",
+          "exm": "Mỗi góc mặt bàn đều được bảo vệ bằng thanh nẹp góc chữ L bằng bìa cứng chịu lực."
+        },
+        {
+          "id": "E174-7",
+          "w": "honeycomb cardboard",
+          "r": "/ˈhʌn.i.koʊm ˈkɑːr.dbɔːrd/",
+          "m": "giấy bìa tổ ong đệm lót",
+          "d": "high-strength paper packaging material with a hexagonal cell interior",
+          "ex": "We replaced polystyrene foam with recyclable honeycomb cardboard to comply with EU packaging laws.",
+          "exr": "",
+          "exm": "Chúng tôi đã thay thế xốp EPS bằng bìa tổ ong tái chế để tuân thủ luật bao bì của EU."
+        },
+        {
+          "id": "E174-8",
+          "w": "pre-shipment inspection",
+          "r": "/ˌpriː ˈʃɪp.mənt ɪnˈspek.ʃən/",
+          "m": "kiểm tra hàng trước xuất xưởng",
+          "d": "final quality check conducted when at least 80% of goods are packed before shipping",
+          "ex": "The buyer booked a third-party agency to carry out pre-shipment inspection on Thursday.",
+          "exr": "",
+          "exm": "Người mua đã đặt lịch với đơn vị giám định độc lập để kiểm hàng trước xuất xưởng vào thứ Năm."
+        },
+        {
+          "id": "E174-9",
+          "w": "AQL standard",
+          "r": "/ˌeɪ.kjuːˈel ˈstæn.dɚd/",
+          "m": "tiêu chuẩn chấp nhận chất lượng AQL",
+          "d": "statistical sampling method determining allowable minor and major defects in a shipment",
+          "ex": "The shipment was inspected under AQL 2.5 for major defects and 4.0 for minor defects.",
+          "exr": "",
+          "exm": "Lô hàng được kiểm nghiệm theo chuẩn AQL 2.5 đối với lỗi nghiêm trọng và 4.0 đối với lỗi nhỏ."
+        },
+        {
+          "id": "E174-10",
+          "w": "color consistency",
+          "r": "/ˈkʌl.ɚ kənˈsɪs.tən.si/",
+          "m": "độ đồng nhất màu sơn",
+          "d": "uniformity of stain, paint, or veneer tone across all items in a matching suite",
+          "ex": "We use a spectrophotometer to guarantee strict color consistency between production batches.",
+          "exr": "",
+          "exm": "Chúng tôi sử dụng máy đo quang phổ để đảm bảo sự đồng đều màu sơn tuyệt đối giữa các lô sản xuất."
+        },
+        {
+          "id": "E174-11",
+          "w": "delamination",
+          "r": "/diːˌlæm.əˈneɪ.ʃən/",
+          "m": "hiện tượng bong tróc tách lớp",
+          "d": "the failure and peeling apart of glued veneer or laminate layers from the base board",
+          "ex": "The boiling water test confirmed no veneer delamination on the tabletop edge band.",
+          "exr": "",
+          "exm": "Thử nghiệm nước sôi xác nhận không hề xảy ra hiện tượng bong tách veneer ở nẹp chỉ cạnh bàn."
+        },
+        {
+          "id": "E174-12",
+          "w": "warping",
+          "r": "/ˈwɔːr.pɪŋ/",
+          "m": "cong vênh",
+          "d": "distortion in wooden boards caused by uneven drying or temperature fluctuation",
+          "ex": "Underside metal relief channels prevent warping across wide solid wood tabletops.",
+          "exr": "",
+          "exm": "Các thanh giằng kim loại xẻ rãnh phía dưới giúp ngăn ngừa cong vênh trên các mặt bàn gỗ rộng."
+        },
+        {
+          "id": "E174-13",
+          "w": "cubic meter",
+          "r": "/ˌkjuː.bɪk ˈmiː.t̬ɚ/",
+          "m": "mét khối (CBM)",
+          "d": "unit of volume measurement used to calculate sea container space and freight rates",
+          "ex": "Each packed dining chair carton measures 0.18 cubic meters.",
+          "exr": "",
+          "exm": "Mỗi thùng carton đựng ghế ăn sau đóng gói có thể tích 0,18 mét khối."
+        },
+        {
+          "id": "E174-14",
+          "w": "palletize",
+          "r": "/ˈpæl.ə.taɪz/",
+          "m": "đóng xếp hàng lên pallet",
+          "d": "to arrange and strap cartons securely onto wooden or plastic pallets for forklift handling",
+          "ex": "All flat-pack cartons are palletized, shrink-wrapped, and strapped with plastic bands.",
+          "exr": "",
+          "exm": "Toàn bộ thùng hàng phẳng đều được xếp lên pallet, quấn màng co và đai nẹp bằng dây đai nhựa."
+        },
+        {
+          "id": "E174-15",
+          "w": "shipping mark",
+          "r": "/ˈʃɪp.ɪŋ ˈmɑːrk/",
+          "m": "ký mã hiệu vận chuyển",
+          "d": "printed carton markings indicating PO number, SKU, item description, and destination",
+          "ex": "Please print the buyer's shipping mark and barcode labels on both short sides of the carton.",
+          "exr": "",
+          "exm": "Vui lòng in ký mã hiệu vận chuyển của người mua và tem mã vạch lên hai mặt hông của thùng carton."
+        },
+        {
+          "id": "E174-16",
+          "w": "lead time",
+          "r": "/ˈliːd ˈtaɪm/",
+          "m": "thời gian sản xuất và giao hàng",
+          "d": "the amount of time needed from order confirmation and deposit until goods are ready to ship",
+          "ex": "Our standard production lead time for repeat 40HQ orders is 45 days.",
+          "exr": "",
+          "exm": "Thời gian sản xuất tiêu chuẩn của chúng tôi cho các đơn hàng lặp lại một cont 40HQ là 45 ngày."
+        },
+        {
+          "id": "E174-17",
+          "w": "MOQ",
+          "r": "/ˌem.oʊˈkjuː/",
+          "m": "số lượng đặt hàng tối thiểu",
+          "d": "Minimum Order Quantity required by a manufacturer to accept production of an item",
+          "ex": "Our MOQ is 100 units per model, or a combination totaling one full 40-foot container.",
+          "exr": "",
+          "exm": "Số lượng đặt tối thiểu của chúng tôi là 100 chiếc mỗi mẫu, hoặc kết hợp đủ một container 40 feet."
+        },
+        {
+          "id": "E174-18",
+          "w": "container stuffing",
+          "r": "/kənˈteɪ.nɚ ˈstʌf.ɪŋ/",
+          "m": "quá trình xếp hàng vào container",
+          "d": "the process of loading, arranging, and securing cargo inside a shipping container",
+          "ex": "Our logistics team supervises container stuffing and installs airbag dunnage between cartons.",
+          "exr": "",
+          "exm": "Đội logistics của chúng tôi giám sát quá trình đóng cont và chèn túi khí chống va đập giữa các thùng."
+        },
+        {
+          "id": "E174-19",
+          "w": "defect rate",
+          "r": "/ˈdiː.fekt ˈreɪt/",
+          "m": "tỷ lệ hàng lỗi",
+          "d": "the percentage of rejected items found during in-line and final quality audits",
+          "ex": "By automating edge-banding, our factory reduced the finish defect rate to below 0.5%.",
+          "exr": "",
+          "exm": "Nhờ tự động hóa công đoạn dán chỉ cạnh, nhà máy đã giảm tỷ lệ lỗi bề mặt xuống dưới 0,5%."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q174-0",
+          "q": "A client reports that packaged furniture cartons often arrive crushed during parcel courier transit. Which test should you conduct to verify carton strength?",
+          "o": [
+            "ISTA 3A package drop and compression vibration test.",
+            "Soaking the whole carton in saltwater for 24 hours.",
+            "Smelling the exterior carton printing ink."
+          ],
+          "a": 0,
+          "why": "The ISTA 3A protocol is the globally recognized simulation test that includes drop testing, rotational edge drops, and vibration to verify parcel transit durability."
+        },
+        {
+          "id": "q174-1",
+          "q": "Why are desiccant pouches and moisture barrier bags essential when exporting solid wood furniture by ocean container from Vietnam to Europe?",
+          "o": [
+            "To absorb moisture from 'container rain' and prevent white mold or mildew during the 30-day ocean voyage.",
+            "To add extra weight to the container so it sinks lower in the water.",
+            "To make the furniture smell like perfume when the customer opens the box."
+          ],
+          "a": 0,
+          "why": "Ocean containers cross temperature zones causing 'container rain' (condensation). Desiccants prevent mold and fungal growth on timber surfaces during sea transit."
+        },
+        {
+          "id": "q174-2",
+          "q": "What is the purpose of a fumigation certificate in international timber shipments?",
+          "o": [
+            "To certify that the timber and wooden packaging pallets have been treated against pests, borer insects, and fungi under ISPM-15 standards.",
+            "To verify that the furniture was made by union workers.",
+            "To confirm that the furniture has no metal screws inside."
+          ],
+          "a": 0,
+          "why": "ISPM-15 fumigation and heat treatment certificates prove that solid wood packaging and timber products are free from invasive biological pests before entering foreign ports."
+        },
+        {
+          "id": "q174-3",
+          "q": "An independent QC inspector applies AQL Level II with acceptance criteria 2.5 for major defects. What does this mean?",
+          "o": [
+            "A statistically calculated maximum number of functional or safety defects allowed in the random sample before the whole batch is rejected.",
+            "Exactly 2.5% of every single chair must be destroyed on purpose.",
+            "The inspector only looks at 2.5 chairs in the whole container."
+          ],
+          "a": 0,
+          "why": "AQL (Acceptance Quality Limit) 2.5 defines the statistical threshold of acceptable defects in a sampled lot according to ISO 2859 / ANSI standards."
+        },
+        {
+          "id": "q174-4",
+          "q": "Why has honeycomb cardboard largely replaced expanded polystyrene (Styrofoam) in European furniture packaging?",
+          "o": [
+            "It provides high crushing strength while being 100% recyclable, complying with stringent EU circular packaging directives.",
+            "It is made by honey bees and smells sweeter than plastic foam.",
+            "It weighs ten times more than wood."
+          ],
+          "a": 0,
+          "why": "Honeycomb paperboard is eco-friendly, biodegradable, and fully recyclable, avoiding plastic packaging taxes and environmental bans in Europe and North America."
+        },
+        {
+          "id": "q174-5",
+          "q": "What documentation does a factory provide to demonstrate careful container stuffing and prevent transit dispute claims?",
+          "o": [
+            "High-resolution photos showing empty container condition, step-by-step carton stacking, cargo dunnage, and the sealed container lock.",
+            "A handwritten note saying the truck driver looked trustworthy.",
+            "A video of workers singing while lifting boxes."
+          ],
+          "a": 0,
+          "why": "A formal container loading inspection report includes photographic evidence of container cleanliness, stacking stability, dunnage airbags, and container bolt seal numbers."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s174-0",
+          "title": "Reviewing pre-shipment inspection results with a quality manager",
+          "lines": [
+            {
+              "t": "Good afternoon. We just received the third-party AQL inspection report for purchase order 9481.",
+              "r": "",
+              "m": "Chào anh. Chúng tôi vừa nhận được báo cáo kiểm định AQL từ bên thứ ba cho đơn hàng PO 9481."
+            },
+            {
+              "t": "Did the shipment pass the AQL Level II threshold for major defects?",
+              "r": "",
+              "m": "Lô hàng có vượt qua ngưỡng kiểm tra AQL Cấp 2 đối với các lỗi nghiêm trọng không?"
+            },
+            {
+              "t": "Yes, zero critical and only two minor finish blemishes out of two hundred sample units. The lot is approved.",
+              "r": "",
+              "m": "Có, không có lỗi nguy hiểm nào và chỉ có 2 lỗi hoàn thiện nhẹ trên 200 sản phẩm lấy mẫu. Lô hàng đã được duyệt."
+            },
+            {
+              "t": "That is great news. We will finalize the packing list and release the cargo for container stuffing tomorrow morning.",
+              "r": "",
+              "m": "Tin tuyệt vời quá. Chúng tôi sẽ chốt bảng kê đóng gói và xuất hàng để đóng container vào sáng mai."
+            }
+          ]
+        },
+        {
+          "id": "s174-1",
+          "title": "Coordinating container loading and packaging protection with an export client",
+          "lines": [
+            {
+              "t": "We have finalized the container stuffing plan for the forty-foot high-cube container.",
+              "r": "",
+              "m": "Chúng tôi đã hoàn thiện sơ đồ đóng hàng cho container 40 feet cao."
+            },
+            {
+              "t": "How many total cubic meters does the shipment occupy, and is there any empty headroom?",
+              "r": "",
+              "m": "Tổng thể tích lô hàng chiếm bao nhiêu mét khối, và có khoảng trống thừa nào phía trên không?"
+            },
+            {
+              "t": "It occupies 67.5 CBM, reaching 98% space utilization. We are placing inflatable dunnage airbags to prevent shifting.",
+              "r": "",
+              "m": "Hàng chiếm 67,5 CBM, đạt 98% hiệu suất chứa. Chúng tôi sẽ chèn thêm túi khí chống xô lệch hàng trong quá trình vận chuyển."
+            },
+            {
+              "t": "Please ensure that four desiccant strips are hung along the container walls before sealing.",
+              "r": "",
+              "m": "Xin hãy đảm bảo treo 4 dải túi hút ẩm dọc theo vách container trước khi kẹp chì niêm phong nhé."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c174-0",
+          "q": "How does your factory protect solid wood furniture from mold and humidity during a 30-day ocean voyage?",
+          "vi": "Nhà máy của bạn bảo vệ đồ gỗ tự nhiên khỏi nấm mốc và ẩm ướt trong hành trình đi biển 30 ngày như thế nào?",
+          "st": "We prevent moisture damage during ocean transit by + method + and inserting...",
+          "ph": [
+            "moisture-barrier sealed polybags",
+            "silica gel desiccant pouches",
+            "container hanging desiccant poles",
+            "strictly controlled kiln-dried timber"
+          ],
+          "sa": "We protect furniture during ocean transit by ensuring all timber is kiln-dried to under 12% moisture content. We wrap items in moisture-barrier polybags with calcium chloride desiccant pouches, and hang industrial desiccant poles inside the container.",
+          "ss": [
+            "anti-mold sticker",
+            "airbag dunnage",
+            "container rain"
+          ],
+          "sc": "Explaining ocean cargo preservation methods to an overseas furniture buyer worried about mold."
+        },
+        {
+          "id": "c174-1",
+          "q": "What packaging specifications do you use to ensure flat-pack cartons survive courier shipping without edge damage?",
+          "vi": "Bạn áp dụng quy cách đóng gói nào để đảm bảo thùng hàng tháo rời KD chịu được vận chuyển chuyển phát nhanh mà không bị cấn móp mép?",
+          "st": "To guarantee transit durability, we use + packaging materials + which pass...",
+          "ph": [
+            "5-ply double-wall corrugated cartons",
+            "high-density corner protectors",
+            "honeycomb paperboard buffers",
+            "ISTA 3A drop test certification"
+          ],
+          "sa": "To guarantee courier durability, we pack items in 5-ply double-wall corrugated cartons reinforced with molded cardboard corner protectors and honeycomb buffering. Our packaging is certified to pass the ISTA 3A transit drop test.",
+          "ss": [
+            "edge crushing test",
+            "bursting strength",
+            "protective foam"
+          ],
+          "sc": "Negotiating mail-order packaging standards with a direct-to-consumer e-commerce brand."
+        },
+        {
+          "id": "c174-2",
+          "q": "What is your standard production lead time and MOQ for a customized bedroom furniture collection?",
+          "vi": "Thời gian sản xuất tiêu chuẩn và số lượng đặt hàng tối thiểu của bạn cho một bộ sưu tập phòng ngủ theo yêu cầu là bao nhiêu?",
+          "st": "Our standard lead time is + weeks/days + with an MOQ of...",
+          "ph": [
+            "45 to 60 days after deposit",
+            "100 units per model",
+            "mixed 40HQ container",
+            "pre-production sample approval"
+          ],
+          "sa": "Our standard production lead time is 45 to 60 days following deposit and golden sample sign-off. Our minimum order quantity is 100 units per SKU, or a combination of up to three models filling one 40-foot high-cube container.",
+          "ss": [
+            "production schedule",
+            "sample lead time",
+            "repeat orders"
+          ],
+          "sc": "Discussing commercial manufacturing terms with an overseas retailer planning their autumn catalog."
+        },
+        {
+          "id": "c174-3",
+          "q": "How does your quality control team inspect finished furniture shipments before loading?",
+          "vi": "Đội ngũ kiểm soát chất lượng QC của bạn tiến hành kiểm tra thành phẩm đồ gỗ xuất khẩu trước khi đóng cont như thế nào?",
+          "st": "Our QC team conducts pre-shipment inspection following + standard + covering...",
+          "ph": [
+            "AQL Level II sampling standard",
+            "functional assembly test",
+            "spectrophotometer color matching",
+            "carton drop and barcode verification"
+          ],
+          "sa": "Our QC team conducts pre-shipment inspection according to AQL Level II standards. We randomly assemble 5% of units to verify fit, test moisture content, check color consistency under standard light booths, and verify shipping mark barcodes.",
+          "ss": [
+            "100% in-line inspection",
+            "cross-hatch adhesion test",
+            "defect report"
+          ],
+          "sc": "Presenting factory quality assurance protocols to an international retail audit team."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Pre-shipment inspection report & container stuffing notice – PO #84920\n\nDear Mr. Henderson,\n\nWe are pleased to inform you that production for purchase order #84920 (Living & Dining Furniture) is 100% completed.\n\nYesterday, our QC team conducted the [[pre-shipment inspection|birthday party|tax calculation]] according to the agreed [[AQL standard|lucky draw|weather forecast]] Level II. Out of 125 sampled boxes, zero critical defects were found. Two minor surface scuffs were touched up immediately.\n\nAll flat-pack cartons are packed in 5-ply [[corrugated carton|paper napkin|plastic wrapper]] boxes reinforced with molded [[corner protector|chewing gum|wooden branch]] buffers. We have included two 50g [[desiccant pouch|sugar pack|sand grain]] bags inside each moisture-barrier lining.\n\nThe official ISPM-15 [[fumigation certificate|driving license|birth certificate]] has been issued by the quarantine bureau and will be couriered with the original Bill of Lading.\n\nContainer stuffing is scheduled for Friday at 9:00 AM at our Binh Duong facility. We will share real-time loading photos and seal verification numbers once the container doors are locked.\n\nBest regards,\nSally Nguyen\nCustomer Service & Logistics Team",
+        "trans": "Tiêu đề: Báo cáo kiểm định trước xuất xưởng & thông báo đóng container – PO #84920\n\nKính gửi ông Henderson,\n\nChúng tôi rất vui mừng thông báo rằng quá trình sản xuất cho đơn đặt hàng #84920 (Nội thất phòng khách & phòng ăn) đã hoàn tất 100%.\n\nNgày hôm qua, đội ngũ QC của chúng tôi đã tiến hành kiểm định trước xuất xưởng theo tiêu chuẩn AQL Cấp 2 đã thống nhất. Trong 125 thùng được lấy mẫu ngẫu nhiên, không phát hiện lỗi nghiêm trọng nào. Hai vết trầy xước nhẹ trên bề mặt đã được xử lý khắc phục ngay lập tức.\n\nToàn bộ các kiện hàng đóng gói phẳng đều được bảo vệ trong thùng carton sóng đôi 5 lớp chịu lực kèm các miếng đệm bảo vệ góc định hình. Chúng tôi đã đặt hai gói hạt hút ẩm 50g bên trong mỗi lớp lót nilon chống ẩm.\n\nChứng thư khử trùng mọt gỗ theo tiêu chuẩn ISPM-15 chính thức đã được chi cục kiểm dịch cấp và sẽ được chuyển phát nhanh cùng với bộ Vận đơn gốc.\n\nLịch đóng hàng vào container dự kiến vào lúc 9:00 sáng thứ Sáu tại nhà máy Bình Dương của chúng tôi. Chúng tôi sẽ gửi ảnh chụp xếp hàng thực tế và số niêm chì niêm phong ngay khi cửa container được khóa lại.\n\nTrân trọng,\nSally Nguyễn\nBộ phận Dịch vụ Khách hàng & Logistics",
+        "audio": ""
+      },
+      "gram": []
+    },
+    {
       "id": "15",
-      "pos": 71,
+      "pos": 73,
       "title": "The wine trade: labels, licences and temperature control",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28072,12 +28909,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 26,
+      "catPos": 28,
       "level": "B2"
     },
     {
       "id": "13",
-      "pos": 72,
+      "pos": 74,
       "title": "OEM and ODM: working with factories on your own brand",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28460,12 +29297,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 27,
+      "catPos": 29,
       "level": "B2"
     },
     {
       "id": "16",
-      "pos": 73,
+      "pos": 75,
       "title": "Running the operation: owners, approvals and closing a shipment",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28848,12 +29685,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 28,
+      "catPos": 30,
       "level": "B2"
     },
     {
       "id": "17",
-      "pos": 74,
+      "pos": 76,
       "title": "Construction investors 1: progress meetings and reports",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -29236,12 +30073,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 29,
+      "catPos": 31,
       "level": "B2"
     },
     {
       "id": "18",
-      "pos": 75,
+      "pos": 77,
       "title": "Construction investors 2: variations and extra costs",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -29624,12 +30461,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 30,
+      "catPos": 32,
       "level": "B2"
     },
     {
       "id": "19",
-      "pos": 76,
+      "pos": 78,
       "title": "Construction investors 3: handover, payment, defects",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -30012,12 +30849,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 31,
+      "catPos": 33,
       "level": "B2"
     },
     {
       "id": "20",
-      "pos": 77,
+      "pos": 79,
       "title": "Leading meetings: chairing, interrupting, closing",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -30400,7 +31237,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 32,
+      "catPos": 34,
       "level": "B2"
     },
     {
@@ -30409,8 +31246,8 @@
       "sub": "Thiết bị và máy móc thi công xây dựng",
       "category": "b2",
       "level": "B2",
-      "catPos": 33,
-      "pos": 78,
+      "catPos": 35,
+      "pos": 80,
       "vocab": [
         {
           "id": "w171-1",
@@ -30836,8 +31673,8 @@
       "sub": "Vật liệu xây dựng chuyên sâu và công nghệ bê tông",
       "category": "b2",
       "level": "B2",
-      "catPos": 34,
-      "pos": 79,
+      "catPos": 36,
+      "pos": 81,
       "vocab": [
         {
           "id": "w172-1",
@@ -31263,8 +32100,8 @@
       "sub": "Vận hành hiện trường, an toàn lao động và tình huống thi công",
       "category": "b2",
       "level": "B2",
-      "catPos": 35,
-      "pos": 80,
+      "catPos": 37,
+      "pos": 82,
       "vocab": [
         {
           "id": "w173-1",
@@ -31686,7 +32523,7 @@
     },
     {
       "id": "151",
-      "pos": 81,
+      "pos": 83,
       "catPos": 1,
       "category": "c1",
       "level": "C1",
@@ -31922,7 +32759,7 @@
     },
     {
       "id": "152",
-      "pos": 82,
+      "pos": 84,
       "catPos": 2,
       "category": "c1",
       "level": "C1",
@@ -32138,7 +32975,7 @@
     },
     {
       "id": "153",
-      "pos": 83,
+      "pos": 85,
       "catPos": 3,
       "category": "c1",
       "level": "C1",
@@ -32334,7 +33171,7 @@
     },
     {
       "id": "154",
-      "pos": 84,
+      "pos": 86,
       "catPos": 4,
       "category": "c1",
       "level": "C1",
@@ -32520,7 +33357,7 @@
     },
     {
       "id": "155",
-      "pos": 85,
+      "pos": 87,
       "catPos": 5,
       "category": "c1",
       "level": "C1",
@@ -32706,7 +33543,7 @@
     },
     {
       "id": "156",
-      "pos": 86,
+      "pos": 88,
       "catPos": 1,
       "category": "c2",
       "level": "C2",
@@ -32892,7 +33729,7 @@
     },
     {
       "id": "157",
-      "pos": 87,
+      "pos": 89,
       "catPos": 2,
       "category": "c2",
       "level": "C2",
@@ -33068,7 +33905,7 @@
     },
     {
       "id": "158",
-      "pos": 88,
+      "pos": 90,
       "catPos": 3,
       "category": "c2",
       "level": "C2",
@@ -33244,7 +34081,7 @@
     },
     {
       "id": "159",
-      "pos": 89,
+      "pos": 91,
       "catPos": 4,
       "category": "c2",
       "level": "C2",
@@ -33410,7 +34247,7 @@
     },
     {
       "id": "160",
-      "pos": 90,
+      "pos": 92,
       "catPos": 5,
       "category": "c2",
       "level": "C2",
