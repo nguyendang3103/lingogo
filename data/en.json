@@ -27361,8 +27361,426 @@
       "gram": []
     },
     {
-      "id": "15",
+      "id": "175",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Decorative planters and garden decor: materials, finishes and retail standards",
+      "sub": "Chậu cây trang trí & decor sân vườn: vật liệu composite, hoàn thiện bề mặt và tiêu chuẩn chuỗi bán lẻ",
+      "vocab": [
+        {
+          "id": "E175-0",
+          "w": "fiberstone",
+          "r": "/ˈfaɪ.bɚ.stoʊn/",
+          "m": "vật liệu đá sợi thủy tinh (Fiberstone)",
+          "d": "a lightweight composite material made from fiberglass mesh and stone powder",
+          "ex": "Our fiberstone planters are 60% lighter than solid stone while remaining highly durable.",
+          "exr": "",
+          "exm": "Chậu cây chất liệu đá sợi thủy tinh của chúng tôi nhẹ hơn 60% so với đá nguyên khối nhưng vẫn cực kỳ bền bỉ."
+        },
+        {
+          "id": "E175-1",
+          "w": "lightweight concrete",
+          "r": "/ˌlaɪt.weɪt ˈkɑːn.kriːt/",
+          "m": "bê tông nhẹ trang trí",
+          "d": "engineered cement composite reinforced with natural fibers for easy lifting",
+          "ex": "Lightweight concrete pots are very popular with Australian garden centres.",
+          "exr": "",
+          "exm": "Các dòng chậu bê tông nhẹ rất được ưa chuộng tại các trung tâm cây cảnh ở Úc."
+        },
+        {
+          "id": "E175-2",
+          "w": "lava stone finish",
+          "r": "/ˈlɑː.və ˈstoʊn ˈfɪn.ɪʃ/",
+          "m": "bề mặt hoàn thiện giả đá nham thạch",
+          "d": "a textured, pitted surface treatment that mimics natural volcanic rock",
+          "ex": "The textured lava stone finish gives each outdoor planter an organic look.",
+          "exr": "",
+          "exm": "Bề mặt hoàn thiện tạo vân đá nham thạch mang lại vẻ tự nhiên mộc mạc cho mỗi chiếc chậu ngoài trời."
+        },
+        {
+          "id": "E175-3",
+          "w": "drainage hole",
+          "r": "/ˈdreɪ.nɪdʒ ˈhoʊl/",
+          "m": "lỗ thoát nước đáy chậu",
+          "d": "an opening at the base of a planter that allows excess water to escape",
+          "ex": "Each outdoor pot comes with a pre-drilled drainage hole and a removable rubber plug.",
+          "exr": "",
+          "exm": "Mỗi chậu ngoài trời đều có lỗ thoát nước khoan sẵn kèm nút cao su tháo rời tiện lợi."
+        },
+        {
+          "id": "E175-4",
+          "w": "frost resistance",
+          "r": "/ˈfrɔːst rəˈzɪs.təns/",
+          "m": "khả năng chống nứt do băng giá",
+          "d": "the ability of a planter to withstand freezing and thawing cycles without cracking",
+          "ex": "European buyers require certified frost resistance down to minus twenty degrees Celsius.",
+          "exr": "",
+          "exm": "Khách mua hàng châu Âu yêu cầu khả năng chống băng giá đạt chuẩn tới âm 20 độ C."
+        },
+        {
+          "id": "E175-5",
+          "w": "UV-stabilized coating",
+          "r": "/ˌjuːˈviː ˈsteɪ.bə.laɪzd ˈkoʊ.t̬ɪŋ/",
+          "m": "lớp phủ kháng tia cực tím (chống phai màu)",
+          "d": "protective sealer that prevents paint and resin from fading under direct sunlight",
+          "ex": "We apply a UV-stabilized coating so the matte black finish will not fade outdoors.",
+          "exr": "",
+          "exm": "Chúng tôi phủ lớp bảo vệ kháng UV để màu sơn đen mờ không bị bạc màu dưới nắng gắt."
+        },
+        {
+          "id": "E175-6",
+          "w": "nested set",
+          "r": "/ˈnes.tɪd ˈset/",
+          "m": "bộ chậu xếp lồng vào nhau",
+          "d": "pots of graduated sizes packed one inside another to save container volume",
+          "ex": "Packing planters as a 3-piece nested set cuts ocean freight cost per unit in half.",
+          "exr": "",
+          "exm": "Đóng gói chậu thành bộ 3 kích cỡ lồng vào nhau giúp giảm một nửa chi phí cước biển trên từng sản phẩm."
+        },
+        {
+          "id": "E175-7",
+          "w": "custom mold",
+          "r": "/ˈkʌs.təm ˈmoʊld/",
+          "m": "khuôn đúc thiết kế riêng",
+          "d": "a dedicated production mold built exclusively for a buyer's proprietary shape",
+          "ex": "Creating a new custom mold takes three weeks, while changing the surface color is much faster.",
+          "exr": "",
+          "exm": "Làm khuôn đúc mới mất ba tuần, trong khi tùy chỉnh màu sắc bề mặt thì nhanh hơn rất nhiều."
+        },
+        {
+          "id": "E175-8",
+          "w": "PE foam lining",
+          "r": "/ˌpiːˈiː ˈfoʊm ˈlaɪ.nɪŋ/",
+          "m": "lớp lót xốp PE chống va đập",
+          "d": "polyethylene foam sheets placed between nested pots to prevent rubbing and chipping",
+          "ex": "Thick PE foam lining protects the rim and glaze during ISTA 3A drop tests.",
+          "exr": "",
+          "exm": "Lớp lót xốp PE dày giúp bảo vệ miệng chậu và lớp men trong suốt bài kiểm tra thả rơi ISTA 3A."
+        },
+        {
+          "id": "E175-9",
+          "w": "carton decal",
+          "r": "/ˈkɑːr.t̬ən ˈdiː.kæl/",
+          "m": "nhãn đề-can dán thùng carton",
+          "d": "printed adhesive sticker applied over packaging boxes to update barcode or SKU info",
+          "ex": "We printed approved carton decals to update the barcode labels before the shipment date.",
+          "exr": "",
+          "exm": "Chúng tôi đã in nhãn đề-can được duyệt để cập nhật lại mã vạch trên thùng kịp trước ngày xuất hàng."
+        },
+        {
+          "id": "E175-10",
+          "w": "Customer Required Date",
+          "r": "/ˈkʌs.tə.mɚ rɪˈkwaɪrd ˈdeɪt/",
+          "m": "ngày khách hàng yêu cầu giao hàng (CRD)",
+          "d": "the target date by which an order must be ready for shipment or delivered to the buyer",
+          "ex": "I monitor production schedules weekly to ensure we meet every Customer Required Date.",
+          "exr": "",
+          "exm": "Tôi theo dõi tiến độ sản xuất hàng tuần để đảm bảo đáp ứng đúng mọi ngày giao hàng khách yêu cầu (CRD)."
+        },
+        {
+          "id": "E175-11",
+          "w": "hand-applied patina",
+          "r": "/ˈhænd əˈplaɪd pəˈtiː.nə/",
+          "m": "lớp màu giả cổ quét thủ công",
+          "d": "artisanal surface coloring rubbed by hand to create natural tonal variation",
+          "ex": "Because of the hand-applied patina, each sandstone vessel has a unique artisanal character.",
+          "exr": "",
+          "exm": "Nhờ kỹ thuật lên màu giả cổ thủ công, mỗi chiếc bình đá cát đều mang nét nghệ thuật độc bản."
+        },
+        {
+          "id": "E175-12",
+          "w": "showroom appointment",
+          "r": "/ˈʃoʊ.ruːm əˈpɔɪnt.mənt/",
+          "m": "lịch hẹn đón khách tham quan phòng mẫu",
+          "d": "a scheduled visit where international buyers inspect physical samples at the factory showroom",
+          "ex": "We prepared the new spring collection ahead of the buyer's showroom appointment.",
+          "exr": "",
+          "exm": "Chúng tôi đã chuẩn bị sẵn bộ sưu tập mùa xuân mới trước buổi hẹn khách xem mẫu tại showroom."
+        },
+        {
+          "id": "E175-13",
+          "w": "market differentiation",
+          "r": "/ˈmɑːr.kɪt ˌdɪf.ɚ.en.ʃiˈeɪ.ʃən/",
+          "m": "sự khác biệt hóa trên thị trường",
+          "d": "distinctive product design or features that set a brand apart from mass-market competitors",
+          "ex": "Exclusive textures give your retail stores strong market differentiation and higher margins.",
+          "exr": "",
+          "exm": "Các bề mặt vân độc quyền mang lại sự khác biệt hóa rõ rệt và biên lợi nhuận cao hơn cho chuỗi cửa hàng của bạn."
+        },
+        {
+          "id": "E175-14",
+          "w": "waterproof inner liner",
+          "r": "/ˈwɔː.t̬ɚ.pruːf ˈɪn.ɚ ˈlaɪ.nɚ/",
+          "m": "lớp phủ chống thấm bên trong lòng chậu",
+          "d": "internal sealant that prevents moisture from seeping through porous planter walls",
+          "ex": "An epoxy waterproof inner liner prevents water stains on indoor wooden floors.",
+          "exr": "",
+          "exm": "Lớp phủ epoxy chống thấm lòng trong giúp ngăn nước rỉ ra làm ố sàn gỗ trong nhà."
+        },
+        {
+          "id": "E175-15",
+          "w": "seasonal assortment",
+          "r": "/ˈsiː.zən.əl əˈsɔːrt.mənt/",
+          "m": "danh mục sản phẩm theo mùa vụ",
+          "d": "a curated range of products selected by retail buyers for spring-summer or autumn-winter",
+          "ex": "We followed up after delivery to plan their seasonal assortment for next spring.",
+          "exr": "",
+          "exm": "Chúng tôi chủ động liên hệ sau khi giao hàng để cùng khách lên danh mục hàng mùa xuân năm tới."
+        },
+        {
+          "id": "E175-16",
+          "w": "color swatch",
+          "r": "/ˈkʌl.ɚ ˈswɑːtʃ/",
+          "m": "mẫu thử màu / bảng mẫu màu vật liệu",
+          "d": "a small physical tile of fiberstone or concrete showing the exact texture and finish",
+          "ex": "We couriered six physical color swatches so the buyer could sign off on the exact shade.",
+          "exr": "",
+          "exm": "Chúng tôi đã gửi chuyển phát nhanh 6 miếng mẫu màu thực tế để khách ký duyệt đúng tông màu."
+        },
+        {
+          "id": "E175-17",
+          "w": "retail display pallet",
+          "r": "/ˈriː.teɪl dɪˈspleɪ ˈpæl.ət/",
+          "m": "pallet trưng bày bán lẻ tại siêu thị",
+          "d": "a point-of-sale pallet designed to be moved directly onto the store floor for shoppers",
+          "ex": "For hardware chains like Bunnings, we pack goods onto ready-to-sell retail display pallets.",
+          "exr": "",
+          "exm": "Đối với các chuỗi siêu thị lớn như Bunnings, chúng tôi đóng hàng trên các pallet trưng bày bán lẻ tiện dụng."
+        },
+        {
+          "id": "E175-18",
+          "w": "reactivate an account",
+          "r": "/riːˈæk.tə.veɪt ən əˈkaʊnt/",
+          "m": "kích hoạt lại khách hàng cũ ngưng mua",
+          "d": "to reconnect with a dormant B2B customer and win new purchase orders",
+          "ex": "By introducing our new lightweight planters, I reactivated an inactive account worth over $60,000.",
+          "exr": "",
+          "exm": "Nhờ giới thiệu dòng chậu siêu nhẹ mới, tôi đã kích hoạt lại một khách hàng cũ với tổng đơn hàng trên 60.000 USD."
+        },
+        {
+          "id": "E175-19",
+          "w": "handover checklist",
+          "r": "/ˈhændˌoʊ.vɚ ˈtʃek.lɪst/",
+          "m": "bảng kiểm bàn giao thông tin đơn hàng",
+          "d": "a verification list ensuring the factory uses the latest customer-approved labels and specs",
+          "ex": "We added a strict handover checklist so Purchasing always uses the latest approved label file.",
+          "exr": "",
+          "exm": "Chúng tôi đã bổ sung bảng kiểm bàn giao nghiêm ngặt để bộ phận Mua hàng luôn dùng đúng file nhãn mới nhất đã duyệt."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q175-0",
+          "q": "A major customer asks to modify the mold, shape, color, and finishing of a planter on a tight deadline, but changing the mold is not feasible. How should you respond?",
+          "o": [
+            "Explain the mold limitation clearly and offer feasible customization options using existing shapes and new surface finishes.",
+            "Promise to change everything anyway and hope the factory figures it out later.",
+            "Cancel the customer's inquiry immediately without offering any alternatives."
+          ],
+          "a": 0,
+          "why": "Protecting the relationship requires honest communication about tooling constraints while guiding the customer toward workable finishing and color options on existing molds."
+        },
+        {
+          "id": "q175-1",
+          "q": "You discover that an order was printed with an outdated carton label instead of the latest customer-approved version. What is the most professional course of action?",
+          "o": [
+            "Take ownership, inform the customer immediately, propose approved corrective carton decals, and send photos for verification.",
+            "Hide the mistake and ship the wrong barcodes to the customer's warehouse.",
+            "Blame the factory workers in an email to the customer and refuse to fix it."
+          ],
+          "a": 0,
+          "why": "Taking ownership early, proposing a practical correction like carton decals, and adding a stricter verification step builds trust and protects on-time delivery."
+        },
+        {
+          "id": "q175-2",
+          "q": "Why do international garden centers prefer importing large outdoor planters in nested sets?",
+          "o": [
+            "Smaller pots fit inside larger ones with PE foam lining, maximizing container space and drastically reducing freight cost per unit.",
+            "Nested sets make the pots heavier so they sink in water.",
+            "Customs officers only allow three pots per box."
+          ],
+          "a": 0,
+          "why": "Nesting smaller sizes inside larger ones reduces empty air volume (CBM) inside shipping containers, lowering unit landed cost."
+        },
+        {
+          "id": "q175-3",
+          "q": "How can an Account Manager proactively generate new revenue from the company's existing database?",
+          "o": [
+            "Identify dormant accounts, reach out with tailored new collections and quotations, and reactivate the business relationship.",
+            "Wait passively until old customers send an email on their own.",
+            "Send random invoices to companies that never asked for quotes."
+          ],
+          "a": 0,
+          "why": "Proactively reconnecting with inactive accounts by presenting relevant new product lines and customized quotes is a proven B2B growth strategy."
+        },
+        {
+          "id": "q175-4",
+          "q": "What is the key selling point of fiberstone and sandfiber planters compared to traditional solid stone or heavy concrete?",
+          "o": [
+            "They replicate natural stone textures while being up to 60% lighter, frost-resistant, and easier for consumers to move.",
+            "They dissolve in the rain after one summer season.",
+            "They are made of 100% solid lead metal."
+          ],
+          "a": 0,
+          "why": "Fiberstone combines fiberglass mesh with stone powder to achieve an authentic stone appearance at a fraction of the weight."
+        },
+        {
+          "id": "q175-5",
+          "q": "When a buyer asks 'Why should we choose this planter collection over mass-market competitors?', which answer best highlights commercial value?",
+          "o": [
+            "Our distinctive hand-applied finishes provide strong market differentiation, helping your stores command higher profit margins.",
+            "Our pots are rounder than other pots.",
+            "We do not know what competitors sell."
+          ],
+          "a": 0,
+          "why": "Highlighting market differentiation, artisanal finishes, and stronger retail margins speaks directly to a B2B buyer's commercial goals."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s175-0",
+          "title": "Presenting a new Fiberstone planter collection at an international trade show",
+          "lines": [
+            {
+              "t": "Welcome to our booth! Let me introduce our new Lava Concrete and Fiberstone planter collection for the upcoming spring season.",
+              "r": "",
+              "m": "Chào mừng ông ghé thăm gian hàng! Để tôi giới thiệu bộ sưu tập chậu Bê tông nham thạch và Đá sợi thủy tinh mới cho vụ xuân tới."
+            },
+            {
+              "t": "The texture looks just like carved volcanic rock. Are they heavy to handle in retail stores?",
+              "r": "",
+              "m": "Bề mặt vân trông giống hệt đá núi lửa chạm khắc. Chúng có nặng khi bốc xếp tại cửa hàng bán lẻ không?"
+            },
+            {
+              "t": "Not at all. Because they are reinforced with fiberglass mesh, they are sixty percent lighter than traditional stone and pass the ISTA 3A drop test.",
+              "r": "",
+              "m": "Hoàn toàn không. Nhờ gia cố bằng lưới sợi thủy tinh, chúng nhẹ hơn 60% so với đá truyền thống và vượt qua bài test thả rơi ISTA 3A."
+            },
+            {
+              "t": "We also pack them in three-piece nested sets with thick PE foam lining to save your container freight costs.",
+              "r": "",
+              "m": "Chúng tôi còn đóng gói theo bộ 3 chiếc lồng vào nhau có lót xốp PE dày để tiết kiệm tối đa cước biển cho bên ông."
+            }
+          ]
+        },
+        {
+          "id": "s175-1",
+          "title": "Guiding a customer toward feasible customization and confirming CRD",
+          "lines": [
+            {
+              "t": "We reviewed your request to customize the planter mold and surface color for your autumn assortment.",
+              "r": "",
+              "m": "Chúng tôi đã xem xét yêu cầu tùy chỉnh khuôn chậu và màu sắc bề mặt cho danh mục hàng mùa thu của bên chị."
+            },
+            {
+              "t": "Developing a new custom mold would delay your Customer Required Date by four weeks.",
+              "r": "",
+              "m": "Việc chế tạo khuôn đúc mới sẽ làm lùi ngày giao hàng yêu cầu (CRD) của chị mất bốn tuần."
+            },
+            {
+              "t": "To protect your launch timeline, we recommend using our existing cylinder mold combined with your custom sandstone finish.",
+              "r": "",
+              "m": "Để bảo vệ đúng lịch ra mắt, chúng tôi đề xuất dùng mẫu khuôn trụ sẵn có kết hợp với bề mặt sơn giả đá cát theo ý chị."
+            },
+            {
+              "t": "We can courier physical color swatches this Friday and guarantee on-time shipment.",
+              "r": "",
+              "m": "Chúng tôi có thể gửi chuyển phát nhanh mẫu màu thực tế vào thứ Sáu này và cam kết giao hàng đúng hạn."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c175-0",
+          "q": "What makes this new planter collection special for modern retail stores?",
+          "vi": "Điều gì làm cho bộ sưu tập chậu cây mới này trở nên đặc biệt đối với các cửa hàng bán lẻ hiện đại?",
+          "st": "This collection offers + design features + and helps retailers achieve...",
+          "ph": [
+            "exclusive lava stone and fiberstone finishes",
+            "lightweight durability and frost resistance",
+            "market differentiation",
+            "nested sets to optimize freight"
+          ],
+          "sa": "This collection offers exclusive lava stone and fiberstone finishes that combine natural aesthetics with lightweight durability. It gives retailers strong market differentiation and comes in nested sets to optimize container freight.",
+          "ss": [
+            "UV-stabilized",
+            "hand-applied patina",
+            "higher margins"
+          ],
+          "sc": "Pitching a new decorative planter range to an Australian or US retail buyer at Ambiente or VIFA Expo."
+        },
+        {
+          "id": "c175-1",
+          "q": "Tell me about a time you handled a difficult customization request from a B2B customer.",
+          "vi": "Hãy kể về một lần bạn xử lý yêu cầu tùy chỉnh sản phẩm khó từ khách hàng B2B.",
+          "st": "A major customer requested changes to + items + so I checked with the team and offered...",
+          "ph": [
+            "changes to mold, shape, and finishing",
+            "explained tooling limitations clearly",
+            "offered workable finishing options on existing designs",
+            "placed orders and continued the relationship"
+          ],
+          "sa": "A key customer asked for changes to the mold, shape, color, and finishing. Since modifying the mold was not feasible within their timeline, I explained the limitation clearly and offered custom finishing options on our existing shapes. The customer accepted the solution and placed the orders.",
+          "ss": [
+            "feasible route",
+            "compromise",
+            "protect the CRD"
+          ],
+          "sc": "Answering a behavioral question or negotiating product development with an overseas buyer."
+        },
+        {
+          "id": "c175-2",
+          "q": "Tell me about a time you took ownership of an operational mistake and prevented a delay.",
+          "vi": "Hãy kể về một tình huống bạn nhận trách nhiệm xử lý sai sót vận hành và giữ đúng tiến độ giao hàng.",
+          "st": "When I noticed + issue + I took ownership, proposed + solution + and added...",
+          "ph": [
+            "outdated label version was used",
+            "proposed corrective carton decals",
+            "sent verification photos for customer approval",
+            "added a stricter handover checklist"
+          ],
+          "sa": "When an outdated label version was printed on export cartons, I immediately took ownership, informed the customer, and proposed applying high-grade carton decals. I coordinated with Purchasing and the factory, sent photos for final approval, delivered the order on time, and added a strict verification step so the error never recurred.",
+          "ss": [
+            "single source of truth",
+            "accountability",
+            "on-time delivery"
+          ],
+          "sc": "Sharing a verified STAR story about attention to detail and problem resolution."
+        },
+        {
+          "id": "c175-3",
+          "q": "How did you successfully reactivate an inactive B2B account?",
+          "vi": "Bạn đã chủ động kích hoạt lại một tài khoản khách hàng cũ ngưng giao dịch như thế nào?",
+          "st": "I identified an inactive account in our database, reached out with + action + which resulted in...",
+          "ph": [
+            "inactive for several years",
+            "proactively introduced new collections",
+            "tailored quotations to their market",
+            "three new orders worth over USD 60,000"
+          ],
+          "sa": "I noticed a customer contact in our database that had been inactive for several years. I took the initiative to reconnect, introduced our new product lines, and prepared tailored quotations based on their seasonal needs. This led to three new orders totaling more than USD 60,000.",
+          "ss": [
+            "account reactivation",
+            "business development",
+            "proactive follow-up"
+          ],
+          "sc": "Highlighting commercial initiative and account growth during a sales review or interview."
+        }
+      ],
+      "fill": {
+        "text": "Subject: New Spring Collection & Ambiente Showroom Invitation – Fiberstone & Lava Planters\n\nDear Ms. Mitchell,\n\nI hope your week is going well. Following our post-delivery follow-up last month, I am excited to share our new Spring–Summer catalogue featuring lightweight [[fiberstone|cast iron|heavy lead]] and Lava Concrete outdoor planters.\n\nEach piece features a [[hand-applied patina|plastic sticker|paper wrap]] and a [[UV-stabilized coating|water soluble paint|cooking oil layer]] to ensure long-lasting color under harsh Australian sunlight. To help you optimize ocean freight, the new tapered cylinders are packed as a 3-piece [[nested set|loose pile|single unit]] with thick [[PE foam lining|newspaper sheet|metal wire]] that passes the ISTA 3A drop test.\n\nIf you are attending Ambiente in Frankfurt next month, we would love to schedule a [[showroom appointment|medical checkup|flight ticket]] at our booth so you can inspect the physical [[color swatch|credit card|shipping bill]] samples in person.\n\nPlease let me know your target [[Customer Required Date|birthday party|holiday trip]] for the spring intake so we can reserve production capacity for your team.\n\nWarm regards,\nSally Nguyen\nAccount Manager",
+        "trans": "Tiêu đề: Bộ sưu tập Mùa Xuân mới & Thư mời tham quan gian hàng Ambiente – Chậu Fiberstone & Bê tông nham thạch\n\nKính gửi bà Mitchell,\n\nHy vọng bà có một tuần làm việc thuận lợi. Tiếp nối cuộc trao đổi chăm sóc sau giao hàng vào tháng trước, tôi rất hào hứng gửi tới bà cuốn catalogue Xuân–Hè mới gồm các dòng chậu ngoài trời bằng đá sợi thủy tinh (Fiberstone) siêu nhẹ và Bê tông nham thạch.\n\nMỗi sản phẩm đều được hoàn thiện màu giả cổ thủ công và phủ lớp bảo vệ kháng tia UV giúp bền màu dưới nắng gắt tại Úc. Để giúp bà tối ưu cước biển, dòng chậu trụ thon mới được đóng gói thành bộ 3 chiếc lồng vào nhau kèm lớp lót xốp PE dày đạt chuẩn thử nghiệm thả rơi ISTA 3A.\n\nNếu bà tham dự hội chợ Ambiente tại Frankfurt vào tháng tới, chúng tôi rất mong được đặt lịch hẹn đón tiếp bà tại gian hàng để bà trực tiếp xem các mẫu màu vật liệu thực tế.\n\nXin vui lòng cho tôi biết Ngày yêu cầu giao hàng (CRD) dự kiến cho đợt nhập hàng mùa xuân để chúng tôi ưu tiên giữ lịch sản xuất cho đội ngũ của bà.\n\nTrân trọng,\nSally Nguyễn\nQuản lý Tài khoản Khách hàng (Account Manager)",
+        "audio": ""
+      },
+      "gram": [],
       "pos": 70,
+      "catPos": 25
+    },
+    {
+      "id": "15",
+      "pos": 71,
       "title": "The wine trade: labels, licences and temperature control",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -27745,12 +28163,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 25,
+      "catPos": 26,
       "level": "B2"
     },
     {
       "id": "13",
-      "pos": 71,
+      "pos": 72,
       "title": "OEM and ODM: working with factories on your own brand",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28133,12 +28551,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 26,
+      "catPos": 27,
       "level": "B2"
     },
     {
       "id": "16",
-      "pos": 72,
+      "pos": 73,
       "title": "Running the operation: owners, approvals and closing a shipment",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28521,12 +28939,430 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 27,
+      "catPos": 28,
       "level": "B2"
     },
     {
+      "id": "181",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Global supply chain operations: SCOR model, vendor selection and resilience",
+      "sub": "Chuỗi cung ứng toàn cầu: mô hình SCOR, chiến lược tìm nguồn cung (Sourcing) và khả năng chống đứt gãy",
+      "vocab": [
+        {
+          "id": "E181-0",
+          "w": "SCOR model",
+          "r": "/ˈskɔːr ˈmɑː.dəl/",
+          "m": "mô hình tham chiếu chuỗi cung ứng SCOR (Plan, Source, Make, Deliver, Return)",
+          "d": "Supply Chain Operations Reference framework covering Plan, Source, Make, Deliver, and Return",
+          "ex": "We use the SCOR model to map our entire import-export flow and spot where the network might break.",
+          "exr": "",
+          "exm": "Chúng tôi sử dụng mô hình SCOR để vẽ bản đồ toàn bộ luồng xuất nhập khẩu và phát hiện sớm các điểm dễ đứt gãy."
+        },
+        {
+          "id": "E181-1",
+          "w": "make-or-buy decision",
+          "r": "/ˌmeɪk ɔːr ˈbaɪ dɪˈsɪʒ.ən/",
+          "m": "quyết định tự sản xuất hay thuê ngoài",
+          "d": "strategic choice between manufacturing goods in-house (insourcing) or purchasing from an external vendor (outsourcing)",
+          "ex": "Every sourcing strategy begins with a make-or-buy decision based on cost, capacity, and IP protection.",
+          "exr": "",
+          "exm": "Mọi chiến lược tìm nguồn cung đều bắt đầu bằng quyết định tự sản xuất hay mua ngoài dựa trên chi phí, công suất và bảo mật IP."
+        },
+        {
+          "id": "E181-2",
+          "w": "total landed cost",
+          "r": "/ˈtoʊ.t̬əl ˈlæn.dɪd ˈkɔːst/",
+          "m": "tổng chi phí hàng về đến kho đích",
+          "d": "the complete cost of a product once it arrives at the buyer's door, including unit price, freight, duty, insurance, and coordination",
+          "ex": "When evaluating overseas suppliers, always calculate total landed cost rather than looking only at unit price.",
+          "exr": "",
+          "exm": "Khi đánh giá nhà cung cấp nước ngoài, hãy luôn tính tổng chi phí về đến kho thay vì chỉ nhìn vào đơn giá xuất xưởng."
+        },
+        {
+          "id": "E181-3",
+          "w": "weighted scoring",
+          "r": "/ˈweɪ.t̬ɪd ˈskɔːr.ɪŋ/",
+          "m": "chấm điểm nhà cung cấp theo trọng số",
+          "d": "evaluating vendor candidates across criteria (quality, on-time delivery, financials, communication) assigned different importance weights",
+          "ex": "We used a weighted scoring matrix across seven criteria to select our primary factory partner.",
+          "exr": "",
+          "exm": "Chúng tôi đã dùng bảng chấm điểm có trọng số theo 7 tiêu chí để chọn ra đối tác nhà máy chính."
+        },
+        {
+          "id": "E181-4",
+          "w": "dual sourcing",
+          "r": "/ˈduː.əl ˈsɔːr.sɪŋ/",
+          "m": "chiến lược dùng song song hai nhà cung cấp",
+          "d": "splitting orders between two qualified suppliers to reduce dependency and supply disruption risk",
+          "ex": "For critical components, we practice dual sourcing so production never stops if one factory has an issue.",
+          "exr": "",
+          "exm": "Đối với các linh kiện quan trọng, chúng tôi áp dụng chiến lược hai nhà cung cấp để sản xuất không bị ngưng trệ nếu một bên gặp sự cố."
+        },
+        {
+          "id": "E181-5",
+          "w": "Make-to-Order",
+          "r": "/ˌmeɪk tə ˈɔːr.dɚ/",
+          "m": "sản xuất theo đơn đặt hàng (MTO)",
+          "d": "production strategy where items with established designs are manufactured only after a confirmed customer PO is received",
+          "ex": "Most OEM furniture and planter factories operate on a Make-to-Order basis with a 45-day lead time.",
+          "exr": "",
+          "exm": "Hầu hết các nhà máy nội thất và chậu cây OEM đều vận hành theo mô hình sản xuất theo đơn hàng (MTO) với thời gian 45 ngày."
+        },
+        {
+          "id": "E181-6",
+          "w": "Make-to-Stock",
+          "r": "/ˌmeɪk tə ˈstɑːk/",
+          "m": "sản xuất trước để lưu kho theo dự báo (MTS)",
+          "d": "manufacturing standard goods ahead of time based on demand forecasts for immediate dispatch",
+          "ex": "Fast-moving standard SKUs are produced under a Make-to-Stock strategy to guarantee rapid delivery.",
+          "exr": "",
+          "exm": "Các mã hàng tiêu chuẩn bán chạy được sản xuất lưu kho sẵn theo dự báo (MTS) để đảm bảo giao hàng nhanh."
+        },
+        {
+          "id": "E181-7",
+          "w": "Engineer-to-Order",
+          "r": "/ˌen.dʒəˈnɪr tə ˈɔːr.dɚ/",
+          "m": "thiết kế và chế tạo mới theo yêu cầu riêng (ETO)",
+          "d": "custom project manufacturing designed from scratch according to a client's unique technical specifications",
+          "ex": "Custom architectural installations follow an Engineer-to-Order workflow requiring mold and drawing approval.",
+          "exr": "",
+          "exm": "Các hạng mục đặt làm riêng theo kiến trúc đi theo luồng Thiết kế theo đơn hàng (ETO), cần duyệt bản vẽ và khuôn mới."
+        },
+        {
+          "id": "E181-8",
+          "w": "three QC layers",
+          "r": "/ˈθriː ˌkjuːˈsiː ˈleɪ.ɚz/",
+          "m": "ba tầng kiểm soát chất lượng (Đầu vào - Trong chuyền - Đầu ra)",
+          "d": "quality control checkpoints at incoming raw materials (IQC), in-process production (IPQC), and outgoing finished goods (OQC)",
+          "ex": "Enforcing all three QC layers—incoming, in-process, and outgoing—catches defects before packing.",
+          "exr": "",
+          "exm": "Thực hiện nghiêm ngặt cả 3 tầng QC — kiểm nguyên liệu đầu vào, kiểm trên chuyền và kiểm thành phẩm đầu ra — giúp bắt lỗi trước khi đóng gói."
+        },
+        {
+          "id": "E181-9",
+          "w": "supply chain resilience",
+          "r": "/səˈplaɪ ˈtʃeɪn rɪˈzɪl.jəns/",
+          "m": "khả năng chống chịu và phục hồi của chuỗi cung ứng",
+          "d": "the ability of a supply network to anticipate, withstand, and recover quickly from disruptions",
+          "ex": "Backup vendors, alternative shipping routes, and safety stock build strong supply chain resilience.",
+          "exr": "",
+          "exm": "Nhà cung cấp dự phòng, tuyến vận chuyển thay thế và tồn kho an toàn giúp xây dựng khả năng chống đứt gãy vững chắc."
+        },
+        {
+          "id": "E181-10",
+          "w": "safety stock",
+          "r": "/ˈseɪf.ti ˈstɑːk/",
+          "m": "lượng tồn kho an toàn dự phòng",
+          "d": "extra buffer inventory held to guard against unexpected demand spikes or supplier delays",
+          "ex": "We keep two weeks of safety stock for critical packaging materials and hardware fittings.",
+          "exr": "",
+          "exm": "Chúng tôi duy trì lượng tồn kho an toàn đủ dùng trong 2 tuần đối với bao bì và phụ kiện kim khí quan trọng."
+        },
+        {
+          "id": "E181-11",
+          "w": "third-party logistics",
+          "r": "/ˌθɝːd ˈpɑːr.t̬i loʊˈdʒɪs.tɪks/",
+          "m": "nhà cung cấp dịch vụ logistics bên thứ ba (3PL)",
+          "d": "an external partner integrating transportation, warehousing, customs brokerage, and order fulfillment",
+          "ex": "Partnering with a reliable 3PL provider streamlined our warehousing and last-mile distribution.",
+          "exr": "",
+          "exm": "Hợp tác với đơn vị logistics 3PL uy tín đã giúp tối ưu hóa khâu lưu kho và phân phối chặng cuối của chúng tôi."
+        },
+        {
+          "id": "E181-12",
+          "w": "intermodal transportation",
+          "r": "/ˌɪn.t̬ɚˈmoʊ.dəl ˌtræns.pɚˈteɪ.ʃən/",
+          "m": "vận tải đa phương thức (kết hợp biển - sắt - bộ)",
+          "d": "moving cargo in the same container across multiple transport modes (sea, rail, and truck) without unpacking",
+          "ex": "Intermodal transportation balances cost, speed, and reach when shipping to inland cities.",
+          "exr": "",
+          "exm": "Vận tải đa phương thức giúp cân bằng giữa chi phí, tốc độ và độ phủ khi giao hàng tới các thành phố sâu trong nội địa."
+        },
+        {
+          "id": "E181-13",
+          "w": "efficiency vs. responsiveness",
+          "r": "/ɪˈfɪʃ.ən.si ˈvɝː.səs rɪˈspɑːn.sɪv.nəs/",
+          "m": "sự đánh đổi giữa Tối ưu chi phí và Tốc độ đáp ứng",
+          "d": "the strategic trade-off between keeping operating costs minimal and reacting rapidly to changing customer demands",
+          "ex": "Every supply chain strategy must balance the trade-off between efficiency and responsiveness.",
+          "exr": "",
+          "exm": "Mọi chiến lược chuỗi cung ứng đều phải cân bằng bài toán đánh đổi giữa tối ưu chi phí và tốc độ phản ứng nhanh."
+        },
+        {
+          "id": "E181-14",
+          "w": "six rights of logistics",
+          "r": "/ˈsɪks ˈraɪts əv loʊˈdʒɪs.tɪks/",
+          "m": "6 chữ Đúng trong Logistics (Hàng - Lượng - Tình trạng - Nơi - Giờ - Chi phí)",
+          "d": "delivering the right goods, in the right quantity and condition, to the right place, at the right time, for the right cost",
+          "ex": "Our delivery KPI is built around achieving all six rights of logistics on every shipment.",
+          "exr": "",
+          "exm": "Chỉ số KPI giao hàng của chúng tôi được xây dựng xoay quanh việc đạt chuẩn 6 chữ Đúng của logistics trên mọi lô hàng."
+        },
+        {
+          "id": "E181-15",
+          "w": "nearshoring",
+          "r": "/ˈnɪrˌʃɔːr.ɪŋ/",
+          "m": "dịch chuyển nguồn cung về các nước lân cận",
+          "d": "sourcing production in a nearby country with closer timezones and shorter transit times",
+          "ex": "Some brands combine farshore manufacturing in Asia with nearshoring to reduce transit lead times.",
+          "exr": "",
+          "exm": "Một số thương hiệu kết hợp sản xuất tại châu Á với tìm nguồn cung ở các nước lân cận để rút ngắn thời gian vận chuyển."
+        },
+        {
+          "id": "E181-16",
+          "w": "named place",
+          "r": "/ˈneɪmd ˈpleɪs/",
+          "m": "địa điểm / cảng chỉ định cụ thể đi kèm điều kiện Incoterms",
+          "d": "the exact port, terminal, or warehouse written after an Incoterm (e.g., FCA Cat Lai Port, Ho Chi Minh City)",
+          "ex": "Never write an Incoterm without its named place and the edition year, such as FOB Cat Lai Port, Incoterms 2020.",
+          "exr": "",
+          "exm": "Đừng bao giờ viết điều kiện Incoterms mà thiếu địa điểm chỉ định cụ thể và năm phiên bản, ví dụ FOB Cảng Cát Lái, Incoterms 2020."
+        },
+        {
+          "id": "E181-17",
+          "w": "transfer of risk",
+          "r": "/ˈtræns.fɚ əv ˈrɪsk/",
+          "m": "thời điểm chuyển giao rủi ro hàng hóa",
+          "d": "the exact physical point where responsibility for cargo loss or damage shifts from seller to buyer",
+          "ex": "Under CIF and CFR, the seller pays ocean freight to destination, but transfer of risk already happens at the port of loading.",
+          "exr": "",
+          "exm": "Theo điều kiện CIF và CFR, người bán trả cước biển tới cảng đích, nhưng rủi ro đã chuyển sang người mua ngay từ cảng xếp hàng."
+        },
+        {
+          "id": "E181-18",
+          "w": "return and claim",
+          "r": "/rɪˈtɝːn ənd ˈkleɪm/",
+          "m": "quy trình trả hàng và khiếu nại bồi thường",
+          "d": "the fifth SCOR process handling defective or damaged goods with documented evidence, root cause, owner, and deadline",
+          "ex": "For any return and claim, we log the PO, batch number, photo evidence, corrective action, owner, and deadline.",
+          "exr": "",
+          "exm": "Đối với mọi trường hợp khiếu nại hàng lỗi, chúng tôi ghi nhận rõ số PO, số lô, ảnh bằng chứng, phương án khắc phục, người phụ trách và thời hạn."
+        },
+        {
+          "id": "E181-19",
+          "w": "single point of failure",
+          "r": "/ˈsɪŋ.ɡəl ˈpɔɪnt əv ˈfeɪl.jɚ/",
+          "m": "điểm yếu chí mạng (nếu gãy sẽ làm tê liệt toàn chuỗi)",
+          "d": "a bottleneck vendor, port, or machine whose failure would halt the entire supply chain",
+          "ex": "Stress-testing our supply network helped us eliminate a single point of failure in glaze raw materials.",
+          "exr": "",
+          "exm": "Việc rà soát sức chịu đựng của chuỗi cung ứng đã giúp chúng tôi loại bỏ được điểm nghẽn phụ thuộc vào một nguồn nguyên liệu men duy nhất."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q181-0",
+          "q": "What are the five core management processes of the SCOR (Supply Chain Operations Reference) model?",
+          "o": [
+            "Plan, Source, Make, Deliver, and Return.",
+            "Buy, Hide, Sleep, Forget, and Cancel.",
+            "Email, Print, Stamp, Fax, and Shred."
+          ],
+          "a": 0,
+          "why": "The SCOR model organizes global supply chain operations into five end-to-end pillars: Plan, Source, Make, Deliver, and Return."
+        },
+        {
+          "id": "q181-1",
+          "q": "What is a common mistake when comparing CIF and FOB under Incoterms 2020?",
+          "o": [
+            "Assuming that under CIF the seller bears risk until the destination port; in reality, risk transfers to the buyer once goods are on board at the port of loading in both FOB and CIF.",
+            "Thinking that FOB stands for Free Orange Box.",
+            "Believing that Incoterms automatically transfer legal title of ownership and payment terms."
+          ],
+          "a": 0,
+          "why": "In Group C terms (CFR, CIF, CPT, CIP), cost and risk separate: the seller pays freight to the destination, but risk transfers to the buyer at the origin side."
+        },
+        {
+          "id": "q181-2",
+          "q": "Why must you evaluate 'Total Landed Cost' instead of only comparing factory unit prices when outsourcing internationally?",
+          "o": [
+            "Because freight, import duties, insurance, warehousing, inspection, coordination time, and defect risks can outweigh a slightly lower unit price.",
+            "Because factory unit prices are written in invisible ink.",
+            "Because shipping across oceans is always 100% free."
+          ],
+          "a": 0,
+          "why": "Total cost analysis accounts for all logistics, tariff, quality, and coordination expenses required to bring the product safely to the warehouse."
+        },
+        {
+          "id": "q181-3",
+          "q": "Which three quality control (QC) layers should be enforced during the MAKE stage of an export order?",
+          "o": [
+            "Incoming QC (raw materials), In-Process QC (during production), and Outgoing QC (finished and packed goods before shipment).",
+            "Only checking the goods after the customer complains six months later.",
+            "Looking at the factory building from Google Maps."
+          ],
+          "a": 0,
+          "why": "Catching defects at Incoming (IQC), In-Process (IPQC), and Outgoing (OQC) stages prevents costly rework and post-shipment claims."
+        },
+        {
+          "id": "q181-4",
+          "q": "How should a professional Account Manager document and handle a customer quality claim (the RETURN step in SCOR)?",
+          "o": [
+            "Record PO/SKU/batch, defect quantity, photo/video evidence, root-cause stage (Source/Make/Deliver), corrective option, owner, and deadline.",
+            "Delete the customer's email and pretend nothing happened.",
+            "Argue with the customer without looking at any photos or batch records."
+          ],
+          "a": 0,
+          "why": "A structured claim protocol isolates whether the failure occurred in sourcing, production, transit, or expectations, and drives accountable resolution."
+        },
+        {
+          "id": "q181-5",
+          "q": "Which three errors are most common when writing Incoterms on a Proforma Invoice or Purchase Order?",
+          "o": [
+            "Omitting the specific named place/port, using sea-only rules like FOB/CIF improperly for terminal container handovers where FCA/CIP fit better, and confusing Incoterms with payment terms.",
+            "Writing the price in numbers.",
+            "Including the buyer's company name."
+          ],
+          "a": 0,
+          "why": "An Incoterm is incomplete without a named place and edition year (e.g., 'FCA Cat Lai Port, Ho Chi Minh City, Vietnam, Incoterms 2020'), and payment terms must be stated separately."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s181-0",
+          "title": "Clarifying Incoterms 2020 cost vs. risk transfer with an overseas buyer",
+          "lines": [
+            {
+              "t": "Before we issue the Proforma Invoice, let's align on the exact Incoterm and named place for this shipment.",
+              "r": "",
+              "m": "Trước khi chúng tôi phát hành Hóa đơn chiếu lệ (PI), hãy thống nhất chính xác điều kiện Incoterms và địa điểm chỉ định cho lô hàng này."
+            },
+            {
+              "t": "We would like you to quote CIF Sydney Port, Incoterms 2020, so ocean freight and marine insurance are included.",
+              "r": "",
+              "m": "Chúng tôi muốn bên bạn báo giá theo điều kiện CIF Cảng Sydney, Incoterms 2020, để đã bao gồm cước biển và bảo hiểm hàng hải."
+            },
+            {
+              "t": "Happy to do so. Just to keep expectations clear, under CIF we pay the freight and insurance to Sydney, while cargo risk transfers once the container is loaded on board at Cat Lai Port.",
+              "r": "",
+              "m": "Rất sẵn lòng. Để làm rõ kỳ vọng giữa hai bên, theo CIF chúng tôi trả cước và bảo hiểm tới Sydney, còn rủi ro hàng hóa được chuyển giao khi container đã xếp lên tàu tại cảng Cát Lái."
+            },
+            {
+              "t": "Understood. Please also send us the marine insurance policy and Bill of Lading draft as soon as the vessel departs.",
+              "r": "",
+              "m": "Tôi đã rõ. Vui lòng gửi cho chúng tôi đơn bảo hiểm hàng hải và bản nháp Vận đơn ngay khi tàu rời cảng nhé."
+            }
+          ]
+        },
+        {
+          "id": "s181-1",
+          "title": "Walking through a supplier quality issue using the SCOR framework",
+          "lines": [
+            {
+              "t": "Tell me about a supplier or production issue you handled and how you prevented it from happening again.",
+              "r": "",
+              "m": "Hãy kể cho tôi nghe về một sự cố nhà cung cấp hoặc sản xuất mà bạn đã xử lý và cách bạn ngăn chặn lỗi đó tái diễn."
+            },
+            {
+              "t": "During our in-process QC check on a Make-to-Order planter run, we found glaze pinholes caused by a raw material batch.",
+              "r": "",
+              "m": "Trong đợt kiểm tra chất lượng trên chuyền (IPQC) cho đơn hàng chậu sản xuất theo đơn (MTO), chúng tôi phát hiện lỗi châm kim bề mặt men do một lô nguyên liệu đầu vào."
+            },
+            {
+              "t": "Instead of waiting until final packing, we isolated the affected batch, worked with the vendor to replace the compound, and re-coated the units.",
+              "r": "",
+              "m": "Thay vì đợi đến lúc đóng gói cuối cùng, chúng tôi đã khoanh vùng ngay lô bị ảnh hưởng, làm việc với nhà cung cấp để đổi mẻ nguyên liệu và xử lý phủ lại bề mặt."
+            },
+            {
+              "t": "To strengthen supply chain resilience, we added an incoming material test and qualified a backup supplier under dual sourcing.",
+              "r": "",
+              "m": "Để tăng cường khả năng chống đứt gãy chuỗi cung ứng, chúng tôi đã bổ sung bước test nguyên liệu đầu vào và duyệt thêm một nhà cung cấp dự phòng theo chiến lược nguồn kép."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c181-0",
+          "q": "How do you use the SCOR model to manage an international order from start to finish?",
+          "vi": "Bạn áp dụng mô hình SCOR như thế nào để quản lý một đơn hàng quốc tế từ đầu đến cuối?",
+          "st": "I follow the five SCOR pillars—Plan, Source, Make, Deliver, and Return—to...",
+          "ph": [
+            "Plan capacity and identify potential bottlenecks",
+            "Source reliable vendors based on total landed cost",
+            "Make with three QC layers: incoming, in-process, and outgoing",
+            "Deliver with clear Incoterms 2020 and handle any Return claims systematically"
+          ],
+          "sa": "I manage orders across the five SCOR steps: first, Plan timelines and spot potential bottlenecks; second, Source verified materials; third, monitor Make through incoming, in-process, and outgoing QC checks; fourth, Deliver under clear Incoterms 2020 and ETD/ETA tracking; and fifth, resolve any Return or claim with documented root cause and corrective actions.",
+          "ss": [
+            "SCOR model",
+            "six rights of logistics",
+            "end-to-end visibility"
+          ],
+          "sc": "Demonstrating structured supply chain knowledge in an operations or account management interview."
+        },
+        {
+          "id": "c181-1",
+          "q": "What is the difference between cost and risk transfer in Group C Incoterms like CIF and CIP?",
+          "vi": "Sự khác biệt giữa điểm chia chi phí và điểm chuyển giao rủi ro trong các điều kiện nhóm C như CIF và CIP là gì?",
+          "st": "In Group C Incoterms, cost and risk transfer at two different points: ...",
+          "ph": [
+            "seller pays main carriage freight to the named destination",
+            "transfer of risk happens earlier at the origin port or carrier handover",
+            "always specify the exact named place and Incoterms 2020",
+            "separate from payment terms and title transfer"
+          ],
+          "sa": "In Group C terms like CIF and CIP, cost and risk transfer at two different points. The seller pays for main carriage and insurance up to the named destination port or place, but the risk of loss or damage transfers to the buyer much earlier—when the goods are loaded on the vessel or handed to the first carrier at origin.",
+          "ss": [
+            "Incoterms 2020",
+            "named port",
+            "marine insurance"
+          ],
+          "sc": "Explaining export terms accurately to a customer or hiring manager."
+        },
+        {
+          "id": "c181-2",
+          "q": "How do you select and evaluate a new factory or vendor partner?",
+          "vi": "Bạn đánh giá và lựa chọn một đối tác nhà máy hoặc nhà cung cấp mới theo quy trình như thế nào?",
+          "st": "We follow a structured vendor selection process using + criteria + and...",
+          "ph": [
+            "define measurable criteria like ISO 9001 and on-time delivery history",
+            "calculate total landed cost beyond unit price",
+            "apply a weighted scoring matrix across candidates",
+            "maintain close communication after contract signing"
+          ],
+          "sa": "We evaluate vendors using measurable criteria including ISO 9001 quality standards, on-time delivery history, financial stability, and communication responsiveness. Rather than looking only at unit price, we compare total landed cost and use a weighted scoring matrix before signing and starting production.",
+          "ss": [
+            "7-step vendor selection",
+            "dual sourcing",
+            "total cost analysis"
+          ],
+          "sc": "Discussing purchasing, merchandising, and supplier management."
+        },
+        {
+          "id": "c181-3",
+          "q": "Tell me about a supplier or production issue you handled, structured by Error -> Root Cause -> Corrective Action.",
+          "vi": "Hãy kể về một sự cố nhà cung cấp hoặc sản xuất mà bạn đã xử lý theo mạch: Lỗi -> Nguyên nhân (Source/Make/Deliver) -> Cách khắc phục.",
+          "st": "During an order run, we encountered + issue + caused by + stage + so I...",
+          "ph": [
+            "identified the issue early during in-process inspection",
+            "traced the root cause to the Make/Source stage",
+            "coordinated an immediate fix to protect the shipment date",
+            "added a preventive verification checklist"
+          ],
+          "sa": "On an export order, we detected a labeling and packaging mismatch before dispatch. I traced the root cause to an outdated handover file between Sales and Purchasing. I immediately coordinated approved corrective decals with the factory so the shipment left on time, and instituted a strict single-source-of-truth checklist to prevent recurrence.",
+          "ss": [
+            "root cause analysis",
+            "three QC layers",
+            "supply chain resilience"
+          ],
+          "sc": "Answering the behavioral supply chain question from Sally's practice notes."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Supply Chain Audit & Incoterms Alignment – Q4 Export Shipments\n\nDear Operations & Merchandising Team,\n\nAhead of our Q4 peak season, let's review our export orders using the [[SCOR model|fashion show|cooking recipe]] (Plan, Source, Make, Deliver, Return) to eliminate any [[single point of failure|parking ticket|coffee break]] in our network.\n\n1. **Source:** For critical packaging and hardware, please maintain two weeks of [[safety stock|empty boxes|old newspapers]] and apply [[dual sourcing|single guessing|blind buying]] so a delay at one vendor never halts assembly.\n2. **Make:** Every [[Make-to-Order|lost-in-space|out-of-date]] production run must pass all [[three QC layers|three card games|three lunch breaks]]—incoming material check, in-process inspection, and outgoing pre-shipment audit.\n3. **Deliver:** When issuing Proforma Invoices, always state the exact [[named place|favorite color|lucky number]] after the Incoterm, for example: `FOB Cat Lai Port, Ho Chi Minh City, Vietnam, Incoterms 2020`. Remember that under CIF, we pay ocean freight to the destination port, but [[transfer of risk|transfer of ownership|transfer of salary]] occurs once the goods are loaded on board at origin.\n4. **Return:** If any claim arises, log the batch number, photo evidence, corrective option, owner, and deadline within 24 hours.\n\nBest regards,\nSally Nguyen",
+        "trans": "Tiêu đề: Rà soát Chuỗi cung ứng & Chuẩn hóa Điều kiện Incoterms – Các lô hàng Xuất khẩu Quý 4\n\nThân gửi Đội ngũ Vận hành & Merchandising,\n\nTrước thềm mùa cao điểm Quý 4, chúng ta hãy cùng rà soát lại các đơn hàng xuất khẩu theo mô hình SCOR (Hoạch định - Tìm nguồn - Sản xuất - Giao hàng - Xử lý trả hàng) nhằm loại bỏ mọi điểm nghẽn có thể làm đứt gãy mạng lưới.\n\n1. **Tìm nguồn (Source):** Đối với vật tư bao bì và phụ kiện kim khí quan trọng, vui lòng duy trì tồn kho an toàn đủ cho 2 tuần và áp dụng chiến lược nguồn cung kép (dual sourcing) để việc trễ hàng ở một nhà cung cấp không bao giờ làm ngưng trệ dây chuyền.\n2. **Sản xuất (Make):** Mọi lô hàng sản xuất theo đơn (Make-to-Order) đều phải đi qua đủ 3 tầng kiểm soát chất lượng (QC) — kiểm nguyên liệu đầu vào, kiểm trên chuyền và kiểm thành phẩm trước khi xuất.\n3. **Giao hàng (Deliver):** Khi phát hành Hóa đơn chiếu lệ (PI), phải luôn ghi rõ địa điểm chỉ định cụ thể ngay sau điều kiện Incoterms, ví dụ: `FOB Cảng Cát Lái, TP.HCM, Việt Nam, Incoterms 2020`. Lưu ý rằng theo điều kiện CIF, chúng ta trả cước biển tới cảng đích, nhưng thời điểm chuyển giao rủi ro đã diễn ra ngay khi hàng được xếp lên tàu tại cảng đi.\n4. **Khiếu nại (Return):** Nếu có bất kỳ khiếu nại nào phát sinh, hãy ghi nhận mã lô, ảnh chụp bằng chứng, phương án khắc phục, người phụ trách và thời hạn xử lý trong vòng 24 giờ.\n\nTrân trọng,\nSally Nguyễn",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 74,
+      "catPos": 29
+    },
+    {
       "id": "20",
-      "pos": 73,
+      "pos": 75,
       "title": "Leading meetings: chairing, interrupting, closing",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28909,12 +29745,2102 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 28,
+      "catPos": 30,
       "level": "B2"
     },
     {
+      "id": "176",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Customer Success Management: onboarding, adoption and account retention",
+      "sub": "Quản trị thành công khách hàng (CSM): hướng dẫn ban đầu, mức độ áp dụng và giữ chân khách hàng",
+      "vocab": [
+        {
+          "id": "E176-0",
+          "w": "customer onboarding",
+          "r": "/ˈkʌs.tə.mɚ ˈɑːnˌbɔːr.dɪŋ/",
+          "m": "quá trình hướng dẫn khách hàng mới nhập cuộc",
+          "d": "the structured process of setting up and training a new customer to use a product or service",
+          "ex": "Smooth customer onboarding sets clear expectations and accelerates first value.",
+          "exr": "",
+          "exm": "Quy trình hướng dẫn ban đầu mượt mà giúp thiết lập kỳ vọng rõ ràng và giúp khách sớm nhận được giá trị."
+        },
+        {
+          "id": "E176-1",
+          "w": "product adoption",
+          "r": "/ˈprɑː.dʌkt əˈdɑːp.ʃən/",
+          "m": "mức độ áp dụng sản phẩm vào thực tế",
+          "d": "how actively and effectively a customer's team integrates a product into their daily workflow",
+          "ex": "Low product adoption in the first 60 days is an early warning sign of churn.",
+          "exr": "",
+          "exm": "Mức độ áp dụng sản phẩm thấp trong 60 ngày đầu tiên là tín hiệu cảnh báo sớm của nguy cơ rời bỏ."
+        },
+        {
+          "id": "E176-2",
+          "w": "desired outcome",
+          "r": "/dɪˈzaɪrd ˈaʊt.kʌm/",
+          "m": "kết quả mong đợi của khách hàng",
+          "d": "the specific business goal or measurable result a customer wants to achieve",
+          "ex": "Customer Success focuses on helping clients achieve their desired outcomes.",
+          "exr": "",
+          "exm": "Quản trị thành công khách hàng tập trung vào việc giúp khách hàng đạt được kết quả kinh doanh mong muốn."
+        },
+        {
+          "id": "E176-3",
+          "w": "proactive engagement",
+          "r": "/ˌproʊˈæk.tɪv ɪnˈɡeɪdʒ.mənt/",
+          "m": "sự tương tác và hỗ trợ chủ động",
+          "d": "reaching out to anticipate needs and prevent blockers before the customer complains",
+          "ex": "Unlike reactive support, CSM relies on proactive engagement throughout the customer journey.",
+          "exr": "",
+          "exm": "Khác với hỗ trợ thụ động khi có lỗi, CSM dựa vào sự tương tác chủ động xuyên suốt hành trình khách hàng."
+        },
+        {
+          "id": "E176-4",
+          "w": "customer health score",
+          "r": "/ˈkʌs.tə.mɚ ˈhelθ ˈskɔːr/",
+          "m": "chỉ số sức khỏe tài khoản khách hàng",
+          "d": "a metric combining usage, engagement, and support tickets to predict renewal or churn",
+          "ex": "When a customer health score drops, I check the root cause and contact the account early.",
+          "exr": "",
+          "exm": "Khi chỉ số sức khỏe khách hàng sụt giảm, tôi kiểm tra nguyên nhân gốc rễ và liên hệ hỗ trợ ngay từ sớm."
+        },
+        {
+          "id": "E176-5",
+          "w": "churn rate",
+          "r": "/ˈtʃɝːn ˈreɪt/",
+          "m": "tỷ lệ khách hàng rời bỏ / hủy dịch vụ",
+          "d": "the percentage of customers who stop buying or fail to renew their contracts",
+          "ex": "Resolving recurring onboarding blockers reduced our quarterly churn rate by 15%.",
+          "exr": "",
+          "exm": "Việc giải quyết triệt để các vướng mắc lặp lại lúc ban đầu đã giúp giảm 15% tỷ lệ rời bỏ hàng quý."
+        },
+        {
+          "id": "E176-6",
+          "w": "account retention",
+          "r": "/əˈkaʊnt rɪˈten.ʃən/",
+          "m": "việc giữ chân khách hàng tiếp tục gắn bó",
+          "d": "keeping existing customers active, satisfied, and renewing over the long term",
+          "ex": "Consistent follow-up and transparent risk updates are the foundation of account retention.",
+          "exr": "",
+          "exm": "Theo dõi sát sao và cập nhật rủi ro minh bạch là nền tảng của việc giữ chân khách hàng lâu dài."
+        },
+        {
+          "id": "E176-7",
+          "w": "contract renewal",
+          "r": "/ˈkɑːn.trækt rɪˈnuː.əl/",
+          "m": "việc gia hạn hợp đồng",
+          "d": "extending a commercial agreement or subscription for another term",
+          "ex": "We start preparing for contract renewal ninety days before the expiration date.",
+          "exr": "",
+          "exm": "Chúng tôi bắt đầu chuẩn bị cho việc gia hạn hợp đồng 90 ngày trước khi hết hạn."
+        },
+        {
+          "id": "E176-8",
+          "w": "land and expand",
+          "r": "/ˈlænd ənd ɪkˈspænd/",
+          "m": "chiến lược thâm nhập rồi mở rộng quy mô",
+          "d": "starting with a small initial deal and growing account value as the customer sees results",
+          "ex": "Once the pilot team succeeds, we use a land-and-expand approach to onboard other departments.",
+          "exr": "",
+          "exm": "Khi nhóm thử nghiệm đạt kết quả tốt, chúng tôi áp dụng chiến lược mở rộng sang các phòng ban khác."
+        },
+        {
+          "id": "E176-9",
+          "w": "at-risk account",
+          "r": "/ˌæt ˈrɪsk əˈkaʊnt/",
+          "m": "khách hàng đang có nguy cơ rời bỏ",
+          "d": "a customer showing warning signs such as low usage, unresolved issues, or dissatisfaction",
+          "ex": "For an at-risk account, we align with internal teams and agree on a clear recovery plan.",
+          "exr": "",
+          "exm": "Đối với tài khoản có nguy cơ rời bỏ, chúng tôi phối hợp nội bộ và thống nhất kế hoạch khôi phục rõ ràng."
+        },
+        {
+          "id": "E176-10",
+          "w": "recovery plan",
+          "r": "/rɪˈkʌv.ɚ.i ˈplæn/",
+          "m": "kế hoạch khôi phục niềm tin khách hàng",
+          "d": "a step-by-step action plan with owners and deadlines to resolve an at-risk customer's issues",
+          "ex": "We shared a two-week recovery plan with concrete milestones to rebuild the client's confidence.",
+          "exr": "",
+          "exm": "Chúng tôi đã gửi kế hoạch khắc phục trong 2 tuần với các cột mốc cụ thể để lấy lại niềm tin của khách."
+        },
+        {
+          "id": "E176-11",
+          "w": "value realization",
+          "r": "/ˈvæl.juː ˌriː.ə.ləˈzeɪ.ʃən/",
+          "m": "sự hiện thực hóa giá trị sử dụng",
+          "d": "the point when a customer experiences measurable business benefits from the product",
+          "ex": "Our goal is to shorten the time to value realization for every new B2B client.",
+          "exr": "",
+          "exm": "Mục tiêu của chúng tôi là rút ngắn thời gian để mọi khách hàng B2B mới cảm nhận được giá trị thực tế."
+        },
+        {
+          "id": "E176-12",
+          "w": "customer lifetime value",
+          "r": "/ˈkʌs.tə.mɚ ˈlaɪf.taɪm ˈvæl.juː/",
+          "m": "giá trị vòng đời khách hàng (CLV)",
+          "d": "the total revenue a business can reasonably expect from a single customer account over time",
+          "ex": "Strong Customer Success directly increases customer lifetime value and brand advocacy.",
+          "exr": "",
+          "exm": "Chăm sóc thành công khách hàng tốt sẽ trực tiếp làm tăng giá trị vòng đời khách hàng và sự giới thiệu truyền miệng."
+        },
+        {
+          "id": "E176-13",
+          "w": "key stakeholder",
+          "r": "/ˈkiː ˈsteɪkˌhoʊl.dɚ/",
+          "m": "người có quyền quyết định / bên liên quan chính",
+          "d": "a decision-maker or leader within the client's organization whose goals must be met",
+          "ex": "A good CSM educates key stakeholders on how the solution supports their strategic initiatives.",
+          "exr": "",
+          "exm": "Một CSM giỏi sẽ giúp các lãnh đạo chủ chốt hiểu rõ giải pháp hỗ trợ mục tiêu chiến lược của họ như thế nào."
+        },
+        {
+          "id": "E176-14",
+          "w": "power user",
+          "r": "/ˈpaʊ.ɚ ˈjuː.zɚ/",
+          "m": "người dùng nòng cốt thành thạo",
+          "d": "an experienced daily user inside the customer's team who champions the product internally",
+          "ex": "Training internal power users helps the customer's team become self-sufficient faster.",
+          "exr": "",
+          "exm": "Đào tạo những người dùng nòng cốt giúp đội ngũ của khách hàng tự vận hành thành thạo nhanh hơn."
+        },
+        {
+          "id": "E176-15",
+          "w": "adoption blocker",
+          "r": "/əˈdɑːp.ʃən ˈblɑː.kɚ/",
+          "m": "rào cản gây tắc nghẽn việc áp dụng",
+          "d": "any technical, workflow, or training obstacle preventing the customer from progressing",
+          "ex": "During onboarding, I follow up weekly to remove any adoption blockers immediately.",
+          "exr": "",
+          "exm": "Trong giai đoạn đầu, tôi theo dõi hàng tuần để tháo gỡ ngay lập tức mọi rào cản gây kẹt tiến độ."
+        },
+        {
+          "id": "E176-16",
+          "w": "recurring issue",
+          "r": "/rɪˈkɝː.ɪŋ ˈɪʃ.uː/",
+          "m": "vấn đề lặp đi lặp lại nhiều lần",
+          "d": "a problem that happens repeatedly across orders or accounts, requiring a process fix",
+          "ex": "I document recurring issues, investigate the root cause, and propose systemic improvements.",
+          "exr": "",
+          "exm": "Tôi ghi chép lại các lỗi lặp đi lặp lại, tìm nguyên nhân gốc rễ và đề xuất cải tiến quy trình."
+        },
+        {
+          "id": "E176-17",
+          "w": "single source of truth",
+          "r": "/ˈsɪŋ.ɡəl ˈsɔːrs əv ˈtruːθ/",
+          "m": "nguồn dữ liệu chuẩn duy nhất",
+          "d": "one centralized, verified record in ERP or CRM that all teams rely on to avoid errors",
+          "ex": "We always use the latest approved ERP record as our single source of truth.",
+          "exr": "",
+          "exm": "Chúng tôi luôn sử dụng bản ghi ERP đã duyệt mới nhất làm nguồn dữ liệu chuẩn duy nhất cho mọi phòng ban."
+        },
+        {
+          "id": "E176-18",
+          "w": "quarterly business review",
+          "r": "/ˈkwɔːr.t̬ɚ.li ˈbɪz.nəs rɪˈvjuː/",
+          "m": "buổi họp đánh giá kết quả kinh doanh hàng quý (QBR)",
+          "d": "a strategic meeting with the customer to review achieved ROI, metrics, and future goals",
+          "ex": "In our quarterly business review, we demonstrated how order accuracy improved by 20%.",
+          "exr": "",
+          "exm": "Trong buổi họp đánh giá quý (QBR), chúng tôi đã chứng minh độ chính xác đơn hàng tăng lên 20%."
+        },
+        {
+          "id": "E176-19",
+          "w": "customer journey",
+          "r": "/ˈkʌs.tə.mɚ ˈdʒɝː.ni/",
+          "m": "hành trình trải nghiệm của khách hàng",
+          "d": "the complete lifecycle of a customer from initial onboarding through adoption, renewal, and expansion",
+          "ex": "A CSM guides the client across every stage of the customer journey.",
+          "exr": "",
+          "exm": "Người làm CSM đồng hành và dẫn dắt khách hàng qua từng chặng của hành trình trải nghiệm."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q176-0",
+          "q": "What is the fundamental difference between Customer Support and Customer Success Management?",
+          "o": [
+            "Customer Support is reactive to issues after they occur, whereas Customer Success is proactive in guiding adoption and driving desired outcomes.",
+            "Customer Support only uses email, while Customer Success only uses fax machines.",
+            "There is no difference; both wait for the customer to cancel their contract."
+          ],
+          "a": 0,
+          "why": "Customer Support reacts when a ticket is raised; Customer Success proactively monitors the customer journey, anticipates needs, and ensures long-term value realization."
+        },
+        {
+          "id": "q176-1",
+          "q": "According to the 14 Tenets of Customer Success, how should a CSM approach their role as an educator?",
+          "o": [
+            "Connect product knowledge directly to the customer's business goals and enable key stakeholders without becoming a full-time manual trainer.",
+            "Read the entire 500-page technical manual out loud to every employee every morning.",
+            "Refuse to explain how the product works so the customer has to guess."
+          ],
+          "a": 0,
+          "why": "A CSM creates maximum impact by linking product adoption to the client's specific business initiatives and enabling the client to become self-sufficient."
+        },
+        {
+          "id": "q176-2",
+          "q": "How should you handle an at-risk customer whose usage or order volume has suddenly dropped?",
+          "o": [
+            "Investigate the root cause early, align with internal teams, and agree with the customer on a clear recovery plan with actions and deadlines.",
+            "Ignore the account until the contract expires so you avoid a difficult conversation.",
+            "Send an automated marketing newsletter without checking their unresolved tickets."
+          ],
+          "a": 0,
+          "why": "Proactive intervention—identifying the root cause and executing a structured recovery plan—is essential to prevent churn and restore trust."
+        },
+        {
+          "id": "q176-3",
+          "q": "How does traditional B2B Account Management experience translate effectively into modern Customer Success?",
+          "o": [
+            "Order follow-up translates to proactive communication, requirement confirmation maps to onboarding, and issue resolution maps to removing adoption blockers.",
+            "B2B Account Management has zero connection to customers or communication.",
+            "Account Managers only work with machines, never with people."
+          ],
+          "a": 0,
+          "why": "Core B2B competencies—customer ownership, cross-functional coordination, data accuracy, and risk management—are the exact operational pillars of Customer Success."
+        },
+        {
+          "id": "q176-4",
+          "q": "What is the best way to eliminate a recurring customer issue that keeps affecting multiple accounts?",
+          "o": [
+            "Document the pattern clearly, analyze the root cause with internal teams, and implement a permanent verification step in the workflow.",
+            "Apologize every time it happens without changing the internal process.",
+            "Tell customers that recurring errors are normal."
+          ],
+          "a": 0,
+          "why": "Systemic improvement requires documenting the recurring pattern, coordinating cross-functionally on the root cause, and updating standard operating procedures."
+        },
+        {
+          "id": "q176-5",
+          "q": "When supporting a new customer during onboarding, what should your first priority be?",
+          "o": [
+            "Understand the customer's desired outcome, workflow, and main challenges, then break the setup into simple, actionable steps.",
+            "Immediately pitch an expensive contract upgrade on day one before they log in.",
+            "Send twenty PDF manuals without any next action or follow-up date."
+          ],
+          "a": 0,
+          "why": "Effective onboarding starts with understanding the client's goal, guiding them through simple steps with practical examples, and confirming clear next actions."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s176-0",
+          "title": "Kicking off customer onboarding and setting expectations",
+          "lines": [
+            {
+              "t": "Welcome aboard! My goal as your Customer Success Manager is to make sure your team achieves your desired outcomes smoothly.",
+              "r": "",
+              "m": "Chào mừng bạn! Mục tiêu của tôi trên cương vị Quản lý Thành công Khách hàng là đảm bảo đội ngũ của bạn đạt được kết quả mong đợi một cách trôi chảy."
+            },
+            {
+              "t": "Thank you. Our biggest challenge right now is migrating our existing order data without disrupting daily operations.",
+              "r": "",
+              "m": "Cảm ơn bạn. Thách thức lớn nhất của chúng tôi hiện tại là chuyển đổi dữ liệu đơn hàng cũ sang mà không làm gián đoạn vận hành hàng ngày."
+            },
+            {
+              "t": "I completely understand. Let's break the onboarding into three simple milestones and start with a pilot batch this week.",
+              "r": "",
+              "m": "Tôi hoàn toàn hiểu. Chúng ta hãy chia quá trình nhập cuộc thành 3 cột mốc đơn giản và bắt đầu bằng một lô chạy thử trong tuần này nhé."
+            },
+            {
+              "t": "I will coordinate directly with our technical team and check in with you every Wednesday to remove any blockers.",
+              "r": "",
+              "m": "Tôi sẽ phối hợp trực tiếp với đội kỹ thuật nội bộ và cập nhật với bạn vào mỗi thứ Tư để tháo gỡ ngay mọi vướng mắc."
+            }
+          ]
+        },
+        {
+          "id": "s176-1",
+          "title": "Re-engaging an at-risk account with a proactive recovery plan",
+          "lines": [
+            {
+              "t": "Hi David, I noticed in our health dashboard that your team's order volume and platform activity dropped over the past month.",
+              "r": "",
+              "m": "Chào David, tôi nhận thấy trên bảng theo dõi sức khỏe tài khoản rằng lượng đơn và mức độ sử dụng của nhóm anh đã giảm trong tháng qua."
+            },
+            {
+              "t": "To be honest, our team got frustrated after two recent shipment updates had mismatched SKU labels.",
+              "r": "",
+              "m": "Thực lòng mà nói, nhóm chúng tôi khá nản sau khi hai đợt cập nhật lô hàng gần đây bị lệch thông tin nhãn mã hàng SKU."
+            },
+            {
+              "t": "Thank you for sharing that candidly. I have already investigated the root cause with our operations team.",
+              "r": "",
+              "m": "Cảm ơn anh đã chia sẻ thẳng thắn. Tôi đã kiểm tra kỹ nguyên nhân gốc rễ với bộ phận vận hành của chúng tôi."
+            },
+            {
+              "t": "We have locked the latest approved template as the single source of truth and prepared a recovery plan for your upcoming orders.",
+              "r": "",
+              "m": "Chúng tôi đã khóa mẫu được duyệt mới nhất làm nguồn chuẩn duy nhất và chuẩn bị kế hoạch khắc phục cho các đơn hàng sắp tới của anh."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c176-0",
+          "q": "How would you explain the difference between Customer Success and Customer Support in an interview?",
+          "vi": "Bạn sẽ giải thích sự khác biệt giữa Customer Success và Customer Support như thế nào trong buổi phỏng vấn?",
+          "st": "Customer Support is usually reactive, whereas Customer Success is...",
+          "ph": [
+            "reactive when an issue happens",
+            "proactive and outcome-focused",
+            "guides product adoption across the customer journey",
+            "identifies risk signals early"
+          ],
+          "sa": "Customer Support is usually reactive: a customer has a problem and the team responds to solve it. Customer Success is proactive and outcome-focused: the CSM follows the customer journey, understands their business goals, guides adoption, and spots risk signals early so the customer achieves long-term value.",
+          "ss": [
+            "retention",
+            "customer lifetime value",
+            "prevent churn"
+          ],
+          "sc": "Answering a core conceptual question during a Remote Customer Success Manager interview."
+        },
+        {
+          "id": "c176-1",
+          "q": "How would you support a new B2B customer during onboarding?",
+          "vi": "Bạn sẽ hỗ trợ một khách hàng B2B mới trong giai đoạn hướng dẫn ban đầu (onboarding) như thế nào?",
+          "st": "First, I would understand the customer's + goals + and then...",
+          "ph": [
+            "understand their desired outcome and workflow",
+            "explain the process in simple steps",
+            "confirm clear next actions and deadlines",
+            "coordinate internally to remove blockers"
+          ],
+          "sa": "First, I would understand the customer's desired goal, daily workflow, and main difficulty. Then I would explain our process in simple steps, provide a practical example, and confirm the next action. After that, I would follow up regularly and coordinate with internal teams if any blocker arises.",
+          "ss": [
+            "set expectations",
+            "pilot run",
+            "time to value"
+          ],
+          "sc": "Demonstrating structured onboarding methodology to a hiring manager."
+        },
+        {
+          "id": "c176-2",
+          "q": "How would you manage a customer at risk of churning?",
+          "vi": "Bạn sẽ xử lý như thế nào khi phát hiện một khách hàng có nguy cơ rời bỏ (at-risk)?",
+          "st": "I would first identify the reason for the risk, then + action + and follow up until...",
+          "ph": [
+            "understand the root cause of low usage or dissatisfaction",
+            "confirm the facts with internal teams",
+            "agree on a recovery plan with clear deadlines",
+            "follow up closely until resolved"
+          ],
+          "sa": "I would first check the real reason for the risk, such as low usage, an unresolved delivery issue, or unclear expectations. Next, I would confirm the facts with internal teams and agree with the customer on a realistic recovery plan with clear actions and deadlines. I would follow up closely until the issue is fully resolved.",
+          "ss": [
+            "health score",
+            "proactive outreach",
+            "rebuild trust"
+          ],
+          "sc": "Explaining account retention and risk mitigation strategies."
+        },
+        {
+          "id": "c176-3",
+          "q": "How do you manage a high-volume customer portfolio without missing important details?",
+          "vi": "Làm thế nào bạn quản lý cùng lúc một danh mục lớn nhiều khách hàng mà không bỏ sót các chi tiết quan trọng?",
+          "st": "I organize my portfolio by + criteria + and maintain...",
+          "ph": [
+            "prioritize by customer impact and deadline risk",
+            "keep accurate records in ERP and CRM",
+            "use a disciplined weekly follow-up schedule",
+            "communicate early on urgent blockers"
+          ],
+          "sa": "I organize customers by priority based on business impact, delivery or adoption risk, and the next required action. I maintain accurate notes in ERP as a single source of truth and follow a strict weekly schedule so nothing falls through the cracks.",
+          "ss": [
+            "MISA AMIS",
+            "Base",
+            "status reports"
+          ],
+          "sc": "Showing strong organizational discipline for a Remote Account Manager or CSM role."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Onboarding Kickoff & 30-Day Success Plan – Welcome to Our Platform!\n\nDear Sarah,\n\nWelcome aboard! As your dedicated Customer Success Manager, my priority is to help your team achieve your [[desired outcome|random guess|personal hobby]] as smoothly and quickly as possible.\n\nTo ensure seamless [[customer onboarding|factory demolition|holiday booking]], I have broken our implementation into three clear milestones over the next 30 days. Our focus is on driving practical [[product adoption|paper waste|office gossip]] across your regional coordinators while using your approved ERP master file as our [[single source of truth|secret rumor|temporary sketch]].\n\nThrough [[proactive engagement|silent waiting|angry arguing]], we will review your [[customer health score|blood pressure|weather map]] every Friday. If your team encounters any [[adoption blocker|traffic jam|coffee spill]], please flag it immediately so I can coordinate with our technical specialists and put a [[recovery plan|vacation request|shopping list]] in place before it impacts your schedule.\n\nLet's confirm Tuesday at 10:00 AM for our kickoff call.\n\nBest regards,\nSally Nguyen\nCustomer Success & Account Management",
+        "trans": "Tiêu đề: Khởi động Onboarding & Kế hoạch Thành công 30 ngày – Chào mừng bạn đến với nền tảng của chúng tôi!\n\nThân gửi Sarah,\n\nChào mừng bạn đồng hành cùng chúng tôi! Trên cương vị là Quản lý Thành công Khách hàng (CSM) phụ trách trực tiếp, ưu tiên hàng đầu của tôi là giúp đội ngũ của bạn đạt được kết quả mong đợi một cách trôi chảy và nhanh chóng nhất.\n\nĐể đảm bảo quá trình hướng dẫn nhập cuộc (onboarding) diễn ra liền mạch, tôi đã chia lộ trình triển khai thành ba cột mốc rõ ràng trong 30 ngày tới. Trọng tâm của chúng ta là thúc đẩy việc áp dụng sản phẩm thực tế cho các điều phối viên khu vực của bạn, đồng thời sử dụng file dữ liệu gốc ERP đã duyệt làm nguồn dữ liệu chuẩn duy nhất.\n\nThông qua sự tương tác hỗ trợ chủ động, chúng ta sẽ cùng rà soát chỉ số sức khỏe tài khoản vào mỗi thứ Sáu. Nếu đội ngũ của bạn gặp bất kỳ rào cản tắc nghẽn nào trong quá trình sử dụng, xin hãy báo ngay để tôi phối hợp với bộ phận kỹ thuật và kích hoạt phương án xử lý kịp thời trước khi ảnh hưởng đến tiến độ của bạn.\n\nHãy xác nhận lịch họp khởi động vào 10:00 sáng thứ Ba tới nhé.\n\nTrân trọng,\nSally Nguyễn\nQuản trị Thành công Khách hàng & Tài khoản B2B",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 76,
+      "catPos": 31
+    },
+    {
+      "id": "177",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Remote job interviews: Account Management, merchandising and STAR stories",
+      "sub": "Phỏng vấn việc làm từ xa (Remote): quản lý tài khoản B2B, theo dõi đơn hàng và kể chuyện theo khung STAR",
+      "vocab": [
+        {
+          "id": "E177-0",
+          "w": "walk me through",
+          "r": "/ˈwɔːk ˈmiː ˈθruː/",
+          "m": "trình bày tóm lược qua (kinh nghiệm / quy trình)",
+          "d": "common interview prompt asking a candidate to explain their background step by step",
+          "ex": "Could you walk me through your experience in international B2B Account Management?",
+          "exr": "",
+          "exm": "Bạn có thể trình bày tóm lược qua kinh nghiệm của mình trong mảng Quản lý Tài khoản B2B quốc tế không?"
+        },
+        {
+          "id": "E177-1",
+          "w": "end-to-end order management",
+          "r": "/ˌend.təˈend ˈɔːr.dɚ ˈmæn.ɪdʒ.mənt/",
+          "m": "quản lý đơn hàng trọn quy trình từ đầu đến cuối",
+          "d": "handling an order from initial intake and ERP entry through factory production, QC, and shipment",
+          "ex": "I owned end-to-end order management for key retail accounts across the US, UK, and Australia.",
+          "exr": "",
+          "exm": "Tôi phụ trách quản lý đơn hàng trọn quy trình từ đầu đến cuối cho các khách hàng lớn tại Mỹ, Anh và Úc."
+        },
+        {
+          "id": "E177-2",
+          "w": "cross-functional collaboration",
+          "r": "/ˌkrɔːsˈfʌŋk.ʃən.əl kəˌlæb.əˈreɪ.ʃən/",
+          "m": "sự phối hợp liên phòng ban",
+          "d": "working closely across Planning, Purchasing, QA/QC, Factory, and Logistics teams",
+          "ex": "Strong cross-functional collaboration helps resolve production bottlenecks before they delay shipment.",
+          "exr": "",
+          "exm": "Sự phối hợp liên phòng ban chặt chẽ giúp giải quyết các điểm nghẽn sản xuất trước khi làm trễ lịch xuất hàng."
+        },
+        {
+          "id": "E177-3",
+          "w": "take ownership",
+          "r": "/ˈteɪk ˈoʊ.nɚ.ʃɪp/",
+          "m": "nhận trách nhiệm và làm chủ vấn đề",
+          "d": "accepting full accountability for a task or mistake and driving it to a solution",
+          "ex": "I am someone who takes ownership when an issue arises and focuses on practical solutions.",
+          "exr": "",
+          "exm": "Tôi là người luôn chủ động nhận trách nhiệm khi có sự cố phát sinh và tập trung tìm giải pháp thực tế."
+        },
+        {
+          "id": "E177-4",
+          "w": "delivery-delay risk",
+          "r": "/dɪˈlɪv.ɚ.i dɪˈleɪ ˈrɪsk/",
+          "m": "rủi ro trễ hạn giao hàng",
+          "d": "any factor in material sourcing or production that threatens the promised shipment date",
+          "ex": "When I spot a delivery-delay risk, I verify the updated timeline with the factory and inform the client early.",
+          "exr": "",
+          "exm": "Khi phát hiện rủi ro trễ giao hàng, tôi xác minh lại tiến độ thực tế với nhà máy và báo sớm cho khách hàng."
+        },
+        {
+          "id": "E177-5",
+          "w": "order discrepancy",
+          "r": "/ˈɔːr.dɚ dɪˈskrep.ən.si/",
+          "m": "sự sai lệch thông tin đơn hàng",
+          "d": "a mismatch between the customer's Purchase Order, Proforma Invoice, or packaging specs",
+          "ex": "As a Furniture Merchandiser, I resolved order discrepancies between buyers and production teams.",
+          "exr": "",
+          "exm": "Khi làm Merchandiser ngành nội thất, tôi đã xử lý triệt để các sai lệch thông tin đơn hàng giữa khách và xưởng."
+        },
+        {
+          "id": "E177-6",
+          "w": "feasible option",
+          "r": "/ˈfiː.zə.bəl ˈɑːp.ʃən/",
+          "m": "phương án khả thi thực tế",
+          "d": "a realistic alternative that the factory can execute without compromising quality or lead time",
+          "ex": "Instead of making an unrealistic promise, I offered two feasible options for the customer to choose from.",
+          "exr": "",
+          "exm": "Thay vì hứa hẹn thiếu thực tế, tôi đã đưa ra hai phương án khả thi để khách hàng lựa chọn."
+        },
+        {
+          "id": "E177-7",
+          "w": "post-delivery follow-up",
+          "r": "/ˌpoʊst dɪˈlɪv.ɚ.i ˈfɑː.loʊ.ʌp/",
+          "m": "chăm sóc và hỏi thăm sau khi giao hàng",
+          "d": "contacting the customer after cargo arrival to check satisfaction and plan seasonal reorders",
+          "ex": "I conduct post-delivery follow-up to gather feedback and understand the client's next seasonal needs.",
+          "exr": "",
+          "exm": "Tôi thực hiện chăm sóc sau giao hàng để lắng nghe phản hồi và nắm bắt nhu cầu mùa vụ tiếp theo của khách."
+        },
+        {
+          "id": "E177-8",
+          "w": "data accuracy",
+          "r": "/ˈdeɪ.t̬ə ˈæk.jɚ.ə.si/",
+          "m": "độ chính xác của dữ liệu",
+          "d": "ensuring quantities, prices, barcodes, and shipping marks in ERP are 100% error-free",
+          "ex": "I ensure data accuracy by cross-checking every ERP entry against the latest approved documents.",
+          "exr": "",
+          "exm": "Tôi đảm bảo độ chính xác của dữ liệu bằng cách đối chiếu mọi thông tin nhập ERP với chứng từ đã duyệt mới nhất."
+        },
+        {
+          "id": "E177-9",
+          "w": "STAR method",
+          "r": "/ˈstɑːr ˈmeθ.əd/",
+          "m": "cấu trúc trả lời phỏng vấn STAR (Tình huống - Nhiệm vụ - Hành động - Kết quả)",
+          "d": "interview framework structuring behavioral answers into Situation, Task, Action, and Result",
+          "ex": "Using the STAR method helps you present verified achievements with clear, measurable outcomes.",
+          "exr": "",
+          "exm": "Sử dụng phương pháp STAR giúp bạn trình bày các thành tích thực tế kèm kết quả đo lường rõ ràng."
+        },
+        {
+          "id": "E177-10",
+          "w": "transferable skill",
+          "r": "/trænsˈfɝː.ə.bəl ˈskɪl/",
+          "m": "kỹ năng có thể chuyển giao sang môi trường mới",
+          "d": "core ability like proactive follow-up and stakeholder coordination that applies across industries",
+          "ex": "Proactive follow-up and data discipline are highly transferable skills for remote SaaS operations.",
+          "exr": "",
+          "exm": "Kỹ năng theo dõi chủ động và kỷ luật dữ liệu là những kỹ năng chuyển giao cực kỳ giá trị cho vận hành từ xa."
+        },
+        {
+          "id": "E177-11",
+          "w": "asynchronous communication",
+          "r": "/eɪˈsɪŋ.krə.nəs kəˌmjuː.nəˈkeɪ.ʃən/",
+          "m": "giao tiếp làm việc không đồng bộ múi giờ",
+          "d": "clear written updates and documentation that allow remote teams across timezones to progress without waiting",
+          "ex": "Working with US, UK, and European clients trained me in clear asynchronous communication.",
+          "exr": "",
+          "exm": "Kinh nghiệm làm việc với khách hàng Mỹ, Anh và châu Âu đã rèn cho tôi kỹ năng giao tiếp lệch múi giờ rất rõ ràng."
+        },
+        {
+          "id": "E177-12",
+          "w": "account status report",
+          "r": "/əˈkaʊnt ˈsteɪ.t̬əs rɪˈpɔːrt/",
+          "m": "báo cáo tiến độ tài khoản khách hàng định kỳ",
+          "d": "a structured weekly summary showing open orders, CRDs, potential risks, and next actions",
+          "ex": "I delivered weekly account status reports to keep clients across three regions fully aligned.",
+          "exr": "",
+          "exm": "Tôi gửi báo cáo tình trạng tài khoản hàng tuần để giúp khách hàng ở cả ba khu vực luôn nắm rõ tiến độ."
+        },
+        {
+          "id": "E177-13",
+          "w": "corrective action",
+          "r": "/kəˈrek.tɪv ˈæk.ʃən/",
+          "m": "bành động khắc phục và phòng ngừa",
+          "d": "a concrete step taken to fix a defect or mistake and prevent it from happening again",
+          "ex": "Whenever a mistake occurred, I executed immediate corrective action and tightened our checking process.",
+          "exr": "",
+          "exm": "Bất cứ khi nào có lỗi phát sinh, tôi đều thực hiện hành động khắc phục ngay và siết chặt quy trình kiểm tra."
+        },
+        {
+          "id": "E177-14",
+          "w": "attention to detail",
+          "r": "/əˈten.ʃən tə ˈdiː.teɪl/",
+          "m": "sự tỉ mỉ, cẩn trọng trong từng chi tiết",
+          "d": "carefulness in reviewing specifications, labels, contracts, and shipping documents",
+          "ex": "My strongest qualities are proactive follow-up, cross-functional coordination, and attention to detail.",
+          "exr": "",
+          "exm": "Điểm mạnh lớn nhất của tôi là sự chủ động theo sát công việc, phối hợp liên phòng ban và sự tỉ mỉ chi tiết."
+        },
+        {
+          "id": "E177-15",
+          "w": "Customer Required Date",
+          "r": "/ˈkʌs.tə.mɚ rɪˈkwaɪrd ˈdeɪt/",
+          "m": "ngày khách hàng yêu cầu giao hàng (CRD)",
+          "d": "the target date specified on a purchase order by which cargo must be shipped",
+          "ex": "I monitored production progress and Customer Required Dates across all export orders.",
+          "exr": "",
+          "exm": "Tôi theo sát tiến độ sản xuất và Ngày yêu cầu giao hàng (CRD) trên toàn bộ các đơn hàng xuất khẩu."
+        },
+        {
+          "id": "E177-16",
+          "w": "proforma invoice",
+          "r": "/proʊˈfɔːr.mə ˈɪn.vɔɪs/",
+          "m": "hóa đơn chiếu lệ (PI)",
+          "d": "a preliminary bill of sale sent to buyers ahead of shipment to confirm order details and payment terms",
+          "ex": "I processed Proforma Invoices and Purchase Orders for both sample and bulk furniture runs.",
+          "exr": "",
+          "exm": "Tôi xử lý Hóa đơn chiếu lệ (PI) và Đơn đặt hàng (PO) cho cả đơn hàng mẫu lẫn đơn sản xuất đại trà."
+        },
+        {
+          "id": "E177-17",
+          "w": "tight deadline",
+          "r": "/ˈtaɪt ˈded.laɪn/",
+          "m": "thời hạn gấp rút / sát nút",
+          "d": "a demanding schedule with very little time remaining before delivery",
+          "ex": "Under tight deadlines, I stay calm, prioritize by customer impact, and confirm facts before promising.",
+          "exr": "",
+          "exm": "Dưới áp lực hạn chót gấp rút, tôi giữ bình tĩnh, ưu tiên theo mức độ ảnh hưởng và xác minh kỹ trước khi hứa."
+        },
+        {
+          "id": "E177-18",
+          "w": "operational discipline",
+          "r": "/ˌɑː.pəˈreɪ.ʃən.əl ˈdɪs.ə.plɪn/",
+          "m": "kỷ luật vận hành",
+          "d": "consistent adherence to accurate documentation, timely reporting, and process verification",
+          "ex": "I bring nine years of international B2B communication and operational discipline to your team.",
+          "exr": "",
+          "exm": "Tôi mang đến 9 năm kinh nghiệm giao tiếp B2B quốc tế và tính kỷ luật vận hành cho đội ngũ của bạn."
+        },
+        {
+          "id": "E177-19",
+          "w": "long-term fit",
+          "r": "/ˌlɔːŋˈtɝːm ˈfɪt/",
+          "m": "sự phù hợp gắn bó lâu dài",
+          "d": "alignment between a candidate's skills, values, and career direction and the company's needs",
+          "ex": "My priority is finding a strong long-term fit where I can contribute to customer operations.",
+          "exr": "",
+          "exm": "Ưu tiên của tôi là tìm được một vị trí phù hợp lâu dài nơi tôi có thể đóng góp cho vận hành khách hàng."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q177-0",
+          "q": "An interviewer asks: 'Tell me about yourself and walk me through your experience.' Which structure is most effective for Sally's profile?",
+          "o": [
+            "Summarize 9 years across Sales Admin, Furniture Merchandising, and B2B Account Management, highlight end-to-end order coordination and ERP accuracy, and connect to the target remote role.",
+            "Recite every childhood school subject starting from primary school.",
+            "Say 'Everything is on my resume, please read it yourself.'"
+          ],
+          "a": 0,
+          "why": "A concise 60-second pitch summarizing core years of experience, key operational strengths, and alignment with the target remote role sets a strong professional tone."
+        },
+        {
+          "id": "q177-1",
+          "q": "When asked 'Why do you want remote work?', how should you frame your answer positively and professionally?",
+          "o": [
+            "Explain that after years of six-day onsite factory commutes, you want to invest that commute time into productive, focused customer communication, documentation, and follow-up.",
+            "Say that you want to sleep until noon and watch movies all day.",
+            "Complain bitterly about your previous boss."
+          ],
+          "a": 0,
+          "why": "Framing remote work around productivity, time optimization, and proven ability to support international clients through digital tools reassures employers of your work ethic."
+        },
+        {
+          "id": "q177-2",
+          "q": "An interviewer asks how you handle a delivery risk when a factory falls behind schedule. What is the best response?",
+          "o": [
+            "Check the real root cause and updated timeline with the factory first, explore practical options, and inform the customer early and honestly.",
+            "Wait until the customer complains two weeks after the missed shipment date.",
+            "Make a fake promise that the goods are already on the ship."
+          ],
+          "a": 0,
+          "why": "Employers value proactive risk communication—verifying facts internally first and presenting honest timelines alongside workable options."
+        },
+        {
+          "id": "q177-3",
+          "q": "How should you address a question about your development area when applying for a SaaS Customer Success role with a B2B manufacturing background?",
+          "o": [
+            "Acknowledge your direct strength is in B2B operations and ERP, highlight your completed Customer Success certifications and experience with MISA AMIS/Base, and show readiness to learn their CRM quickly.",
+            "Pretend you invented Salesforce and have 20 years of coding experience.",
+            "Say you have no weaknesses at all."
+          ],
+          "a": 0,
+          "why": "Honesty paired with concrete proof of continuous learning (CustomerSuccessU & LinkedIn certificates) and software adaptability builds high credibility."
+        },
+        {
+          "id": "q177-4",
+          "q": "What is the best strategy when answering 'What are your salary expectations?' early in an interview?",
+          "o": [
+            "Express openness to discuss based on role scope, working arrangement, and benefits, and ask to understand the company's budget range for the position.",
+            "Refuse to speak until they wire money immediately.",
+            "Say you will work for free forever."
+          ],
+          "a": 0,
+          "why": "Staying flexible while inquiring about the company's budgeted range keeps you in contention without underpricing or pricing yourself out prematurely."
+        },
+        {
+          "id": "q177-5",
+          "q": "Which question is strongest to ask the interviewer at the end of an Account Management or Customer Success interview?",
+          "o": [
+            "What would success look like in the first 90 days, and which metrics are most important for this role?",
+            "How soon can I take a month of vacation?",
+            "What does your company actually do?"
+          ],
+          "a": 0,
+          "why": "Asking about 90-day success criteria and key performance metrics shows an outcome-driven, proactive mindset."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s177-0",
+          "title": "Answering 'Walk me through your experience' and 'Why remote work?'",
+          "lines": [
+            {
+              "t": "Thanks for joining us today, Sally. Could you walk me through your background and what brings you to this remote Account Manager role?",
+              "r": "",
+              "m": "Cảm ơn Sally đã tham gia buổi phỏng vấn hôm nay. Bạn có thể trình bày tóm lược về kinh nghiệm và điều gì đưa bạn đến vị trí Quản lý Tài khoản từ xa này?"
+            },
+            {
+              "t": "Certainly. I have nine years of experience across Sales Administration, Furniture Merchandising, and international B2B Account Management.",
+              "r": "",
+              "m": "Vâng ạ. Tôi có 9 năm kinh nghiệm trải đều từ Admin Kinh doanh, Merchandiser Nội thất đến Quản lý Tài khoản B2B quốc tế."
+            },
+            {
+              "t": "My work has focused on end-to-end order coordination, ERP data accuracy, production follow-up, and resolving issues for clients in the US, UK, Europe, and Australia.",
+              "r": "",
+              "m": "Công việc của tôi tập trung vào điều phối đơn hàng trọn quy trình, đảm bảo dữ liệu ERP chính xác, theo sát sản xuất và xử lý vấn đề cho khách hàng ở Mỹ, Anh, Châu Âu và Úc."
+            },
+            {
+              "t": "After years of commuting six days a week to factories in Binh Duong, I am seeking a remote role where I can channel that time into supporting customers and operations.",
+              "r": "",
+              "m": "Sau nhiều năm đi lại 6 ngày một tuần tới các nhà máy ở Bình Dương, tôi tìm kiếm công việc từ xa để dành trọn thời gian đó cho việc hỗ trợ khách hàng và vận hành hiệu quả hơn."
+            }
+          ]
+        },
+        {
+          "id": "s177-1",
+          "title": "Explaining how you manage orders and ensure data accuracy",
+          "lines": [
+            {
+              "t": "In a fast-paced remote team, how do you manage an order from confirmation to shipment without missing details?",
+              "r": "",
+              "m": "Trong một đội ngũ làm việc từ xa nhịp độ nhanh, bạn quản lý đơn hàng từ lúc xác nhận đến khi xuất tàu như thế nào để không sót chi tiết?"
+            },
+            {
+              "t": "First, I confirm all customer requirements and cross-check product specs, labels, packaging, and Customer Required Dates.",
+              "r": "",
+              "m": "Trước tiên, tôi xác nhận đầy đủ yêu cầu của khách và đối chiếu kỹ thông số sản phẩm, tem nhãn, bao bì cùng Ngày giao hàng yêu cầu (CRD)."
+            },
+            {
+              "t": "Then I update the order in ERP, using the latest approved version as our single source of truth.",
+              "r": "",
+              "m": "Sau đó tôi cập nhật đơn hàng lên ERP, luôn lấy bản được duyệt mới nhất làm nguồn dữ liệu chuẩn duy nhất."
+            },
+            {
+              "t": "I coordinate weekly with the factory on production and inspections, and send clear status updates until the shipment is completed.",
+              "r": "",
+              "m": "Tôi phối hợp hàng tuần với nhà máy về tiến độ sản xuất và kiểm hàng, đồng thời gửi báo cáo cập nhật rõ ràng cho đến khi lô hàng hoàn tất."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c177-0",
+          "q": "Tell me about yourself and walk me through your experience.",
+          "vi": "Hãy giới thiệu về bản thân và trình bày tóm lược kinh nghiệm làm việc của bạn.",
+          "st": "I have 9 years of experience across + roles + focusing on...",
+          "ph": [
+            "9 years of experience across Sales Admin, Furniture Merchandising, and B2B Account Management",
+            "customer communication, order processing, and ERP updates",
+            "production follow-up and shipping documents",
+            "looking for a remote role in Account Management or Customer Success"
+          ],
+          "sa": "I have 9 years of experience across Sales Administration, Furniture Merchandising, and B2B Account Management. My work has focused on customer communication, order processing, quotations, ERP updates, production follow-up, and issue resolution for international clients. I am now looking for a remote role in Account Management or Customer Success where I can contribute my follow-up and coordination skills.",
+          "ss": [
+            "international B2B",
+            "order-to-delivery",
+            "cross-functional"
+          ],
+          "sc": "Opening question in a remote job interview."
+        },
+        {
+          "id": "c177-1",
+          "q": "How do you handle a delivery risk or tight deadline?",
+          "vi": "Bạn xử lý rủi ro trễ hạn giao hàng hoặc áp lực thời hạn gấp rút như thế nào?",
+          "st": "I first check the real reason with the related team, then + action + and inform...",
+          "ph": [
+            "check the real reason and updated timeline with the factory",
+            "look for practical solutions",
+            "inform the customer early and honestly",
+            "agree on a realistic next step without making false promises"
+          ],
+          "sa": "I first check the real reason for the risk and confirm the updated timeline with the factory or related team. Then I look for practical solutions and inform the customer early. If the timeline needs to change, I explain the situation honestly and agree on a realistic next step rather than making a promise that could hurt quality.",
+          "ss": [
+            "prioritize by impact",
+            "stay calm",
+            "proactive update"
+          ],
+          "sc": "Answering a situational question about operational pressure and delivery management."
+        },
+        {
+          "id": "c177-2",
+          "q": "How do you ensure data accuracy across orders, labels, and customer records?",
+          "vi": "Làm thế nào bạn đảm bảo độ chính xác của dữ liệu trên đơn hàng, tem nhãn và hồ sơ khách hàng?",
+          "st": "I check the latest customer-approved information before + action + and always use...",
+          "ph": [
+            "verify the latest customer-approved version",
+            "cross-check product details, labels, packaging, and delivery dates",
+            "compare with order documents",
+            "use the latest approved version as the single source of truth"
+          ],
+          "sa": "I check the latest customer-approved information before updating an order or record, especially product details, labels, packaging, quantities, and delivery dates. I compare the details against official order documents and always use the latest approved version as the single source of truth.",
+          "ss": [
+            "ERP system",
+            "MISA AMIS",
+            "verification step"
+          ],
+          "sc": "Demonstrating operational discipline and accuracy in a remote coordination interview."
+        },
+        {
+          "id": "c177-3",
+          "q": "Why should we hire you for this remote Account Management / Customer Coordination role?",
+          "vi": "Tại sao chúng tôi nên tuyển dụng bạn cho vị trí Quản lý Tài khoản / Điều phối Khách hàng từ xa này?",
+          "st": "I bring 9 years of practical B2B experience in + skills + and I am...",
+          "ph": [
+            "9 years of practical B2B experience",
+            "careful with details and proactive with follow-up",
+            "comfortable coordinating across internal teams",
+            "quick to learn new ERP and CRM systems"
+          ],
+          "sa": "I bring 9 years of practical B2B experience in customer communication, order coordination, data accuracy, and issue resolution. I am careful with details, proactive with follow-up, and comfortable working across different internal teams. I can support daily customer operations reliably and learn your systems quickly.",
+          "ss": [
+            "customer ownership",
+            "operational discipline",
+            "long-term fit"
+          ],
+          "sc": "Closing pitch during a remote job interview."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Application for Remote Account Manager – Dang Ngoc Kim Nguyen\n\nDear Hiring Manager,\n\nI am writing to apply for the Remote Account Manager position. I bring nine years of experience across sales administration, furniture merchandising, and international B2B account management, owning [[end-to-end order management|office cleaning|graphic drawing]] for clients across the US, UK, Europe, and Australia.\n\nIn my previous roles, I clarified customer requirements, prepared [[proforma invoice|medical receipt|cinema ticket]] documents, maintained high [[data accuracy|noise level|fuel consumption]] in ERP systems, and monitored production against every [[Customer Required Date|national holiday|lunch break]]. When a [[delivery-delay risk|weather forecast|sports match]] arose, I practiced [[cross-functional collaboration|solo guessing|silent waiting]] with factory and logistics teams to present customers with a [[feasible option|false promise|blank page]] early.\n\nBy taking initiative to [[reactivate an account|delete a file|close a shop]] that had been dormant for years, I secured three new orders totaling over USD 60,000. I have also completed Customer Success Fundamentals certifications to strengthen my approach to onboarding and retention.\n\nThank you for your time and consideration. I look forward to discussing how my operational discipline can support your team.\n\nKind regards,\nDang Ngoc Kim Nguyen (Sally)",
+        "trans": "Tiêu đề: Ứng tuyển vị trí Quản lý Tài khoản Từ xa (Remote Account Manager) – Đặng Ngọc Kim Nguyên\n\nKính gửi Quản lý Tuyển dụng,\n\nTôi viết thư này để ứng tuyển vào vị trí Quản lý Tài khoản Từ xa. Tôi mang đến 9 năm kinh nghiệm trong lĩnh vực admin kinh doanh, merchandiser ngành nội thất và quản lý tài khoản B2B quốc tế, trực tiếp phụ trách quản lý đơn hàng trọn quy trình từ đầu đến cuối cho khách hàng tại Mỹ, Anh, Châu Âu và Úc.\n\nTrong các vị trí trước đây, tôi làm rõ yêu cầu của khách hàng, lập chứng từ Hóa đơn chiếu lệ (PI), duy trì độ chính xác dữ liệu cao trên hệ thống ERP và theo sát tiến độ sản xuất theo đúng từng Ngày yêu cầu giao hàng (CRD). Khi phát sinh rủi ro trễ giao hàng, tôi thực hiện phối hợp liên phòng ban chặt chẽ với nhà máy và đội logistics để sớm đưa ra phương án khả thi cho khách hàng.\n\nNhờ chủ động kích hoạt lại một tài khoản khách hàng cũ đã ngưng giao dịch nhiều năm, tôi đã mang về 3 đơn hàng mới với tổng giá trị hơn 60.000 USD. Tôi cũng đã hoàn thành các chứng chỉ Nền tảng Quản trị Thành công Khách hàng (Customer Success Fundamentals) để nâng cao kỹ năng hướng dẫn và giữ chân khách hàng.\n\nCảm ơn ông/bà đã dành thời gian xem xét hồ sơ. Tôi rất mong có cơ hội trao đổi thêm về cách tính kỷ luật vận hành của mình có thể đóng góp cho đội ngũ của quý công ty.\n\nTrân trọng,\nĐặng Ngọc Kim Nguyên (Sally)",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 77,
+      "catPos": 32
+    },
+    {
+      "id": "178",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Workplace communication: giving and receiving constructive feedback",
+      "sub": "Giao tiếp nơi làm việc: kỹ năng xin, nhận và đưa phản hồi mang tính xây dựng",
+      "vocab": [
+        {
+          "id": "E178-0",
+          "w": "constructive feedback",
+          "r": "/kənˈstrʌk.tɪv ˈfiːd.bæk/",
+          "m": "phản hồi / góp ý mang tính xây dựng",
+          "d": "specific, supportive input aimed at helping someone improve behavior or performance",
+          "ex": "Constructive feedback focuses on specific actions and clear next steps rather than personal criticism.",
+          "exr": "",
+          "exm": "Phản hồi mang tính xây dựng tập trung vào hành vi cụ thể và bước cải thiện rõ ràng thay vì chỉ trích cá nhân."
+        },
+        {
+          "id": "E178-1",
+          "w": "blind spot",
+          "r": "/ˈblaɪnd ˈspɑːt/",
+          "m": "điểm mù (thiếu sót bản thân không tự nhận ra)",
+          "d": "an area of weakness or habit in your communication or workflow that you do not notice yourself",
+          "ex": "Asking colleagues for input helps you uncover blind spots in how you communicate.",
+          "exr": "",
+          "exm": "Chủ động xin góp ý từ đồng nghiệp giúp bạn nhận ra những điểm mù trong cách giao tiếp của chính mình."
+        },
+        {
+          "id": "E178-2",
+          "w": "potential trap",
+          "r": "/pəˈten.ʃəl ˈtræp/",
+          "m": "cái bẫy kìm hãm tiềm năng",
+          "d": "failing to reach your full capability because you avoid asking for honest feedback",
+          "ex": "To avoid the potential trap, I proactively ask my manager for specific feedback after key projects.",
+          "exr": "",
+          "exm": "Để tránh cái bẫy kìm hãm tiềm năng, tôi chủ động xin sếp góp ý cụ thể sau các dự án quan trọng."
+        },
+        {
+          "id": "E178-3",
+          "w": "growth mindset",
+          "r": "/ˈɡroʊθ ˈmaɪnd.set/",
+          "m": "tư duy phát triển cầu thị",
+          "d": "the belief that abilities and performance can be developed through dedication and feedback",
+          "ex": "Approaching feedback with a growth mindset turns criticism into useful coaching data.",
+          "exr": "",
+          "exm": "Tiếp nhận góp ý với tư duy cầu thị sẽ biến những lời phê bình thành dữ liệu quý giá để phát triển."
+        },
+        {
+          "id": "E178-4",
+          "w": "defensive reaction",
+          "r": "/dɪˈfen.sɪv riˈæk.ʃən/",
+          "m": "phản ứng phòng thủ (bảo vệ cái tôi)",
+          "d": "immediately making excuses or arguing when receiving critical feedback",
+          "ex": "Pause and take a breath before replying so you avoid a defensive reaction.",
+          "exr": "",
+          "exm": "Hãy dừng lại một nhịp trước khi trả lời để tránh rơi vào phản ứng phòng thủ."
+        },
+        {
+          "id": "E178-5",
+          "w": "separate fact from opinion",
+          "r": "/ˈsep.ə.reɪt ˈfækt frəm əˈpɪn.jən/",
+          "m": "tách biệt sự thật khách quan khỏi ý kiến chủ quan",
+          "d": "distinguishing verifiable events and behavior from someone's general impression",
+          "ex": "Asking for a concrete example helps you separate fact from opinion.",
+          "exr": "",
+          "exm": "Việc hỏi xin một ví dụ cụ thể sẽ giúp bạn tách biệt được dữ kiện thực tế khỏi cảm nhận chủ quan."
+        },
+        {
+          "id": "E178-6",
+          "w": "recurring pattern",
+          "r": "/rɪˈkɝː.ɪŋ ˈpæt.ɚn/",
+          "m": "khuôn mẫu / xu hướng lặp đi lặp lại",
+          "d": "something mentioned by multiple people over time, indicating a real habit to address",
+          "ex": "One comment may be an opinion, but feedback from three teammates shows a recurring pattern.",
+          "exr": "",
+          "exm": "Một nhận xét đơn lẻ có thể chỉ là ý kiến cá nhân, nhưng góp ý giống nhau từ ba đồng nghiệp cho thấy một xu hướng lặp lại."
+        },
+        {
+          "id": "E178-7",
+          "w": "forward focus",
+          "r": "/ˈfɔːr.wɚd ˈfoʊ.kəs/",
+          "m": "tập trung hướng tới giải pháp cho lần sau",
+          "d": "shifting the conversation from past blame toward what to do differently next time",
+          "ex": "Effective feedback ends with a forward focus so the receiver knows exactly how to improve.",
+          "exr": "",
+          "exm": "Một lời góp ý hiệu quả luôn kết thúc bằng định hướng cho tương lai để người nhận biết cách làm tốt hơn lần sau."
+        },
+        {
+          "id": "E178-8",
+          "w": "actionable insight",
+          "r": "/ˈæk.ʃən.ə.bəl ˈɪn.saɪt/",
+          "m": "góp ý sâu sắc có thể chuyển thành hành động ngay",
+          "d": "clear, specific information that gives a practical step you can execute right away",
+          "ex": "Instead of vague praise, ask questions that generate actionable insights.",
+          "exr": "",
+          "exm": "Thay vì những lời khen chung chung, hãy đặt câu hỏi để nhận được các góp ý cụ thể có thể hành động ngay."
+        },
+        {
+          "id": "E178-9",
+          "w": "reflect on",
+          "r": "/rɪˈflekt ˈɑːn/",
+          "m": "suy ngẫm kỹ về",
+          "d": "to think carefully and calmly about feedback before deciding on a response",
+          "ex": "I would like to take some time to reflect on your feedback and come back with a clear plan.",
+          "exr": "",
+          "exm": "Tôi muốn dành chút thời gian suy ngẫm kỹ về góp ý của bạn và sẽ phản hồi lại bằng một kế hoạch rõ ràng."
+        },
+        {
+          "id": "E178-10",
+          "w": "specific example",
+          "r": "/spəˈsɪf.ɪk ɪɡˈzæm.pəl/",
+          "m": "ví dụ tình huống cụ thể",
+          "d": "a real instance showing when a behavior happened and what impact it created",
+          "ex": "Could you share one specific example so I can understand what you expected to see?",
+          "exr": "",
+          "exm": "Bạn có thể chia sẻ một ví dụ cụ thể để tôi hiểu rõ hơn điều bạn kỳ vọng là gì không?"
+        },
+        {
+          "id": "E178-11",
+          "w": "collaborative process",
+          "r": "/kəˈlæb.ɚ.ə.t̬ɪv ˈprɑː.ses/",
+          "m": "quá trình trao đổi hợp tác hai chiều",
+          "d": "a two-way dialogue where both sides share perspectives to solve a problem together",
+          "ex": "Giving feedback should be a collaborative process, not a one-way lecture.",
+          "exr": "",
+          "exm": "Đưa phản hồi nên là một quá trình trao đổi hợp tác hai chiều, chứ không phải màn giáo huấn một chiều."
+        },
+        {
+          "id": "E178-12",
+          "w": "supportive tone",
+          "r": "/səˈpɔːr.tɪv ˈtoʊn/",
+          "m": "giọng điệu hỗ trợ, thiện chí",
+          "d": "speaking in a calm, respectful, and encouraging way that preserves trust",
+          "ex": "Using a supportive tone makes it much easier for colleagues to accept tough feedback.",
+          "exr": "",
+          "exm": "Giữ giọng điệu hỗ trợ và thiện chí giúp đồng nghiệp dễ dàng đón nhận những góp ý thẳng thắn hơn nhiều."
+        },
+        {
+          "id": "E178-13",
+          "w": "data point",
+          "r": "/ˈdeɪ.t̬ə ˈpɔɪnt/",
+          "m": "một điểm dữ liệu tham khảo",
+          "d": "viewing a piece of feedback objectively as information rather than a judgment on your worth",
+          "ex": "Treat every piece of criticism as a useful data point for your professional growth.",
+          "exr": "",
+          "exm": "Hãy coi mỗi lời nhận xét như một điểm dữ liệu hữu ích phục vụ cho sự phát triển nghề nghiệp của bạn."
+        },
+        {
+          "id": "E178-14",
+          "w": "take a step back",
+          "r": "/ˈteɪk ə ˈstep ˈbæk/",
+          "m": "lùi lại một nhịp để bình tĩnh nhìn nhận",
+          "d": "to pause emotionally and view a situation objectively before reacting",
+          "ex": "When receiving unexpected criticism, take a step back before you respond.",
+          "exr": "",
+          "exm": "Khi nhận được lời phê bình bất ngờ, hãy lùi lại một nhịp để bình tĩnh suy xét trước khi phản hồi."
+        },
+        {
+          "id": "E178-15",
+          "w": "align expectations",
+          "r": "/əˈlaɪn ˌek.spekˈteɪ.ʃənz/",
+          "m": "làm rõ và khớp kỳ vọng giữa các bên",
+          "d": "ensuring teammates and customers share the exact same understanding of deliverables and timing",
+          "ex": "Regular check-ins help align expectations between Sales, Purchasing, and the factory.",
+          "exr": "",
+          "exm": "Các buổi rà soát định kỳ giúp khớp đúng kỳ vọng giữa bộ phận Kinh doanh, Mua hàng và Nhà máy."
+        },
+        {
+          "id": "E178-16",
+          "w": "personal attack",
+          "r": "/ˈpɝː.sən.əl əˈtæk/",
+          "m": "sự công kích cá nhân",
+          "d": "criticizing someone's character instead of describing observable behavior and impact",
+          "ex": "Saying 'You are careless' feels like a personal attack; describe the missed step instead.",
+          "exr": "",
+          "exm": "Nói 'Bạn thật cẩu thả' dễ bị coi là công kích cá nhân; thay vào đó hãy nêu rõ bước kiểm tra bị thiếu."
+        },
+        {
+          "id": "E178-17",
+          "w": "observable behavior",
+          "r": "/əbˈzɝː.və.bəl bɪˈheɪ.vjɚ/",
+          "m": "hành vi thực tế quan sát được",
+          "d": "concrete actions or words that anyone can verify, rather than assumptions about intent",
+          "ex": "Always anchor your feedback in observable behavior and its operational impact.",
+          "exr": "",
+          "exm": "Hãy luôn neo lời góp ý của bạn vào các hành vi thực tế quan sát được và tác động của nó tới công việc."
+        },
+        {
+          "id": "E178-18",
+          "w": "peer feedback",
+          "r": "/ˈpɪr ˈfiːd.bæk/",
+          "m": "góp ý đồng cấp giữa các đồng nghiệp",
+          "d": "feedback exchanged laterally between colleagues working on the same workflow",
+          "ex": "Peer feedback between Account Managers and Purchasing speeds up order handovers.",
+          "exr": "",
+          "exm": "Góp ý trao đổi giữa Quản lý Tài khoản và bộ phận Mua hàng giúp tăng tốc độ bàn giao đơn hàng."
+        },
+        {
+          "id": "E178-19",
+          "w": "next action",
+          "r": "/ˈnekst ˈæk.ʃən/",
+          "m": "bước hành động cụ thể tiếp theo",
+          "d": "the immediate, concrete commitment agreed upon at the end of a feedback conversation",
+          "ex": "After every important feedback session, I write down one clear next action.",
+          "exr": "",
+          "exm": "Sau mỗi buổi nhận góp ý quan trọng, tôi luôn ghi lại một bước hành động cụ thể tiếp theo."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q178-0",
+          "q": "Why is asking 'Do you have any feedback for me?' often ineffective in the workplace?",
+          "o": [
+            "It is too broad and vague, making it hard for the other person to give specific, actionable insights.",
+            "It is illegal to ask for feedback on weekdays.",
+            "Managers only understand questions that are 500 words long."
+          ],
+          "a": 0,
+          "why": "Broad questions invite polite, generic replies like 'Everything is fine.' Asking about a specific meeting, update, or task yields actionable feedback."
+        },
+        {
+          "id": "q178-1",
+          "q": "Which question is best when asking an internal teammate for specific feedback on your order updates?",
+          "o": [
+            "Was the information I shared clear enough for you to take action, and is there anything I should include next time to make coordination easier?",
+            "Am I the greatest coworker you have ever met?",
+            "Why do you never read my emails?"
+          ],
+          "a": 0,
+          "why": "Focusing on clarity, actionability, and future improvement makes it safe and easy for colleagues to share practical suggestions."
+        },
+        {
+          "id": "q178-2",
+          "q": "When you receive unexpected or tough feedback that triggers your ego, what should you do first?",
+          "o": [
+            "Take a step back, thank the person for sharing, ask for a specific example, and take time to reflect before reacting.",
+            "Argue loudly for thirty minutes to prove they are wrong.",
+            "Quit the meeting immediately and block their email."
+          ],
+          "a": 0,
+          "why": "Pausing prevents a defensive reaction, allows you to separate fact from opinion, and preserves professional trust."
+        },
+        {
+          "id": "q178-3",
+          "q": "How should you structure constructive feedback when a teammate sends two order updates with outdated label versions?",
+          "o": [
+            "State the specific situation, describe the rechecking impact on Purchasing and the factory, and ask them to verify the latest approved file next time.",
+            "Tell them 'You are a careless person who ruins everything.'",
+            "Say nothing and let the factory print the wrong labels again."
+          ],
+          "a": 0,
+          "why": "Structuring feedback around Situation -> Observable Behavior -> Impact -> Forward Focus solves the issue without attacking the person."
+        },
+        {
+          "id": "q178-4",
+          "q": "What makes feedback a collaborative process rather than a one-way lecture?",
+          "o": [
+            "Sharing your observation and then asking 'How do you see it from your side?' to listen to their perspective.",
+            "Sending an anonymous complaint letter.",
+            "Refusing to let the other person speak."
+          ],
+          "a": 0,
+          "why": "Inviting the other person's perspective uncovers hidden blockers and builds shared ownership of the solution."
+        },
+        {
+          "id": "q178-5",
+          "q": "If a colleague asks you for feedback on the spot and you are not prepared, what is the best reply?",
+          "o": [
+            "I'd like to take a little time to think about it so I can give you feedback that is specific and useful.",
+            "I have nothing to say to you ever.",
+            "Make up a random criticism without any examples."
+          ],
+          "a": 0,
+          "why": "Taking time to prepare ensures your feedback is thoughtful, specific, and grounded in real examples."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s178-0",
+          "title": "Asking a manager and internal team for specific, actionable feedback",
+          "lines": [
+            {
+              "t": "Hi Mark, I am working on improving my customer risk updates and weekly account reports.",
+              "r": "",
+              "m": "Chào Mark, tôi đang nỗ lực cải thiện cách cập nhật rủi ro cho khách hàng và báo cáo tài khoản hàng tuần."
+            },
+            {
+              "t": "After this shipment closes, could you share one thing I did well and one thing I could improve next time?",
+              "r": "",
+              "m": "Sau khi lô hàng này hoàn tất, anh có thể chia sẻ một điểm tôi đã làm tốt và một điểm tôi nên cải thiện cho lần tới không?"
+            },
+            {
+              "t": "Sure, Sally. Your timeline tracking was very thorough, and adding a quick summary line at the top of the email would make it even faster for management to read.",
+              "r": "",
+              "m": "Chắc chắn rồi Sally. Phần theo dõi tiến độ của bạn rất kỹ lưỡng, và nếu thêm một dòng tóm tắt nhanh ở đầu email thì ban giám đốc sẽ nắm bắt còn nhanh hơn nữa."
+            },
+            {
+              "t": "Thank you, that is really helpful. Starting this Friday, I will include a three-bullet executive summary at the top of every weekly report.",
+              "r": "",
+              "m": "Cảm ơn anh, góp ý đó thực sự rất hữu ích. Bắt đầu từ thứ Sáu này, tôi sẽ đưa phần tóm tắt 3 gạch đầu dòng lên đầu mỗi báo cáo tuần."
+            }
+          ]
+        },
+        {
+          "id": "s178-1",
+          "title": "Giving constructive feedback to an internal coordinator on delivery updates",
+          "lines": [
+            {
+              "t": "Hi Lan, do you have a quick moment to review how we share production schedule changes?",
+              "r": "",
+              "m": "Chào Lan, bạn có vài phút để chúng ta cùng rà soát lại cách chia sẻ thông tin khi lịch sản xuất thay đổi không?"
+            },
+            {
+              "t": "In yesterday's update, the delivery date moved back by five days, but the reason and proposed options were not included.",
+              "r": "",
+              "m": "Trong bản cập nhật hôm qua, ngày giao hàng bị lùi lại 5 ngày nhưng chưa kèm theo nguyên nhân và phương án đề xuất."
+            },
+            {
+              "t": "That made it harder to explain the situation clearly to the overseas buyer. How do you see it from your side?",
+              "r": "",
+              "m": "Điều đó khiến mình khó giải thích rõ tình hình cho khách mua nước ngoài. Ở góc độ của bạn thì bạn thấy sao?"
+            },
+            {
+              "t": "I was waiting for the finishing workshop to confirm. Next time, I will include the root cause and partial shipment options right away.",
+              "r": "",
+              "m": "Hôm qua mình đang chờ xưởng sơn xác nhận lại. Lần tới mình sẽ ghi kèm nguyên nhân gốc rễ và phương án giao hàng từng phần ngay từ đầu."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c178-0",
+          "q": "How do you handle receiving critical feedback in the workplace?",
+          "vi": "Bạn đón nhận và xử lý những lời góp ý thẳng thắn (hoặc phê bình) trong công việc như thế nào?",
+          "st": "I treat feedback as useful information rather than + reaction + and I...",
+          "ph": [
+            "treat feedback as a useful data point, not personal criticism",
+            "ask for specific examples to understand clearly",
+            "reflect on any recurring pattern",
+            "turn it into a concrete next action"
+          ],
+          "sa": "I treat feedback as useful information for growth, not as personal criticism. When I receive tough feedback, I pause, thank the person, and ask for a specific example so I can understand clearly. Then I reflect on the pattern and turn it into a concrete next action to improve my work.",
+          "ss": [
+            "growth mindset",
+            "forward focus",
+            "separate fact from opinion"
+          ],
+          "sc": "Answering an interview question about coachability, teamwork, and emotional intelligence."
+        },
+        {
+          "id": "c178-1",
+          "q": "How do you proactively ask for feedback from your manager or cross-functional teammates?",
+          "vi": "Bạn chủ động xin góp ý từ cấp quản lý hoặc đồng nghiệp liên phòng ban như thế nào để tránh câu trả lời chung chung?",
+          "st": "Instead of asking a broad question, I ask specific questions about + context + such as...",
+          "ph": [
+            "avoid vague questions like 'Any feedback?'",
+            "ask about a specific meeting, update, or project",
+            "one thing I did well and one thing to improve",
+            "whether my information was clear enough to take action"
+          ],
+          "sa": "Instead of asking a broad question like 'Do you have any feedback?', I ask specific questions tied to a real task. For example, I ask my team whether my order update was clear enough to take action, or ask my manager for one thing I did well and one thing I should improve next time.",
+          "ss": [
+            "avoid the potential trap",
+            "uncover blind spots",
+            "actionable insight"
+          ],
+          "sc": "Explaining how you continuously improve communication in a remote team."
+        },
+        {
+          "id": "c178-2",
+          "q": "How do you give constructive feedback to a colleague without damaging the relationship?",
+          "vi": "Bạn đưa phản hồi góp ý cho đồng nghiệp như thế nào để vừa giải quyết được việc vừa giữ gìn mối quan hệ tốt?",
+          "st": "I prepare beforehand, use a supportive tone, focus on + elements + and ask...",
+          "ph": [
+            "focus on a specific situation and observable behavior",
+            "explain the impact on the customer or workflow",
+            "ask 'How do you see it from your side?'",
+            "agree on a clear forward focus for next time"
+          ],
+          "sa": "I prepare beforehand and use a calm, supportive tone. I describe the specific situation, the observable issue, and its impact on the workflow or customer, rather than making it personal. Then I ask for their perspective and agree on a practical improvement for next time.",
+          "ss": [
+            "collaborative process",
+            "no personal attack",
+            "next action"
+          ],
+          "sc": "Demonstrating cross-functional leadership and interpersonal skills."
+        },
+        {
+          "id": "c178-3",
+          "q": "Tell me about a time feedback or a mistake helped you improve an operational process.",
+          "vi": "Hãy kể về một lần lời góp ý hoặc một sự cố giúp bạn cải tiến quy trình vận hành tốt hơn.",
+          "st": "After an issue showed we needed stricter checking on + item + I took responsibility and...",
+          "ph": [
+            "identified the need to verify the latest approved label version",
+            "took responsibility and resolved the immediate issue",
+            "added a stricter verification step with Planning and Purchasing",
+            "prevented the error from recurring"
+          ],
+          "sa": "When an incident showed that an old handover file had been used for carton labels, I took responsibility, fixed the shipment with approved decals, and reflected on the process gap. I then implemented a stricter verification step with Planning and Purchasing so we always check the latest approved version first.",
+          "ss": [
+            "process improvement",
+            "single source of truth",
+            "accountability"
+          ],
+          "sc": "Connecting feedback and learning directly to Sally's verified work history."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Quick Retrospective & Workflow Alignment – Q3 Export Orders\n\nHi Team,\n\nThank you all for your hard work closing out our Q3 shipments on schedule. As part of our continuous improvement, I would love to treat our recent order cycle as a [[collaborative process|personal attack|secret contest]] to make Q4 even smoother.\n\nTo help me uncover any [[blind spot|parking spot|vacation spot]] in my coordination, could you share one [[specific example|random rumor|funny joke]] where my weekly order updates were helpful, and one area where I could be clearer?\n\nOn the factory handover side, I noticed a [[recurring pattern|lucky coincidence|weather change]] in the last two urgent POs: when a delivery date shifted, the root cause and backup options were not attached. This made it harder to [[align expectations|cancel contracts|hide mistakes]] with our overseas buyers.\n\nWith a [[forward focus|backward blame|defensive reaction]], let's include the delay reason and a proposed [[next action|coffee break|holiday card]] whenever a timeline changes. How do you see this from your side?\n\nBest regards,\nSally Nguyen",
+        "trans": "Tiêu đề: Nhìn lại nhanh & Đồng bộ quy trình phối hợp – Các đơn hàng xuất khẩu Quý 3\n\nChào cả nhóm,\n\nCảm ơn tất cả mọi người đã nỗ lực hết mình để hoàn thành đúng hạn các lô hàng Quý 3 vừa qua. Nằm trong tinh thần cải tiến liên tục, mình rất mong chúng ta cùng nhìn lại chu kỳ đơn hàng vừa rồi như một quá trình trao đổi hợp tác hai chiều để Quý 4 vận hành trôi chảy hơn nữa.\n\nĐể giúp mình nhận ra những điểm mù trong khâu điều phối, mọi người có thể chia sẻ giúp một ví dụ cụ thể mà bản cập nhật đơn hàng hàng tuần của mình đã hỗ trợ tốt, và một điểm mình nên trình bày rõ hơn không?\n\nỞ khâu bàn giao tiến độ nhà máy, mình nhận thấy một khuôn mẫu lặp lại trong hai đơn hàng gấp gần đây: khi ngày giao hàng thay đổi, nguyên nhân gốc rễ và phương án dự phòng chưa được đính kèm. Điều này khiến việc làm rõ và khớp kỳ vọng với khách mua nước ngoài gặp khó khăn hơn.\n\nVới tinh thần hướng tới giải pháp cho lần sau, chúng ta hãy thống nhất luôn đính kèm lý do lùi lịch và bước hành động đề xuất tiếp theo mỗi khi tiến độ thay đổi nhé. Ở góc độ của mọi người thì mọi người thấy phương án này thế nào?\n\nTrân trọng,\nSally Nguyễn",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 78,
+      "catPos": 33
+    },
+    {
+      "id": "179",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Lean startup and e-commerce: problem discovery, MVP and unit economics",
+      "sub": "Khởi nghiệp tinh gọn & thương mại số: khám phá vấn đề, kiểm chứng MVP và bài toán kinh tế đơn vị",
+      "vocab": [
+        {
+          "id": "E179-0",
+          "w": "problem discovery",
+          "r": "/ˈprɑː.bləm dɪˈskʌv.ɚ.i/",
+          "m": "giai đoạn khám phá và xác thực vấn đề",
+          "d": "interviewing and observing target users to verify they have a frequent, painful problem worth solving",
+          "ex": "Before choosing products to sell, we start with problem discovery to verify real customer pain points.",
+          "exr": "",
+          "exm": "Trước khi chọn sản phẩm để bán, chúng tôi bắt đầu bằng việc khám phá vấn đề để xác thực nỗi đau thực tế của khách hàng."
+        },
+        {
+          "id": "E179-1",
+          "w": "customer-problem hypothesis",
+          "r": "/ˈkʌs.tə.mɚ ˈprɑː.bləm haɪˈpɑː.θə.sɪs/",
+          "m": "giả thuyết về cặp Khách hàng - Vấn đề",
+          "d": "a testable statement defining which specific group experiences a clear problem in a specific trigger situation",
+          "ex": "Our customer-problem hypothesis targets remote workers struggling with cluttered small desks.",
+          "exr": "",
+          "exm": "Giả thuyết khách hàng - vấn đề của chúng tôi nhắm tới người làm việc tại nhà có bàn nhỏ bị bừa bộn dây sạc và phụ kiện."
+        },
+        {
+          "id": "E179-2",
+          "w": "early adopter",
+          "r": "/ˈɝː.li əˈdɑːp.tɚ/",
+          "m": "nhóm khách hàng tiên phong trải nghiệm sớm",
+          "d": "people who feel the problem acutely and have already tried or paid for workarounds",
+          "ex": "Look for early adopters who are actively spending money trying to fix the problem today.",
+          "exr": "",
+          "exm": "Hãy tìm kiếm những khách hàng tiên phong đang chủ động bỏ tiền tìm cách giải quyết vấn đề đó ngay lúc này."
+        },
+        {
+          "id": "E179-3",
+          "w": "unique value proposition",
+          "r": "/juːˈniːk ˈvæl.juː ˌprɑː.pəˈzɪʃ.ən/",
+          "m": "lời hứa giá trị độc nhất (UVP)",
+          "d": "a clear statement explaining the specific outcome you help customers achieve without their main barrier",
+          "ex": "Our unique value proposition is helping young professionals declutter their desk in ten minutes without buying mismatched items.",
+          "exr": "",
+          "exm": "Lời hứa giá trị độc nhất của chúng tôi là giúp người trẻ dọn gọn góc làm việc trong 10 phút mà không phải tự chọn từng món lẻ lệch tông."
+        },
+        {
+          "id": "E179-4",
+          "w": "minimum viable product",
+          "r": "/ˈmɪn.ə.məm ˈvaɪ.ə.bəl ˈprɑː.dʌkt/",
+          "m": "sản phẩm khả dụng tối thiểu (MVP)",
+          "d": "the simplest version of a solution that delivers core value and tests whether customers will pay",
+          "ex": "Our goal in 90 days is generating ten real transactions using a minimum viable product.",
+          "exr": "",
+          "exm": "Mục tiêu 90 ngày của chúng tôi là tạo ra ít nhất 10 giao dịch thật bằng một sản phẩm khả dụng tối thiểu (MVP)."
+        },
+        {
+          "id": "E179-5",
+          "w": "concierge MVP",
+          "r": "/ˌkɑːn.siˈerʒ ˌem.viːˈpiː/",
+          "m": "MVP phục vụ thủ công cá nhân hóa",
+          "d": "delivering the solution manually behind the scenes to validate demand before building automation or inventory",
+          "ex": "We used a concierge MVP to curate desk bundles manually for our first ten paying customers.",
+          "exr": "",
+          "exm": "Chúng tôi dùng mô hình MVP thủ công để tư vấn và phối bộ gọn góc làm việc cho 10 khách trả tiền đầu tiên."
+        },
+        {
+          "id": "E179-6",
+          "w": "behavioral evidence",
+          "r": "/bɪˈheɪ.vjɚ.əl ˈev.ə.dəns/",
+          "m": "bằng chứng hành vi thực tế",
+          "d": "actions like paying a deposit, booking a call, or placing an order, rather than polite compliments",
+          "ex": "In Lean Startup, behavioral evidence matters much more than social media likes or compliments.",
+          "exr": "",
+          "exm": "Trong khởi nghiệp tinh gọn, bằng chứng hành vi thực tế quan trọng hơn rất nhiều so với lời khen xã giao hay lượt thích."
+        },
+        {
+          "id": "E179-7",
+          "w": "willingness to pay",
+          "r": "/ˈwɪl.ɪŋ.nəs tə ˈpeɪ/",
+          "m": "sự sẵn sàng rút hầu bao chi trả",
+          "d": "proof that customers value the outcome enough to pay real money without heavy discounting",
+          "ex": "Avoid deep discounts during validation because they hide the customer's true willingness to pay.",
+          "exr": "",
+          "exm": "Tránh giảm giá sâu trong giai đoạn kiểm chứng vì nó sẽ che mờ mức độ sẵn sàng chi trả thực sự của khách hàng."
+        },
+        {
+          "id": "E179-8",
+          "w": "unit economics",
+          "r": "/ˈjuː.nɪt ˌiː.kəˈnɑː.mɪks/",
+          "m": "bài toán kinh tế trên từng đơn vị giao dịch",
+          "d": "the direct revenues and variable costs associated with a single order or customer transaction",
+          "ex": "Never scale paid advertising before verifying that your unit economics are positive.",
+          "exr": "",
+          "exm": "Đừng bao giờ đẩy mạnh chạy quảng cáo trả phí trước khi kiểm chứng bài toán kinh tế đơn vị đã có lãi."
+        },
+        {
+          "id": "E179-9",
+          "w": "contribution margin",
+          "r": "/ˌkɑːn.trəˈbjuː.ʃən ˈmɑːr.dʒɪn/",
+          "m": "lợi nhuận đóng góp (sau khi trừ biến phí)",
+          "d": "revenue minus all variable costs of a transaction (COGS, packing, shipping, platform fees, ads, returns)",
+          "ex": "Contribution margin equals order revenue minus every variable cost required to fulfill that order.",
+          "exr": "",
+          "exm": "Lợi nhuận đóng góp bằng doanh thu đơn hàng trừ đi toàn bộ chi phí biến đổi phát sinh để hoàn tất giao dịch đó."
+        },
+        {
+          "id": "E179-10",
+          "w": "variable cost",
+          "r": "/ˈver.i.ə.bəl ˈkɔːst/",
+          "m": "chi phí biến đổi (biến phí)",
+          "d": "costs that increase with each sale, such as product sourcing, fulfillment, payment fees, and commission",
+          "ex": "When calculating unit economics, include all variable costs including packaging, platform fees, and return handling.",
+          "exr": "",
+          "exm": "Khi tính toán hiệu quả đơn hàng, phải tính đủ mọi chi phí biến đổi gồm bao bì, phí sàn và chi phí đổi trả."
+        },
+        {
+          "id": "E179-11",
+          "w": "go-to-market strategy",
+          "r": "/ˌɡoʊ.təˈmɑːr.kɪt ˈstræt̬.ə.dʒi/",
+          "m": "chiến lược đưa sản phẩm ra thị trường (GTM)",
+          "d": "the tactical plan specifying target segment, message formula, channels, and pricing to win initial customers",
+          "ex": "Our go-to-market strategy starts with direct interviews and niche workspace communities.",
+          "exr": "",
+          "exm": "Chiến lược ra thị trường của chúng tôi bắt đầu bằng phỏng vấn trực tiếp và tiếp cận các hội nhóm nghiện decor bàn làm việc."
+        },
+        {
+          "id": "E179-12",
+          "w": "product bundle",
+          "r": "/ˈprɑː.dʌkt ˈbʌn.dəl/",
+          "m": "bộ combo sản phẩm giải quyết trọn gói",
+          "d": "a curated set of complementary items sold together to solve a complete customer problem",
+          "ex": "Our workspace organizer product bundle combines cable clips, desk trays, and ambient lighting.",
+          "exr": "",
+          "exm": "Bộ combo Gọn Góc Làm Việc của chúng tôi kết hợp kẹp giữ dây sạc, khay chia ngăn mặt bàn và đèn decor đồng bộ."
+        },
+        {
+          "id": "E179-13",
+          "w": "order fulfillment",
+          "r": "/ˈɔːr.dɚ fʊlˈfɪl.mənt/",
+          "m": "khâu hoàn tất và giao đơn hàng",
+          "d": "the process of receiving, picking, packing, and shipping online orders to end customers",
+          "ex": "Even when using dropshipping or third-party order fulfillment, you must enforce strict quality standards.",
+          "exr": "",
+          "exm": "Ngay cả khi dùng dropshipping hoặc dịch vụ hoàn tất đơn hàng bên thứ ba, bạn vẫn phải kiểm soát tiêu chuẩn trải nghiệm chặt chẽ."
+        },
+        {
+          "id": "E179-14",
+          "w": "conversion rate",
+          "r": "/kənˈvɝː.ʒən ˈreɪt/",
+          "m": "tỷ lệ chuyển đổi thành khách mua",
+          "d": "the percentage of visitors or leads who take a committed action or complete a purchase",
+          "ex": "In each message test, we keep the audience constant to measure the true conversion rate.",
+          "exr": "",
+          "exm": "Trong mỗi vòng thử nghiệm thông điệp, chúng tôi giữ nguyên tệp khách hàng để đo lường tỷ lệ chuyển đổi thực chất."
+        },
+        {
+          "id": "E179-15",
+          "w": "social commerce",
+          "r": "/ˈsoʊ.ʃəl ˈkɑː.mɝːs/",
+          "m": "thương mại qua mạng xã hội",
+          "d": "selling products directly through social media content, short videos, and community engagement",
+          "ex": "Situational short videos on TikTok and Instagram drive high engagement for social commerce.",
+          "exr": "",
+          "exm": "Các video ngắn theo tình huống trên TikTok và Instagram tạo tương tác rất tốt cho thương mại mạng xã hội."
+        },
+        {
+          "id": "E179-16",
+          "w": "accounts receivable",
+          "r": "/əˈkaʊnts rɪˈsiː.və.bəl/",
+          "m": "công nợ phải thu khách hàng",
+          "d": "money owed to a company by its debtors for goods or services delivered",
+          "ex": "In our ERP design, accounts receivable is automatically calculated from payment schedules minus actual cash collected.",
+          "exr": "",
+          "exm": "Trong thiết kế ERP của chúng tôi, công nợ phải thu được tính tự động từ lịch thanh toán trừ đi số tiền thực thu."
+        },
+        {
+          "id": "E179-17",
+          "w": "multi-level approval",
+          "r": "/ˌmʌl.ti ˈlev.əl əˈpruː.vəl/",
+          "m": "quy trình phê duyệt nhiều cấp",
+          "d": "an ERP workflow where quotations and contracts require sign-off based on deal value and profit margin",
+          "ex": "Once a quotation passes multi-level approval in ERP, the document version is locked against overwriting.",
+          "exr": "",
+          "exm": "Khi báo giá đã qua phê duyệt nhiều cấp trên ERP, phiên bản chứng từ sẽ được khóa để tránh ghi đè dữ liệu cũ."
+        },
+        {
+          "id": "E179-18",
+          "w": "customer acquisition cost",
+          "r": "/ˈkʌs.tə.mɚ ˌæk.wəˈzɪʃ.ən ˈkɔːst/",
+          "m": "chi phí thu hút một khách hàng mới (CAC)",
+          "d": "total marketing and sales expense required to win one paying customer",
+          "ex": "Micro-partnerships and referrals help keep customer acquisition cost low during early validation.",
+          "exr": "",
+          "exm": "Hợp tác với các đối tác nhỏ và giới thiệu truyền miệng giúp giữ chi phí thu hút khách hàng ở mức thấp trong giai đoạn đầu."
+        },
+        {
+          "id": "E179-19",
+          "w": "repeatability",
+          "r": "/rɪˌpiː.t̬əˈbɪl.ə.t̬i/",
+          "m": "tính lặp lại ổn định của hệ thống kinh doanh",
+          "d": "the fifth validation gate proving that customer acquisition, sales, and fulfillment work consistently",
+          "ex": "Only invest heavily in inventory after proving repeatability and positive contribution margin.",
+          "exr": "",
+          "exm": "Chỉ đầu tư lớn vào tồn kho sau khi đã chứng minh được tính lặp lại của hệ thống và lợi nhuận đóng góp dương."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q179-0",
+          "q": "According to Lean Startup principles in Sally's Future Startup Brand framework, what should you start with before picking a product to sell?",
+          "o": [
+            "Start with problem discovery: identify a specific group facing a frequent, painful problem who are actively trying to solve it and willing to pay.",
+            "Rent a massive warehouse and import 10,000 random items first.",
+            "Spend six months designing a logo before talking to a single customer."
+          ],
+          "a": 0,
+          "why": "Validating the customer-problem pair and behavioral evidence first prevents wasting capital on products nobody needs."
+        },
+        {
+          "id": "q179-1",
+          "q": "Why should you avoid using deep discounts to get your first 10 validation transactions?",
+          "o": [
+            "Deep discounts distort behavioral evidence and mask weak underlying demand or low willingness to pay.",
+            "Customers hate saving money.",
+            "Calculators cannot subtract percentages."
+          ],
+          "a": 0,
+          "why": "Transaction validation must prove that customers value the outcome enough to pay a sustainable price that covers variable costs."
+        },
+        {
+          "id": "q179-2",
+          "q": "How is Contribution Margin accurately calculated for an e-commerce or dropshipping order?",
+          "o": [
+            "Order revenue minus all variable costs of the transaction (product cost, packaging, fulfillment, platform fees, payment fees, taxes, acquisition, and returns).",
+            "Order revenue minus nothing at all.",
+            "Only counting the factory price and ignoring shipping, ads, and return costs."
+          ],
+          "a": 0,
+          "why": "True unit economics requires subtracting every variable expense tied to executing and supporting that specific transaction."
+        },
+        {
+          "id": "q179-3",
+          "q": "When testing a Go-To-Market message across target customers, what rule ensures a clean experiment?",
+          "o": [
+            "Keep the target customer segment and Call-To-Action (CTA) constant in each test round, changing only one message element at a time.",
+            "Change the product, audience, price, website, and CTA all at the same second.",
+            "Never write down the results of any test."
+          ],
+          "a": 0,
+          "why": "Isolating one variable per test round lets you know exactly which value promise drives real customer commitment."
+        },
+        {
+          "id": "q179-4",
+          "q": "In the workspace organizer bundle concept ('Bộ Gọn Góc Làm Việc'), what is the core customer-problem hypothesis?",
+          "o": [
+            "Young remote workers with small desks lose focus due to messy cables and accessories, and want an effortless, coordinated bundle rather than picking separate items.",
+            "Large factories need 50-ton cranes for outdoor steel yards.",
+            "People want to have more tangled wires on their tables."
+          ],
+          "a": 0,
+          "why": "The bundle solves decision fatigue and visual clutter simultaneously: cable management + zoned storage + cohesive aesthetic in 10 minutes."
+        },
+        {
+          "id": "q179-5",
+          "q": "In Sally's ERP system design for managing deals, quotations, and orders, how should quotation revisions and accounts receivable be handled?",
+          "o": [
+            "Lock approved quotation versions using price snapshots without overwriting history, and compute accounts receivable from payment schedules minus actual collections.",
+            "Overwrite old quotations so no one knows what price was promised yesterday.",
+            "Type a random debt number manually without linking it to payment schedules."
+          ],
+          "a": 0,
+          "why": "Preserving version history (audit trail + snapshots) and calculating receivables dynamically from scheduled vs. collected payments ensures financial integrity."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s179-0",
+          "title": "Conducting a problem-discovery interview for the Workspace Organizer Bundle",
+          "lines": [
+            {
+              "t": "Thanks for chatting with me today. When you work from home at your desk, what frustrates you the most about your workspace setup?",
+              "r": "",
+              "m": "Cảm ơn bạn đã dành thời gian trò chuyện hôm nay. Khi làm việc tại nhà, điều gì ở góc bàn làm việc khiến bạn thấy phiền toái và mất tập trung nhất?"
+            },
+            {
+              "t": "My desk is quite small, so laptop chargers, notebooks, and small accessories get tangled and messy within two days.",
+              "r": "",
+              "m": "Bàn của mình khá nhỏ nên dây sạc laptop, sổ tay và đồ lặt vặt cứ bị rối tung và bừa bộn chỉ sau hai ngày."
+            },
+            {
+              "t": "Have you tried buying organizers online to fix it, and what was unsatisfactory about that experience?",
+              "r": "",
+              "m": "Bạn đã từng thử đặt mua các món đồ收納 (sắp xếp) trên mạng để khắc phục chưa, và điều gì làm bạn chưa hài lòng?"
+            },
+            {
+              "t": "I tried, but picking individual trays and cable clips from different shops took hours and the colors did not match at all.",
+              "r": "",
+              "m": "Mình thử rồi, nhưng việc tự lựa từng khay đựng, kẹp dây ở nhiều shop khác nhau mất hàng giờ đồng hồ mà màu sắc về lắp lên lại lệch tông nhau."
+            }
+          ]
+        },
+        {
+          "id": "s179-1",
+          "title": "Reviewing unit economics and contribution margin before scaling ads",
+          "lines": [
+            {
+              "t": "We just completed our first ten real orders for the curated desk bundle without using deep discounts.",
+              "r": "",
+              "m": "Chúng ta vừa hoàn thành 10 đơn hàng thực tế đầu tiên cho bộ combo Gọn Góc Làm Việc mà không cần dùng đến giảm giá sâu."
+            },
+            {
+              "t": "That validates transaction demand! How do the unit economics look once we factor in all variable costs?",
+              "r": "",
+              "m": "Vậy là đã kiểm chứng được nhu cầu giao dịch thật! Bài toán kinh tế đơn vị trông thế nào sau khi tính đủ toàn bộ biến phí?"
+            },
+            {
+              "t": "After deducting sourcing, custom packaging, fulfillment, platform fees, and acquisition cost, our contribution margin is twenty-eight percent.",
+              "r": "",
+              "m": "Sau khi trừ giá vốn hàng, bao bì đồng bộ, phí đóng gói giao hàng, phí nền tảng và chi phí marketing, lợi nhuận đóng góp đạt 28%."
+            },
+            {
+              "t": "Great. Let's standardize our supplier QC checklist and order tracker before testing micro-influencer partnerships.",
+              "r": "",
+              "m": "Tuyệt vời. Hãy chuẩn hóa bảng kiểm chất lượng nhà cung cấp và file theo dõi đơn hàng trước khi mở rộng hợp tác với các KOL ngách."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c179-0",
+          "q": "How do you validate a new e-commerce or startup idea before investing heavily in inventory?",
+          "vi": "Bạn kiểm chứng một ý tưởng kinh doanh thương mại điện tử hoặc khởi nghiệp mới như thế nào trước khi đầu tư lớn vào tồn kho?",
+          "st": "Instead of starting with inventory, I follow five validation gates: + steps...",
+          "ph": [
+            "start with problem discovery and behavioral interviews",
+            "test the unique value proposition for demand validation",
+            "secure 10 real transactions via a concierge MVP",
+            "verify positive contribution margin and repeatability"
+          ],
+          "sa": "Instead of starting with heavy inventory, I follow a disciplined validation flow: first, problem discovery through behavioral interviews; second, demand validation of the value promise; third, generating at least 10 real paying transactions with a minimum viable product; and fourth, verifying positive contribution margin before scaling.",
+          "ss": [
+            "willingness to pay",
+            "unit economics",
+            "lean canvas"
+          ],
+          "sc": "Discussing business development, e-commerce strategy, or entrepreneurial mindset."
+        },
+        {
+          "id": "c179-1",
+          "q": "Pitch the value proposition of your 'Workspace Organizer Bundle' (Bộ Gọn Góc Làm Việc) in 30 seconds.",
+          "vi": "Hãy giới thiệu lời hứa giá trị (Value Proposition) của dự án 'Bộ Gọn Góc Làm Việc' trong 30 giây.",
+          "st": "For remote workers and students with small desks who struggle with + problem + we offer...",
+          "ph": [
+            "cluttered cables and accessories that hurt focus",
+            "curated all-in-one workspace bundle",
+            "declutter your desk in 10 minutes",
+            "cohesive aesthetic without hunting for separate items"
+          ],
+          "sa": "When young professionals working from home struggle with messy cables and cluttered small desks, we help them reset and organize their workspace in 10 minutes without having to hunt for mismatched pieces, through a curated, color-coordinated 3-zone desk bundle.",
+          "ss": [
+            "cable management",
+            "zoned storage",
+            "peace of mind"
+          ],
+          "sc": "Practicing go-to-market messaging and copywriting pitch."
+        },
+        {
+          "id": "c179-2",
+          "q": "What is the role of dropshipping or third-party fulfillment in an early-stage brand?",
+          "vi": "Dropshipping hoặc dịch vụ hoàn tất đơn hàng (fulfillment) đóng vai trò gì trong giai đoạn đầu xây dựng thương hiệu?",
+          "st": "Dropshipping is a tool to reduce inventory risk during + stage + but...",
+          "ph": [
+            "reduce inventory risk during transaction validation",
+            "not a standalone competitive advantage",
+            "enforce strict packaging and delivery standards",
+            "transition to a hybrid inventory model for winning products"
+          ],
+          "sa": "Dropshipping helps minimize inventory risk during the transaction validation phase, but it is not a competitive advantage on its own. Because fulfillment is part of the customer experience, we must enforce strict vendor SLA standards and move to a hybrid micro-inventory model once a winning bundle is proven.",
+          "ss": [
+            "contribution margin",
+            "customer experience",
+            "quality control"
+          ],
+          "sc": "Explaining supply chain and e-commerce operations strategy."
+        },
+        {
+          "id": "c179-3",
+          "q": "How should an ERP system structure the data flow from lead to cash?",
+          "vi": "Một hệ thống ERP quản lý đơn hàng và kinh doanh nên thiết kế luồng dữ liệu từ khi có khách đến khi thu tiền như thế nào?",
+          "st": "The ERP data flow should connect + stages + while locking...",
+          "ph": [
+            "Customer -> Deal Opportunity -> Quotation versions -> Contract -> Order -> Payment & Receivables",
+            "multi-level approval based on value and margin",
+            "lock approved versions using price snapshots",
+            "calculate accounts receivable dynamically from schedules minus cash collected"
+          ],
+          "sa": "The system should link Customer, Deal Opportunity, versioned Quotations, Business Plan (PAKD), Contract, Sales Order, and Payment Schedules. Once a quote passes multi-level approval, its price snapshot is locked so history is never overwritten, and accounts receivable is calculated directly from scheduled payments minus actual collections.",
+          "ss": [
+            "audit trail",
+            "win/loss tracking",
+            "data integrity"
+          ],
+          "sc": "Explaining business process design and ERP architecture."
+        }
+      ],
+      "fill": {
+        "text": "Subject: 90-Day Lean Validation Report – Workspace Organizer Bundle MVP\n\nHi Team,\n\nHere is our 90-day progress update on the Workspace Organizer project. During the [[problem discovery|factory demolition|holiday party]] phase, we interviewed 15 remote professionals and confirmed our [[customer-problem hypothesis|weather prediction|lottery number]]: small home desks get cluttered with cables within days, and buyers hate spending hours picking mismatched items.\n\nWe crafted a clear [[unique value proposition|bank loan|parking ticket]]: 'Declutter your workspace in 10 minutes to start your day with a clearer mind.' Using a manual [[concierge MVP|heavy tractor|cargo ship]], we curated cohesive 3-step bundles and achieved 12 real orders without heavy discounting—proving genuine [[willingness to pay|fear of flying|love of cooking]].\n\nOur [[unit economics|astronomy chart|music sheet]] analysis shows that after deducting product cost, packaging, and [[order fulfillment|kitchen cleaning|garden watering]], we maintain a positive 30% [[contribution margin|interest rate|weight loss]].\n\nNext week, we will lock our supplier quotation versions in the tracker and test short situational videos for social commerce.\n\nBest,\nSally",
+        "trans": "Tiêu đề: Báo cáo Kiểm chứng Tinh gọn 90 ngày – MVP Bộ Gọn Góc Làm Việc\n\nChào cả nhóm,\n\nDưới đây là cập nhật tiến độ 90 ngày cho dự án Bộ Gọn Góc Làm Việc của chúng ta. Trong giai đoạn khám phá vấn đề, chúng ta đã phỏng vấn 15 người làm việc từ xa và xác nhận giả thuyết khách hàng - vấn đề: bàn làm việc nhỏ tại nhà rất nhanh bị rối dây sạc chỉ sau vài ngày, và khách hàng ngại mất hàng giờ tự chọn từng món lẻ bị lệch tông màu.\n\nChúng ta đã xây dựng lời hứa giá trị độc nhất (UVP) rõ ràng: 'Dọn lại góc làm việc trong 10 phút để bắt đầu ngày mới nhẹ đầu hơn.' Sử dụng mô hình MVP phục vụ thủ công, chúng ta đã phối các bộ combo 3 vùng đồng bộ và đạt được 12 đơn hàng trả tiền thật mà không cần giảm giá sâu — chứng minh sự sẵn sàng chi trả thực chất của khách.\n\nPhân tích bài toán kinh tế đơn vị cho thấy sau khi trừ giá vốn sản phẩm, bao bì và chi phí hoàn tất đơn hàng (fulfillment), chúng ta duy trì được lợi nhuận đóng góp dương ở mức 30%.\n\nTuần tới, chúng ta sẽ khóa các phiên bản báo giá nhà cung cấp trên hệ thống theo dõi và thử nghiệm chuỗi video tình huống ngắn cho kênh thương mại mạng xã hội.\n\nThân mến,\nSally",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 79,
+      "catPos": 34
+    },
+    {
+      "id": "180",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "AI agents and business automation: workflows, skills and digital second brain",
+      "sub": "Tác nhân AI & tự động hóa doanh nghiệp: quy trình Make, đóng gói kỹ năng (Skill) và bộ não số thứ hai",
+      "vocab": [
+        {
+          "id": "E180-0",
+          "w": "AI agent",
+          "r": "/ˌeɪˈaɪ ˈeɪ.dʒənt/",
+          "m": "tác nhân AI tự chủ thực thi công việc",
+          "d": "an AI system equipped with instructions, context, and tools to execute multi-step workflows",
+          "ex": "We configured an AI agent to audit order spreadsheets and draft weekly customer updates.",
+          "exr": "",
+          "exm": "Chúng tôi đã thiết lập một tác nhân AI để rà soát bảng tính đơn hàng và soạn thảo báo cáo cập nhật hàng tuần cho khách."
+        },
+        {
+          "id": "E180-1",
+          "w": "workflow automation",
+          "r": "/ˈwɝːk.floʊ ˌɔː.t̬əˈmeɪ.ʃən/",
+          "m": "tự động hóa quy trình công việc",
+          "d": "connecting software apps so repetitive tasks run automatically without manual copy-pasting",
+          "ex": "Using Make for workflow automation saved our sales admin team ten hours every week.",
+          "exr": "",
+          "exm": "Sử dụng nền tảng Make để tự động hóa quy trình đã giúp đội ngũ Sales Admin tiết kiệm 10 giờ làm việc mỗi tuần."
+        },
+        {
+          "id": "E180-2",
+          "w": "digital second brain",
+          "r": "/ˈdɪdʒ.ə.t̬əl ˈsek.ənd ˈbreɪn/",
+          "m": "bộ não số thứ hai (lưu trữ và kết nối tri thức)",
+          "d": "a structured personal or company knowledge base in Obsidian or Notion that AI can read and reference",
+          "ex": "My digital second brain in Obsidian stores all verified SOPs, templates, and customer history.",
+          "exr": "",
+          "exm": "Bộ não số thứ hai của tôi trên Obsidian lưu trữ toàn bộ quy trình chuẩn SOP, biểu mẫu và lịch sử khách hàng đã xác minh."
+        },
+        {
+          "id": "E180-3",
+          "w": "knowledge digitization",
+          "r": "/ˈnɑː.lɪdʒ ˌdɪdʒ.ə.t̬əˈzeɪ.ʃən/",
+          "m": "số hóa dữ liệu và tri thức doanh nghiệp",
+          "d": "converting scattered files, tacit experience, and procedures into clean, structured markdown notes",
+          "ex": "Knowledge digitization is the essential first step before training an internal company AI assistant.",
+          "exr": "",
+          "exm": "Số hóa tri thức doanh nghiệp là bước nền tảng bắt buộc đầu tiên trước khi huấn luyện trợ lý AI nội bộ."
+        },
+        {
+          "id": "E180-4",
+          "w": "reusable skill",
+          "r": "/riːˈjuː.zə.bəl ˈskɪl/",
+          "m": "kỹ năng đóng gói tái sử dụng cho AI",
+          "d": "a modular folder containing instructions, templates, and scripts that an AI agent can invoke on demand",
+          "ex": "Whenever a complex task succeeds, I package the workflow into a reusable skill for my agent.",
+          "exr": "",
+          "exm": "Bất cứ khi nào thực hiện thành công một việc phức tạp, tôi đều đóng gói quy trình đó thành một skill tái sử dụng cho AI."
+        },
+        {
+          "id": "E180-5",
+          "w": "trigger and action",
+          "r": "/ˈtrɪɡ.ɚ ənd ˈæk.ʃən/",
+          "m": "sự kiện kích hoạt và hành động thực thi",
+          "d": "the basic building block of automation: when event A happens (trigger), perform task B (action)",
+          "ex": "A new customer inquiry form acts as the trigger that launches the quotation drafting action.",
+          "exr": "",
+          "exm": "Biểu mẫu hỏi hàng mới của khách đóng vai trò là sự kiện kích hoạt (trigger) khởi chạy hành động tạo báo giá nháp."
+        },
+        {
+          "id": "E180-6",
+          "w": "webhook integration",
+          "r": "/ˈweb.hʊk ˌɪn.t̬əˈɡreɪ.ʃən/",
+          "m": "kết nối truyền dữ liệu tức thời qua Webhook",
+          "d": "an automated message sent from one app to another the instant a specific event occurs",
+          "ex": "Via webhook integration, new website orders appear in our ERP tracking sheet within two seconds.",
+          "exr": "",
+          "exm": "Thông qua kết nối webhook, các đơn hàng mới trên web xuất hiện ngay trong bảng theo dõi ERP chỉ sau 2 giây."
+        },
+        {
+          "id": "E180-7",
+          "w": "context window",
+          "r": "/ˈkɑːn.tekst ˈwɪn.doʊ/",
+          "m": "cửa sổ ngữ cảnh (dung lượng bộ nhớ tức thời của AI)",
+          "d": "the maximum amount of text and files an AI model can read and process in a single session",
+          "ex": "Keep reference notes concise and well-indexed so you do not overload the agent's context window.",
+          "exr": "",
+          "exm": "Hãy giữ các ghi chú tham chiếu ngắn gọn và có mục lục rõ ràng để không làm quá tải cửa sổ ngữ cảnh của AI."
+        },
+        {
+          "id": "E180-8",
+          "w": "system prompt",
+          "r": "/ˈsɪs.təm ˈprɑːmpt/",
+          "m": "chỉ dẫn hệ thống (định hình vai trò & quy tắc cho AI)",
+          "d": "core instructions defining an AI assistant's role, tone, constraints, and output standards",
+          "ex": "A well-written system prompt ensures the AI writes concise, accurate B2B emails without fluff.",
+          "exr": "",
+          "exm": "Một bản chỉ dẫn hệ thống được viết chuẩn giúp AI soạn email B2B ngắn gọn, chính xác mà không bị lan man."
+        },
+        {
+          "id": "E180-9",
+          "w": "iterative optimization",
+          "r": "/ˈɪt̬.ɚ.ə.tɪv ˌɑːp.tə.məˈzeɪ.ʃən/",
+          "m": "tối ưu hóa lặp lại qua từng vòng chạy thử",
+          "d": "testing a skill or automation on real data, spotting errors, and refining the rules round by round",
+          "ex": "Through three rounds of iterative optimization, our video-editing skill reached 98% accuracy.",
+          "exr": "",
+          "exm": "Qua ba vòng chạy thử và tối ưu hóa liên tục, bộ kỹ năng cắt ghép video tự động đã đạt độ chính xác 98%."
+        },
+        {
+          "id": "E180-10",
+          "w": "standard operating procedure",
+          "r": "/ˈstæn.dɚd ˈɑː.pə.reɪ.t̬ɪŋ prəˈsiː.dʒɚ/",
+          "m": "quy trình vận hành tiêu chuẩn (SOP)",
+          "d": "documented step-by-step instructions on how to perform a routine business operation consistently",
+          "ex": "If you can write a clear Standard Operating Procedure for a human, you can turn it into an AI skill.",
+          "exr": "",
+          "exm": "Nếu bạn có thể viết được một quy trình chuẩn (SOP) rõ ràng cho người đọc, bạn hoàn toàn có thể biến nó thành skill cho AI."
+        },
+        {
+          "id": "E180-11",
+          "w": "human-in-the-loop",
+          "r": "/ˈhjuː.mən ɪn ðə ˈluːp/",
+          "m": "có con người kiểm duyệt ở khâu quyết định",
+          "d": "designing automation so a human reviews and approves critical outputs before they are sent to clients",
+          "ex": "We keep a human-in-the-loop step to review every AI-generated quotation before emailing the buyer.",
+          "exr": "",
+          "exm": "Chúng tôi luôn giữ bước con người kiểm duyệt cuối cùng cho mọi báo giá do AI tạo ra trước khi gửi tới khách mua hàng."
+        },
+        {
+          "id": "E180-12",
+          "w": "data mapping",
+          "r": "/ˈdeɪ.t̬ə ˈmæp.ɪŋ/",
+          "m": "ánh xạ / khớp nối các trường dữ liệu",
+          "d": "matching data fields from one source (like an Excel PO) to corresponding fields in another system",
+          "ex": "Accurate data mapping ensures the SKU code, quantity, and unit price flow into the right invoice columns.",
+          "exr": "",
+          "exm": "Việc ánh xạ trường dữ liệu chính xác giúp mã hàng SKU, số lượng và đơn giá tự động điền đúng vào các cột hóa đơn."
+        },
+        {
+          "id": "E180-13",
+          "w": "structured output",
+          "r": "/ˈstrʌk.tʃɚd ˈaʊt.pʊt/",
+          "m": "kết quả đầu ra được định dạng chuẩn (bảng / JSON / mẫu)",
+          "d": "AI responses formatted strictly according to a predefined template, table, or JSON schema",
+          "ex": "Providing a sample template guarantees a clean structured output every single time.",
+          "exr": "",
+          "exm": "Cung cấp sẵn một biểu mẫu chuẩn sẽ đảm bảo AI luôn trả về kết quả đầu ra đúng định dạng trong mọi lần chạy."
+        },
+        {
+          "id": "E180-14",
+          "w": "batch processing",
+          "r": "/ˈbætʃ ˈprɑː.ses.ɪŋ/",
+          "m": "xử lý hàng loạt tự động",
+          "d": "running an automated task across dozens or hundreds of files or rows in one go",
+          "ex": "Batch processing allowed us to extract key metrics from fifty monthly reports in five minutes.",
+          "exr": "",
+          "exm": "Kỹ thuật xử lý hàng loạt cho phép chúng tôi trích xuất số liệu chính từ 50 báo cáo tháng chỉ trong 5 phút."
+        },
+        {
+          "id": "E180-15",
+          "w": "knowledge map",
+          "r": "/ˈnɑː.lɪdʒ ˈmæp/",
+          "m": "bản đồ điều hướng tri thức (Index / MOC)",
+          "d": "an index page linking related notes and folders so both humans and AI agents can navigate fast",
+          "ex": "A clean knowledge map helps the AI agent locate the right project context without reading every file.",
+          "exr": "",
+          "exm": "Một trang bản đồ điều hướng gọn gàng giúp tác nhân AI tìm đúng ngữ cảnh dự án mà không cần đọc tràn lan mọi file."
+        },
+        {
+          "id": "E180-16",
+          "w": "quality checklist",
+          "r": "/ˈkwɑː.lə.t̬i ˈtʃek.lɪst/",
+          "m": "danh sách tiêu chí tự kiểm tra chất lượng",
+          "d": "validation rules embedded inside a skill so the AI checks its own work before finishing",
+          "ex": "Embed a quality checklist inside your skill so the agent verifies all numbers before reporting.",
+          "exr": "",
+          "exm": "Hãy nhúng một bảng kiểm chất lượng vào trong skill để AI tự kiểm tra chéo mọi con số trước khi xuất báo cáo."
+        },
+        {
+          "id": "E180-17",
+          "w": "API integration",
+          "r": "/ˌeɪ.piːˈaɪ ˌɪn.t̬əˈɡreɪ.ʃən/",
+          "m": "tích hợp giao tiếp phần mềm qua cổng API",
+          "d": "connecting external platforms like Google Drive, CRM, or Claude directly into your automated workflow",
+          "ex": "Through API integration, our workflow automatically backs up approved contracts to cloud storage.",
+          "exr": "",
+          "exm": "Nhờ tích hợp API, quy trình của chúng tôi tự động sao lưu các hợp đồng đã duyệt lên kho lưu trữ đám mây."
+        },
+        {
+          "id": "E180-18",
+          "w": "hallucination",
+          "r": "/həˌluː.səˈneɪ.ʃən/",
+          "m": "hiện tượng AI tự bịa thông tin sai sự thật",
+          "d": "when an AI model invents unverified facts, numbers, or links not present in the source data",
+          "ex": "Grounding the agent in your verified second brain eliminates AI hallucination in client reports.",
+          "exr": "",
+          "exm": "Việc neo chặt tác nhân AI vào kho dữ liệu bộ não thứ hai đã xác minh giúp triệt tiêu hiện tượng AI tự bịa số liệu."
+        },
+        {
+          "id": "E180-19",
+          "w": "self-optimizing loop",
+          "r": "/ˌselfˈɑːp.tə.maɪ.zɪŋ ˈluːp/",
+          "m": "vòng lặp tự đánh giá và tối ưu",
+          "d": "a workflow where output results and error logs are fed back to improve the skill instructions",
+          "ex": "Logging every correction creates a self-optimizing loop that makes the assistant smarter each week.",
+          "exr": "",
+          "exm": "Ghi nhận lại mỗi lần chỉnh sửa giúp tạo ra một vòng lặp tự tối ưu khiến trợ lý AI ngày càng thông minh hơn mỗi tuần."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q180-0",
+          "q": "Why is building a structured 'Digital Second Brain' (such as an indexed Obsidian vault) so powerful when working with AI agents?",
+          "o": [
+            "It provides verified context, SOPs, and templates so the AI produces accurate, personalized outputs without hallucinating.",
+            "It makes your computer screen glow in the dark.",
+            "AI agents can only read handwritten paper notebooks."
+          ],
+          "a": 0,
+          "why": "An organized Second Brain acts as the single source of truth, allowing AI agents to retrieve exact business rules, templates, and verified facts."
+        },
+        {
+          "id": "q180-1",
+          "q": "What is an AI 'Skill' in modern agentic workflows?",
+          "o": [
+            "A packaged, reusable set of instructions, templates, and checklists that teaches an AI agent how to execute a specific repeatable task reliably.",
+            "A physical robot arm that paints cars.",
+            "A random password generator."
+          ],
+          "a": 0,
+          "why": "Packaging successful workflows into modular SKILL.md files with templates and verification rules allows any AI agent to repeat the task consistently."
+        },
+        {
+          "id": "q180-2",
+          "q": "Why should business automations include a 'human-in-the-loop' step for high-stakes tasks like sending quotations or legal contracts?",
+          "o": [
+            "So a responsible manager can verify pricing, terms, and context before the document is officially sent to the customer.",
+            "Because computers cannot send emails on their own.",
+            "To make the process take ten times longer for no reason."
+          ],
+          "a": 0,
+          "why": "AI accelerates drafting and data mapping by 90%, while human-in-the-loop sign-off guarantees 100% commercial accountability and relationship safety."
+        },
+        {
+          "id": "q180-3",
+          "q": "How do you prevent an AI agent from overloading its context window when searching a large company wiki?",
+          "o": [
+            "Use a clean knowledge map (index notes) and modular folders so the agent only reads the specific files relevant to the current task.",
+            "Paste all 5,000 company PDFs into every single chat message.",
+            "Delete the entire company database every morning."
+          ],
+          "a": 0,
+          "why": "Progressive disclosure—navigating from an index map to only the relevant note—keeps context clean, fast, and accurate."
+        },
+        {
+          "id": "q180-4",
+          "q": "What is the best time to turn a manual business task into a reusable AI skill?",
+          "o": [
+            "Right after you have successfully completed the task once and verified what good output looks like.",
+            "Before you even know what the task or goal is.",
+            "Never; you should type the exact same 2-page prompt from scratch every day."
+          ],
+          "a": 0,
+          "why": "Extracting a skill from a proven, successful task captures real-world edge cases, exact formatting, and quality criteria."
+        },
+        {
+          "id": "q180-5",
+          "q": "In a Make.com automation scenario, what is the role of 'data mapping'?",
+          "o": [
+            "Linking specific fields from the trigger source (such as Customer Name, SKU, and Quantity from a form) into the exact target fields of an ERP sheet or email template.",
+            "Drawing a geographic map of the world with colored pencils.",
+            "Deleting all customer phone numbers."
+          ],
+          "a": 0,
+          "why": "Data mapping ensures structured information flows accurately from one application module to the next without manual retyping."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s180-0",
+          "title": "Explaining how you use AI and digital tools to boost Account Management productivity",
+          "lines": [
+            {
+              "t": "I saw on your profile that you completed several AI Business and Automation courses. How do you apply those skills in daily operations?",
+              "r": "",
+              "m": "Tôi thấy trong hồ sơ bạn đã hoàn thành nhiều khóa học về AI cho Doanh nghiệp và Tự động hóa. Bạn áp dụng những kỹ năng đó vào vận hành hàng ngày như thế nào?"
+            },
+            {
+              "t": "I maintain a structured digital second brain that stores our standard operating procedures, email templates, and verified product specs.",
+              "r": "",
+              "m": "Tôi xây dựng một bộ não số thứ hai có cấu trúc rõ ràng để lưu trữ các quy trình chuẩn SOP, mẫu email và thông số sản phẩm đã xác minh."
+            },
+            {
+              "t": "By packaging routine tasks into reusable AI skills with a strict quality checklist, I can draft weekly account status reports and check order discrepancies in minutes.",
+              "r": "",
+              "m": "Bằng cách đóng gói các tác vụ lặp lại thành những kỹ năng AI tái sử dụng kèm bảng kiểm chất lượng chặt chẽ, tôi có thể soạn báo cáo tuần và rà soát sai lệch đơn hàng chỉ trong vài phút."
+            },
+            {
+              "t": "I always keep a human-in-the-loop verification step so every update sent to customers is 100% accurate.",
+              "r": "",
+              "m": "Tôi luôn giữ bước con người kiểm duyệt cuối cùng để đảm bảo mọi thông tin gửi tới khách hàng đều chính xác tuyệt đối 100%."
+            }
+          ]
+        },
+        {
+          "id": "s180-1",
+          "title": "Designing an automated order-intake and quotation workflow with Make",
+          "lines": [
+            {
+              "t": "Right now, our sales coordinators spend two hours every morning copying inquiry details from emails into Excel.",
+              "r": "",
+              "m": "Hiện tại, các điều phối viên kinh doanh của chúng ta đang mất 2 tiếng mỗi sáng chỉ để copy thông tin hỏi hàng từ email sang bảng Excel."
+            },
+            {
+              "t": "We can automate that entire flow using a webhook trigger connected to Make and our ERP sheet.",
+              "r": "",
+              "m": "Chúng ta có thể tự động hóa toàn bộ luồng đó bằng cách dùng sự kiện kích hoạt webhook kết nối với Make và bảng theo dõi ERP."
+            },
+            {
+              "t": "Once the customer submits the inquiry form, data mapping populates the quotation template and drafts a reply automatically.",
+              "r": "",
+              "m": "Ngay khi khách gửi biểu mẫu hỏi hàng, tính năng ánh xạ dữ liệu sẽ tự động điền vào mẫu báo giá và soạn sẵn email phản hồi nháp."
+            },
+            {
+              "t": "Then the Account Manager simply reviews the draft, approves the pricing, and clicks send.",
+              "r": "",
+              "m": "Sau đó Quản lý Tài khoản chỉ việc rà soát lại bản nháp, duyệt mức giá và bấm gửi đi."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c180-0",
+          "q": "How do you use AI tools and automation to improve your daily work efficiency?",
+          "vi": "Bạn sử dụng các công cụ AI và tự động hóa như thế nào để nâng cao hiệu suất làm việc hàng ngày?",
+          "st": "I use a structured digital second brain combined with + tools + to...",
+          "ph": [
+            "digitize SOPs and templates in a second brain",
+            "package repeatable tasks into reusable AI skills",
+            "automate data mapping and routine reporting",
+            "keep human-in-the-loop verification for 100% accuracy"
+          ],
+          "sa": "I organize all SOPs, templates, and verified project data in a structured digital second brain. For repeatable tasks like drafting weekly status reports or checking order checklists, I use reusable AI skills and workflow automation to speed up preparation while always keeping a human-in-the-loop check for final accuracy.",
+          "ss": [
+            "workflow automation",
+            "structured output",
+            "prevent hallucination"
+          ],
+          "sc": "Highlighting modern AI & digital productivity skills during a remote job interview."
+        },
+        {
+          "id": "c180-1",
+          "q": "How do you ensure an AI assistant does not make up wrong numbers or facts (hallucinate) in business documents?",
+          "vi": "Làm thế nào bạn đảm bảo trợ lý AI không tự bịa ra con số hoặc thông tin sai lệch (hallucination) trong tài liệu công việc?",
+          "st": "To prevent AI hallucination, I ground the agent in + source + and enforce...",
+          "ph": [
+            "ground the AI strictly in verified source files",
+            "forbid inventing unverified metrics or dates",
+            "embed a quality checklist inside the skill",
+            "verify against the single source of truth before sending"
+          ],
+          "sa": "To prevent AI hallucination, I never ask the AI to guess. I ground it strictly in our verified second-brain notes and ERP data, instruct it never to invent metrics, embed a self-check quality checklist inside the skill, and review every figure against our single source of truth.",
+          "ss": [
+            "data accuracy",
+            "human-in-the-loop",
+            "structured template"
+          ],
+          "sc": "Reassuring a manager that your use of AI is disciplined, safe, and reliable."
+        },
+        {
+          "id": "c180-2",
+          "q": "Walk me through how you turn a manual business process into a reusable AI skill.",
+          "vi": "Hãy trình bày cách bạn chuyển hóa một quy trình làm việc thủ công thành một kỹ năng AI (Skill) có thể tái sử dụng.",
+          "st": "First, I complete the task manually to verify good output, then + steps...",
+          "ph": [
+            "document the step-by-step Standard Operating Procedure (SOP)",
+            "extract a clean structured output template",
+            "define a quality checklist for common mistakes",
+            "run iterative optimization on real examples"
+          ],
+          "sa": "First, I complete the task successfully to establish what great output looks like. Next, I document the step-by-step SOP, provide a clean output template, and add a quality checklist for common edge cases. Finally, I test the skill across real examples and refine it through iterative optimization.",
+          "ss": [
+            "reusable skill",
+            "self-optimizing loop",
+            "consistent quality"
+          ],
+          "sc": "Explaining AI Agent Mastery and process standardization."
+        },
+        {
+          "id": "c180-3",
+          "q": "What business workflows in Sales Administration or Account Management are best suited for Make automation?",
+          "vi": "Những quy trình nào trong công việc Sales Admin hoặc Quản lý Tài khoản phù hợp nhất để tự động hóa bằng Make?",
+          "st": "The best candidates for workflow automation are repetitive data-transfer tasks such as...",
+          "ph": [
+            "syncing new customer inquiries into CRM/ERP trackers",
+            "generating standard Proforma Invoice and quotation drafts",
+            "sending automated ETD/ETA and CRD follow-up reminders",
+            "backing up approved shipping documents to cloud folders"
+          ],
+          "sa": "The best workflows to automate are repetitive, rule-based tasks: syncing customer inquiry forms into ERP trackers via webhooks, populating standard quotation templates through data mapping, triggering internal reminders ahead of Customer Required Dates, and archiving approved shipping documents into structured cloud folders.",
+          "ss": [
+            "trigger and action",
+            "save admin hours",
+            "reduce human error"
+          ],
+          "sc": "Proposing operational efficiency improvements to a business operations team."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Proposal – Automating Weekly Order Trackers & Standardizing AI Skills\n\nHi Operations Team,\n\nTo reduce manual copy-pasting and free up more time for proactive customer follow-up, I have prepared a roadmap for [[workflow automation|office painting|furniture moving]] across our account coordination tasks.\n\nFirst, we have completed [[knowledge digitization|paper shredding|window washing]] by organizing all verified email templates, packaging checklists, and SOPs into our shared [[digital second brain|wooden cabinet|cardboard box]]. This gives our team and our [[AI agent|delivery truck|coffee machine]] a reliable single source of truth without risking [[hallucination|sunburn|traffic jam]].\n\nSecond, using [[webhook integration|postal stamps|fax paper]] in Make, incoming buyer inquiries will automatically map SKU and quantity fields into our draft quotation sheet. We have also packaged our weekly reporting format into a [[reusable skill|broken tool|secret diary]] with an embedded [[quality checklist|shopping coupon|movie ticket]].\n\nMost importantly, we maintain a strict [[human-in-the-loop|hands-off guessing|blind sending]] policy: everyAccount Manager reviews and approves the final numbers before any update goes out to the client.\n\nBest regards,\nSally Nguyen",
+        "trans": "Tiêu đề: Đề xuất – Tự động hóa Bảng theo dõi Đơn hàng Tuần & Chuẩn hóa Bộ Kỹ năng AI (Skills)\n\nChào Đội ngũ Vận hành,\n\nNhằm giảm bớt thao tác copy-paste thủ công và dành nhiều thời gian hơn cho việc chăm sóc khách hàng chủ động, tôi đã chuẩn bị lộ trình tự động hóa quy trình (workflow automation) cho các tác vụ điều phối tài khoản của chúng ta.\n\nThứ nhất, chúng ta đã hoàn tất việc số hóa tri thức bằng cách sắp xếp toàn bộ mẫu email chuẩn, bảng kiểm bao bì và quy trình SOP vào bộ não số thứ hai dùng chung. Việc này cung cấp cho cả đội ngũ lẫn tác nhân AI một nguồn dữ liệu chuẩn duy nhất, loại bỏ hoàn toàn nguy cơ AI tự bịa thông tin sai lệch.\n\nThứ hai, thông qua kết nối webhook trên Make, các yêu cầu hỏi hàng mới từ khách sẽ tự động ánh xạ mã SKU và số lượng vào bảng báo giá nháp. Chúng ta cũng đã đóng gói mẫu báo cáo tuần thành một kỹ năng tái sử dụng (reusable skill) có tích hợp sẵn bảng kiểm chất lượng.\n\nQuan trọng nhất, chúng ta luôn duy trì nguyên tắc có con người kiểm duyệt (human-in-the-loop) nghiêm ngặt: mỗi Quản lý Tài khoản đều trực tiếp rà soát và phê duyệt số liệu cuối cùng trước khi gửi bất kỳ bản cập nhật nào cho khách hàng.\n\nTrân trọng,\nSally Nguyễn",
+        "audio": ""
+      },
+      "gram": [],
+      "pos": 80,
+      "catPos": 35
+    },
+    {
       "id": "151",
-      "pos": 74,
+      "pos": 81,
       "catPos": 1,
       "category": "c1",
       "level": "C1",
@@ -29150,7 +32076,7 @@
     },
     {
       "id": "152",
-      "pos": 75,
+      "pos": 82,
       "catPos": 2,
       "category": "c1",
       "level": "C1",
@@ -29366,7 +32292,7 @@
     },
     {
       "id": "153",
-      "pos": 76,
+      "pos": 83,
       "catPos": 3,
       "category": "c1",
       "level": "C1",
@@ -29562,7 +32488,7 @@
     },
     {
       "id": "154",
-      "pos": 77,
+      "pos": 84,
       "catPos": 4,
       "category": "c1",
       "level": "C1",
@@ -29748,7 +32674,7 @@
     },
     {
       "id": "155",
-      "pos": 78,
+      "pos": 85,
       "catPos": 5,
       "category": "c1",
       "level": "C1",
@@ -29934,7 +32860,7 @@
     },
     {
       "id": "156",
-      "pos": 79,
+      "pos": 86,
       "catPos": 1,
       "category": "c2",
       "level": "C2",
@@ -30120,7 +33046,7 @@
     },
     {
       "id": "157",
-      "pos": 80,
+      "pos": 87,
       "catPos": 2,
       "category": "c2",
       "level": "C2",
@@ -30296,7 +33222,7 @@
     },
     {
       "id": "158",
-      "pos": 81,
+      "pos": 88,
       "catPos": 3,
       "category": "c2",
       "level": "C2",
@@ -30472,7 +33398,7 @@
     },
     {
       "id": "159",
-      "pos": 82,
+      "pos": 89,
       "catPos": 4,
       "category": "c2",
       "level": "C2",
@@ -30638,7 +33564,7 @@
     },
     {
       "id": "160",
-      "pos": 83,
+      "pos": 90,
       "catPos": 5,
       "category": "c2",
       "level": "C2",
