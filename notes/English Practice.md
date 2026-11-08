@@ -1,6 +1,6 @@
 ---
 type: course
-tags: [learn, english, manager, construction, import-export, supply-chain, lewu, curriculum]
+tags: [learn, english, manager, construction, import-export, supply-chain, curriculum]
 status: active
 created: 21/10/2026
 updated: 28/10/2026
@@ -16,13 +16,13 @@ updated: 28/10/2026
 
 ## Mục tiêu khoá
 
-Củng cố tiếng Anh manager với đối tác nước ngoài, ưu tiên **xuất nhập khẩu và supply chain theo việc thật của LEWU**, rồi đến **chủ đầu tư xây dựng**. Học xong: tự chủ trì họp 30 phút, viết email thương mại không dịch nháp, đàm phán giá, tiến độ, thanh toán, khiếu nại, làm việc bằng tiếng Anh với nhà phân phối, nhà máy, forwarder và broker.
+Củng cố tiếng Anh manager với đối tác nước ngoài, ưu tiên **xuất nhập khẩu và supply chain theo việc thật của dự án XNK thực tế**, rồi đến **chủ đầu tư xây dựng**. Học xong: tự chủ trì họp 30 phút, viết email thương mại không dịch nháp, đàm phán giá, tiến độ, thanh toán, khiếu nại, làm việc bằng tiếng Anh với nhà phân phối, nhà máy, forwarder và broker.
 
 Giả định: trình độ B1 trở lên (chưa đo thật); nội dung viết ở mức B1 đến B2, không có bài cơ bản.
 
 ## Dùng vào việc gì, khi nào
 
-- Email, gọi điện với nhà phân phối, nhà máy OEM/ODM, forwarder, broker: hằng ngày ở LEWU (dự án Robot AI Inspector, OEM-LEWU AI Inspector, xuất mẫu vật liệu xây dựng đi Úc), nối [[00. International Supply Chains and Logistics]].
+- Email, gọi điện với nhà phân phối, nhà máy OEM/ODM, forwarder, broker: hằng ngày ở dự án XNK thực tế (dự án Robot AI Inspector, OEM-dự án XNK thực tế AI Inspector, xuất mẫu vật liệu xây dựng đi Úc), nối [[00. International Supply Chains and Logistics]].
 - Viết email cho từng đối tượng (khách hàng, nhà cung cấp, forwarder, đối tác nước ngoài, quản lý, email khó): chủ đề 4, 6 đến 9 và 13.
 - Họp, báo cáo tiến độ, đàm phán với chủ đầu tư nước ngoài: chủ đề 29 đến 32, khi có dự án hoặc khách xây dựng.
 - Sản phẩm ngành (vật liệu xây dựng, viên nén sinh khối, rượu): chủ đề 14 đến 16 và 23 đến 25, khi có đơn hoặc đối tác mảng đó.
@@ -56,18 +56,18 @@ Giả định: trình độ B1 trở lên (chưa đo thật); nội dung viết 
 | 14 | Building materials 1: products, specifications and standards | Vật liệu xây dựng 1: sản phẩm, thông số, tiêu chuẩn (gạch, bê tông, cách nhiệt, chứng chỉ thử nghiệm) | tự soạn, nối chủ đề xuất mẫu vật liệu | Bảng thông số kỹ thuật bằng tiếng Anh cho 1 sản phẩm và email gửi chứng chỉ |
 | 15 | Wine and spirits 1: products, tasting and recommendations | Rượu 1: sản phẩm, nếm thử, gợi ý món ăn (rượu vang và rượu mạnh) | tự soạn, chưa có nguồn trong kho | Ghi chú nếm và email giới thiệu một loại rượu |
 | 16 | Biomass pellets 1: the product, quality and specifications | Viên nén sinh khối 1: sản phẩm, chất lượng, thông số (độ ẩm, tro, nhiệt trị, ENplus) | tự soạn, chưa có nguồn trong kho | Bảng thông số 1 trang và email gửi thông số cho người mua mới |
-| 17 | Buying through a distributor: quotes, terms and written confirmation | mua qua nhà phân phối, báo giá, xác nhận bằng văn bản | LEWU: Robot AI Inspector | Email xin báo giá chi tiết và hỏi VAT, bảo hành gửi nhà phân phối |
-| 18 | Technical specifications: robots, sensors and software | thông số kỹ thuật robot, cảm biến, phần mềm | LEWU: bảng so sánh Go2, AS2, A2 | Danh sách câu hỏi kỹ thuật bằng tiếng Anh cho 3 mẫu robot |
-| 19 | Acceptance testing, warranty and after-sales service | nghiệm thu, bảo hành, hậu mãi | LEWU: mục Nghiệm thu máy | Biên bản nghiệm thu mẫu và email báo lỗi khi chạy thử |
-| 20 | Shipping to Australia: couriers, air cargo and biosecurity | gửi hàng sang Úc (chuyển phát, air cargo, kiểm dịch) | LEWU: Danh sách agency tuyến Úc | Email xin báo giá door-to-door đi Sydney |
-| 21 | Dangerous goods and compliance: batteries, radio equipment and HS codes | hàng nguy hiểm và tuân thủ (pin lithium, thiết bị vô tuyến, mã HS) | LEWU: Quy trình nhập, rủi ro đỏ | Email xin UN38.3, MSDS và hỏi trách nhiệm khi vận chuyển |
-| 22 | Exporting building materials: samples, packing and quality | xuất mẫu vật liệu xây dựng (đóng gói, chất lượng, duyệt mẫu) | LEWU: lô gạch mẫu đi Úc | Email báo đã gửi mẫu và giới thiệu mẫu bằng lời |
+| 17 | Buying through a distributor: quotes, terms and written confirmation | mua qua nhà phân phối, báo giá, xác nhận bằng văn bản | dự án XNK thực tế: Robot AI Inspector | Email xin báo giá chi tiết và hỏi VAT, bảo hành gửi nhà phân phối |
+| 18 | Technical specifications: robots, sensors and software | thông số kỹ thuật robot, cảm biến, phần mềm | dự án XNK thực tế: bảng so sánh Go2, AS2, A2 | Danh sách câu hỏi kỹ thuật bằng tiếng Anh cho 3 mẫu robot |
+| 19 | Acceptance testing, warranty and after-sales service | nghiệm thu, bảo hành, hậu mãi | dự án XNK thực tế: mục Nghiệm thu máy | Biên bản nghiệm thu mẫu và email báo lỗi khi chạy thử |
+| 20 | Shipping to Australia: couriers, air cargo and biosecurity | gửi hàng sang Úc (chuyển phát, air cargo, kiểm dịch) | dự án XNK thực tế: Danh sách agency tuyến Úc | Email xin báo giá door-to-door đi Sydney |
+| 21 | Dangerous goods and compliance: batteries, radio equipment and HS codes | hàng nguy hiểm và tuân thủ (pin lithium, thiết bị vô tuyến, mã HS) | dự án XNK thực tế: Quy trình nhập, rủi ro đỏ | Email xin UN38.3, MSDS và hỏi trách nhiệm khi vận chuyển |
+| 22 | Exporting building materials: samples, packing and quality | xuất mẫu vật liệu xây dựng (đóng gói, chất lượng, duyệt mẫu) | dự án XNK thực tế: lô gạch mẫu đi Úc | Email báo đã gửi mẫu và giới thiệu mẫu bằng lời |
 | 23 | Building materials 2: orders, loading and delivery to site | Vật liệu xây dựng 2: đặt hàng, xếp hàng, giao đến công trình (pallet, hàng vỡ, khiếu nại) | tự soạn | Email xác nhận xếp hàng và giao đến công trình, email xử lý hàng hư khi vận chuyển |
 | 24 | Wine and spirits 2: price lists, orders and distribution | Rượu 2: bảng giá, đơn hàng, phân phối (giá sỉ, thuế, kênh bán) | tự soạn, chưa có nguồn trong kho | Email gửi bảng giá và đơn đầu tiên cho nhà phân phối |
 | 25 | Biomass pellets 2: bulk shipping, contracts and inspection | Viên nén sinh khối 2: chở hàng rời, hợp đồng, giám định (draft survey, laytime, chào giá cố định) | tự soạn, chưa có nguồn trong kho | Email chào giá cố định cho một lô hàng rời |
 | 26 | The wine trade: labels, licences and temperature control | ngành rượu vang (nhãn, giấy phép, kiểm soát nhiệt độ) | chưa có nguồn, từ vựng chung | Email hỏi giá và phân bổ gửi nhà sản xuất rượu |
-| 27 | OEM and ODM: working with factories on your own brand | OEM/ODM với nhà máy, NDA, sở hữu trí tuệ | LEWU: OEM-LEWU AI Inspector | Email hỏi OEM/ODM gửi nhà máy, kèm danh sách chi phí cần báo |
-| 28 | Running the operation: owners, approvals and closing a shipment | điều hành lô hàng (owner, phê duyệt, đóng lô) | LEWU: LEWU XNK (C1 đến C9) | Email cập nhật tiến độ tuần và tóm tắt họp rút kinh nghiệm |
+| 27 | OEM and ODM: working with factories on your own brand | OEM/ODM với nhà máy, NDA, sở hữu trí tuệ | dự án XNK thực tế: OEM-dự án XNK thực tế AI Inspector | Email hỏi OEM/ODM gửi nhà máy, kèm danh sách chi phí cần báo |
+| 28 | Running the operation: owners, approvals and closing a shipment | điều hành lô hàng (owner, phê duyệt, đóng lô) | dự án XNK thực tế: dự án XNK thực tế XNK (C1 đến C9) | Email cập nhật tiến độ tuần và tóm tắt họp rút kinh nghiệm |
 | 29 | Construction investors 1: progress meetings and reports | Chủ đầu tư xây dựng 1: họp tiến độ, báo cáo | tự soạn | Báo cáo tiến độ 1 trang mẫu |
 | 30 | Construction investors 2: variations and extra costs | Chủ đầu tư xây dựng 2: phát sinh, thay đổi, báo giá bổ sung | tự soạn | Email đề xuất phát sinh kèm lý do, ảnh hưởng tiến độ và chi phí |
 | 31 | Construction investors 3: handover, payment, defects | Chủ đầu tư xây dựng 3: nghiệm thu, thanh toán, lỗi tồn đọng | tự soạn | Email yêu cầu thanh toán và danh sách lỗi cần sửa |
@@ -77,7 +77,7 @@ Giả định: trình độ B1 trở lên (chưa đo thật); nội dung viết 
 
 - **12 từ supply chain** ở các chủ đề 1, 2, 3, 5, 10, 11, 12, 29, 30, 31, 32 soạn theo khoá [[00. International Supply Chains and Logistics]], mạch SCOR: chủ đề 1 khái niệm chuỗi cung ứng; 2 SCOR, thu mua, hoạch định; 3 chọn nhà cung cấp (RFQ, RFI, chấm điểm); 5 make or buy, tổng chi phí, thuế quan; 10 Incoterms, MTO/MTS; 11 QC, chứng từ, khiếu nại, logistics ngược; 12 phương thức vận tải, cước, SLA; 29 tồn kho và theo dõi lô hàng; 30 rủi ro và khả năng phục hồi; 31 hải quan, tỷ giá, thanh toán, phí lưu container; 32 3PL/4PL, số hoá, tinh gọn, bền vững. 8 từ còn lại của các chủ đề đó theo chủ đề.
 - **Câu Coach lấy từ các bài The Coach:** chủ đề 1 [[01.02.01. Giới thiệu nhanh sản phẩm cho khách]]; 2 [[01.02. Giới thiệu về công việc]], [[01.01.02. Chứng minh năng lực sản xuất]]; 3 [[01.02.02. Lên lịch hẹn follow-up với khách tiềm năng]], [[01.02.03. Báo giá sơ bộ cho khách tại gian hàng]]; 5 [[01.01.01. Giới thiệu dòng sản phẩm mới]], [[01.01.03. Giải đáp thắc mắc về giá]], [[01.01.06. Trình bày độ bền và tuổi thọ sản phẩm]]; 10 [[01.01.04. Trình bày quy trình tùy chỉnh]]; 11 [[01.03. Gia hạn hợp đồng]]; 12 [[02.01. Thảo luận cơ hội thị trường]], [[01.01.05. So sánh sản phẩm với đối thủ]]. Các chủ đề khác có câu Coach tự soạn (nhãn "Work practice").
-- **Chủ đề 17 đến 22, 27 và 28 theo việc thật của LEWU** (nhà phân phối, thông số robot, nghiệm thu, gửi hàng sang Úc, hàng nguy hiểm, xuất mẫu, OEM, điều hành lô hàng); tài liệu LEWU nằm ở brain riêng của LEWU (thư mục `LEWU XNK (comp.)`).
+- **Chủ đề 17 đến 22, 27 và 28 theo việc thật của dự án XNK thực tế** (nhà phân phối, thông số robot, nghiệm thu, gửi hàng sang Úc, hàng nguy hiểm, xuất mẫu, OEM, điều hành lô hàng); tài liệu dự án XNK thực tế nằm ở brain riêng của dự án XNK thực tế (thư mục `dự án XNK thực tế XNK (comp.)`).
 - **Chưa có nguồn trong kho, tự soạn theo từ vựng chung:** vật liệu xây dựng, viên nén sinh khối, rượu (kể cả chủ đề 26 về nhãn, giấy phép, nhiệt độ rượu vang), chủ đầu tư xây dựng. Điều khoản hợp đồng chuẩn cần tài liệu thật của Sally. Số liệu trong ví dụ (giá, độ cồn, chứng nhận) chỉ là ví dụ.
 - Tên người và công ty trong ví dụ là giả.
 

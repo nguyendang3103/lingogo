@@ -12,7 +12,7 @@ Dùng khi học Anh, Trung, Nhật cùng lúc trong app Lingogo mà không bị 
 
 ## Thứ tự ưu tiên (theo mục tiêu trong kho)
 
-1. **Tiếng Anh, chính:** dùng hằng ngày ở LEWU (email, gọi điện, đàm phán). [[English Practice]]
+1. **Tiếng Anh, chính:** dùng hằng ngày trong công việc (email, gọi điện, đàm phán). [[English Practice]]
 2. **Tiếng Trung, phụ chính:** đối tác nói tiếng Trung, thương mại, chứng từ. [[Chinese Practice]]
 3. **Tiếng Nhật, nhẹ:** giao tiếp và du lịch, không thi JLPT. [[Japanese Practice]]
 
