@@ -1539,6 +1539,7 @@ function lessonView(t, i) {
 
     if (ex.type === 'intro') {
       body = itemCard(code, ex.v, ex.tip); btn.textContent = 'Tiếp tục'; ready = () => true;
+      setTimeout(() => say(code, ex.v.w), 300);
     } else if (ex.type === 'meaning' || ex.type === 'listen' || ex.type === 'reverse') {
       const isMeaning = ex.type === 'meaning';
       const c = choose(ex.opts, (o) => isMeaning ? o.m : h('span', { lang: LANGS[code].lang }, plain(o.w), o.r && o.r !== o.w && code !== 'en' ? h('span', { class: 'small muted' }, '  ' + o.r) : ''));
@@ -1548,6 +1549,7 @@ function lessonView(t, i) {
         isMeaning ? h('div', { class: 'stack center', style: { gap: '6px' } }, wordBlock(code, ex.v, { hideMeaning: true }), listenBtns(code, ex.v.w)) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m)),
         c.el);
       gradeFn = () => ({ correct: c.sel() === ex.v, expected: isMeaning ? ex.v.m : plain(ex.v.w) });
+      if (ex.type === 'listen' || isMeaning) setTimeout(() => say(code, ex.v.w), 300);
     } else if (ex.type === 'hvw') {
       const c = choose(ex.opts, (o) => o.hv);
       c.setCorrect(ex.correct);
@@ -1708,6 +1710,8 @@ function lessonView(t, i) {
         ) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
+      if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
+      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
@@ -1799,7 +1803,7 @@ function reviewView() {
       const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
       bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
       S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code);
-      back.hidden = false;
+      back.hidden = false; say(code, sayText);
       verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
       if (!ok) cont.dataset.wrong = '1';
       dock.hidden = false;
