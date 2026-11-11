@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1755';
+const APP_BUILD_ID = '20261111-1800';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1056,15 +1056,136 @@ function lessonTitle(t, i) {
   const ws = l.words.map((w) => plain(w.w).replace(/[.…\s]+$/, '')).slice(0, 3).join(', ');
   return 'Từ mới ' + n + ' · ' + ws + (l.words.length > 3 ? '…' : '');
 }
-const dueIn = (code) => { const t = todayN(); return Object.keys(S.srs).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t && isCard(code, k)).length; };
-const CARDS = {};
-function cardIndex(code) { // id → mục từ/kanji có thể ôn bằng thẻ
+// ===== Hệ thống Spaced Repetition cho tất cả các kỹ năng (Từ vựng, Nói, Viết, Ngữ pháp) =====
+const CARDS = {}, SPEAK_CARDS = {}, WRITE_CARDS = {}, GRAM_CARDS = {};
+
+function cardIndex(code) {
   if (CARDS[code] || !DATA[code]) return CARDS[code] || {};
   const m = {};
-  DATA[code].topics.forEach((t) => { t.vocab.forEach((v) => { m[v.id] = { v, t }; }); (t.kanji || []).forEach((k) => { m[k.id] = { k, t }; }); });
+  DATA[code].topics.forEach((t) => {
+    t.vocab.forEach((v) => { m[v.id] = { v, t }; });
+    (t.kanji || []).forEach((k) => { m[k.id] = { k, t }; });
+  });
   return (CARDS[code] = m);
 }
-const isCard = (code, key) => !!cardIndex(code)[key.slice(code.length + 1)];
+
+function speakIndex(code) {
+  if (SPEAK_CARDS[code] || !DATA[code]) return SPEAK_CARDS[code] || {};
+  const m = {};
+  DATA[code].topics.forEach((t) => {
+    (speakItems(code, t) || []).filter((it) => it.kind === 'line').forEach((it) => {
+      const p = plain(it.text);
+      if (!m[p]) m[p] = { it, t };
+    });
+  });
+  return (SPEAK_CARDS[code] = m);
+}
+
+function writeIndex(code) {
+  if (WRITE_CARDS[code] || !DATA[code]) return WRITE_CARDS[code] || {};
+  const m = {};
+  DATA[code].topics.forEach((t) => {
+    t.vocab.forEach((v) => {
+      [...plain(v.w)].filter((c) => /[㐀-鿿]/.test(c)).forEach((c) => {
+        if (!m[c]) m[c] = { c, t, hint: charHint(code, c), v };
+      });
+    });
+    (t.kanji || []).forEach((k) => {
+      if (!m[k.k]) m[k.k] = { c: k.k, t, hint: k.hv, k };
+    });
+  });
+  return (WRITE_CARDS[code] = m);
+}
+
+function grammarIndex(code) {
+  if (GRAM_CARDS[code] || !DATA[code] || !DATA[code].grammar) return GRAM_CARDS[code] || {};
+  const m = {};
+  const all = grammarPoints(code);
+  all.forEach((p) => { m[p.gid] = p; });
+  return (GRAM_CARDS[code] = m);
+}
+
+function parseSrsKey(k, code) {
+  if (!k.startsWith(code + ':')) return null;
+  const rest = k.slice(code.length + 1);
+  if (rest.startsWith('speak:')) {
+    const text = rest.slice(6);
+    const sp = (speakIndex(code) || {})[text] || { it: { text }, t: {} };
+    return { skill: 'speak', key: k, id: text, it: sp };
+  }
+  if (rest.startsWith('write:')) {
+    const ch = rest.slice(6);
+    const wr = (writeIndex(code) || {})[ch] || { c: ch, t: {}, hint: charHint(code, ch) };
+    return { skill: 'write', key: k, id: ch, it: wr };
+  }
+  if (rest.startsWith('gram:')) {
+    const gid = rest.slice(5);
+    const d = DATA[code];
+    const gr = (grammarIndex(code) || {})[gid] || (d && d.grammar && d.grammar[gid] ? { gid, g: d.grammar[gid], lv: d.grammar[gid].lv } : null);
+    if (!gr) return null;
+    return { skill: 'gram', key: k, id: gid, it: gr };
+  }
+  const vMap = cardIndex(code);
+  const it = vMap[rest];
+  if (it) return { skill: 'vocab', key: k, id: rest, it };
+  return null;
+}
+
+const isCard = (code, key) => !!parseSrsKey(key, code);
+
+function ensureSrsItems(code) {
+  if (!S.srs) S.srs = {};
+  const d = DATA[code]; if (!d) return;
+  const t0 = todayN();
+  d.topics.forEach((t) => {
+    const hasStudied = t.lessons.some((l, i) => lessonDone(t, i));
+    if (hasStudied) {
+      t.vocab.forEach((v) => {
+        const k = sid(code, v.id);
+        if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+      });
+      (t.kanji || []).forEach((kj) => {
+        const k = sid(code, kj.id);
+        if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+      });
+      if (t.gram && d.grammar) {
+        t.gram.forEach((gid) => {
+          const k = code + ':gram:' + gid;
+          if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+        });
+      }
+    }
+  });
+  if (S.spoken) {
+    Object.keys(S.spoken).forEach((k) => {
+      if (k.startsWith(code + ':')) {
+        const text = k.slice(code.length + 1);
+        const sKey = code + ':speak:' + text;
+        if (!S.srs[sKey]) S.srs[sKey] = { b: (S.spoken[k] || 0) >= 80 ? 2 : 1, due: t0, last: t0 - 1 };
+      }
+    });
+  }
+  if (S.written) {
+    Object.keys(S.written).forEach((k) => {
+      if (k.startsWith(code + ':')) {
+        const ch = k.slice(code.length + 1);
+        const sKey = code + ':write:' + ch;
+        if (!S.srs[sKey]) S.srs[sKey] = { b: 1, due: t0, last: t0 - 1 };
+      }
+    });
+  }
+}
+
+function srsDueItems(code, skillFilter = 'all') {
+  ensureSrsItems(code);
+  const t0 = todayN();
+  const allKeys = Object.keys(S.srs || {}).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t0);
+  const parsed = allKeys.map((k) => parseSrsKey(k, code)).filter(Boolean);
+  if (skillFilter === 'all') return parsed;
+  return parsed.filter((x) => x.skill === skillFilter);
+}
+
+const dueIn = (code) => srsDueItems(code, 'all').length;
 
 // ===== Tiện ích giao diện =====
 function h(tag, attrs, ...kids) {
@@ -1415,13 +1536,13 @@ function homeView() {
     h('div', { class: 'stats' },
       h('div', { class: 'stat' }, h('b', {}, st), h('span', {}, 'ngày đạt mục tiêu')),
       h('div', { class: 'stat' }, h('b', {}, xp), h('span', {}, 'XP hôm nay')),
-      h('div', { class: 'stat' }, h('b', {}, due), h('span', {}, 'thẻ cần ôn'))),
+      h('div', { class: 'stat' }, h('b', {}, due), h('span', {}, 'mục cần ôn'))),
     h('div', { class: 'panel stack' },
       h('div', { class: 'row between small' },
         h('span', {}, xp >= goal() ? 'Đã đạt mục tiêu hôm nay' : 'Còn ' + (goal() - xp) + ' XP để đạt mục tiêu'),
         h('span', { class: 'muted' }, xp + '/' + goal() + ' XP · mỗi từ +5')),
       h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': goal() }, gf),
-      due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' thẻ ngay'),
+      due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' mục ngắt quãng ngay'),
       nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
         h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
         : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
@@ -1432,7 +1553,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.38 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.40 · Cập nhật 11/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -2216,7 +2337,10 @@ function lessonView(t, i) {
         }
         if (ex.k) srsRate(sid(code, ex.k.id), r.correct);
         if (ex.q) srsRate(sid(code, ex.q.id), r.correct);
+        if (ex.type === 'speak' && resp) srsRate(code + ':speak:' + plain(ex.text), resp.score >= 70);
+        if (ex.type === 'write') srsRate(code + ':write:' + ex.ch, r.correct);
         if (ex.type === 'gquiz') {
+          srsRate(code + ':gram:' + ex.q.p.gid, r.correct);
           const st = gqStore();
           if (r.correct) {
             if (st.wrong[ex.q.p.gid]) {
@@ -2297,66 +2421,384 @@ function lessonView(t, i) {
     h('div', { class: 'dock' }, h('button', { class: 'primary block', onclick: step }, 'Bắt đầu · ' + steps.filter((s) => s.type !== 'intro').length + ' câu'))));
 }
 
-// ===== Ôn tập =====
+// ===== Ôn tập theo phương pháp Spaced Repetition (Lặp lại ngắt quãng) cho tất cả các kỹ năng =====
+let REVIEW_SKILL = 'all';
+
 function reviewView() {
-  const code = S.lang, idx = cardIndex(code), t0 = todayN();
-  const queue = Object.keys(S.srs).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t0 && idx[k.slice(code.length + 1)])
-    .sort((a, b) => S.srs[a].due - S.srs[b].due || S.srs[a].b - S.srs[b].b).slice(0, 30);
+  const code = S.lang, t0 = todayN();
+  ensureSrsItems(code);
+
+  const skillTabs = [
+    ['all', 'Tất cả'],
+    ['vocab', 'Từ vựng'],
+    ['speak', 'Luyện nói'],
+    ...(code !== 'en' ? [['write', 'Luyện viết'], ['gram', 'Ngữ pháp']] : [])
+  ];
+
+  const counts = {};
+  skillTabs.forEach(([k]) => {
+    counts[k] = srsDueItems(code, k).length;
+  });
+
+  const head = () => h('div', { class: 'stack', style: { gap: '10px' } },
+    h('div', { class: 'row between' },
+      h('h1', {}, 'Ôn tập ngắt quãng'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: 'review' }),
+        langSwitch()
+      )
+    ),
+    h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+      skillTabs.map(([k, label]) => h('button', {
+        class: 'mini' + (REVIEW_SKILL === k ? ' primary' : ' ghost'),
+        onclick: () => { REVIEW_SKILL = k; reviewView(); }
+      }, label + ' (' + (counts[k] || 0) + ')'))
+    )
+  );
+
+  const queue = srsDueItems(code, REVIEW_SKILL)
+    .sort((a, b) => S.srs[a.key].due - S.srs[b.key].due || S.srs[a.key].b - S.srs[b.key].b)
+    .slice(0, 30);
   let count = 0;
-  const head = () => h('div', { class: 'row between' }, h('h1', {}, 'Ôn tập'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'review' }), langSwitch()));
+
   if (!queue.length) {
-    const total = Object.keys(S.srs).filter((k) => k.startsWith(code + ':') && idx[k.slice(code.length + 1)]).length;
-    mount(h('div', { class: 'stack-lg' }, head(), h('div', { class: 'panel stack center' },
-      h('h2', {}, total ? 'Chưa có thẻ nào đến hạn' : 'Chưa có từ nào để ôn'),
-      h('p', { class: 'muted' }, total ? 'Bạn có ' + total + ' thẻ ' + L().short + ' trong hàng ôn. Quay lại ngày mai nhé.' : 'Học một bài để từ vựng vào hàng ôn tập.'),
-      h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học'))));
+    const totalAll = counts.all || 0;
+    mount(h('div', { class: 'stack-lg' }, head(),
+      h('div', { class: 'panel stack center' },
+        h('h2', {}, totalAll ? 'Mục này chưa có thẻ đến hạn' : 'Đã xong các mục ôn tập hôm nay!'),
+        h('p', { class: 'muted' }, totalAll
+          ? 'Hôm nay bạn còn ' + totalAll + ' mục đến hạn ở các kỹ năng khác.'
+          : 'Hệ thống Spaced Repetition đã ghi nhận tiến độ của bạn cho cả từ vựng, luyện nói, luyện viết và ngữ pháp. Hãy quay lại vào ngày mai nhé!'),
+        totalAll && REVIEW_SKILL !== 'all' ? h('button', { class: 'accent block', onclick: () => { REVIEW_SKILL = 'all'; reviewView(); } }, 'Chuyển sang Tất cả (' + totalAll + ' mục)') : null,
+        h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')
+      )
+    ));
     return;
   }
+
   const show = () => {
-    const k = queue[0];
-    if (!k) { checkAch(); mount(h('div', { class: 'stack-lg' }, head(), h('div', { class: 'panel stack center' }, h('h2', {}, 'Xong phiên ôn tập'), h('p', { class: 'muted' }, 'Bạn đã ôn ' + count + ' lượt.'), h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')))); return; }
-    const it = idx[k.slice(code.length + 1)], s = S.srs[k];
-    let front, back, sayText;
-    if (it.v) {
-      const v = it.v; sayText = v.w;
-      front = h('div', { class: 'big', lang: L().lang }, plain(v.w));
-      back = h('div', { class: 'stack', hidden: true }, v.r && (v.r !== v.w ? h('div', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null }, v.r) : null), code !== 'en' && hvBlock(code, v), h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, v.m),
-        v.d && code === 'en' && h('p', { class: 'small muted' }, v.d), v.ex && h('p', { lang: L().lang }, '“' + v.ex + '”'), v.exr && h('p', { class: 'small read' }, v.exr), v.exm && h('p', { class: 'small muted' }, v.exm));
-    } else {
-      const kj = it.k; sayText = kj.ex && kj.ex[0] ? plain(kj.ex[0][0]) : kj.k;
-      front = h('div', { class: 'big', lang: 'ja' }, kj.k);
-      back = h('div', { class: 'stack', hidden: true }, h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, kj.hv),
-        h('p', { class: 'small', lang: 'ja' }, 'On: ' + kj.on + ' · Kun: ' + kj.kun), ...(kj.ex || []).slice(0, 3).map((e) => h('p', { class: 'small', lang: 'ja' }, ruby(e[0]), ' · ', h('span', { class: 'muted' }, e[1]))));
+    const item = queue[0];
+    if (!item) {
+      checkAch();
+      mount(h('div', { class: 'stack-lg' }, head(),
+        h('div', { class: 'panel stack center' },
+          h('h2', {}, 'Xong phiên ôn tập!'),
+          h('p', { class: 'muted' }, 'Bạn đã ôn ' + count + ' lượt lặp lại ngắt quãng.'),
+          counts.all > count ? h('button', { class: 'accent block', onclick: () => reviewView() }, 'Ôn tiếp các mục còn lại') : null,
+          h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')
+        )
+      ));
+      return;
     }
-    // Máy tự phân loại: chọn nghĩa đúng trong 4 đáp án; sai → Quên, đúng nhanh → Dễ, đúng chậm → Khó
-    const pool = Object.values(idx), t0r = Date.now();
-    const answer = it.v ? it.v.m : it.k.hv;
-    const others = it.v ? pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t === it.t).concat(pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t !== it.t))
-      : pool.filter((x) => x.k && x.k.k !== it.k.k && x.k.hv !== it.k.hv);
-    const labels = [...new Set(others.slice(0, 40).map((x) => (it.v ? x.v.m : x.k.hv)))];
-    const opts = shuffle([answer, ...sample(labels, 3)]);
-    const verdict = h('div', { 'aria-live': 'assertive' });
-    const cont = h('button', { class: 'primary block', hidden: true, onclick: () => { queue.shift(); if (cont.dataset.wrong) queue.push(k); show(); } }, 'Tiếp tục');
-    const dock = h('div', { class: 'dock stack', hidden: true }, verdict, cont);
-    const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
-      const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
-      bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
-      S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code);
-      back.hidden = false; say(code, sayText);
-      verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
-      if (!ok) cont.dataset.wrong = '1';
-      dock.hidden = false;
-      cont.hidden = false; cont.focus();
-    } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
-    mount(h('div', { class: 'stack-lg' }, head(),
-      h('div', { class: 'row between' }, h('span', { class: 'small muted' }, it.t.sub || it.t.title), h('span', { class: 'chip' }, 'Còn ' + queue.length)),
-      h('div', { class: 'panel card' }, h('p', { class: 'small muted' }, it.v ? 'Chọn nghĩa đúng' : 'Chọn âm Hán Việt đúng'), front, h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })), back),
-      h('div', { class: 'options' }, bs),
-      dock));
+
+    const k = item.key, s = S.srs[k];
+    const skillBadge = {
+      vocab: h('span', { class: 'chip' }, item.it && item.it.k ? 'Kanji' : 'Từ vựng'),
+      speak: h('span', { class: 'chip accent' }, '🎙️ Luyện nói'),
+      write: h('span', { class: 'chip good' }, '✍️ Luyện viết'),
+      gram: h('span', { class: 'chip' }, '📖 Ngữ pháp')
+    }[item.skill] || h('span', { class: 'chip' }, item.skill);
+
+    const subTitle = (item.it && item.it.t && (item.it.t.sub || item.it.t.title)) || (item.it && item.it.lv) || 'Spaced Repetition';
+    const topBar = h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, skillBadge, h('span', { class: 'small muted' }, subTitle)),
+      h('span', { class: 'chip' }, 'Còn ' + queue.length)
+    );
+
+    // 1. TỪ VỰNG / KANJI
+    if (item.skill === 'vocab') {
+      const it = item.it;
+      let front, back, sayText;
+      if (it.v) {
+        const v = it.v; sayText = v.w;
+        front = h('div', { class: 'big', lang: L().lang }, plain(v.w));
+        back = h('div', { class: 'stack', hidden: true },
+          v.r && (v.r !== v.w ? h('div', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null }, v.r) : null),
+          code !== 'en' && hvBlock(code, v),
+          h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, v.m),
+          v.d && code === 'en' && h('p', { class: 'small muted' }, v.d),
+          v.ex && h('p', { lang: L().lang }, '“' + v.ex + '”'),
+          v.exr && h('p', { class: 'small read' }, v.exr),
+          v.exm && h('p', { class: 'small muted' }, v.exm)
+        );
+      } else {
+        const kj = it.k; sayText = kj.ex && kj.ex[0] ? plain(kj.ex[0][0]) : kj.k;
+        front = h('div', { class: 'big', lang: 'ja' }, kj.k);
+        back = h('div', { class: 'stack', hidden: true },
+          h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, kj.hv),
+          h('p', { class: 'small', lang: 'ja' }, 'On: ' + kj.on + ' · Kun: ' + kj.kun),
+          ...(kj.ex || []).slice(0, 3).map((e) => h('p', { class: 'small', lang: 'ja' }, ruby(e[0]), ' · ', h('span', { class: 'muted' }, e[1])))
+        );
+      }
+      const pool = Object.values(cardIndex(code)), t0r = Date.now();
+      const answer = it.v ? it.v.m : it.k.hv;
+      const others = it.v
+        ? pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t === it.t).concat(pool.filter((x) => x.v && x.v.id !== it.v.id && x.v.m !== it.v.m && x.t !== it.t))
+        : pool.filter((x) => x.k && x.k.k !== it.k.k && x.k.hv !== it.k.hv);
+      const labels = [...new Set(others.slice(0, 40).map((x) => (it.v ? x.v.m : x.k.hv)))];
+      const opts = shuffle([answer, ...sample(labels, 3)]);
+      const verdict = h('div', { 'aria-live': 'assertive' });
+      const cont = h('button', { class: 'primary block', hidden: true, onclick: () => {
+        queue.shift();
+        if (cont.dataset.wrong) queue.push(item);
+        show();
+      } }, 'Tiếp tục');
+      const dock = h('div', { class: 'dock stack', hidden: true }, verdict, cont);
+      const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
+        const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
+        bs.forEach((b, n) => { b.disabled = true; if (opts[n] === answer) b.classList.add('right'); else if (n === j) b.classList.add('wrong'); });
+        S.srs[k] = srsNext(s, g); count++; addXp(g >= 2 ? XP_ITEM : 0, code);
+        back.hidden = false; say(code, sayText);
+        verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') }, ok ? 'Đúng · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đúng · ôn lại ngay hôm nay'));
+        if (!ok) cont.dataset.wrong = '1';
+        dock.hidden = false; cont.hidden = false; cont.focus();
+      } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
+
+      return mount(h('div', { class: 'stack-lg' }, head(), topBar,
+        h('div', { class: 'panel card' },
+          h('p', { class: 'small muted' }, it.v ? 'Chọn nghĩa đúng' : 'Chọn âm Hán Việt đúng'),
+          front,
+          h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })),
+          back
+        ),
+        h('div', { class: 'options' }, bs),
+        dock
+      ));
+    }
+
+    // 2. LUYỆN NÓI
+    if (item.skill === 'speak') {
+      const it = (item.it && item.it.it) || item.it || {};
+      const targetText = it.text || item.id;
+      const wordsBox = h('div', { class: 'words', lang: L().lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, it.raw ? ruby(it.raw) : plain(targetText));
+      const resultBox = h('div', { class: 'stack center', style: { gap: '4px', minHeight: '40px' } });
+      const verdict = h('div', { 'aria-live': 'assertive' });
+      const cont = h('button', { class: 'primary block', hidden: true, onclick: () => {
+        queue.shift();
+        if (cont.dataset.wrong) queue.push(item);
+        show();
+      } }, 'Tiếp tục');
+      const dock = h('div', { class: 'dock stack', hidden: true }, verdict, cont);
+
+      const finishSpeak = (g, ok, scoreText) => {
+        S.srs[k] = srsNext(s, g);
+        count++;
+        addXp(ok ? XP_ITEM : 0, code);
+        verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') },
+          (scoreText ? scoreText + ' · ' : '') + (ok ? 'Đạt · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đạt · ôn lại sớm')
+        ));
+        if (!ok) cont.dataset.wrong = '1';
+        dock.hidden = false; cont.hidden = false; cont.focus();
+      };
+
+      const ctrl = micControl(code, (said) => {
+        const a = align(code, targetText, said);
+        wordsBox.replaceChildren(...a.units.map((w, idx) => h('span', { class: a.hit[idx] ? 'hit' : 'miss' }, w)));
+        const ok = a.score >= 70;
+        const g = a.score >= 90 ? 4 : a.score >= 70 ? 3 : a.score >= 50 ? 2 : 1;
+        resultBox.replaceChildren(
+          h('div', { class: 'score', style: { color: ok ? 'var(--good)' : 'var(--ink)' } }, a.score + '%'),
+          h('p', { class: 'center small muted', lang: L().lang }, 'Máy nghe được: “' + said + '”')
+        );
+        finishSpeak(g, ok, 'Điểm phát âm ' + a.score + '%');
+      }, (selfGrade) => {
+        finishSpeak(selfGrade >= 3 ? 3 : 1, selfGrade >= 3, 'Tự đánh giá');
+      }, [['Chưa tốt', 1], ['Tạm ổn', 2], ['Nói tốt', 3]]);
+
+      return mount(h('div', { class: 'stack-lg' }, head(), topBar,
+        h('div', { class: 'panel card stack center', style: { gap: '10px' } },
+          h('p', { class: 'small muted' }, 'Bấm Micro và nói lại câu này theo phương pháp lặp lại ngắt quãng:'),
+          wordsBox,
+          it.r && it.r !== targetText ? h('p', { class: code === 'en' ? 'ipa' : 'read', style: { margin: 0, textAlign: 'center' } }, it.r) : null,
+          it.m ? h('p', { class: 'small muted center', style: { fontSize: '1.05rem', margin: 0 } }, it.m) : null,
+          h('div', { class: 'listen', style: { justifyContent: 'center' } }, spk(code, targetText, { cls: 'big' })),
+          ctrl,
+          resultBox
+        ),
+        dock
+      ));
+    }
+
+    // 3. LUYỆN VIẾT
+    if (item.skill === 'write') {
+      const c = item.id;
+      const hint = item.it.hint || charHint(code, c);
+      const wbox = h('div', { class: 'charbox', style: { margin: '0 auto' } });
+      const info = h('p', { class: 'small muted center' }, 'Đang tải nét chữ…');
+      const verdict = h('div', { 'aria-live': 'assertive' });
+      const cont = h('button', { class: 'primary block', hidden: true, onclick: () => {
+        queue.shift();
+        if (cont.dataset.wrong) queue.push(item);
+        show();
+      } }, 'Tiếp tục');
+      const dock = h('div', { class: 'dock stack', hidden: true }, verdict, cont);
+
+      const finishWrite = (g, ok, note) => {
+        S.srs[k] = srsNext(s, g);
+        count++;
+        addXp(ok ? XP_ITEM : 0, code);
+        verdict.replaceChildren(h('p', { class: 'small center ' + (ok ? '' : 'muted') },
+          (note ? note + ' · ' : '') + (ok ? 'Đạt · ôn lại sau ' + ivText(S.srs[k]) : 'Chưa đạt · ôn lại sớm')
+        ));
+        if (!ok) cont.dataset.wrong = '1';
+        dock.hidden = false; cont.hidden = false; cont.focus();
+      };
+
+      setTimeout(async () => {
+        const strokes = await loadStrokes(code);
+        const data = strokes[c];
+        if (!data || !window.HanziWriter) {
+          info.replaceChildren(
+            h('p', {}, 'Chữ: ' + c + (hint ? ' (' + hint + ')' : '')),
+            h('div', { class: 'row center', style: { gap: '8px' } },
+              h('button', { class: 'mini', onclick: () => finishWrite(3, true, 'Đã nhớ chữ') }, 'Tôi đã nhớ chữ này'),
+              h('button', { class: 'mini ghost', onclick: () => finishWrite(1, false, 'Cần ôn lại') }, 'Chưa nhớ')
+            )
+          );
+          return;
+        }
+        const size = Math.min(260, window.innerWidth - 64);
+        const writer = HanziWriter.create(wbox, c, {
+          width: size, height: size, padding: 12, showCharacter: false, showOutline: false,
+          strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222',
+          outlineColor: guideColor(),
+          drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257',
+          charDataLoader: (ch, ok) => ok(data)
+        });
+        info.textContent = 'Hãy nhớ chữ và viết từng nét vào ô (không nét mờ)';
+        writer.quiz({
+          showHintAfterMisses: 2,
+          onComplete: (res) => {
+            const ok = res.totalMistakes <= 3;
+            info.textContent = ok ? 'Hoàn thành tốt! (Sai ' + res.totalMistakes + ' lần)' : 'Hoàn thành nhưng sai ' + res.totalMistakes + ' lần.';
+            finishWrite(ok ? (res.totalMistakes === 0 ? 4 : 3) : 1, ok);
+          }
+        });
+      }, 50);
+
+      return mount(h('div', { class: 'stack-lg' }, head(), topBar,
+        h('div', { class: 'panel card stack center', style: { gap: '10px' } },
+          h('p', { class: 'small muted' }, 'Tập viết chữ theo phương pháp lặp lại ngắt quãng:'),
+          h('div', { class: 'row center', style: { gap: '8px', alignItems: 'center' } },
+            h('span', { class: 'chip good', style: { fontSize: '1.2rem', padding: '4px 14px' } }, c),
+            hint ? h('b', {}, hint) : null,
+            spk(code, c)
+          ),
+          wbox,
+          info,
+          h('div', { class: 'row center', style: { gap: '8px' } },
+            h('button', { class: 'ghost mini', onclick: () => finishWrite(3, true, 'Đã viết xong') }, 'Đã viết trên giấy (Đạt)'),
+            h('button', { class: 'ghost mini', onclick: () => finishWrite(1, false, 'Chưa nhớ nét') }, 'Chưa nhớ nét (Ôn lại)')
+          )
+        ),
+        dock
+      ));
+    }
+
+    // 4. NGỮ PHÁP
+    if (item.skill === 'gram') {
+      const p = item.it;
+      const g = p.g || (DATA[code].grammar && DATA[code].grammar[p.gid]);
+      if (!g) {
+        queue.shift(); show(); return;
+      }
+      const all = grammarPoints(code);
+      const pool = [...new Set(all.flatMap((x) => gqKeywords(x.g)))];
+      const q = gqMake(p, all, pool) || {
+        type: 'cloze', p, e: g.ex[0], label: 'Điền từ đúng',
+        prompt: g.ex[0][0], hint: g.ex[0][2], answer: gqKeywords(g)[0] || '', opts: [gqKeywords(g)[0] || '', 'không', 'đã', 'sẽ']
+      };
+
+      const langAttr = LANGS[code].lang;
+      let done = false;
+      const nextBtn = h('button', { class: 'primary block next-btn', hidden: true, onclick: () => {
+        queue.shift();
+        if (nextBtn.dataset.wrong) queue.push(item);
+        show();
+      } }, 'Tiếp tục');
+      const fb = h('div', { 'aria-live': 'polite' });
+
+      const revealGrammar = (ok) => {
+        done = true;
+        const sGrade = ok ? 3 : 1;
+        S.srs[k] = srsNext(s, sGrade);
+        count++;
+        addXp(ok ? XP_ITEM : 0, code);
+        save();
+        if (!ok) nextBtn.dataset.wrong = '1';
+        nextBtn.hidden = false;
+
+        fb.replaceChildren(
+          h('div', { class: 'feedback ' + (ok ? 'ok' : 'no') },
+            h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
+            ok ? (' · Ôn lại sau ' + ivText(S.srs[k])) : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer) + ' · Ôn lại sớm')
+          ),
+          h('div', { style: { margin: '8px 0 12px 0' } }, nextBtn),
+          h('div', { class: 'panel gram', style: { gap: '8px' } },
+            h('div', { class: 'ex' },
+              h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
+              h('p', { class: 'small read', style: { textAlign: 'left' } }, q.e[1]),
+              h('p', { class: 'small muted' }, q.e[2])
+            )
+          ),
+          h('div', { class: 'panel gram stack', style: { gap: '6px' } },
+            h('p', { class: 'label', style: { margin: 0 } }, 'Giải thích ngữ pháp:'),
+            h('p', { class: 'pat', style: { margin: 0 } }, g.t),
+            g.f && h('p', { class: 'small', lang: langAttr, style: { margin: 0 } }, g.f),
+            ...(g.notes || []).map((n) => h('p', { class: 'small', style: { margin: 0 } }, n))
+          )
+        );
+        setTimeout(() => say(code, q.e[0]), 250);
+      };
+
+      let body;
+      if (q.type === 'cloze') {
+        const bs = q.opts.map((o, idx) => h('button', { 'aria-keyshortcuts': String(idx + 1), onclick: () => {
+          if (done) return;
+          bs.forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.answer) b.classList.add('right'); else if (j === idx) b.classList.add('wrong'); });
+          revealGrammar(o === q.answer);
+        } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, idx + 1), h('span', { class: 'grow', lang: langAttr }, o)));
+        body = h('div', { class: 'stack' },
+          h('p', { class: 'label' }, q.label),
+          h('p', { class: 'q', lang: langAttr }, q.prompt),
+          h('p', { class: 'small muted' }, 'Nghĩa: ' + q.hint),
+          h('div', { class: 'options' }, bs)
+        );
+      } else {
+        const chosen = [];
+        const ans = h('div', { class: 'tokens answer', lang: langAttr, 'aria-label': 'Câu của bạn' }), poolTokens = h('div', { class: 'tokens', lang: langAttr });
+        const checkBtn = h('button', { class: 'primary block next-btn', disabled: true, onclick: () => {
+          if (done) return;
+          const ok = chosen.map((c) => c.t).join('') === q.answer;
+          checkBtn.hidden = true;
+          ans.classList.add(ok ? 'right' : 'wrong');
+          revealGrammar(ok);
+          draw();
+        } }, 'Kiểm tra');
+        const draw = () => {
+          ans.replaceChildren(...chosen.map((c, idx) => {
+            const b = h('button', { disabled: done }, c.t);
+            attachTokenReorder(b, c, idx, chosen, draw, () => done);
+            return b;
+          }));
+          poolTokens.replaceChildren(...q.bank.filter((b) => !chosen.includes(b)).map((b) => h('button', { disabled: done, onclick: () => { chosen.push(b); draw(); } }, b.t)));
+          checkBtn.disabled = chosen.length !== q.bank.length;
+        };
+        draw();
+        body = h('div', { class: 'stack' },
+          h('p', { class: 'label' }, q.label),
+          h('p', { class: 'q' }, q.prompt),
+          ans, poolTokens,
+          checkBtn
+        );
+      }
+
+      return mount(h('div', { class: 'stack-lg' }, head(), topBar, body, fb));
+    }
   };
+
   show();
 }
-
 // ===== Luyện nói =====
 const SPEAK_TOPIC = {}, WRITE_TOPIC = {};
 function topicPicker(code, store, onChange) {
@@ -2390,8 +2832,13 @@ function speakView() {
   const pick = topicPicker(code, SPEAK_TOPIC, speakView);
   const t = d.topics.find((x) => x.id === SPEAK_TOPIC[code]) || d.topics[0];
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
+  const dueSpk = srsDueItems(code, 'speak').length;
   mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'speak', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())), pick),
+    h('div', { class: 'stack' },
+      h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'speak', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
+      pick,
+      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null
+    ),
     !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
       if (it.kind === 'coach') return h('button', { class: 'sentence', onclick: () => coachView(t, it.c) }, h('span', { class: 'meta' }, h('b', { lang: 'en', style: { display: 'block' } }, it.c.q), it.c.vi && h('span', { class: 'small muted' }, it.c.vi)), h('span', { class: 'chip' }, 'Coach'));
@@ -2448,6 +2895,7 @@ function speakOne(t, it, all) {
 
   const record = (score) => {
     S.spoken[k] = Math.max(S.spoken[k] || 0, score);
+    srsRate(code + ':speak:' + plain(it.text), score >= 70);
     addXp(score >= 70 ? XP_ITEM : 1, code);
     checkAch();
   };
@@ -2517,7 +2965,12 @@ function writeView() {
   const code = S.lang, d = DATA[code];
   const pick = topicPicker(code, WRITE_TOPIC, writeView);
   const t = d.topics.find((x) => x.id === WRITE_TOPIC[code]) || d.topics[0];
-  const head = h('div', { class: 'stack' }, h('div', { class: 'row between' }, h('h1', {}, 'Viết'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'write', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())), pick);
+  const dueWr = code !== 'en' ? srsDueItems(code, 'write').length : 0;
+  const head = h('div', { class: 'stack' },
+    h('div', { class: 'row between' }, h('h1', {}, 'Viết'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'write', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
+    pick,
+    dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null
+  );
   if (code === 'en') {
     if (!t.fill) { mount(h('div', { class: 'stack-lg' }, head, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.'))); return; }
     return mount(h('div', { class: 'stack-lg' }, head, fillBlock(t)));
@@ -2620,6 +3073,7 @@ function charView(code, c, list) {
       onComplete: (s) => {
         const k = sid(code, c);
         S.written[k] = (S.written[k] || 0) + 1;
+        srsRate(code + ':write:' + c, s.totalMistakes <= 3);
         addXp(XP_ITEM, code);
         checkAch();
         stepLabel.className = 'chip good';
@@ -2915,8 +3369,15 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
     const next = h('button', { class: 'primary block next-btn', hidden: true, onclick: () => { i++; i < qs.length ? show() : finish(); } }, i + 1 < qs.length ? 'Câu tiếp theo' : 'Xem kết quả');
     const reveal = (ok) => {
       done = true;
-      if (ok) { score++; addXp(XP_ITEM, code); if (st.wrong[q.p.gid]) { st.wrong[q.p.gid]--; if (st.wrong[q.p.gid] <= 0) delete st.wrong[q.p.gid]; } }
-      else st.wrong[q.p.gid] = (st.wrong[q.p.gid] || 0) + 1;
+      if (ok) {
+        score++;
+        addXp(XP_ITEM, code);
+        srsRate(code + ':gram:' + q.p.gid, true);
+        if (st.wrong[q.p.gid]) { st.wrong[q.p.gid]--; if (st.wrong[q.p.gid] <= 0) delete st.wrong[q.p.gid]; }
+      } else {
+        st.wrong[q.p.gid] = (st.wrong[q.p.gid] || 0) + 1;
+        srsRate(code + ':gram:' + q.p.gid, false);
+      }
       save();
       next.hidden = false;
       fb.replaceChildren(
@@ -3043,6 +3504,7 @@ function grammarTabView() {
     ),
     h('div', { class: 'row', style: { flexWrap: 'wrap', gap: '6px' } }, chip('all', 'Tất cả (' + pts.length + ')'), ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (isJa ? lv : lv.replace('HSK ', '')) + ' (' + count(lv) + ')'))),
     h('div', { class: 'panel stack' }, h('h2', {}, 'Quiz ngữ pháp'),
+      srsDueItems(code, 'gram').length > 0 ? h('button', { class: 'accent block', onclick: () => { REVIEW_SKILL = 'gram'; go('review'); } }, '📖 Ôn tập ngắt quãng: Có ' + srsDueItems(code, 'gram').length + ' điểm ngữ pháp cần ôn hôm nay') : null,
       h('p', { class: 'small muted' }, '10 câu: điền từ đúng vào chỗ trống hoặc sắp xếp các từ thành câu đúng.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
       h('button', { class: 'primary block', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'tất cả cấp' : sel)),
       nWrong > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai' + (sel !== 'all' ? ' (' + sel + ')' : ''))),
