@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1730';
+const APP_BUILD_ID = '20261111-1740';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2924,6 +2924,7 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
           h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
           ok ? '' : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer))
         ),
+        h('div', { style: { margin: '8px 0 12px 0' } }, next),
         h('div', { class: 'panel gram', style: { gap: '8px' } },
           h('div', { class: 'ex' },
             h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
@@ -2931,7 +2932,6 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
             h('p', { class: 'small muted' }, q.e[2])
           )
         ),
-        h('div', { style: { margin: '8px 0 12px 0' } }, next),
         h('div', { class: 'panel gram stack', style: { gap: '6px' } },
           h('p', { class: 'label', style: { margin: 0 } }, 'Giải thích ngữ pháp:'),
           h('p', { class: 'pat', style: { margin: 0 } }, g.t),
