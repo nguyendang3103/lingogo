@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1935';
+const APP_BUILD_ID = '20261111-1950';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1745,7 +1745,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.75 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.80 · Cập nhật 11/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -1768,21 +1768,213 @@ function ieltsDoneCount(t) {
   return skills.filter((s) => isIeltsDone(t, s)).length;
 }
 
-function markIeltsDone(t, skill, score) {
+function markIeltsDone(t, skill, score, band) {
   if (!S.ielts) S.ielts = {};
   const k = t.lang + ':' + t.id + ':' + skill;
   const isFirst = !S.ielts[k] || !S.ielts[k].done;
-  S.ielts[k] = { done: true, score: score || 100, ts: Date.now() };
+  const b = band || (score >= 90 ? '8.5' : score >= 80 ? '7.5' : score >= 70 ? '6.5' : '6.0');
+  S.ielts[k] = { done: true, score: score || 100, band: b, ts: Date.now() };
   if (isFirst) {
     addXp(15, 'en');
     checkAch();
     save();
-    toast('🎉 Hoàn thành IELTS ' + (skill === 'listen' ? 'Listening' : skill === 'speak' ? 'Speaking' : skill === 'read' ? 'Reading' : 'Writing') + '! +15 XP');
+    toast('🎉 Hoàn thành IELTS ' + (skill === 'listen' ? 'Listening' : skill === 'speak' ? 'Speaking' : skill === 'read' ? 'Reading' : 'Writing') + ' (Band ' + b + ')! +15 XP');
   } else {
     save();
-    toast('Đã cập nhật bài làm IELTS!');
+    toast('Đã cập nhật bài làm IELTS (Band ' + b + ')!');
   }
 }
+
+// Tuyển tập đề thi thực tế theo chuẩn ieltsonlinetests.com (IOT Recent Actual Tests)
+const IELTS_IOT_VOLUMES = [
+  {
+    vol: 1,
+    code: 'IOT-ACT-VOL1',
+    title: 'Education, Universities & Modern Learning',
+    sub: 'Đề thi thực tế Vol 1: Đổi mới giáo dục & Phương pháp học tập',
+    type: 'Academic',
+    targetBand: 'Band 7.0–8.0',
+    topicId: 110,
+    desc: 'Tuyển tập đề thi IELTS Online Tests: Trọng tâm về chuyển đổi số giáo dục, tự chủ đại học và kỹ năng thế kỷ 21.'
+  },
+  {
+    vol: 2,
+    code: 'IOT-ACT-VOL2',
+    title: 'Climate Change, Renewable Energy & Global Conservation',
+    sub: 'Đề thi thực tế Vol 2: Biến đổi khí hậu & Năng lượng tái tạo',
+    type: 'Academic',
+    targetBand: 'Band 7.0–8.5',
+    topicId: 138,
+    desc: 'Chủ đề thi thường gặp nhất: Cắt giảm khí thải CO2, năng lượng mặt trời/gió và chính sách bảo tồn môi trường đa quốc gia.'
+  },
+  {
+    vol: 3,
+    code: 'IOT-ACT-VOL3',
+    title: 'Artificial Intelligence, Automation & Future Employment',
+    sub: 'Đề thi thực tế Vol 3: Trí tuệ nhân tạo, Tự động hóa & Việc làm',
+    type: 'Academic',
+    targetBand: 'Band 7.5–8.5+',
+    topicId: 137,
+    desc: 'Đề thi xu hướng 2026: Tác động của AI đối với thị trường lao động, đạo đức công nghệ và đào tạo kỹ năng số.'
+  },
+  {
+    vol: 4,
+    code: 'IOT-ACT-VOL4',
+    title: 'International Business, Trade Logistics & Global Economy',
+    sub: 'Đề thi thực tế Vol 4: Kinh doanh quốc tế & Chuỗi cung ứng',
+    type: 'Academic / General',
+    targetBand: 'Band 6.5–7.5',
+    topicId: 1,
+    desc: 'Đàm phán thương mại, logistics toàn cầu, xuất nhập khẩu và văn hóa quản trị doanh nghiệp đa quốc gia.'
+  },
+  {
+    vol: 5,
+    code: 'IOT-ACT-VOL5',
+    title: 'Public Healthcare, Preventive Medicine & Mental Health',
+    sub: 'Đề thi thực tế Vol 5: Y tế công cộng & Sức khỏe tinh thần',
+    type: 'Academic',
+    targetBand: 'Band 6.5–7.5',
+    topicId: 133,
+    desc: 'Y học dự phòng, bảo hiểm y tế toàn dân, dinh dưỡng khoa học và chăm sóc sức khỏe tâm lý trong thời đại số.'
+  },
+  {
+    vol: 6,
+    code: 'IOT-ACT-VOL6',
+    title: 'Smart Urbanization, Sustainable Architecture & Transport',
+    sub: 'Đề thi thực tế Vol 6: Đô thị thông minh & Kiến trúc bền vững',
+    type: 'Academic',
+    targetBand: 'Band 7.0–8.0',
+    topicId: 118,
+    desc: 'Quy hoạch thành phố thông minh, vật liệu xây dựng xanh và hệ thống giao thông công cộng không phát thải.'
+  },
+  {
+    vol: 7,
+    code: 'IOT-ACT-VOL7',
+    title: 'Workplace Communication, Remote Culture & Career Agility',
+    sub: 'Đề thi thực tế Vol 7: Giao tiếp công sở & Làm việc từ xa',
+    type: 'General Training',
+    targetBand: 'Band 6.0–7.0',
+    topicId: 125,
+    desc: 'Kỹ năng phỏng vấn tuyển dụng, làm việc từ xa (Remote/Hybrid Work) và quản lý hiệu suất công việc linh hoạt.'
+  },
+  {
+    vol: 8,
+    code: 'IOT-ACT-VOL8',
+    title: 'Cultural Heritage, Mass Tourism & Global Mobility',
+    sub: 'Đề thi thực tế Vol 8: Di sản văn hóa & Du lịch toàn cầu',
+    type: 'Academic / General',
+    targetBand: 'Band 6.5–7.5',
+    topicId: 131,
+    desc: 'Mặt tích cực và tiêu cực của du lịch đại chúng, bảo tồn di tích cổ và xu hướng du lịch sinh thái có trách nhiệm.'
+  }
+];
+
+function getIeltsBand(t, skill) {
+  if (!S.ielts) return 'Chưa thi';
+  const k = t.lang + ':' + t.id + ':' + skill;
+  const item = S.ielts[k];
+  if (!item || !item.done) return 'Chưa thi';
+  if (item.band) return item.band;
+  const s = item.score || 80;
+  if (s >= 90) return '8.5';
+  if (s >= 80) return '7.5';
+  if (s >= 70) return '6.5';
+  if (s >= 60) return '6.0';
+  return '5.5';
+}
+
+function calculateOverallIeltsBand(t) {
+  const skills = ['listen', 'speak', 'read', 'write'];
+  const bands = skills.map((sk) => {
+    const bStr = getIeltsBand(t, sk);
+    const num = parseFloat(bStr);
+    return isNaN(num) ? 6.5 : num;
+  });
+  const avg = bands.reduce((a, b) => a + b, 0) / 4;
+  const whole = Math.floor(avg);
+  const frac = avg - whole;
+  if (frac < 0.25) return (whole).toFixed(1);
+  if (frac < 0.75) return (whole + 0.5).toFixed(1);
+  return (whole + 1.0).toFixed(1);
+}
+
+function showIeltsSummaryModal(t) {
+  const bL = getIeltsBand(t, 'listen');
+  const bS = getIeltsBand(t, 'speak');
+  const bR = getIeltsBand(t, 'read');
+  const bW = getIeltsBand(t, 'write');
+  const overall = calculateOverallIeltsBand(t);
+
+  const cefr = parseFloat(overall) >= 8.5 ? 'C2 · Mastery (Bậc thầy xuất sắc)'
+    : parseFloat(overall) >= 7.5 ? 'C1 · Advanced (Thành thạo chuyên sâu)'
+    : parseFloat(overall) >= 6.5 ? 'B2 · Upper-Intermediate (Giao tiếp tốt)'
+    : 'B1 · Intermediate (Đạt chuẩn cơ bản)';
+
+  const overlay = h('div', {
+    class: 'modal-overlay',
+    style: {
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      background: 'rgba(0,0,0,0.68)', zIndex: 100,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
+    },
+    onclick: (e) => { if (e.target === overlay) overlay.remove(); }
+  });
+
+  const card = h('div', {
+    class: 'panel stack',
+    style: {
+      maxWidth: '480px', width: '100%', maxHeight: '90vh', overflowY: 'auto',
+      borderRadius: '16px', border: '2px solid var(--teal)', boxShadow: '0 10px 36px rgba(0,0,0,0.35)',
+      background: 'var(--surface)', padding: '20px'
+    }
+  },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('span', { class: 'chip accent', style: { fontWeight: 700 } }, 'ieltsonlinetests.com · Mock TRF'),
+      h('button', { class: 'ghost mini', onclick: () => overlay.remove() }, '✕ Đóng')
+    ),
+    h('h2', { style: { margin: '8px 0 2px 0', fontSize: '1.28rem' } }, 'Bảng điểm Tổng kết Đề thi IELTS'),
+    h('p', { class: 'small muted', style: { marginBottom: '10px' } }, 'Đề thi: ' + t.title + (t.sub ? ' (' + t.sub + ')' : '')),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', margin: '8px 0' } },
+      h('div', { class: 'panel center', style: { padding: '12px', background: 'rgba(15,82,87,0.06)' } },
+        h('span', { class: 'small muted' }, '🎧 Listening'),
+        h('div', { style: { fontSize: '1.45rem', fontWeight: 800, color: 'var(--teal)' } }, bL !== 'Chưa thi' ? 'Band ' + bL : '—')
+      ),
+      h('div', { class: 'panel center', style: { padding: '12px', background: 'rgba(15,82,87,0.06)' } },
+        h('span', { class: 'small muted' }, '🎙️ Speaking'),
+        h('div', { style: { fontSize: '1.45rem', fontWeight: 800, color: 'var(--teal)' } }, bS !== 'Chưa thi' ? 'Band ' + bS : '—')
+      ),
+      h('div', { class: 'panel center', style: { padding: '12px', background: 'rgba(15,82,87,0.06)' } },
+        h('span', { class: 'small muted' }, '📖 Reading'),
+        h('div', { style: { fontSize: '1.45rem', fontWeight: 800, color: 'var(--teal)' } }, bR !== 'Chưa thi' ? 'Band ' + bR : '—')
+      ),
+      h('div', { class: 'panel center', style: { padding: '12px', background: 'rgba(15,82,87,0.06)' } },
+        h('span', { class: 'small muted' }, '✍️ Writing'),
+        h('div', { style: { fontSize: '1.45rem', fontWeight: 800, color: 'var(--teal)' } }, bW !== 'Chưa thi' ? 'Band ' + bW : '—')
+      )
+    ),
+    h('div', { class: 'panel center stack', style: { background: 'rgba(30,158,115,0.12)', border: '1px solid rgba(30,158,115,0.35)', padding: '14px', borderRadius: '12px', margin: '8px 0' } },
+      h('span', { class: 'small muted', style: { textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 } }, 'Điểm tổng kết chuẩn Cambridge IELTS'),
+      h('div', { style: { fontSize: '2.5rem', fontWeight: 900, color: 'var(--good)', margin: '4px 0' } }, 'Band ' + overall),
+      h('span', { class: 'chip good', style: { fontSize: '.86rem', fontWeight: 600 } }, cefr)
+    ),
+    h('div', { class: 'row', style: { gap: '8px', marginTop: '14px' } },
+      h('button', { class: 'primary block grow', onclick: () => { overlay.remove(); IELTS_ACTIVE_SKILL = 'listen'; ieltsTabView(); } }, 'Làm lại đề này 🔄'),
+      h('button', { class: 'accent block grow', onclick: () => {
+        overlay.remove();
+        const d = DATA.en;
+        const idx = d.topics.indexOf(t);
+        const nextTopic = d.topics[idx + 1] || d.topics[0];
+        IELTS_TOPIC['en'] = nextTopic.id;
+        IELTS_ACTIVE_SKILL = 'listen';
+        ieltsTabView();
+      } }, 'Làm đề kế tiếp ➔')
+    )
+  );
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+}
+
 
 // Sinh bộ đề IELTS 4 kỹ năng hoàn chỉnh cho bất kỳ chủ đề tiếng Anh nào
 function getIeltsData(t) {
@@ -1984,15 +2176,55 @@ function ieltsView(t, initialSkill = 'listen') {
   go('ielts');
 }
 
+let IELTS_MODE = 'volumes'; // 'volumes' (ieltsonlinetests.com) hoặc 'topics' (90 chủ đề)
+
 function ieltsTabView() {
   const code = S.lang;
   if (code !== 'en') return go('home');
   const d = DATA[code];
-  const pick = topicPicker(code, IELTS_TOPIC, ieltsTabView);
+  
+  // Xử lý chủ đề đang chọn
+  if (!IELTS_TOPIC[code]) {
+    const firstVol = IELTS_IOT_VOLUMES[0];
+    IELTS_TOPIC[code] = firstVol.topicId;
+  }
   const t = d.topics.find((x) => x.id === IELTS_TOPIC[code]) || d.topics[0];
   IELTS_CURRENT_TOPIC = t;
   const data = getIeltsData(t);
   const doneCount = ieltsDoneCount(t);
+  const currentVol = IELTS_IOT_VOLUMES.find((v) => v.topicId === t.id);
+
+  // Bộ chọn Volume theo ieltsonlinetests.com
+  const volSelect = h('select', {
+    'aria-label': 'Bộ đề thi IELTS Online Tests',
+    onchange: (e) => {
+      const vid = parseInt(e.target.value, 10);
+      const selVol = IELTS_IOT_VOLUMES.find((v) => v.vol === vid);
+      if (selVol) {
+        IELTS_TOPIC[code] = selVol.topicId;
+        IELTS_ACTIVE_SKILL = 'listen';
+        ieltsTabView();
+      }
+    }
+  }, ...IELTS_IOT_VOLUMES.map((v) => h('option', {
+    value: v.vol,
+    selected: currentVol && currentVol.vol === v.vol
+  }, '📄 ' + v.code + ': ' + v.title + ' (' + v.type + ' · ' + v.targetBand + ')')));
+
+  const topicPick = topicPicker(code, IELTS_TOPIC, ieltsTabView);
+
+  const modeSwitch = h('div', { class: 'row', style: { gap: '6px', margin: '4px 0' } },
+    h('button', {
+      class: 'mini ' + (IELTS_MODE === 'volumes' ? 'primary' : 'ghost'),
+      style: { fontWeight: 600 },
+      onclick: () => { IELTS_MODE = 'volumes'; ieltsTabView(); }
+    }, '📚 Đề thi IELTS Online Tests (Volumes 1–8)'),
+    h('button', {
+      class: 'mini ' + (IELTS_MODE === 'topics' ? 'primary' : 'ghost'),
+      style: { fontWeight: 600 },
+      onclick: () => { IELTS_MODE = 'topics'; ieltsTabView(); }
+    }, '🎯 Luyện theo 90 Chủ đề A1–C2')
+  );
 
   const head = h('div', { class: 'stack' },
     h('div', { class: 'row between' },
@@ -2002,15 +2234,19 @@ function ieltsTabView() {
         langSwitch()
       )
     ),
-    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Luyện thi 4 kỹ năng chuẩn Cambridge IELTS · 🎧 Nghe · 🎙️ Nói · 📖 Đọc · ✍️ Viết'),
-    pick,
+    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Mô phỏng đề thi thực tế theo chuẩn ieltsonlinetests.com · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
+    modeSwitch,
+    IELTS_MODE === 'volumes' ? volSelect : topicPick,
     h('div', { class: 'row between', style: { alignItems: 'center', margin: '4px 0 6px 0', padding: '10px 14px', background: 'rgba(15, 82, 87, 0.08)', border: '1px solid rgba(15, 82, 87, 0.22)', borderRadius: '12px' } },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
-        h('span', { class: 'chip level', style: { fontWeight: 700 } }, t.level || 'B1'),
-        h('b', { style: { color: 'var(--teal)', fontSize: '1.02rem' } }, data.band),
-        h('span', { class: 'small muted' }, t.sub || t.title)
+        h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
+        h('b', { style: { color: 'var(--teal)', fontSize: '1.02rem' } }, currentVol ? currentVol.targetBand : data.band),
+        h('span', { class: 'small muted' }, currentVol ? currentVol.sub : (t.sub || t.title))
       ),
-      h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓')
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓'),
+        doneCount > 0 ? h('button', { class: 'mini accent', onclick: () => showIeltsSummaryModal(t) }, '📊 Bảng điểm') : null
+      )
     )
   );
 
@@ -2025,10 +2261,11 @@ function ieltsTabView() {
     ...skills.map(([sk, iconLabel, enLabel]) => {
       const isDone = isIeltsDone(t, sk);
       const isActive = IELTS_ACTIVE_SKILL === sk;
+      const bStr = getIeltsBand(t, sk);
       return h('button', {
         class: 'ielts-tab-btn' + (isActive ? ' active' : ''),
         onclick: () => { IELTS_ACTIVE_SKILL = sk; ieltsTabView(); }
-      }, iconLabel + ' (' + enLabel + ')' + (isDone ? ' ✓' : ''));
+      }, iconLabel + ' (' + enLabel + ')' + (isDone ? (bStr !== 'Chưa thi' ? ' · ' + bStr : ' ✓') : ''));
     })
   );
 
@@ -2130,16 +2367,29 @@ function renderIeltsListening(t, data) {
     const isFillCorrect = userFill === ls.fill.target;
     if (isFillCorrect) score += 50;
 
+    const band = (isMcCorrect && isFillCorrect) ? '8.5' : (isMcCorrect || isFillCorrect) ? '6.5' : '5.0';
     feedbackArea.style.display = 'block';
     feedbackArea.replaceChildren(
-      h('h3', {}, isMcCorrect && isFillCorrect ? '🎉 Xuất sắc! Đúng cả 2/2 câu' : 'Kết quả bài nghe: ' + (score / 50) + '/2 câu đúng'),
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('h3', { style: { margin: 0 } }, isMcCorrect && isFillCorrect ? '🎉 Xuất sắc! Đúng cả 2/2 câu' : 'Kết quả bài nghe: ' + (score / 50) + '/2 câu đúng'),
+        h('span', { class: 'chip good', style: { fontSize: '.95rem', fontWeight: 700 } }, 'Band ' + band)
+      ),
       h('p', {}, '1. Trắc nghiệm: ' + (isMcCorrect ? '✓ Chính xác' : '✗ Chưa đúng (Đáp án: ' + String.fromCharCode(65 + ls.mc.answer) + ')')),
       h('p', { class: 'small muted' }, ls.mc.why),
       h('p', {}, '2. Điền từ: ' + (isFillCorrect ? '✓ Chính xác (' + ls.fill.rawTarget + ')' : '✗ Chưa đúng. Đáp án: "' + ls.fill.rawTarget + '"')),
-      h('p', { class: 'small muted' }, ls.fill.hint)
+      h('p', { class: 'small muted' }, ls.fill.hint),
+      h('button', {
+        class: 'primary block',
+        style: { marginTop: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
+        onclick: () => {
+          IELTS_ACTIVE_SKILL = 'speak';
+          ieltsTabView();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 'Chuyển sang kỹ năng kế tiếp: Nói (Speaking) ➔')
     );
 
-    markIeltsDone(t, 'listen', Math.max(score, 60));
+    markIeltsDone(t, 'listen', Math.max(score, 60), band);
   } }, 'Kiểm tra đáp án & Nộp bài (+15 XP)');
 
   return h('div', { class: 'stack-lg' },
@@ -2214,7 +2464,10 @@ function renderIeltsSpeaking(t, data) {
             );
           })
         ),
-        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 85) }, 'Hoàn thành Part 1 (+15 XP)')
+        h('div', { class: 'row', style: { gap: '8px' } },
+          h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 85, '7.5'); toast('Đã lưu kết quả Part 1!'); } }, 'Hoàn thành Part 1 (+15 XP)'),
+          h('button', { class: 'primary block grow', onclick: () => { partTab = 'p2'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 2 (Cue Card) ➔')
+        )
       );
     } else if (partTab === 'p2') {
       // Part 2: Cue Card
@@ -2287,7 +2540,10 @@ function renderIeltsSpeaking(t, data) {
           h('div', { class: 'row', style: { marginTop: '8px' } }, toggleModelP2Btn),
           modelP2Box
         ),
-        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 90) }, 'Hoàn thành Part 2 (+15 XP)')
+        h('div', { class: 'row', style: { gap: '8px' } },
+          h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 90, '8.0'); toast('Đã lưu kết quả Part 2!'); } }, 'Hoàn thành Part 2 (+15 XP)'),
+          h('button', { class: 'primary block grow', onclick: () => { partTab = 'p3'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 3 (Thảo luận) ➔')
+        )
       );
     } else {
       // Part 3: Discussion
@@ -2305,7 +2561,18 @@ function renderIeltsSpeaking(t, data) {
             )
           ))
         ),
-        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 95) }, 'Hoàn thành Part 3 (+15 XP)')
+        h('div', { class: 'stack', style: { gap: '8px' } },
+          h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 95, '8.5') }, 'Hoàn thành bài luyện Nói (+15 XP · Band 8.5)'),
+          h('button', {
+            class: 'primary block',
+            style: { padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
+            onclick: () => {
+              IELTS_ACTIVE_SKILL = 'read';
+              ieltsTabView();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }, 'Chuyển sang kỹ năng kế tiếp: Đọc (Reading) ➔')
+        )
       );
     }
   }
@@ -2378,13 +2645,26 @@ function renderIeltsReading(t, data) {
         '<i>Dẫn chứng:</i> ' + item.clue + '<br>' + item.why;
     });
 
+    const band = correctCount === rd.tfng.length ? '8.5' : correctCount >= 2 ? '7.5' : correctCount === 1 ? '6.0' : '5.0';
     feedbackArea.style.display = 'block';
     feedbackArea.replaceChildren(
-      h('h3', {}, correctCount === rd.tfng.length ? '🎉 Hoàn hảo! Đúng ' + correctCount + '/' + rd.tfng.length + ' câu True/False/Not Given' : 'Đúng ' + correctCount + '/' + rd.tfng.length + ' câu'),
-      h('p', { class: 'small muted' }, 'Hệ thống đã hiển thị câu dẫn chứng trực tiếp trong đoạn văn ở từng câu hỏi.')
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('h3', { style: { margin: 0 } }, correctCount === rd.tfng.length ? '🎉 Hoàn hảo! Đúng ' + correctCount + '/' + rd.tfng.length + ' câu True/False/Not Given' : 'Đúng ' + correctCount + '/' + rd.tfng.length + ' câu'),
+        h('span', { class: 'chip good', style: { fontSize: '.95rem', fontWeight: 700 } }, 'Band ' + band)
+      ),
+      h('p', { class: 'small muted' }, 'Hệ thống đã hiển thị câu dẫn chứng trực tiếp trong đoạn văn ở từng câu hỏi.'),
+      h('button', {
+        class: 'primary block',
+        style: { marginTop: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
+        onclick: () => {
+          IELTS_ACTIVE_SKILL = 'write';
+          ieltsTabView();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 'Chuyển sang kỹ năng kế tiếp: Viết (Writing) ➔')
     );
 
-    markIeltsDone(t, 'read', Math.round((correctCount / rd.tfng.length) * 100));
+    markIeltsDone(t, 'read', Math.round((correctCount / rd.tfng.length) * 100), band);
   } }, 'Kiểm tra đáp án & Nộp bài (+15 XP)');
 
   return h('div', { class: 'stack-lg' },
@@ -2497,10 +2777,24 @@ function renderIeltsWriting(t, data) {
         h('div', { class: 'row', style: { marginTop: '6px' } }, toggleModelBtn),
         modelBox
       ),
-      h('button', { class: 'accent block', onclick: () => {
-        const words = (textarea.value || '').trim().split(/\s+/).filter(Boolean).length;
-        markIeltsDone(t, 'write', words >= minWords ? 95 : 75);
-      } }, 'Lưu bài viết & Hoàn thành (+15 XP)')
+      h('div', { class: 'stack', style: { gap: '8px' } },
+        h('button', { class: 'accent block', onclick: () => {
+          const words = (textarea.value || '').trim().split(/\s+/).filter(Boolean).length;
+          const band = words >= minWords ? '8.0' : '6.5';
+          markIeltsDone(t, 'write', words >= minWords ? 95 : 75, band);
+          toast('Đã lưu bài viết (Band ' + band + ')!');
+        } }, 'Lưu bài viết & Hoàn thành (+15 XP)'),
+        h('button', {
+          class: 'primary block',
+          style: { padding: '14px', fontSize: '1.02rem', fontWeight: 700, borderRadius: '10px' },
+          onclick: () => {
+            const words = (textarea.value || '').trim().split(/\s+/).filter(Boolean).length;
+            const band = words >= minWords ? '8.0' : '6.5';
+            markIeltsDone(t, 'write', words >= minWords ? 95 : 75, band);
+            showIeltsSummaryModal(t);
+          }
+        }, '🏆 Hoàn thành trọn bộ 4 Kỹ năng! Xem Bảng điểm Tổng kết (Overall Band) ➔')
+      )
     );
   }
 
