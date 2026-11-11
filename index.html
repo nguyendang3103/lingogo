@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1815';
+const APP_BUILD_ID = '20261111-1830';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1197,29 +1197,90 @@ function parseSrsKey(k, code) {
 
 const isCard = (code, key) => !!parseSrsKey(key, code);
 
+// Kiểm tra xem một mục đã thực sự được học hay chưa (chỉ ôn những gì đã học)
+function isLearned(code, parsed) {
+  if (!parsed) return false;
+  const d = DATA[code]; if (!d) return false;
+
+  // 1. TỪ VỰNG / KANJI: Phải nằm trong các bài học đã hoàn thành (lessonDone)
+  if (parsed.skill === 'vocab') {
+    const it = parsed.it; if (!it) return false;
+    if (it.v) {
+      const vId = it.v.id, t = it.t;
+      if (!t || !t.lessons) return false;
+      return t.lessons.some((l, i) => lessonDone(t, i) && l.words && l.words.some((w) => w.id === vId));
+    }
+    if (it.k) {
+      const t = it.t;
+      if (!t || !t.lessons) return false;
+      return t.lessons.some((l, i) => lessonDone(t, i) && (l.kind === 'kanji' || l.kind === 'learn'));
+    }
+    return false;
+  }
+
+  // 2. LUYỆN NÓI: Chỉ những câu người dùng ĐÃ từng luyện nói (có trong S.spoken)
+  if (parsed.skill === 'speak') {
+    const text = plain(parsed.id);
+    return !!(S.spoken && S.spoken[sid(code, text)] != null);
+  }
+
+  // 3. LUYỆN VIẾT: Chỉ những chữ người dùng ĐÃ từng tập viết (có trong S.written)
+  if (parsed.skill === 'write') {
+    const ch = parsed.id;
+    return !!(S.written && (S.written[sid(code, ch)] || 0) > 0);
+  }
+
+  // 4. NGỮ PHÁP: Chỉ những điểm ngữ pháp của chủ đề đã học bài quiz/review hoặc đã làm quiz trong tab ngữ pháp
+  if (parsed.skill === 'gram') {
+    const gid = parsed.id;
+    const allPts = grammarPoints(code);
+    const p = allPts.find((x) => x.gid === gid);
+    if (!p) return false;
+    const hasStudiedTopic = p.topics.some((t) => {
+      return t.lessons.some((l, i) => lessonDone(t, i) && (l.kind === 'quiz' || l.kind === 'review' || (t.lessons.length > 2 && i >= 1)));
+    });
+    const hasGq = S.gq && (
+      (S.gq.best && (S.gq.best[code + ':' + p.lv] != null || S.gq.best[code + ':topic'] != null)) ||
+      (S.gq.wrong && S.gq.wrong[gid] != null)
+    );
+    return hasStudiedTopic || !!hasGq;
+  }
+
+  return false;
+}
+
 function ensureSrsItems(code) {
   if (!S.srs) S.srs = {};
   const d = DATA[code]; if (!d) return;
   const t0 = todayN();
+
+  // 1. Chỉ đưa từ vựng / kanji của các BÀI ĐÃ HOÀN THÀNH (lessonDone) vào hàng ôn tập
   d.topics.forEach((t) => {
-    const hasStudied = t.lessons.some((l, i) => lessonDone(t, i));
-    if (hasStudied) {
-      t.vocab.forEach((v) => {
-        const k = sid(code, v.id);
-        if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
-      });
-      (t.kanji || []).forEach((kj) => {
-        const k = sid(code, kj.id);
-        if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
-      });
-      if (t.gram && d.grammar) {
-        t.gram.forEach((gid) => {
-          const k = code + ':gram:' + gid;
-          if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+    t.lessons.forEach((l, i) => {
+      if (lessonDone(t, i)) {
+        (l.words || []).forEach((w) => {
+          const k = sid(code, w.id);
+          if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
         });
+        if (l.kind === 'kanji' && t.kanji) {
+          t.kanji.forEach((kj) => {
+            const k = sid(code, kj.id);
+            if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+          });
+        }
       }
+    });
+
+    const gramDone = t.lessons.some((l, i) => lessonDone(t, i) && (l.kind === 'quiz' || l.kind === 'review'));
+    if (gramDone && t.gram && d.grammar) {
+      t.gram.forEach((gid) => {
+        const k = code + ':gram:' + gid;
+        if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+      });
     }
   });
+
+  // 2. Chỉ các câu ĐÃ luyện nói
   if (S.spoken) {
     Object.keys(S.spoken).forEach((k) => {
       if (k.startsWith(code + ':')) {
@@ -1229,22 +1290,36 @@ function ensureSrsItems(code) {
       }
     });
   }
+
+  // 3. Chỉ các chữ ĐÃ tập viết
   if (S.written) {
     Object.keys(S.written).forEach((k) => {
-      if (k.startsWith(code + ':')) {
+      if (k.startsWith(code + ':') && S.written[k] > 0) {
         const ch = k.slice(code.length + 1);
         const sKey = code + ':write:' + ch;
         if (!S.srs[sKey]) S.srs[sKey] = { b: 1, due: t0, last: t0 - 1 };
       }
     });
   }
+
+  // 4. DỌN SẠCH DỮ LIỆU: Loại bỏ mọi mục chưa học khỏi S.srs
+  Object.keys(S.srs).forEach((k) => {
+    if (k.startsWith(code + ':')) {
+      const parsed = parseSrsKey(k, code);
+      if (!parsed || !isLearned(code, parsed)) {
+        delete S.srs[k];
+      }
+    }
+  });
 }
 
 function srsDueItems(code, skillFilter = 'all') {
   ensureSrsItems(code);
   const t0 = todayN();
   const allKeys = Object.keys(S.srs || {}).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t0);
-  const parsed = allKeys.map((k) => parseSrsKey(k, code)).filter(Boolean);
+  const parsed = allKeys
+    .map((k) => parseSrsKey(k, code))
+    .filter((x) => x && isLearned(code, x));
   if (skillFilter === 'all') return parsed;
   return parsed.filter((x) => x.skill === skillFilter);
 }
@@ -1652,7 +1727,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.45 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.50 · Cập nhật 11/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -2584,10 +2659,10 @@ function reviewView() {
     const totalAll = counts.all || 0;
     mount(h('div', { class: 'stack-lg' }, head(),
       h('div', { class: 'panel stack center' },
-        h('h2', {}, totalAll ? 'Mục này chưa có thẻ đến hạn' : 'Đã xong các mục ôn tập hôm nay!'),
+        h('h2', {}, totalAll ? 'Mục này chưa có thẻ đến hạn' : 'Đã ôn hết các nội dung đã học!'),
         h('p', { class: 'muted' }, totalAll
-          ? 'Hôm nay bạn còn ' + totalAll + ' mục đến hạn ở các kỹ năng khác.'
-          : 'Hệ thống Spaced Repetition đã ghi nhận tiến độ của bạn cho cả từ vựng, luyện nói, luyện viết và ngữ pháp. Hãy quay lại vào ngày mai nhé!'),
+          ? 'Hôm nay bạn còn ' + totalAll + ' mục cần ôn ở các kỹ năng khác (chỉ bao gồm bài bạn đã học).'
+          : 'Hệ thống chỉ đưa các từ vựng, câu nói, chữ viết và ngữ pháp BẠN ĐÃ HỌC vào ôn tập. Bạn đã hoàn thành hết mục hôm nay, hãy học bài mới để tiếp tục mở rộng!'),
         totalAll && REVIEW_SKILL !== 'all' ? h('button', { class: 'accent block', onclick: () => { REVIEW_SKILL = 'all'; reviewView(); } }, 'Chuyển sang Tất cả (' + totalAll + ' mục)') : null,
         h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')
       )
