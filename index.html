@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1830';
+const APP_BUILD_ID = '20261111-1900';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1727,8 +1727,749 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.50 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.60 · Cập nhật 11/11/2026')));
 }
+
+// ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
+function bandOfLevel(lvl) {
+  if (lvl === 'A1') return 'Band 4.5–5.0';
+  if (lvl === 'A2') return 'Band 5.0–5.5';
+  if (lvl === 'B1') return 'Band 5.5–6.5';
+  if (lvl === 'B2') return 'Band 6.5–7.5';
+  return 'Band 7.5–8.5+';
+}
+
+function isIeltsDone(t, skill) {
+  if (!S.ielts) return false;
+  const k = t.lang + ':' + t.id + ':' + skill;
+  return !!(S.ielts[k] && S.ielts[k].done);
+}
+
+function ieltsDoneCount(t) {
+  const skills = ['listen', 'speak', 'read', 'write'];
+  return skills.filter((s) => isIeltsDone(t, s)).length;
+}
+
+function markIeltsDone(t, skill, score) {
+  if (!S.ielts) S.ielts = {};
+  const k = t.lang + ':' + t.id + ':' + skill;
+  const isFirst = !S.ielts[k] || !S.ielts[k].done;
+  S.ielts[k] = { done: true, score: score || 100, ts: Date.now() };
+  if (isFirst) {
+    addXp(15, 'en');
+    checkAch();
+    save();
+    toast('🎉 Hoàn thành IELTS ' + (skill === 'listen' ? 'Listening' : skill === 'speak' ? 'Speaking' : skill === 'read' ? 'Reading' : 'Writing') + '! +15 XP');
+  } else {
+    save();
+    toast('Đã cập nhật bài làm IELTS!');
+  }
+}
+
+// Sinh bộ đề IELTS 4 kỹ năng hoàn chỉnh cho bất kỳ chủ đề tiếng Anh nào
+function getIeltsData(t) {
+  const lvl = t.level || 'B1';
+  const band = bandOfLevel(lvl);
+  const vList = t.vocab || [];
+  const speakLines = (t.speak || []).flatMap((s) => s.lines || []);
+  
+  // 1. Listening
+  let listenLines = [];
+  if (speakLines.length >= 2) {
+    listenLines = speakLines.map((ln, i) => ({
+      speaker: i % 2 === 0 ? 'Speaker A' : 'Speaker B',
+      text: ln.t,
+      vi: ln.m || ''
+    }));
+  } else {
+    listenLines = [
+      { speaker: 'Speaker A', text: 'Hello, thank you for meeting with me today to discuss our arrangements.', vi: 'Xin chào, cảm ơn bạn đã gặp tôi hôm nay để trao đổi về các sắp xếp của chúng ta.' },
+      { speaker: 'Speaker B', text: 'It is a pleasure. Let us review the key points and finalize the schedule.', vi: 'Rất hân hạnh. Hãy cùng xem lại các điểm chính và chốt lịch trình nhé.' }
+    ];
+  }
+  
+  const listenScript = listenLines.map((l) => l.speaker + ': "' + l.text + '"').join('\n');
+  const listenAudioText = listenLines.map((l) => l.text).join('. ');
+  
+  const listenMc = (t.quiz && t.quiz[0]) ? {
+    q: t.quiz[0].q,
+    options: t.quiz[0].o,
+    answer: t.quiz[0].a,
+    why: t.quiz[0].why || 'Dựa vào thông tin chi tiết người nói đã đề cập trong bài nghe.'
+  } : {
+    q: 'What is the primary focus of the conversation?',
+    options: ['Making practical arrangements and communicating effectively', 'Complaining about delays', 'Canceling an upcoming project'],
+    answer: 0,
+    why: 'The speakers are discussing practical arrangements and effective communication.'
+  };
+
+  const keyWordObj = vList[0] || { w: 'meeting', m: 'cuộc hẹn / cuộc gặp' };
+  const listenFill = {
+    prompt: 'Listen and fill in the missing word (write ONE word):',
+    sentence: 'The speaker highlights the necessity of having a clear understanding of ' + plain(keyWordObj.w).toLowerCase() + ' in real-world contexts.',
+    target: plain(keyWordObj.w).toLowerCase().replace(/[^a-z0-9]/g, ''),
+    rawTarget: plain(keyWordObj.w),
+    hint: 'Gợi ý: ' + keyWordObj.m
+  };
+
+  // 2. Speaking
+  const coachItems = t.coach || [];
+  const p1Questions = coachItems.slice(0, 2).map((c) => ({
+    q: c.q,
+    vi: c.vi || '',
+    st: c.st || 'I would say that...',
+    sa: c.sa || ('In my view, ' + t.title.toLowerCase() + ' plays a fundamental role in our daily routines.'),
+    phrases: c.ph || ['to be honest', 'in my daily routine', 'most importantly']
+  }));
+  if (p1Questions.length === 0) {
+    p1Questions.push({
+      q: 'How often do you encounter situations related to ' + t.title.toLowerCase() + '?',
+      vi: 'Bạn thường gặp các tình huống liên quan đến chủ đề này như thế nào?',
+      st: 'To be honest, I regularly...',
+      sa: 'To be honest, I deal with this almost every day, especially during interactions with friends and coworkers.',
+      phrases: ['on a regular basis', 'from my perspective', 'without a doubt']
+    });
+  }
+
+  const p2CueCard = {
+    title: 'Describe an important situation or experience where you had to deal with ' + t.title.toLowerCase(),
+    prompts: [
+      'When and where this situation took place',
+      'Who you were communicating or working with',
+      'What specific actions or conversations occurred',
+      'And explain why this experience was particularly significant or memorable to you.'
+    ],
+    prepSeconds: 60,
+    speakSeconds: 120,
+    modelAnswer: 'I would like to talk about a memorable experience involving ' + t.title.toLowerCase() + '. ' +
+      'It occurred a few months ago when I was participating in an important collaborative project. ' +
+      'At that time, I was working closely with several colleagues from different backgrounds, which required clear communication and active listening. ' +
+      'Throughout the interaction, we exchanged ideas, aligned our expectations, and addressed potential misunderstandings constructively. ' +
+      'This experience was truly meaningful because it demonstrated the immense value of clarity and mutual respect. ' +
+      'Looking back, it not only enhanced my confidence but also broadened my professional perspective substantially.'
+  };
+
+  const p3Discussion = [
+    {
+      q: 'Why do you think proficiency in ' + t.title.toLowerCase() + ' is so essential in modern life?',
+      vi: 'Tại sao việc thành thạo chủ đề này lại vô cùng thiết yếu trong đời sống hiện đại?',
+      sa: 'In my perspective, contemporary society relies heavily on swift, effective communication. Individuals who excel in this area can build trust faster, avoid friction, and collaborate productively.'
+    },
+    {
+      q: 'How might technology change how people approach this area in the near future?',
+      vi: 'Công nghệ có thể thay đổi cách mọi người tiếp cận vấn đề này trong tương lai ra sao?',
+      sa: 'Undoubtedly, digital tools and automated platforms streamline routine workflows. However, emotional empathy, critical thinking, and nuanced expression will always require genuine human involvement.'
+    }
+  ];
+
+  // 3. Reading
+  const passageTitle = 'Reading Passage · ' + t.title;
+  const pA = 'Mastery and thoughtful engagement with ' + t.title.toLowerCase() + ' have become indispensable in contemporary academic and professional spheres. Linguistic studies consistently indicate that learners who immerse themselves in structured discourse develop superior cognitive adaptability and collaborative problem-solving skills.';
+  const pB = 'Furthermore, real-world case studies illustrate that genuine comprehension entails far more than rote memorization of lexical items. In complex environments, successful communicators distinguish themselves by their ability to decode contextual nuances, evaluate perspectives, and respond with precision and tact.';
+  const pC = 'In conclusion, whether candidates are preparing for the international IELTS examination or pursuing personal growth, steady exposure paired with reflective practice remains the true benchmark of enduring fluency and intellectual advancement.';
+  const fullPassage = [pA, pB, pC];
+
+  const tfngQuestions = [
+    {
+      stmt: 'Research suggests that engaging in structured discourse enhances cognitive adaptability.',
+      ans: 'TRUE',
+      clue: 'Paragraph A explicitly states: "learners who immerse themselves in structured discourse develop superior cognitive adaptability..."',
+      why: 'Thông tin trong bài đọc hoàn toàn trùng khớp với khẳng định của câu hỏi (TRUE).'
+    },
+    {
+      stmt: 'Rote memorization of vocabulary is considered the single most important factor for successful communication.',
+      ans: 'FALSE',
+      clue: 'Paragraph B states: "genuine comprehension entails far more than rote memorization of lexical items."',
+      why: 'Bài đọc chỉ rõ rằng việc học vẹt từ vựng là chưa đủ, mà còn cần sự nhạy bén ngữ cảnh (FALSE).'
+    },
+    {
+      stmt: 'Most international corporations now require employees to retake the IELTS exam every two years.',
+      ans: 'NOT GIVEN',
+      clue: 'Paragraph C mentions preparing for international exams such as IELTS, but nowhere mentions corporation re-examination policies.',
+      why: 'Bài đọc không hề đề cập đến quy định thi lại 2 năm một lần của các tập đoàn (NOT GIVEN).'
+    }
+  ];
+
+  const readingVocab = vList.slice(0, 4).map((v) => ({
+    w: plain(v.w),
+    r: v.r || '',
+    m: v.m || '',
+    ex: v.ex || ''
+  }));
+
+  // 4. Writing
+  const task1 = {
+    type: 'Task 1 · Letter / Email',
+    minWords: 150,
+    prompt: (t.fill && t.fill.trans)
+      ? ('You are writing a semi-formal email regarding ' + t.title.toLowerCase() + '.\\n- Explain the background and current situation\\n- Detail the key points and arrangements\\n- Propose suitable next steps or request a convenient meeting time.\\n(Write at least 150 words.)')
+      : ('Write a formal/semi-formal email to a colleague or partner regarding ' + t.title.toLowerCase() + '.\\n- State your purpose and context\\n- Outline your specific suggestions\\n- Request their feedback by the end of the week.\\n(Write at least 150 words.)'),
+    modelAnswer: (t.fill && t.fill.text)
+      ? ('Dear Alex,\\n\\nI am writing to formally update you regarding our ongoing progress with ' + t.title.toLowerCase() + '. Everything is moving forward smoothly, and we have achieved the preliminary milestones established during our last discussion.\\n\\nWith regard to our upcoming schedule, I would like to propose a brief follow-up meeting next week so that we can review the outcomes in detail and address any lingering questions. Please let me know what day and time would be most convenient for your calendar.\\n\\nThank you very much for your consistent support and cooperation. I look forward to your response.\\n\\nWarm regards,\\nSally')
+      : ('Dear Mr. Davis,\\n\\nI am writing to provide you with an overview of our latest developments in relation to ' + t.title.toLowerCase() + '. Over the past several weeks, our team has thoroughly assessed current workflows and identified valuable avenues for improvement.\\n\\nFirst and foremost, establishing a transparent communication routine has proved immensely beneficial for all stakeholders. In addition, streamlining day-to-day procedures enables greater agility without compromising standards.\\n\\nCould you please review the attached summary and let me know if you have any questions or further suggestions? I would appreciate receiving your thoughts by this Friday.\\n\\nSincerely,\\nSally')
+  };
+
+  const task2 = {
+    type: 'Task 2 · Opinion / Discussion Essay',
+    minWords: 250,
+    prompt: 'Some people argue that competence in ' + t.title.toLowerCase() + ' is most effectively developed through formal educational courses, while others believe that practical everyday immersion is far more crucial. Discuss both views and give your own opinion. (Write at least 250 words.)',
+    outline: [
+      { part: '1. Introduction', guide: 'Paraphrase the prompt + Thesis statement (state that while formal courses provide core principles, practical immersion is indispensable).' },
+      { part: '2. Body Paragraph 1 (Formal Education)', guide: 'Discuss structured methodology, guidance from certified instructors, and foundational accuracy.' },
+      { part: '3. Body Paragraph 2 (Practical Immersion)', guide: 'Discuss spontaneous real-world practice, cognitive agility, and handling authentic nuances.' },
+      { part: '4. Conclusion', guide: 'Summarize both perspectives and reaffirm your balanced personal verdict.' }
+    ],
+    linkingWords: ['Furthermore,', 'In addition,', 'On the other hand,', 'Consequently,', 'It is widely argued that', 'From my perspective,', 'In stark contrast,', 'Ultimately,'],
+    modelEssay: 'In contemporary society, whether proficiency in ' + t.title.toLowerCase() + ' is better cultivated through formal classroom instruction or direct real-world immersion remains a prominent topic of discussion. While formal pedagogical training offers indispensable theoretical foundations, I firmly believe that experiential immersion is the ultimate driver of authentic communicative mastery.\n\nOn the one hand, advocates of structured education highlight the merits of systematic pedagogical guidance. In an academic environment, learners are methodically introduced to foundational rules, standardized terminology, and analytical frameworks. Furthermore, experienced instructors provide immediate, constructive feedback that prevents misconceptions from solidifying into persistent habits. Consequently, learners with rigorous educational grounding often exhibit high structural precision and academic composure.\n\nOn the other hand, real-world immersion provides indispensable advantages that cannot be replicated within traditional classrooms. Engaging in spontaneous, authentic situations compels individuals to process information in real time and adapt to diverse communicative styles. Moreover, successfully navigating real-life challenges cultivates psychological resilience and self-assurance. For instance, professionals who actively apply their competencies in active workplace environments consistently demonstrate superior practical agility compared to those who only memorize textbook theories.\n\nIn conclusion, although formal instruction establishes a dependable baseline of core mechanics, experiential immersion is undeniably paramount for genuine fluency. A balanced synergy between both methodologies represents the most effective pathway toward excellence in ' + t.title.toLowerCase() + '.'
+  };
+
+  return {
+    band,
+    title: t.title,
+    sub: t.sub || t.title,
+    listening: {
+      title: 'IELTS Listening · Section 1 & 2',
+      audioText: listenAudioText,
+      transcript: listenScript,
+      lines: listenLines,
+      mc: listenMc,
+      fill: listenFill
+    },
+    speaking: {
+      title: 'IELTS Speaking · 3 Parts',
+      part1: p1Questions,
+      part2: p2CueCard,
+      part3: p3Discussion
+    },
+    reading: {
+      title: passageTitle,
+      paragraphs: fullPassage,
+      tfng: tfngQuestions,
+      vocab: readingVocab
+    },
+    writing: {
+      title: 'IELTS Writing · Task 1 & Task 2',
+      task1,
+      task2
+    }
+  };
+}
+
+// ===== MÀN HÌNH LUYỆN THI IELTS TOÀN DIỆN =====
+let IELTS_CURRENT_TOPIC = null;
+let IELTS_ACTIVE_SKILL = 'listen';
+
+function ieltsView(t, initialSkill = 'listen') {
+  VIEW = 'ielts';
+  setTabs(false);
+  IELTS_CURRENT_TOPIC = t;
+  IELTS_ACTIVE_SKILL = initialSkill;
+  const code = t.lang || 'en';
+  const data = getIeltsData(t);
+
+  const topbar = h('div', { class: 'ielts-topbar' },
+    h('button', { class: 'ghost mini', onclick: () => go('home') }, '← Quay lại'),
+    h('div', { class: 'stack center', style: { gap: '2px' } },
+      h('b', { style: { fontSize: '.95rem' } }, 'IELTS 4 Kỹ năng · ' + t.title),
+      h('span', { class: 'small muted' }, (t.sub ? t.sub + ' · ' : '') + data.band)
+    ),
+    h('span', { class: 'chip accent', style: { fontWeight: 700 } }, data.band)
+  );
+
+  const skills = [
+    ['listen', '🎧 Nghe', 'Listening'],
+    ['speak', '🎙️ Nói', 'Speaking'],
+    ['read', '📖 Đọc', 'Reading'],
+    ['write', '✍️ Viết', 'Writing']
+  ];
+
+  const tabs = h('div', { class: 'ielts-tabs' },
+    ...skills.map(([sk, iconLabel, enLabel]) => {
+      const isDone = isIeltsDone(t, sk);
+      const isActive = IELTS_ACTIVE_SKILL === sk;
+      return h('button', {
+        class: 'ielts-tab-btn' + (isActive ? ' active' : ''),
+        onclick: () => { IELTS_ACTIVE_SKILL = sk; ieltsView(t, sk); }
+      }, iconLabel + (isDone ? ' ✓' : ''));
+    })
+  );
+
+  let contentEl = null;
+  if (IELTS_ACTIVE_SKILL === 'listen') contentEl = renderIeltsListening(t, data);
+  else if (IELTS_ACTIVE_SKILL === 'speak') contentEl = renderIeltsSpeaking(t, data);
+  else if (IELTS_ACTIVE_SKILL === 'read') contentEl = renderIeltsReading(t, data);
+  else contentEl = renderIeltsWriting(t, data);
+
+  mount(h('div', { class: 'stack-lg', style: { paddingBottom: '40px' } }, topbar, tabs, contentEl));
+}
+
+// 1. Giao diện IELTS Listening
+function renderIeltsListening(t, data) {
+  const code = 'en';
+  const ls = data.listening;
+  let isPlaying = false;
+  let showTranscript = false;
+  let slowSpeed = false;
+
+  const statusText = h('span', { class: 'small muted' }, 'Sẵn sàng phát bài nghe');
+  const transcriptBox = h('div', { class: 'panel', style: { display: 'none', background: 'var(--surface)', fontSize: '.9rem', lineHeight: 1.6, whiteSpace: 'pre-wrap' } }, ls.transcript);
+
+  const playBtn = h('button', { class: 'primary', onclick: () => {
+    if (isPlaying) {
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      isPlaying = false;
+      playBtn.textContent = '▶ Nghe bài nói';
+      statusText.textContent = 'Đã tạm dừng';
+    } else {
+      isPlaying = true;
+      playBtn.textContent = '⏸ Tạm dừng';
+      statusText.textContent = 'Đang phát bài nghe IELTS…';
+      say(code, ls.audioText, slowSpeed);
+      setTimeout(() => {
+        if (!speechSynthesis.speaking) {
+          isPlaying = false;
+          playBtn.textContent = '▶ Nghe bài nói';
+          statusText.textContent = 'Đã nghe xong';
+        }
+      }, 3000);
+    }
+  } }, '▶ Nghe bài nói');
+
+  const replayBtn = h('button', { class: 'ghost mini', onclick: () => {
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    isPlaying = true;
+    playBtn.textContent = '⏸ Tạm dừng';
+    statusText.textContent = 'Đang phát lại từ đầu…';
+    say(code, ls.audioText, slowSpeed);
+  } }, '⏪ Nghe lại từ đầu');
+
+  const speedBtn = h('button', { class: 'ghost mini', onclick: () => {
+    slowSpeed = !slowSpeed;
+    speedBtn.textContent = slowSpeed ? 'Tốc độ: 0.8x (Chậm)' : 'Tốc độ: 1.0x (Chuẩn)';
+    if (isPlaying) {
+      say(code, ls.audioText, slowSpeed);
+    }
+  } }, 'Tốc độ: 1.0x (Chuẩn)');
+
+  const transcriptToggleBtn = h('button', { class: 'ghost mini', onclick: () => {
+    showTranscript = !showTranscript;
+    transcriptBox.style.display = showTranscript ? 'block' : 'none';
+    transcriptToggleBtn.textContent = showTranscript ? 'Ẩn Transcript ▴' : '📜 Xem Transcript (Kịch bản) ▾';
+  } }, '📜 Xem Transcript (Kịch bản) ▾');
+
+  // Question 1: Multiple Choice
+  let selectedMc = null;
+  const mcOptionBtns = ls.mc.options.map((opt, idx) => {
+    const btn = h('button', {
+      class: 'sentence',
+      style: { textAlign: 'left', margin: '4px 0', border: '1px solid var(--line)' },
+      onclick: () => {
+        selectedMc = idx;
+        mcOptionBtns.forEach((b, j) => {
+          b.style.borderColor = (j === idx) ? 'var(--teal)' : 'var(--line)';
+          b.style.background = (j === idx) ? 'rgba(15, 82, 87, 0.08)' : '';
+        });
+      }
+    }, h('span', { class: 'kbd' }, String.fromCharCode(65 + idx)), h('span', { class: 'grow' }, opt));
+    return btn;
+  });
+
+  // Question 2: Fill-in blank
+  const fillInput = h('input', {
+    type: 'text',
+    placeholder: 'Gõ từ còn thiếu vào đây…',
+    autocomplete: 'off',
+    style: { maxWidth: '280px', marginTop: '6px' }
+  });
+
+  const feedbackArea = h('div', { class: 'panel stack', style: { display: 'none' } });
+
+  const submitBtn = h('button', { class: 'accent block', style: { marginTop: '12px' }, onclick: () => {
+    let score = 0;
+    const isMcCorrect = selectedMc === ls.mc.answer;
+    if (isMcCorrect) score += 50;
+    const userFill = (fillInput.value || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+    const isFillCorrect = userFill === ls.fill.target;
+    if (isFillCorrect) score += 50;
+
+    feedbackArea.style.display = 'block';
+    feedbackArea.replaceChildren(
+      h('h3', {}, isMcCorrect && isFillCorrect ? '🎉 Xuất sắc! Đúng cả 2/2 câu' : 'Kết quả bài nghe: ' + (score / 50) + '/2 câu đúng'),
+      h('p', {}, '1. Trắc nghiệm: ' + (isMcCorrect ? '✓ Chính xác' : '✗ Chưa đúng (Đáp án: ' + String.fromCharCode(65 + ls.mc.answer) + ')')),
+      h('p', { class: 'small muted' }, ls.mc.why),
+      h('p', {}, '2. Điền từ: ' + (isFillCorrect ? '✓ Chính xác (' + ls.fill.rawTarget + ')' : '✗ Chưa đúng. Đáp án: "' + ls.fill.rawTarget + '"')),
+      h('p', { class: 'small muted' }, ls.fill.hint)
+    );
+
+    markIeltsDone(t, 'listen', Math.max(score, 60));
+  } }, 'Kiểm tra đáp án & Nộp bài (+15 XP)');
+
+  return h('div', { class: 'stack-lg' },
+    h('div', { class: 'panel stack' },
+      h('div', { class: 'row between' },
+        h('b', {}, '🎧 IELTS Listening · Bài nghe thực tế'),
+        statusText
+      ),
+      h('p', { class: 'small muted' }, 'Lắng nghe đoạn hội thoại hoặc độc thoại chuẩn bản xứ, sau đó hoàn thành các câu hỏi bên dưới.'),
+      h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap' } }, playBtn, replayBtn, speedBtn, transcriptToggleBtn),
+      transcriptBox
+    ),
+    h('div', { class: 'panel stack' },
+      h('p', { class: 'label' }, 'Câu hỏi 1 · Multiple Choice (Trắc nghiệm)'),
+      h('p', { style: { fontWeight: 600 } }, ls.mc.q),
+      h('div', { class: 'stack', style: { gap: '4px' } }, ...mcOptionBtns)
+    ),
+    h('div', { class: 'panel stack' },
+      h('p', { class: 'label' }, 'Câu hỏi 2 · Note Completion (Điền từ)'),
+      h('p', { class: 'small muted' }, ls.fill.prompt),
+      h('p', { style: { fontSize: '1.02rem', lineHeight: 1.6 } }, ls.fill.sentence),
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } }, fillInput, h('span', { class: 'small muted' }, ls.fill.hint))
+    ),
+    submitBtn,
+    feedbackArea
+  );
+}
+
+// 2. Giao diện IELTS Speaking
+function renderIeltsSpeaking(t, data) {
+  const spk = data.speaking;
+  let partTab = 'p1';
+
+  const partTabs = h('div', { class: 'row', style: { gap: '6px' } },
+    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p1'; renderPart(); } }, 'Part 1: Phỏng vấn ngắn'),
+    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p2'; renderPart(); } }, 'Part 2: Cue Card (Độc thoại)'),
+    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p3'; renderPart(); } }, 'Part 3: Thảo luận sâu')
+  );
+
+  const container = h('div', { class: 'stack-lg' });
+
+  function renderPart() {
+    partTabs.querySelectorAll('button').forEach((b, idx) => {
+      const match = (idx === 0 && partTab === 'p1') || (idx === 1 && partTab === 'p2') || (idx === 2 && partTab === 'p3');
+      b.className = 'mini ' + (match ? 'primary' : 'ghost');
+    });
+
+    if (partTab === 'p1') {
+      container.replaceChildren(
+        h('div', { class: 'panel stack' },
+          h('b', {}, 'Part 1: Personal Interview (Phỏng vấn cá nhân)'),
+          h('p', { class: 'small muted' }, 'Giám khảo sẽ hỏi bạn 2–3 câu hỏi quen thuộc về cuộc sống và thói quen hàng ngày. Bấm Micro để luyện nói từng câu hoặc xem câu trả lời mẫu Band 8.0+.'),
+          ...spk.part1.map((p, idx) => {
+            let showModel = false;
+            const modelBox = h('div', { class: 'panel', style: { display: 'none', background: 'rgba(15, 82, 87, 0.06)' } },
+              h('p', { class: 'label' }, 'Câu trả lời mẫu Band 8.0+'),
+              h('p', { lang: 'en', style: { fontWeight: 600 } }, p.sa),
+              listenBtns('en', p.sa)
+            );
+            const toggleModelBtn = h('button', { class: 'ghost mini', onclick: () => {
+              showModel = !showModel;
+              modelBox.style.display = showModel ? 'block' : 'none';
+              toggleModelBtn.textContent = showModel ? 'Ẩn câu trả lời mẫu' : '💡 Xem câu trả lời mẫu Band 8.0+';
+            } }, '💡 Xem câu trả lời mẫu Band 8.0+');
+
+            return h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
+              h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + p.q),
+              p.vi && h('p', { class: 'small muted' }, p.vi),
+              h('p', { class: 'small' }, h('span', { class: 'chip accent' }, 'Gợi ý bắt đầu:'), ' ' + p.st),
+              h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, toggleModelBtn),
+              modelBox
+            );
+          })
+        ),
+        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 85) }, 'Hoàn thành Part 1 (+15 XP)')
+      );
+    } else if (partTab === 'p2') {
+      // Part 2: Cue Card
+      let timerInterval = null;
+      let secondsLeft = 60;
+      let timerType = 'prep';
+
+      const timerNum = h('span', { class: 'ielts-timer-num' }, '01:00');
+      const timerLabel = h('span', { class: 'small muted' }, 'Thời gian chuẩn bị (1 phút)');
+
+      const startPrepBtn = h('button', { class: 'primary mini', onclick: () => {
+        clearInterval(timerInterval);
+        secondsLeft = 60;
+        timerType = 'prep';
+        timerLabel.textContent = 'Đang đếm ngược 1 phút chuẩn bị…';
+        timerInterval = setInterval(() => {
+          secondsLeft--;
+          const m = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+          const s = String(secondsLeft % 60).padStart(2, '0');
+          timerNum.textContent = m + ':' + s;
+          if (secondsLeft <= 0) {
+            clearInterval(timerInterval);
+            timerLabel.textContent = 'Hết giờ chuẩn bị! Hãy bắt đầu nói 2 phút.';
+            toast('🔔 Hết 1 phút chuẩn bị! Bắt đầu nói.');
+          }
+        }, 1000);
+      } }, '⏱️ Bắt đầu 1 Phút chuẩn bị');
+
+      const startSpeakBtn = h('button', { class: 'accent mini', onclick: () => {
+        clearInterval(timerInterval);
+        secondsLeft = 120;
+        timerType = 'speak';
+        timerLabel.textContent = 'Đang đếm ngược 2 phút nói độc thoại…';
+        timerInterval = setInterval(() => {
+          secondsLeft--;
+          const m = String(Math.floor(secondsLeft / 60)).padStart(2, '0');
+          const s = String(secondsLeft % 60).padStart(2, '0');
+          timerNum.textContent = m + ':' + s;
+          if (secondsLeft <= 0) {
+            clearInterval(timerInterval);
+            timerLabel.textContent = 'Hết 2 phút nói! Hoàn thành phần Part 2.';
+            toast('🎉 Hoàn thành 2 phút nói độc thoại!');
+          }
+        }, 1000);
+      } }, '🎙️ Bắt đầu 2 Phút nói');
+
+      let showModelP2 = false;
+      const modelP2Box = h('div', { class: 'panel', style: { display: 'none', background: 'rgba(15, 82, 87, 0.06)' } },
+        h('p', { class: 'label' }, 'Bài nói độc thoại mẫu Band 8.5 (2 Minutes Monologue)'),
+        h('p', { lang: 'en', style: { lineHeight: 1.6 } }, spk.part2.modelAnswer),
+        listenBtns('en', spk.part2.modelAnswer)
+      );
+
+      const toggleModelP2Btn = h('button', { class: 'ghost mini', onclick: () => {
+        showModelP2 = !showModelP2;
+        modelP2Box.style.display = showModelP2 ? 'block' : 'none';
+        toggleModelP2Btn.textContent = showModelP2 ? 'Ẩn bài mẫu độc thoại' : '💡 Xem bài nói mẫu Band 8.5';
+      } }, '💡 Xem bài nói mẫu Band 8.5');
+
+      container.replaceChildren(
+        h('div', { class: 'ielts-cue-card stack' },
+          h('div', { class: 'row between' },
+            h('span', { class: 'chip level', style: { fontWeight: 700 } }, 'IELTS CANDIDATE TASK CARD'),
+            h('span', { class: 'small muted' }, 'Part 2 Long Turn')
+          ),
+          h('h3', { style: { margin: '6px 0' } }, spk.part2.title),
+          h('p', { class: 'small muted' }, 'You should say:'),
+          h('ul', { style: { paddingLeft: '20px', lineHeight: 1.6 } }, ...spk.part2.prompts.map((pm) => h('li', {}, pm))),
+          h('div', { class: 'ielts-timer-box' }, timerNum, h('div', { class: 'stack' }, timerLabel, h('div', { class: 'row', style: { gap: '6px' } }, startPrepBtn, startSpeakBtn))),
+          h('div', { class: 'row', style: { marginTop: '8px' } }, toggleModelP2Btn),
+          modelP2Box
+        ),
+        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 90) }, 'Hoàn thành Part 2 (+15 XP)')
+      );
+    } else {
+      // Part 3: Discussion
+      container.replaceChildren(
+        h('div', { class: 'panel stack' },
+          h('b', {}, 'Part 3: Two-way Discussion (Thảo luận phản biện sâu)'),
+          h('p', { class: 'small muted' }, 'Giám khảo sẽ mở rộng câu hỏi mang tính xã hội và tư duy phản biện. Đòi hỏi bạn dùng từ vựng nâng cao và cấu trúc lập luận nhiều chiều.'),
+          ...spk.part3.map((p, idx) => h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
+            h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + p.q),
+            p.vi && h('p', { class: 'small muted' }, p.vi),
+            h('div', { class: 'panel', style: { background: 'rgba(15, 82, 87, 0.05)', marginTop: '6px' } },
+              h('p', { class: 'label' }, 'Mẫu câu trả lời Band 8.5'),
+              h('p', { lang: 'en', style: { lineHeight: 1.6 } }, p.sa),
+              listenBtns('en', p.sa)
+            )
+          ))
+        ),
+        h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 95) }, 'Hoàn thành Part 3 (+15 XP)')
+      );
+    }
+  }
+
+  renderPart();
+  return h('div', { class: 'stack-lg' }, partTabs, container);
+}
+
+// 3. Giao diện IELTS Reading
+function renderIeltsReading(t, data) {
+  const rd = data.reading;
+
+  const passageBox = h('div', { class: 'ielts-passage' },
+    ...rd.paragraphs.map((p, idx) => h('p', {}, h('b', { style: { color: 'var(--teal)', marginRight: '6px' } }, '[' + String.fromCharCode(65 + idx) + ']'), p))
+  );
+
+  const vocabBox = h('div', { class: 'panel stack' },
+    h('b', {}, 'Từ vựng học thuật quan trọng trong bài đọc (Key IELTS Vocabulary)'),
+    h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+      ...rd.vocab.map((v) => h('button', {
+        class: 'chip',
+        style: { fontSize: '.84rem', cursor: 'pointer' },
+        onclick: () => { say('en', v.w); toast(v.w + ' ' + (v.r || '') + ': ' + v.m); }
+      }, '🔊 ' + v.w + ' (' + v.m + ')'))
+    )
+  );
+
+  // True / False / Not Given
+  const tfngAnswers = {};
+  const tfngContainers = rd.tfng.map((item, idx) => {
+    const btnRow = h('div', { class: 'row', style: { gap: '6px', marginTop: '6px' } });
+    ['TRUE', 'FALSE', 'NOT GIVEN'].forEach((opt) => {
+      const b = h('button', {
+        class: 'mini ghost',
+        style: { fontWeight: 600, minWidth: '85px' },
+        onclick: () => {
+          tfngAnswers[idx] = opt;
+          btnRow.querySelectorAll('button').forEach((other) => {
+            other.className = (other.textContent === opt) ? 'mini primary' : 'mini ghost';
+          });
+        }
+      }, opt);
+      btnRow.appendChild(b);
+    });
+
+    const expBox = h('div', { class: 'small muted', style: { display: 'none', marginTop: '6px', lineHeight: 1.5 } });
+
+    return {
+      el: h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
+        h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + item.stmt),
+        btnRow,
+        expBox
+      ),
+      item,
+      expBox
+    };
+  });
+
+  const feedbackArea = h('div', { class: 'panel stack', style: { display: 'none' } });
+
+  const submitBtn = h('button', { class: 'accent block', onclick: () => {
+    let correctCount = 0;
+    tfngContainers.forEach(({ item, expBox }, idx) => {
+      const userAns = tfngAnswers[idx];
+      const isRight = userAns === item.ans;
+      if (isRight) correctCount++;
+      expBox.style.display = 'block';
+      expBox.innerHTML = '<b style="color:' + (isRight ? 'var(--good)' : 'var(--bad)') + '">' +
+        (isRight ? '✓ Đúng (' + item.ans + ')' : '✗ Chưa đúng. Đáp án: ' + item.ans) + '</b><br>' +
+        '<i>Dẫn chứng:</i> ' + item.clue + '<br>' + item.why;
+    });
+
+    feedbackArea.style.display = 'block';
+    feedbackArea.replaceChildren(
+      h('h3', {}, correctCount === rd.tfng.length ? '🎉 Hoàn hảo! Đúng ' + correctCount + '/' + rd.tfng.length + ' câu True/False/Not Given' : 'Đúng ' + correctCount + '/' + rd.tfng.length + ' câu'),
+      h('p', { class: 'small muted' }, 'Hệ thống đã hiển thị câu dẫn chứng trực tiếp trong đoạn văn ở từng câu hỏi.')
+    );
+
+    markIeltsDone(t, 'read', Math.round((correctCount / rd.tfng.length) * 100));
+  } }, 'Kiểm tra đáp án & Nộp bài (+15 XP)');
+
+  return h('div', { class: 'stack-lg' },
+    h('div', { class: 'panel stack' },
+      h('div', { class: 'row between' },
+        h('b', {}, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
+        h('span', { class: 'chip level' }, data.band)
+      ),
+      passageBox
+    ),
+    vocabBox,
+    h('div', { class: 'panel stack' },
+      h('p', { class: 'label' }, 'True / False / Not Given (Chọn TRUE nếu đúng, FALSE nếu sai, NOT GIVEN nếu không có)'),
+      ...tfngContainers.map((c) => c.el)
+    ),
+    submitBtn,
+    feedbackArea
+  );
+}
+
+// 4. Giao diện IELTS Writing
+function renderIeltsWriting(t, data) {
+  const wr = data.writing;
+  let currentTask = 'task2';
+
+  const taskTabs = h('div', { class: 'row', style: { gap: '6px' } },
+    h('button', { class: 'mini ' + (currentTask === 'task1' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task1'; draw(); } }, 'Task 1: Thư / Email (min 150 từ)'),
+    h('button', { class: 'mini ' + (currentTask === 'task2' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task2'; draw(); } }, 'Task 2: Bài luận Essay (min 250 từ)')
+  );
+
+  const container = h('div', { class: 'stack-lg' });
+
+  function draw() {
+    taskTabs.querySelectorAll('button').forEach((b, idx) => {
+      b.className = 'mini ' + ((idx === 0 && currentTask === 'task1') || (idx === 1 && currentTask === 'task2') ? 'primary' : 'ghost');
+    });
+
+    const isT2 = currentTask === 'task2';
+    const targetObj = isT2 ? wr.task2 : wr.task1;
+    const minWords = targetObj.minWords;
+
+    const wordCountBadge = h('span', { class: 'ielts-word-counter warn' }, '0 / ' + minWords + ' từ (Chưa đủ)');
+
+    const textarea = h('textarea', {
+      rows: 10,
+      placeholder: isT2 ? 'Bắt đầu viết bài luận Task 2 (tối thiểu 250 từ) vào đây…' : 'Bắt đầu viết email / thư Task 1 (tối thiểu 150 từ) vào đây…',
+      style: { width: '100%', padding: '12px', fontSize: '.96rem', lineHeight: 1.6, borderRadius: '10px', border: '1px solid var(--line)', fontFamily: 'inherit' },
+      oninput: () => updateWordCount()
+    });
+
+    function updateWordCount() {
+      const words = (textarea.value || '').trim().split(/\s+/).filter(Boolean);
+      const count = words.length;
+      if (count >= minWords) {
+        wordCountBadge.className = 'ielts-word-counter good';
+        wordCountBadge.textContent = '✓ ' + count + ' / ' + minWords + ' từ (Đạt yêu cầu)';
+      } else {
+        wordCountBadge.className = 'ielts-word-counter warn';
+        wordCountBadge.textContent = count + ' / ' + minWords + ' từ (Chưa đủ ' + minWords + ' từ)';
+      }
+    }
+
+    // Nút chèn nhanh liên từ học thuật
+    const linkingChips = (wr.task2.linkingWords || []).map((w) => h('button', {
+      class: 'ielts-linking-chip',
+      onclick: () => {
+        const start = textarea.selectionStart || textarea.value.length;
+        const end = textarea.selectionEnd || textarea.value.length;
+        textarea.value = textarea.value.substring(0, start) + w + ' ' + textarea.value.substring(end);
+        textarea.focus();
+        updateWordCount();
+      }
+    }, '+ ' + w));
+
+    let showModel = false;
+    const modelBox = h('div', { class: 'panel stack', style: { display: 'none', background: 'rgba(15, 82, 87, 0.06)' } },
+      h('p', { class: 'label' }, isT2 ? 'Bài viết mẫu Band 8.5 (Model Essay)' : 'Bài viết mẫu Task 1 (Model Letter)'),
+      h('div', { style: { whiteSpace: 'pre-wrap', lineHeight: 1.65, fontSize: '.94rem' } }, isT2 ? wr.task2.modelEssay : wr.task1.modelAnswer)
+    );
+
+    const toggleModelBtn = h('button', { class: 'ghost mini', onclick: () => {
+      showModel = !showModel;
+      modelBox.style.display = showModel ? 'block' : 'none';
+      toggleModelBtn.textContent = showModel ? 'Ẩn bài mẫu' : '💡 Xem bài mẫu Band 8.5';
+    } }, '💡 Xem bài mẫu Band 8.5');
+
+    container.replaceChildren(
+      h('div', { class: 'panel stack' },
+        h('div', { class: 'row between' },
+          h('b', {}, targetObj.type),
+          h('span', { class: 'chip accent' }, 'Yêu cầu: ≥ ' + minWords + ' từ')
+        ),
+        h('p', { style: { fontWeight: 600, whiteSpace: 'pre-wrap' } }, targetObj.prompt)
+      ),
+      isT2 ? h('div', { class: 'panel stack' },
+        h('b', {}, 'Dàn ý 4 đoạn chuẩn thi IELTS (Essay Structure)'),
+        ...wr.task2.outline.map((o) => h('div', { class: 'stack', style: { gap: '2px' } },
+          h('span', { style: { fontWeight: 600, color: 'var(--teal)' } }, o.part),
+          h('span', { class: 'small muted' }, o.guide)
+        ))
+      ) : null,
+      h('div', { class: 'panel stack' },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', {}, 'Khu vực viết bài'),
+          wordCountBadge
+        ),
+        h('p', { class: 'small muted' }, 'Chèn nhanh liên từ học thuật Band 7.5+:'),
+        h('div', { class: 'ielts-linking-bank' }, ...linkingChips),
+        textarea,
+        h('div', { class: 'row', style: { marginTop: '6px' } }, toggleModelBtn),
+        modelBox
+      ),
+      h('button', { class: 'accent block', onclick: () => {
+        const words = (textarea.value || '').trim().split(/\s+/).filter(Boolean).length;
+        markIeltsDone(t, 'write', words >= minWords ? 95 : 75);
+      } }, 'Lưu bài viết & Hoàn thành (+15 XP)')
+    );
+  }
+
+  draw();
+  return h('div', { class: 'stack-lg' }, taskTabs, container);
+}
+
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
   const body = open && h('div', { class: 'body' },
@@ -1739,11 +2480,42 @@ function topicCard(t, nx, num) {
         h('span', { class: 'meta' }, h('span', { lang: l.kind === 'learn' ? L().lang : null }, lessonTitle(t, i)),
           dn && h('span', { class: 'small muted', style: { display: 'block' } }, typeof S.lessons[lkey(t, i)] === 'number' ? 'Tốt nhất ' + S.lessons[lkey(t, i)] + '%' : 'Đã học ở app cũ')));
     }),
+    t.lang === 'en' && h('div', { class: 'ielts-topic-card' },
+      h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '8px' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          h('span', { class: 'chip accent', style: { fontWeight: 700, fontSize: '.78rem' } }, '🏆 IELTS 4 KỸ NĂNG'),
+          h('span', { class: 'small muted' }, bandOfLevel(t.level))
+        ),
+        h('span', { class: 'chip small' + (ieltsDoneCount(t) === 4 ? ' good' : '') }, ieltsDoneCount(t) + '/4 kỹ năng')
+      ),
+      h('div', { class: 'ielts-skill-grid' },
+        h('button', { class: 'ielts-skill-btn' + (isIeltsDone(t, 'listen') ? ' done' : ''), onclick: (e) => { e.stopPropagation(); ieltsView(t, 'listen'); } },
+          h('span', { class: 'icon' }, '🎧'),
+          h('span', { class: 'label' }, 'Nghe (Listening)'),
+          isIeltsDone(t, 'listen') ? h('span', { class: 'check' }, '✓') : h('span', { class: 'arrow' }, '→')
+        ),
+        h('button', { class: 'ielts-skill-btn' + (isIeltsDone(t, 'speak') ? ' done' : ''), onclick: (e) => { e.stopPropagation(); ieltsView(t, 'speak'); } },
+          h('span', { class: 'icon' }, '🎙️'),
+          h('span', { class: 'label' }, 'Nói (Speaking)'),
+          isIeltsDone(t, 'speak') ? h('span', { class: 'check' }, '✓') : h('span', { class: 'arrow' }, '→')
+        ),
+        h('button', { class: 'ielts-skill-btn' + (isIeltsDone(t, 'read') ? ' done' : ''), onclick: (e) => { e.stopPropagation(); ieltsView(t, 'read'); } },
+          h('span', { class: 'icon' }, '📖'),
+          h('span', { class: 'label' }, 'Đọc (Reading)'),
+          isIeltsDone(t, 'read') ? h('span', { class: 'check' }, '✓') : h('span', { class: 'arrow' }, '→')
+        ),
+        h('button', { class: 'ielts-skill-btn' + (isIeltsDone(t, 'write') ? ' done' : ''), onclick: (e) => { e.stopPropagation(); ieltsView(t, 'write'); } },
+          h('span', { class: 'icon' }, '✍️'),
+          h('span', { class: 'label' }, 'Viết (Writing)'),
+          isIeltsDone(t, 'write') ? h('span', { class: 'check' }, '✓') : h('span', { class: 'arrow' }, '→')
+        )
+      )
+    ),
     h('div', { class: 'extras' },
       (t.gram && t.gram.length) && h('button', { class: 'mini', onclick: () => grammarView(t) }, 'Ngữ pháp'),
       (t.kanji && t.kanji.length) && h('button', { class: 'mini', onclick: () => kanjiView(t) }, 'Kanji (' + t.kanji.length + ')'),
-      h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Luyện nói'),
-      (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết')));
+      t.lang !== 'en' && h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Luyện nói'),
+      t.lang !== 'en' && (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết')));
   const displayNum = num != null ? num : (t.catPos || t.pos);
   const lvl = t.level || (t.category === 'life' ? 'A1' : t.category === 'hobbies' ? 'A2' : (t.category === 'business' ? 'B1' : null));
   return h('section', { class: 'topic' + (isCur ? ' cur' : '') + (done === t.lessons.length ? ' done' : '') },
@@ -3031,7 +3803,8 @@ function speakView() {
     h('div', { class: 'stack' },
       h('div', { class: 'row between' }, h('h1', {}, 'Luyện nói'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'speak', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
       pick,
-      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null
+      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null,
+      code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'speak') }, '🏆 Luyện IELTS Speaking Part 1, 2, 3 của chủ đề này →') : null
     ),
     !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
@@ -3163,7 +3936,8 @@ function writeView() {
   const head = h('div', { class: 'stack' },
     h('div', { class: 'row between' }, h('h1', {}, 'Viết'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'write', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
     pick,
-    dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null
+    dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null,
+    code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'write') }, '🏆 Luyện IELTS Writing Task 1 & 2 của chủ đề này →') : null
   );
   if (code === 'en') {
     if (!t.fill) { mount(h('div', { class: 'stack-lg' }, head, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.'))); return; }
