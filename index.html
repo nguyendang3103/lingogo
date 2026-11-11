@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1915';
+const APP_BUILD_ID = '20261111-1930';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -449,35 +449,41 @@ const LANGS = {
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
 const CATEGORIES = {
   en: [
-    { id: 'a1', name: 'A1 · Khởi động & Cơ bản', short: 'A1 Sơ cấp 1', icon: '🐣', level: 'A1', count: '13 bài', desc: 'Chào hỏi, số đếm, màu sắc, gia đình, đồ dùng học tập, động vật, hoa quả, rau củ, đồ ăn, đồ uống, quần áo, sinh hoạt' },
-    { id: 'a2', name: 'A2 · Đời sống & Giao tiếp', short: 'A2 Sơ cấp 2', icon: '🌿', level: 'A2', count: '17 bài', desc: 'Thời tiết, nhà bếp, ngoại hình, cảm xúc, hành động cơ thể, giao thông, trường học, mua sắm, quê hương, quốc gia, côn trùng, hoa cỏ, hải sản, lễ Tết' },
-    { id: 'b1', name: 'B1 · Trung cấp & Đời sống xã hội', short: 'B1 Trung cấp', icon: '🎨', level: 'B1', count: '15 bài', desc: 'Nghề nghiệp, tính cách, công việc, thể thao, bóng đá, phim ảnh, du lịch, thời trang, y tế, bưu điện, ngân hàng, nghệ thuật, công nghệ, môi trường & tự nhiên, quân đội' },
-    { id: 'b2', name: 'B2 · Thương mại & Đi làm', short: 'B2 Thương mại', icon: '💼', level: 'B2–B2+', count: '35 bài', desc: 'Trọn bộ Tiếng Anh Thương mại & Sự nghiệp Quốc tế (họp hành, đàm phán, chuỗi cung ứng SCOR, nội thất & chậu cảnh xuất khẩu, Customer Success, phỏng vấn Remote STAR, Lean Startup và AI Automation)' },
-    { id: 'c1', name: 'C1 · Cao cấp & Học thuật', short: 'C1 Cao cấp', icon: '🏛️', level: 'C1', count: '5 bài', desc: 'Nghiên cứu học thuật, kinh tế vĩ mô toàn cầu, quản trị chiến lược M&A, khung pháp lý & IP, nghệ thuật tranh biện phản biện' },
-    { id: 'c2', name: 'C2 · Thành thạo & Ngoại giao', short: 'C2 Bậc thầy', icon: '👑', level: 'C2', count: '5 bài', desc: 'Quan hệ quốc tế & địa chính trị, triết học & nhận thức luận, nghệ thuật biên dịch, đạo đức AI tương lai, truyền thông khủng hoảng' },
-    { id: 'all', name: 'Tất cả 6 cấp độ', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '90 bài', desc: 'Toàn bộ 90 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
+    { id: 'a1', name: 'Khởi động & Cơ bản', short: 'Sơ cấp 1', icon: '🐣', level: 'A1', count: '13 bài', desc: 'Chào hỏi, số đếm, màu sắc, gia đình, đồ dùng học tập, động vật, hoa quả, rau củ, đồ ăn, đồ uống, quần áo, sinh hoạt' },
+    { id: 'a2', name: 'Đời sống & Giao tiếp', short: 'Sơ cấp 2', icon: '🌿', level: 'A2', count: '17 bài', desc: 'Thời tiết, nhà bếp, ngoại hình, cảm xúc, hành động cơ thể, giao thông, trường học, mua sắm, quê hương, quốc gia, côn trùng, hoa cỏ, hải sản, lễ Tết' },
+    { id: 'b1', name: 'Trung cấp & Đời sống xã hội', short: 'Trung cấp', icon: '🎨', level: 'B1', count: '15 bài', desc: 'Nghề nghiệp, tính cách, công việc, thể thao, bóng đá, phim ảnh, du lịch, thời trang, y tế, bưu điện, ngân hàng, nghệ thuật, công nghệ, môi trường & tự nhiên, quân đội' },
+    { id: 'b2', name: 'Thương mại & Đi làm', short: 'Thương mại', icon: '💼', level: 'B2–B2+', count: '35 bài', desc: 'Trọn bộ Tiếng Anh Thương mại & Sự nghiệp Quốc tế (họp hành, đàm phán, chuỗi cung ứng SCOR, nội thất & chậu cảnh xuất khẩu, Customer Success, phỏng vấn Remote STAR, Lean Startup và AI Automation)' },
+    { id: 'c1', name: 'Cao cấp & Học thuật', short: 'Cao cấp', icon: '🏛️', level: 'C1', count: '5 bài', desc: 'Nghiên cứu học thuật, kinh tế vĩ mô toàn cầu, quản trị chiến lược M&A, khung pháp lý & IP, nghệ thuật tranh biện phản biện' },
+    { id: 'c2', name: 'Thành thạo & Ngoại giao', short: 'Bậc thầy', icon: '👑', level: 'C2', count: '5 bài', desc: 'Quan hệ quốc tế & địa chính trị, triết học & nhận thức luận, nghệ thuật biên dịch, đạo đức AI tương lai, truyền thông khủng hoảng' },
+    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '90 bài', desc: 'Toàn bộ 90 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
   ],
   zh: [
-    { id: 'hsk1', name: 'HSK 1 · Sơ cấp 1', short: 'HSK 1', icon: '🌱', level: 'HSK 1', count: '7 bài', desc: 'Nền tảng phát âm Pinyin, chào hỏi, số đếm, gia đình, ngày giờ, đại từ' },
-    { id: 'hsk2', name: 'HSK 2 · Sơ cấp 2', short: 'HSK 2', icon: '🌿', level: 'HSK 2', count: '10 bài', desc: 'Động từ, ăn uống, mua sắm, hỏi đường, khách sạn, công việc, WeChat' },
-    { id: 'hsk3', name: 'HSK 3 · Sơ cấp 3', short: 'HSK 3', icon: '🍃', level: 'HSK 3', count: '10 bài', desc: 'Du lịch, so sánh, phim ảnh, thể thao, trường học, sinh hoạt, hỏi giá báo giá' },
-    { id: 'hsk4', name: 'HSK 4 · Trung cấp 1', short: 'HSK 4', icon: '💼', level: 'HSK 4', count: '8 bài', desc: 'Bốn mùa, đơn hàng, thanh toán, vận chuyển, thủ tục hải quan, kiểm hàng' },
-    { id: 'hsk5', name: 'HSK 5 · Trung cấp 2', short: 'HSK 5', icon: '👔', level: 'HSK 5', count: '6 bài', desc: 'Họp tiến độ, đàm phán hợp đồng, hội chợ quốc tế, văn hóa, email trang trọng' },
-    { id: 'hsk6', name: 'HSK 6 · Trung cấp 3', short: 'HSK 6', icon: '🚀', level: 'HSK 6', count: '4 bài', desc: 'Thuyết trình, vấn đề xã hội, công nghệ AI, thành ngữ 4 chữ thông dụng' },
-    { id: 'hsk7', name: 'HSK 7 · Cao cấp 1', short: 'HSK 7', icon: '🎓', level: 'HSK 7', count: '2 bài', desc: 'Phương pháp nghiên cứu học thuật, tổng quan tài liệu và kinh tế vĩ mô toàn cầu' },
-    { id: 'hsk8', name: 'HSK 8 · Cao cấp 2', short: 'HSK 8', icon: '🏛️', level: 'HSK 8', count: '2 bài', desc: 'Quan hệ quốc tế, ngoại giao đa phương, pháp luật và sở hữu trí tuệ' },
-    { id: 'hsk9', name: 'HSK 9 · Cao cấp 3', short: 'HSK 9', icon: '👑', level: 'HSK 9', count: '2 bài', desc: 'Tư biện triết học, tư tưởng truyền thống và nghệ thuật dịch thuật Tín - Đạt - Nhã' },
-    { id: 'all', name: 'Tất cả 9 cấp độ', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '51 bài', desc: 'Toàn bộ 51 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
+    { id: 'hsk1', name: 'Sơ cấp 1', short: 'HSK 1', icon: '🌱', level: 'HSK 1', count: '7 bài', desc: 'Nền tảng phát âm Pinyin, chào hỏi, số đếm, gia đình, ngày giờ, đại từ' },
+    { id: 'hsk2', name: 'Sơ cấp 2', short: 'HSK 2', icon: '🌿', level: 'HSK 2', count: '10 bài', desc: 'Động từ, ăn uống, mua sắm, hỏi đường, khách sạn, công việc, WeChat' },
+    { id: 'hsk3', name: 'Sơ cấp 3', short: 'HSK 3', icon: '🍃', level: 'HSK 3', count: '10 bài', desc: 'Du lịch, so sánh, phim ảnh, thể thao, trường học, sinh hoạt, hỏi giá báo giá' },
+    { id: 'hsk4', name: 'Trung cấp 1', short: 'HSK 4', icon: '💼', level: 'HSK 4', count: '8 bài', desc: 'Bốn mùa, đơn hàng, thanh toán, vận chuyển, thủ tục hải quan, kiểm hàng' },
+    { id: 'hsk5', name: 'Trung cấp 2', short: 'HSK 5', icon: '👔', level: 'HSK 5', count: '6 bài', desc: 'Họp tiến độ, đàm phán hợp đồng, hội chợ quốc tế, văn hóa, email trang trọng' },
+    { id: 'hsk6', name: 'Trung cấp 3', short: 'HSK 6', icon: '🚀', level: 'HSK 6', count: '4 bài', desc: 'Thuyết trình, vấn đề xã hội, công nghệ AI, thành ngữ 4 chữ thông dụng' },
+    { id: 'hsk7', name: 'Cao cấp 1', short: 'HSK 7', icon: '🎓', level: 'HSK 7', count: '2 bài', desc: 'Phương pháp nghiên cứu học thuật, tổng quan tài liệu và kinh tế vĩ mô toàn cầu' },
+    { id: 'hsk8', name: 'Cao cấp 2', short: 'HSK 8', icon: '🏛️', level: 'HSK 8', count: '2 bài', desc: 'Quan hệ quốc tế, ngoại giao đa phương, pháp luật và sở hữu trí tuệ' },
+    { id: 'hsk9', name: 'Cao cấp 3', short: 'HSK 9', icon: '👑', level: 'HSK 9', count: '2 bài', desc: 'Tư biện triết học, tư tưởng truyền thống và nghệ thuật dịch thuật Tín - Đạt - Nhã' },
+    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '51 bài', desc: 'Toàn bộ 51 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
   ],
   ja: [
-    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Chào hỏi, ngày giờ, mua sắm, gia đình, sinh hoạt, du lịch và trọn bộ 101 chữ Hán Kanji N5' },
-    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, tiền tệ, 12 thể động từ và Kanji N4' },
-    { id: 'n3', name: 'N3 · Trung cấp 1', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Văn phòng & công việc, đời sống & xử lý sự cố, trải nghiệm văn hóa và du lịch Nhật Bản' },
-    { id: 'n2', name: 'N2 · Trung cấp 2', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Đàm phán kinh doanh, kính ngữ thương mại & tác phong công sở, xã hội & công nghệ' },
-    { id: 'n1', name: 'N1 · Cao cấp', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Kinh tế vĩ mô & toàn cầu, pháp chế & quản trị doanh nghiệp, tư tưởng & mỹ học Nhật Bản' },
-    { id: 'all', name: 'Tất cả 5 cấp độ', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Lộ trình tiếng Nhật toàn diện 26 bài học từ sơ cấp N5 đến cao cấp N1' }
+    { id: 'n5', name: 'Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Chào hỏi, ngày giờ, mua sắm, gia đình, sinh hoạt, du lịch và trọn bộ 101 chữ Hán Kanji N5' },
+    { id: 'n4', name: 'Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, tiền tệ, 12 thể động từ và Kanji N4' },
+    { id: 'n3', name: 'Trung cấp 1', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Văn phòng & công việc, đời sống & xử lý sự cố, trải nghiệm văn hóa và du lịch Nhật Bản' },
+    { id: 'n2', name: 'Trung cấp 2', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Đàm phán kinh doanh, kính ngữ thương mại & tác phong công sở, xã hội & công nghệ' },
+    { id: 'n1', name: 'Cao cấp', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Kinh tế vĩ mô & toàn cầu, pháp chế & quản trị doanh nghiệp, tư tưởng & mỹ học Nhật Bản' },
+    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Lộ trình tiếng Nhật toàn diện 26 bài học từ sơ cấp N5 đến cao cấp N1' }
   ]
 };
+
+// Loại bỏ tiền tố cấp độ (như A1., A1 ·, HSK 1 ·, JLPT N5 ·) ở đầu tên chủ đề/nhóm
+function cleanPhaseName(name) {
+  if (!name) return '';
+  return name.replace(/^(A[12]|B[12]|C[12]|HSK\s*(3\.0)?\s*(Cấp\s*)?\d+|JLPT\s*N\d+|N[1-5])\s*[·.:-]\s*/i, '').trim();
+}
 const EN_CATEGORIES = CATEGORIES.en;
 let subjectsOpen = false;
 const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'a1', zhCat: 'hsk1', jaCat: 'n5', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, gq: {}, ach: {}, t: 0 });
@@ -1433,10 +1439,10 @@ function langSwitch() {
 let VIEW = 'pick'; // mở app là màn hình chọn ngôn ngữ
 const TABS = [
   ['home', 'Học', ICON.home],
+  ['speak', 'Nói', ICON.speak],
+  ['write', 'Viết', ICON.pen],
   ['ielts', 'IELTS', ICON.book],
   ['grammar', 'Ngữ pháp', ICON.book],
-  ['speak', 'Luyện nói', ICON.speak],
-  ['write', 'Viết', ICON.pen],
   ['progress', 'Tiến độ', ICON.chart]
 ];
 function setTabs(show) {
@@ -1444,8 +1450,8 @@ function setTabs(show) {
   document.body.classList.toggle('lessonmode', !show);
   if (!show) return;
   const filtered = TABS.filter(([k]) => {
-    if (k === 'ielts') return S.lang === 'en'; // Chỉ tiếng Anh có tab IELTS
-    if (k === 'grammar') return S.lang !== 'en'; // Tiếng Trung, Nhật có tab Ngữ pháp
+    if (k === 'ielts') return S.lang === 'en'; // Tab IELTS nằm sau Viết, trước Tiến độ
+    if (k === 'grammar') return S.lang !== 'en'; // Tab Ngữ pháp nằm sau Viết, trước Tiến độ
     return true;
   });
   nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', { 'aria-current': VIEW === k ? 'page' : null, onclick: () => go(k) }, icon(d), label)));
@@ -1737,9 +1743,9 @@ function homeView() {
       syncButton()),
     catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
-      ph.name && h('p', { class: 'label phase' }, ph.name),
+      ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.65 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.70 · Cập nhật 11/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -1986,24 +1992,25 @@ function ieltsTabView() {
   const t = d.topics.find((x) => x.id === IELTS_TOPIC[code]) || d.topics[0];
   IELTS_CURRENT_TOPIC = t;
   const data = getIeltsData(t);
+  const doneCount = ieltsDoneCount(t);
 
   const head = h('div', { class: 'stack' },
     h('div', { class: 'row between' },
-      h('h1', {}, 'IELTS 4 Kỹ năng'),
+      h('h1', {}, 'Luyện IELTS'),
       h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
         feedbackBtn({ mode: 'ielts', topicId: t.id, topicTitle: t.sub || t.title }),
         langSwitch()
       )
     ),
-    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Luyện thi chuẩn Cambridge IELTS · 🎧 Nghe · 🎙️ Nói · 📖 Đọc · ✍️ Viết'),
+    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Luyện thi 4 kỹ năng chuẩn Cambridge IELTS · 🎧 Nghe · 🎙️ Nói · 📖 Đọc · ✍️ Viết'),
     pick,
-    h('div', { class: 'row between', style: { alignItems: 'center', margin: '4px 0 6px 0', padding: '10px 14px', background: 'rgba(15, 82, 87, 0.07)', border: '1px solid rgba(15, 82, 87, 0.2)', borderRadius: '12px' } },
-      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+    h('div', { class: 'row between', style: { alignItems: 'center', margin: '4px 0 6px 0', padding: '10px 14px', background: 'rgba(15, 82, 87, 0.08)', border: '1px solid rgba(15, 82, 87, 0.22)', borderRadius: '12px' } },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
         h('span', { class: 'chip level', style: { fontWeight: 700 } }, t.level || 'B1'),
-        h('b', { style: { color: 'var(--teal)', fontSize: '1rem' } }, data.band),
+        h('b', { style: { color: 'var(--teal)', fontSize: '1.02rem' } }, data.band),
         h('span', { class: 'small muted' }, t.sub || t.title)
       ),
-      h('span', { class: 'chip small' + (ieltsDoneCount(t) === 4 ? ' good' : '') }, ieltsDoneCount(t) + '/4 kỹ năng ✓')
+      h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓')
     )
   );
 
@@ -2015,13 +2022,13 @@ function ieltsTabView() {
   ];
 
   const skillTabs = h('div', { class: 'ielts-tabs' },
-    ...skills.map(([sk, iconLabel]) => {
+    ...skills.map(([sk, iconLabel, enLabel]) => {
       const isDone = isIeltsDone(t, sk);
       const isActive = IELTS_ACTIVE_SKILL === sk;
       return h('button', {
         class: 'ielts-tab-btn' + (isActive ? ' active' : ''),
         onclick: () => { IELTS_ACTIVE_SKILL = sk; ieltsTabView(); }
-      }, iconLabel + (isDone ? ' ✓' : ''));
+      }, iconLabel + ' (' + enLabel + ')' + (isDone ? ' ✓' : ''));
     })
   );
 
@@ -3777,7 +3784,7 @@ function topicPicker(code, store, onChange) {
       ...cats.filter((c) => c.id !== 'all').map((c) => {
         const ts = d.topics.filter((t) => (t.category || defCat) === c.id);
         if (!ts.length) return null;
-        return h('optgroup', { label: c.icon + ' ' + c.name + ' (' + c.level + ')' },
+        return h('optgroup', { label: c.icon + ' ' + cleanPhaseName(c.name) + ' (' + c.level + ')' },
           ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, (t.level ? '[' + t.level + '] ' : '') + (t.catPos || t.pos) + '. ' + (t.sub || t.title))));
       }).filter(Boolean));
   }
