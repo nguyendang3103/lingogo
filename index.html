@@ -425,6 +425,239 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
 .toast.show { opacity: 1; }
 .loading { padding: 48px 0; text-align: center; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+/* ===== GIAO DIỆN IELTS & MOBILE RESPONSIVE ===== */
+#app { max-width: 560px; margin: 0 auto; overflow-x: hidden; width: 100%; box-sizing: border-box; }
+body { overflow-x: hidden; }
+.ielts-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 4px 0;
+}
+.ielts-mode-switch button {
+  min-height: 42px;
+  padding: 8px 6px;
+  font-size: .84rem;
+  font-weight: 600;
+  border-radius: 12px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+}
+.ielts-year-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 2px 6px 2px;
+  margin: 2px 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.ielts-year-chips::-webkit-scrollbar { display: none; }
+.ielts-year-chips button {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  min-height: 34px;
+  border-radius: 18px;
+}
+.ielts-vol-select {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 10px 12px;
+  font-size: .9rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  text-overflow: ellipsis;
+}
+.ielts-info-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: rgba(15, 82, 87, 0.08);
+  border: 1px solid rgba(15, 82, 87, 0.22);
+  border-radius: 14px;
+  margin: 4px 0 8px 0;
+}
+@media (min-width: 480px) {
+  .ielts-info-banner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.ielts-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 4px;
+  margin: 6px 0 10px 0;
+}
+.ielts-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 2px;
+  min-height: 52px;
+  font-size: .76rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.ielts-tab-btn.active {
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
+}
+.ielts-passage {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: .94rem;
+  line-height: 1.7;
+  max-height: 380px;
+  overflow-y: auto;
+  border-left: 4px solid var(--teal);
+  scrollbar-width: thin;
+}
+.ielts-passage p { margin-bottom: 12px; }
+.ielts-cue-card {
+  background: #fdfaf3;
+  border: 2px dashed #d97706;
+  border-radius: 16px;
+  padding: 18px;
+  color: #1f2937;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.08);
+}
+[data-theme="dark"] .ielts-cue-card {
+  background: #1c1917;
+  border-color: #d97706;
+  color: #f3f4f6;
+}
+.ielts-timer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 10px 0;
+}
+@media (min-width: 440px) {
+  .ielts-timer-box {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.ielts-timer-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #d97706;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+.ielts-tfng-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+.ielts-tfng-row button {
+  min-height: 38px;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 6px 2px;
+  white-space: nowrap;
+  border-radius: 10px;
+}
+.ielts-task-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ielts-task-tabs button {
+  min-height: 42px;
+  font-size: .82rem;
+  font-weight: 600;
+  padding: 8px 6px;
+  border-radius: 12px;
+  white-space: normal;
+  line-height: 1.25;
+}
+.ielts-word-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .82rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px;
+}
+.ielts-word-counter.warn {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.ielts-word-counter.good {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.ielts-linking-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px 0;
+}
+.ielts-linking-chip {
+  font-size: .8rem;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.ielts-linking-chip:active {
+  background: var(--sunk);
+  border-color: var(--teal);
+}
+.ielts-action-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+@media (min-width: 480px) {
+  .ielts-action-col {
+    flex-direction: row;
+  }
+}
+.tabs button { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tabs button span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
 </style>
 
 <div id="app"><p class="loading">Đang tải…</p></div>
@@ -438,7 +671,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-2315';
+const APP_BUILD_ID = '20261111-2345';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -5940,13 +6173,13 @@ function ieltsTabView() {
 
   // Bộ lọc năm (2026 xếp đầu, 2025, 2024, 2023, 2022)
   const years = [2026, 2025, 2024, 2023, 2022];
-  const yearFilterChips = h('div', { class: 'row', style: { gap: '6px', margin: '4px 0 6px 0', flexWrap: 'wrap' } },
+  const yearFilterChips = h('div', { class: 'ielts-year-chips' },
     ...['all', ...years].map((yr) => {
       const isActive = (IELTS_FILTER_YEAR === yr || (yr === 'all' && !IELTS_FILTER_YEAR));
-      const lbl = yr === 'all' ? 'Tất cả năm' : (yr === 2026 ? '⚡ 2026 (Mới nhất)' : 'Năm ' + yr);
+      const lbl = yr === 'all' ? 'Tất cả năm' : (yr === 2026 ? '⚡ 2026 Mới nhất' : 'Năm ' + yr);
       return h('button', {
-        class: 'mini ' + (isActive ? 'accent' : 'ghost'),
-        style: { fontSize: '.8rem', fontWeight: isActive ? 700 : 500, padding: '4px 10px' },
+        class: isActive ? 'primary' : 'ghost',
+        style: { border: isActive ? 'none' : '1px solid var(--line)' },
         onclick: () => {
           IELTS_FILTER_YEAR = yr;
           if (yr !== 'all') {
@@ -5975,6 +6208,7 @@ function ieltsTabView() {
   }).filter(Boolean);
 
   const volSelect = h('select', {
+    class: 'ielts-vol-select',
     'aria-label': 'Kho đề thi IELTS 2022–2026',
     onchange: (e) => {
       IELTS_CURRENT_VOL = e.target.value;
@@ -5985,17 +6219,17 @@ function ieltsTabView() {
 
   const topicPick = topicPicker(code, IELTS_TOPIC, ieltsTabView);
 
-  const modeSwitch = h('div', { class: 'row', style: { gap: '6px', margin: '4px 0' } },
+  const modeSwitch = h('div', { class: 'ielts-mode-switch' },
     h('button', {
-      class: 'mini ' + (IELTS_MODE === 'volumes' ? 'primary' : 'ghost'),
-      style: { fontWeight: 600 },
+      class: IELTS_MODE === 'volumes' ? 'primary' : 'ghost',
+      style: { border: IELTS_MODE === 'volumes' ? 'none' : '1px solid var(--line)' },
       onclick: () => { IELTS_MODE = 'volumes'; ieltsTabView(); }
-    }, '📚 Kho Đề thi IELTS 2022–2026 (ieltsonlinetests.com)'),
+    }, '📚 Đề thi 2022–2026'),
     h('button', {
-      class: 'mini ' + (IELTS_MODE === 'topics' ? 'primary' : 'ghost'),
-      style: { fontWeight: 600 },
+      class: IELTS_MODE === 'topics' ? 'primary' : 'ghost',
+      style: { border: IELTS_MODE === 'topics' ? 'none' : '1px solid var(--line)' },
       onclick: () => { IELTS_MODE = 'topics'; ieltsTabView(); }
-    }, '🎯 Luyện theo 90 Chủ đề A1–C2')
+    }, '🎯 90 Chủ đề A1–C2')
   );
 
   const head = h('div', { class: 'stack' },
@@ -6009,24 +6243,24 @@ function ieltsTabView() {
     h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com/vi/ielts-exam-library) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
     modeSwitch,
     IELTS_MODE === 'volumes' ? h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect) : topicPick,
-    h('div', { class: 'row between', style: { alignItems: 'center', margin: '4px 0 6px 0', padding: '10px 14px', background: 'rgba(15, 82, 87, 0.08)', border: '1px solid rgba(15, 82, 87, 0.22)', borderRadius: '12px' } },
+    h('div', { class: 'ielts-info-banner' },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
         h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
         h('b', { style: { color: 'var(--teal)', fontSize: '1.02rem' } }, currentVol ? currentVol.targetBand : data.band),
-        h('span', { class: 'small muted' }, currentVol ? currentVol.sub : (t.sub || t.title))
+        h('span', { class: 'small muted', style: { wordBreak: 'break-word' } }, currentVol ? currentVol.sub : (t.sub || t.title))
       ),
-      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+      h('div', { class: 'row between', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%', justifyContent: 'space-between' } },
         h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓'),
-        doneCount > 0 ? h('button', { class: 'mini accent', onclick: () => showIeltsSummaryModal(t) }, '📊 Bảng điểm') : null
+        doneCount > 0 ? h('button', { class: 'mini accent', onclick: () => showIeltsSummaryModal(t) }, '📊 Bảng điểm Mock TRF') : null
       )
     )
   );
 
   const skills = [
-    ['listen', '🎧 Nghe', 'Listening'],
-    ['speak', '🎙️ Nói', 'Speaking'],
-    ['read', '📖 Đọc', 'Reading'],
-    ['write', '✍️ Viết', 'Writing']
+    ['listen', '🎧 Nghe', 'Listen'],
+    ['speak', '🎙️ Nói', 'Speak'],
+    ['read', '📖 Đọc', 'Read'],
+    ['write', '✍️ Viết', 'Write']
   ];
 
   const skillTabs = h('div', { class: 'ielts-tabs' },
@@ -6037,7 +6271,12 @@ function ieltsTabView() {
       return h('button', {
         class: 'ielts-tab-btn' + (isActive ? ' active' : ''),
         onclick: () => { IELTS_ACTIVE_SKILL = sk; ieltsTabView(); }
-      }, iconLabel + ' (' + enLabel + ')' + (isDone ? (bStr !== 'Chưa thi' ? ' · ' + bStr : ' ✓') : ''));
+      },
+        h('span', { style: { fontSize: '.92rem' } }, iconLabel),
+        h('span', { style: { fontSize: '.72rem', opacity: isActive ? 1 : 0.8 } },
+          isDone ? (bStr !== 'Chưa thi' ? 'Band ' + bStr : '✓ Xong') : enLabel
+        )
+      );
     })
   );
 
@@ -6183,7 +6422,7 @@ function renderIeltsListening(t, data) {
       h('p', { class: 'label' }, 'Câu hỏi 2 · Note Completion (Điền từ)'),
       h('p', { class: 'small muted' }, ls.fill.prompt),
       h('p', { style: { fontSize: '1.02rem', lineHeight: 1.6 } }, ls.fill.sentence),
-      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } }, fillInput, h('span', { class: 'small muted' }, ls.fill.hint))
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } }, fillInput, h('span', { class: 'small muted' }, ls.fill.hint))
     ),
     submitBtn,
     feedbackArea
@@ -6195,10 +6434,10 @@ function renderIeltsSpeaking(t, data) {
   const spk = data.speaking;
   let partTab = 'p1';
 
-  const partTabs = h('div', { class: 'row', style: { gap: '6px' } },
-    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p1'; renderPart(); } }, 'Part 1: Phỏng vấn ngắn'),
-    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p2'; renderPart(); } }, 'Part 2: Cue Card (Độc thoại)'),
-    h('button', { class: 'mini', style: { fontWeight: 600 }, onclick: () => { partTab = 'p3'; renderPart(); } }, 'Part 3: Thảo luận sâu')
+  const partTabs = h('div', { class: 'ielts-mode-switch', style: { gridTemplateColumns: 'repeat(3, 1fr)' } },
+    h('button', { class: 'mini ' + (partTab === 'p1' ? 'primary' : 'ghost'), style: { border: partTab === 'p1' ? 'none' : '1px solid var(--line)' }, onclick: () => { partTab = 'p1'; renderPart(); } }, 'Part 1'),
+    h('button', { class: 'mini ' + (partTab === 'p2' ? 'primary' : 'ghost'), style: { border: partTab === 'p2' ? 'none' : '1px solid var(--line)' }, onclick: () => { partTab = 'p2'; renderPart(); } }, 'Part 2 Cue Card'),
+    h('button', { class: 'mini ' + (partTab === 'p3' ? 'primary' : 'ghost'), style: { border: partTab === 'p3' ? 'none' : '1px solid var(--line)' }, onclick: () => { partTab = 'p3'; renderPart(); } }, 'Part 3 Thảo luận')
   );
 
   const container = h('div', { class: 'stack-lg' });
@@ -6236,7 +6475,7 @@ function renderIeltsSpeaking(t, data) {
             );
           })
         ),
-        h('div', { class: 'row', style: { gap: '8px' } },
+        h('div', { class: 'ielts-action-col' },
           h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 85, '7.5'); toast('Đã lưu kết quả Part 1!'); } }, 'Hoàn thành Part 1 (+15 XP)'),
           h('button', { class: 'primary block grow', onclick: () => { partTab = 'p2'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 2 (Cue Card) ➔')
         )
@@ -6308,11 +6547,17 @@ function renderIeltsSpeaking(t, data) {
           h('h3', { style: { margin: '6px 0' } }, spk.part2.title),
           h('p', { class: 'small muted' }, 'You should say:'),
           h('ul', { style: { paddingLeft: '20px', lineHeight: 1.6 } }, ...spk.part2.prompts.map((pm) => h('li', {}, pm))),
-          h('div', { class: 'ielts-timer-box' }, timerNum, h('div', { class: 'stack' }, timerLabel, h('div', { class: 'row', style: { gap: '6px' } }, startPrepBtn, startSpeakBtn))),
+          h('div', { class: 'ielts-timer-box' },
+            timerNum,
+            h('div', { class: 'stack grow', style: { minWidth: '180px' } },
+              timerLabel,
+              h('div', { class: 'row wrap', style: { gap: '6px' } }, startPrepBtn, startSpeakBtn)
+            )
+          ),
           h('div', { class: 'row', style: { marginTop: '8px' } }, toggleModelP2Btn),
           modelP2Box
         ),
-        h('div', { class: 'row', style: { gap: '8px' } },
+        h('div', { class: 'ielts-action-col' },
           h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 90, '8.0'); toast('Đã lưu kết quả Part 2!'); } }, 'Hoàn thành Part 2 (+15 XP)'),
           h('button', { class: 'primary block grow', onclick: () => { partTab = 'p3'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 3 (Thảo luận) ➔')
         )
@@ -6375,11 +6620,10 @@ function renderIeltsReading(t, data) {
   // True / False / Not Given
   const tfngAnswers = {};
   const tfngContainers = rd.tfng.map((item, idx) => {
-    const btnRow = h('div', { class: 'row', style: { gap: '6px', marginTop: '6px' } });
+    const btnRow = h('div', { class: 'ielts-tfng-row' });
     ['TRUE', 'FALSE', 'NOT GIVEN'].forEach((opt) => {
       const b = h('button', {
         class: 'mini ghost',
-        style: { fontWeight: 600, minWidth: '85px' },
         onclick: () => {
           tfngAnswers[idx] = opt;
           btnRow.querySelectorAll('button').forEach((other) => {
@@ -6462,9 +6706,9 @@ function renderIeltsWriting(t, data) {
   const wr = data.writing;
   let currentTask = 'task2';
 
-  const taskTabs = h('div', { class: 'row', style: { gap: '6px' } },
-    h('button', { class: 'mini ' + (currentTask === 'task1' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task1'; draw(); } }, 'Task 1: Thư / Email (min 150 từ)'),
-    h('button', { class: 'mini ' + (currentTask === 'task2' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task2'; draw(); } }, 'Task 2: Bài luận Essay (min 250 từ)')
+  const taskTabs = h('div', { class: 'ielts-task-tabs' },
+    h('button', { class: 'mini ' + (currentTask === 'task1' ? 'primary' : 'ghost'), style: { border: currentTask === 'task1' ? 'none' : '1px solid var(--line)' }, onclick: () => { currentTask = 'task1'; draw(); } }, 'Task 1: Thư/Báo cáo (≥150 từ)'),
+    h('button', { class: 'mini ' + (currentTask === 'task2' ? 'primary' : 'ghost'), style: { border: currentTask === 'task2' ? 'none' : '1px solid var(--line)' }, onclick: () => { currentTask = 'task2'; draw(); } }, 'Task 2: Bài luận (≥250 từ)')
   );
 
   const container = h('div', { class: 'stack-lg' });
