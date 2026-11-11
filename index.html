@@ -92,7 +92,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
 .ghost { background: transparent; border-color: transparent; color: var(--teal); }
 .block { width: 100%; }
 .mini { min-height: 36px; padding: 6px 12px; font-size: .88rem; border-radius: 10px; }
-input[type=text], input[type=password], textarea {
+input[type=text], input[type=password], input[type=search], textarea {
   width: 100%; font: inherit; font-size: 17px; color: var(--ink); background: var(--surface);
   border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-height: 50px;
 }
@@ -425,7 +425,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1630';
+const APP_BUILD_ID = '20261111-1700';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1419,7 +1419,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.33 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.34 · Cập nhật 11/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -2647,8 +2647,13 @@ function fillBlock(t) {
 function grammarView(t, backTo) {
   const code = t.lang, d = DATA[code], langAttr = LANGS[code].lang;
   const back = h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go(backTo || 'home') }, backTo === 'grammar' ? '← Về tab Ngữ pháp' : '← Về trang Học'), h('span', { class: 'grow' }), feedbackBtn({ mode: 'grammar', topicId: t.id, topicTitle: t.sub || t.title }));
-  return mount(h('div', { class: 'stack-lg' }, back, h('h1', {}, 'Ngữ pháp · ' + (t.sub || t.title)),
-    ...(t.gram || []).map((gid) => {
+  const topicGids = t.gram || [];
+  return mount(h('div', { class: 'stack-lg' }, back,
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+      h('h1', { style: { margin: 0 } }, 'Ngữ pháp · ' + (t.sub || t.title)),
+      topicGids.length > 0 && h('button', { class: 'primary mini', onclick: () => grammarTopicQuiz(t, backTo) }, 'Luyện tập bài này (' + topicGids.length + ')')
+    ),
+    ...(topicGids).map((gid) => {
       const g = d.grammar && d.grammar[gid]; if (!g) return null;
       return h('div', { class: 'panel gram' },
         h('h2', {}, g.t, g.lv && h('span', { class: 'chip good', style: { marginLeft: '8px', fontSize: '.7rem', verticalAlign: 'middle' } }, g.lv)),
@@ -2663,8 +2668,23 @@ function grammarView(t, backTo) {
       );
     })));
 }
+function grammarTopicQuiz(t, backTo) {
+  const code = t.lang, d = DATA[code];
+  const all = grammarPoints(code);
+  const pts = (t.gram || []).map((gid) => all.find((x) => x.gid === gid) || { gid, g: d.grammar[gid], lv: d.grammar[gid].lv }).filter((x) => x && x.g);
+  if (!pts.length) { toast('Bài này chưa có câu hỏi ngữ pháp.'); return; }
+  const pool = [...new Set(all.flatMap((x) => gqKeywords(x.g)))];
+  const qs = [];
+  for (let r = 0; qs.length < 10 && r < 40 && pts.length; r++) {
+    const q = gqMake(pts[r % pts.length], all, pool);
+    if (q && !qs.some((exist) => exist.e[0] === q.e[0] && exist.type === q.type)) qs.push(q);
+  }
+  if (!qs.length) { toast('Chưa tạo được câu hỏi cho bài này.'); return; }
+  grammarQuizView(null, false, { qs, title: 'Quiz ngữ pháp · ' + (t.sub || t.title), onBack: () => grammarView(t, backTo), t });
+}
 // ===== Tab Ngữ pháp: kiến thức theo cấp độ + quiz riêng =====
 const GQ = { zh: 'all', ja: 'all' };
+const GQ_SEARCH = { zh: '', ja: '' };
 const GRAM_LEVELS = {
   zh: ['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6', 'HSK 7', 'HSK 8', 'HSK 9'],
   ja: ['N5', 'N4', 'N3', 'N2', 'N1']
@@ -2693,7 +2713,13 @@ function gqMake(p, all, pool) {
       const e = shuffle(g.ex).find((x) => kws.some((k) => x[0].includes(k) && x[0].replace(k, '').replace(/[，、。？！\s]/g, '').length >= 2));
       if (!e) continue;
       const k = kws.find((w) => e[0].includes(w) && e[0].replace(w, '').replace(/[，、。？！\s]/g, '').length >= 2);
-      const ds = shuffle(pool.filter((w) => w !== k && !e[0].includes(w) && !k.includes(w) && !w.includes(k)));
+      const sameLvPool = all.filter((x) => x.lv === p.lv).flatMap((x) => gqKeywords(x.g));
+      const candPool = sameLvPool.length >= 8 ? sameLvPool : pool;
+      let ds = shuffle(candPool.filter((w) => w !== k && !e[0].includes(w) && !k.includes(w) && !w.includes(k)));
+      if (ds.length < 3) {
+        const extra = shuffle(pool.filter((w) => w !== k && !e[0].includes(w) && !k.includes(w) && !w.includes(k) && !ds.includes(w)));
+        ds = ds.concat(extra);
+      }
       ds.sort((a, b) => Math.abs(a.length - k.length) - Math.abs(b.length - k.length));
       if (ds.length < 3) continue;
       return { type, p, e, label: 'Điền từ đúng vào chỗ trống', prompt: e[0].replace(k, '＿＿'), hint: e[2], answer: k, opts: shuffle([k, ...ds.slice(0, 3)]) };
@@ -2715,38 +2741,40 @@ function gqBuild(levelKey, onlyWrong, code = S.lang) {
   const qs = [];
   for (let r = 0; qs.length < 10 && r < 40 && weighted.length; r++) {
     const q = gqMake(weighted[r % weighted.length], all, pool);
-    if (q) qs.push(q);
+    if (q && !qs.some((exist) => exist.e[0] === q.e[0] && exist.type === q.type)) qs.push(q);
   }
   return qs;
 }
-function grammarQuizView(levelKey, onlyWrong) {
+function grammarQuizView(levelKey, onlyWrong, customOpts) {
   const code = S.lang, langAttr = LANGS[code].lang;
-  const qs = gqBuild(levelKey, onlyWrong, code), st = gqStore();
-  const allPts = grammarPoints(code);
-  const title = 'Quiz ngữ pháp · ' + (levelKey === 'all' ? 'Tất cả cấp' : levelKey);
-  const head = () => h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go('grammar') }, '← Ngữ pháp'), h('span', { class: 'grow' }));
-  if (!qs.length) return mount(h('div', { class: 'stack-lg' }, head(), h('h1', {}, title), h('p', { class: 'note' }, 'Chưa có câu hỏi phù hợp.'), h('button', { class: 'primary block', onclick: () => go('grammar') }, 'Quay lại')));
+  const qs = customOpts && customOpts.qs ? customOpts.qs : gqBuild(levelKey, onlyWrong, code);
+  const st = gqStore(), allPts = grammarPoints(code);
+  const title = (customOpts && customOpts.title) || ('Quiz ngữ pháp · ' + (levelKey === 'all' ? 'Tất cả cấp' : levelKey));
+  const onBack = (customOpts && customOpts.onBack) || (() => go('grammar'));
+  const backLabel = customOpts && customOpts.onBack ? '← Quay lại' : '← Ngữ pháp';
+  const head = () => h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: onBack }, backLabel), h('span', { class: 'grow' }));
+  if (!qs.length) return mount(h('div', { class: 'stack-lg' }, head(), h('h1', {}, title), h('p', { class: 'note' }, 'Chưa có câu hỏi phù hợp.'), h('button', { class: 'primary block', onclick: onBack }, 'Quay lại')));
   let i = 0, score = 0;
-  const bestKey = code + ':' + levelKey;
-  const getBest = () => st.best[bestKey] != null ? st.best[bestKey] : (code === 'zh' ? st.best[levelKey] : null);
+  const bestKey = code + ':' + (levelKey || 'topic');
+  const getBest = () => st.best[bestKey] != null ? st.best[bestKey] : (code === 'zh' && levelKey ? st.best[levelKey] : null);
   const finish = () => {
     const prev = getBest() || 0;
     if (score > prev || getBest() == null) st.best[bestKey] = Math.max(score, prev);
     save(); checkAch();
-    const wrongCount = allPts.filter((x) => st.wrong[x.gid]).length;
+    const wrongCount = levelKey ? allPts.filter((x) => (levelKey === 'all' || x.lv === levelKey) && st.wrong[x.gid]).length : 0;
     mount(h('div', { class: 'stack-lg' }, head(), h('h1', {}, title),
       h('div', { class: 'panel stack center' }, h('h2', {}, 'Kết quả: ' + score + '/' + qs.length),
         h('p', { class: 'muted' }, score === qs.length ? 'Tuyệt vời! Bạn nắm chắc phần này.' : score >= qs.length * 0.7 ? 'Khá tốt. Xem lại các điểm sai rồi làm lại nhé.' : 'Hãy đọc lại kiến thức rồi làm lại nhé.'),
         getBest() != null && h('p', { class: 'small muted' }, 'Điểm cao nhất: ' + getBest() + '/10')),
-      h('button', { class: 'primary block', onclick: () => grammarQuizView(levelKey, false) }, 'Làm bộ câu hỏi mới'),
-      wrongCount > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(levelKey, true) }, 'Ôn ' + wrongCount + ' điểm hay sai'),
-      h('button', { class: 'block', onclick: () => go('grammar') }, 'Về tab Ngữ pháp')));
+      h('button', { class: 'primary block', onclick: () => customOpts && customOpts.t ? grammarTopicQuiz(customOpts.t, onBack) : grammarQuizView(levelKey, false) }, 'Làm bộ câu hỏi mới'),
+      wrongCount > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(levelKey, true) }, 'Ôn ' + wrongCount + ' điểm hay sai' + (levelKey !== 'all' ? ' (' + levelKey + ')' : '')),
+      h('button', { class: 'block', onclick: onBack }, customOpts && customOpts.onBack ? 'Quay lại' : 'Về tab Ngữ pháp')));
   };
   const show = () => {
     const q = qs[i], g = q.p.g;
     let done = false;
     const fb = h('div', { 'aria-live': 'polite' });
-    const next = h('button', { class: 'primary block', hidden: true, onclick: () => { i++; i < qs.length ? show() : finish(); } }, i + 1 < qs.length ? 'Câu tiếp theo' : 'Xem kết quả');
+    const next = h('button', { class: 'primary block next-btn', hidden: true, onclick: () => { i++; i < qs.length ? show() : finish(); } }, i + 1 < qs.length ? 'Câu tiếp theo' : 'Xem kết quả');
     const reveal = (ok) => {
       done = true;
       if (ok) { score++; addXp(XP_ITEM, code); if (st.wrong[q.p.gid]) { st.wrong[q.p.gid]--; if (st.wrong[q.p.gid] <= 0) delete st.wrong[q.p.gid]; } }
@@ -2756,6 +2784,7 @@ function grammarQuizView(levelKey, onlyWrong) {
         h('p', { class: 'feedback ' + (ok ? 'ok' : 'no') }, h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'), ok ? '' : ' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer)),
         h('div', { class: 'ex' }, h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])), h('p', { class: 'small read', style: { textAlign: 'left' } }, q.e[1]), h('p', { class: 'small muted' }, q.e[2])),
         h('p', { class: 'pat' }, g.t), g.f && h('p', { class: 'small', lang: langAttr }, g.f), g.notes[0] && h('p', { class: 'small' }, g.notes[0])));
+      setTimeout(() => say(code, q.e[0]), 250);
       next.hidden = false;
     };
     let body;
@@ -2771,7 +2800,7 @@ function grammarQuizView(levelKey, onlyWrong) {
     } else {
       const chosen = [];
       const ans = h('div', { class: 'tokens answer', lang: langAttr, 'aria-label': 'Câu của bạn' }), pool = h('div', { class: 'tokens', lang: langAttr });
-      const checkBtn = h('button', { class: 'primary block', disabled: true, onclick: () => {
+      const checkBtn = h('button', { class: 'primary block next-btn', disabled: true, onclick: () => {
         if (done) return;
         const ok = chosen.map((c) => c.t).join('') === q.answer;
         checkBtn.hidden = true;
@@ -2802,25 +2831,68 @@ function grammarTabView() {
   if (code === 'en') return mount(h('div', { class: 'stack-lg' }, h('h1', {}, 'Ngữ pháp'), h('p', { class: 'note' }, 'Tab Ngữ pháp riêng hiện có cho tiếng Trung và tiếng Nhật. Hãy đổi ngôn ngữ để dùng.'), h('button', { class: 'primary block', onclick: () => go('pick') }, 'Đổi ngôn ngữ')));
   const langAttr = LANGS[code].lang, lvs = GRAM_LEVELS[code] || [];
   const pts = grammarPoints(code), st = gqStore(), sel = GQ[code] || 'all';
-  const shown = pts.filter((x) => sel === 'all' || x.lv === sel);
+  const qText = (GQ_SEARCH[code] || '').trim().toLowerCase();
+  const matchQuery = (x) => {
+    if (!qText) return true;
+    const haystack = [
+      x.g.t, x.g.zh, x.g.f, ...(x.g.notes || []),
+      ...x.g.ex.flatMap(e => [e[0], e[1], e[2]]),
+      x.topics.map(t => (t.sub || t.title)).join(' ')
+    ].join(' ').toLowerCase();
+    return haystack.includes(qText);
+  };
+  const shown = pts.filter((x) => (sel === 'all' || x.lv === sel) && matchQuery(x));
   const count = (lv) => pts.filter((x) => x.lv === lv).length;
-  const nWrong = pts.filter((x) => st.wrong[x.gid]).length;
+  const nWrong = pts.filter((x) => (sel === 'all' || x.lv === sel) && st.wrong[x.gid]).length;
   const bestVal = st.best[code + ':' + sel] != null ? st.best[code + ':' + sel] : (code === 'zh' ? st.best[sel] : null);
   const chip = (key, label) => h('button', { class: 'mini' + (sel === key ? ' primary' : ' ghost'), 'aria-pressed': String(sel === key), onclick: () => { GQ[code] = key; grammarTabView(); } }, label);
   const isJa = code === 'ja';
+
+  const toggleAll = () => {
+    const details = document.querySelectorAll('.stack-lg details.gram');
+    const anyClosed = [...details].some((d) => !d.open);
+    details.forEach((d) => { d.open = anyClosed; });
+    const btn = document.getElementById('toggle-gram-btn');
+    if (btn) btn.textContent = anyClosed ? 'Thu gọn tất cả' : 'Mở tất cả';
+  };
+
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'stack', style: { gap: '4px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
         h('p', { class: 'label', style: { margin: 0 } }, isJa ? 'Ngữ pháp tiếng Nhật' : 'Ngữ pháp tiếng Trung'),
-        langSwitch()
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          feedbackBtn({ mode: 'grammar_tab' }),
+          langSwitch()
+        )
       ),
       h('h1', {}, isJa ? 'Kiến thức theo JLPT' : 'Kiến thức theo HSK'),
       h('p', { class: 'muted small' }, pts.length + ' điểm ngữ pháp · mỗi điểm có công thức, ghi chú và 3 câu ví dụ.')),
+    h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+      h('input', {
+        type: 'search',
+        class: 'gram-search-input',
+        style: { flex: 1, minHeight: '44px', padding: '10px 14px' },
+        placeholder: isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm kiếm ngữ pháp HSK 1–9, từ khóa, ví dụ...',
+        value: GQ_SEARCH[code] || '',
+        oninput: (e) => {
+          GQ_SEARCH[code] = e.target.value;
+          grammarTabView();
+          const el = document.querySelector('.gram-search-input');
+          if (el) { el.focus(); el.selectionStart = el.selectionEnd = el.value.length; }
+        }
+      }),
+      GQ_SEARCH[code] ? h('button', { class: 'ghost mini', onclick: () => { GQ_SEARCH[code] = ''; grammarTabView(); } }, 'Xóa tìm') : null
+    ),
     h('div', { class: 'row', style: { flexWrap: 'wrap', gap: '6px' } }, chip('all', 'Tất cả (' + pts.length + ')'), ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (isJa ? lv : lv.replace('HSK ', '')) + ' (' + count(lv) + ')'))),
     h('div', { class: 'panel stack' }, h('h2', {}, 'Quiz ngữ pháp'),
       h('p', { class: 'small muted' }, '10 câu: điền từ đúng vào chỗ trống hoặc sắp xếp các từ thành câu đúng.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
       h('button', { class: 'primary block', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'tất cả cấp' : sel)),
-      nWrong > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai')),
+      nWrong > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai' + (sel !== 'all' ? ' (' + sel + ')' : ''))),
+    h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
+      h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm ngữ pháp') : (shown.length + ' điểm ngữ pháp')),
+      shown.length > 0 && h('button', { id: 'toggle-gram-btn', class: 'ghost mini', onclick: toggleAll }, 'Mở tất cả')
+    ),
+    shown.length === 0 ? h('p', { class: 'note center' }, 'Không tìm thấy điểm ngữ pháp nào phù hợp với “' + qText + '”.') : null,
     ...shown.map((x) => h('details', { class: 'panel gram' }, h('summary', { style: { cursor: 'pointer', fontWeight: 600 } }, x.g.t, ' ', h('span', { class: 'chip good', style: { fontSize: '.7rem' } }, x.lv)),
       h('div', { class: 'gram', style: { marginTop: '8px' } },
         h('p', { lang: langAttr, class: 'muted' }, x.g.zh), x.g.f && h('p', { class: 'pat', lang: langAttr }, x.g.f), ...x.g.notes.map((n) => h('p', {}, n)),
@@ -3524,7 +3596,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
   if (e.key === 'Enter') {
-    const main = [...document.querySelectorAll('.dock button')].filter((b) => visible(b) && !b.closest('.grades'))[0];
+    const main = [...document.querySelectorAll('.dock button, .next-btn')].filter((b) => visible(b) && !b.closest('.grades'))[0];
     if (main) { e.preventDefault(); main.click(); }
   }
 });
