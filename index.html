@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1950';
+const APP_BUILD_ID = '20261111-2005';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -4079,7 +4079,7 @@ function topicPicker(code, store, onChange) {
         const ts = d.topics.filter((t) => (t.category || defCat) === c.id);
         if (!ts.length) return null;
         return h('optgroup', { label: c.icon + ' ' + cleanPhaseName(c.name) + ' (' + c.level + ')' },
-          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, (t.level ? '[' + t.level + '] ' : '') + (t.catPos || t.pos) + '. ' + (t.sub || t.title))));
+          ...ts.map((t) => h('option', { value: t.id, selected: t.id === store[code] }, (t.catPos || t.pos) + '. ' + (t.sub || t.title))));
       }).filter(Boolean));
   }
   return h('select', { 'aria-label': 'Chủ đề', onchange: (e) => { store[code] = e.target.value; onChange(); } },
