@@ -425,7 +425,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261109-2150';
+const APP_BUILD_ID = '20261111-1410';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2538,7 +2538,7 @@ function grammarView(t) {
   if (code === 'zh') {
     return mount(h('div', { class: 'stack-lg' }, back, h('h1', {}, 'Ngữ pháp · ' + t.sub),
       ...t.gram.map((gid) => { const g = DATA.zh.grammar[gid]; return h('div', { class: 'panel gram' },
-        h('h2', {}, g.t), h('p', { lang: 'zh-Hans', class: 'muted' }, g.zh), g.f && h('p', { class: 'pat', lang: 'zh-Hans' }, g.f), ...g.notes.map((n) => h('p', {}, n)),
+        h('h2', {}, g.t, g.lv && h('span', { class: 'chip good', style: { marginLeft: '8px', fontSize: '.7rem', verticalAlign: 'middle' } }, g.lv)), h('p', { lang: 'zh-Hans', class: 'muted' }, g.zh), g.f && h('p', { class: 'pat', lang: 'zh-Hans' }, g.f), ...g.notes.map((n) => h('p', {}, n)),
         ...g.ex.map((e) => h('div', { class: 'ex' }, h('p', { lang: 'zh-Hans' }, e[0], ' ', spk('zh', e[0])), h('p', { class: 'small read', style: { textAlign: 'left' } }, e[1]), h('p', { class: 'small muted' }, e[2])))); })));
   }
   const lines = t.gram.flatMap((g) => g.lines);
