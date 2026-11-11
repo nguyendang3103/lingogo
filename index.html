@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1800';
+const APP_BUILD_ID = '20261111-1815';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -666,28 +666,92 @@ async function startGhSync() {
 // ===== Ngày, streak, XP (ngày tính theo giờ máy, đánh số như các app cũ) =====
 const todayN = () => { const n = new Date(); return Math.floor((n.getTime() - n.getTimezoneOffset() * 6e4) / 864e5); };
 const dayDate = (n) => new Date(n * 864e5);
-// Mục tiêu: mỗi ngôn ngữ tối thiểu S.goal XP/ngày (mặc định 20). Chuỗi ngày tính riêng cho từng ngôn ngữ.
-const goal = () => Math.max(20, S.goal || 20);
+
+// ===== Lộ trình học thông minh: Phân bổ thứ trong tuần chống loạn ngôn ngữ =====
+// Thứ tự ưu tiên: Tiếng Anh (cao nhất) > Tiếng Trung (nhì) > Tiếng Nhật (ba)
+const WEEKLY_SCHEDULE = {
+  1: { // Thứ Hai
+    name: 'Thứ Hai', focus: 'en',
+    title: '🇬🇧 Thứ Hai: Trọng tâm Tiếng Anh',
+    desc: 'Tập trung Luyện nói & Tình huống giao tiếp · Tiếng Trung & Nhật duy trì ôn nhẹ',
+    goals: { en: 2.0, zh: 0.5, ja: 0.5 }
+  },
+  2: { // Thứ Ba
+    name: 'Thứ Ba', focus: 'zh',
+    title: '🇨🇳 Thứ Ba: Trọng tâm Tiếng Trung',
+    desc: 'Học bài mới, Quiz ngữ pháp HSK & Viết chữ Hán · Tiếng Anh duy trì ôn nhẹ',
+    goals: { zh: 2.0, en: 0.5, ja: 0.5 }
+  },
+  3: { // Thứ Tư
+    name: 'Thứ Tư', focus: 'en',
+    title: '🇬🇧 Thứ Tư: Trọng tâm Tiếng Anh',
+    desc: 'Học từ vựng nâng cao, Điền email & Luyện nói · Tiếng Trung & Nhật duy trì ôn nhẹ',
+    goals: { en: 2.0, ja: 0.5, zh: 0.5 }
+  },
+  4: { // Thứ Năm
+    name: 'Thứ Năm', focus: 'ja',
+    title: '🇯🇵 Thứ Năm: Trọng tâm Tiếng Nhật',
+    desc: 'Học Ngữ pháp JLPT, Tập viết Kanji & Luyện câu SOV · Tiếng Anh duy trì ôn nhẹ',
+    goals: { ja: 2.0, en: 0.5, zh: 0.5 }
+  },
+  5: { // Thứ Sáu
+    name: 'Thứ Sáu', focus: 'zh',
+    title: '🇨🇳 Thứ Sáu: Trọng tâm Tiếng Trung',
+    desc: 'Luyện nói câu chủ đề, Ôn tập ngữ pháp & từ vựng · Tiếng Anh duy trì ôn nhẹ',
+    goals: { zh: 2.0, en: 0.5, ja: 0.5 }
+  },
+  6: { // Thứ Bảy
+    name: 'Thứ Bảy', focus: 'en',
+    title: '🇬🇧 Thứ Bảy: Trọng tâm Tiếng Anh',
+    desc: 'Luyện nghe hiểu thực tế, Podcast & Phản xạ tự do · Trung & Nhật duy trì ôn nhẹ',
+    goals: { en: 2.0, zh: 0.5, ja: 0.5 }
+  },
+  0: { // Chủ Nhật
+    name: 'Chủ Nhật', focus: 'all',
+    title: '🧘 Chủ Nhật: Tổng ôn tập Spaced Repetition',
+    desc: 'Quét sạch các mục đến hạn lặp lại ngắt quãng cả 3 thứ tiếng · Không học bài mới',
+    goals: { en: 1.0, zh: 1.0, ja: 1.0 }
+  }
+};
+
+function getDaySchedule(d = todayN()) {
+  const diffDays = d - todayN();
+  const dateObj = new Date();
+  if (diffDays !== 0) dateObj.setDate(dateObj.getDate() + diffDays);
+  return WEEKLY_SCHEDULE[dateObj.getDay()] || WEEKLY_SCHEDULE[0];
+}
+
+function goal(code = S.lang, d = todayN()) {
+  const base = Math.max(20, S.goal || 20);
+  if (S.smartSchedule === false) return base;
+  const sch = getDaySchedule(d);
+  if (!sch || !sch.goals || !sch.goals[code]) return base;
+  return Math.max(10, Math.round(base * sch.goals[code]));
+}
+
 const xpOf = (d, code) => ((S.dl || {})[d] || {})[code] || 0;
-const metGoal = (d, code) => xpOf(d, code) >= goal();
+const metGoal = (d, code) => xpOf(d, code) >= goal(code, d);
+
 function streak(code = S.lang) {
   let d = todayN(); if (!metGoal(d, code)) d--;
   let n = 0; while (metGoal(d, code)) { n++; d--; }
   return n;
 }
+
 function longest(code = S.lang) {
   const ks = Object.keys(S.dl || {}).filter((k) => metGoal(k, code)).map(Number).sort((a, b) => a - b);
   let best = 0, run = 0, prev = null;
   for (const k of ks) { run = prev !== null && k === prev + 1 ? run + 1 : 1; best = Math.max(best, run); prev = k; }
   return best;
 }
+
 function addXp(n, code = S.lang) {
   if (!n) return;
   const t = todayN(), before = metGoal(t, code);
   S.days[t] = (S.days[t] || 0) + n;
   S.dl = S.dl || {}; S.dl[t] = S.dl[t] || {}; S.dl[t][code] = (S.dl[t][code] || 0) + n;
   save();
-  if (!before && metGoal(t, code)) setTimeout(() => toast('Đạt mục tiêu ' + goal() + ' XP ' + LANGS[code].short + ' hôm nay!'), 300);
+  if (!before && metGoal(t, code)) setTimeout(() => toast('Đạt mục tiêu ' + goal(code, t) + ' XP ' + LANGS[code].short + ' hôm nay! 🎉'), 300);
 }
 const XP_ITEM = 5; // mỗi từ (hoặc kanji, câu, tình huống) làm đúng = 5 XP
 
@@ -1318,21 +1382,42 @@ const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến C2', zh: 'Tiếng Trung ·
 function pickView() {
   setTabs(false);
   const t = todayN();
+  const sch = getDaySchedule(t);
+  const isSunday = sch.focus === 'all';
   mount(h('div', { class: 'stack-lg', style: { paddingTop: '16px' } },
     h('div', { class: 'stack', style: { gap: '4px' } },
       h('p', { class: 'label' }, 'Lingogo'),
       h('h1', {}, 'Chào ' + S.name + ', hôm nay học gì?')),
+    h('div', { class: 'panel', style: { padding: '12px 16px', background: 'rgba(15,82,87,.08)', border: '1px solid var(--teal)', borderRadius: '14px', display: 'flex', flexDirection: 'column', gap: '4px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('span', { class: 'chip accent', style: { fontSize: '.75rem', fontWeight: 700 } }, '📅 Lịch học ' + sch.name),
+        h('span', { class: 'small muted' }, isSunday ? 'Tổng ôn cả 3 thứ tiếng' : ('Trọng tâm: ' + LANGS[sch.focus].label))
+      ),
+      h('p', { style: { fontWeight: 700, margin: '4px 0 2px 0', fontSize: '1.02rem', color: 'var(--ink)' } }, sch.title),
+      h('p', { class: 'small muted', style: { margin: 0 } }, sch.desc)
+    ),
     h('div', { class: 'langpick' }, Object.entries(LANGS).map(([c, v], i) => {
+      const g = goal(c, t);
       const x = xpOf(t, c), f = h('i');
-      requestAnimationFrame(() => { f.style.width = Math.min(100, Math.round((x / goal()) * 100)) + '%'; });
+      requestAnimationFrame(() => { f.style.width = Math.min(100, Math.round((x / g) * 100)) + '%'; });
       const lessons = Object.keys(S.lessons).filter((k) => k.startsWith(c + ':')).length;
-      return h('button', { class: 'langcard' + (c === S.lang ? ' cur' : ''), 'aria-keyshortcuts': String(i + 1), onclick: () => { S.lang = c; save(); go('home'); } },
+      const isFocus = sch.focus === c;
+      return h('button', {
+        class: 'langcard' + (c === S.lang ? ' cur' : '') + (isFocus ? ' focus-day' : ''),
+        'aria-keyshortcuts': String(i + 1),
+        onclick: () => { S.lang = c; save(); go('home'); }
+      },
         h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true' }, GLYPH[c]),
-        h('span', {}, h('span', { class: 'name', lang: v.lang }, v.label), h('span', { class: 'muted small' }, '  ' + SUBTITLE[c])),
-        h('span', { class: 'small muted' }, x + '/' + goal() + ' XP hôm nay · chuỗi ' + streak(c) + ' ngày · ' + lessons + ' bài đã học'),
-        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': goal() }, f));
+        h('span', {},
+          h('span', { class: 'name', lang: v.lang }, v.label),
+          h('span', { class: 'muted small' }, '  ' + SUBTITLE[c]),
+          isFocus ? h('span', { class: 'chip accent', style: { marginLeft: '8px', fontSize: '.7rem', verticalAlign: 'middle' } }, '🎯 Trọng tâm hôm nay') : null
+        ),
+        h('span', { class: 'small muted' }, x + '/' + g + ' XP hôm nay · chuỗi ' + streak(c) + ' ngày · ' + lessons + ' bài đã học'),
+        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': g }, f)
+      );
     })),
-    h('p', { class: 'small muted center' }, 'Mục tiêu mỗi thứ tiếng ' + goal() + ' XP/ngày · đổi ngôn ngữ bất cứ lúc nào bằng nút ở đầu trang')));
+    h('p', { class: 'small muted center' }, 'Lộ trình thông minh: Luân phiên trọng tâm & duy trì lặp lại ngắt quãng để tránh loạn ngôn ngữ.')));
 }
 
 // ===== Màn hình chào =====
@@ -1537,15 +1622,29 @@ function homeView() {
       h('div', { class: 'stat' }, h('b', {}, st), h('span', {}, 'ngày đạt mục tiêu')),
       h('div', { class: 'stat' }, h('b', {}, xp), h('span', {}, 'XP hôm nay')),
       h('div', { class: 'stat' }, h('b', {}, due), h('span', {}, 'mục cần ôn'))),
-    h('div', { class: 'panel stack' },
-      h('div', { class: 'row between small' },
-        h('span', {}, xp >= goal() ? 'Đã đạt mục tiêu hôm nay' : 'Còn ' + (goal() - xp) + ' XP để đạt mục tiêu'),
-        h('span', { class: 'muted' }, xp + '/' + goal() + ' XP · mỗi từ +5')),
-      h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': goal() }, gf),
-      due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' mục ngắt quãng ngay'),
-      nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
-        h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
-        : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')),
+    (() => {
+      const g = goal(S.lang, todayN());
+      const sch = getDaySchedule(todayN());
+      const isFocus = sch.focus === S.lang;
+      return h('div', { class: 'panel stack' },
+        h('div', { class: 'row between small', style: { alignItems: 'center' } },
+          h('span', {},
+            isFocus
+              ? h('span', { class: 'chip accent', style: { fontSize: '.72rem', marginRight: '6px' } }, '🎯 Trọng tâm hôm nay')
+              : sch.focus === 'all'
+              ? h('span', { class: 'chip good', style: { fontSize: '.72rem', marginRight: '6px' } }, '🧘 Tổng ôn Chủ Nhật')
+              : h('span', { class: 'chip', style: { fontSize: '.72rem', marginRight: '6px' } }, '⚡ Duy trì ngắt quãng'),
+            h('span', {}, xp >= g ? 'Đã đạt mục tiêu hôm nay' : 'Còn ' + (g - xp) + ' XP để đạt mục tiêu')
+          ),
+          h('span', { class: 'muted' }, xp + '/' + g + ' XP · mỗi từ +5')
+        ),
+        h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': g }, gf),
+        due > 0 && h('button', { class: 'accent block', onclick: () => go('review') }, 'Ôn ' + due + ' mục ngắt quãng ngay'),
+        nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
+          h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
+          : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')
+      );
+    })(),
     h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
       feedbackBtn(),
       syncButton()),
@@ -1553,7 +1652,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, ph.name),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.40 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.45 · Cập nhật 11/11/2026')));
 }
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
@@ -2453,7 +2552,27 @@ function reviewView() {
         class: 'mini' + (REVIEW_SKILL === k ? ' primary' : ' ghost'),
         onclick: () => { REVIEW_SKILL = k; reviewView(); }
       }, label + ' (' + (counts[k] || 0) + ')'))
-    )
+    ),
+    (() => {
+      const sch = getDaySchedule(t0);
+      const isFocus = sch.focus === code;
+      const g = goal(code, t0);
+      return h('div', { class: 'panel', style: { padding: '10px 14px', background: isFocus ? 'rgba(15,82,87,.08)' : 'transparent', border: isFocus ? '1px solid var(--teal)' : '1px dashed var(--line)', borderRadius: '12px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('span', { class: 'chip ' + (isFocus ? 'accent' : 'good'), style: { fontSize: '.72rem' } },
+            isFocus ? '🎯 Trọng tâm hôm nay: ' + LANGS[code].short : sch.focus === 'all' ? '🧘 Chủ Nhật tổng ôn' : '⚡ Duy trì: ' + LANGS[code].short
+          ),
+          h('span', { class: 'small muted' }, 'Mục tiêu hôm nay: ' + g + ' XP (đã có ' + xpOf(t0, code) + ' XP)')
+        ),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0' } },
+          isFocus
+            ? 'Hôm nay là ngày học sâu ' + LANGS[code].label + '. Hãy quét sạch các mục ôn tập ngắt quãng và học bài mới / luyện nói để đạt ' + g + ' XP!'
+            : sch.focus === 'all'
+            ? 'Chủ Nhật không nạp bài mới. Hãy dành 10–15 phút hoàn thành các mục ôn tập ngắt quãng của ' + LANGS[code].short + '!'
+            : 'Hôm nay chỉ cần ôn ' + (counts.all || 0) + ' mục ngắt quãng (khoảng 5 phút) để đạt ' + g + ' XP và giữ chuỗi mà không sợ bị loạn kiến thức!'
+        )
+      );
+    })()
   );
 
   const queue = srsDueItems(code, REVIEW_SKILL)
@@ -4157,7 +4276,8 @@ function progressView() {
       h('span', { class: 'small muted' }, Object.keys(S.written).filter((k) => k.startsWith(c + ':')).length ? Object.keys(S.written).filter((k) => k.startsWith(c + ':')).length + ' chữ đã viết' : ''));
   });
   const goalSel = h('select', { id: 'goal', onchange: (e) => { S.goal = Number(e.target.value); save(); toast('Đã lưu mục tiêu.'); } },
-    [[20, 'Tối thiểu · 20 XP mỗi thứ tiếng'], [30, 'Vừa phải · 30 XP mỗi thứ tiếng'], [50, 'Nghiêm túc · 50 XP mỗi thứ tiếng']].map(([v, l]) => h('option', { value: v, selected: goal() === v }, l)));
+    [[20, 'Tối thiểu · 20 XP cơ bản (Focus: 40 XP / Duy trì: 10 XP)'], [30, 'Vừa phải · 30 XP cơ bản (Focus: 60 XP / Duy trì: 15 XP)'], [50, 'Nghiêm túc · 50 XP cơ bản (Focus: 100 XP / Duy trì: 25 XP)']].map(([v, l]) => h('option', { value: v, selected: (S.goal || 20) === v }, l)));
+  const smartSchedCheck = h('input', { type: 'checkbox', id: 'smartSched', checked: S.smartSchedule !== false, onchange: (e) => { S.smartSchedule = e.target.checked; save(); toast('Đã cập nhật chế độ lộ trình.'); progressView(); } });
   let confirmReset = false;
   const resetBtn = h('button', { class: 'ghost block', onclick: () => { if (!confirmReset) { confirmReset = true; resetBtn.textContent = 'Bấm lần nữa để xóa toàn bộ tiến độ của cả ba thứ tiếng'; return; } S = fresh(); save(); welcomeView(); } }, 'Xóa tiến độ và học lại từ đầu');
   const c0 = S.lang, k0 = Object.keys(S.srs).filter((k) => k.startsWith(c0 + ':'));
@@ -4178,7 +4298,10 @@ function progressView() {
         days.map((d) => h('div', { class: d === t ? 'today' : '' }, h('span', {}, xd(d) || ''), h('i', { style: { height: (xd(d) / max * 100) + '%' } }), h('span', {}, wd[dayDate(d).getUTCDay()]))))),
     h('div', { class: 'stack' }, h('h2', {}, 'Thành tích'),
       h('div', { class: 'badges' }, ACH.map(([code, title, desc]) => h('div', { class: 'badge' + (S.ach[code] ? '' : ' off') }, h('b', {}, title), h('p', { class: 'small muted' }, desc))))),
-    h('div', { class: 'panel stack' }, h('h3', {}, 'Cài đặt'), h('label', { for: 'goal', class: 'label' }, 'Mục tiêu mỗi ngày'), goalSel, h('p', { class: 'small muted' }, 'Mỗi từ, kanji, câu hoặc tình huống làm đúng được 5 XP. Học lại bài cũ được nửa XP.'),
+    h('div', { class: 'panel stack' }, h('h3', {}, 'Cài đặt lộ trình thông minh'),
+      h('label', { class: 'row', style: { alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600 } }, smartSchedCheck, h('span', {}, 'Bật lộ trình học theo thứ trong tuần (chống loạn ngôn ngữ)')),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Tự động tăng mục tiêu XP cho ngôn ngữ trọng tâm trong ngày và giảm nhẹ cho các ngôn ngữ duy trì (kèm nhắc nhở Spaced Repetition).'),
+      h('label', { for: 'goal', class: 'label', style: { marginTop: '8px' } }, 'Mức độ mục tiêu cơ bản'), goalSel, h('p', { class: 'small muted' }, 'Mỗi từ, kanji, câu hoặc tình huống làm đúng được 5 XP. Học lại bài cũ được nửa XP.'),
       h('p', { class: 'small muted' }, 'Thêm vào màn hình chính trên iPhone: mở link bằng Safari, bấm Chia sẻ, chọn “Thêm vào MH chính”.')),
     h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', gap: '10px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
