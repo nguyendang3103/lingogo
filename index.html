@@ -294,7 +294,20 @@ select { width: 100%; }
 .endef { text-align: center; color: var(--muted); font-size: .95rem; font-style: italic; }
 .tokens { display: flex; flex-wrap: wrap; gap: 8px; min-height: 52px; align-content: flex-start; }
 .tokens.answer { border-bottom: 2px dashed var(--line); padding-bottom: 10px; }
-.tokens button { min-height: 44px; padding: 8px 14px; }
+.tokens button { min-height: 44px; padding: 8px 14px; user-select: none; -webkit-user-select: none; touch-action: manipulation; transition: transform .12s, box-shadow .12s, border-color .12s; }
+.tokens.answer button { cursor: grab; }
+.tokens.answer button:active { cursor: grabbing; }
+.tokens.answer button.dragging { opacity: .25; transform: scale(.92); }
+.tokens.answer button.drop-target-before { border-left: 3px solid var(--teal) !important; transform: translateX(3px); }
+.tokens.answer button.drop-target-after { border-right: 3px solid var(--teal) !important; transform: translateX(-3px); }
+.token-drag-clone {
+  position: fixed; pointer-events: none; z-index: 1000;
+  border-radius: 12px; background: var(--surface); color: var(--ink);
+  border: 2px solid var(--teal); box-shadow: 0 10px 24px rgba(0,0,0,.35);
+  padding: 8px 16px; font-weight: 600; font-size: 1.1rem;
+  transform: translate(-50%, -50%) scale(1.08);
+  transition: none;
+}
 .feedback { border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
 .feedback.ok { background: var(--good-bg); }
 .feedback.ok strong { color: var(--good); }
@@ -425,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-1700';
+const APP_BUILD_ID = '20261111-1730';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1517,6 +1530,125 @@ function quizFeedback(code, ex, r) {
 }
 
 
+// Kéo thả và đổi vị trí từ khi sắp xếp câu
+function attachTokenReorder(btn, c, idx, chosen, draw, isDone) {
+  btn.setAttribute('draggable', isDone() ? 'false' : 'true');
+  btn.addEventListener('dragstart', (e) => {
+    if (isDone()) return;
+    e.dataTransfer.setData('text/plain', String(idx));
+    e.dataTransfer.effectAllowed = 'move';
+    btn.classList.add('dragging');
+  });
+  btn.addEventListener('dragend', () => {
+    btn.classList.remove('dragging');
+    const container = btn.parentElement;
+    if (container) container.querySelectorAll('button').forEach((b) => b.classList.remove('drop-target-before', 'drop-target-after'));
+  });
+  btn.addEventListener('dragover', (e) => {
+    if (isDone()) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const rect = btn.getBoundingClientRect();
+    const isAfter = e.clientX > (rect.left + rect.width / 2);
+    btn.classList.toggle('drop-target-after', isAfter);
+    btn.classList.toggle('drop-target-before', !isAfter);
+  });
+  btn.addEventListener('dragleave', () => {
+    btn.classList.remove('drop-target-before', 'drop-target-after');
+  });
+  btn.addEventListener('drop', (e) => {
+    if (isDone()) return;
+    e.preventDefault();
+    const fromIdx = parseInt(e.dataTransfer.getData('text/plain'), 10);
+    if (isNaN(fromIdx) || fromIdx === idx) return;
+    const rect = btn.getBoundingClientRect();
+    const isAfter = e.clientX > (rect.left + rect.width / 2);
+    let targetIdx = isAfter ? idx + 1 : idx;
+    if (fromIdx < targetIdx) targetIdx--;
+    const [item] = chosen.splice(fromIdx, 1);
+    chosen.splice(targetIdx, 0, item);
+    draw();
+  });
+
+  let startX = 0, startY = 0, isDragging = false, clone = null;
+  btn.addEventListener('touchstart', (e) => {
+    if (isDone() || e.touches.length > 1) return;
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    isDragging = false; clone = null;
+  }, { passive: true });
+
+  btn.addEventListener('touchmove', (e) => {
+    if (isDone() || e.touches.length > 1) return;
+    const t = e.touches[0];
+    const dx = t.clientX - startX, dy = t.clientY - startY;
+    if (!isDragging && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+      isDragging = true;
+      clone = document.createElement('div');
+      clone.className = 'token-drag-clone';
+      clone.textContent = c.t;
+      document.body.appendChild(clone);
+      btn.classList.add('dragging');
+    }
+    if (isDragging) {
+      if (e.cancelable) e.preventDefault();
+      if (clone) {
+        clone.style.left = t.clientX + 'px';
+        clone.style.top = t.clientY + 'px';
+      }
+      clone.style.display = 'none';
+      const under = document.elementFromPoint(t.clientX, t.clientY);
+      clone.style.display = 'block';
+      const targetBtn = under && under.closest('.tokens.answer button');
+      const container = btn.parentElement;
+      if (container) container.querySelectorAll('button').forEach((b) => b.classList.remove('drop-target-before', 'drop-target-after'));
+      if (targetBtn && targetBtn !== btn) {
+        const rect = targetBtn.getBoundingClientRect();
+        const isAfter = t.clientX > (rect.left + rect.width / 2);
+        targetBtn.classList.toggle('drop-target-after', isAfter);
+        targetBtn.classList.toggle('drop-target-before', !isAfter);
+      }
+    }
+  }, { passive: false });
+
+  btn.addEventListener('touchend', (e) => {
+    if (clone) { clone.remove(); clone = null; }
+    btn.classList.remove('dragging');
+    const container = btn.parentElement;
+    if (container) container.querySelectorAll('button').forEach((b) => b.classList.remove('drop-target-before', 'drop-target-after'));
+    if (isDragging) {
+      if (e.cancelable) e.preventDefault();
+      const t = e.changedTouches && e.changedTouches[0];
+      if (t && container) {
+        const under = document.elementFromPoint(t.clientX, t.clientY);
+        const targetBtn = under && under.closest('.tokens.answer button');
+        if (targetBtn && targetBtn !== btn) {
+          const fromIdx = chosen.indexOf(c);
+          const toItemIdx = [...container.children].indexOf(targetBtn);
+          if (fromIdx !== -1 && toItemIdx !== -1) {
+            const rect = targetBtn.getBoundingClientRect();
+            const isAfter = t.clientX > (rect.left + rect.width / 2);
+            let targetIdx = isAfter ? toItemIdx + 1 : toItemIdx;
+            if (fromIdx < targetIdx) targetIdx--;
+            const [item] = chosen.splice(fromIdx, 1);
+            chosen.splice(targetIdx, 0, item);
+            draw();
+          }
+        }
+      }
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    if (isDone() || isDragging) return;
+    const curIdx = chosen.indexOf(c);
+    if (curIdx !== -1) {
+      chosen.splice(curIdx, 1);
+      draw();
+    }
+  });
+}
+
 // Tách câu thành các mảnh để sắp xếp
 function tokensOf(code, text) {
   if (code === 'en') return text.split(/\s+/).filter(Boolean);
@@ -1721,7 +1853,11 @@ function lessonView(t, i) {
       const chosen = [];
       const ans = h('div', { class: 'tokens answer', 'aria-label': 'Câu của bạn' }), pool = h('div', { class: 'tokens' });
       const draw = () => {
-        ans.replaceChildren(...chosen.map((c) => h('button', { lang: LANGS[code].lang, onclick: () => { if (!checked) { chosen.splice(chosen.indexOf(c), 1); draw(); } } }, c.t)));
+        ans.replaceChildren(...chosen.map((c, idx) => {
+          const b = h('button', { lang: LANGS[code].lang }, c.t);
+          attachTokenReorder(b, c, idx, chosen, draw, () => checked);
+          return b;
+        }));
         pool.replaceChildren(...bank.filter((b) => !chosen.includes(b)).map((b) => h('button', { lang: LANGS[code].lang, onclick: () => { chosen.push(b); draw(); } }, b.t)));
         update();
       };
@@ -2048,16 +2184,18 @@ function lessonView(t, i) {
         const chosen = [];
         const ans = h('div', { class: 'tokens answer', lang: langAttr, 'aria-label': 'Câu của bạn' }), pool = h('div', { class: 'tokens', lang: langAttr });
         const draw = () => {
-          ans.replaceChildren(...chosen.map((c) => h('button', { onclick: () => { if (!checked) { chosen.splice(chosen.indexOf(c), 1); draw(); } } }, c.t)));
+          ans.replaceChildren(...chosen.map((c, idx) => {
+            const b = h('button', {}, c.t);
+            attachTokenReorder(b, c, idx, chosen, draw, () => checked);
+            return b;
+          }));
           pool.replaceChildren(...q.bank.filter((b) => !chosen.includes(b)).map((b) => h('button', { onclick: () => { if (!checked) { chosen.push(b); draw(); } } }, b.t)));
           update();
         };
-        const clearBtn = h('button', { class: 'ghost mini', onclick: (e) => { e.preventDefault(); if (!checked) { chosen.length = 0; draw(); } } }, 'Xóa hết');
         body = h('div', { class: 'stack' },
           h('p', { class: 'label' }, 'Ngữ pháp · ' + q.label),
           h('p', { class: 'q' }, q.prompt),
-          ans, pool,
-          h('div', { class: 'row' }, clearBtn, h('span', { class: 'grow' }))
+          ans, pool
         );
         ready = () => chosen.length === q.bank.length;
         after = () => { pool.replaceChildren(); };
@@ -2780,12 +2918,28 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
       if (ok) { score++; addXp(XP_ITEM, code); if (st.wrong[q.p.gid]) { st.wrong[q.p.gid]--; if (st.wrong[q.p.gid] <= 0) delete st.wrong[q.p.gid]; } }
       else st.wrong[q.p.gid] = (st.wrong[q.p.gid] || 0) + 1;
       save();
-      fb.replaceChildren(h('div', { class: 'panel gram' },
-        h('p', { class: 'feedback ' + (ok ? 'ok' : 'no') }, h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'), ok ? '' : ' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer)),
-        h('div', { class: 'ex' }, h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])), h('p', { class: 'small read', style: { textAlign: 'left' } }, q.e[1]), h('p', { class: 'small muted' }, q.e[2])),
-        h('p', { class: 'pat' }, g.t), g.f && h('p', { class: 'small', lang: langAttr }, g.f), g.notes[0] && h('p', { class: 'small' }, g.notes[0])));
-      setTimeout(() => say(code, q.e[0]), 250);
       next.hidden = false;
+      fb.replaceChildren(
+        h('div', { class: 'feedback ' + (ok ? 'ok' : 'no') },
+          h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
+          ok ? '' : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer))
+        ),
+        h('div', { class: 'panel gram', style: { gap: '8px' } },
+          h('div', { class: 'ex' },
+            h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
+            h('p', { class: 'small read', style: { textAlign: 'left' } }, q.e[1]),
+            h('p', { class: 'small muted' }, q.e[2])
+          )
+        ),
+        h('div', { style: { margin: '8px 0 12px 0' } }, next),
+        h('div', { class: 'panel gram stack', style: { gap: '6px' } },
+          h('p', { class: 'label', style: { margin: 0 } }, 'Giải thích ngữ pháp:'),
+          h('p', { class: 'pat', style: { margin: 0 } }, g.t),
+          g.f && h('p', { class: 'small', lang: langAttr, style: { margin: 0 } }, g.f),
+          ...(g.notes || []).map((n) => h('p', { class: 'small', style: { margin: 0 } }, n))
+        )
+      );
+      setTimeout(() => say(code, q.e[0]), 250);
     };
     let body;
     if (q.type === 'cloze') {
@@ -2809,20 +2963,24 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
         draw();
       } }, 'Kiểm tra');
       const draw = () => {
-        ans.replaceChildren(...chosen.map((c) => h('button', { disabled: done, onclick: () => { chosen.splice(chosen.indexOf(c), 1); draw(); } }, c.t)));
+        ans.replaceChildren(...chosen.map((c, idx) => {
+          const b = h('button', { disabled: done }, c.t);
+          attachTokenReorder(b, c, idx, chosen, draw, () => done);
+          return b;
+        }));
         pool.replaceChildren(...q.bank.filter((b) => !chosen.includes(b)).map((b) => h('button', { disabled: done, onclick: () => { chosen.push(b); draw(); } }, b.t)));
         checkBtn.disabled = chosen.length !== q.bank.length;
       };
       draw();
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, q.label),
         h('p', { class: 'q' }, q.prompt),
-        ans, pool, h('div', { class: 'row' }, h('button', { class: 'ghost grow', onclick: () => { if (!done) { chosen.length = 0; draw(); } } }, 'Xóa hết'), h('span', { class: 'grow' })),
+        ans, pool,
         checkBtn);
     }
     mount(h('div', { class: 'stack-lg' }, head(), h('h1', {}, title),
       h('div', { class: 'row between' }, h('span', { class: 'chip' }, 'Câu ' + (i + 1) + '/' + qs.length), h('span', { class: 'chip good' }, q.p.lv)),
       h('div', { class: 'bar' }, h('i', { style: { width: (i / qs.length * 100) + '%' } })),
-      body, fb, next));
+      body, fb));
   };
   show();
 }
