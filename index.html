@@ -438,7 +438,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261111-2030';
+const APP_BUILD_ID = '20261111-2315';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1787,82 +1787,112 @@ function markIeltsDone(t, skill, score, band) {
 
 // Tuyển tập đề thi thực tế theo chuẩn ieltsonlinetests.com (IOT Recent Actual Tests)
 // Tuyển tập đề thi thực tế theo chuẩn ieltsonlinetests.com (IOT Recent Actual Tests Volumes 1-8)
+// Tuyển tập Đề thi IELTS Online Tests 2022–2026 (ieltsonlinetests.com/vi/ielts-exam-library)
+// Năm 2026 được xếp trên đầu theo thứ tự thời gian mới nhất
 const IELTS_IOT_VOLUMES = [
   {
-    vol: 1,
-    code: 'IOT-ACT-VOL1',
-    title: 'William Gilbert & School Excursions',
-    sub: 'Đề thi thực tế Vol 1: Từ trường Trái Đất & Chuyến dã ngoại thực địa',
-    type: 'Academic',
-    targetBand: 'Band 7.0–8.0',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Kỹ năng quan sát khoa học thực nghiệm, từ tính Trái Đất và hoạt động sinh thái dã ngoại.'
+    "vol": "2026-1",
+    "year": 2026,
+    "code": "IOT-2026-T1",
+    "title": "Generative AI & Modern Learning Systems",
+    "sub": "Đề thi IELTS 2026: Trí tuệ nhân tạo tạo sinh & Đổi mới giáo dục đại học",
+    "type": "Academic",
+    "targetBand": "Band 7.5–8.5+",
+    "desc": "Tuyển tập IELTS Online Tests 2026: Hệ thống học tập thích ứng AI, cấp thẻ nghiên cứu trung tâm điện toán và đạo đức công nghệ."
   },
   {
-    vol: 2,
-    code: 'IOT-ACT-VOL2',
-    title: 'Going Bananas & Coastal Archaeology',
-    sub: 'Đề thi thực tế Vol 2: Nguy cơ tuyệt chủng chuối & Khảo cổ học duyên hải',
-    type: 'Academic',
-    targetBand: 'Band 7.0–8.5',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Đột biến nấm TR4 trên cây chuối thương mại, biến đổi khí hậu xâm thực bờ biển và thể thao cộng đồng.'
+    "vol": "2026-2",
+    "year": 2026,
+    "code": "IOT-2026-T2",
+    "title": "Climate Neutrality & Global Energy Grids",
+    "sub": "Đề thi IELTS 2026: Trung hòa carbon & Mạng lưới năng lượng tái tạo",
+    "type": "Academic",
+    "targetBand": "Band 7.5–8.5+",
+    "desc": "Tuyển tập IELTS Online Tests 2026: Quá trình chuyển dịch hydro xanh toàn cầu, du lịch sinh thái không phát thải và thuế carbon xuyên biên giới."
   },
   {
-    vol: 3,
-    code: 'IOT-ACT-VOL3',
-    title: 'The History of the Pencil & AI Innovations',
-    sub: 'Đề thi thực tế Vol 3: Lịch sử bút chì than chì & Nhà ở du học sinh',
-    type: 'Academic',
-    targetBand: 'Band 7.5–8.5+',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Khám phá mỏ than chì Borrowdale thế kỷ 16, công nghệ bút chì hiện đại và đăng ký homestay quốc tế.'
+    "vol": "2025-1",
+    "year": 2025,
+    "code": "IOT-2025-T1",
+    "title": "Autonomous Transportation & Urban Planning",
+    "sub": "Đề thi IELTS 2025: Giao thông tự hành & Hạ tầng đô thị thông minh",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.5",
+    "desc": "Tuyển tập IELTS Online Tests 2025: Pin thể rắn cho xe điện, dịch vụ chia sẻ xe tự lái đô thị và chính sách đi bộ hóa trung tâm thương mại."
   },
   {
-    vol: 4,
-    code: 'IOT-ACT-VOL4',
-    title: 'The Secret Life of Bees & Sustainable Freight',
-    sub: 'Đề thi thực tế Vol 4: Hội chứng sụp đổ bầy ong & Vận tải hàng hải',
-    type: 'Academic',
-    targetBand: 'Band 7.0–8.0',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Tác động của thuốc trừ sâu lên loài ong thụ phấn, đăng ký hội thảo học thuật và tái chế chai nhựa.'
+    "vol": "2025-2",
+    "year": 2025,
+    "code": "IOT-2025-T2",
+    "title": "Preventative Healthcare & Telehealth",
+    "sub": "Đề thi IELTS 2025: Y học dự phòng & Khám chữa bệnh từ xa",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2025: Cơ chế ghi nhớ và tính khả biến thần kinh, bồi thường bảo hiểm y tế du lịch và thuế tiêu thụ đặc biệt cho đồ ngọt."
   },
   {
-    vol: 5,
-    code: 'IOT-ACT-VOL5',
-    title: 'The Psychology of Memory & Public Health',
-    sub: 'Đề thi thực tế Vol 5: Cơ chế ghi nhớ não bộ & Bảo hiểm du lịch',
-    type: 'Academic',
-    targetBand: 'Band 7.0–8.0',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Đường cong lãng quên Ebbinghaus, giấc ngủ REM củng cố trí nhớ và quy trình bồi thường hành lý thất lạc.'
+    "vol": "2024-1",
+    "year": 2024,
+    "code": "IOT-2024-T1",
+    "title": "How the Mind Ages & Lifelong Learning",
+    "sub": "Đề thi IELTS 2024: Sự lão hóa nhận thức & Giáo dục đại học",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2024: Nghiên cứu lão hóa trí tuệ và dự trữ nhận thức, thủ tục thuê nhà sinh viên và tranh luận học phí đại học."
   },
   {
-    vol: 6,
-    code: 'IOT-ACT-VOL6',
-    title: 'Child Language Acquisition & Space Missions',
-    sub: 'Đề thi thực tế Vol 6: Tiếp thu ngôn ngữ trẻ em & Thuê xe tự lái',
-    type: 'Academic',
-    targetBand: 'Band 7.5–8.5+',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Thuyết ngữ pháp phổ quát của Chomsky, giao tiếp trẻ thơ và tranh luận đầu tư thám hiểm vũ trụ.'
+    "vol": "2024-2",
+    "year": 2024,
+    "code": "IOT-2024-T2",
+    "title": "Sustainable Apiculture & Pollinator Conservation",
+    "sub": "Đề thi IELTS 2024: Hội chứng sụp đổ bầy ong & Chuỗi cung ứng xanh",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2024: Suy giảm quần thể ong mật do thuốc trừ sâu neonicotinoid, hội thảo phát triển bền vững và tái chế nhựa PET."
   },
   {
-    vol: 7,
-    code: 'IOT-ACT-VOL7',
-    title: 'Agricultural Revolution & Cultural Heritage',
-    sub: 'Đề thi thực tế Vol 7: Cách mạng nông nghiệp Lưỡi liềm màu mỡ & Giáo dục',
-    type: 'Academic',
-    targetBand: 'Band 7.0–8.0',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Thuần hóa ngũ cốc nguyên thủy tại Çatalhöyük, khảo cổ học tiền sử và chính sách vé vào cửa viện bảo tàng.'
+    "vol": "2023-1",
+    "year": 2023,
+    "code": "IOT-2023-T1",
+    "title": "The Vikings Wayfaring Way & Maritime History",
+    "sub": "Đề thi IELTS 2023: Con đường thám hiểm của người Viking & Thám hiểm vũ trụ",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2023: Kỹ thuật đóng tàu và định hướng bằng đá mặt trời của người Viking, bảo tàng di sản và phát triển cảng biển."
   },
   {
-    vol: 8,
-    code: 'IOT-ACT-VOL8',
-    title: 'The History of Silk & Remote Work Synergy',
-    sub: 'Đề thi thực tế Vol 8: Con đường tơ lụa cổ đại & Làm việc từ xa',
-    type: 'Academic',
-    targetBand: 'Band 7.5–8.5+',
-    desc: 'Tuyển tập IELTS Recent Actual Test: Độc quyền tơ lụa thời cổ đại, nhiệm vụ đánh cắp kén tằm của tu sĩ Byzantine và hiệu suất làm việc từ xa.'
+    "vol": "2023-2",
+    "year": 2023,
+    "code": "IOT-2023-T2",
+    "title": "The History of the Pencil & Industrial Inventions",
+    "sub": "Đề thi IELTS 2023: Lịch sử bút chì than chì Borrowdale & Thể thao",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2023: Mỏ than chì Borrowdale thế kỷ 16 và quy trình Conté, đăng ký hội viên trung tâm thể thao và internet băng rộng."
+  },
+  {
+    "vol": "2022-1",
+    "year": 2022,
+    "code": "IOT-2022-T1",
+    "title": "Animal Minds: Alex the Parrot & Field Ecology",
+    "sub": "Đề thi IELTS 2022: Trí tuệ nhận thức loài vật & Dã ngoại thực địa",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.0",
+    "desc": "Tuyển tập IELTS Online Tests 2022: Thí nghiệm ngôn ngữ và nhận thức của vẹt Alex (Irene Pepperberg), dã ngoại bảo tồn và bảo tồn vườn thú."
+  },
+  {
+    "vol": "2022-2",
+    "year": 2022,
+    "code": "IOT-2022-T2",
+    "title": "Going Bananas & Workplace Flexibility",
+    "sub": "Đề thi IELTS 2022: Nguy cơ tuyệt chủng chuối & Làm việc từ xa",
+    "type": "Academic",
+    "targetBand": "Band 7.0–8.5",
+    "desc": "Tuyển tập IELTS Online Tests 2022: Nấm Panama TR4 đe dọa giống chuối Cavendish, dịch vụ thuê xe sân bay và hiệu suất làm việc từ xa."
   }
 ];
 
-// Ngân hàng đề thi thực tế chuẩn ieltsonlinetests.com (Listening, Speaking, Reading, Writing)
+// Ngân hàng đề thi thực tế IELTS 4 kỹ năng 2022–2026
 const IELTS_IOT_TESTS = {
   "1": {
     "band": "Band 7.0–8.0",
@@ -3512,6 +3542,2062 @@ const IELTS_IOT_TESTS = {
         "modelEssay": "The global paradigm shift toward telecommuting has prompted claims that working remotely from home is universally superior to working within centralized corporate offices for both workers and enterprises. While remote work delivers undeniable advantages in flexibility and overhead reduction, I firmly disagree that it is universally more beneficial, as completely virtual arrangements erode team cohesion, creative spontaneous innovation, and employee mental wellbeing.\n\nOn the one hand, remote working bestows unmistakable operational efficiencies. For employees, eliminating arduous daily commutes saves hundreds of hours annually, substantially lowering transportation expenditures and commuting stress. This reclaimed time affords workers greater autonomy to balance professional duties with familial responsibilities. For corporations, adopting distributed remote teams dramatically slashes capital expenditure on commercial office leases, utilities, and facility management. Furthermore, companies can recruit top-tier talent from global candidate pools without geographical limitations, fostering diverse international workforces.\n\nOn the other hand, the universal abolition of physical workspaces poses profound long-term hazards for corporate vitality and employee health. Firstly, spontaneous brainstorming and serendipitous creative breakthroughs rarely flourish in structured, scheduled video calls; physical co-presence remains indispensable for fostering trust and rapid problem-solving. Secondly, junior employees and new hires suffer immensely under fully remote regimes, as they are deprived of passive observational learning and informal mentorship from senior colleagues. Most critically, remote working frequently blurs the boundaries between professional obligations and domestic life, with employees feeling perpetually tethered to their computers, resulting in chronic burnout and social isolation.\n\nIn conclusion, although remote work offers valuable flexibility and cost savings, asserting that it is universally superior to office-based work is fundamentally flawed. A balanced hybrid model—combining the autonomy of telecommuting with the interpersonal energy of periodic office collaboration—represents the truly optimal strategy for modern business."
       }
     }
+  },
+  "2026-1": {
+    "band": "Band 7.5–8.5+",
+    "title": "Generative AI & Modern Learning Systems",
+    "sub": "Đề thi IELTS 2026: Trí tuệ nhân tạo tạo sinh & Đổi mới giáo dục đại học",
+    "listening": {
+      "title": "Section 1 · University Digital Hub & AI Research Lab Registration",
+      "audioText": "Good morning, I would like to register for my graduate access badge at the University Digital Hub and AI Research Center. Welcome Liam! As a postgraduate researcher, you receive level-three access to our cloud supercomputing cluster. The digital lab is open 24 hours a day with biometric fingerprint entry. Does the access pass include the interactive visualization workstations in Room 402? Yes, all visualization pods are included, though you must reserve them at least 12 hours ahead through the portal. Please remember to complete the online data protection and ethical AI governance module before your pass is activated.",
+      "transcript": "Liam: Good morning, I'd like to register for my graduate access badge at the University Digital Hub and AI Research Center.\nAdvisor: Welcome Liam! As a postgraduate researcher, you receive level-three access to our cloud supercomputing cluster. The digital lab is open 24 hours a day with biometric fingerprint entry.\nLiam: That is incredible. Does the access pass include the interactive visualization workstations in Room 402?\nAdvisor: Yes, all visualization pods are included, though you must reserve them at least 12 hours ahead through the portal. Please remember to complete the online data protection and ethical AI governance module before your pass is activated.\nLiam: Understood. I will complete that compliance test this afternoon.",
+      "lines": [
+        {
+          "speaker": "Liam",
+          "text": "Good morning, I'd like to register for my graduate access badge at the University Digital Hub and AI Research Center.",
+          "vi": "Xin chào, tôi muốn đăng ký thẻ vào Trung tâm Kỹ thuật số & Nghiên cứu AI của trường."
+        },
+        {
+          "speaker": "Advisor",
+          "text": "Welcome Liam! As a postgraduate researcher, you receive level-three access to our cloud supercomputing cluster. The digital lab is open 24 hours a day with biometric fingerprint entry.",
+          "vi": "Chào mừng Liam! Là nghiên cứu sinh sau đại học, bạn được cấp quyền bậc 3 vào cụm siêu máy tính đám mây. Phòng lab mở cửa 24/24 với xác thực vân tay sinh trắc học."
+        },
+        {
+          "speaker": "Liam",
+          "text": "Does the access pass include the interactive visualization workstations in Room 402?",
+          "vi": "Thẻ này có bao gồm việc sử dụng các máy trạm mô phỏng trực quan tại Phòng 402 không ạ?"
+        },
+        {
+          "speaker": "Advisor",
+          "text": "Yes, all visualization pods are included, though you must reserve them at least 12 hours ahead through the portal. Please remember to complete the online data protection and ethical AI governance module before your pass is activated.",
+          "vi": "Có chứ, tất cả các khoang mô phỏng đều được sử dụng, tuy nhiên bạn cần đặt trước ít nhất 12 giờ qua cổng thông tin. Hãy nhớ hoàn thành bài tập trực tuyến về bảo mật dữ liệu và đạo đức AI trước khi thẻ được kích hoạt."
+        },
+        {
+          "speaker": "Liam",
+          "text": "Understood. I will complete that compliance test this afternoon.",
+          "vi": "Tôi hiểu rồi. Tôi sẽ hoàn thành bài kiểm tra đó ngay trong chiều nay."
+        }
+      ],
+      "mc": {
+        "q": "How many hours in advance must researchers book visualization workstations in Room 402?",
+        "options": [
+          "6 hours",
+          "12 hours",
+          "24 hours",
+          "48 hours"
+        ],
+        "answer": 1,
+        "why": "The advisor clearly specifies: \"...though you must reserve them at least 12 hours ahead through the portal.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "The research lab is accessible 24 hours a day using biometric ____ entry.",
+        "target": "fingerprint",
+        "rawTarget": "fingerprint",
+        "hint": "Gợi ý: Dấu vân tay sinh trắc học (fingerprint)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you routinely utilize artificial intelligence applications in your daily studies or employment?",
+          "vi": "Bạn có thường xuyên sử dụng các ứng dụng AI trong học tập hoặc công việc hàng ngày không?",
+          "st": "On an everyday basis, I use...",
+          "sa": "On an everyday basis, I use AI copilots to assist with summarizing dense academic journals, generating code snippets, and brainstorming creative outlines. It drastically minimizes administrative drudgery.",
+          "phrases": [
+            "AI copilots",
+            "dense academic journals",
+            "administrative drudgery",
+            "workflow efficiency"
+          ]
+        },
+        {
+          "q": "Do you believe generative AI tools encourage laziness among students?",
+          "vi": "Bạn có nghĩ các công cụ AI tạo sinh khiến học sinh sinh viên trở nên lười biếng hơn không?",
+          "st": "While over-reliance is a genuine risk...",
+          "sa": "While over-reliance is a genuine risk, when used thoughtfully, AI acts as an intellectual multiplier that elevates higher-order critical reasoning rather than fostering intellectual complacency.",
+          "phrases": [
+            "over-reliance",
+            "intellectual multiplier",
+            "critical reasoning",
+            "active synthesis"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an artificial intelligence technology, software, or digital tool that has transformed your productivity.",
+        "prompts": [
+          "What the AI tool is and how you first discovered it",
+          "What specific tasks or workflows you use it for",
+          "How it differs from traditional search engines or software",
+          "And explain how this tool has transformed your intellectual productivity."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe an advanced large language model and multimodal AI assistant that I integrated into my academic workflow over the past year. Unlike traditional search engines that merely provide disjointed hyperlinks, this generative tool synthesizes complex conceptual explanations, translates idiomatic nuances across languages, and debugs software scripts in seconds. In my research routine, I feed unstructured field notes and statistical datasets into the interface, and it generates structured executive summaries and comparative tables. What is truly transformative is its capability to act as an objective devil's advocate: I can prompt it to challenge my hypotheses and highlight logical fallacies in my argumentative essays. This immediate conversational feedback loop has sharpened my analytical agility and cut research time by half."
+      },
+      "part3": [
+        {
+          "q": "Will generative artificial intelligence eventually replace human teachers and university professors?",
+          "vi": "Trí tuệ nhân tạo tạo sinh liệu có thay thế hoàn toàn các giáo viên và giáo sư đại học không?",
+          "sa": "I believe human educators will remain irreplaceable. While algorithms excel at content delivery and grading, teaching fundamentally requires emotional empathy, moral mentorship, and inspiring intellectual curiosity."
+        },
+        {
+          "q": "What regulatory guardrails must governments enforce to prevent AI hallucinations and academic plagiarism?",
+          "vi": "Chính phủ cần ban hành những quy chuẩn nào để ngăn chặn hiện tượng AI đưa tin sai lệch và đạo văn?",
+          "sa": "Regulatory frameworks must mandate watermarking on synthetic outputs, enforce algorithmic transparency, and hold tech corporations legally accountable for intellectual property infringement."
+        }
+      ]
+    },
+    "reading": {
+      "title": "Artificial Intelligence and Cognitive Evolution in Education",
+      "paragraphs": [
+        "[A] In the landscape of educational history, few innovations have provoked such profound existential reflection as the advent of Generative Artificial Intelligence (GenAI). Unlike prior digital disruptions—such as calculators or internet search engines that merely expedited data retrieval—neural language models possess the unprecedented capacity to parse semantic nuances, generate cogent prose, and simulate adaptive human conversation.",
+        "[B] Pioneering cognitive scientists at Stanford and Oxford have monitored the implementation of adaptive AI tutors across secondary and tertiary classrooms. Their empirical findings demonstrate that personalized machine learning algorithms can eradicate the long-standing '2-sigma problem' first identified by educational psychologist Benjamin Bloom. Bloom posited that an average student tutored one-on-one achieved mastery two standard deviations above students taught in conventional classrooms.",
+        "[C] By continually diagnosing a student's unique misconceptions in real time, AI learning systems adjust lexical difficulty, scaffold complex problem-solving steps, and offer targeted remediation without evoking the social anxiety or embarrassment frequently experienced in public classrooms.",
+        "[D] However, neurobiologists voice substantial reservations regarding the potential atrophy of critical human cognitive faculties. When students outsource preliminary ideation, literary analysis, and mathematical synthesis to generative models, the prefrontal cortex is deprived of the desirable cognitive friction necessary to forge deep myelin-wrapped neural pathways.",
+        "[E] Educational institutions are thus transitioning from alarmist prohibition toward pedagogical integration. Leading universities now emphasize 'metacognitive literacy'—the capacity to critically interrogate, audit, and synthesize AI-generated outputs while preserving human ethical judgment, philosophical depth, and uncompromised intellectual integrity."
+      ],
+      "tfng": [
+        {
+          "stmt": "Benjamin Bloom's 2-sigma problem indicated that classroom instruction produces superior results to one-on-one tutoring.",
+          "ans": "FALSE",
+          "clue": "Paragraph B states Bloom discovered one-on-one tutoring produced results two standard deviations ABOVE conventional classrooms.",
+          "why": "Hiện tượng 2-sigma của Bloom chỉ ra dạy kèm 1-1 cho kết quả vượt trội hơn hẳn lớp học truyền thống (FALSE)."
+        },
+        {
+          "stmt": "Personalized AI tutors can help learners overcome social anxiety associated with asking questions in public classes.",
+          "ans": "TRUE",
+          "clue": "Paragraph C states: \"...without evoking the social anxiety or embarrassment frequently experienced in public classrooms.\"",
+          "why": "Hệ thống AI giúp học sinh tránh được cảm giác tự ti hay xấu hổ khi hỏi bài trước đám đông (TRUE)."
+        },
+        {
+          "stmt": "Most universities have enacted permanent worldwide bans prohibiting students from ever accessing generative AI.",
+          "ans": "FALSE",
+          "clue": "Paragraph E states universities are transitioning away from prohibition toward pedagogical integration and metacognitive literacy.",
+          "why": "Các trường đại học đang chuyển từ cấm đoán sang tích hợp giáo dục và rèn luyện năng lực phản biện (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "scaffold",
+          "r": "/ˈskæf.oʊld/",
+          "m": "giàn giáo nâng đỡ (phương pháp sư phạm chia nhỏ từng bước hỗ trợ)",
+          "ex": "The algorithm scaffolds complex algebraic equations for beginners."
+        },
+        {
+          "w": "atrophy",
+          "r": "/ˈæt.rə.fi/",
+          "m": "sự teo mòn, suy thoái do không sử dụng",
+          "ex": "Over-reliance on automation risks cognitive atrophy."
+        },
+        {
+          "w": "metacognitive",
+          "r": "/ˌmet̬.əˈkɑːɡ.nə.tɪv/",
+          "m": "thuộc về siêu nhận thức (nhận biết và điều chỉnh tư duy của bản thân)",
+          "ex": "Metacognitive literacy enables students to evaluate AI outputs critically."
+        },
+        {
+          "w": "remediation",
+          "r": "/rɪˌmiː.diˈeɪ.ʃən/",
+          "m": "sự bồi dưỡng, khắc phục lỗ hổng kiến thức",
+          "ex": "Targeted remediation prevents learning gaps from widening."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Bar Chart",
+        "minWords": 150,
+        "prompt": "The bar chart below illustrates global annual private and governmental investment in generative artificial intelligence research and infrastructure between 2020 and 2026 (in billions of US dollars). Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The bar chart illustrates the exponential escalation of global financial investment into generative artificial intelligence research and computational infrastructure from 2020 to 2026, comparing private corporate expenditures with governmental funding.\n\nOverall, both funding sources displayed explosive growth over the seven-year period, with private sector capital consistently outstripping public appropriations by a substantial margin. The disparity between corporate and governmental expenditure widened dramatically toward the conclusion of the timeline.\n\nIn 2020, total investment was relatively modest, with private venture capital and tech conglomerates contributing 12 billion dollars, while public government grants accounted for 4 billion dollars. Spending accelerated moderately through 2022 before experiencing an unprecedented surge starting in 2023 following the consumer breakthrough of large language models.\n\nBy 2024, private capital allocations reached 68 billion dollars, dwarfing governmental commitments of 22 billion dollars. This exponential trajectory culminated in 2026, where corporate investment peaked at an astonishing 145 billion dollars, driven by utility-scale data center construction. Meanwhile, government funding rose robustly to 45 billion dollars, prioritizing sovereign AI initiatives and national cybersecurity defense."
+      },
+      "task2": {
+        "type": "Task 2 · Discussion Essay",
+        "minWords": 250,
+        "prompt": "Some people argue that artificial intelligence will soon render human school teachers and university professors completely obsolete. Others insist that human educators will always remain indispensable. Discuss both views and give your own opinion. (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce generative AI in education debate & state unequivocal thesis: while AI excels at individualized instruction, human mentorship is indispensable for moral and emotional development."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Arguments for AI Replacing Teachers)",
+            "guide": "Discuss 24/7 personalized pace, non-judgmental remediation, instant multilingual translation, and eliminating teacher shortages."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Arguments for Human Teachers)",
+            "guide": "Discuss emotional empathy, inspiring ethical character, fostering collaborative social dynamics, and modeling resilience."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm verdict: AI will serve as an exceptionally powerful instructional copilot, but human teachers will remain the soul of education."
+          }
+        ],
+        "linkingWords": [
+          "On the one hand,",
+          "On the other hand,",
+          "Furthermore,",
+          "Consequently,",
+          "In conclusion,"
+        ],
+        "modelEssay": "The meteoric ascension of generative artificial intelligence has ignited heated conjecture that human teachers and university professors may soon become obsolete. While automated cognitive systems deliver unprecedented pedagogical efficiencies, I firmly maintain that human educators will always remain fundamentally irreplaceable in cultivating the emotional, moral, and social faculties of learners.\n\nOn the one hand, proponents of algorithmic instruction highlight the unmatched technical capabilities of AI tutors. Powered by massive neural networks, machine learning algorithms can analyze a student's cognitive bottlenecks instantaneously and tailor curricula to their precise learning velocity. Unlike overburdened school teachers managing crowded classrooms of thirty or forty pupils, an AI tutor never loses patience, offers round-the-clock individualized feedback, and provides seamless multilingual explanations. Furthermore, deploying digital tutors across underdeveloped regions could democratize world-class instructional content, effectively resolving chronic global teacher shortages and bridging educational inequalities.\n\nOn the other hand, reducing education to mere information transfer and exam drills ignores its profound human dimension. True pedagogical excellence is rooted in emotional empathy, interpersonal trust, and moral mentorship—capacities entirely foreign to predictive language models. Dedicated teachers inspire intellectual curiosity, instill ethical integrity, and detect subtle signs of emotional distress or psychological trauma in students. Furthermore, physical classrooms function as crucial social laboratories where young citizens learn conflict resolution, collaborative teamwork, and civic empathy through real human interaction. A sophisticated algorithm can explain quantum mechanics, but it cannot model human compassion, courage, or resilience in the face of adversity.\n\nIn conclusion, although artificial intelligence will undoubtedly transform classroom workflows by automating routine grading and rote instruction, it will never displace human educators. The future of education lies in harmonious synergy: empowering compassionate teachers with sophisticated AI tools to unleash the full potential of every student."
+      }
+    }
+  },
+  "2026-2": {
+    "band": "Band 7.5–8.5+",
+    "title": "Climate Neutrality & Global Energy Grids",
+    "sub": "Đề thi IELTS 2026: Trung hòa carbon & Mạng lưới năng lượng tái tạo",
+    "listening": {
+      "title": "Section 1 · Eco-Resort Booking & Carbon-Neutral Travel Induction",
+      "audioText": "Good afternoon, I am calling to finalize my reservation for the Eco-Valley Wilderness Lodge in the Highlands. Welcome Sophia! We are thrilled to host you at Europe's first fully carbon-neutral nature sanctuary. Our lodge operates entirely on micro-hydro power and geothermal heat pumps. Does the package include zero-emission transportation from the Inverness rail station? Yes, our fleet of solar-charged electric shuttles meets guests directly at Platform 3. Furthermore, all dining options feature seasonal organic produce sourced within a ten-mile radius, and we provide complimentary titanium thermal flasks for your mountain hikes.",
+      "transcript": "Sophia: Good afternoon, I'm calling to finalize my reservation for the Eco-Valley Wilderness Lodge in the Highlands.\nManager: Welcome Sophia! We are thrilled to host you at Europe's first fully carbon-neutral nature sanctuary. Our lodge operates entirely on micro-hydro power and geothermal heat pumps.\nSophia: That sounds wonderful. Does the package include zero-emission transportation from the Inverness rail station?\nManager: Yes, our fleet of solar-charged electric shuttles meets guests directly at Platform 3. Furthermore, all dining options feature seasonal organic produce sourced within a ten-mile radius, and we provide complimentary titanium thermal flasks for your mountain hikes.\nSophia: That is exceptional hospitality. Please confirm my arrival for this Friday at 3:00 PM.",
+      "lines": [
+        {
+          "speaker": "Sophia",
+          "text": "Good afternoon, I'm calling to finalize my reservation for the Eco-Valley Wilderness Lodge in the Highlands.",
+          "vi": "Xin chào, tôi gọi để hoàn tất đặt phòng tại Eco-Valley Wilderness Lodge ở vùng Highlands."
+        },
+        {
+          "speaker": "Manager",
+          "text": "Welcome Sophia! We are thrilled to host you at Europe's first fully carbon-neutral nature sanctuary. Our lodge operates entirely on micro-hydro power and geothermal heat pumps.",
+          "vi": "Chào mừng Sophia! Khu nghỉ dưỡng của chúng tôi hoàn toàn trung hòa carbon đầu tiên tại châu Âu, chạy 100% bằng thủy điện nhỏ và bơm nhiệt địa nhiệt."
+        },
+        {
+          "speaker": "Sophia",
+          "text": "Does the package include zero-emission transportation from the Inverness rail station?",
+          "vi": "Gói dịch vụ có bao gồm xe đưa đón không phát thải từ ga tàu Inverness không?"
+        },
+        {
+          "speaker": "Manager",
+          "text": "Yes, our fleet of solar-charged electric shuttles meets guests directly at Platform 3. Furthermore, all dining options feature seasonal organic produce sourced within a ten-mile radius, and we provide complimentary titanium thermal flasks for your mountain hikes.",
+          "vi": "Có chứ, đội xe điện sạc năng lượng mặt trời sẽ đón khách tại Sân ga số 3. Ngoài ra mọi bữa ăn đều dùng nông sản hữu cơ trong bán kính 10 dặm, và chúng tôi tặng bình giữ nhiệt titan cho các chuyến leo núi."
+        },
+        {
+          "speaker": "Sophia",
+          "text": "That is exceptional hospitality. Please confirm my arrival for this Friday at 3:00 PM.",
+          "vi": "Dịch vụ thật tuyệt vời. Hãy xác nhận giúp tôi sẽ đến vào 3 giờ chiều thứ Sáu này nhé."
+        }
+      ],
+      "mc": {
+        "q": "Where do the solar-charged electric shuttle buses meet arriving guests at the station?",
+        "options": [
+          "Airport Terminal 1",
+          "Main station taxi rank",
+          "Station Platform 3",
+          "Central bus concourse"
+        ],
+        "answer": 2,
+        "why": "The manager states: \"...our fleet of solar-charged electric shuttles meets guests directly at Platform 3.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "All dining ingredients at the lodge are sourced within a ten-mile ____ from local organic farms.",
+        "target": "radius",
+        "rawTarget": "radius",
+        "hint": "Gợi ý: Bán kính khoảng cách (radius)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you make deliberate lifestyle choices to minimize your household energy consumption?",
+          "vi": "Bạn có chủ động áp dụng các giải pháp giảm thiểu tiêu thụ năng lượng trong gia đình không?",
+          "st": "In my domestic routine, I...",
+          "sa": "In my domestic routine, I have upgraded all lighting to energy-efficient LEDs, program our thermostat intelligently, and unplug vampire appliances to curb residual electricity wastage.",
+          "phrases": [
+            "domestic routine",
+            "energy-efficient LEDs",
+            "vampire appliances",
+            "electricity conservation"
+          ]
+        },
+        {
+          "q": "What is your opinion on ecotourism compared to conventional mass resort travel?",
+          "vi": "Bạn nghĩ thế nào về du lịch sinh thái so với du lịch nghỉ dưỡng đại trà truyền thống?",
+          "sa": "Ecotourism is vastly superior because it actively channels tourist revenue into biodiversity preservation and local indigenous communities, rather than perpetuating environmental degradation.",
+          "phrases": [
+            "vastly superior",
+            "biodiversity preservation",
+            "indigenous empowerment",
+            "minimize footprint"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an eco-friendly technology, environmental policy, or renewable energy practice that you find inspiring.",
+        "prompts": [
+          "What the green technology or environmental practice is",
+          "Where and when you first learned about its implementation",
+          "How it functions to reduce carbon emissions or environmental waste",
+          "And explain why you believe this solution is vital for our collective future."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe the development of offshore floating wind turbines and green hydrogen supergrids. I first learned about this technological frontier while reading an international energy policy whitepaper last year. Traditional wind farms are limited to shallow coastal waters, but floating deep-water platforms can harness consistent, hurricane-strength oceanic winds in the open sea. What excites me most is the integration of green electrolysis: during periods of peak gusty winds when electricity grids cannot absorb the surplus power, the electricity is immediately routed to split seawater into green hydrogen and oxygen. This zero-carbon hydrogen can then be stored in salt caverns and pipeline networks to power steel manufacturing plants and maritime container ships. By replacing fossil fuel baseload power, floating oceanic supergrids provide a genuine blueprint for achieving net-zero industrial civilization."
+      },
+      "part3": [
+        {
+          "q": "Should wealthy industrialized nations provide financial climate compensation to developing economies?",
+          "vi": "Các quốc gia công nghiệp phát triển có nên bồi thường tài chính khí hậu cho các nền kinh tế đang phát triển không?",
+          "sa": "Yes, morally and pragmatically. Western nations generated the vast majority of historical cumulative atmospheric emissions, while vulnerable equatorial nations suffer the worst droughts and typhoons despite contributing minimally."
+        },
+        {
+          "q": "Can carbon offset schemes genuinely halt climate change or do they merely enable corporate greenwashing?",
+          "vi": "Các cơ chế tín chỉ carbon có thực sự ngăn chặn biến đổi khí hậu hay chỉ là chiêu trò tẩy xanh của doanh nghiệp?",
+          "sa": "Many unverified offsets represent egregious greenwashing. Real climate progress requires absolute, legally binding emissions reductions at the industrial source, rather than paying distant entities for dubious tree-planting projects."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The Global Transition to Green Hydrogen and Supergrids",
+      "paragraphs": [
+        "[A] As atmospheric concentrations of greenhouse gases exceed catastrophic thresholds, the international community has reached a scientific consensus: incremental efficiency improvements are insufficient; complete decarbonization of heavy industrial sectors is imperative. While lithium-ion battery technology has successfully electrified personal automobiles, it remains physically impractical for long-haul maritime shipping, commercial aviation, and primary steel production.",
+        "[B] Enter green hydrogen—heralded by chemical engineers as the ultimate clean chemical feedstock and energy vector. Unlike 'grey hydrogen' derived from fossil methane via steam reformation, green hydrogen is produced through polymer electrolyte membrane (PEM) electrolysis powered exclusively by surplus solar and offshore wind electricity, discharging pure oxygen as its sole byproduct.",
+        "[C] The primary economic bottleneck has historically centered on efficiency and cost. Splitting water molecules entails substantial thermodynamic conversion losses, rendering green hydrogen roughly three times more expensive per kilogram than fossil fuels. However, driven by massive utility-scale deployments in northern Europe, Australia, and the Middle East, levelized costs of electrolyzers have plunged by over 60 percent since 2020.",
+        "[D] Concurrently, international consortiums are engineering trans-continental high-voltage direct current (HVDC) supergrids. These subsea transmission cables lose less than three percent of electricity over thousands of kilometers, allowing desert solar parks in North Africa to supply baseline industrial power to factories in Scandinavia during cloudy winter months.",
+        "[E] Overcoming storage bottlenecks requires retrofitting depleted underground salt caverns and natural gas pipeline networks to store pressurized hydrogen gas for seasonal backup. By linking continental supergrids with subterranean chemical energy reserves, global energy architecture can transition into an unshakeable, 100-percent renewable closed-loop ecosystem."
+      ],
+      "tfng": [
+        {
+          "stmt": "Green hydrogen produces harmful sulfur dioxide emissions during the water electrolysis process.",
+          "ans": "FALSE",
+          "clue": "Paragraph B explicitly states that PEM electrolysis discharges pure oxygen as its sole byproduct.",
+          "why": "Quá trình điện phân nước bằng năng lượng tái tạo chỉ thải ra khí oxy tinh khiết, hoàn toàn không có khí lưu huỳnh (FALSE)."
+        },
+        {
+          "stmt": "Electrolyzer manufacturing costs declined by more than sixty percent since 2020.",
+          "ans": "TRUE",
+          "clue": "Paragraph C states: \"...levelized costs of electrolyzers have plunged by over 60 percent since 2020.\"",
+          "why": "Chi phí sản xuất thiết bị điện phân đã giảm hơn 60% kể từ năm 2020 nhờ quy mô mở rộng (TRUE)."
+        },
+        {
+          "stmt": "High-voltage direct current (HVDC) transmission cables suffer from extreme electrical power loss exceeding fifty percent.",
+          "ans": "FALSE",
+          "clue": "Paragraph D states HVDC subsea cables lose less than three percent of electricity over thousands of kilometers.",
+          "why": "Cáp truyền tải một chiều siêu cao áp (HVDC) chỉ thất thoát chưa đến 3% năng lượng trên hàng ngàn km (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "electrolysis",
+          "r": "/iˌlekˈtrɑː.lə.sɪs/",
+          "m": "quá trình điện phân phân tách phân tử",
+          "ex": "Water electrolysis powered by solar panels yields green hydrogen."
+        },
+        {
+          "w": "supergrid",
+          "r": "/ˈsuː.pɚ.ɡrɪd/",
+          "m": "siêu lưới điện truyền tải liên lục địa",
+          "ex": "A continental supergrid balances fluctuating renewable power supply."
+        },
+        {
+          "w": "byproduct",
+          "r": "/ˈbaɪˌprɑː.dʌkt/",
+          "m": "sản phẩm phụ sinh ra trong phản ứng",
+          "ex": "Pure oxygen is the harmless byproduct of clean electrolysis."
+        },
+        {
+          "w": "subterranean",
+          "r": "/ˌsʌb.təˈreɪ.ni.ən/",
+          "m": "dưới lòng đất sâu",
+          "ex": "Subterranean salt caverns provide immense capacity for gas storage."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Line Graph",
+        "minWords": 150,
+        "prompt": "The line graph below shows the percentage of electricity generated from renewable sources (wind, solar, hydro) in national grids across five regions between 2015 and 2026. Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The line graph illustrates the proportion of total electricity generated from renewable energy sources across five distinct geographic regions—the European Union, North America, East Asia, Latin America, and Sub-Saharan Africa—from 2015 to 2026.\n\nOverall, every surveyed region experienced an upward trajectory in renewable energy penetration over the eleven-year period. Latin America and the European Union maintained the highest proportions throughout, whereas Sub-Saharan Africa and East Asia, despite rapid accelerations, began from significantly lower baselines.\n\nIn 2015, Latin America led all regions with 54% of its electricity derived from renewables, predominantly sustained by vast hydroelectric river basins. The European Union followed at 30%, while North America registered 20%. East Asia and Sub-Saharan Africa recorded modest figures of 14% and 10% respectively.\n\nOver the subsequent decade, aggressive wind and photovoltaic installations spurred remarkable convergence. By 2026, the European Union surged dramatically to reach 62%, narrowing the gap with Latin America, which climbed steadily to 68%. East Asia exhibited the steepest acceleration, rising fourfold to 48% by 2026. North America achieved 42%, while Sub-Saharan Africa expanded progressively to 28%."
+      },
+      "task2": {
+        "type": "Task 2 · Opinion Essay",
+        "minWords": 250,
+        "prompt": "Some people argue that governments should impose direct punitive carbon taxes on fossil fuel corporations rather than offering consumer subsidies for purchasing electric vehicles. To what extent do you agree or disagree? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce climate policy debate & state balanced agreement: taxing fossil extractors addresses structural pollution at source, whereas EV subsidies often benefit affluent households."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Direct Carbon Taxes on Polluters)",
+            "guide": "Discuss the polluter-pays principle, compelling energy giants to decarbonize, and generating immense state revenue."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Flaws of Consumer EV Subsidies)",
+            "guide": "Discuss regressive equity issues (subsidizing luxury cars for wealthy drivers) and grid emissions if power remains coal-fired."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm thesis: punitive upstream carbon taxation is fundamentally more effective and equitable than downstream consumer subsidies."
+          }
+        ],
+        "linkingWords": [
+          "First and foremost,",
+          "In contrast,",
+          "Furthermore,",
+          "Consequently,",
+          "In conclusion,"
+        ],
+        "modelEssay": "In the urgent global quest to achieve carbon neutrality, policymakers debate whether public funds are better directed toward subsidizing consumer electric vehicles or imposing punitive carbon taxation on fossil fuel corporations. I firmly agree that holding energy conglomerates accountable through direct carbon levies is substantially more equitable and structurally effective than doling out retail vehicle subsidies.\n\nFirst and foremost, taxing fossil extraction implements the ethical 'polluter-pays' principle. For over a century, oil and gas multinational monopolies have privatized astronomical profits while socializing severe environmental externalities. Imposing progressive taxes directly on barrels of crude petroleum and tonnes of coal mined compels energy corporations to divert capital away from fossil exploration and channel billions into green hydrogen and renewable generation. Furthermore, carbon tax revenues can be ring-fenced to finance national public transportation systems, high-speed electrified railways, and grid modernization—initiatives that benefit all socioeconomic strata rather than private vehicle owners alone.\n\nIn stark contrast, subsidizing consumer electric automobiles represents a regressive and incomplete climate remedy. In many developing and developed nations, private electric vehicles remain prohibitively expensive for low-income citizens; thus, government rebates effectively function as state subsidies for affluent suburbanites purchasing second or third luxury cars. Moreover, incentivizing electric car purchases does little to curb emissions if the local electricity grid remains heavily dependent on coal-fired power plants. Subsidizing private vehicles also exacerbates urban traffic congestion, roadway wear, and the demand for environmentally destructive lithium mining, rather than encouraging pedestrian transit and cycling.\n\nIn conclusion, while electric mobility is a crucial component of future transportation, relying on consumer subsidies is socially regressive and addresses only downstream symptoms. Imposing direct punitive carbon taxes on fossil fuel giants tackles the root source of emissions, driving systemic industrial transformation across the global economy."
+      }
+    }
+  },
+  "2025-1": {
+    "band": "Band 7.5–8.5+",
+    "title": "Child Language Acquisition & Space Missions",
+    "sub": "Đề thi thực tế Vol 6: Tiếp thu ngôn ngữ trẻ em & Thuê xe tự lái",
+    "listening": {
+      "title": "Section 1 · Car Rental Booking & Satellite Navigation Package",
+      "audioText": "Good morning, I would like to reserve a rental vehicle for a week from London Heathrow Airport. Welcome to Apex Car Rentals Michael! We have compact hatchbacks, executive sedans, and family SUVs. I would prefer a compact SUV with automatic transmission and integrated satellite GPS navigation. Perfect. We have a hybrid SUV available for 42 pounds per day. Would you like to add comprehensive zero-excess insurance? Yes, absolutely. Does the rental operate on a full-to-full fuel policy? Yes, you collect the car with a full tank and simply return it full to avoid refuelling service charges.",
+      "transcript": "Michael: Good morning, I'd like to reserve a rental vehicle for a week from London Heathrow Airport.\nAgent: Welcome to Apex Car Rentals Michael! We have compact hatchbacks, executive sedans, and family SUVs.\nMichael: I would prefer a compact SUV with automatic transmission and integrated satellite GPS navigation.\nAgent: Perfect. We have a hybrid SUV available for 42 pounds per day. Would you like to add comprehensive zero-excess insurance?\nMichael: Yes, absolutely. Does the rental operate on a full-to-full fuel policy?\nAgent: Yes, you collect the car with a full tank and simply return it full to avoid refuelling service charges.\nMichael: Excellent. Please reserve that vehicle for my Saturday morning pickup.",
+      "lines": [
+        {
+          "speaker": "Michael",
+          "text": "Good morning, I'd like to reserve a rental vehicle for a week from London Heathrow Airport.",
+          "vi": "Xin chào, tôi muốn đặt thuê một chiếc ô tô trong 1 tuần từ sân bay London Heathrow."
+        },
+        {
+          "speaker": "Agent",
+          "text": "Welcome to Apex Car Rentals Michael! We have compact hatchbacks, executive sedans, and family SUVs.",
+          "vi": "Chào mừng anh Michael đến với Apex Car Rentals! Chúng tôi có xe cỡ nhỏ, sedan cao cấp và SUV gia đình."
+        },
+        {
+          "speaker": "Michael",
+          "text": "I would prefer a compact SUV with automatic transmission and integrated satellite GPS navigation.",
+          "vi": "Tôi ưu tiên một chiếc SUV cỡ nhỏ, số tự động và có tích hợp định vị GPS vệ tinh."
+        },
+        {
+          "speaker": "Agent",
+          "text": "Perfect. We have a hybrid SUV available for 42 pounds per day. Would you like to add comprehensive zero-excess insurance?",
+          "vi": "Tuyệt vời. Chúng tôi có một chiếc SUV hybrid với giá 42 bảng/ngày. Anh có muốn mua thêm bảo hiểm toàn diện miễn thường không?"
+        },
+        {
+          "speaker": "Michael",
+          "text": "Yes, absolutely. Does the rental operate on a full-to-full fuel policy?",
+          "vi": "Có chứ, chắc chắn rồi. Quy định về xăng của bên mình có phải nhận bình đầy trả bình đầy không?"
+        },
+        {
+          "speaker": "Agent",
+          "text": "Yes, you collect the car with a full tank and simply return it full to avoid refuelling service charges.",
+          "vi": "Dạ đúng, anh nhận xe bình đầy và chỉ cần đổ đầy xăng khi trả để tránh phí dịch vụ tiếp nhiên liệu."
+        }
+      ],
+      "mc": {
+        "q": "What is the daily rental rate for the requested hybrid compact SUV?",
+        "options": [
+          "35 pounds",
+          "42 pounds",
+          "50 pounds",
+          "65 pounds"
+        ],
+        "answer": 1,
+        "why": "The rental agent states: \"We have a hybrid SUV available for 42 pounds per day.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "The car rental contract operates on a full-to-full ____ policy to avoid additional refuelling charges.",
+        "target": "fuel",
+        "rawTarget": "fuel",
+        "hint": "Gợi ý: Nhiên liệu / xăng xe (fuel)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you enjoy long-distance travel by train or automobile?",
+          "vi": "Bạn có thích các chuyến đi đường dài bằng tàu hỏa hoặc ô tô không?",
+          "st": "I am particularly fond of...",
+          "sa": "I am particularly fond of scenic train journeys. Riding through countryside panoramas while reading or conversing is far more relaxing than navigating heavy highway traffic.",
+          "phrases": [
+            "scenic train journeys",
+            "countryside panoramas",
+            "relaxing ambiance",
+            "unwind"
+          ]
+        },
+        {
+          "q": "Have you ever learned to navigate using traditional paper maps?",
+          "vi": "Bạn đã từng học cách định hướng bằng bản đồ giấy truyền thống chưa?",
+          "st": "During my school scouts trips...",
+          "sa": "During my school scouts trips, we were taught topographical orienteering with paper maps and magnetic compasses. It provided a deep appreciation of spatial topography that digital GPS often obscures.",
+          "phrases": [
+            "topographical orienteering",
+            "magnetic compasses",
+            "spatial awareness",
+            "digital GPS"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe a memorable journey you took by train, airplane, or automobile.",
+        "prompts": [
+          "Where you were traveling to and what mode of transit you chose",
+          "Who accompanied you on this journey",
+          "What landscapes, landmarks, or occurrences you encountered",
+          "And explain why this particular journey remains vivid in your memory."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe an unforgettable overnight sleeper train journey from London to Edinburgh aboard the Caledonian Sleeper. I embarked on this trip last autumn accompanied by a close university friend. Boarding the train at midnight in bustling central London, we settled into our cozy cabin as the train smoothly accelerated northwards. What made the journey truly magical was waking up at sunrise as the train wound through the misty Scottish Highlands. Gazing out the carriage window at heather-covered glens, ancient stone viaducts, and glass-like lochs in the morning light was breathtaking. The gentle rhythm of the train paired with Scotland's dramatic natural splendor left an indelible imprint on my memory."
+      },
+      "part3": [
+        {
+          "q": "Why should governments prioritize high-speed passenger rail over expanding short-haul domestic flights?",
+          "vi": "Tại sao các chính phủ nên ưu tiên đường sắt cao tốc hơn việc mở rộng các chuyến bay nội địa cự ly ngắn?",
+          "sa": "High-speed electrified rail produces up to ninety percent fewer carbon emissions per passenger kilometer than commercial aviation, while connecting downtown city centers directly without cumbersome airport transit delays."
+        },
+        {
+          "q": "How does excessive tourism threaten ecological biodiversity in sensitive rural environments?",
+          "vi": "Du lịch quá mức đe dọa đa dạng sinh học sinh thái tại các vùng nông thôn nhạy cảm ra sao?",
+          "sa": "Unregulated mass tourism leads to litter pollution, vehicular emissions, habitat fragmentation, and the commercial gentrification of fragile pastoral communities."
+        }
+      ]
+    },
+    "reading": {
+      "title": "How Children Acquire Language",
+      "paragraphs": [
+        "[A] Of all the intellectual feats accomplished by human beings, perhaps none is more astonishing than language acquisition in early childhood. Within the first four years of life, without any formal pedagogical training, infants progress from helpless cooing to mastering the labyrinthine syntactic and phonetic rules of their native tongue.",
+        "[B] In the mid-20th century, behaviorist psychologist B.F. Skinner posited that language is learned through pure operant conditioning: infants babble randomly, parents selectively reinforce correct sounds through praise and food, and children gradually copy adult speech patterns through imitation.",
+        "[C] This behaviorist paradigm was famously dismantled by linguist Noam Chomsky in 1959. Chomsky observed that children routinely generate original, grammatical sentences they have never previously heard—a phenomenon termed the 'poverty of the stimulus'. He argued that humans possess an innate, genetically encoded biological organ termed the 'Language Acquisition Device' (LAD), which contains the blueprint for Universal Grammar.",
+        "[D] Modern empirical infant psychology has enriched Chomsky's theoretical claims. Groundbreaking eye-tracking and neural imaging studies demonstrate that infants are born as 'citizens of the world', capable of distinguishing the phonetic contrasts of every human language. However, by ten to twelve months of age, statistical pruning occurs: neural circuits tune selectively to the phonemes frequently spoken in their immediate environment.",
+        "[E] Furthermore, developmental neurobiology highlights the existence of a 'critical period' for language mastery. Driven by neuroplasticity, young brains effortlessly wire complex grammar during childhood. If individuals are deprived of linguistic exposure during this window, attaining native-like grammatical intuition becomes neurochemically impossible in later adulthood."
+      ],
+      "tfng": [
+        {
+          "stmt": "Noam Chomsky argued that infants are born with an innate biological capacity for grammar.",
+          "ans": "TRUE",
+          "clue": "Paragraph C explains Chomsky's argument that humans possess an innate Language Acquisition Device (LAD) and Universal Grammar.",
+          "why": "Chomsky khẳng định con người bẩm sinh đã sở hữu cơ chế sinh học tiếp nhận ngôn ngữ (TRUE)."
+        },
+        {
+          "stmt": "B.F. Skinner believed children develop speech through subconscious genetic blueprints.",
+          "ans": "FALSE",
+          "clue": "Paragraph B states Skinner posited language is learned through operant conditioning, imitation, and parental reinforcement.",
+          "why": "Skinner theo trường phái hành vi, cho rằng ngôn ngữ do bắt chước và củng cố có điều kiện chứ không phải do gen (FALSE)."
+        },
+        {
+          "stmt": "Infants lose their ability to distinguish universal phonetic sounds within the first 48 hours of life.",
+          "ans": "FALSE",
+          "clue": "Paragraph D states statistical pruning occurs around ten to twelve months of age, not 48 hours.",
+          "why": "Trẻ sơ sinh duy trì khả năng phân biệt âm thanh của mọi ngôn ngữ đến 10-12 tháng tuổi mới thu hẹp dần (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "innate",
+          "r": "/ɪˈneɪt/",
+          "m": "bẩm sinh, có sẵn trong cấu trúc di truyền",
+          "ex": "Humans have an innate predisposition toward linguistic syntax."
+        },
+        {
+          "w": "phoneme",
+          "r": "/ˈfoʊ.niːm/",
+          "m": "âm vị (đơn vị âm thanh nhỏ nhất trong ngôn ngữ)",
+          "ex": "Infants can distinguish subtle differences between foreign phonemes."
+        },
+        {
+          "w": "neuroplasticity",
+          "r": "/ˌnʊr.oʊ.plæsˈtɪs.ə.t̬i/",
+          "m": "tính khả biến thần kinh (khả năng não bộ tái cấu trúc)",
+          "ex": "High neuroplasticity during childhood accelerates bilingual acquisition."
+        },
+        {
+          "w": "reinforce",
+          "r": "/ˌriː.ɪnˈfɔːrs/",
+          "m": "củng cố, tăng cường phản xạ",
+          "ex": "Caregivers naturally reinforce communicative gestures through smiling."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Map Comparison",
+        "minWords": 150,
+        "prompt": "The two maps illustrate the transformation of a small coastal fishing village called Port Moray between 2000 and 2020. Summarize the changes and describe notable infrastructure developments. (Write at least 150 words.)",
+        "modelAnswer": "The two maps delineate the infrastructural and commercial evolution of the coastal village of Port Moray over a twenty-year period from 2000 to 2020.\n\nOverall, the settlement underwent comprehensive modernization, transitioning from a tranquil artisanal fishing port into a vibrant maritime resort and tourist destination.\n\nIn 2000, Port Moray was predominantly agrarian and marine-focused. The northern waterfront featured small wooden fishing docks and boat sheds, flanked by a modest residential cluster of traditional cottages in the center. An extensive woodland occupied the eastern quadrant, while agricultural pastures bordered the west, accessible via a narrow single-lane road.\n\nBy 2020, profound redevelopment transformed the area. The old fishing docks were replaced by an expansive marina capable of accommodating private yachts, complemented by a luxury waterfront promenade lined with restaurants and souvenir boutiques. In the east, the woodland was cleared to make way for a four-story seaside hotel and a golf course. Furthermore, the residential zone expanded substantially with modern holiday apartments, and the access road was widened into a dual carriageway alongside an adjacent car park."
+      },
+      "task2": {
+        "type": "Task 2 · Discussion Essay",
+        "minWords": 250,
+        "prompt": "Some people argue that space exploration is a colossal waste of public financial resources that should be redirected to domestic socioeconomic problems. Others believe that investing in space missions is vital for the future of scientific advancement and human civilization. Discuss both views and give your own opinion. (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce space budget debate & state thesis: while domestic poverty is pressing, space exploration generates indispensable technological innovations that benefit Earth."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Arguments Against Space Spending)",
+            "guide": "Discuss urgent earthly crises: climate refugees, healthcare inequality, and public school underfunding."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Arguments for Space Exploration)",
+            "guide": "Discuss spinoff technologies (GPS, satellite weather monitoring, photovoltaic cells), asteroid mineral mining, and preserving humanity's survival."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm stance: investing a modest fraction of national wealth into space science yields monumental dividends for terrestrial sustainability."
+          }
+        ],
+        "linkingWords": [
+          "On the one hand,",
+          "On the other hand,",
+          "Furthermore,",
+          "Consequently,",
+          "In conclusion,"
+        ],
+        "modelEssay": "The allocation of state budgets toward space exploration has sparked enduring controversy, pitting proponents of scientific curiosity against advocates for urgent terrestrial needs. While skeptics assert that billions spent on extraterrestrial missions represent an unjustifiable indulgence amidst global poverty, I firmly contend that space investment drives indispensable technological breakthroughs that profoundly enhance life on Earth.\n\nOn the one hand, critics raise valid ethical concerns regarding resource prioritization. In developing and developed nations alike, millions of citizens grapple with acute socioeconomic hardship, crumbling medical infrastructure, and chronic food insecurity. Furthermore, catastrophic climate disruptions demand astronomical capital for flood barriers, reforestation, and renewable energy grids. From this perspective, spending public funds on launching exploratory probes to Mars can appear disconnected from the pressing suffering of impoverished communities, prompting calls to divert aerospace appropriations directly into public healthcare and social welfare.\n\nOn the other hand, viewing space science as an unproductive luxury betrays a fundamental misunderstanding of technological development. The stringent engineering demands of space missions have spawned numerous 'spinoff' technologies that underpin modern civilization, including satellite telecommunications, real-time GPS navigation, advanced photovoltaic cells, and digital medical imaging. Crucially, Earth observation satellites represent humanity's most critical diagnostic tool for monitoring polar ice-shelf melting, tracking deforestation, and predicting agricultural droughts. Beyond immediate utility, exploring outer space ensures the ultimate long-term resilience of human civilization against catastrophic asteroid impacts or terrestrial resource depletion.\n\nIn conclusion, although addressing socioeconomic challenges on Earth must remain a governmental priority, terminating space exploration would be dangerously short-sighted. By dedicating a reasonable portion of national budgets to aerospace research, humanity not only safeguards its future among the stars but also secures transformative technologies that preserve our home planet."
+      }
+    }
+  },
+  "2025-2": {
+    "band": "Band 7.0–8.0",
+    "title": "The Psychology of Memory & Public Health",
+    "sub": "Đề thi thực tế Vol 5: Cơ chế ghi nhớ não bộ & Bảo hiểm du lịch",
+    "listening": {
+      "title": "Section 1 · Airline Baggage Delay Claim Consultation",
+      "audioText": "Good afternoon, I arrived on flight BA 482 from Tokyo, but my checked luggage has not appeared on the carousel. I am very sorry for the inconvenience Ms Rachel. Let us file a Property Irregularity Report. Can I have your baggage claim tag number? Yes, it is TK 892 410. We have tracked your suitcase; it was mistakenly loaded onto a later connecting flight and will arrive tomorrow morning. We provide an immediate emergency essential allowance of up to 75 pounds for basic toiletries and clothing. Furthermore, our courier will deliver the suitcase directly to your hotel address free of charge.",
+      "transcript": "Rachel: Good afternoon, I arrived on flight BA 482 from Tokyo, but my checked luggage has not appeared on the carousel.\nOfficer: I'm very sorry for the inconvenience Ms. Rachel. Let us file a Property Irregularity Report. Can I have your baggage claim tag number?\nRachel: Yes, it is TK 892 410.\nOfficer: We have tracked your suitcase; it was mistakenly loaded onto a later connecting flight and will arrive tomorrow morning. We provide an immediate emergency essential allowance of up to 75 pounds for basic toiletries and clothing. Furthermore, our courier will deliver the suitcase directly to your hotel address free of charge.\nRachel: That is reassuring to hear. Here is my hotel voucher and contact number.",
+      "lines": [
+        {
+          "speaker": "Rachel",
+          "text": "Good afternoon, I arrived on flight BA 482 from Tokyo, but my checked luggage has not appeared on the carousel.",
+          "vi": "Xin chào, tôi vừa đáp chuyến bay BA 482 từ Tokyo, nhưng hành lý ký gửi vẫn chưa thấy trên băng chuyền."
+        },
+        {
+          "speaker": "Officer",
+          "text": "I'm very sorry for the inconvenience Ms. Rachel. Let us file a Property Irregularity Report. Can I have your baggage claim tag number?",
+          "vi": "Tôi rất tiếc vì sự bất tiện này cô Rachel. Chúng ta hãy lập Biên bản bất thường về tài sản. Cho tôi xin số thẻ hành lý được không?"
+        },
+        {
+          "speaker": "Rachel",
+          "text": "Yes, it is TK 892 410.",
+          "vi": "Dạ được, số thẻ là TK 892 410."
+        },
+        {
+          "speaker": "Officer",
+          "text": "We have tracked your suitcase; it was mistakenly loaded onto a later connecting flight and will arrive tomorrow morning. We provide an immediate emergency essential allowance of up to 75 pounds for basic toiletries and clothing. Furthermore, our courier will deliver the suitcase directly to your hotel address free of charge.",
+          "vi": "Chúng tôi đã định vị được vali của bạn; nó bị xếp nhầm sang chuyến nối chuyến muộn hơn và sẽ đến vào sáng mai. Chúng tôi cấp khoản hỗ trợ khẩn cấp lên đến 75 bảng để mua đồ dùng vệ sinh và quần áo cơ bản. Ngoài ra bên chuyển phát sẽ giao thẳng đến khách sạn miễn phí."
+        },
+        {
+          "speaker": "Rachel",
+          "text": "That is reassuring to hear. Here is my hotel voucher and contact number.",
+          "vi": "Nghe vậy tôi yên tâm rồi. Đây là phiếu đặt phòng và số điện thoại của tôi."
+        }
+      ],
+      "mc": {
+        "q": "What compensation does the airline provide immediately for the delayed baggage?",
+        "options": [
+          "A full ticket refund voucher",
+          "An emergency essentials allowance up to 75 pounds",
+          "A free night stay at an airport hotel",
+          "A complimentary business class upgrade"
+        ],
+        "answer": 1,
+        "why": "The officer confirms: \"...an immediate emergency essential allowance of up to 75 pounds for basic toiletries and clothing.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "The delayed suitcase will be delivered directly to the passenger's ____ address by courier tomorrow morning.",
+        "target": "hotel",
+        "rawTarget": "hotel",
+        "hint": "Gợi ý: Địa chỉ lưu trú của hành khách (hotel)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you consider yourself someone with a dependable memory for details?",
+          "vi": "Bạn có tự thấy mình là người có trí nhớ tốt về các chi tiết không?",
+          "st": "Generally speaking, I have...",
+          "sa": "Generally speaking, I have a sharp memory for spatial layouts and conceptual principles, though I occasionally forget minor numerical dates unless I record them in my calendar.",
+          "phrases": [
+            "sharp memory",
+            "conceptual principles",
+            "digital calendar",
+            "mnemonic techniques"
+          ]
+        },
+        {
+          "q": "How do you usually memorize important information for examinations or presentations?",
+          "vi": "Bạn thường ghi nhớ các thông tin quan trọng cho kỳ thi hoặc bài thuyết trình như thế nào?",
+          "st": "Rather than rote cramming...",
+          "sa": "Rather than rote cramming, I rely on active recall and spaced repetition. Quizzing myself periodically over several days solidifies knowledge far more effectively in long-term memory.",
+          "phrases": [
+            "active recall",
+            "spaced repetition",
+            "rote cramming",
+            "long-term memory"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an article, documentary, or medical talk about health or psychology that you found insightful.",
+        "prompts": [
+          "What the article, documentary, or talk was specifically about",
+          "Where and when you first encountered or listened to it",
+          "What key psychological or biological principles were explained",
+          "And explain how this knowledge changed your lifestyle or study habits."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe an eye-opening neuroscience documentary regarding the biological mechanisms of human sleep and memory consolidation. I watched this program on an educational streaming platform several months ago. The presentation demonstrated that sleep is not a passive dormant state; rather, during deep slow-wave and REM sleep, the hippocampus actively replays daily experiences and transfers them into the neocortex for permanent storage. What astonished me most was experimental evidence showing that chronic sleep deprivation severely impairs neurogenesis and increases brain toxins linked to cognitive decline. Learning this prompted me to radically overhaul my schedule: instead of pulling all-night cramming sessions before exams, I now prioritize a disciplined eight-hour sleep window, which has noticeably elevated my focus and retention."
+      },
+      "part3": [
+        {
+          "q": "Should public healthcare systems place greater emphasis on preventive wellness rather than curative treatments?",
+          "vi": "Hệ thống y tế công cộng có nên chú trọng nhiều hơn vào phòng ngừa thay vì chữa bệnh không?",
+          "sa": "Absolutely. Investing in preventative initiatives—such as subsidized nutrition counseling, community exercise facilities, and early biometric screenings—averts chronic diseases and prevents astronomical hospital costs."
+        },
+        {
+          "q": "How does excessive immersion in short-form digital media affect the human attention span and memory retention?",
+          "vi": "Việc xem quá nhiều video ngắn trên mạng xã hội ảnh hưởng thế nào đến sự tập trung và trí nhớ?",
+          "sa": "Continuous exposure to rapid 15-second stimuli conditions the brain to crave instant dopamine surges, weakening prefrontal cortical control and eroding the sustained focus required for deep intellectual retention."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The Psychology of Human Memory and Forgetting",
+      "paragraphs": [
+        "[A] For centuries, philosophers debated the nature of human recollection, but it was not until the late 19th century that memory was subjected to rigorous empirical inquiry. The German psychologist Hermann Ebbinghaus conducted foundational experiments upon himself, systematically memorizing thousands of nonsensical three-letter syllables (such as WID, ZOF, and KEP) to map the rate at which human recollection decays over time.",
+        "[B] Ebbinghaus discovered what is now universally termed the 'Forgetting Curve'. His quantitative data revealed that forgetting does not occur at a steady, linear pace; instead, information loss is precipitously steep within the first twenty minutes to twenty-four hours after encoding. However, beyond this critical threshold, the rate of decay flattens asymptotically, with remaining memories enduring indefinitely.",
+        "[C] Contemporary cognitive neuroscience has substantiated Ebbinghaus's behavioral observations through anatomical discoveries. Cognitive scientists divide memory into three interacting stages: fleeting sensory memory, limited working memory (which can hold roughly four to seven chunks of data), and virtually infinite long-term memory stored across vast neural networks.",
+        "[D] The physical transformation of temporary neural activations into durable memories is termed 'synaptic consolidation'. This intricate biological process requires the synthesis of novel proteins that physically strengthen the synaptic connections between neurons. Neuroimaging confirms that consolidation occurs predominantly during periods of quiet rest and slow-wave sleep, where the brain replays newly acquired information.",
+        "[E] Crucially, memory decay is not an irreversible biological fate. By employing 'spaced retrieval practice'—testing oneself at systematically expanding intervals—learners interrupt the forgetting curve. Each retrieval event reactivates synaptic pathways, rendering the memory trace progressively resistant to decay and optimizing lifelong intellectual mastery."
+      ],
+      "tfng": [
+        {
+          "stmt": "Ebbinghaus demonstrated that forgetting proceeds at a steady, unchanging rate over weeks.",
+          "ans": "FALSE",
+          "clue": "Paragraph B explains that forgetting occurs precipitously fast within the first 24 hours before flattening, rather than at a steady linear pace.",
+          "why": "Đường cong lãng quên diễn ra rất nhanh trong 24h đầu rồi thoải dần, không phải giảm đều đặn liên tục (FALSE)."
+        },
+        {
+          "stmt": "Sensory memory possesses the capacity to store large volumes of information for days.",
+          "ans": "FALSE",
+          "clue": "Paragraph C describes sensory memory as \"fleeting\" in contrast to infinite long-term memory.",
+          "why": "Trí nhớ giác quan chỉ thoáng qua trong tích tắc, không thể lưu nhiều ngày (FALSE)."
+        },
+        {
+          "stmt": "Deep sleep actively facilitates the biochemical consolidation of newly acquired memories.",
+          "ans": "TRUE",
+          "clue": "Paragraph D states: \"Neuroimaging confirms that consolidation occurs predominantly during periods of quiet rest and slow-wave sleep...\"",
+          "why": "Khoa học thần kinh xác nhận quá trình củng cố khớp thần kinh diễn ra chủ yếu khi ngủ sâu (TRUE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "consolidation",
+          "r": "/kənˌsɑː.ləˈdeɪ.ʃən/",
+          "m": "sự củng cố vững chắc (chuyển trí nhớ ngắn sang dài hạn)",
+          "ex": "Memory consolidation requires undisturbed sleep."
+        },
+        {
+          "w": "asymptotically",
+          "r": "/ˌeɪ.sɪmpˈtɑː.t̬ɪ.kəl.i/",
+          "m": "theo đường tiệm cận (giảm chậm dần gần như đi ngang)",
+          "ex": "The decay curve flattens asymptotically over time."
+        },
+        {
+          "w": "synaptic",
+          "r": "/sɪˈnæp.tɪk/",
+          "m": "thuộc về các khớp nối tế bào thần kinh",
+          "ex": "Repeated practice strengthens synaptic connections."
+        },
+        {
+          "w": "retrieval",
+          "r": "/rɪˈtriː.vəl/",
+          "m": "sự truy xuất, gợi nhớ thông tin từ não bộ",
+          "ex": "Active retrieval practice outperforms passive rereading."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Pie Charts",
+        "minWords": 150,
+        "prompt": "The pie charts compare the proportion of electricity generated from various energy sources in Australia in 2010 and 2025. Summarize the information and make comparisons where relevant. (Write at least 150 words.)",
+        "modelAnswer": "The two pie charts illustrate the composition of electricity generation by fuel source in Australia in 2010 alongside figures for 2025.\n\nOverall, the fifteen-year period witnessed a dramatic transition away from carbon-intensive fossil fuels toward renewable alternatives. While coal was overwhelmingly dominant in 2010, renewable energy sources expanded significantly to constitute the majority share by 2025.\n\nIn 2010, coal accounted for nearly three-quarters (72%) of Australia's total electricity output. Natural gas represented the second largest component at 18%, whereas renewable sources—comprising solar, wind, and hydro—generated a modest 8%, with oil making up the residual 2%.\n\nBy 2025, the energy landscape altered radically. Coal's proportion dropped precipitously to 34%, representing a reduction of more than half. Conversely, renewable energy surged to capture 46% of total electricity generation, establishing itself as the leading power source. Solar and wind energy drove this expansion, benefiting from extensive utility-scale investments. Meanwhile, natural gas remained relatively stable at 18%, and oil was virtually phased out at under 2%."
+      },
+      "task2": {
+        "type": "Task 2 · Agree or Disagree Essay",
+        "minWords": 250,
+        "prompt": "In order to combat escalating rates of obesity and chronic illnesses, some people advocate that governments should introduce heavy taxes on sugary soft drinks and unhealthy fast foods. To what extent do you agree or disagree? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce lifestyle disease crisis & state unequivocal agreement: fiscal taxation disincentivizes consumption while funding preventative healthcare."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Direct Impact)",
+            "guide": "Discuss price elasticity, deterring impulse purchasing among youth, and compelling beverage companies to reformulate recipes."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Revenue Reinvestment)",
+            "guide": "Discuss hypothecating tax revenues toward school sports programs and subsidizing fresh organic produce."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm stance: targeted fiscal intervention is a legitimate, necessary weapon against lifestyle diseases."
+          }
+        ],
+        "linkingWords": [
+          "First and foremost,",
+          "Consequently,",
+          "Furthermore,",
+          "In conclusion,",
+          "Moreover,"
+        ],
+        "modelEssay": "In response to the alarming escalation of obesity, diabetes, and cardiovascular disorders worldwide, public health advocates have increasingly urged governments to impose punitive excise taxes on sugar-sweetened beverages and ultra-processed fast foods. I wholeheartedly support this fiscal measure, as targeted taxation not only curtails harmful dietary consumption through financial disincentives but also generates vital public revenues to finance preventative health initiatives.\n\nFirst and foremost, fiscal taxation exerts a decisive deterrent effect on consumer purchasing behavior. Empirical evidence from public health interventions—such as tobacco taxation and sugar taxes enacted in Mexico and the United Kingdom—demonstrates that high excise levies trigger immediate reductions in sales. Because sugary sodas and processed fast foods are price-elastic non-essential luxuries, higher retail prices discourage habitual consumption, particularly among teenagers and low-income demographics who are disproportionately susceptible to junk food marketing. Furthermore, confronting manufacturers with tax liabilities creates powerful commercial incentives for agribusinesses to reformulate products with lower sugar concentrations.\n\nFurthermore, the financial revenues accrued from dietary taxes can be directly ring-fenced to subsidize nutritious food options and community wellness infrastructure. In many urban environments termed 'food deserts', fresh vegetables and fruits remain significantly more expensive per calorie than processed junk foods. Municipal governments can hypothecate soda tax proceeds to subsidize local farmer markets, provide nutritious school lunches, and construct public sports complexes. By altering the relative cost structure in favor of healthy dietary choices, authorities establish a sustainable structural framework that encourages long-term wellness.\n\nIn conclusion, imposing heavy taxes on sugar-laden drinks and fast foods represents a pragmatic and indispensable public health strategy. By disincentivizing unhealthy consumption and financing nutritional education, governments can stem the epidemic of chronic lifestyle diseases."
+      }
+    }
+  },
+  "2024-1": {
+    "band": "Band 7.5–8.5+",
+    "title": "The History of Silk & Remote Work Synergy",
+    "sub": "Đề thi thực tế Vol 8: Con đường tơ lụa cổ đại & Làm việc từ xa",
+    "listening": {
+      "title": "Section 1 · Health Club Induction & Fitness Assessment",
+      "audioText": "Good afternoon, I am scheduled for my new member fitness induction and trainer consultation. Welcome Thomas! My name is Karen and I will be conducting your health assessment. We will start with a quick cardiovascular check and calculate your target heart rate zones. Do you have any prior sports injuries? I had a minor ankle sprain six months ago while playing squash, but it has healed well. Understood. We will emphasize low-impact elliptical training and core stability. Here is your biometric smart locker key card, which gives you complimentary towel service and access to our thermal sauna.",
+      "transcript": "Thomas: Good afternoon, I'm scheduled for my new member fitness induction and trainer consultation.\nKaren: Welcome Thomas! My name is Karen and I'll be conducting your health assessment. We'll start with a quick cardiovascular check and calculate your target heart rate zones.\nThomas: Do you have any prior sports injuries?\nThomas: I had a minor ankle sprain six months ago while playing squash, but it has healed well.\nKaren: Understood. We'll emphasize low-impact elliptical training and core stability. Here is your biometric smart locker key card, which gives you complimentary towel service and access to our thermal sauna.\nThomas: Thank you Karen, I'm eager to get started.",
+      "lines": [
+        {
+          "speaker": "Thomas",
+          "text": "Good afternoon, I'm scheduled for my new member fitness induction and trainer consultation.",
+          "vi": "Chào buổi chiều, tôi có lịch hướng dẫn hội viên mới và tư vấn với huấn luyện viên."
+        },
+        {
+          "speaker": "Karen",
+          "text": "Welcome Thomas! My name is Karen and I'll be conducting your health assessment. We'll start with a quick cardiovascular check and calculate your target heart rate zones.",
+          "vi": "Chào anh Thomas! Tôi là Karen và tôi sẽ phụ trách đánh giá sức khỏe cho anh. Chúng ta sẽ bắt đầu bằng kiểm tra tim mạch và tính toán vùng nhịp tim mục tiêu."
+        },
+        {
+          "speaker": "Thomas",
+          "text": "I had a minor ankle sprain six months ago while playing squash, but it has healed well.",
+          "vi": "Tôi có bị bong gân cổ chân nhẹ cách đây sáu tháng khi chơi bóng quần (squash), nhưng đã hồi phục tốt rồi."
+        },
+        {
+          "speaker": "Karen",
+          "text": "Understood. We'll emphasize low-impact elliptical training and core stability. Here is your biometric smart locker key card, which gives you complimentary towel service and access to our thermal sauna.",
+          "vi": "Tôi hiểu rồi. Chúng ta sẽ chú trọng các bài tập máy đi bộ elip ít tác động lực và tăng cường cơ trọng tâm. Đây là thẻ từ tủ đồ thông minh sinh trắc học của anh, được miễn phí dịch vụ khăn tập và vào phòng xông hơi."
+        }
+      ],
+      "mc": {
+        "q": "Which low-impact exercise does Karen recommend to accommodate Thomas's previous ankle injury?",
+        "options": [
+          "High-impact sprint intervals",
+          "Elliptical cross-trainer machine",
+          "Heavy barbell deadlifts",
+          "Outdoor road cycling"
+        ],
+        "answer": 1,
+        "why": "Karen specifically advises: \"We'll emphasize low-impact elliptical training and core stability.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "The biometric key card grants Thomas complimentary towel service and access to the thermal ____.",
+        "target": "sauna",
+        "rawTarget": "sauna",
+        "hint": "Gợi ý: Phòng xông hơi thư giãn (sauna)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you prefer working or studying in a solitary environment or in a collaborative team?",
+          "vi": "Bạn thích làm việc hay học tập một mình trong không gian yên tĩnh hay trong một nhóm cộng tác?",
+          "st": "My preference largely hinges on...",
+          "sa": "My preference largely hinges on the nature of the task. For deep analytical writing or coding, I require complete solitude. However, for brainstorming and product design, collaborative synergy is indispensable.",
+          "phrases": [
+            "largely hinges on",
+            "complete solitude",
+            "brainstorming synergy",
+            "creative consensus"
+          ]
+        },
+        {
+          "q": "How do you maintain a clear boundary between your professional obligations and personal leisure?",
+          "vi": "Bạn duy trì ranh giới rõ ràng giữa công việc và thời gian thư giãn cá nhân bằng cách nào?",
+          "st": "I enforce a strict routine of...",
+          "sa": "I enforce a strict routine of shutting down work laptops by 6:30 PM and muting workplace communication apps during weekends to safeguard mental rejuvenation.",
+          "phrases": [
+            "strict routine",
+            "mental rejuvenation",
+            "unplug completely",
+            "work-life equilibrium"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe a demanding group assignment, workplace project, or team task you accomplished successfully.",
+        "prompts": [
+          "What the group assignment or project was and what its goals were",
+          "Who you collaborated with and what specific role you assumed",
+          "What hurdles or interpersonal friction arose during the workflow",
+          "And explain what key factors contributed to your team's ultimate triumph."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe an ambitious university capstone project where our team developed a cross-platform mobile application for local farmers to sell organic produce directly to urban consumers. Our group comprised four students: a backend developer, a UI designer, a marketing analyst, and myself acting as the project coordinator and frontend coder. The primary hurdle occurred mid-way through development when a critical API integration failure threatened our launch deadline, provoking considerable frustration among team members. Rather than apportioning blame, I scheduled an emergency retrospective meeting where we mapped out our technical bottlenecks on a whiteboard and re-allocated coding modules based on individual strengths. By maintaining transparent asynchronous documentation and holding brief daily standup calls, we resolved the technical impasse and delivered the completed prototype on schedule, earning the highest commendation from our faculty evaluators."
+      },
+      "part3": [
+        {
+          "q": "How will artificial intelligence tools alter asynchronous teamwork and office collaboration in the coming decades?",
+          "vi": "Các công cụ trí tuệ nhân tạo sẽ thay đổi sự cộng tác nhóm không đồng bộ và môi trường văn phòng như thế nào trong các thập kỷ tới?",
+          "sa": "AI copilots will automate routine minutes documentation, real-time multilingual translation, and intelligent task scheduling, allowing human teams to focus exclusively on strategic conceptualization and emotional leadership."
+        },
+        {
+          "q": "What psychological challenges do employees experience when working entirely remotely without face-to-face interaction?",
+          "vi": "Nhân viên gặp phải những thách thức tâm lý nào khi làm việc hoàn toàn từ xa mà không có tiếp xúc trực tiếp?",
+          "sa": "Prolonged remote working can induce insidious feelings of professional isolation, erosion of informal mentorship, and cognitive burnout caused by the blending of living rooms and office workstations."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The History of Silk and the Ancient Silk Road",
+      "paragraphs": [
+        "[A] For millennia, no textile has captivated humanity quite like silk. Revered for its shimmering luster, featherweight softness, and surprising tensile strength, silk was synonymous with regal luxury and geopolitical prestige. According to ancient Chinese mythology, the discovery of sericulture occurred around 2700 BCE when Empress Leizu was drinking tea beneath a mulberry tree. A cocoon fell into her steaming teacup, and as she attempted to fish it out, the hot water dissolved the sticky sericin protein, unfurling a continuous, glistening filament hundreds of meters long.",
+        "[B] Recognizing its extraordinary potential, the Chinese imperial court pioneered the complex craft of sericulture: rearing the domesticated silkworm (Bombyx mori), harvesting white mulberry leaves (Morus alba) to feed the ravenous caterpillars, and reeling delicate silk threads onto wooden bobbins to be woven on sophisticated handlooms into damasks and brocades.",
+        "[C] For over a millennium, China guarded the secrets of sericulture with ruthless tenacity. The imperial state held an absolute monopoly over silk production, and attempting to smuggle silkworm eggs or mulberry seeds outside Chinese borders was punishable by summary execution. Silk was so universally esteemed that lengths of silk fabric were officially used as currency to pay imperial taxes, ransom hostages, and reward military generals.",
+        "[D] The insatiable Western appetite for Chinese silk spurred the creation of the Silk Road—an intricate 6,400-kilometer network of overland trade routes spanning deserts and mountain passes from Chang'an through Central Asia to Antioch, Alexandria, and Rome. Wealthy Roman patricians paid astronomical sums in gold for translucent Chinese garments, prompting conservative Roman senators to decry silk imports as an immoral financial drain that sapped national treasury reserves.",
+        "[E] The Chinese monopoly was finally shattered in 552 CE through daring industrial espionage. Byzantine Emperor Justinian I enlisted two Nestorian monks who had traveled to China. The monks concealed live silkworm eggs and mulberry seeds within hollow bamboo walking sticks, successfully smuggling them past imperial border guards to Constantinople. This enabled the Byzantine Empire to establish its own thriving Mediterranean silk industry, ending China's two-thousand-year exclusive reign."
+      ],
+      "tfng": [
+        {
+          "stmt": "Under ancient Chinese law, exporting live silkworm eggs was punishable by capital punishment.",
+          "ans": "TRUE",
+          "clue": "Paragraph C states: \"...attempting to smuggle silkworm eggs or mulberry seeds outside Chinese borders was punishable by summary execution.\"",
+          "why": "Luật pháp phong kiến Trung Hoa trừng phạt tội buôn lậu trứng tằm bằng án tử hình (TRUE)."
+        },
+        {
+          "stmt": "Roman senators unanimously celebrated the importation of Chinese silk as a symbol of Roman prosperity.",
+          "ans": "FALSE",
+          "clue": "Paragraph D states: \"...prompting conservative Roman senators to decry silk imports as an immoral financial drain that sapped national treasury reserves.\"",
+          "why": "Các thượng nghị sĩ La Mã lên án tơ lụa là thứ xa xỉ vô đạo đức làm chảy máu vàng bạc quốc gia (FALSE)."
+        },
+        {
+          "stmt": "Byzantine monks smuggled silkworm eggs to Constantinople hidden inside hollow walking sticks.",
+          "ans": "TRUE",
+          "clue": "Paragraph E states: \"The monks concealed live silkworm eggs and mulberry seeds within hollow bamboo walking sticks...\"",
+          "why": "Các tu sĩ Byzantine đã giấu trứng tằm trong gậy tre rỗng để mang trót lọt về Constantinople (TRUE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "sericulture",
+          "r": "/ˈser.ɪ.kʌl.tʃɚ/",
+          "m": "nghề nuôi tằm ươm tơ",
+          "ex": "Ancient China maintained strict imperial control over sericulture."
+        },
+        {
+          "w": "espionage",
+          "r": "/ˈes.pi.ə.nɑːʒ/",
+          "m": "hoạt động gián điệp, đánh cắp bí mật thương mại",
+          "ex": "The monks carried out daring industrial espionage."
+        },
+        {
+          "w": "monopoly",
+          "r": "/məˈnɑː.pəl.i/",
+          "m": "độc quyền sản xuất và buôn bán",
+          "ex": "The Byzantine silk industry ended the Chinese monopoly."
+        },
+        {
+          "w": "filament",
+          "r": "/ˈfɪl.ə.mənt/",
+          "m": "sợi tơ siêu mảnh và dai",
+          "ex": "A single cocoon can yield an unbroken filament over 800 meters long."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Bar Chart",
+        "minWords": 150,
+        "prompt": "The bar chart below compares the average weekly hours dedicated to recreational and leisure pursuits by men and women across four distinct age groups in 2023. Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The bar chart provides a comparative analysis of average weekly hours devoted to recreational and leisure activities by males and females across four age brackets—18–24, 25–44, 45–64, and 65 and over—in 2023.\n\nOverall, men consistently enjoyed more leisure time than women across every demographic bracket. Furthermore, leisure hours exhibited a U-shaped distribution, with young adults and senior retirees experiencing significantly more recreational time than working-age adults.\n\nAmong the youngest cohort (18–24), men spent an average of 34 hours weekly on recreation, compared to 28 hours for women. Leisure hours contracted markedly during the peak working and child-rearing years (25–44), falling to 22 hours for males and just 16 hours for females, representing the lowest figures recorded.\n\nIn the 45–64 demographic, recreational time rebounded slightly to 26 hours for men and 21 hours for women. Finally, retirement among those aged 65 and over resulted in the highest leisure figures across the chart, with senior men dedicating 44 hours per week to leisure pursuits, closely followed by senior women at 38 hours."
+      },
+      "task2": {
+        "type": "Task 2 · Agree or Disagree Essay",
+        "minWords": 250,
+        "prompt": "Some people argue that working remotely from home is universally more advantageous for both employees and corporations than working in a centralized physical office. To what extent do you agree or disagree? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce remote work transformation & state nuanced disagreement: while telecommuting offers flexibility, universal remote models erode company culture and innovation."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Benefits)",
+            "guide": "Discuss eliminated commuting stress, geographic talent acquisition, and reduced corporate real estate overhead."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Drawbacks & Necessity of Office)",
+            "guide": "Discuss blurred work-life boundaries, onboarding difficulties for juniors, and spontaneous creative collaboration in physical spaces."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reiterate stance: hybrid models that combine remote flexibility with physical interaction outperform dogmatic universal remote setups."
+          }
+        ],
+        "linkingWords": [
+          "It is undeniable that",
+          "However,",
+          "Furthermore,",
+          "Consequently,",
+          "In conclusion,"
+        ],
+        "modelEssay": "The global paradigm shift toward telecommuting has prompted claims that working remotely from home is universally superior to working within centralized corporate offices for both workers and enterprises. While remote work delivers undeniable advantages in flexibility and overhead reduction, I firmly disagree that it is universally more beneficial, as completely virtual arrangements erode team cohesion, creative spontaneous innovation, and employee mental wellbeing.\n\nOn the one hand, remote working bestows unmistakable operational efficiencies. For employees, eliminating arduous daily commutes saves hundreds of hours annually, substantially lowering transportation expenditures and commuting stress. This reclaimed time affords workers greater autonomy to balance professional duties with familial responsibilities. For corporations, adopting distributed remote teams dramatically slashes capital expenditure on commercial office leases, utilities, and facility management. Furthermore, companies can recruit top-tier talent from global candidate pools without geographical limitations, fostering diverse international workforces.\n\nOn the other hand, the universal abolition of physical workspaces poses profound long-term hazards for corporate vitality and employee health. Firstly, spontaneous brainstorming and serendipitous creative breakthroughs rarely flourish in structured, scheduled video calls; physical co-presence remains indispensable for fostering trust and rapid problem-solving. Secondly, junior employees and new hires suffer immensely under fully remote regimes, as they are deprived of passive observational learning and informal mentorship from senior colleagues. Most critically, remote working frequently blurs the boundaries between professional obligations and domestic life, with employees feeling perpetually tethered to their computers, resulting in chronic burnout and social isolation.\n\nIn conclusion, although remote work offers valuable flexibility and cost savings, asserting that it is universally superior to office-based work is fundamentally flawed. A balanced hybrid model—combining the autonomy of telecommuting with the interpersonal energy of periodic office collaboration—represents the truly optimal strategy for modern business."
+      }
+    }
+  },
+  "2024-2": {
+    "band": "Band 7.0–8.0",
+    "title": "The Secret Life of Bees & Sustainable Freight",
+    "sub": "Đề thi thực tế Vol 4: Hội chứng sụp đổ bầy ong & Vận tải hàng hải",
+    "listening": {
+      "title": "Section 1 · International Sustainability Symposium Registration",
+      "audioText": "Good morning, I would like to confirm my delegate registration for the International Sustainability Symposium next month. Certainly Dr Evans! The early-bird academic pass is 280 euros, which grants access to all plenary halls and digital proceedings. Does the fee include the networking gala dinner on Thursday evening? Yes, the dinner and coffee breaks are included. We also offer a complimentary shuttle bus service from Airport Terminal 2 to the conference venue hotel every hour on Wednesday.",
+      "transcript": "Dr. Evans: Good morning, I'd like to confirm my delegate registration for the International Sustainability Symposium next month.\nRegistrar: Certainly Dr. Evans! The early-bird academic pass is 280 euros, which grants access to all plenary halls and digital proceedings.\nDr. Evans: Does the fee include the networking gala dinner on Thursday evening?\nRegistrar: Yes, the dinner and coffee breaks are included. We also offer a complimentary shuttle bus service from Airport Terminal 2 to the conference venue hotel every hour on Wednesday.\nDr. Evans: That is wonderfully convenient. I will finalize payment with my university credit card right now.",
+      "lines": [
+        {
+          "speaker": "Dr. Evans",
+          "text": "Good morning, I'd like to confirm my delegate registration for the International Sustainability Symposium next month.",
+          "vi": "Xin chào, tôi muốn xác nhận đăng ký đại biểu cho Hội nghị Chuyên đề Bền vững Quốc tế vào tháng tới."
+        },
+        {
+          "speaker": "Registrar",
+          "text": "Certainly Dr. Evans! The early-bird academic pass is 280 euros, which grants access to all plenary halls and digital proceedings.",
+          "vi": "Dạ được chứ Tiến sĩ Evans! Vé học thuật ưu đãi sớm là 280 euro, bao gồm quyền vào tất cả các hội trường chính và kỷ yếu số."
+        },
+        {
+          "speaker": "Dr. Evans",
+          "text": "Does the fee include the networking gala dinner on Thursday evening?",
+          "vi": "Mức phí đó đã bao gồm tiệc tối kết nối vào tối thứ Năm chưa?"
+        },
+        {
+          "speaker": "Registrar",
+          "text": "Yes, the dinner and coffee breaks are included. We also offer a complimentary shuttle bus service from Airport Terminal 2 to the conference venue hotel every hour on Wednesday.",
+          "vi": "Dạ có, tiệc tối và các bữa giải lao đã bao gồm. Chúng tôi cũng có xe đưa đón miễn phí từ Nhà ga sân bay số 2 đến khách sạn hội nghị mỗi tiếng một chuyến vào thứ Tư."
+        },
+        {
+          "speaker": "Dr. Evans",
+          "text": "That is wonderfully convenient. I will finalize payment with my university credit card right now.",
+          "vi": "Thật tiện lợi quá. Tôi sẽ thanh toán ngay bằng thẻ tín dụng của trường."
+        }
+      ],
+      "mc": {
+        "q": "From which airport location does the complimentary symposium shuttle bus depart?",
+        "options": [
+          "Terminal 1 arrivals concourse",
+          "Airport Terminal 2",
+          "Central Train Station",
+          "Airport Car Park 4"
+        ],
+        "answer": 1,
+        "why": "The registrar states: \"...complimentary shuttle bus service from Airport Terminal 2 to the conference venue hotel every hour on Wednesday.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "The 280-euro early-bird academic pass includes admission to the networking ____ dinner on Thursday evening.",
+        "target": "gala",
+        "rawTarget": "gala",
+        "hint": "Gợi ý: Buổi tiệc tối giao lưu trang trọng (gala)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "What mode of public transportation do you rely on most frequently?",
+          "vi": "Phương tiện giao thông công cộng nào bạn sử dụng thường xuyên nhất?",
+          "st": "In my everyday commute...",
+          "sa": "In my everyday commute, I rely extensively on the rapid transit metro. It is remarkably punctual, cost-effective, and shields me from stressful rush-hour traffic jams.",
+          "phrases": [
+            "everyday commute",
+            "rapid transit",
+            "remarkably punctual",
+            "avoid traffic congestion"
+          ]
+        },
+        {
+          "q": "Do you make a conscious effort to adopt environmentally friendly daily habits?",
+          "vi": "Bạn có ý thức áp dụng các thói quen thân thiện với môi trường trong cuộc sống hàng ngày không?",
+          "st": "I try my best to integrate...",
+          "sa": "I try my best to integrate sustainable choices, such as carrying a reusable water container, minimizing single-use plastics, and turning off electronic appliances when not in use.",
+          "phrases": [
+            "sustainable choices",
+            "single-use plastics",
+            "energy conservation",
+            "carbon footprint"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an eco-friendly habit or action you regularly practice to help protect the environment.",
+        "prompts": [
+          "What the eco-friendly habit or lifestyle choice is",
+          "When and why you decided to incorporate it into your routine",
+          "How easy or challenging it is to maintain consistently",
+          "And explain what positive ecological impact this practice contributes."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe my ongoing commitment to comprehensive waste segregation and eliminating single-use plastics. I adopted this habit roughly three years ago after watching an eye-opening environmental documentary about ocean plastic pollution and landfill degradation. In my home, I established dedicated bins to separate organic compost, paper, and clean rigid plastics. Furthermore, whenever I go grocery shopping, I always carry reusable canvas tote bags and glass containers. Initially, remembering to wash and sort every plastic carton was slightly inconvenient, but it has now become second nature. While individual action might appear modest, collectively reducing municipal landfill waste and conserving raw petroleum materials significantly eases ecological strain on planetary ecosystems."
+      },
+      "part3": [
+        {
+          "q": "Are mandatory government carbon regulations more effective than voluntary individual lifestyle changes?",
+          "vi": "Các quy định giảm phát thải bắt buộc của chính phủ có hiệu quả hơn những thay đổi tự nguyện của cá nhân không?",
+          "sa": "Undoubtedly. Individual initiatives are praiseworthy, but structural decarbonization requires binding legal mandates on heavy industries, aggressive carbon pricing, and large-scale renewable infrastructure investment."
+        },
+        {
+          "q": "How can international trade reduce the carbon footprint associated with long-distance freight?",
+          "vi": "Thương mại quốc tế có thể giảm lượng phát thải carbon từ vận chuyển hàng hóa đường dài bằng cách nào?",
+          "sa": "Shipping conglomerates must transition to green hydrogen or ammonia maritime fuels, optimize automated port logistics, and revive regional localized supply chains where feasible."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The Secret Life of Bees and Colony Collapse",
+      "paragraphs": [
+        "[A] Throughout terrestrial ecosystems, few creatures exert an ecological influence as profound as the humble honeybee (Apis mellifera). As primary biological pollinators, bees are responsible for fertilizing approximately one-third of all crops consumed by humanity, providing pollination services estimated by economists at over 200 billion dollars annually.",
+        "[B] However, over the past two decades, commercial beekeepers across North America and Europe have reported catastrophic losses due to a baffling phenomenon termed Colony Collapse Disorder (CCD). In affected apiaries, adult worker bees vanish suddenly and without trace, leaving behind an undamaged hive stocked with honey, pollen, and an abandoned queen bee.",
+        "[C] Early hypotheses attributed CCD to electromagnetic radiation from cellular towers or exotic viral pathogens. Yet, exhaustive epidemiological studies have revealed that no single rogue agent is to blame; rather, CCD represents a multi-factorial crisis driven by agricultural pesticides, parasitic infestation, and acute environmental malnutrition.",
+        "[D] Chief among chemical suspects are neonicotinoids—systemic neurotoxic insecticides widely coated on commercial seeds. As crops germinate, neonicotinoid residues permeate floral nectar and pollen. While sub-lethal to adult bees, exposure impairs their delicate neural circuitry, crippling their navigational memory and making it impossible for foragers to locate their way back to the hive.",
+        "[E] Compounding chemical toxicity is the ubiquitous Varroa destructor mite, an invasive parasite that feeds on bee fat bodies while transmitting deadly viruses. In response, modern agroecologists advocate for establishing flowering biodiversity corridors along monoculture farms, outlawing persistent agrochemicals, and breeding hygienic bee lineages capable of naturally resisting parasitic infestation."
+      ],
+      "tfng": [
+        {
+          "stmt": "Honeybees are biologically responsible for pollinating roughly one-third of the global food supply.",
+          "ans": "TRUE",
+          "clue": "Paragraph A confirms: \"...bees are responsible for fertilizing approximately one-third of all crops consumed by humanity...\"",
+          "why": "Bài đọc xác nhận ong mật chịu trách nhiệm thụ phấn cho khoảng 1/3 tổng lượng cây trồng lương thực của nhân loại (TRUE)."
+        },
+        {
+          "stmt": "Colony Collapse Disorder is caused solely by high-frequency radiation emitted by mobile communication masts.",
+          "ans": "FALSE",
+          "clue": "Paragraph C states: \"...no single rogue agent is to blame; rather, CCD represents a multi-factorial crisis driven by agricultural pesticides, parasitic infestation, and acute environmental malnutrition.\"",
+          "why": "Bài đọc bác bỏ giả thuyết sóng điện thoại và khẳng định đây là hội chứng do nhiều yếu tố kết hợp (FALSE)."
+        },
+        {
+          "stmt": "Neonicotinoid exposure destroys the ability of worker bees to navigate back to their colonies.",
+          "ans": "TRUE",
+          "clue": "Paragraph D states: \"...crippling their navigational memory and making it impossible for foragers to locate their way back to the hive.\"",
+          "why": "Thuốc trừ sâu nhóm neonicotinoid làm tê liệt trí nhớ định vị, khiến ong thợ không thể tìm đường về tổ (TRUE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "pollinator",
+          "r": "/ˈpɑː.lə.neɪ.t̬ɚ/",
+          "m": "loài động vật/côn trùng thụ phấn cho hoa",
+          "ex": "Bees are the most economically vital pollinators in agriculture."
+        },
+        {
+          "w": "pathogen",
+          "r": "/ˈpæθ.ə.dʒən/",
+          "m": "mầm bệnh vi sinh vật (vi khuẩn, virus)",
+          "ex": "The hive was infected with an opportunistic bacterial pathogen."
+        },
+        {
+          "w": "neonicotinoid",
+          "r": "/ˌniː.oʊ.nɪˈkɑː.tɪ.nɔɪd/",
+          "m": "thuốc trừ sâu tác động hệ thần kinh côn trùng",
+          "ex": "Many European nations banned neonicotinoids to protect wild bees."
+        },
+        {
+          "w": "forager",
+          "r": "/ˈfɔːr.ɪ.dʒɚ/",
+          "m": "cá thể đi kiếm ăn bên ngoài",
+          "ex": "Worker foragers travel several kilometers to collect nectar."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Process Diagram",
+        "minWords": 150,
+        "prompt": "The diagram below illustrates the sequential stages involved in the mechanical recycling of plastic polyethylene terephthalate (PET) bottles into synthetic textile fibers. Summarize the process and make comparisons where applicable. (Write at least 150 words.)",
+        "modelAnswer": "The flowchart delineates the industrial process through which discarded plastic polyethylene terephthalate (PET) beverage bottles are transformed into synthetic fleece fabrics.\n\nOverall, the manufacturing sequence comprises eight discrete stages, beginning with consumer waste collection and sorting, continuing through mechanical shredding and chemical purification, and culminating in spinning synthetic yarn for apparel production.\n\nInitially, post-consumer PET bottles are deposited into recycling bins and transported to central recovery facilities where automated optical sorters segregate clear bottles from colored containers. Following manual inspection, non-plastic bottle caps and paper labels are stripped away. The bottles are then compressed into dense bales and fed into an industrial granulator that shreds the plastic into minute flakes.\n\nSubsequently, these plastic flakes undergo intensive chemical decontamination in heated alkaline baths to eradicate beverage residues. Once thoroughly dried, the sterile flakes are melted down at approximately 260 degrees Celsius and extruded through microscopic spinneret nozzles to form continuous synthetic filaments. Finally, these filaments are stretched, cooled, crimped, and woven into high-performance polyester fleece garments."
+      },
+      "task2": {
+        "type": "Task 2 · Advantage & Disadvantage Essay",
+        "minWords": 250,
+        "prompt": "As international trade continues to expand, many food products and consumer goods are transported thousands of miles from where they are produced before reaching consumers. Do the advantages of this trend outweigh the disadvantages? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Acknowledge rise in global cargo transport & state thesis: while long-distance freight ensures variety, its environmental damage and supply fragility outweigh the benefits."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Advantages)",
+            "guide": "Discuss dietary diversity in cold regions, access to exotic commodities, and economic growth for export-driven developing economies."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Disadvantages)",
+            "guide": "Discuss massive bunker fuel maritime carbon emissions, plastic packaging waste, and extreme vulnerability to geopolitical supply chain shocks."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm verdict: negative environmental and strategic drawbacks decisively eclipse consumer convenience."
+          }
+        ],
+        "linkingWords": [
+          "It is undeniable that",
+          "On the other hand,",
+          "Consequently,",
+          "Moreover,",
+          "In conclusion,"
+        ],
+        "modelEssay": "In our interconnected globalized economy, an enormous volume of food produce and manufactured merchandise is freighted across thousands of ocean nautical miles prior to reaching retail shelves. While this international supply chain grants consumers unprecedented access to diverse commodities, I firmly contend that the severe ecological repercussions and strategic fragilities associated with long-distance freight decisively eclipse its immediate conveniences.\n\nOn the positive side, transcontinental freight bestows unmistakable economic and lifestyle benefits. For inhabitants of temperate and sub-arctic nations, importing tropical agricultural products—such as avocados, bananas, and coffee—ensures dietary variety throughout harsh winter seasons. Furthermore, the global agricultural trade represents an indispensable economic lifeline for developing countries in the Global South, where agricultural exports generate vital foreign exchange reserves and sustain millions of rural livelihoods. By capitalizing on comparative advantage, nations can specialize in goods they produce most efficiently, reducing unit costs for international consumers.\n\nNevertheless, the environmental ramifications of long-distance distribution are deeply troubling. Heavy container vessels and air cargo haulers consume colossal amounts of low-grade bunker fuel, discharging millions of tonnes of greenhouse gases, sulfur oxides, and particulate matter into marine atmospheres. Additionally, ensuring perishable foodstuffs survive protracted transit requires extensive chemical preservatives, synthetic refrigeration agents, and multi-layered plastic packaging that exacerbate global landfill crises. Strategically, relying on supply chains spanning continents creates acute economic vulnerability, as evidenced by recent geopolitical conflicts and maritime bottlenecks that triggered worldwide inflation and food shortages.\n\nIn conclusion, although shipping food and goods across the globe provides consumers with seasonal luxury and supports developing exporters, the resulting carbon emissions, packaging pollution, and geopolitical risks represent an intolerable price. Therefore, the disadvantages of long-distance freight undeniably outweigh its advantages."
+      }
+    }
+  },
+  "2023-1": {
+    "band": "Band 7.0–8.0",
+    "title": "Agricultural Revolution & Cultural Heritage",
+    "sub": "Đề thi thực tế Vol 7: Cách mạng nông nghiệp Lưỡi liềm màu mỡ & Giáo dục",
+    "listening": {
+      "title": "Section 1 · Camden Continuing Adult Education Registration",
+      "audioText": "Good evening, I would like to register for the Advanced Academic Spanish evening course. Welcome Elena! The class meets every Tuesday and Thursday evening from 6:30 PM to 8:30 PM. The full term fee is 310 pounds, which covers all instructional courseware, audio lab access, and the final certificate examination. Can the tuition be paid in monthly installments? Yes, you can pay in two equal installments of 155 pounds. Please bring a passport photo and your completed registration form to the student services desk.",
+      "transcript": "Elena: Good evening, I would like to register for the Advanced Academic Spanish evening course.\nAdmissions: Welcome Elena! The class meets every Tuesday and Thursday evening from 6:30 PM to 8:30 PM.\nElena: The full term fee is 310 pounds, which covers all instructional courseware, audio lab access, and the final certificate examination.\nElena: Can the tuition be paid in monthly installments?\nAdmissions: Yes, you can pay in two equal installments of 155 pounds. Please bring a passport photo and your completed registration form to the student services desk.\nElena: Wonderful. I will submit the paperwork tomorrow after work.",
+      "lines": [
+        {
+          "speaker": "Elena",
+          "text": "Good evening, I would like to register for the Advanced Academic Spanish evening course.",
+          "vi": "Chào buổi tối, tôi muốn đăng ký khóa học tiếng Tây Ban Nha học thuật nâng cao buổi tối."
+        },
+        {
+          "speaker": "Admissions",
+          "text": "Welcome Elena! The class meets every Tuesday and Thursday evening from 6:30 PM to 8:30 PM.",
+          "vi": "Chào mừng Elena! Lớp học diễn ra vào tối thứ Ba và thứ Năm hàng tuần, từ 6:30 đến 8:30 tối."
+        },
+        {
+          "speaker": "Elena",
+          "text": "The full term fee is 310 pounds, which covers all instructional courseware, audio lab access, and the final certificate examination.",
+          "vi": "Học phí trọn khóa là 310 bảng, bao gồm toàn bộ giáo trình, phòng lab âm thanh và kỳ thi cấp chứng chỉ cuối khóa."
+        },
+        {
+          "speaker": "Elena",
+          "text": "Can the tuition be paid in monthly installments?",
+          "vi": "Học phí có thể đóng làm nhiều đợt được không ạ?"
+        },
+        {
+          "speaker": "Admissions",
+          "text": "Yes, you can pay in two equal installments of 155 pounds. Please bring a passport photo and your completed registration form to the student services desk.",
+          "vi": "Dạ được, bạn có thể đóng thành 2 đợt bằng nhau, mỗi đợt 155 bảng. Vui lòng mang ảnh thẻ và đơn đăng ký đã điền đến bàn dịch vụ sinh viên."
+        }
+      ],
+      "mc": {
+        "q": "On which days of the week does the advanced evening language class take place?",
+        "options": [
+          "Monday and Wednesday",
+          "Tuesday and Thursday",
+          "Wednesday and Friday",
+          "Saturday morning only"
+        ],
+        "answer": 1,
+        "why": "The admissions officer states: \"The class meets every Tuesday and Thursday evening from 6:30 PM to 8:30 PM.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "Students paying tuition in two installments must provide a passport-sized ____ with their registration form.",
+        "target": "photo",
+        "rawTarget": "photo",
+        "hint": "Gợi ý: Ảnh chụp chân dung làm hồ sơ (photo/photograph)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you prefer reading physical paper books or electronic digital books?",
+          "vi": "Bạn thích đọc sách giấy truyền thống hay sách điện tử hơn?",
+          "st": "While digital tablets offer portability...",
+          "sa": "While digital e-readers offer incredible portability, I harbor a deep sentimental preference for physical paper books. Turning actual pages and inhaling the tactile scent of ink enhances immersion.",
+          "phrases": [
+            "portability",
+            "tactile scent",
+            "deep immersion",
+            "digital fatigue"
+          ]
+        },
+        {
+          "q": "How frequently do you visit your local municipal public library?",
+          "vi": "Bạn có thường xuyên đến thư viện công cộng tại địa phương không?",
+          "st": "Whenever I require absolute quietude...",
+          "sa": "Whenever I require absolute quietude for intense writing or academic research, I visit my community library. It provides a peaceful sanctuary free from household distractions.",
+          "phrases": [
+            "absolute quietude",
+            "peaceful sanctuary",
+            "academic focus",
+            "community resources"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an inspiring book, historical biography, or narrative that made a lasting impression on you.",
+        "prompts": [
+          "What the title of the book or historical narrative was",
+          "When you read it and what central themes it examined",
+          "What major insights or historical turning points it detailed",
+          "And explain why this narrative left an enduring impression on your worldview."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe an exceptional non-fiction work titled Guns, Germs, and Steel by Jared Diamond, which examines the broad trajectory of human civilization over the past 13,000 years. I read this book during my final year of secondary school. The central theme explores why European and Asian civilizations industrialized faster than cultures in the Americas or Africa. Diamond persuasively demonstrates that global inequality was not driven by genetic superiority, but rather by biogeographical fortune: the Fertile Crescent possessed the ideal wild cereal grains like emmer wheat and domesticable large mammals. Reading this fundamentally dismantled ethnocentric preconceptions for me and taught me to view human history through the lens of geographical and environmental determinism."
+      },
+      "part3": [
+        {
+          "q": "Will physical public libraries remain culturally indispensable in an era of universal online information?",
+          "vi": "Các thư viện công cộng truyền thống có còn giữ vai trò thiết yếu trong thời đại thông tin trực tuyến không?",
+          "sa": "Yes, absolutely. Libraries have evolved beyond book repositories; they function as inclusive community centers providing free high-speed internet, literacy coaching, and equitable social spaces for marginalized citizens."
+        },
+        {
+          "q": "How does studying human history prevent contemporary societies from repeating monumental mistakes?",
+          "vi": "Việc học lịch sử nhân loại giúp các xã hội hiện đại tránh lặp lại những sai lầm lớn như thế nào?",
+          "sa": "History illuminates recurring systemic patterns of economic inflation, ideological polarization, and ecological depletion. By analyzing the collapse of past civilizations, modern leaders can navigate contemporary crises with greater humility and foresight."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The Agricultural Revolution in the Fertile Crescent",
+      "paragraphs": [
+        "[A] For roughly 95 percent of human evolutionary history, anatomically modern Homo sapiens lived exclusively as mobile hunter-gatherers, moving in small kinship bands to forage wild tubers, seeds, and game. However, around 10,000 BCE in the Middle East—specifically in an arc stretching from modern Israel and Jordan through southeastern Turkey to western Iran known as the Fertile Crescent—humanity initiated the most consequential socioeconomic transition in its history: the Agricultural Revolution.",
+        "[B] The transformation from nomadic foraging to settled sedentary life was catalyzed by profound climatic warming following the end of the last Ice Age. Wild stands of emmer wheat, einkorn, and barley flourished across alluvial valleys. Archaeological digs indicate that the Natufian culture first established permanent stone villages to harvest these wild cereals before systematic cultivation began.",
+        "[C] Over successive generations, early farmers engaged in deliberate artificial selection: instead of harvesting wild grasses whose seeds shattered upon ripening, they selectively gathered mutant stalks whose seeds remained attached to the rachis. By sowing these mutant seeds, humans domesticated cereals that could be harvested en masse, accompanied by the pastoral domestication of wild goats, sheep, and pigs.",
+        "[D] Monumental discoveries at Göbekli Tepe in southeastern Turkey have revolutionized archaeological timelines. Dating to 9500 BCE, this complex of carved megalithic limestone pillars predates pottery and metal tools. Intricate carvings of predators and geometric motifs suggest that collective religious rituals and temple construction actually compelled nomadic bands to settle and farm nearby fields to feed temple builders.",
+        "[E] While agriculture generated surplus food that enabled explosive demographic growth, specialized crafts, and writing systems, it proved to be a double-edged sword. Paleopathological examinations of early agricultural skeletons reveal widespread dental caries, iron-deficiency anemia, and spinal deformities resulting from monotonous backbreaking field labor. Furthermore, agricultural surpluses fostered private property, standing armies, and entrenched social inequality."
+      ],
+      "tfng": [
+        {
+          "stmt": "The transition to agriculture occurred primarily due to abrupt climatic cooling in the Fertile Crescent.",
+          "ans": "FALSE",
+          "clue": "Paragraph B explicitly states: \"The transformation... was catalyzed by profound climatic warming following the end of the last Ice Age.\"",
+          "why": "Quá trình chuyển đổi sang nông nghiệp được kích hoạt bởi sự ấm lên của khí hậu, không phải do lạnh đi (FALSE)."
+        },
+        {
+          "stmt": "Excavations at Göbekli Tepe suggest religious temple construction may have preceded settled farming.",
+          "ans": "TRUE",
+          "clue": "Paragraph D states: \"...temple construction actually compelled nomadic bands to settle and farm nearby fields to feed temple builders.\"",
+          "why": "Các phát hiện tại Göbekli Tepe chỉ ra nhu cầu tổ chức nghi lễ và xây dựng đền đài đã thúc đẩy việc định cư và trồng trọt (TRUE)."
+        },
+        {
+          "stmt": "Skeletal remains indicate that early farmers enjoyed superior nutritional health compared to hunter-gatherers.",
+          "ans": "FALSE",
+          "clue": "Paragraph E states paleopathological analysis revealed widespread dental caries, anemia, and spinal deformities among early farmers.",
+          "why": "Bộ xương người nông dân thời kỳ đầu cho thấy họ bị suy dinh dưỡng, sâu răng và biến dạng cột sống nhiều hơn (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "sedentary",
+          "r": "/ˈsed.ən.ter.i/",
+          "m": "định cư một chỗ (không còn du mục du cư)",
+          "ex": "The shift from foraging to sedentary farming transformed human civilization."
+        },
+        {
+          "w": "domestication",
+          "r": "/dəˌmes.tɪˈkeɪ.ʃən/",
+          "m": "sự thuần hóa động vật/cây trồng hoang dã",
+          "ex": "Cereal domestication required generations of artificial selection."
+        },
+        {
+          "w": "alluvial",
+          "r": "/əˈluː.vi.əl/",
+          "m": "thuộc về đất phù sa bồi đắp màu mỡ",
+          "ex": "Alluvial soils along river valleys supported bountiful harvest yields."
+        },
+        {
+          "w": "surplus",
+          "r": "/ˈsɝː.pləs/",
+          "m": "lượng thặng dư dồi dào",
+          "ex": "Grain surpluses allowed societies to sustain specialized artisans."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Line Graph",
+        "minWords": 150,
+        "prompt": "The line graph below shows median residential real estate prices compared with average household earnings in a major metropolitan area between 1995 and 2025. Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The line graph delineates the divergent trends between median residential property prices and average household earnings in a prominent metropolitan region over a thirty-year timeframe from 1995 to 2025.\n\nOverall, while median household earnings exhibited modest, gradual upward growth throughout the period, real estate prices experienced an astronomical exponential surge, creating an ever-widening affordability gap for prospective homebuyers.\n\nIn 1995, residential home prices and household earnings were relatively aligned, standing at approximately $140,000 and $45,000 respectively, representing a price-to-income ratio of just over 3:1. Over the following decade, property values began to climb rapidly, reaching $260,000 by 2005, whereas incomes increased sluggishly to $52,000.\n\nBetween 2010 and 2025, the disparity intensified dramatically. Median housing prices skyrocketed from $310,000 to peak at an unprecedented $680,000 by 2025. Conversely, household earnings showed only marginal gains, rising to $72,000. Consequently, by 2025, the price-to-income ratio expanded to nearly 9.5:1, underscoring severe housing unaffordability in the metropolitan hub."
+      },
+      "task2": {
+        "type": "Task 2 · Two-Part Question Essay",
+        "minWords": 250,
+        "prompt": "Many national museums and historical galleries charge entrance fees while others provide free admission to the public. What are the advantages and disadvantages of charging for admission? In your opinion, should cultural institutions receive full state subsidy? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce museum admission debate & state thesis: while ticketing provides operational capital, museums must be free to ensure universal civic education."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Pros & Cons of Admission Fees)",
+            "guide": "Discuss advantages (direct revenue for restoration and curation) and disadvantages (financial barrier excluding low-income families and students)."
+          },
+          {
+            "part": "3. Body Paragraph 2 (State Subsidy Stance)",
+            "guide": "Argue why full state funding is essential: cultural heritage belongs to the public domain and fosters social cohesion and tourism."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm stance: governments should fully fund national museums to preserve democratic access to history and art."
+          }
+        ],
+        "linkingWords": [
+          "On the one hand,",
+          "However,",
+          "Furthermore,",
+          "In my perspective,",
+          "In conclusion,"
+        ],
+        "modelEssay": "The funding mechanisms of national museums and historical galleries have sparked intense discussion regarding accessibility and public finance. While introducing entrance tariffs helps institutions maintain exhibition standards, I firmly believe that national cultural institutions should be fully subsidized by the state to guarantee universal, barrier-free access for all citizens.\n\nThere are clear financial justifications for charging admission fees. Operating world-class cultural institutions entails substantial overhead costs, including climate-controlled conservation labs, high-tech security systems, and competitive curator salaries. Ticket revenues empower museums to acquire rare antiquities, stage innovative international exhibitions, and maintain heritage infrastructure without relying solely on precarious government grants. However, the cardinal drawback of ticketing is that it establishes an exclusionary financial barrier. When ticket prices are high, economically disadvantaged families, immigrants, and students are priced out of cultural enrichment, transforming public history into an elitist commodity.\n\nIn my perspective, national museums perform a vital civic and educational mission that merits complete state subsidy. Cultural heritage belongs collectively to the entire populace; therefore, studying national history, fine art, and scientific wonders should be considered a fundamental democratic right analogous to public primary education. Countries like the United Kingdom demonstrate that universal free admission to prestigious institutions—such as the British Museum and the National Gallery—drives monumental cultural engagement while stimulating billions in auxiliary tourism spending on hotels, hospitality, and retail.\n\nIn conclusion, although admission fees provide direct operating revenue, they inherently compromise social equity. Governments should fully underwrite national museums through public revenues, ensuring that humanity's collective cultural heritage remains democratically accessible to inspire future generations."
+      }
+    }
+  },
+  "2023-2": {
+    "band": "Band 7.5–8.5+",
+    "title": "The History of the Pencil & AI Innovations",
+    "sub": "Đề thi thực tế Vol 3: Lịch sử bút chì than chì & Nhà ở du học sinh",
+    "listening": {
+      "title": "Section 1 · International Student Homestay Registration",
+      "audioText": "Good morning, I am looking to arrange homestay accommodation for my upcoming semester at the university. Welcome David! We have family homestays and shared student flats. Do you have any specific dietary requirements? Yes, I am strictly vegetarian and would prefer a quiet room with a dedicated study desk. Not a problem. We have a lovely host family located five minutes from tram line 4. The weekly rent is 180 pounds, which includes water, gas, electricity, and high-speed Wi-Fi. That fits my budget well. Does the room include private laundry facilities? Yes, you have free access to the laundry room every Tuesday and Saturday.",
+      "transcript": "David: Good morning, I'm looking to arrange homestay accommodation for my upcoming semester at the university.\nAdvisor: Welcome David! We have family homestays and shared student flats. Do you have any specific dietary requirements?\nDavid: Yes, I am strictly vegetarian and would prefer a quiet room with a dedicated study desk.\nAdvisor: Not a problem. We have a lovely host family located five minutes from tram line 4. The weekly rent is 180 pounds, which includes water, gas, electricity, and high-speed Wi-Fi.\nDavid: That fits my budget well. Does the room include private laundry facilities?\nAdvisor: Yes, you have free access to the laundry room every Tuesday and Saturday.",
+      "lines": [
+        {
+          "speaker": "David",
+          "text": "Good morning, I'm looking to arrange homestay accommodation for my upcoming semester at the university.",
+          "vi": "Chào cô, em muốn sắp xếp chỗ ở dạng homestay cho học kỳ sắp tới tại trường đại học."
+        },
+        {
+          "speaker": "Advisor",
+          "text": "Welcome David! We have family homestays and shared student flats. Do you have any specific dietary requirements?",
+          "vi": "Chào David! Chúng tôi có dạng ở cùng gia đình bản xứ và căn hộ sinh viên. Em có yêu cầu ăn uống đặc biệt nào không?"
+        },
+        {
+          "speaker": "David",
+          "text": "Yes, I am strictly vegetarian and would prefer a quiet room with a dedicated study desk.",
+          "vi": "Dạ có, em ăn chay hoàn toàn và muốn có một phòng yên tĩnh với bàn học riêng."
+        },
+        {
+          "speaker": "Advisor",
+          "text": "Not a problem. We have a lovely host family located five minutes from tram line 4. The weekly rent is 180 pounds, which includes water, gas, electricity, and high-speed Wi-Fi.",
+          "vi": "Không thành vấn đề. Có một gia đình rất tốt cách tuyến tàu điện số 4 chỉ 5 phút. Tiền thuê là 180 bảng/tuần, đã bao gồm điện nước, gas và Wi-Fi tốc độ cao."
+        },
+        {
+          "speaker": "David",
+          "text": "That fits my budget well. Does the room include private laundry facilities?",
+          "vi": "Mức giá đó rất vừa với ngân sách của em. Chỗ ở có tiện nghi giặt ủi không ạ?"
+        },
+        {
+          "speaker": "Advisor",
+          "text": "Yes, you have free access to the laundry room every Tuesday and Saturday.",
+          "vi": "Có chứ, em được sử dụng phòng giặt đồ miễn phí vào thứ Ba và thứ Bảy hàng tuần."
+        }
+      ],
+      "mc": {
+        "q": "What is included in the weekly rent of 180 pounds?",
+        "options": [
+          "Breakfast and dinner every day",
+          "All utilities including high-speed Wi-Fi",
+          "Free monthly tram passes",
+          "Weekly room cleaning service"
+        ],
+        "answer": 1,
+        "why": "The advisor notes: \"The weekly rent is 180 pounds, which includes water, gas, electricity, and high-speed Wi-Fi.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "David informs the accommodation advisor that he is strictly ____ regarding his dietary preferences.",
+        "target": "vegetarian",
+        "rawTarget": "vegetarian",
+        "hint": "Gợi ý: Chế độ ăn uống không ăn thịt (vegetarian)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Which technological device or electronic gadget do you use most frequently?",
+          "vi": "Thiết bị công nghệ hay tiện ích điện tử nào bạn sử dụng thường xuyên nhất?",
+          "st": "Without a doubt, my smartphone...",
+          "sa": "Without a doubt, my smartphone is my most indispensable gadget. It functions as my portable office, communication portal, and educational reference tool throughout the entire day.",
+          "phrases": [
+            "indispensable gadget",
+            "portable office",
+            "seamless connectivity",
+            "multitask efficiently"
+          ]
+        },
+        {
+          "q": "Do you think modern devices make people more productive or more distracted?",
+          "vi": "Bạn nghĩ các thiết bị hiện đại giúp con người làm việc hiệu quả hơn hay dễ bị xao nhãng hơn?",
+          "st": "It truly acts as a double-edged sword...",
+          "sa": "It truly acts as a double-edged sword. While automated applications accelerate complex tasks, perpetual notifications and social media feeds can severely fragment our cognitive attention span.",
+          "phrases": [
+            "double-edged sword",
+            "fragment attention",
+            "cognitive focus",
+            "digital discipline"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe a modern electronic device, software, or technology that you find indispensable.",
+        "prompts": [
+          "What this piece of technology is and how often you use it",
+          "What primary functions and features it performs for you",
+          "How you learned to navigate and master its capabilities",
+          "And explain why your daily life would be significantly more challenging without it."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to talk about cloud-based collaborative productivity software, specifically digital note-taking and knowledge management applications. In my daily academic and professional routine, I use this platform continuously across my laptop, tablet, and smartphone. What makes this tool truly indispensable is its ability to synchronize unstructured ideas, lecture notes, academic citations, and project deadlines instantaneously in real time. Prior to adopting this system, my study materials were scattered across paper notebooks and disjointed folders. Now, with bidirectional linking and smart search capabilities, I can retrieve any research insight within seconds. Without this technology, managing complex cross-functional projects and maintaining rigorous intellectual organization would be exponentially more cumbersome."
+      },
+      "part3": [
+        {
+          "q": "How will artificial intelligence and automation alter white-collar professional careers over the next decade?",
+          "vi": "Trí tuệ nhân tạo và tự động hóa sẽ thay đổi các ngành nghề văn phòng như thế nào trong thập kỷ tới?",
+          "sa": "AI algorithms will automate routine analytical tasks such as financial auditing, legal research, and medical imaging analysis. Consequently, professionals must cultivate high-level ethical judgment, emotional empathy, and creative synthesis."
+        },
+        {
+          "q": "Does technological acceleration risk widening the socioeconomic divide between generations?",
+          "vi": "Sự tăng tốc công nghệ có nguy cơ nới rộng khoảng cách kinh tế xã hội giữa các thế hệ không?",
+          "sa": "Undoubtedly. Senior citizens and impoverished populations who lack digital literacy face systemic disenfranchisement as basic public services migrate exclusively to digital interfaces."
+        }
+      ]
+    },
+    "reading": {
+      "title": "The History of the Pencil",
+      "paragraphs": [
+        "[A] The common wooden pencil is one of humanity's most deceptively simple inventions. Millions are manufactured daily, yet few ponder the dramatic historical circumstances that gave birth to this universal writing utensil. The story began around 1564 when a colossal deposit of pure, solid graphite was unearthed in Borrowdale, in the Lake District of northern England.",
+        "[B] Locals initially believed they had discovered a novel variety of lead or 'plumbago', which they utilized to brand sheep. However, its exceptional military value soon became apparent: solid graphite was indispensable for lining molds used to cast cannonballs with unprecedented smoothness, making the mine a crown asset fiercely guarded by armed troops.",
+        "[C] Because the Borrowdale graphite was uniquely pure, it could be sawn into square sticks and wrapped with string to write without dirtying fingers. England held a strict global monopoly, and attempting to steal or smuggle graphite was deemed a capital offense. In Continental Europe, craftsmen struggled with inferior, impure graphite deposits that crumbled upon pressure.",
+        "[D] The breakthrough occurred during the Napoleonic Wars when the British naval blockade severed France's supply of Borrowdale graphite. Facing a severe national shortage of writing instruments, French scientist Nicolas-Jacques Conté developed a revolutionary process in 1795: he pulverized low-grade graphite into powder, blended it with fine clay, and fired the mixture in a high-temperature kiln.",
+        "[E] Conté's clay-graphite method solved the global supply problem and allowed manufacturers to control the pencil's hardness with mathematical precision. By altering the clay-to-graphite ratio, makers could produce hard, light lines (H) or soft, dark lines (B), establishing the universal grading scale still employed across the globe today."
+      ],
+      "tfng": [
+        {
+          "stmt": "Borrowdale graphite was initially mistaken for a variety of lead by local farmers.",
+          "ans": "TRUE",
+          "clue": "Paragraph B states: \"Locals initially believed they had discovered a novel variety of lead or 'plumbago'...\"",
+          "why": "Bài đọc xác nhận người dân địa phương ban đầu tưởng nhầm than chì là một loại quặng chì (TRUE)."
+        },
+        {
+          "stmt": "Smuggling graphite out of England was punishable by death under British crown law.",
+          "ans": "TRUE",
+          "clue": "Paragraph C states: \"...attempting to steal or smuggle graphite was deemed a capital offense.\"",
+          "why": "Từ \"capital offense\" chỉ tội danh bị xử phạt tử hình (TRUE)."
+        },
+        {
+          "stmt": "Nicolas-Jacques Conté's manufacturing technique made pencils significantly more brittle and easily broken.",
+          "ans": "FALSE",
+          "clue": "Paragraph D and E explain that Conté's kiln-fired clay-graphite mixture solved the crumbling problem and allowed precise hardness control.",
+          "why": "Kỹ thuật của Conté giúp bút chắc chắn, không bị vỡ vụn và điều chỉnh được độ cứng (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "pulverize",
+          "r": "/ˈpʌl.və.raɪz/",
+          "m": "nghiền nát thành bột mịn",
+          "ex": "The mineral was pulverized into ultra-fine particles before processing."
+        },
+        {
+          "w": "monopoly",
+          "r": "/məˈnɑː.pəl.i/",
+          "m": "độc quyền thương mại hoàn toàn",
+          "ex": "England maintained an absolute monopoly on pure graphite exports."
+        },
+        {
+          "w": "brittle",
+          "r": "/ˈbrɪt.əl/",
+          "m": "giòn, dễ gãy vụn khi chịu lực",
+          "ex": "Impure graphite was too brittle to produce solid writing sticks."
+        },
+        {
+          "w": "kiln",
+          "r": "/kɪln/",
+          "m": "lò nung nhiệt độ cao",
+          "ex": "The clay and graphite rods were hardened inside a specialized kiln."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Table",
+        "minWords": 150,
+        "prompt": "The table below displays the employment rates of university graduates across five major academic faculties within six months of graduation in 2022. Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The table provides a comparative breakdown of graduate employment outcomes across five distinct university faculties within six months of completing their degree in 2022.\n\nOverall, graduates from vocational and STEM disciplines secured full-time employment at significantly higher rates compared to those in arts and humanities. Medicine and Engineering emerged as the most career-stable faculties, whereas Arts & Humanities recorded the highest proportions in part-time work or further study.\n\nSpecifically, Medicine led all faculties with an impressive 92% full-time employment rate, alongside only 4% in further study and 2% unemployed. Engineering followed closely with 86% in full-time professional positions and an unemployment rate of 5%. Computer Science also performed robustly, achieving 81% full-time employment and 9% engaging in postgraduate degrees.\n\nIn stark contrast, only 52% of Arts & Humanities graduates attained full-time employment within six months. However, this discipline exhibited the largest cohort pursuing further education (24%) and part-time occupations (14%), with an overall unemployment rate of 10%."
+      },
+      "task2": {
+        "type": "Task 2 · Problem & Solution Essay",
+        "minWords": 250,
+        "prompt": "In many major cities worldwide, soaring housing costs have made it nearly impossible for young people to buy a home. What are the main causes of this problem, and what practical measures can governments and urban planners take to address it? (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Introduce acute urban housing crisis & state that speculative investment and supply constraints require legislative and zoning solutions."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Causes)",
+            "guide": "Discuss residential property financialization/speculation and rigid municipal zoning restricting new supply."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Solutions)",
+            "guide": "Discuss vacancy tax on speculative buyers, subsidized affordable housing developments, and high-speed rail to satellite towns."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reiterate that combining tax disincentives on speculation with expanding affordable transit-oriented housing can restore accessibility."
+          }
+        ],
+        "linkingWords": [
+          "First and foremost,",
+          "Consequently,",
+          "To tackle this issue,",
+          "Furthermore,",
+          "In conclusion,"
+        ],
+        "modelEssay": "Across metropolises worldwide, the escalating cost of residential property has precipitated an unprecedented housing crisis, rendering homeownership an unattainable dream for the younger generation. This unsustainable situation stems primarily from speculative real estate investment and severe housing shortages, demanding multi-pronged intervention through fiscal policy and forward-thinking urban planning.\n\nThe foremost driver of hyper-inflated home prices is the financialization of residential real estate. In many global capitals, housing has ceased to be viewed merely as shelter; instead, it is treated as a lucrative asset class by institutional investors and foreign speculators. By buying up residential blocks to generate passive rental yields or bank capital gains, speculators artificially restrict supply for first-time buyers. Additionally, outdated municipal zoning laws and protracted planning permissions impede the construction of high-density apartment complexes, creating an acute supply-demand mismatch in economic hubs where employment opportunities are concentrated.\n\nTo resolve this structural predicament, governments must deploy decisive legislative and infrastructural remedies. Firstly, authorities should introduce progressive stamp duties and punitive vacancy taxes on non-resident investors and unoccupied investment properties. By curbing speculative capital, property prices can cool to reflect local median household earnings. Secondly, urban planners must accelerate transit-oriented developments by investing in high-speed rail networks connecting satellite towns with central business districts. Expanding high-density social housing along commuter corridors enables young workers to acquire affordable apartments without sacrificing career accessibility.\n\nIn conclusion, skyrocketing housing costs are driven by unchecked real estate speculation and chronic regulatory supply bottlenecks. By enacting stringent anti-speculation tax policies and expanding transit-connected social developments, municipal governments can ensure that homeownership once again becomes an achievable milestone for young citizens."
+      }
+    }
+  },
+  "2022-1": {
+    "band": "Band 7.0–8.0",
+    "title": "William Gilbert & School Excursions",
+    "sub": "Đề thi thực tế Vol 1: Từ trường Trái Đất & Chuyến dã ngoại thực địa",
+    "listening": {
+      "title": "Section 1 · School Excursion to Brampton Nature Reserve",
+      "audioText": "Good morning Ms Jenkins. I am calling to inquire about the upcoming weekend excursion to Brampton Nature Reserve. Good morning Mark! The bus departs from the main campus gate at exactly 8:30 AM this Saturday. Great. What is the total fee, and does it include lunch? The student discount fee is 24 pounds, which includes transport, entry to the conservation center, and a guided woodland walk. You need to bring your own packed lunch and waterproof shoes. Understood. Are there specific activities planned for the afternoon? Yes, from 1:30 PM we will observe the bird ringing station and carry out water sampling at the lake. Do not forget your student ID card for registration.",
+      "transcript": "Mark: Good morning Ms. Jenkins. I'm calling to inquire about the upcoming weekend excursion to Brampton Nature Reserve.\nMs. Jenkins: Good morning Mark! The bus departs from the main campus gate at exactly 8:30 AM this Saturday.\nMark: Great. What is the total fee, and does it include lunch?\nMs. Jenkins: The student discount fee is 24 pounds, which includes transport, entry to the conservation center, and a guided woodland walk. You need to bring your own packed lunch and waterproof shoes.\nMark: Understood. Are there specific activities planned for the afternoon?\nMs. Jenkins: Yes, from 1:30 PM we will observe the bird ringing station and carry out water sampling at the lake. Don't forget your student ID card for registration.\nMark: Thank you very much. I will register online today.",
+      "lines": [
+        {
+          "speaker": "Mark",
+          "text": "Good morning Ms. Jenkins. I'm calling to inquire about the upcoming weekend excursion to Brampton Nature Reserve.",
+          "vi": "Chào cô Jenkins. Em gọi để hỏi về chuyến dã ngoại cuối tuần sắp tới tới Khu bảo tồn thiên nhiên Brampton."
+        },
+        {
+          "speaker": "Ms. Jenkins",
+          "text": "Good morning Mark! The bus departs from the main campus gate at exactly 8:30 AM this Saturday.",
+          "vi": "Chào Mark! Xe buýt xuất phát từ cổng chính lúc đúng 8 giờ 30 sáng thứ Bảy này."
+        },
+        {
+          "speaker": "Mark",
+          "text": "Great. What is the total fee, and does it include lunch?",
+          "vi": "Tuyệt quá. Tổng chi phí là bao nhiêu và đã bao gồm bữa trưa chưa ạ?"
+        },
+        {
+          "speaker": "Ms. Jenkins",
+          "text": "The student discount fee is 24 pounds, which includes transport, entry to the conservation center, and a guided woodland walk. You need to bring your own packed lunch and waterproof shoes.",
+          "vi": "Phí ưu đãi cho sinh viên là 24 bảng, gồm tiền xe, vé vào trung tâm bảo tồn và hướng dẫn viên đi rừng. Các em cần tự mang cơm trưa và đi giày chống nước."
+        },
+        {
+          "speaker": "Mark",
+          "text": "Understood. Are there specific activities planned for the afternoon?",
+          "vi": "Em hiểu rồi. Buổi chiều có hoạt động cụ thể nào không ạ?"
+        },
+        {
+          "speaker": "Ms. Jenkins",
+          "text": "Yes, from 1:30 PM we will observe the bird ringing station and carry out water sampling at the lake. Don't forget your student ID card for registration.",
+          "vi": "Có chứ, từ 1:30 chiều chúng ta sẽ quan sát trạm bấm vòng theo dõi chim và lấy mẫu nước tại hồ. Đừng quên mang thẻ sinh viên khi đăng ký nhé."
+        }
+      ],
+      "mc": {
+        "q": "What time does the excursion bus leave the main campus gate on Saturday?",
+        "options": [
+          "8:00 AM",
+          "8:30 AM",
+          "9:00 AM",
+          "9:30 AM"
+        ],
+        "answer": 1,
+        "why": "Ms. Jenkins confirms: \"The bus departs from the main campus gate at exactly 8:30 AM this Saturday.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "Students must bring their own packed lunch and waterproof ____ for the forest trail walk.",
+        "target": "shoes",
+        "rawTarget": "shoes",
+        "hint": "Gợi ý: Trang phục cần mang khi đi bộ đường ướt (shoes/boots)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you enjoy visiting natural reserves or outdoor parks in your free time?",
+          "vi": "Bạn có thích đi thăm các khu bảo tồn thiên nhiên hay công viên ngoài trời khi rảnh rỗi không?",
+          "st": "To be completely honest, I find...",
+          "sa": "To be completely honest, I find spending time in nature incredibly rejuvenating. Whenever my academic schedule permits, I visit nearby parks to escape the hustle and bustle of city life.",
+          "phrases": [
+            "rejuvenating",
+            "hustle and bustle",
+            "academic schedule",
+            "escape routine"
+          ]
+        },
+        {
+          "q": "Did you frequently participate in school excursions during your childhood?",
+          "vi": "Hồi nhỏ bạn có thường xuyên tham gia các chuyến tham quan dã ngoại của trường không?",
+          "st": "Looking back at my school years...",
+          "sa": "Looking back at my school years, we had annual excursions to historical landmarks and botanical gardens. Those trips provided fantastic opportunities for experiential learning beyond textbooks.",
+          "phrases": [
+            "experiential learning",
+            "botanical gardens",
+            "broaden horizons",
+            "memorable highlights"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an influential scientist or historical figure whose discoveries you find inspiring.",
+        "prompts": [
+          "Who this person was and what historical era they lived in",
+          "What groundbreaking discovery or invention they made",
+          "How you first learned about their scientific contributions",
+          "And explain why their approach or legacy continues to inspire you."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to talk about William Gilbert, a prominent Elizabethan physician and physicist recognized worldwide as the father of modern electricity and magnetism. Born in Colchester in 1544, he studied medicine at Cambridge and rose to become personal physician to Queen Elizabeth I. However, his enduring legacy lies in physics and his 1600 treatise, De Magnete. Prior to his work, people held superstitious beliefs that garlic could demagnetize compasses. Gilbert conducted meticulous experiments that debunked these myths and demonstrated that the Earth itself acts as a colossal spherical magnet with two distinct magnetic poles. What inspires me most is his pioneering adoption of empirical observation over dogmatic authority, laying the cornerstone for Galileo and the scientific revolution."
+      },
+      "part3": [
+        {
+          "q": "Why is empirical research more dependable than traditional theoretical assumptions?",
+          "vi": "Tại sao nghiên cứu thực nghiệm lại đáng tin cậy hơn các giả định lý thuyết truyền thống?",
+          "sa": "Empirical research grounds theoretical speculation in concrete, observable evidence. Without systematic experimentation and rigorous peer review, flawed assumptions can persist unchallenged for generations."
+        },
+        {
+          "q": "Should governments prioritize funding for basic science or applied commercial technologies?",
+          "vi": "Chính phủ nên ưu tiên cấp vốn cho khoa học cơ bản hay các công nghệ ứng dụng thương mại?",
+          "sa": "A balanced approach is vital. While commercial technology yields rapid economic returns, fundamental pure science unlocks revolutionary discoveries that transform human civilization over the long term."
+        }
+      ]
+    },
+    "reading": {
+      "title": "William Gilbert and Magnetism",
+      "paragraphs": [
+        "[A] The 16th and 17th centuries were marked by great scientific upheaval. Galileo Galilei and William Gilbert stand out as the two towering figures who spearheaded modern scientific inquiry. While Galileo is internationally celebrated for his astronomical breakthroughs, William Gilbert—heralded as the father of electricity and magnetism—remains less familiar to the general public, despite his revolutionary impact.",
+        "[B] Born into a respectable family in Colchester in 1544, Gilbert pursued his higher education at St John's College, Cambridge, where he earned his Bachelor of Arts, Master of Arts, and ultimately his doctorate in medicine in 1569. He subsequently established an esteemed medical practice in London, rising to become the President of the Royal College of Physicians and the personal physician to Queen Elizabeth I.",
+        "[C] Although medicine guaranteed him social stature and wealth, Gilbert's true intellectual passion lay in physics. At the time, Britain was emerging as an ambitious maritime power. Long-distance sea voyages depended critically on the magnetic compass, yet ship navigators routinely encountered erratic variations in needle behavior without understanding why.",
+        "[D] Prior to Gilbert, navigation was clouded by folklore. It was widely believed that compasses pointed toward massive magnetic mountains in the arctic or the pole star, and that rubbing garlic on a lodestone would destroy its magnetic properties. Gilbert methodically tested these claims through direct experimentation, decisively disproving the garlic myth and creating a spherical lodestone called a 'terrella' to simulate the Earth.",
+        "[E] In his monumental 1600 publication, De Magnete, Gilbert demonstrated that our entire planet functions as a colossal magnet. Furthermore, he coined the Latin term 'electricus' after discovering that amber, when rubbed, attracts lightweight debris. Crucially, Gilbert insisted that knowledge must be built upon demonstrable experiments rather than blind deference to ancient authorities."
+      ],
+      "tfng": [
+        {
+          "stmt": "Gilbert was knighted by Queen Elizabeth I specifically for his medical discoveries.",
+          "ans": "NOT GIVEN",
+          "clue": "Paragraph B mentions he was the physician to Queen Elizabeth I, but makes no mention of being knighted for medical discoveries.",
+          "why": "Bài đọc chỉ nêu ông là bác sĩ riêng của Nữ hoàng, hoàn toàn không có thông tin về việc được phong hiệp sĩ vì phát minh y tế (NOT GIVEN)."
+        },
+        {
+          "stmt": "Gilbert disproved the widespread belief that garlic could neutralize a magnet.",
+          "ans": "TRUE",
+          "clue": "Paragraph D states: \"Gilbert methodically tested these claims through direct experimentation, decisively disproving the garlic myth...\"",
+          "why": "Bài đọc xác nhận rõ Gilbert đã làm thí nghiệm trực tiếp và bác bỏ hoàn toàn quan niệm tỏi làm mất từ tính (TRUE)."
+        },
+        {
+          "stmt": "Gilbert believed the Earth's magnetic poles were perfectly identical to the geographic poles.",
+          "ans": "FALSE",
+          "clue": "Paragraph C and D explain that ship navigators encountered erratic compass needle variations, which led Gilbert to discover magnetic variation.",
+          "why": "Sự sai lệch giữa kim la bàn và cực địa lý là lý do chính Gilbert nghiên cứu và phát hiện từ trường biến thiên (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "lodestone",
+          "r": "/ˈloʊd.stoʊn/",
+          "m": "quặng đá nam châm thiên nhiên",
+          "ex": "Ancient sailors used lodestone to magnetize early iron compass needles."
+        },
+        {
+          "w": "empirical",
+          "r": "/ɪmˈpɪr.ɪ.kəl/",
+          "m": "dựa trên thực nghiệm và quan sát thực tế",
+          "ex": "Modern scientific theory relies heavily on empirical evidence."
+        },
+        {
+          "w": "upheaval",
+          "r": "/ʌpˈhiː.vəl/",
+          "m": "bước chuyển mình lớn, sự biến động sâu sắc",
+          "ex": "The 17th century was an era of profound scientific upheaval."
+        },
+        {
+          "w": "erratically",
+          "r": "/ɪˈræt.ɪ.kli/",
+          "m": "thất thường, không thể đoán định",
+          "ex": "The compass needle shifted erratically near the metallic ores."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Line Graph",
+        "minWords": 150,
+        "prompt": "The graph below shows primary energy consumption by fuel source in the UK from 1990 to 2020, with projections to 2030. Summarize the information by selecting and reporting the main features, and make comparisons where relevant. (Write at least 150 words.)",
+        "modelAnswer": "The line graph illustrates changes in primary energy consumption across four different fuel sources in the United Kingdom between 1990 and 2020, alongside projected figures up to 2030.\n\nOverall, fossil fuels experienced a pronounced downward trajectory throughout the period, whereas renewable energy displayed substantial growth that is forecast to accelerate further by 2030.\n\nIn 1990, coal was the dominant energy source, accounting for approximately 65 million tonnes of oil equivalent (Mtoe). However, coal usage plummeted dramatically over the subsequent decades, falling below 5 Mtoe by 2020 and anticipated to phase out entirely by 2030. Natural gas rose initially to a peak of 70 Mtoe around 2000 before declining steadily to 40 Mtoe in 2020.\n\nIn stark contrast, renewable energy sources—including wind, solar, and hydroelectricity—registered negligible consumption in 1990 at under 2 Mtoe. Over the thirty-year timeframe, renewables expanded remarkably, reaching roughly 35 Mtoe in 2020. Projections indicate that renewables will surpass natural gas by 2028, reaching an estimated 55 Mtoe by 2030."
+      },
+      "task2": {
+        "type": "Task 2 · Discussion Essay",
+        "minWords": 250,
+        "prompt": "Some people believe that university education should be completely free for all students, funded entirely by the state. Others argue that students should pay tuition fees because higher education primarily benefits individuals. Discuss both views and give your own opinion. (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Paraphrase prompt & state thesis: while free tuition promotes social equity, an income-contingent cost-sharing model is more sustainable."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Free Education)",
+            "guide": "Discuss democratizing access, removing student debt, and producing positive societal externalities."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Tuition Fees)",
+            "guide": "Discuss personal financial returns of graduates, avoiding regressive taxation, and institutional resources."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Restate balanced opinion: subsidized tuition paired with income-linked repayment schemes."
+          }
+        ],
+        "linkingWords": [
+          "On the one hand,",
+          "On the other hand,",
+          "Consequently,",
+          "In stark contrast,",
+          "Furthermore,",
+          "Ultimately,"
+        ],
+        "modelEssay": "The question of whether tertiary education should be fully subsidized by the government or funded through individual tuition fees remains a subject of intense debate worldwide. While tuition-free universities foster social equity and equal opportunities, I believe that a cost-sharing model supported by income-contingent loans offers a more sustainable and balanced solution.\n\nOn the one hand, proponents of free university education emphasize its role in democratizing access to professional careers. When financial barriers are dismantled, talented students from underprivileged socio-economic backgrounds can pursue high-demand degrees without incurring debilitating student debt. Furthermore, a highly educated populace yields significant collective dividends for society, including higher tax contributions, lower crime rates, and accelerated technological innovation. Scandinavian nations, for instance, demonstrate that publicly funded higher education contributes directly to social cohesion and civic progress.\n\nOn the other hand, opponents contend that the personal economic returns from obtaining a university degree justify individual investment. Graduates typically enjoy higher lifetime earnings, enhanced job security, and upward social mobility compared to non-graduates. Consequently, requiring taxpayers—many of whom did not attend university themselves—to subsidize degrees for future high-earners can be viewed as regressive. Moreover, universal state funding often strains national budgets, potentially compromising educational infrastructure, faculty salaries, and research facilities.\n\nIn conclusion, although state investment in higher education is crucial for national competitiveness, completely free tuition is neither fiscally sustainable nor entirely equitable. A pragmatic approach involves subsidized tuition fees paired with flexible income-driven loan schemes, ensuring that tertiary education remains accessible to all while maintaining institutional excellence."
+      }
+    }
+  },
+  "2022-2": {
+    "band": "Band 7.0–8.5",
+    "title": "Going Bananas & Coastal Archaeology",
+    "sub": "Đề thi thực tế Vol 2: Nguy cơ tuyệt chủng chuối & Khảo cổ học duyên hải",
+    "listening": {
+      "title": "Section 1 · Community Sports & Leisure Centre Membership",
+      "audioText": "Hello, I would like to ask about joining the sports complex, particularly using the Olympic pool and fitness suite. Certainly! We have three tiers: Standard, Off-Peak, and Platinum. The Platinum pass gives you 24-hour gym access and unlimited swimming. How much is the Platinum membership per month? It is 45 pounds per month on a 12-month contract, plus a one-off joining fee of 20 pounds which includes a free session with a personal trainer. That sounds very reasonable. Are fitness classes like yoga included? Yes, all studio classes are complimentary for Platinum members, though you must reserve your spot at least 24 hours in advance through our app.",
+      "transcript": "Sarah: Hello, I'd like to ask about joining the sports complex, particularly using the Olympic pool and fitness suite.\nOfficer: Certainly! We have three tiers: Standard, Off-Peak, and Platinum. The Platinum pass gives you 24-hour gym access and unlimited swimming.\nSarah: How much is the Platinum membership per month?\nOfficer: It is 45 pounds per month on a 12-month contract, plus a one-off joining fee of 20 pounds which includes a free session with a personal trainer.\nSarah: That sounds very reasonable. Are fitness classes like yoga included?\nOfficer: Yes, all studio classes are complimentary for Platinum members, though you must reserve your spot at least 24 hours in advance through our app.",
+      "lines": [
+        {
+          "speaker": "Sarah",
+          "text": "Hello, I'd like to ask about joining the sports complex, particularly using the Olympic pool and fitness suite.",
+          "vi": "Xin chào, tôi muốn hỏi về việc đăng ký trung tâm thể thao, đặc biệt là dùng bể bơi Olympic và phòng gym."
+        },
+        {
+          "speaker": "Officer",
+          "text": "Certainly! We have three tiers: Standard, Off-Peak, and Platinum. The Platinum pass gives you 24-hour gym access and unlimited swimming.",
+          "vi": "Chắc chắn rồi ạ! Chúng tôi có ba hạng: Chuẩn, Giờ thấp điểm và Bạch kim. Thẻ Bạch kim cho phép tập 24/24 và bơi không giới hạn."
+        },
+        {
+          "speaker": "Sarah",
+          "text": "How much is the Platinum membership per month?",
+          "vi": "Hạng Bạch kim giá bao nhiêu một tháng vậy bạn?"
+        },
+        {
+          "speaker": "Officer",
+          "text": "It is 45 pounds per month on a 12-month contract, plus a one-off joining fee of 20 pounds which includes a free session with a personal trainer.",
+          "vi": "Dạ 45 bảng mỗi tháng theo hợp đồng 12 tháng, cộng với phí gia nhập một lần 20 bảng đã bao gồm 1 buổi tập riêng với huấn luyện viên cá nhân."
+        },
+        {
+          "speaker": "Sarah",
+          "text": "That sounds very reasonable. Are fitness classes like yoga included?",
+          "vi": "Mức giá rất hợp lý. Các lớp thể hình như yoga đã được bao gồm chưa?"
+        },
+        {
+          "speaker": "Officer",
+          "text": "Yes, all studio classes are complimentary for Platinum members, though you must reserve your spot at least 24 hours in advance through our app.",
+          "vi": "Dạ có, tất cả các lớp nhóm đều miễn phí cho hội viên Bạch kim, tuy nhiên bạn cần đặt chỗ trước ít nhất 24 giờ qua ứng dụng."
+        }
+      ],
+      "mc": {
+        "q": "What special benefit is included with the 20-pound joining fee?",
+        "options": [
+          "A branded sports water bottle",
+          "A complimentary session with a personal trainer",
+          "Two free sauna vouchers",
+          "A personalized diet consultation"
+        ],
+        "answer": 1,
+        "why": "The membership officer explicitly mentions: \"...plus a one-off joining fee of 20 pounds which includes a free session with a personal trainer.\""
+      },
+      "fill": {
+        "prompt": "Listen and fill in the missing word (write ONE word only):",
+        "sentence": "Platinum members must book group fitness studio classes at least 24 hours ahead using the mobile ____.",
+        "target": "app",
+        "rawTarget": "app",
+        "hint": "Gợi ý: Ứng dụng điện thoại để đặt trước chỗ (app)"
+      }
+    },
+    "speaking": {
+      "title": "IELTS Speaking · 3 Parts",
+      "part1": [
+        {
+          "q": "Do you engage in regular physical exercise or sports activities?",
+          "vi": "Bạn có tham gia tập thể dục hay chơi thể thao thường xuyên không?",
+          "st": "To maintain my physical wellbeing...",
+          "sa": "To maintain my physical wellbeing, I try to go swimming twice a week and do high-intensity interval training. Exercising regularly helps alleviate stress from work and improves cardiovascular endurance.",
+          "phrases": [
+            "physical wellbeing",
+            "alleviate stress",
+            "cardiovascular endurance",
+            "consistent routine"
+          ]
+        },
+        {
+          "q": "What is your opinion on exercising outdoors compared to working out in a gym?",
+          "vi": "Quan điểm của bạn thế nào về việc tập luyện ngoài trời so với tập trong phòng gym?",
+          "st": "Both options provide distinct advantages...",
+          "sa": "Both options provide distinct advantages. Gyms offer specialized equipment and air conditioning, while outdoor activities like trail running or cycling expose you to sunlight and fresh natural scenery.",
+          "phrases": [
+            "distinct advantages",
+            "specialized equipment",
+            "scenic surroundings",
+            "boost vitality"
+          ]
+        }
+      ],
+      "part2": {
+        "title": "Describe an ancient historic site, archaeological monument, or museum you have visited.",
+        "prompts": [
+          "Where this historic site or monument is located",
+          "When and with whom you visited it",
+          "What architectural or archaeological features caught your attention",
+          "And explain how this visit deepened your appreciation of history."
+        ],
+        "prepSeconds": 60,
+        "speakSeconds": 120,
+        "modelAnswer": "I would like to describe the dramatic coastal ruins of Dunluce Castle, perched precariously on basalt cliffs on the northern coast of County Antrim. I visited this medieval fortress two years ago during a research trip with friends. The castle dates back to the 13th century and witnessed intense clan warfare and maritime trade. What fascinated me most was its extreme vulnerability to coastal erosion; in fact, historical records state that part of the castle kitchen collapsed directly into the turbulent Atlantic sea during an intense storm in 1639. Walking among the ancient stone masonry while listening to the roaring waves below gave me a palpable sense of how inexorably nature reclaims human constructions over centuries."
+      },
+      "part3": [
+        {
+          "q": "How does global climate change and sea-level rise threaten coastal archaeological sites?",
+          "vi": "Biến đổi khí hậu toàn cầu và nước biển dâng đe dọa các di chỉ khảo cổ học ven biển như thế nào?",
+          "sa": "Accelerated sea-level rise and severe maritime storms intensify shoreline erosion, washing away unrecorded prehistoric strata and destabilizing ancient stone ruins faster than archaeologists can survey them."
+        },
+        {
+          "q": "Who should bear the primary financial burden of preserving cultural heritage: the public or private sector?",
+          "vi": "Ai nên gánh vác trách nhiệm tài chính chính trong việc bảo tồn di sản văn hóa: nhà nước hay khối tư nhân?",
+          "sa": "Preserving national heritage is fundamentally a collective civic duty, so public funding must provide the baseline. However, public-private partnerships and ethical tourism revenues can supply critical supplemental funds."
+        }
+      ]
+    },
+    "reading": {
+      "title": "Going Bananas",
+      "paragraphs": [
+        "[A] The banana is the world's most globally consumed fruit, serving as a staple food source for over 400 million people across developing nations and a multi-billion dollar export commodity for multinational agribusinesses. Yet, beneath this veneer of supermarket abundance lies a grave biological crisis: the commercial banana is on the brink of extinction.",
+        "[B] The fundamental vulnerability of the commercial banana stems from its lack of genetic diversity. The modern yellow banana sold in Western grocery stores belongs almost exclusively to a single variety known as the Cavendish. Because commercial bananas are sterile and seedless, every single Cavendish plant is a genetically identical clone propagated through vegetative cuttings.",
+        "[C] This is not the first time the banana industry has faced disaster. In the first half of the 20th century, the dominant global export variety was the Gros Michel, renowned for being sweeter, larger, and tougher than today's bananas. However, in the 1950s, a virulent soil-borne fungus known as Panama Disease (Fusarium oxysporum) decimated plantations across Central America, forcing growers to adopt the Cavendish because it was immune to the fungus.",
+        "[D] Today, history is repeating itself with alarming speed. A mutated fungal strain termed Tropical Race 4 (TR4) has emerged, to which the Cavendish has zero natural immunity. Having originated in Southeast Asia, TR4 has spread inexorably through Australia, the Middle East, Africa, and recently arrived in Latin America—the epicenter of global export production.",
+        "[E] Because TR4 lingers in the soil for decades and resists chemical fungicides, agronomists are racing against time. Solutions include cross-breeding wild seeded bananas from the jungles of Malaysia and deploying CRISPR gene-editing to engineer resistance genes into the Cavendish genome before supermarket shelves empty out."
+      ],
+      "tfng": [
+        {
+          "stmt": "The Gros Michel variety became extinct because it was too delicate to be transported internationally.",
+          "ans": "FALSE",
+          "clue": "Paragraph C explains that Gros Michel was actually tougher than modern bananas, but was wiped out by Panama Disease.",
+          "why": "Bài đọc chỉ ra Gros Michel cứng cáp và bền hơn chuối hiện nay, nguyên nhân bị xóa sổ là do nấm bệnh Panama (FALSE)."
+        },
+        {
+          "stmt": "Every commercial Cavendish banana tree is a genetic clone of one another.",
+          "ans": "TRUE",
+          "clue": "Paragraph B states: \"every single Cavendish plant is a genetically identical clone propagated through vegetative cuttings.\"",
+          "why": "Khẳng định trong bài đọc xác nhận mọi cây chuối Cavendish thương mại đều là bản sao vô tính giống hệt nhau (TRUE)."
+        },
+        {
+          "stmt": "Chemical fungicides have proven effective in completely eradicating Tropical Race 4 from infected soil.",
+          "ans": "FALSE",
+          "clue": "Paragraph E states: \"Because TR4 lingers in the soil for decades and resists chemical fungicides...\"",
+          "why": "Nấm TR4 tồn tại nhiều thập kỷ trong đất và kháng lại các loại thuốc diệt nấm hóa học (FALSE)."
+        }
+      ],
+      "vocab": [
+        {
+          "w": "monoculture",
+          "r": "/ˈmɑː.nəˌkʌl.tʃɚ/",
+          "m": "độc canh (chỉ trồng duy nhất một giống loài)",
+          "ex": "Agricultural monoculture leaves crops exceptionally vulnerable to epidemics."
+        },
+        {
+          "w": "virulent",
+          "r": "/ˈvɪr.jə.lənt/",
+          "m": "độc lực cao, lây lan cực kỳ nguy hiểm",
+          "ex": "The virulent strain of the fungus spread across continents."
+        },
+        {
+          "w": "decimate",
+          "r": "/ˈdes.ə.meɪt/",
+          "m": "tàn phá nặng nề, tiêu diệt phần lớn",
+          "ex": "Panama disease decimated commercial plantations throughout the region."
+        },
+        {
+          "w": "clone",
+          "r": "/kloʊn/",
+          "m": "bản sao di truyền giống hệt thế hệ trước",
+          "ex": "Cavendish bananas are clones reproduced without genetic seeds."
+        }
+      ]
+    },
+    "writing": {
+      "title": "IELTS Writing · Task 1 & Task 2",
+      "task1": {
+        "type": "Task 1 · Academic Bar Chart",
+        "minWords": 150,
+        "prompt": "The chart below shows the percentage of households with high-speed broadband internet in five European countries between 2005 and 2020. Summarize the information and make comparisons. (Write at least 150 words.)",
+        "modelAnswer": "The bar chart compares broadband connectivity penetration rates across households in five European nations—namely the UK, Germany, France, Sweden, and Italy—at five-year intervals from 2005 to 2020.\n\nOverall, all five countries witnessed dramatic upward trajectories in broadband adoption over the fifteen-year period. Sweden maintained the highest connectivity rate throughout, whereas Italy consistently recorded the lowest percentages.\n\nIn 2005, high-speed broadband was relatively scarce, with Sweden leading at 38% and the UK following at 28%. Germany and France reported modest figures of 22% and 18% respectively, while Italy trailed significantly at just 12%.\n\nBy 2020, widespread telecommunications infrastructure resulted in substantial convergence. Sweden achieved near-universal household coverage at 94%, closely followed by the United Kingdom and Germany at 89% and 86% respectively. Although Italy registered steady growth, rising to 68% by 2020, it remained well below its northern European counterparts."
+      },
+      "task2": {
+        "type": "Task 2 · Opinion Essay",
+        "minWords": 250,
+        "prompt": "Some people believe that universities should focus exclusively on providing students with practical knowledge and skills for their future careers. Others think that the primary purpose of higher education is to pursue knowledge for its own sake, regardless of career utility. Discuss both views and give your opinion. (Write at least 250 words.)",
+        "outline": [
+          {
+            "part": "1. Introduction",
+            "guide": "Paraphrase topic & state balanced thesis: universities must cultivate foundational analytical inquiry alongside career vocational skills."
+          },
+          {
+            "part": "2. Body Paragraph 1 (Career Skills)",
+            "guide": "Discuss economic realities, graduate employability, and meeting acute national industry labor shortages."
+          },
+          {
+            "part": "3. Body Paragraph 2 (Knowledge for its Own Sake)",
+            "guide": "Discuss critical reasoning, philosophical depth, and cognitive resilience against rapid technological obsolescence."
+          },
+          {
+            "part": "4. Conclusion",
+            "guide": "Reaffirm thesis: premier universities harmonize utilitarian training with intellectual enlightenment."
+          }
+        ],
+        "linkingWords": [
+          "On the one hand,",
+          "On the other hand,",
+          "Furthermore,",
+          "In conclusion,",
+          "Consequently,",
+          "By contrast,"
+        ],
+        "modelEssay": "The core mandate of tertiary institutions has ignited enduring debate between utilitarian pragmatism and classical liberal education. While vocational training equips graduates with immediate labor market competencies, I firmly maintain that universities must preserve a dual philosophy: cultivating intellectual curiosity and analytical inquiry alongside professional readiness.\n\nOn the one hand, advocates of a career-focused curriculum emphasize economic necessity. In an era of rapid technological disruption and escalating tuition fees, students and parents rightly view higher education as a substantial financial investment. Specializing in computer science, clinical nursing, or financial engineering delivers concrete technical skills that translate into high employability and address critical national labor shortages. When universities prioritize commercial relevance, they bridge the gap between academic theory and workplace demands, ensuring graduates contribute effectively to economic productivity from day one.\n\nOn the other hand, reducing universities to mere vocational training centers undermines their historic mission as bastions of enlightenment. Engaging in theoretical philosophy, classical literature, and pure mathematics cultivates intellectual breadth, ethical discernment, and critical thinking—faculties that transcend individual vocations. Furthermore, in an unpredictable job market where specific technical tools become obsolete within years, graduates who possess deep cognitive adaptability and problem-solving fundamentals demonstrate far greater resilience than those trained solely for narrow technical tasks.\n\nIn conclusion, universities should not be compelled to choose between practical employment training and intellectual exploration. The most prestigious and effective institutions are those that harmonize both ideals, producing well-rounded scholars who possess both the philosophical maturity to reflect on society and the practical capabilities to drive it forward."
+      }
+    }
   }
 };
 
@@ -3608,7 +5694,9 @@ function showIeltsSummaryModal(t) {
       h('button', { class: 'accent block grow', onclick: () => {
         overlay.remove();
         if (IELTS_MODE === 'volumes') {
-          IELTS_CURRENT_VOL = (IELTS_CURRENT_VOL % IELTS_IOT_VOLUMES.length) + 1;
+          const cIdx = IELTS_IOT_VOLUMES.findIndex((v) => v.vol === IELTS_CURRENT_VOL);
+          const nextVol = IELTS_IOT_VOLUMES[(cIdx + 1) % IELTS_IOT_VOLUMES.length];
+          IELTS_CURRENT_VOL = nextVol.vol;
         } else {
           const d = DATA.en;
           const idx = d.topics.indexOf(t);
@@ -3831,14 +5919,17 @@ function ieltsView(t, initialSkill = 'listen') {
 }
 
 let IELTS_MODE = 'volumes'; // 'volumes' (ieltsonlinetests.com) hoặc 'topics' (90 chủ đề)
-let IELTS_CURRENT_VOL = 1;
+let IELTS_CURRENT_VOL = '2026-1'; // Mặc định mở bộ đề mới nhất năm 2026 ở trên đầu
+let IELTS_FILTER_YEAR = 'all'; // 'all', 2026, 2025, 2024, 2023, 2022
 
 function ieltsTabView() {
   const code = S.lang;
   if (code !== 'en') return go('home');
   const d = DATA[code];
   
-  const currentVol = (IELTS_MODE === 'volumes') ? (IELTS_IOT_VOLUMES.find((v) => v.vol === IELTS_CURRENT_VOL) || IELTS_IOT_VOLUMES[0]) : null;
+  const currentVol = (IELTS_MODE === 'volumes')
+    ? (IELTS_IOT_VOLUMES.find((v) => v.vol === IELTS_CURRENT_VOL) || IELTS_IOT_VOLUMES[0])
+    : null;
   const t = (IELTS_MODE === 'volumes' && currentVol)
     ? { id: 'vol_' + currentVol.vol, lang: 'en', title: currentVol.title, sub: currentVol.sub, level: currentVol.targetBand }
     : (d.topics.find((x) => x.id === IELTS_TOPIC[code]) || d.topics[0]);
@@ -3847,18 +5938,50 @@ function ieltsTabView() {
   const data = getIeltsData(t, currentVol);
   const doneCount = ieltsDoneCount(t);
 
-  // Bộ chọn Volume theo ieltsonlinetests.com
+  // Bộ lọc năm (2026 xếp đầu, 2025, 2024, 2023, 2022)
+  const years = [2026, 2025, 2024, 2023, 2022];
+  const yearFilterChips = h('div', { class: 'row', style: { gap: '6px', margin: '4px 0 6px 0', flexWrap: 'wrap' } },
+    ...['all', ...years].map((yr) => {
+      const isActive = (IELTS_FILTER_YEAR === yr || (yr === 'all' && !IELTS_FILTER_YEAR));
+      const lbl = yr === 'all' ? 'Tất cả năm' : (yr === 2026 ? '⚡ 2026 (Mới nhất)' : 'Năm ' + yr);
+      return h('button', {
+        class: 'mini ' + (isActive ? 'accent' : 'ghost'),
+        style: { fontSize: '.8rem', fontWeight: isActive ? 700 : 500, padding: '4px 10px' },
+        onclick: () => {
+          IELTS_FILTER_YEAR = yr;
+          if (yr !== 'all') {
+            const firstOfYr = IELTS_IOT_VOLUMES.find((v) => v.year === yr);
+            if (firstOfYr) IELTS_CURRENT_VOL = firstOfYr.vol;
+          }
+          ieltsTabView();
+        }
+      }, lbl);
+    })
+  );
+
+  // Menu chọn đề thi theo từng năm (2026 ở trên đầu)
+  const displayedVols = (IELTS_FILTER_YEAR === 'all')
+    ? IELTS_IOT_VOLUMES
+    : IELTS_IOT_VOLUMES.filter((v) => v.year === parseInt(IELTS_FILTER_YEAR, 10));
+
+  const volGroups = years.map((yr) => {
+    const list = displayedVols.filter((v) => v.year === yr);
+    if (!list.length) return null;
+    const label = yr === 2026 ? '✨ Đề thi IELTS 2026 (Mới nhất)' : ('📅 Đề thi IELTS ' + yr);
+    return h('optgroup', { label }, ...list.map((v) => h('option', {
+      value: v.vol,
+      selected: currentVol && currentVol.vol === v.vol
+    }, '📄 ' + v.code + ': ' + v.title + ' (' + v.type + ' · ' + v.targetBand + ')')));
+  }).filter(Boolean);
+
   const volSelect = h('select', {
-    'aria-label': 'Bộ đề thi IELTS Online Tests',
+    'aria-label': 'Kho đề thi IELTS 2022–2026',
     onchange: (e) => {
-      IELTS_CURRENT_VOL = parseInt(e.target.value, 10);
+      IELTS_CURRENT_VOL = e.target.value;
       IELTS_ACTIVE_SKILL = 'listen';
       ieltsTabView();
     }
-  }, ...IELTS_IOT_VOLUMES.map((v) => h('option', {
-    value: v.vol,
-    selected: currentVol && currentVol.vol === v.vol
-  }, '📄 ' + v.code + ': ' + v.title + ' (' + v.type + ' · ' + v.targetBand + ')')));
+  }, ...volGroups);
 
   const topicPick = topicPicker(code, IELTS_TOPIC, ieltsTabView);
 
@@ -3867,7 +5990,7 @@ function ieltsTabView() {
       class: 'mini ' + (IELTS_MODE === 'volumes' ? 'primary' : 'ghost'),
       style: { fontWeight: 600 },
       onclick: () => { IELTS_MODE = 'volumes'; ieltsTabView(); }
-    }, '📚 Đề thi IELTS Online Tests (Volumes 1–8)'),
+    }, '📚 Kho Đề thi IELTS 2022–2026 (ieltsonlinetests.com)'),
     h('button', {
       class: 'mini ' + (IELTS_MODE === 'topics' ? 'primary' : 'ghost'),
       style: { fontWeight: 600 },
@@ -3883,9 +6006,9 @@ function ieltsTabView() {
         langSwitch()
       )
     ),
-    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Mô phỏng đề thi thực tế theo chuẩn ieltsonlinetests.com · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
+    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com/vi/ielts-exam-library) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
     modeSwitch,
-    IELTS_MODE === 'volumes' ? volSelect : topicPick,
+    IELTS_MODE === 'volumes' ? h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect) : topicPick,
     h('div', { class: 'row between', style: { alignItems: 'center', margin: '4px 0 6px 0', padding: '10px 14px', background: 'rgba(15, 82, 87, 0.08)', border: '1px solid rgba(15, 82, 87, 0.22)', borderRadius: '12px' } },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
         h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
