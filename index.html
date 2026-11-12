@@ -504,6 +504,37 @@ body { overflow-x: hidden; }
     align-items: center;
   }
 }
+.skill-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 4px;
+  margin: 6px 0 10px 0;
+}
+.skill-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: .95rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.skill-tab-btn.active {
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
+}
 .ielts-tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -750,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0945';
+const APP_BUILD_ID = '20261112-1135';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1679,6 +1710,7 @@ function toast(m) { const t = document.getElementById('toast'); t.textContent = 
 const ICON = {
   github: 'M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z',
   home: 'M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z',
+  skills: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z',
   speak: 'M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm6-3a6 6 0 0 1-12 0M12 18v3',
   cards: 'M4 7h12v13H4zM8 4h12v13',
   pen: 'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',
@@ -1753,10 +1785,10 @@ function langSwitch() {
 
 // ===== Điều hướng =====
 let VIEW = 'pick'; // mở app là màn hình chọn ngôn ngữ
+let SKILL_TAB = 'speak'; // 'speak' | 'write'
 const TABS = [
   ['home', 'Học', ICON.home],
-  ['speak', 'Nói', ICON.speak],
-  ['write', 'Viết', ICON.pen],
+  ['skills', 'Kỹ năng', ICON.skills],
   ['ielts', 'Luyện IELTS', ICON.book],
   ['grammar', 'Ngữ pháp', ICON.book],
   ['progress', 'Tiến độ', ICON.chart]
@@ -1766,20 +1798,34 @@ function setTabs(show) {
   document.body.classList.toggle('lessonmode', !show);
   if (!show) return;
   const filtered = TABS.filter(([k]) => {
-    if (k === 'ielts') return S.lang === 'en'; // Tab IELTS nằm sau Viết, trước Tiến độ
-    if (k === 'grammar') return S.lang !== 'en'; // Tab Ngữ pháp nằm sau Viết, trước Tiến độ
+    if (k === 'ielts') return S.lang === 'en'; // Tab IELTS nằm sau Kỹ năng, trước Tiến độ
+    if (k === 'grammar') return S.lang !== 'en'; // Tab Ngữ pháp nằm sau Kỹ năng, trước Tiến độ
     return true;
   });
-  nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', { 'aria-current': VIEW === k ? 'page' : null, onclick: () => go(k) }, icon(d), label)));
+  nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', {
+    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write'))) ? 'page' : null,
+    onclick: () => go(k)
+  }, icon(d), label)));
 }
-function go(k) { VIEW = k; route(); }
+function go(k) {
+  if (k === 'speak') {
+    SKILL_TAB = 'speak';
+    VIEW = 'skills';
+  } else if (k === 'write') {
+    SKILL_TAB = 'write';
+    VIEW = 'skills';
+  } else {
+    VIEW = k;
+  }
+  route();
+}
 async function route() {
   if (!S.name) return welcomeView();
   if (VIEW === 'pick') return pickView();
   setTabs(true);
   try {
     if (VIEW !== 'progress') { mount(h('p', { class: 'loading' }, 'Đang tải bài học…')); await loadLang(S.lang); }
-    ({ home: homeView, review: reviewView, ielts: ieltsTabView, speak: speakView, write: writeView, grammar: grammarTabView, progress: progressView })[VIEW]();
+    ({ home: homeView, review: reviewView, skills: skillsView, ielts: ieltsTabView, speak: speakView, write: writeView, grammar: grammarTabView, progress: progressView })[VIEW]();
   } catch (e) {
     mount(h('div', { class: 'panel stack' }, h('p', {}, e.message || 'Có lỗi khi tải.'), h('button', { class: 'primary', onclick: route }, 'Thử lại')));
   }
@@ -8745,13 +8791,12 @@ function speakItems(code, t) {
   (t.coach || []).forEach((c) => out.push({ kind: 'coach', c, group: 'Coach · trả lời câu hỏi' }));
   return out;
 }
-function speakView() {
-  const code = S.lang, d = DATA[code];
-  const pick = topicPicker(code, SPEAK_TOPIC, speakView);
+function renderSpeakSkills(code, d) {
+  const pick = topicPicker(code, SPEAK_TOPIC, () => skillsView('speak'));
   const t = d.topics.find((x) => x.id === SPEAK_TOPIC[code]) || d.topics[0];
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   const dueSpk = srsDueItems(code, 'speak').length;
-  mount(h('div', { class: 'stack-lg' },
+  return [
     code === 'en' ? ieltsTipBox('IELTS Speaking Tips: 6 Tình huống ứng biến & Công thức P-E-E-R', [
       'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
       'Trả lời mở rộng: Áp dụng P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result) tránh cộc lốc.',
@@ -8759,7 +8804,6 @@ function speakView() {
       'Hạn chế tối đa fillers rác (uhm, ah, like, you know) bằng cách pause 1 giây để thở và sắp xếp câu.'
     ], 'speaking') : null,
     h('div', { class: 'stack' },
-      h('div', { class: 'row between' }, h('h1', {}, 'Nói'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'speak', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
       pick,
       dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null,
       code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'speak') }, '🏆 Luyện IELTS Speaking Part 1, 2, 3 của chủ đề này →') : null
@@ -8771,7 +8815,8 @@ function speakView() {
       return h('button', { class: 'sentence', onclick: () => speakOne(t, it, items) },
         h('span', { class: 'meta' }, h('span', { lang: L().lang, style: { display: 'block', fontWeight: 600 } }, it.raw ? ruby(it.raw) : plain(it.text)), it.r && it.r !== it.text && h('span', { class: 'small read', style: { display: 'block', textAlign: 'left' } }, it.r), it.m && h('span', { class: 'small muted' }, it.m)),
         h('span', { class: 'chip' + (best >= 80 ? ' good' : '') }, best != null ? best + '%' : 'Chưa nói'));
-    })))));
+    })))
+  ];
 }
 function micControl(code, onResult, onSelf, selfLabels) {
   const box = h('div', { class: 'stack center' });
@@ -8885,13 +8930,12 @@ function coachView(t, c) {
     ctrl, result, h('button', { class: 'ghost', onclick: () => { sample.hidden = false; } }, 'Xem câu trả lời mẫu'), sample));
 }
 
-// ===== Viết =====
-function writeView() {
-  const code = S.lang, d = DATA[code];
-  const pick = topicPicker(code, WRITE_TOPIC, writeView);
+// ===== Viết & Kỹ năng (Nói + Viết) =====
+function renderWriteSkills(code, d) {
+  const pick = topicPicker(code, WRITE_TOPIC, () => skillsView('write'));
   const t = d.topics.find((x) => x.id === WRITE_TOPIC[code]) || d.topics[0];
   const dueWr = code !== 'en' ? srsDueItems(code, 'write').length : 0;
-  const head = h('div', { class: 'stack' },
+  const writeHead = [
     code === 'en' ? ieltsTipBox('IELTS Writing Tips: 4 Quy tắc dấu phẩy Band 7+ & Cấu trúc Causes-Solutions', [
       'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
       'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
@@ -8899,25 +8943,86 @@ function writeView() {
       'Quy tắc 4: Tránh lỗi Comma Splice (ghép 2 câu độc lập chỉ bằng dấu phẩy).',
       'Task 2 Causes & Solutions: Mở bài 2 câu ➔ Thân bài 1 Nguyên nhân ➔ Thân bài 2 Giải pháp ➔ Kết bài 1–2 câu.'
     ], 'writing') : null,
-    h('div', { class: 'row between' }, h('h1', {}, 'Viết'), h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, feedbackBtn({ mode: 'write', topicId: t.id, topicTitle: t.sub || t.title }), langSwitch())),
-    pick,
-    dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null,
-    code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'write') }, '🏆 Luyện IELTS Writing Task 1 & 2 của chủ đề này →') : null
-  );
+    h('div', { class: 'stack' },
+      pick,
+      dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null,
+      code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'write') }, '🏆 Luyện IELTS Writing Task 1 & 2 của chủ đề này →') : null
+    )
+  ];
   if (code === 'en') {
-    if (!t.fill) { mount(h('div', { class: 'stack-lg' }, head, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.'))); return; }
-    return mount(h('div', { class: 'stack-lg' }, head, fillBlock(t)));
+    if (!t.fill) {
+      return [...writeHead, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.')];
+    }
+    return [...writeHead, fillBlock(t)];
   }
   const chars = [...new Set(t.vocab.flatMap((v) => [...plain(v.w)]).filter((c) => /[㐀-鿿]/.test(c)))];
   const kanji = (t.kanji || []).map((k) => k.k);
   const list = code === 'ja' ? [...new Set([...kanji, ...chars])] : chars;
   const grid = (arr, cls) => h('div', { class: 'chargrid ' + (cls || '') }, arr.map((c) => c === '_' ? h('span', { class: 'gap' }) : h('button', { lang: L().lang, class: S.written[sid(code, c)] ? 'done' : '', onclick: () => charView(code, c, arr.filter((x) => x !== '_')) },
     c, h('small', {}, charHint(code, c)))));
-  mount(h('div', { class: 'stack-lg' }, head,
+  return [
+    ...writeHead,
     h('div', { class: 'stack' }, h('h3', {}, code === 'zh' ? 'Chữ Hán trong chủ đề' : 'Kanji trong bài'), list.length ? grid(list) : h('p', { class: 'muted' }, 'Bài này không có chữ Hán.')),
     code === 'ja' && h('div', { class: 'stack' }, h('h3', {}, 'Hiragana'), grid(KANA.hira, 'kana')),
     code === 'ja' && h('div', { class: 'stack' }, h('h3', {}, 'Katakana'), grid(KANA.kata, 'kana')),
-    t.fill && fillBlock(t)));
+    t.fill && fillBlock(t)
+  ];
+}
+
+function skillsView(tab) {
+  if (tab) SKILL_TAB = tab;
+  VIEW = 'skills';
+  setTabs(true);
+  const code = S.lang, d = DATA[code];
+  const curTopicId = (SKILL_TAB === 'speak' ? SPEAK_TOPIC[code] : WRITE_TOPIC[code]);
+  const t = d.topics.find((x) => x.id === curTopicId) || d.topics[0];
+
+  const writeTabLabel = code === 'en' ? '✍️ Luyện viết email' : '✍️ Luyện viết chữ';
+
+  const navSub = h('div', { class: 'skill-tabs', role: 'tablist' },
+    h('button', {
+      class: 'skill-tab-btn' + (SKILL_TAB === 'speak' ? ' active' : ''),
+      role: 'tab',
+      'aria-selected': SKILL_TAB === 'speak' ? 'true' : 'false',
+      onclick: () => { SKILL_TAB = 'speak'; skillsView(); }
+    }, '🎙️ Luyện nói'),
+    h('button', {
+      class: 'skill-tab-btn' + (SKILL_TAB === 'write' ? ' active' : ''),
+      role: 'tab',
+      'aria-selected': SKILL_TAB === 'write' ? 'true' : 'false',
+      onclick: () => { SKILL_TAB = 'write'; skillsView(); }
+    }, writeTabLabel)
+  );
+
+  const head = h('div', { class: 'stack', style: { gap: '6px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h1', { style: { margin: 0 } }, 'Kỹ năng'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: SKILL_TAB, topicId: t.id, topicTitle: t.sub || t.title }),
+        langSwitch()
+      )
+    ),
+    navSub
+  );
+
+  const bodyElements = (SKILL_TAB === 'speak') ? renderSpeakSkills(code, d) : renderWriteSkills(code, d);
+
+  mount(h('div', { class: 'stack-lg' },
+    head,
+    ...bodyElements.filter(Boolean)
+  ));
+}
+
+function speakView() {
+  SKILL_TAB = 'speak';
+  VIEW = 'skills';
+  skillsView('speak');
+}
+
+function writeView() {
+  SKILL_TAB = 'write';
+  VIEW = 'skills';
+  skillsView('write');
 }
 const KANA_H = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや_ゆ_よらりるれろわ___をん____';
 const KANA = { hira: [...KANA_H], kata: [...KANA_H].map((c) => c === '_' ? c : String.fromCharCode(c.charCodeAt(0) + 96)) };
@@ -9831,10 +9936,10 @@ function showFeedbackModal(customCtx) {
     if (cur.stepItem) locText += ' [' + cur.stepItem + ']';
   } else if (cur.mode === 'review' || VIEW === 'review') {
     locText = 'Ôn tập thẻ từ' + (cur.card ? ' [' + cur.card + ']' : '');
-  } else if (cur.mode === 'speak' || VIEW === 'speak') {
-    locText = 'Luyện nói phát âm' + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
-  } else if (cur.mode === 'write' || VIEW === 'write') {
-    locText = 'Tập viết chữ' + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
+  } else if (cur.mode === 'speak' || VIEW === 'speak' || (VIEW === 'skills' && SKILL_TAB === 'speak')) {
+    locText = 'Kỹ năng · Luyện nói phát âm' + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
+  } else if (cur.mode === 'write' || VIEW === 'write' || (VIEW === 'skills' && SKILL_TAB === 'write')) {
+    locText = 'Kỹ năng · ' + (S.lang === 'en' ? 'Luyện viết email' : 'Tập viết chữ') + (cur.topicTitle ? ' (' + cur.topicTitle + ')' : '');
   } else if (cur.mode === 'grammar') {
     locText = 'Ngữ pháp · ' + (cur.topicTitle || '');
   } else if (cur.mode === 'kanji') {
