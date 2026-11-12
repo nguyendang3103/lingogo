@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1715';
+const APP_BUILD_ID = '20261112-1730';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1536,9 +1536,9 @@ const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) {
 const sample = (arr, n, not) => shuffle(arr.filter((x) => !not || !not(x))).slice(0, n);
 
 // ===== Lộ trình: chia chủ đề thành các bài học =====
-// Mỗi chủ đề có số bài tùy nội dung: các bài từ mới (vài từ một bài), bài kanji, bài tình huống,
-// bài điền từ, bài luyện nói, cuối cùng là bài ôn tập.
-const PLAN_V = 2;
+// Mỗi bài học (kind: 'learn') tích hợp trọn vẹn cả 4 kỹ năng: Từ vựng + Nghe + Nói + Đọc + Viết.
+// Cuối mỗi chủ đề là bài Tổng ôn 4 Kỹ năng (kind: 'review').
+const PLAN_V = 3;
 const LESSON_SIZE = { en: 4, zh: 3, ja: 6 };
 function planTopic(d, t) {
   const size = LESSON_SIZE[d.code] || 4, out = [];
@@ -1547,27 +1547,34 @@ function planTopic(d, t) {
   const nWord = Math.max(1, Math.round(t.vocab.length / size)), per = Math.ceil(t.vocab.length / nWord);
   chunks(t.vocab, per).forEach((w) => out.push({ kind: 'learn', words: w }));
   chunks(t.kanji || [], 4).forEach((k) => out.push({ kind: 'kanji', words: [], kanji: k }));
-  if (t.quiz.length) chunks(t.quiz, t.quiz.length > 6 ? Math.ceil(t.quiz.length / 2) : 6).forEach((q) => out.push({ kind: 'quiz', words: [], quiz: q }));
-  if (t.fill) out.push({ kind: 'fill', words: [] });
-  if (t.speak.length || (t.coach || []).length || (t.sents || []).length) out.push({ kind: 'speak', words: [] });
+  // 4 Kỹ năng (Nghe, Nói, Đọc, Viết) được lồng trực tiếp vào từng bài học (kind: 'learn')
+  // và tổng hợp trọn bộ trong bài Tổng ôn cuối chủ đề (kind: 'review').
+  // Không tách lẻ tẻ thành các bài riêng (Tình huống, Viết email, Luyện nói) ở cuối chủ đề.
   out.push({ kind: 'review', words: [] });
   out.forEach((l, i) => { l.idx = i; });
   return out;
 }
-// Đổi bài đã học theo cách chia cũ (mỗi chủ đề cố định vài bài) sang cách chia mới, giữ tỉ lệ đã học
-const OLD_SIZE = { en: 5, zh: 4, ja: 8 };
+// Chuyển đổi tiến độ học mượt mà sang cấu trúc bài học tích hợp 4 kỹ năng
 function remapLessons(d) {
   S.pv = S.pv || {};
   if (S.pv[d.code] === PLAN_V) return;
   for (const t of d.topics) {
-    const oldN = Math.ceil(t.vocab.length / OLD_SIZE[d.code]) + 1, vals = [];
-    for (let j = 0; j < oldN; j++) { const k = d.code + ':' + t.id + '-' + j; if (S.lessons[k] != null) { vals.push(S.lessons[k]); delete S.lessons[k]; } }
-    if (!vals.length) continue;
-    const nums = vals.filter((v) => typeof v === 'number'), val = nums.length ? Math.round(nums.reduce((a, b) => a + b, 0) / nums.length) : 'cũ';
-    const n = Math.round((vals.length / oldN) * t.lessons.length);
-    for (let j = 0; j < n; j++) S.lessons[d.code + ':' + t.id + '-' + j] = val;
+    const prefix = d.code + ':' + t.id + '-';
+    const keys = Object.keys(S.lessons).filter((k) => k.startsWith(prefix));
+    if (!keys.length) continue;
+    const vals = keys.map((k) => S.lessons[k]);
+    keys.forEach((k) => delete S.lessons[k]);
+    const nums = vals.filter((v) => typeof v === 'number');
+    const val = nums.length ? Math.round(nums.reduce((a, b) => a + b, 0) / nums.length) : 'cũ';
+    const prevDone = vals.length;
+    // Nếu trước đây đã học hết hoặc gần hết chủ đề (>= 4 bài đã làm) thì đánh dấu hoàn thành toàn bộ chủ đề mới
+    const newN = prevDone >= 4 ? t.lessons.length : Math.max(1, Math.min(t.lessons.length, Math.round((prevDone / 5) * t.lessons.length)));
+    for (let j = 0; j < newN; j++) {
+      S.lessons[prefix + j] = val;
+    }
   }
-  S.pv[d.code] = PLAN_V; save();
+  S.pv[d.code] = PLAN_V;
+  save();
 }
 const lkey = (t, i) => t.lang + ':' + t.id + '-' + i;
 const lessonDone = (t, i) => S.lessons[lkey(t, i)] != null;
@@ -1678,23 +1685,12 @@ function grammarIndex(code) {
 function parseSrsKey(k, code) {
   if (!k.startsWith(code + ':')) return null;
   const rest = k.slice(code.length + 1);
-  if (rest.startsWith('speak:')) {
-    const text = rest.slice(6);
-    const sp = (speakIndex(code) || {})[text] || { it: { text }, t: {} };
-    return { skill: 'speak', key: k, id: text, it: sp };
-  }
+  // Ôn tập ngắt quãng chỉ ôn từ mới (từ vựng / kanji): bỏ qua speak và gram
+  if (rest.startsWith('speak:') || rest.startsWith('gram:')) return null;
   if (rest.startsWith('write:')) {
     const ch = rest.slice(6);
     const wr = (writeIndex(code) || {})[ch] || { c: ch, t: {}, hint: charHint(code, ch) };
     return { skill: 'write', key: k, id: ch, it: wr };
-  }
-  if (rest.startsWith('gram:')) {
-    if (code === 'en') return null; // Tiếng Anh không đưa ngữ pháp vào Ôn tập ngắt quãng
-    const gid = rest.slice(5);
-    const d = DATA[code];
-    const gr = (grammarIndex(code) || {})[gid] || (d && d.grammar && d.grammar[gid] ? { gid, g: d.grammar[gid], lv: d.grammar[gid].lv } : null);
-    if (!gr) return null;
-    return { skill: 'gram', key: k, id: gid, it: gr };
   }
   const vMap = cardIndex(code);
   const it = vMap[rest];
@@ -1725,33 +1721,10 @@ function isLearned(code, parsed) {
     return false;
   }
 
-  // 2. LUYỆN NÓI: Chỉ những câu người dùng ĐÃ từng luyện nói (có trong S.spoken)
-  if (parsed.skill === 'speak') {
-    const text = plain(parsed.id);
-    return !!(S.spoken && S.spoken[sid(code, text)] != null);
-  }
-
-  // 3. LUYỆN VIẾT: Chỉ những chữ người dùng ĐÃ từng tập viết (có trong S.written)
+  // 2. LUYỆN VIẾT: Chỉ những chữ người dùng ĐÃ từng tập viết (có trong S.written)
   if (parsed.skill === 'write') {
     const ch = parsed.id;
     return !!(S.written && (S.written[sid(code, ch)] || 0) > 0);
-  }
-
-  // 4. NGỮ PHÁP: Chỉ những điểm ngữ pháp của chủ đề đã học bài (bất kỳ bài học nào trong chủ đề) hoặc đã làm quiz trong tab ngữ pháp
-  if (parsed.skill === 'gram') {
-    if (code === 'en') return false; // Tiếng Anh không đưa ngữ pháp vào Ôn tập ngắt quãng
-    const gid = parsed.id;
-    const allPts = grammarPoints(code);
-    const p = allPts.find((x) => x.gid === gid);
-    if (!p) return false;
-    const hasStudiedTopic = p.topics.some((t) => {
-      return t.lessons.some((l, i) => lessonDone(t, i));
-    });
-    const hasGq = S.gq && (
-      (S.gq.best && (S.gq.best[code + ':' + p.lv] != null || S.gq.best[code + ':topic'] != null)) ||
-      (S.gq.wrong && S.gq.wrong[gid] != null)
-    );
-    return hasStudiedTopic || !!hasGq;
   }
 
   return false;
@@ -1759,21 +1732,20 @@ function isLearned(code, parsed) {
 
 function ensureSrsItems(code) {
   if (!S.srs) S.srs = {};
-  // Dọn sạch triệt để mọi key ngữ pháp tiếng Anh trong S.srs nếu từng tồn tại
-  if (S.srs) {
-    let deletedAny = false;
-    Object.keys(S.srs).forEach((k) => {
-      if (k.startsWith('en:gram:')) {
-        delete S.srs[k];
-        deletedAny = true;
-      }
-    });
-    if (deletedAny && typeof save === 'function') save();
-  }
+  // Ôn tập ngắt quãng chỉ ôn từ mới: dọn sạch triệt để mọi key speak và gram trong S.srs nếu từng tồn tại
+  let deletedAny = false;
+  Object.keys(S.srs).forEach((k) => {
+    if (k.includes(':speak:') || k.includes(':gram:')) {
+      delete S.srs[k];
+      deletedAny = true;
+    }
+  });
+  if (deletedAny && typeof save === 'function') save();
+
   const d = DATA[code]; if (!d) return;
   const t0 = todayN();
 
-  // 1. Chỉ đưa từ vựng / kanji của các BÀI ĐÃ HOÀN THÀNH (lessonDone) vào hàng ôn tập
+  // Chỉ đưa từ vựng / kanji của các BÀI ĐÃ HOÀN THÀNH (lessonDone) vào hàng ôn tập
   d.topics.forEach((t) => {
     t.lessons.forEach((l, i) => {
       if (lessonDone(t, i)) {
@@ -1789,39 +1761,9 @@ function ensureSrsItems(code) {
         }
       }
     });
-
-    const hasAnyDone = t.lessons.some((l, i) => lessonDone(t, i));
-    if (hasAnyDone && t.gram && d.grammar && code !== 'en') {
-      t.gram.forEach((gid) => {
-        const k = code + ':gram:' + gid;
-        if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
-      });
-    }
   });
 
-  // 2. Chỉ các câu ĐÃ luyện nói
-  if (S.spoken) {
-    Object.keys(S.spoken).forEach((k) => {
-      if (k.startsWith(code + ':')) {
-        const text = k.slice(code.length + 1);
-        const sKey = code + ':speak:' + text;
-        if (!S.srs[sKey]) S.srs[sKey] = { b: (S.spoken[k] || 0) >= 80 ? 2 : 1, due: t0, last: t0 - 1 };
-      }
-    });
-  }
-
-  // 3. Chỉ các chữ ĐÃ tập viết
-  if (S.written) {
-    Object.keys(S.written).forEach((k) => {
-      if (k.startsWith(code + ':') && S.written[k] > 0) {
-        const ch = k.slice(code.length + 1);
-        const sKey = code + ':write:' + ch;
-        if (!S.srs[sKey]) S.srs[sKey] = { b: 1, due: t0, last: t0 - 1 };
-      }
-    });
-  }
-
-  // 4. DỌN SẠCH DỮ LIỆU: Loại bỏ mọi mục chưa học khỏi S.srs
+  // DỌN SẠCH DỮ LIỆU: Loại bỏ mọi mục chưa học khỏi S.srs
   Object.keys(S.srs).forEach((k) => {
     if (k.startsWith(code + ':')) {
       const parsed = parseSrsKey(k, code);
@@ -1832,14 +1774,14 @@ function ensureSrsItems(code) {
   });
 }
 
-function srsDueItems(code, skillFilter = 'all') {
+function srsDueItems(code, skillFilter = 'vocab') {
   ensureSrsItems(code);
   const t0 = todayN();
   const allKeys = Object.keys(S.srs || {}).filter((k) => k.startsWith(code + ':') && S.srs[k].due <= t0);
   const parsed = allKeys
     .map((k) => parseSrsKey(k, code))
     .filter((x) => x && isLearned(code, x));
-  if (skillFilter === 'all') return parsed;
+  if (skillFilter === 'all' || !skillFilter) return parsed;
   return parsed.filter((x) => x.skill === skillFilter);
 }
 
@@ -8245,6 +8187,12 @@ function buildSteps(t, i) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
     }
+
+    // Điền từ vào email công việc / đoạn văn (nếu có fill và là bài học cuối của chủ đề)
+    const learnTotal = t.lessons.filter((x) => x.kind === 'learn').length;
+    if (t.fill && i === Math.max(0, learnTotal - 1)) {
+      steps.push({ type: 'fill', fill: t.fill });
+    }
   } else if (l.kind === 'kanji') {
     const pool = t.kanji.length >= 4 ? t.kanji : d.topics.flatMap((x) => x.kanji || []);
     l.kanji.forEach((k) => steps.push({ type: 'kintro', k }));
@@ -8282,6 +8230,9 @@ function buildSteps(t, i) {
     if (revEx.length) {
       const v = revEx[0];
       steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v });
+    }
+    if (t.fill) {
+      steps.push({ type: 'fill', fill: t.fill });
     }
   }
   return steps;
@@ -8867,51 +8818,28 @@ function lessonView(t, i) {
 }
 
 // ===== Ôn tập theo phương pháp Spaced Repetition (Lặp lại ngắt quãng) =====
-let REVIEW_SKILL = 'vocab'; // Mặc định chỉ ôn từ mới
+let REVIEW_SKILL = 'vocab'; // Ôn tập ngắt quãng chỉ ôn từ mới theo yêu cầu
 
 function reviewView() {
   const code = S.lang, t0 = todayN();
   ensureSrsItems(code);
-
-  if (!REVIEW_SKILL || REVIEW_SKILL === 'all') {
-    REVIEW_SKILL = 'vocab';
-  }
+  REVIEW_SKILL = 'vocab';
 
   const counts = {
-    vocab: srsDueItems(code, 'vocab').length,
-    speak: srsDueItems(code, 'speak').length,
-    write: code !== 'en' ? srsDueItems(code, 'write').length : 0,
-    gram: code !== 'en' ? srsDueItems(code, 'gram').length : 0
+    vocab: srsDueItems(code, 'vocab').length
   };
 
   const head = (isReviewing = false) => {
-    let title = 'Ôn tập từ mới (Spaced Repetition)';
-    let subtitle = 'Ôn tập các từ vựng đã học theo chu kỳ lặp lại ngắt quãng để ghi nhớ lâu bền.';
-    let backBtn = h('button', { class: 'ghost mini', onclick: () => go('home') }, '← Về trang Học');
-    let badge = h('span', { class: 'chip good', style: { fontSize: '.8rem' } }, '📚 Có ' + (counts.vocab || 0) + ' từ mới cần ôn');
-
-    if (REVIEW_SKILL === 'speak') {
-      title = '🎙️ Ôn tập kỹ năng Nói';
-      subtitle = 'Luyện phát âm lại các câu giao tiếp đã học bằng Micro AI chấm giọng.';
-      backBtn = h('button', { class: 'ghost mini', onclick: () => { SKILL_TAB = 'speak'; go('skills'); } }, '← Về tab Luyện Nói');
-      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '🎙️ Có ' + (counts.speak || 0) + ' câu cần ôn');
-    } else if (REVIEW_SKILL === 'write') {
-      title = '✍️ Ôn tập kỹ năng Viết';
-      subtitle = 'Luyện viết lại các chữ Hán / Kanji đã học theo nét chuẩn.';
-      backBtn = h('button', { class: 'ghost mini', onclick: () => { SKILL_TAB = 'write'; go('skills'); } }, '← Về tab Luyện Viết');
-      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '✍️ Có ' + (counts.write || 0) + ' chữ cần ôn');
-    } else if (REVIEW_SKILL === 'gram') {
-      title = '📖 Ôn tập ngữ pháp';
-      subtitle = 'Ôn tập các mẫu câu và cấu trúc ngữ pháp đã học.';
-      backBtn = h('button', { class: 'ghost mini', onclick: () => go('knowledge') }, '← Về tab Kiến thức');
-      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '📖 Có ' + (counts.gram || 0) + ' điểm cần ôn');
-    }
+    const title = 'Ôn tập từ mới (Spaced Repetition)';
+    const subtitle = 'Ôn tập các từ vựng đã học theo chu kỳ lặp lại ngắt quãng để ghi nhớ lâu bền.';
+    const backBtn = h('button', { class: 'ghost mini', onclick: () => go('home') }, '← Về trang Học');
+    const badge = h('span', { class: 'chip good', style: { fontSize: '.8rem' } }, '📚 Có ' + (counts.vocab || 0) + ' từ mới cần ôn');
 
     return h('div', { class: 'stack', style: { gap: '10px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
         backBtn,
         h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-          feedbackBtn({ mode: 'review_' + REVIEW_SKILL }),
+          feedbackBtn({ mode: 'review_vocab' }),
           langSwitch()
         )
       ),
@@ -10594,10 +10522,6 @@ function renderKnowledgeGrammar(code) {
     ),
     h('div', { class: 'panel stack', style: { background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
       h('h2', { style: { margin: 0, fontSize: '1.05rem' } }, '🎯 Luyện Quiz Ngữ Pháp'),
-      srsDueItems(code, 'gram').length > 0 ? h('button', {
-        class: 'accent block',
-        onclick: () => { REVIEW_SKILL = 'gram'; go('review'); }
-      }, '📖 Ôn tập ngắt quãng: Có ' + srsDueItems(code, 'gram').length + ' điểm ngữ pháp cần ôn hôm nay') : null,
       h('p', { class: 'small muted', style: { margin: '4px 0 8px 0' } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
       h('div', { class: 'row', style: { gap: '8px' } },
         h('button', { class: 'primary grow', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'Tất cả cấp' : sel)),
