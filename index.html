@@ -750,7 +750,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0940';
+const APP_BUILD_ID = '20261112-0945';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -6771,6 +6771,15 @@ function renderIeltsListening(t, data) {
     const band = (isMcCorrect && isFillCorrect) ? '8.5' : (isMcCorrect || isFillCorrect) ? '6.5' : '5.0';
     feedbackArea.style.display = 'block';
     feedbackArea.replaceChildren(
+      h('button', {
+        class: 'primary block',
+        style: { marginBottom: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
+        onclick: () => {
+          IELTS_ACTIVE_SKILL = 'speak';
+          ieltsTabView();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 'Chuyển sang kỹ năng kế tiếp: Nói (Speaking) ➔'),
       h('div', { class: 'row between', style: { alignItems: 'center' } },
         h('h3', { style: { margin: 0 } }, isMcCorrect && isFillCorrect ? '🎉 Xuất sắc! Đúng cả 2/2 câu' : 'Kết quả bài nghe: ' + (score / 50) + '/2 câu đúng'),
         h('span', { class: 'chip good', style: { fontSize: '.95rem', fontWeight: 700 } }, 'Band ' + band)
@@ -6778,16 +6787,7 @@ function renderIeltsListening(t, data) {
       h('p', {}, '1. Trắc nghiệm: ' + (isMcCorrect ? '✓ Chính xác' : '✗ Chưa đúng (Đáp án: ' + String.fromCharCode(65 + ls.mc.answer) + ')')),
       h('p', { class: 'small muted' }, ls.mc.why),
       h('p', {}, '2. Điền từ: ' + (isFillCorrect ? '✓ Chính xác (' + ls.fill.rawTarget + ')' : '✗ Chưa đúng. Đáp án: "' + ls.fill.rawTarget + '"')),
-      h('p', { class: 'small muted' }, ls.fill.hint),
-      h('button', {
-        class: 'primary block',
-        style: { marginTop: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
-        onclick: () => {
-          IELTS_ACTIVE_SKILL = 'speak';
-          ieltsTabView();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 'Chuyển sang kỹ năng kế tiếp: Nói (Speaking) ➔')
+      h('p', { class: 'small muted' }, ls.fill.hint)
     );
 
     markIeltsDone(t, 'listen', Math.max(score, 60), band);
@@ -7217,20 +7217,20 @@ function renderIeltsReading(t, data) {
     const band = correctCount === rd.tfng.length ? '8.5' : correctCount >= 2 ? '7.5' : correctCount === 1 ? '6.0' : '5.0';
     feedbackArea.style.display = 'block';
     feedbackArea.replaceChildren(
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
-        h('h3', { style: { margin: 0 } }, correctCount === rd.tfng.length ? '🎉 Hoàn hảo! Đúng ' + correctCount + '/' + rd.tfng.length + ' câu True/False/Not Given' : 'Đúng ' + correctCount + '/' + rd.tfng.length + ' câu'),
-        h('span', { class: 'chip good', style: { fontSize: '.95rem', fontWeight: 700 } }, 'Band ' + band)
-      ),
-      h('p', { class: 'small muted' }, 'Hệ thống đã hiển thị câu dẫn chứng trực tiếp trong đoạn văn ở từng câu hỏi.'),
       h('button', {
         class: 'primary block',
-        style: { marginTop: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
+        style: { marginBottom: '14px', padding: '12px', fontSize: '1rem', fontWeight: 700, borderRadius: '10px' },
         onclick: () => {
           IELTS_ACTIVE_SKILL = 'write';
           ieltsTabView();
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      }, 'Chuyển sang kỹ năng kế tiếp: Viết (Writing) ➔')
+      }, 'Chuyển sang kỹ năng kế tiếp: Viết (Writing) ➔'),
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('h3', { style: { margin: 0 } }, correctCount === rd.tfng.length ? '🎉 Hoàn hảo! Đúng ' + correctCount + '/' + rd.tfng.length + ' câu True/False/Not Given' : 'Đúng ' + correctCount + '/' + rd.tfng.length + ' câu'),
+        h('span', { class: 'chip good', style: { fontSize: '.95rem', fontWeight: 700 } }, 'Band ' + band)
+      ),
+      h('p', { class: 'small muted' }, 'Hệ thống đã hiển thị câu dẫn chứng trực tiếp trong đoạn văn ở từng câu hỏi.')
     );
 
     markIeltsDone(t, 'read', Math.round((correctCount / rd.tfng.length) * 100), band);
@@ -8203,14 +8203,14 @@ function lessonView(t, i) {
       if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
       if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
       if (ex.type === 'gquiz') setTimeout(() => say(code, ex.q.e[0]), 250);
-      btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; btn.onclick = step; btn.focus();
+      btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp theo ➔'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', () => { if (!checked) check(); });
     const total = done + queue.length + 1;
     mount(h('div', { class: 'stack-lg' },
       h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('div', { class: 'bar' }, h('i', { style: { width: (done / total * 100) + '%' } })), feedbackBtn()),
       retried.has(ex.n) && first.has(ex.n) && h('span', { class: 'chip', style: { alignSelf: 'flex-start' } }, 'Làm lại câu chưa đúng'),
-      body, fb, h('div', { class: 'dock stack', style: { gap: '6px' } }, btn, h('p', { class: 'keyhint' }, 'Phím 1–4 để chọn · Enter để kiểm tra / tiếp tục'))));
+      body, h('div', { class: 'dock stack', style: { gap: '6px' } }, btn, h('p', { class: 'keyhint' }, 'Phím 1–4 để chọn · Enter để kiểm tra / tiếp tục')), fb));
     update();
   }
 
@@ -8403,7 +8403,7 @@ function reviewView() {
         style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, verdict, contTop);
+      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
       const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
@@ -8457,7 +8457,7 @@ function reviewView() {
         style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, verdict, contTop);
+      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
       const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const finishSpeak = (g, ok, scoreText) => {
@@ -8526,7 +8526,7 @@ function reviewView() {
         style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, verdict, contTop);
+      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
       const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const finishWrite = (g, ok, note) => {
@@ -8628,7 +8628,7 @@ function reviewView() {
         onclick: onNext
       }, 'Tiếp theo ➔');
       const verdict = h('div', { 'aria-live': 'assertive' });
-      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, verdict, contTop);
+      const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
       const fb = h('div', { 'aria-live': 'polite' });
 
       const revealGrammar = (ok) => {
@@ -8647,11 +8647,11 @@ function reviewView() {
         contTop.focus();
 
         fb.replaceChildren(
+          h('div', { style: { margin: '0 0 8px 0' } }, contBottom),
           h('div', { class: 'feedback ' + (ok ? 'ok' : 'no') },
             h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
             ok ? (' · Ôn lại sau ' + ivText(S.srs[k])) : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer) + ' · Ôn lại sớm')
           ),
-          h('div', { style: { margin: '8px 0 12px 0' } }, contBottom),
           h('div', { class: 'panel gram', style: { gap: '8px' } },
             h('div', { class: 'ex' },
               h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
@@ -9290,12 +9290,13 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
       }
       save();
       next.hidden = false;
+      next.textContent = 'Tiếp theo ➔';
       fb.replaceChildren(
+        h('div', { style: { margin: '0 0 10px 0' } }, next),
         h('div', { class: 'feedback ' + (ok ? 'ok' : 'no') },
           h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
           ok ? '' : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer))
         ),
-        h('div', { style: { margin: '8px 0 12px 0' } }, next),
         h('div', { class: 'panel gram', style: { gap: '8px' } },
           h('div', { class: 'ex' },
             h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
