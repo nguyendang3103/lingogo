@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1845';
+const APP_BUILD_ID = '20261112-2115';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8049,11 +8049,90 @@ function makeGrammarQuizStep(code, gid) {
   return null;
 }
 
+// ===== Trích xuất hội thoại bài học của chủ đề =====
+function getTopicDialogues(arg1, arg2) {
+  const code = (typeof arg1 === 'string') ? arg1 : ((arg1 && arg1.lang) || S.lang || 'en');
+  const t = (typeof arg1 === 'string') ? arg2 : arg1;
+  if (!t) return [];
+
+  const out = [];
+
+  // 1. Nếu chủ đề có t.speak (scenes với các lượt lời thoại)
+  if (t.speak && t.speak.length) {
+    t.speak.forEach((sc, scIdx) => {
+      const sceneTitle = sc.title || ('Tình huống ' + (scIdx + 1));
+      const lines = (sc.lines || []).map((ln, idx) => ({
+        speaker: ln.s || (idx % 2 === 0 ? 'A' : 'B'),
+        name: (ln.s || (idx % 2 === 0 ? 'A' : 'B')) === 'A' ? 'A (Bạn)' : 'B (Đối tác)',
+        text: ln.t || ln.text || '',
+        t: ln.t || ln.text || '',
+        r: ln.r || '',
+        m: ln.m || '',
+        raw: ln.raw || '',
+        s: sceneTitle
+      }));
+      if (lines.length) {
+        out.push({
+          id: sc.id || ('dlg-' + scIdx),
+          title: sceneTitle,
+          lines
+        });
+      }
+    });
+  }
+
+  // 2. Nếu tiếng Nhật có t.sents (câu giao tiếp / hội thoại)
+  if (code === 'ja' && t.sents && t.sents.length) {
+    const sLines = t.sents.map((s, idx) => {
+      const text = s.chunks ? s.chunks.join('') : (s.text || '');
+      return {
+        speaker: idx % 2 === 0 ? 'A' : 'B',
+        name: idx % 2 === 0 ? 'A (田中)' : 'B (山田)',
+        text,
+        t: text,
+        r: s.r || '',
+        m: s.m || s.trans || '',
+        raw: s.raw || '',
+        s: 'Giao tiếp hội thoại'
+      };
+    });
+    out.push({
+      id: 'sents-' + t.id,
+      title: 'Hội thoại mẫu: ' + (t.sub || t.title),
+      lines: sLines
+    });
+  }
+
+  // 3. Nếu tiếng Anh / Trung có t.fill (đoạn văn / email thực hành)
+  if (t.fill && t.fill.text && !out.length) {
+    const cleanText = t.fill.text.replace(/\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, '$1');
+    const sentences = cleanText.split(/(?<=[.!?])\s+/).filter(Boolean);
+    const fLines = sentences.map((st, idx) => ({
+      speaker: idx % 2 === 0 ? 'A' : 'B',
+      name: idx % 2 === 0 ? 'A' : 'B',
+      text: st,
+      t: st,
+      r: '',
+      m: t.fill.trans || '',
+      raw: '',
+      s: 'Đoạn văn thực tế'
+    }));
+    out.push({
+      id: 'fill-' + t.id,
+      title: 'Đoạn văn thực tế: ' + (t.sub || t.title),
+      lines: fLines
+    });
+  }
+
+  return out;
+}
+
 // ===== Bài học =====
 function buildSteps(t, i) {
-  const code = t.lang, d = DATA[code], l = t.lessons[i], steps = [];
-  const allWords = d.topics.flatMap((x) => x.vocab);
-  const topicWords = t.vocab;
+  const code = t.lang || S.lang || 'en', d = DATA[code] || DATA[S.lang], l = t.lessons[i], steps = [];
+  if (!d || !l) return steps;
+  const allWords = (d.topics || []).flatMap((x) => x.vocab || []);
+  const topicWords = t.vocab || [];
   const opt = (v, field) => shuffle([v, ...sample(topicWords.length >= 6 ? topicWords : allWords, 3, (x) => x.id === v.id || x[field] === v[field])]);
 
   if (l.kind === 'learn') {
@@ -8107,9 +8186,10 @@ function buildSteps(t, i) {
       });
     }
     // Luyện thêm 1 câu từ hội thoại chủ đề (nếu có)
-    const dlgs = getTopicDialogues(t);
-    if (dlgs && dlgs.length) {
-      const dLine = dlgs[i % dlgs.length];
+    const dlgs = getTopicDialogues(code, t);
+    const dlgLines = dlgs.flatMap((d) => d.lines || []);
+    if (dlgLines.length) {
+      const dLine = dlgLines[i % dlgLines.length];
       if (dLine && dLine.t) {
         steps.push({
           type: 'speak',
@@ -8241,9 +8321,9 @@ function buildSteps(t, i) {
 function lessonView(t, i) {
   VIEW = 'lesson'; setTabs(false);
   setFeedbackContext({ mode: 'lesson', topicId: t.id, topicTitle: t.sub || t.title, lessonIndex: i, lessonKind: t.lessons[i].kind, lessonTitle: lessonTitle(t, i) });
-  const code = t.lang, steps = buildSteps(t, i), first = new Map(), retried = new Set(), queue = steps.map((s, n) => ({ ...s, n }));
+  const code = t.lang || S.lang || 'en', steps = buildSteps(t, i), first = new Map(), retried = new Set(), queue = steps.map((s, n) => ({ ...s, n }));
   let done = 0;
-  if (LANGS[code].cjk) loadStrokes(code);
+  if (LANGS[code] && LANGS[code].cjk) loadStrokes(code);
   const exit = () => { setFeedbackContext(null); go('home'); };
 
   function step() {
