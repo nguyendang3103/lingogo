@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1645';
+const APP_BUILD_ID = '20261112-1705';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1852,7 +1852,10 @@ function h(tag, attrs, ...kids) {
     if (v == null || v === false) continue;
     if (k === 'class') el.className = v;
     else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
-    else if (k === 'style') Object.assign(el.style, v);
+    else if (k === 'style') {
+      if (typeof v === 'string') el.style.cssText = v;
+      else if (typeof v === 'object' && v) Object.assign(el.style, v);
+    }
     else el.setAttribute(k, v === true ? '' : v);
   }
   for (const c of kids.flat(9)) if (c != null && c !== false) el.append(c instanceof Node ? c : document.createTextNode(String(c)));
@@ -2284,7 +2287,7 @@ function homeView() {
           h('span', { class: 'muted' }, xp + '/' + g + ' XP · mỗi từ +5')
         ),
         h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': g }, gf),
-        h('button', { class: (due > 0 ? 'accent' : 'ghost mini') + ' block', style: due > 0 ? '' : 'padding: 6px 12px; font-size: .84rem; color: var(--muted); margin: 4px 0;', onclick: () => { REVIEW_SKILL = 'vocab'; go('review'); } }, due > 0 ? '🔄 Ôn tập từ mới: Có ' + due + ' từ cần ôn hôm nay' : '🔄 Ôn tập từ mới (SRS) · Đã ôn hết hôm nay ✓'),
+        h('button', { class: (due > 0 ? 'accent' : 'ghost mini') + ' block', style: due > 0 ? {} : { padding: '6px 12px', fontSize: '.84rem', color: 'var(--muted)', margin: '4px 0' }, onclick: () => { REVIEW_SKILL = 'vocab'; go('review'); } }, due > 0 ? '🔄 Ôn tập từ mới: Có ' + due + ' từ cần ôn hôm nay' : '🔄 Ôn tập từ mới (SRS) · Đã ôn hết hôm nay ✓'),
         nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
           h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
           : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')
