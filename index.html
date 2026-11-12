@@ -731,6 +731,7 @@ body { overflow-x: hidden; }
 <nav class="tabs" id="tabs" aria-label="Điều hướng" hidden></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js"></script>
+<script src="data/ielts_30day_listening.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -738,7 +739,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0735';
+const APP_BUILD_ID = '20261112-0755';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -808,7 +809,7 @@ function mergeState(a, b) {
     out[f] = Object.assign({}, older[f]);
     for (const [k, v] of Object.entries(newer[f] || {})) { const o = out[f][k]; out[f][k] = typeof v === 'number' && typeof o === 'number' ? Math.max(v, o) : (typeof v === 'number' ? v : o != null ? o : v); }
   }
-  out.fill = Object.assign({}, older.fill, newer.fill); out.ach = Object.assign({}, older.ach, newer.ach);
+  out.fill = Object.assign({}, older.fill, newer.fill); out.ielts_challenge = Object.assign({}, older.ielts_challenge, newer.ielts_challenge); out.ach = Object.assign({}, older.ach, newer.ach);
   out.name = newer.name || older.name; out.t = Math.max(a.t || 0, b.t || 0);
   return out;
 }
