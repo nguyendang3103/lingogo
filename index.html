@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1205';
+const APP_BUILD_ID = '20261112-1310';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1276,72 +1276,187 @@ async function say(code, text, slow) {
   tts(code, text, slow);
 }
 
-// ===== Nhận dạng giọng nói =====
+// ===== Nhận dạng giọng nói (Độ nhạy cao & Chống lỗi Aborted) =====
 const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
 let micBlocked = !Rec;
+let ACTIVE_REC = null;
+let ACTIVE_STREAM = null;
+let ACTIVE_STOP_FN = null;
 
-function listenOnce(code, onInterim) {
-  return new Promise((resolve, reject) => {
+// Kích hoạt Auto Gain Control trên phần cứng Micro để tự động khuếch đại âm lượng giọng nói nhỏ
+async function getSensitiveMicStream() {
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return null;
+  try {
+    return await navigator.mediaDevices.getUserMedia({
+      audio: {
+        autoGainControl: true, // Tăng độ nhạy cho giọng đọc nhỏ
+        noiseSuppression: true, // Khử tạp âm nền
+        echoCancellation: true  // Chống dội âm
+      }
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+// Dừng phiên nhận diện trước đó sạch sẽ để triệt tiêu lỗi 'aborted' ở lần nói 2, 3
+async function stopActiveRecognition() {
+  if (ACTIVE_STOP_FN) {
+    const fn = ACTIVE_STOP_FN;
+    ACTIVE_STOP_FN = null;
+    try { fn(); } catch (e) {}
+  }
+  if (ACTIVE_REC) {
+    const rec = ACTIVE_REC;
+    ACTIVE_REC = null;
+    try {
+      rec.onstart = null;
+      rec.onresult = null;
+      rec.onerror = null;
+      rec.onend = null;
+      rec.abort();
+    } catch (e) {}
+    await new Promise((r) => setTimeout(r, 120));
+  }
+  if (ACTIVE_STREAM) {
+    const st = ACTIVE_STREAM;
+    ACTIVE_STREAM = null;
+    try { st.getTracks().forEach((t) => t.stop()); } catch (e) {}
+  }
+}
+
+function listenOnce(code, onInterim, isRetry = false) {
+  return new Promise(async (resolve, reject) => {
     if (!Rec) return reject('not-supported');
     if (location.protocol === 'file:') return reject('file-protocol');
 
-    const r = new Rec();
-    r.lang = LANGS[code] ? LANGS[code].rec : 'en-US';
-    r.interimResults = true;
-    r.maxAlternatives = 1;
-    r.continuous = false;
+    await stopActiveRecognition();
+    ACTIVE_STREAM = await getSensitiveMicStream();
 
     let done = false;
     let transcript = '';
+    let speechTimer = null;
+    const r = new Rec();
+    ACTIVE_REC = r;
+
+    r.lang = LANGS[code] ? LANGS[code].rec : 'en-US';
+    r.interimResults = true;
+    r.maxAlternatives = 5;
+    r.continuous = true;
+
+    const finish = (text) => {
+      if (done) return;
+      done = true;
+      if (speechTimer) clearTimeout(speechTimer);
+      ACTIVE_STOP_FN = null;
+      ACTIVE_REC = null;
+      try {
+        r.onstart = null;
+        r.onresult = null;
+        r.onerror = null;
+        r.onend = null;
+        r.stop();
+      } catch (e) {}
+      if (ACTIVE_STREAM) {
+        try { ACTIVE_STREAM.getTracks().forEach((t) => t.stop()); } catch (e) {}
+        ACTIVE_STREAM = null;
+      }
+      resolve((text || transcript).trim());
+    };
+
+    const fail = (err) => {
+      if (done) return;
+      done = true;
+      if (speechTimer) clearTimeout(speechTimer);
+      ACTIVE_STOP_FN = null;
+      ACTIVE_REC = null;
+      try {
+        r.onstart = null;
+        r.onresult = null;
+        r.onerror = null;
+        r.onend = null;
+        r.abort();
+      } catch (e) {}
+      if (ACTIVE_STREAM) {
+        try { ACTIVE_STREAM.getTracks().forEach((t) => t.stop()); } catch (e) {}
+        ACTIVE_STREAM = null;
+      }
+      reject(err);
+    };
+
+    ACTIVE_STOP_FN = () => {
+      finish(transcript);
+    };
 
     r.onstart = () => {
-      if (onInterim) onInterim('Đang nghe... Hãy nói to và rõ!');
+      if (onInterim) onInterim('🎙️ Đang nghe... Hãy nói to và rõ!');
     };
 
     r.onresult = (e) => {
       let cur = '';
-      for (let i = e.resultIndex; i < e.results.length; ++i) {
-        if (e.results[i][0] && e.results[i][0].transcript) {
-          cur += e.results[i][0].transcript;
+      for (let i = 0; i < e.results.length; ++i) {
+        const res = e.results[i];
+        if (res && res[0] && res[0].transcript) {
+          cur += res[0].transcript;
         }
       }
       if (cur) {
         transcript = cur;
         if (onInterim) onInterim('Đang nghe: “' + cur + '”');
+        if (speechTimer) clearTimeout(speechTimer);
+        // Tự động nhận diện xong sau 1.8 giây ngưng giọng
+        speechTimer = setTimeout(() => {
+          finish(transcript);
+        }, 1800);
       }
     };
 
     r.onerror = (e) => {
-      if (!done) {
-        done = true;
+      const errName = e.error || 'error';
+      if (errName === 'aborted') {
         if (transcript.trim()) {
-          resolve(transcript.trim());
-        } else {
-          reject(e.error || 'error');
+          return finish(transcript);
         }
+        if (!isRetry) {
+          done = true;
+          stopActiveRecognition().then(() => {
+            listenOnce(code, onInterim, true).then(resolve).catch(reject);
+          });
+          return;
+        }
+        return finish('');
+      }
+
+      if (transcript.trim()) {
+        finish(transcript);
+      } else {
+        fail(errName);
       }
     };
 
     r.onend = () => {
-      if (!done) {
-        done = true;
-        resolve(transcript.trim());
-      }
+      finish(transcript);
     };
 
     try {
       r.start();
     } catch (e) {
-      done = true;
-      reject('not-allowed');
+      if (!isRetry) {
+        done = true;
+        stopActiveRecognition().then(() => {
+          listenOnce(code, onInterim, true).then(resolve).catch(reject);
+        });
+        return;
+      }
+      fail('not-allowed');
       return;
     }
 
     setTimeout(() => {
       if (!done) {
-        try { r.stop(); } catch (e) {}
+        finish(transcript);
       }
-    }, code === 'en' ? 10000 : 8000);
+    }, code === 'en' ? 15000 : 10000);
   });
 }
 
@@ -1362,8 +1477,10 @@ async function tryListen(code, onInterim) {
       toast('Chưa nghe thấy tiếng. Bạn hãy bấm vào Micro rồi nói ngay nhé.');
     } else if (err === 'network') {
       toast('Lỗi kết nối mạng của bộ nhận diện giọng nói. Vui lòng kiểm tra lại mạng internet.');
+    } else if (err === 'aborted') {
+      return null;
     } else {
-      toast('Chưa nghe rõ (' + err + '). Bạn thử lại nhé.');
+      toast('Chưa nghe rõ. Bạn bấm Micro thử lại nhé.');
     }
     return null;
   }
@@ -6974,6 +7091,9 @@ function createIeltsSpeechRecorder(promptText, sampleAnswer, onFinished) {
   function stopRecording() {
     isRecording = false;
     clearInterval(timerInterval);
+    if (ACTIVE_STOP_FN) {
+      try { ACTIVE_STOP_FN(); } catch (e) {}
+    }
     box.className = 'ielts-speak-recorder stack';
     recordBtn.className = 'ghost mini';
     recordBtn.textContent = '🔄 Ghi âm lại';
@@ -8126,7 +8246,11 @@ function lessonView(t, i) {
             const hint = h('p', { class: 'small muted' }, attempts > 0 ? 'Bấm micro để nói lại và nâng cao điểm' : 'Bấm micro rồi nói cả câu');
             return h('div', { class: 'stack' },
               h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-                const b = e.currentTarget; b.classList.add('live');
+                const b = e.currentTarget;
+                if (b.classList.contains('live')) {
+                  if (ACTIVE_STOP_FN) { ACTIVE_STOP_FN(); return; }
+                }
+                b.classList.add('live');
                 const said = await tryListen(code, (txt) => { hint.textContent = txt; });
                 b.classList.remove('live');
                 hint.textContent = 'Bấm micro để nói lại và nâng cao điểm';
@@ -8841,7 +8965,11 @@ function micControl(code, onResult, onSelf, selfLabels) {
         const hint = h('p', { class: 'small muted' }, hasSpoken ? 'Bấm micro để nói lại và nâng cao điểm số' : 'Bấm micro rồi nói cả câu');
         return h('div', { class: 'stack center' },
           h('button', { class: 'mic', 'aria-label': 'Bấm để nói', onclick: async (e) => {
-            const b = e.currentTarget; b.classList.add('live');
+            const b = e.currentTarget;
+            if (b.classList.contains('live')) {
+              if (ACTIVE_STOP_FN) { ACTIVE_STOP_FN(); return; }
+            }
+            b.classList.add('live');
             const said = await tryListen(code, (txt) => { hint.textContent = txt; });
             b.classList.remove('live');
             hint.textContent = 'Bấm micro để nói lại và nâng cao điểm số';
