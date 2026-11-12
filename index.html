@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1145';
+const APP_BUILD_ID = '20261112-1150';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -7484,7 +7484,7 @@ function wordBlock(code, v, opts = {}) {
   return h('div', { class: 'stack center', style: { gap: '6px' } },
     h('div', { class: 'big', lang: LANGS[code].lang }, plain(v.w)),
     v.r && (code === 'en' ? h('div', { class: 'ipa' }, v.r) : (v.r !== v.w && h('div', { class: 'read', lang: code === 'ja' ? 'ja' : null }, v.r))),
-    code !== 'en' && hvBlock(code, v),
+    code !== 'en' && !opts.hideMeaning && !opts.hideHv && hvBlock(code, v),
     !opts.hideMeaning && h('p', {}, h('b', {}, v.m), v.d && code === 'en' && h('span', { class: 'small muted', style: { display: 'block' } }, v.d)));
 }
 function itemCard(code, v, tip) {
@@ -8243,7 +8243,8 @@ function lessonView(t, i) {
         ex.type === 'reverse' && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
           h('p', { class: code === 'en' ? 'ipa' : 'read', style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
           h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
-        ) : null
+        ) : null,
+        ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v)) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
       if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
