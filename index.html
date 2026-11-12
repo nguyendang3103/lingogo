@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1135';
+const APP_BUILD_ID = '20261112-1145';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8594,7 +8594,7 @@ function reviewView() {
         const data = strokes[c];
         if (!data || !window.HanziWriter) {
           info.replaceChildren(
-            h('p', {}, 'Chữ: ' + c + (hint ? ' (' + hint + ')' : '')),
+            h('p', {}, 'Chữ: ', h('b', { lang: LANGS[code].lang }, c), (hint ? ' (' + hint + ')' : '')),
             h('div', { class: 'row center', style: { gap: '8px' } },
               h('button', { class: 'mini', onclick: () => finishWrite(3, true, 'Đã nhớ chữ') }, 'Tôi đã nhớ chữ này'),
               h('button', { class: 'mini ghost', onclick: () => finishWrite(1, false, 'Cần ôn lại') }, 'Chưa nhớ')
@@ -8626,7 +8626,7 @@ function reviewView() {
         h('div', { class: 'panel card stack center', style: { gap: '10px' } },
           h('p', { class: 'small muted' }, 'Tập viết chữ theo phương pháp lặp lại ngắt quãng:'),
           h('div', { class: 'row center', style: { gap: '8px', alignItems: 'center' } },
-            h('span', { class: 'chip good', style: { fontSize: '1.2rem', padding: '4px 14px' } }, c),
+            h('span', { class: 'chip good', lang: LANGS[code].lang, style: { fontSize: '1.2rem', padding: '4px 14px' } }, c),
             hint ? h('b', {}, hint) : null,
             spk(code, c)
           ),
