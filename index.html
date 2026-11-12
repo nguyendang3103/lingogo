@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1545';
+const APP_BUILD_ID = '20261112-1600';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1890,6 +1890,7 @@ const ICON = {
   speak: 'M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm6-3a6 6 0 0 1-12 0M12 18v3',
   cards: 'M4 7h12v13H4zM8 4h12v13',
   pen: 'M4 20h4L19 9l-4-4L4 16v4zM14 6l4 4',
+  exam: 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4',
   chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
   book: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5V5a2 2 0 0 1 2-2h14v14H6.5A2.5 2.5 0 0 0 4 19.5z',
   speaker: 'M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11',
@@ -1962,11 +1963,14 @@ function langSwitch() {
 // ===== Điều hướng =====
 let VIEW = 'pick'; // mở app là màn hình chọn ngôn ngữ
 let SKILL_TAB = 'speak'; // 'speak' | 'write'
+let KNOWLEDGE_TAB = 'gram'; // 'gram' | 'chars' | 'kana'
+let EXAM_LV = { zh: 'HSK 1', ja: 'N5' };
 const TABS = [
   ['home', 'Học', ICON.home],
   ['skills', 'Kỹ năng', ICON.skills],
   ['ielts', 'Luyện IELTS', ICON.book],
-  ['grammar', 'Ngữ pháp', ICON.book],
+  ['knowledge', 'Kiến thức', ICON.book],
+  ['exam', 'Luyện thi', ICON.exam],
   ['progress', 'Tiến độ', ICON.chart]
 ];
 function setTabs(show) {
@@ -1974,12 +1978,19 @@ function setTabs(show) {
   document.body.classList.toggle('lessonmode', !show);
   if (!show) return;
   const filtered = TABS.filter(([k]) => {
-    if (k === 'ielts') return S.lang === 'en'; // Tab IELTS nằm sau Kỹ năng, trước Tiến độ
-    if (k === 'grammar') return S.lang !== 'en'; // Tab Ngữ pháp nằm sau Kỹ năng, trước Tiến độ
+    if (k === 'ielts') return S.lang === 'en'; // Chỉ tiếng Anh có tab Luyện IELTS
+    if (k === 'knowledge') return S.lang !== 'en'; // Tiếng Trung & Nhật có tab Kiến thức
+    if (k === 'exam') return S.lang !== 'en'; // Tiếng Trung & Nhật có tab Luyện HSK / Luyện JLPT
     return true;
+  }).map(([k, label, d]) => {
+    if (k === 'exam') {
+      const examLabel = S.lang === 'zh' ? 'Luyện HSK' : 'Luyện JLPT';
+      return [k, examLabel, d];
+    }
+    return [k, label, d];
   });
   nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', {
-    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write' || VIEW === 'listen' || VIEW === 'read'))) ? 'page' : null,
+    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write' || VIEW === 'listen' || VIEW === 'read')) || (k === 'knowledge' && (VIEW === 'grammar' || VIEW === 'kanji' || VIEW === 'knowledge')) || (k === 'exam' && VIEW === 'exam')) ? 'page' : null,
     onclick: () => go(k)
   }, icon(d), label)));
 }
@@ -1987,6 +1998,9 @@ function go(k) {
   if (k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
     SKILL_TAB = k;
     VIEW = 'skills';
+  } else if (k === 'grammar') {
+    KNOWLEDGE_TAB = 'gram';
+    VIEW = 'knowledge';
   } else {
     VIEW = k;
   }
@@ -1998,7 +2012,18 @@ async function route() {
   setTabs(true);
   try {
     if (VIEW !== 'progress') { mount(h('p', { class: 'loading' }, 'Đang tải bài học…')); await loadLang(S.lang); }
-    ({ home: homeView, review: reviewView, skills: skillsView, ielts: ieltsTabView, speak: speakView, write: writeView, grammar: grammarTabView, progress: progressView })[VIEW]();
+    ({
+      home: homeView,
+      review: reviewView,
+      skills: skillsView,
+      ielts: ieltsTabView,
+      knowledge: knowledgeTabView,
+      grammar: knowledgeTabView,
+      exam: examTabView,
+      speak: speakView,
+      write: writeView,
+      progress: progressView
+    })[VIEW]();
   } catch (e) {
     mount(h('div', { class: 'panel stack' }, h('p', {}, e.message || 'Có lỗi khi tải.'), h('button', { class: 'primary', onclick: route }, 'Thử lại')));
   }
@@ -10254,12 +10279,80 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
   };
   show();
 }
+// =====================================================================
+// TAB KIẾN THỨC (TIẾNG TRUNG & TIẾNG NHẬT)
+// =====================================================================
 function grammarTabView() {
+  KNOWLEDGE_TAB = 'gram';
+  knowledgeTabView();
+}
+
+function knowledgeTabView() {
   const code = S.lang;
-  if (code === 'en') return mount(h('div', { class: 'stack-lg' }, h('h1', {}, 'Ngữ pháp'), h('p', { class: 'note' }, 'Tab Ngữ pháp riêng hiện có cho tiếng Trung và tiếng Nhật. Hãy đổi ngôn ngữ để dùng.'), h('button', { class: 'primary block', onclick: () => go('pick') }, 'Đổi ngôn ngữ')));
-  const langAttr = LANGS[code].lang, lvs = GRAM_LEVELS[code] || [];
-  const pts = grammarPoints(code), st = gqStore(), sel = GQ[code] || 'all';
+  if (code === 'en') {
+    return mount(h('div', { class: 'stack-lg' },
+      h('h1', {}, 'Kiến thức'),
+      h('p', { class: 'note' }, 'Tab Kiến thức chuyên sâu hiện có cho Tiếng Trung và Tiếng Nhật. Với Tiếng Anh, các kỹ năng được chia theo 4 tab Nghe - Nói - Đọc - Viết trong tab Kỹ năng.'),
+      h('button', { class: 'primary block', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
+    ));
+  }
+
+  const isJa = code === 'ja';
+  const subtabs = isJa
+    ? [
+        { k: 'gram', label: '📖 Ngữ pháp JLPT' },
+        { k: 'chars', label: '🈴 Chữ Hán Kanji' },
+        { k: 'kana', label: '🔤 Bảng chữ cái' }
+      ]
+    : [
+        { k: 'gram', label: '📖 Ngữ pháp HSK' },
+        { k: 'chars', label: '🈴 Chữ Hán & Bộ thủ' }
+      ];
+
+  if (!subtabs.some((st) => st.k === KNOWLEDGE_TAB)) {
+    KNOWLEDGE_TAB = 'gram';
+  }
+
+  const header = h('div', { class: 'stack', style: { gap: '4px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, isJa ? 'Kiến thức Tiếng Nhật' : 'Kiến thức Tiếng Trung'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: 'knowledge_tab' }),
+        langSwitch()
+      )
+    ),
+    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức & Ngữ pháp HSK'),
+    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+      isJa
+        ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
+        : 'Tổng hợp ngữ pháp HSK 1–6, 214 bộ thủ Khang Hy và quy tắc bút thuận viết chữ Hán.'
+    )
+  );
+
+  const navSub = h('div', { class: 'skill-tabs', style: { margin: '6px 0 12px 0' } },
+    ...subtabs.map((st) => h('button', {
+      class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
+      onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
+    }, st.label))
+  );
+
+  let body = null;
+  if (KNOWLEDGE_TAB === 'gram') body = renderKnowledgeGrammar(code);
+  else if (KNOWLEDGE_TAB === 'chars') body = renderKnowledgeChars(code);
+  else if (KNOWLEDGE_TAB === 'kana') body = renderKnowledgeKana(code);
+
+  mount(h('div', { class: 'stack-lg' }, header, navSub, body));
+}
+
+function renderKnowledgeGrammar(code) {
+  const isJa = code === 'ja';
+  const langAttr = LANGS[code].lang;
+  const lvs = GRAM_LEVELS[code] || [];
+  const pts = grammarPoints(code);
+  const st = gqStore();
+  const sel = GQ[code] || 'all';
   const qText = (GQ_SEARCH[code] || '').trim().toLowerCase();
+
   const matchQuery = (x) => {
     if (!qText) return true;
     const haystack = [
@@ -10269,12 +10362,16 @@ function grammarTabView() {
     ].join(' ').toLowerCase();
     return haystack.includes(qText);
   };
+
   const shown = pts.filter((x) => (sel === 'all' || x.lv === sel) && matchQuery(x));
   const count = (lv) => pts.filter((x) => x.lv === lv).length;
   const nWrong = pts.filter((x) => (sel === 'all' || x.lv === sel) && st.wrong[x.gid]).length;
   const bestVal = st.best[code + ':' + sel] != null ? st.best[code + ':' + sel] : (code === 'zh' ? st.best[sel] : null);
-  const chip = (key, label) => h('button', { class: 'mini' + (sel === key ? ' primary' : ' ghost'), 'aria-pressed': String(sel === key), onclick: () => { GQ[code] = key; grammarTabView(); } }, label);
-  const isJa = code === 'ja';
+  const chip = (key, label) => h('button', {
+    class: 'mini' + (sel === key ? ' primary' : ' ghost'),
+    'aria-pressed': String(sel === key),
+    onclick: () => { GQ[code] = key; knowledgeTabView(); }
+  }, label);
 
   const toggleAll = () => {
     const details = document.querySelectorAll('.stack-lg details.gram');
@@ -10284,49 +10381,482 @@ function grammarTabView() {
     if (btn) btn.textContent = anyClosed ? 'Thu gọn tất cả' : 'Mở tất cả';
   };
 
-  mount(h('div', { class: 'stack-lg' },
-    h('div', { class: 'stack', style: { gap: '4px' } },
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
-        h('p', { class: 'label', style: { margin: 0 } }, isJa ? 'Ngữ pháp tiếng Nhật' : 'Ngữ pháp tiếng Trung'),
-        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-          feedbackBtn({ mode: 'grammar_tab' }),
-          langSwitch()
-        )
-      ),
-      h('h1', {}, isJa ? 'Kiến thức theo JLPT' : 'Kiến thức theo HSK'),
-      h('p', { class: 'muted small' }, pts.length + ' điểm ngữ pháp · mỗi điểm có công thức, ghi chú và 3 câu ví dụ.')),
+  return h('div', { class: 'stack-lg', style: { gap: '12px' } },
     h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
       h('input', {
         type: 'search',
         class: 'gram-search-input',
         style: { flex: 1, minHeight: '44px', padding: '10px 14px' },
-        placeholder: isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm kiếm ngữ pháp HSK 1–9, từ khóa, ví dụ...',
+        placeholder: isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm kiếm ngữ pháp HSK 1–6, từ khóa, ví dụ...',
         value: GQ_SEARCH[code] || '',
         oninput: (e) => {
           GQ_SEARCH[code] = e.target.value;
-          grammarTabView();
+          knowledgeTabView();
           const el = document.querySelector('.gram-search-input');
           if (el) { el.focus(); el.selectionStart = el.selectionEnd = el.value.length; }
         }
       }),
-      GQ_SEARCH[code] ? h('button', { class: 'ghost mini', onclick: () => { GQ_SEARCH[code] = ''; grammarTabView(); } }, 'Xóa tìm') : null
+      GQ_SEARCH[code] ? h('button', { class: 'ghost mini', onclick: () => { GQ_SEARCH[code] = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
     ),
-    h('div', { class: 'row', style: { flexWrap: 'wrap', gap: '6px' } }, chip('all', 'Tất cả (' + pts.length + ')'), ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (isJa ? lv : lv.replace('HSK ', '')) + ' (' + count(lv) + ')'))),
-    h('div', { class: 'panel stack' }, h('h2', {}, 'Quiz ngữ pháp'),
-      srsDueItems(code, 'gram').length > 0 ? h('button', { class: 'accent block', onclick: () => { REVIEW_SKILL = 'gram'; go('review'); } }, '📖 Ôn tập ngắt quãng: Có ' + srsDueItems(code, 'gram').length + ' điểm ngữ pháp cần ôn hôm nay') : null,
-      h('p', { class: 'small muted' }, '10 câu: điền từ đúng vào chỗ trống hoặc sắp xếp các từ thành câu đúng.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
-      h('button', { class: 'primary block', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'tất cả cấp' : sel)),
-      nWrong > 0 && h('button', { class: 'accent block', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai' + (sel !== 'all' ? ' (' + sel + ')' : ''))),
+    h('div', { class: 'row', style: { flexWrap: 'wrap', gap: '6px' } },
+      chip('all', 'Tất cả (' + pts.length + ')'),
+      ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (isJa ? lv : lv.replace('HSK ', '')) + ' (' + count(lv) + ')'))
+    ),
+    h('div', { class: 'panel stack', style: { background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
+      h('h2', { style: { margin: 0, fontSize: '1.05rem' } }, '🎯 Luyện Quiz Ngữ Pháp'),
+      srsDueItems(code, 'gram').length > 0 ? h('button', {
+        class: 'accent block',
+        onclick: () => { REVIEW_SKILL = 'gram'; go('review'); }
+      }, '📖 Ôn tập ngắt quãng: Có ' + srsDueItems(code, 'gram').length + ' điểm ngữ pháp cần ôn hôm nay') : null,
+      h('p', { class: 'small muted', style: { margin: '4px 0 8px 0' } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
+      h('div', { class: 'row', style: { gap: '8px' } },
+        h('button', { class: 'primary grow', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'Tất cả cấp' : sel)),
+        nWrong > 0 ? h('button', { class: 'accent', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai') : null
+      )
+    ),
     h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
       h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm ngữ pháp') : (shown.length + ' điểm ngữ pháp')),
       shown.length > 0 && h('button', { id: 'toggle-gram-btn', class: 'ghost mini', onclick: toggleAll }, 'Mở tất cả')
     ),
     shown.length === 0 ? h('p', { class: 'note center' }, 'Không tìm thấy điểm ngữ pháp nào phù hợp với “' + qText + '”.') : null,
-    ...shown.map((x) => h('details', { class: 'panel gram' }, h('summary', { style: { cursor: 'pointer', fontWeight: 600 } }, x.g.t, ' ', h('span', { class: 'chip good', style: { fontSize: '.7rem' } }, x.lv)),
+    ...shown.map((x) => h('details', { class: 'panel gram', style: { borderRadius: '12px' } },
+      h('summary', { style: { cursor: 'pointer', fontWeight: 600 } },
+        x.g.t, ' ', h('span', { class: 'chip good', style: { fontSize: '.7rem' } }, x.lv)
+      ),
       h('div', { class: 'gram', style: { marginTop: '8px' } },
-        h('p', { lang: langAttr, class: 'muted' }, x.g.zh), x.g.f && h('p', { class: 'pat', lang: langAttr }, x.g.f), ...x.g.notes.map((n) => h('p', {}, n)),
-        ...x.g.ex.map((e) => h('div', { class: 'ex' }, h('p', { lang: langAttr }, e[0], ' ', spk(code, e[0])), h('p', { class: 'small read', style: { textAlign: 'left' } }, e[1]), h('p', { class: 'small muted' }, e[2]))),
-        h('p', { class: 'small muted' }, 'Gặp trong bài: ' + x.topics.map((t) => t.sub || t.title).join(' · ')))))));
+        h('p', { lang: langAttr, class: 'muted', style: { fontWeight: 500 } }, x.g.zh),
+        x.g.f && h('p', { class: 'pat', lang: langAttr }, x.g.f),
+        ...(x.g.notes || []).map((n) => h('p', { style: { margin: '4px 0' } }, n)),
+        ...x.g.ex.map((e) => h('div', { class: 'ex', style: { margin: '6px 0', padding: '8px', background: 'var(--sunk)', borderRadius: '8px' } },
+          h('p', { lang: langAttr, style: { margin: 0, fontWeight: 500 } }, e[0], ' ', spk(code, e[0])),
+          h('p', { class: 'small read', style: { textAlign: 'left', margin: '2px 0' } }, e[1]),
+          h('p', { class: 'small muted', style: { margin: 0 } }, e[2])
+        )),
+        h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong bài: ' + x.topics.map((t) => t.sub || t.title).join(' · '))
+      )
+    ))
+  );
+}
+
+// 7 Quy tắc bút thuận viết chữ Hán và 214 Bộ thủ Khang Hy
+let CHARS_SEARCH = '';
+function renderKnowledgeChars(code) {
+  if (code === 'zh') {
+    const rules = [
+      { title: '1. Ngang trước sổ sau', ex: '十', pinyin: 'shí', hv: 'Thập (Số 10)', desc: 'Nét ngang viết trước, nét sổ dọc viết đè lên sau.' },
+      { title: '2. Phẩy trước mác sau', ex: '八', pinyin: 'bā', hv: 'Bát (Số 8)', desc: 'Nét phẩy xiên trái viết trước, nét mác xiên phải viết sau.' },
+      { title: '3. Trên trước dưới sau', ex: '三', pinyin: 'sān', hv: 'Tam (Số 3)', desc: 'Viết các nét theo thứ tự từ trên xuống dưới.' },
+      { title: '4. Trái trước phải sau', ex: '你', pinyin: 'nǐ', hv: 'Nhĩ (Bạn)', desc: 'Bộ nhân đứng bên trái viết trước, phần bên phải viết sau.' },
+      { title: '5. Ngoài trước trong sau', ex: '月', pinyin: 'yuè', hv: 'Nguyệt (Mặt trăng)', desc: 'Khung bao bọc bên ngoài viết trước, các nét bên trong viết sau.' },
+      { title: '6. Vào trước đóng sau', ex: '日', pinyin: 'rì', hv: 'Nhật (Mặt trời)', desc: 'Vẽ khung 3 cạnh, viết ruột bên trong rồi mới kẻ nét đáy đóng lại.' },
+      { title: '7. Giữa trước hai bên sau', ex: '小', pinyin: 'xiǎo', hv: 'Tiểu (Nhỏ)', desc: 'Nét sổ móc ở giữa viết trước, hai nét chấm/phẩy hai bên viết sau.' }
+    ];
+
+    const radicals = [
+      { r: '一', p: 'yī', m: 'Một (Nhất)', s: 1 },
+      { r: '丨', p: 'gǔn', m: 'Nét sổ (Cổn)', s: 1 },
+      { r: '丶', p: 'zhǔ', m: 'Điểm, chấm (Chủ)', s: 1 },
+      { r: '丿', p: 'piě', m: 'Nét phẩy (Phiệt)', s: 1 },
+      { r: '乙', p: 'yǐ', m: 'Can thứ 2 (Ất)', s: 1 },
+      { r: '亅', p: 'jué', m: 'Nét móc (Quyết)', s: 1 },
+      { r: '二', p: 'èr', m: 'Số hai (Nhị)', s: 2 },
+      { r: '亠', p: 'tóu', m: 'Đầu (Đầu)', s: 2 },
+      { r: '人', p: 'rén', m: 'Người (Nhân / 亻)', s: 2 },
+      { r: '儿', p: 'ér', m: 'Trẻ con (Nhi)', s: 2 },
+      { r: '入', p: 'rù', m: 'Vào (Nhập)', s: 2 },
+      { r: '八', p: 'bā', m: 'Số tám (Bát)', s: 2 },
+      { r: '冂', p: 'jiōng', m: 'Vùng biên (Quynh)', s: 2 },
+      { r: '冖', p: 'mì', m: 'Khăn trùm (Mịch)', s: 2 },
+      { r: '冫', p: 'bīng', m: 'Băng tuyết (Băng)', s: 2 },
+      { r: '几', p: 'jī', m: 'Ghế tựa (Kỷ)', s: 2 },
+      { r: '凵', p: 'kǎn', m: 'Há miệng (Khảm)', s: 2 },
+      { r: '刀', p: 'dāo', m: 'Con dao (Đao / 刂)', s: 2 },
+      { r: '力', p: 'lì', m: 'Sức mạnh (Lực)', s: 2 },
+      { r: '勹', p: 'bāo', m: 'Bao bọc (Bao)', s: 2 },
+      { r: '匕', p: 'bǐ', m: 'Cái thìa (Chủy)', s: 2 },
+      { r: '匚', p: 'fāng', m: 'Hòm đựng (Phương)', s: 2 },
+      { r: '十', p: 'shí', m: 'Số mười (Thập)', s: 2 },
+      { r: '卜', p: 'bǔ', m: 'Bói toán (Bặc)', s: 2 },
+      { r: '卩', p: 'jié', m: 'Đốt tre (Tiết)', s: 2 },
+      { r: '厂', p: 'hǎn', m: 'Sườn núi (Hán)', s: 2 },
+      { r: '厶', p: 'sī', m: 'Riêng tư (Khứ)', s: 2 },
+      { r: '又', p: 'yòu', m: 'Lại nữa (Hựu)', s: 2 },
+      { r: '口', p: 'kǒu', m: 'Miệng (Khẩu)', s: 3 },
+      { r: '囗', p: 'wéi', m: 'Vây quanh (Vi)', s: 3 },
+      { r: '土', p: 'tǔ', m: 'Đất (Thổ)', s: 3 },
+      { r: '士', p: 'shì', m: 'Kẻ sĩ (Sĩ)', s: 3 },
+      { r: '夂', p: 'zhǐ', m: 'Đi chậm (Trĩ)', s: 3 },
+      { r: '夕', p: 'xī', m: 'Buổi chiều (Tịch)', s: 3 },
+      { r: '大', p: 'dà', m: 'To lớn (Đại)', s: 3 },
+      { r: '女', p: 'nǚ', m: 'Phụ nữ (Nữ)', s: 3 },
+      { r: '子', p: 'zǐ', m: 'Con cái (Tử)', s: 3 },
+      { r: '宀', p: 'mián', m: 'Mái nhà (Miên)', s: 3 },
+      { r: '寸', p: 'cùn', m: 'Tấc (Thốn)', s: 3 },
+      { r: '小', p: 'xiǎo', m: 'Nhỏ bé (Tiểu)', s: 3 },
+      { r: '尢', p: 'wāng', m: 'Què quặt (Uông)', s: 3 },
+      { r: '尸', p: 'shī', m: 'Xác chết (Thi)', s: 3 },
+      { r: '山', p: 'shān', m: 'Núi non (Sơn)', s: 3 },
+      { r: '巛', p: 'chuān', m: 'Sông ngòi (Xuyên)', s: 3 },
+      { r: '工', p: 'gōng', m: 'Công việc (Công)', s: 3 },
+      { r: '己', p: 'jǐ', m: 'Bản thân (Kỷ)', s: 3 },
+      { r: '巾', p: 'jīn', m: 'Khăn vải (Cân)', s: 3 },
+      { r: '干', p: 'gān', m: 'Can dự, khô (Can)', s: 3 },
+      { r: '幺', p: 'yāo', m: 'Nhỏ nhắn (Yêu)', s: 3 },
+      { r: '广', p: 'guǎng', m: 'Mái hiên (Quảng)', s: 3 },
+      { r: '廴', p: 'yǐn', m: 'Bước dài (Dẫn)', s: 3 },
+      { r: '廾', p: 'gǒng', m: 'Hai tay chắp (Củng)', s: 3 },
+      { r: '弋', p: 'yì', m: 'Cái cọc (Dặc)', s: 3 },
+      { r: '弓', p: 'gōng', m: 'Cây cung (Cung)', s: 3 },
+      { r: '心', p: 'xīn', m: 'Trái tim (Tâm / 忄)', s: 4 },
+      { r: '手', p: 'shǒu', m: 'Bàn tay (Thủ / 扌)', s: 4 },
+      { r: '水', p: 'shuǐ', m: 'Nước (Thủy / 氵)', s: 4 },
+      { r: '火', p: 'huǒ', m: 'Ngọn lửa (Hỏa / 灬)', s: 4 },
+      { r: '木', p: 'mù', m: 'Cây gỗ (Mộc)', s: 4 },
+      { r: '日', p: 'rì', m: 'Mặt trời (Nhật)', s: 4 },
+      { r: '月', p: 'yuè', m: 'Mặt trăng (Nguyệt)', s: 4 },
+      { r: '言', p: 'yán', m: 'Lời nói (Ngôn / 讠)', s: 7 },
+      { r: '金', p: 'jīn', m: 'Kim loại (Kim / 钅)', s: 8 }
+    ];
+
+    const q = CHARS_SEARCH.trim().toLowerCase();
+    const filteredRad = radicals.filter((x) => !q || x.r.includes(q) || x.p.includes(q) || x.m.toLowerCase().includes(q));
+
+    return h('div', { class: 'stack-lg' },
+      h('div', { class: 'panel card stack', style: { gap: '10px' } },
+        h('h2', { style: { margin: 0 } }, '✍️ 7 Quy tắc bút thuận viết chữ Hán'),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Nắm vững quy tắc viết để nhớ mặt chữ nhanh gấp 3 lần và viết chữ đẹp chuẩn phong cách:'),
+        ...rules.map((ru) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center' } },
+            h('b', { style: { color: 'var(--teal)' } }, ru.title),
+            h('button', {
+              class: 'chip good',
+              style: { cursor: 'pointer', fontSize: '1rem', padding: '2px 10px' },
+              onclick: () => charView('zh', ru.ex, [ru.ex])
+            }, ru.ex + ' (' + ru.pinyin + ') ➔ Tập viết')
+          ),
+          h('p', { class: 'small', style: { margin: '4px 0 2px 0' } }, ru.desc),
+          h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa Hán Việt: ' + ru.hv)
+        ))
+      ),
+      h('div', { class: 'panel card stack', style: { gap: '10px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('h2', { style: { margin: 0 } }, '🈴 Bộ thủ thường gặp nhất'),
+          h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, filteredRad.length + ' bộ thủ')
+        ),
+        h('input', {
+          type: 'search',
+          placeholder: '🔍 Tìm bộ thủ (nhập chữ Hán, Pinyin hoặc nghĩa tiếng Việt)...',
+          value: CHARS_SEARCH,
+          style: { minHeight: '40px', padding: '8px 12px' },
+          oninput: (e) => { CHARS_SEARCH = e.target.value; knowledgeTabView(); }
+        }),
+        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '8px' } },
+          ...filteredRad.map((x) => h('div', {
+            class: 'panel stack center',
+            style: { background: 'var(--sunk)', borderRadius: '10px', padding: '8px', cursor: 'pointer' },
+            onclick: () => charView('zh', x.r, [x.r])
+          },
+            h('span', { style: { fontSize: '1.6rem', fontWeight: 700, color: 'var(--ink)' } }, x.r),
+            h('b', { style: { fontSize: '.85rem' } }, x.p),
+            h('p', { class: 'small muted center', style: { margin: 0, fontSize: '.75rem', lineHeight: 1.2 } }, x.m),
+            h('span', { class: 'chip', style: { fontSize: '.65rem', padding: '1px 6px', marginTop: '2px' } }, x.s + ' nét')
+          ))
+        )
+      )
+    );
+  }
+
+  // Japanese Kanji Lookup
+  const allKanji = [];
+  const topics = DATA.ja.topics || [];
+  topics.forEach((t) => {
+    (t.kanji || []).forEach((k) => {
+      if (!allKanji.some((x) => x.k === k.k)) {
+        allKanji.push({ ...k, topicTitle: t.sub || t.title, lv: t.level || 'N5' });
+      }
+    });
+  });
+
+  const q = CHARS_SEARCH.trim().toLowerCase();
+  const filtered = allKanji.filter((k) => !q || k.k.includes(q) || k.hv.toLowerCase().includes(q) || (k.on && k.on.toLowerCase().includes(q)) || (k.kun && k.kun.toLowerCase().includes(q)));
+
+  return h('div', { class: 'stack-lg' },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0 } }, '🈴 Danh mục Kanji JLPT'),
+      h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, filtered.length + '/' + allKanji.length + ' chữ')
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Tra cứu âm Hán Việt, âm On (Onyomi), âm Kun (Kunyomi) và bấm chữ để tập viết từng nét:'),
+    h('input', {
+      type: 'search',
+      placeholder: '🔍 Tìm Kanji theo chữ, âm Hán Việt, On, Kun...',
+      value: CHARS_SEARCH,
+      style: { minHeight: '40px', padding: '8px 12px' },
+      oninput: (e) => { CHARS_SEARCH = e.target.value; knowledgeTabView(); }
+    }),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      ...filtered.map((k) => h('div', { class: 'panel kj', style: { borderRadius: '12px', background: 'var(--surface)' } },
+        h('button', {
+          class: 'k ghost',
+          lang: 'ja',
+          'aria-label': 'Tập viết ' + k.k,
+          onclick: () => { S.lang = 'ja'; charView('ja', k.k, allKanji.map((x) => x.k)); }
+        }, k.k),
+        h('div', { class: 'grow stack', style: { gap: '4px' } },
+          h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+            h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, k.hv),
+            h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, k.lv),
+            h('span', { class: 'small muted' }, 'Bài: ' + k.topicTitle)
+          ),
+          k.on ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'On: ' + k.on) : null,
+          k.kun ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'Kun: ' + k.kun) : null,
+          ...(k.ex || []).slice(0, 2).map((e) => h('p', { class: 'small muted', lang: 'ja', style: { margin: 0 } }, ruby(e[0]), ' · ' + e[1]))
+        )
+      ))
+    )
+  );
+}
+
+// Bảng chữ cái tiếng Nhật Hiragana & Katakana
+let KANA_MODE = 'hira'; // 'hira' | 'kata'
+function renderKnowledgeKana(code) {
+  const kanaData = [
+    { r: 'a', h: 'あ', k: 'ア' }, { r: 'i', h: 'い', k: 'イ' }, { r: 'u', h: 'う', k: 'ウ' }, { r: 'e', h: 'え', k: 'エ' }, { r: 'o', h: 'お', k: 'オ' },
+    { r: 'ka', h: 'か', k: 'カ' }, { r: 'ki', h: 'き', k: 'キ' }, { r: 'ku', h: 'く', k: 'ク' }, { r: 'ke', h: 'け', k: 'ケ' }, { r: 'ko', h: 'こ', k: 'コ' },
+    { r: 'sa', h: 'さ', k: 'サ' }, { r: 'shi', h: 'し', k: 'シ' }, { r: 'su', h: 'す', k: 'ス' }, { r: 'se', h: 'せ', k: 'セ' }, { r: 'so', h: 'そ', k: 'ソ' },
+    { r: 'ta', h: 'た', k: 'タ' }, { r: 'chi', h: 'ち', k: 'チ' }, { r: 'tsu', h: 'つ', k: 'ツ' }, { r: 'te', h: 'て', k: 'テ' }, { r: 'to', h: 'と', k: 'ト' },
+    { r: 'na', h: 'na', k: 'ナ' }, { r: 'ni', h: 'に', k: 'ニ' }, { r: 'nu', h: 'ぬ', k: 'ヌ' }, { r: 'ne', h: 'ね', k: 'ネ' }, { r: 'no', h: 'の', k: 'ノ' },
+    { r: 'ha', h: 'は', k: 'ハ' }, { r: 'hi', h: 'ひ', k: 'ヒ' }, { r: 'fu', h: 'ふ', k: 'フ' }, { r: 'he', h: 'へ', k: 'ヘ' }, { r: 'ho', h: 'ほ', k: 'ホ' },
+    { r: 'ma', h: 'ま', k: 'マ' }, { r: 'mi', h: 'み', k: 'ミ' }, { r: 'mu', h: 'む', k: 'ム' }, { r: 'me', h: 'め', k: 'メ' }, { r: 'mo', h: 'も', k: 'モ' },
+    { r: 'ya', h: 'や', k: 'ヤ' }, { r: '', h: '', k: '' }, { r: 'yu', h: 'ゆ', k: 'ユ' }, { r: '', h: '', k: '' }, { r: 'yo', h: 'よ', k: 'ヨ' },
+    { r: 'ra', h: 'ら', k: 'ラ' }, { r: 'ri', h: 'り', k: 'リ' }, { r: 'ru', h: 'る', k: 'ル' }, { r: 're', h: 'れ', k: 'レ' }, { r: 'ro', h: 'ろ', k: 'ロ' },
+    { r: 'wa', h: 'わ', k: 'ワ' }, { r: '', h: '', k: '' }, { r: '', h: '', k: '' }, { r: '', h: '', k: '' }, { r: 'wo', h: 'を', k: 'ヲ' },
+    { r: 'n', h: 'ん', k: 'ン' }
+  ];
+
+  return h('div', { class: 'stack-lg' },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0 } }, '🔤 Bảng 46 Chữ Cái Tiếng Nhật'),
+      h('div', { class: 'row', style: { gap: '6px' } },
+        h('button', {
+          class: 'mini' + (KANA_MODE === 'hira' ? ' primary' : ' ghost'),
+          onclick: () => { KANA_MODE = 'hira'; knowledgeTabView(); }
+        }, 'Hiragana (Chữ mềm)'),
+        h('button', {
+          class: 'mini' + (KANA_MODE === 'kata' ? ' primary' : ' ghost'),
+          onclick: () => { KANA_MODE = 'kata'; knowledgeTabView(); }
+        }, 'Katakana (Chữ cứng)')
+      )
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm vào chữ bất kỳ để nghe audio phát âm chuẩn bản xứ ngay lập tức:'),
+    h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' } },
+      ...kanaData.map((item) => {
+        if (!item.r) return h('div', { style: { height: '62px' } });
+        const char = KANA_MODE === 'hira' ? item.h : item.k;
+        return h('button', {
+          class: 'panel stack center',
+          style: { padding: '8px 4px', borderRadius: '10px', background: 'var(--surface)', cursor: 'pointer', border: '1px solid var(--line)' },
+          onclick: () => say('ja', char)
+        },
+          h('span', { lang: 'ja', style: { fontSize: '1.45rem', fontWeight: 700, color: 'var(--teal)' } }, char),
+          h('span', { class: 'small muted', style: { fontSize: '.75rem' } }, item.r)
+        );
+      })
+    )
+  );
+}
+
+// =====================================================================
+// TAB LUYỆN THI QUỐC TẾ: HSK (TIẾNG TRUNG) & JLPT (TIẾNG NHẬT)
+// =====================================================================
+const HSK_INFO = {
+  'HSK 1': { time: '35 phút', qs: 40, pass: '120 / 200 điểm', parts: ['Nghe hiểu (20 câu · 15 phút)', 'Đọc hiểu (20 câu · 17 phút)', 'Tô phiếu đáp án (3 phút)'], vocab: '150 từ vựng cơ bản', desc: 'Đạt khả năng hiểu và sử dụng các từ ngữ, câu nói tiếng Trung hết sức đơn giản.' },
+  'HSK 2': { time: '50 phút', qs: 60, pass: '120 / 200 điểm', parts: ['Nghe hiểu (35 câu · 25 phút)', 'Đọc hiểu (25 câu · 22 phút)', 'Tô phiếu đáp án (3 phút)'], vocab: '300 từ vựng', desc: 'Có thể sử dụng tiếng Trung giao tiếp đơn giản và trực tiếp trong đời sống hàng ngày.' },
+  'HSK 3': { time: '85 phút', qs: 80, pass: '180 / 300 điểm', parts: ['Nghe hiểu (40 câu · 35 phút)', 'Đọc hiểu (30 câu · 30 phút)', 'Viết câu (10 câu · 15 phút)', 'Tô phiếu đáp án (5 phút)'], vocab: '600 từ vựng', desc: 'Có thể hoàn thành nhiệm vụ giao tiếp cơ bản trong cuộc sống, học tập và công việc.' },
+  'HSK 4': { time: '100 phút', qs: 100, pass: '180 / 300 điểm', parts: ['Nghe hiểu (45 câu · 30 phút)', 'Đọc hiểu (40 câu · 40 phút)', 'Viết đoạn (15 câu · 25 phút)', 'Tô phiếu đáp án (5 phút)'], vocab: '1.200 từ vựng', desc: 'Có thể thảo luận về các chủ đề thuộc phạm vi rộng hơn bằng tiếng Trung, đàm thoại lưu loát với người bản xứ.' },
+  'HSK 5': { time: '120 phút', qs: 100, pass: '180 / 300 điểm', parts: ['Nghe hiểu (45 câu · 30 phút)', 'Đọc hiểu (45 câu · 45 phút)', 'Viết bài luận (10 câu · 40 phút)', 'Tô phiếu đáp án (5 phút)'], vocab: '2.500 từ vựng', desc: 'Có thể đọc báo chí tiếng Trung, thưởng thức phim ảnh và thuyết trình diễn văn hoàn chỉnh.' },
+  'HSK 6': { time: '135 phút', qs: 101, pass: '180 / 300 điểm', parts: ['Nghe hiểu (50 câu · 35 phút)', 'Đọc hiểu (50 câu · 50 phút)', 'Viết tóm tắt (1 bài 400 chữ · 45 phút)', 'Tô phiếu đáp án (5 phút)'], vocab: '5.000+ từ vựng', desc: 'Dễ dàng hiểu thông tin bằng tiếng Trung và diễn đạt trôi chảy ý kiến dưới dạng nói hoặc viết.' }
+};
+
+const JLPT_INFO = {
+  'N5': { time: '100 phút', qs: 65, pass: '80 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Từ vựng & Chữ Hán (20 phút)', 'Ngữ pháp & Đọc hiểu (40 phút)', 'Nghe hiểu (30 phút)'], desc: 'Có thể hiểu tiếng Nhật cơ bản ở mức độ nhất định (đọc Hiragana, Katakana, khoảng 100 Kanji và 800 từ).' },
+  'N4': { time: '115 phút', qs: 75, pass: '90 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Từ vựng & Chữ Hán (25 phút)', 'Ngữ pháp & Đọc hiểu (55 phút)', 'Nghe hiểu (35 phút)'], desc: 'Hiểu tiếng Nhật căn bản trong các tình huống thường ngày (khoảng 300 Kanji và 1.500 từ vựng).' },
+  'N3': { time: '140 phút', qs: 90, pass: '95 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Kiến thức ngôn ngữ (30 phút)', 'Ngữ pháp & Đọc hiểu (70 phút)', 'Nghe hiểu (40 phút)'], desc: 'Cầu nối trung cấp: Hiểu tiếng Nhật sinh hoạt hàng ngày ở mức độ cụ thể, đọc báo tiêu đề.' },
+  'N2': { time: '155 phút', qs: 105, pass: '90 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Kiến thức ngôn ngữ & Đọc hiểu (105 phút)', 'Nghe hiểu (50 phút)'], desc: 'Đủ điều kiện làm việc tại công ty Nhật: Hiểu tiếng Nhật tự nhiên, đọc bài báo, đàm luận công sở.' },
+  'N1': { time: '170 phút', qs: 115, pass: '100 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Kiến thức ngôn ngữ & Đọc hiểu (110 phút)', 'Nghe hiểu (60 phút)'], desc: 'Cấp độ cao nhất: Hiểu tiếng Nhật trong nhiều hoàn cảnh đa dạng, bài luận trừu tượng, logic học thuật.' }
+};
+
+function examTabView() {
+  const code = S.lang;
+  if (code === 'en') {
+    return ieltsTabView();
+  }
+
+  const isZh = code === 'zh';
+  const levels = isZh ? ['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6'] : ['N5', 'N4', 'N3', 'N2', 'N1'];
+  if (!levels.includes(EXAM_LV[code])) {
+    EXAM_LV[code] = levels[0];
+  }
+  const curLv = EXAM_LV[code];
+  const info = isZh ? HSK_INFO[curLv] : JLPT_INFO[curLv];
+
+  const header = h('div', { class: 'stack', style: { gap: '4px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, isZh ? 'Phòng Luyện Thi HSK' : 'Phòng Luyện Thi JLPT'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: 'exam_tab' }),
+        langSwitch()
+      )
+    ),
+    h('h1', { style: { margin: 0 } }, isZh ? 'Luyện Thi HSK (Cấp 1–6)' : 'Luyện Thi JLPT (N5–N1)'),
+    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+      isZh
+        ? 'Khung đề thi chuẩn HSK 3.0 Hanban, cơ cấu thời gian, điểm số và bài thi mẫu.'
+        : 'Khung đề thi chuẩn JLPT Japan Foundation, thời gian thi, điểm liệt và bài thi mẫu.'
+    )
+  );
+
+  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '6px 0 12px 0' } },
+    ...levels.map((lv) => h('button', {
+      class: 'mini' + (curLv === lv ? ' primary' : ' ghost'),
+      style: { fontWeight: 700, minWidth: '60px' },
+      onclick: () => { EXAM_LV[code] = lv; examTabView(); }
+    }, lv))
+  );
+
+  const structureCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '📋 Cấu trúc đề thi ' + curLv),
+      h('span', { class: 'chip good', style: { fontWeight: 700 } }, info.time)
+    ),
+    h('p', { class: 'small', style: { margin: 0 } }, info.desc),
+    h('div', { class: 'row between', style: { flexWrap: 'wrap', gap: '8px', background: 'var(--sunk)', padding: '10px 14px', borderRadius: '10px' } },
+      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tổng số câu:'), h('b', {}, info.qs + ' câu')),
+      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tiêu chuẩn ĐẬU:'), h('b', { style: { color: 'var(--good)' } }, info.pass))
+    ),
+    h('div', { class: 'stack', style: { gap: '4px' } },
+      h('p', { class: 'label', style: { margin: 0 } }, 'Các phần thi chính:'),
+      ...info.parts.map((part) => h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        h('span', { style: { color: 'var(--teal)' } }, '✔'),
+        h('span', { class: 'small' }, part)
+      ))
+    )
+  );
+
+  const mockTestCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '🎯 Đề thi thử mô phỏng ' + curLv),
+      h('span', { class: 'chip accent', style: { fontSize: '.75rem' } }, 'Demo Test')
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } },
+      'Làm bài kiểm tra mô phỏng câu hỏi trắc nghiệm đúng format thi thật với tính năng chấm điểm tự động.'
+    ),
+    h('button', {
+      class: 'primary block',
+      style: { fontWeight: 700, padding: '12px' },
+      onclick: () => startExamDemo(code, curLv)
+    }, '▶ Làm bài thi thử mẫu (' + curLv + ')'),
+    h('div', { class: 'panel', style: { background: 'rgba(14, 116, 144, .08)', border: '1px dashed var(--teal)', borderRadius: '10px', padding: '12px' } },
+      h('b', { style: { color: 'var(--teal)' } }, '📌 Kho đề thi chính thức:'),
+      h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } },
+        'Hệ thống đã thiết lập sẵn sàng phòng thi cho ' + (isZh ? 'HSK 1 đến HSK 6' : 'JLPT N5 đến N1') + '. Bạn có thể nạp các file đề thi thật (file đề PDF/JSON và file audio) vào kho dữ liệu để luyện thi bất cứ lúc nào!'
+      )
+    )
+  );
+
+  const tipsCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
+    h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '💡 Cẩm nang mẹo làm bài thi ' + (isZh ? 'HSK' : 'JLPT')),
+    ...(isZh ? [
+      { t: '1. Phân bổ thời gian phần Đọc hiểu', d: 'Mỗi câu đọc hiểu HSK chỉ nên làm dưới 50 giây. Đọc câu hỏi và phương án A/B/C/D trước rồi mới quay lại quét từ khóa trong bài đọc.' },
+      { t: '2. Chiến thuật bắt Keyword bài Nghe', d: 'Tận dụng 15-30 giây trước khi đoạn audio phát để nhìn nhanh các đáp án. Chú ý các từ nối chuyển ý (但是, 不过, 虽然, 尽管) vì câu trả lời đúng thường nằm ngay phía sau.' },
+      { t: '3. Quy tắc ngữ pháp phần Viết sắp xếp câu', d: 'Xác định cấu trúc cốt lõi: Ai làm gì (Chủ ngữ + Vị ngữ + Tân ngữ). Ghi nhớ các cấu trúc câu đặc biệt: câu chữ 把 (Chủ + 把 + Tân + Động từ + Thành phần khác) và câu bị động 被.' }
+    ] : [
+      { t: '1. Tốc độ phần Kiến thức ngôn ngữ (Mondai 1-4)', d: 'Phần Kanji và Từ vựng phải làm thật nhanh (15-20 phút). Tuyệt đối không dừng lại quá 30 giây ở một từ Kanji chưa nhớ để dành thời gian cho bài đọc hiểu.' },
+      { t: '2. Kỹ năng làm bài tìm sao ★ trong Ngữ pháp', d: 'Ghép các cụm từ đi liền với nhau thành cặp trước (VD: て-form đi với ください, danh từ đi với trợ từ tương ứng), sau đó mới đặt vào câu hoàn chỉnh.' },
+      { t: '3. Bí quyết nghe hiểu Mondai phản xạ nhanh', d: 'Nắm chắc ngữ điệu hỏi và các cặp câu đáp trả thông dụng (đặc biệt là kính ngữ 敬語 và khiêm nhường ngữ 謙譲語). Nghe ngay từ đầu câu để xác định đối tượng hành động.' }
+    ]).map((tip) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+      h('b', { style: { color: 'var(--teal)' } }, tip.t),
+      h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, tip.d)
+    ))
+  );
+
+  mount(h('div', { class: 'stack-lg' }, header, lvSelector, structureCard, mockTestCard, tipsCard));
+}
+
+// Chế độ thi thử Demo cho HSK / JLPT
+function startExamDemo(code, lv) {
+  const isZh = code === 'zh';
+  const pts = grammarPoints(code).filter((x) => x.lv === lv);
+  const samplePts = pts.length >= 3 ? pts.slice(0, 5) : grammarPoints(code).slice(0, 5);
+  let curQ = 0;
+  let score = 0;
+  const total = samplePts.length;
+
+  const questions = samplePts.map((p, idx) => {
+    const ex = p.g.ex && p.g.ex[0];
+    const plainSentence = ex ? ex[0] : p.g.t;
+    const meaning = ex ? ex[2] : (p.g.notes && p.g.notes[0]) || '';
+    const kw = gqKeywords(p.g)[0] || (isZh ? '的' : 'は');
+    const wrongPool = isZh ? ['不', '在', '了', '很', '没', '和'] : ['が', 'を', 'に', 'で', 'も', 'と'];
+    const dist = sample(wrongPool.filter((w) => w !== kw), 3);
+    const opts = shuffle([kw, ...dist]);
+    return {
+      num: idx + 1,
+      prompt: plainSentence.replace(kw, ' ( ___ ) '),
+      answer: kw,
+      opts,
+      meaning,
+      full: plainSentence
+    };
+  });
+
+  const renderQuiz = () => {
+    if (curQ >= total) {
+      // Kết quả thi
+      const pass = score >= Math.ceil(total * 0.6);
+      mount(h('div', { class: 'stack-lg center', style: { paddingTop: '24px' } },
+        h('h1', { style: { color: pass ? 'var(--good)' : 'var(--bad)' } }, pass ? '🎉 CHÚC MỪNG BẠN ĐÃ ĐẠT!' : '⚡ CẦN TIẾP TỤC ÔN LUYỆN'),
+        h('div', { class: 'panel card stack center', style: { padding: '24px', borderRadius: '16px', gap: '12px' } },
+          h('p', { class: 'label' }, 'Kết quả bài thi thử mẫu ' + lv),
+          h('div', { style: { fontSize: '2.5rem', fontWeight: 800, color: pass ? 'var(--good)' : 'var(--bad)' } }, score + ' / ' + total),
+          h('p', { class: 'small muted center' }, pass ? 'Bạn nắm rất chắc các điểm kiến thức trọng tâm của cấp độ này!' : 'Hãy vào tab Kiến thức để ôn lại các điểm ngữ pháp trước khi thi.'),
+          h('div', { class: 'row center', style: { gap: '10px', marginTop: '12px' } },
+            h('button', { class: 'primary', onclick: () => examTabView() }, 'Về phòng thi'),
+            h('button', { class: 'ghost', onclick: () => startExamDemo(code, lv) }, 'Làm lại đề này')
+          )
+        )
+      ));
+      return;
+    }
+
+    const q = questions[curQ];
+    mount(h('div', { class: 'stack-lg' },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('button', { class: 'ghost mini', onclick: () => examTabView() }, '✕ Hủy bài thi'),
+        h('span', { class: 'chip good', style: { fontWeight: 700 } }, 'Câu ' + (curQ + 1) + ' / ' + total),
+        h('span', { class: 'small muted' }, 'Điểm: ' + score)
+      ),
+      h('div', { class: 'panel card stack', style: { gap: '12px', borderRadius: '14px' } },
+        h('p', { class: 'label', style: { margin: 0 } }, isZh ? 'Chọn từ thích hợp điền vào chỗ trống:' : '正しい言葉を一つ選んでください:'),
+        h('h2', { lang: LANGS[code].lang, style: { margin: '8px 0', fontSize: '1.25rem', lineHeight: 1.5 } }, q.prompt),
+        q.meaning ? h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa: ' + q.meaning) : null,
+        h('div', { class: 'options', style: { marginTop: '12px' } },
+          ...q.opts.map((opt, i) => h('button', {
+            class: 'primary',
+            style: { padding: '14px', fontSize: '1.05rem', textAlign: 'left', fontWeight: 600 },
+            onclick: () => {
+              const ok = opt === q.answer;
+              if (ok) score++;
+              toast(ok ? 'Chính xác! (+1)' : ('Chưa đúng. Đáp án: ' + q.answer));
+              curQ++;
+              setTimeout(renderQuiz, 400);
+            }
+          }, h('span', { class: 'kbd' }, i + 1), opt))
+        )
+      )
+    ));
+  };
+
+  renderQuiz();
 }
 function kanjiView(t) {
   const render = () => {
