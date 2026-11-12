@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1600';
+const APP_BUILD_ID = '20261112-1615';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1689,13 +1689,9 @@ function parseSrsKey(k, code) {
     return { skill: 'write', key: k, id: ch, it: wr };
   }
   if (rest.startsWith('gram:')) {
+    if (code === 'en') return null; // Tiếng Anh không đưa ngữ pháp vào Ôn tập ngắt quãng
     const gid = rest.slice(5);
     const d = DATA[code];
-    if (code === 'en') {
-      const it = (cardIndex(code) || {})[gid];
-      if (it && it.v && it.v.ex) return { skill: 'gram', key: k, id: gid, it };
-      return null;
-    }
     const gr = (grammarIndex(code) || {})[gid] || (d && d.grammar && d.grammar[gid] ? { gid, g: d.grammar[gid], lv: d.grammar[gid].lv } : null);
     if (!gr) return null;
     return { skill: 'gram', key: k, id: gid, it: gr };
@@ -1743,12 +1739,7 @@ function isLearned(code, parsed) {
 
   // 4. NGỮ PHÁP: Chỉ những điểm ngữ pháp của chủ đề đã học bài (bất kỳ bài học nào trong chủ đề) hoặc đã làm quiz trong tab ngữ pháp
   if (parsed.skill === 'gram') {
-    if (code === 'en') {
-      const it = parsed.it; if (!it || !it.v) return false;
-      const vId = it.v.id, t = it.t;
-      if (!t || !t.lessons) return false;
-      return t.lessons.some((l, i) => lessonDone(t, i) && l.words && l.words.some((w) => w.id === vId));
-    }
+    if (code === 'en') return false; // Tiếng Anh không đưa ngữ pháp vào Ôn tập ngắt quãng
     const gid = parsed.id;
     const allPts = grammarPoints(code);
     const p = allPts.find((x) => x.gid === gid);
@@ -1768,6 +1759,17 @@ function isLearned(code, parsed) {
 
 function ensureSrsItems(code) {
   if (!S.srs) S.srs = {};
+  // Dọn sạch triệt để mọi key ngữ pháp tiếng Anh trong S.srs nếu từng tồn tại
+  if (S.srs) {
+    let deletedAny = false;
+    Object.keys(S.srs).forEach((k) => {
+      if (k.startsWith('en:gram:')) {
+        delete S.srs[k];
+        deletedAny = true;
+      }
+    });
+    if (deletedAny && typeof save === 'function') save();
+  }
   const d = DATA[code]; if (!d) return;
   const t0 = todayN();
 
@@ -1789,22 +1791,10 @@ function ensureSrsItems(code) {
     });
 
     const hasAnyDone = t.lessons.some((l, i) => lessonDone(t, i));
-    if (hasAnyDone && t.gram && d.grammar) {
+    if (hasAnyDone && t.gram && d.grammar && code !== 'en') {
       t.gram.forEach((gid) => {
         const k = code + ':gram:' + gid;
         if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
-      });
-    }
-    if (hasAnyDone && code === 'en') {
-      t.lessons.forEach((l, i) => {
-        if (lessonDone(t, i)) {
-          (l.words || []).forEach((w) => {
-            if (w.ex) {
-              const k = code + ':gram:' + w.id;
-              if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
-            }
-          });
-        }
       });
     }
   });
@@ -1853,7 +1843,7 @@ function srsDueItems(code, skillFilter = 'all') {
   return parsed.filter((x) => x.skill === skillFilter);
 }
 
-const dueIn = (code) => srsDueItems(code, 'all').length;
+const dueIn = (code) => srsDueItems(code, 'vocab').length;
 
 // ===== Tiện ích giao diện =====
 function h(tag, attrs, ...kids) {
@@ -2292,7 +2282,7 @@ function homeView() {
           h('span', { class: 'muted' }, xp + '/' + g + ' XP · mỗi từ +5')
         ),
         h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': g }, gf),
-        h('button', { class: (due > 0 ? 'accent' : 'ghost mini') + ' block', style: due > 0 ? '' : 'padding: 6px 12px; font-size: .84rem; color: var(--muted); margin: 4px 0;', onclick: () => go('review') }, due > 0 ? '🔄 Ôn tập ngắt quãng: Có ' + due + ' thẻ đến hạn hôm nay' : '🔄 Ôn tập ngắt quãng (SRS) · Đã ôn hết hôm nay ✓'),
+        h('button', { class: (due > 0 ? 'accent' : 'ghost mini') + ' block', style: due > 0 ? '' : 'padding: 6px 12px; font-size: .84rem; color: var(--muted); margin: 4px 0;', onclick: () => { REVIEW_SKILL = 'vocab'; go('review'); } }, due > 0 ? '🔄 Ôn tập từ mới: Có ' + due + ' từ cần ôn hôm nay' : '🔄 Ôn tập từ mới (SRS) · Đã ôn hết hôm nay ✓'),
         nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
           h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
           : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')
@@ -8823,61 +8813,62 @@ function lessonView(t, i) {
     )));
 }
 
-// ===== Ôn tập theo phương pháp Spaced Repetition (Lặp lại ngắt quãng) cho tất cả các kỹ năng =====
-let REVIEW_SKILL = 'all';
+// ===== Ôn tập theo phương pháp Spaced Repetition (Lặp lại ngắt quãng) =====
+let REVIEW_SKILL = 'vocab'; // Mặc định chỉ ôn từ mới
 
 function reviewView() {
   const code = S.lang, t0 = todayN();
   ensureSrsItems(code);
 
-  const skillTabs = [
-    ['all', 'Tất cả'],
-    ['vocab', 'Từ vựng'],
-    ['speak', 'Nói'],
-    ...(code !== 'en' ? [['write', 'Luyện viết']] : []),
-    ['gram', 'Ngữ pháp']
-  ];
+  if (!REVIEW_SKILL || REVIEW_SKILL === 'all') {
+    REVIEW_SKILL = 'vocab';
+  }
 
-  const counts = {};
-  skillTabs.forEach(([k]) => {
-    counts[k] = srsDueItems(code, k).length;
-  });
+  const counts = {
+    vocab: srsDueItems(code, 'vocab').length,
+    speak: srsDueItems(code, 'speak').length,
+    write: code !== 'en' ? srsDueItems(code, 'write').length : 0,
+    gram: code !== 'en' ? srsDueItems(code, 'gram').length : 0
+  };
 
-  const head = (isReviewing = false) => h('div', { class: 'stack', style: { gap: '10px' } },
-    h('div', { class: 'row between' },
-      h('h1', {}, 'Ôn tập ngắt quãng'),
-      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-        feedbackBtn({ mode: 'review' }),
-        langSwitch()
-      )
-    ),
-    h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
-      skillTabs.map(([k, label]) => h('button', {
-        class: 'mini' + (REVIEW_SKILL === k ? ' primary' : ' ghost'),
-        onclick: () => { REVIEW_SKILL = k; reviewView(); }
-      }, label + ' (' + (counts[k] || 0) + ')'))
-    ),
-    !isReviewing ? (() => {
-      const sch = getDaySchedule(t0);
-      const isFocus = sch.focus === code;
-      const g = goal(code, t0);
-      return h('div', { class: 'panel', style: { padding: '10px 14px', background: isFocus ? 'rgba(15,82,87,.08)' : 'transparent', border: isFocus ? '1px solid var(--teal)' : '1px dashed var(--line)', borderRadius: '12px' } },
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('span', { class: 'chip ' + (isFocus ? 'accent' : 'good'), style: { fontSize: '.72rem' } },
-            isFocus ? '🎯 Trọng tâm hôm nay: ' + LANGS[code].short : sch.focus === 'all' ? '🧘 Chủ Nhật tổng ôn' : '⚡ Duy trì: ' + LANGS[code].short
-          ),
-          h('span', { class: 'small muted' }, 'Mục tiêu hôm nay: ' + g + ' XP (đã có ' + xpOf(t0, code) + ' XP)')
-        ),
-        h('p', { class: 'small', style: { margin: '4px 0 0 0' } },
-          isFocus
-            ? 'Hôm nay là ngày học sâu ' + LANGS[code].label + '. Hãy quét sạch các mục ôn tập ngắt quãng và học bài mới / luyện nói để đạt ' + g + ' XP!'
-            : sch.focus === 'all'
-            ? 'Chủ Nhật không nạp bài mới. Hãy dành 10–15 phút hoàn thành các mục ôn tập ngắt quãng của ' + LANGS[code].short + '!'
-            : 'Hôm nay chỉ cần ôn ' + (counts.all || 0) + ' mục ngắt quãng (khoảng 5 phút) để đạt ' + g + ' XP và giữ chuỗi mà không sợ bị loạn kiến thức!'
+  const head = (isReviewing = false) => {
+    let title = 'Ôn tập từ mới (Spaced Repetition)';
+    let subtitle = 'Ôn tập các từ vựng đã học theo chu kỳ lặp lại ngắt quãng để ghi nhớ lâu bền.';
+    let backBtn = h('button', { class: 'ghost mini', onclick: () => go('home') }, '← Về trang Học');
+    let badge = h('span', { class: 'chip good', style: { fontSize: '.8rem' } }, '📚 Có ' + (counts.vocab || 0) + ' từ mới cần ôn');
+
+    if (REVIEW_SKILL === 'speak') {
+      title = '🎙️ Ôn tập kỹ năng Nói';
+      subtitle = 'Luyện phát âm lại các câu giao tiếp đã học bằng Micro AI chấm giọng.';
+      backBtn = h('button', { class: 'ghost mini', onclick: () => { SKILL_TAB = 'speak'; go('skills'); } }, '← Về tab Luyện Nói');
+      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '🎙️ Có ' + (counts.speak || 0) + ' câu cần ôn');
+    } else if (REVIEW_SKILL === 'write') {
+      title = '✍️ Ôn tập kỹ năng Viết';
+      subtitle = 'Luyện viết lại các chữ Hán / Kanji đã học theo nét chuẩn.';
+      backBtn = h('button', { class: 'ghost mini', onclick: () => { SKILL_TAB = 'write'; go('skills'); } }, '← Về tab Luyện Viết');
+      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '✍️ Có ' + (counts.write || 0) + ' chữ cần ôn');
+    } else if (REVIEW_SKILL === 'gram') {
+      title = '📖 Ôn tập ngữ pháp';
+      subtitle = 'Ôn tập các mẫu câu và cấu trúc ngữ pháp đã học.';
+      backBtn = h('button', { class: 'ghost mini', onclick: () => go('knowledge') }, '← Về tab Kiến thức');
+      badge = h('span', { class: 'chip accent', style: { fontSize: '.8rem' } }, '📖 Có ' + (counts.gram || 0) + ' điểm cần ôn');
+    }
+
+    return h('div', { class: 'stack', style: { gap: '10px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        backBtn,
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          feedbackBtn({ mode: 'review_' + REVIEW_SKILL }),
+          langSwitch()
         )
-      );
-    })() : null
-  );
+      ),
+      h('div', { class: 'stack', style: { gap: '4px' } },
+        h('h1', { style: { margin: 0, fontSize: '1.4rem' } }, title),
+        h('p', { class: 'small muted', style: { margin: 0 } }, subtitle),
+        h('div', { class: 'row', style: { marginTop: '4px' } }, badge)
+      )
+    );
+  };
 
   const queue = srsDueItems(code, REVIEW_SKILL)
     .sort((a, b) => S.srs[a.key].due - S.srs[b.key].due || S.srs[a.key].b - S.srs[b.key].b)
@@ -8885,15 +8876,18 @@ function reviewView() {
   let count = 0;
 
   if (!queue.length) {
-    const totalAll = counts.all || 0;
     mount(h('div', { class: 'stack-lg' }, head(),
-      h('div', { class: 'panel stack center' },
-        h('h2', {}, totalAll ? 'Mục này chưa có thẻ đến hạn' : 'Đã ôn hết các nội dung đã học!'),
-        h('p', { class: 'muted' }, totalAll
-          ? 'Hôm nay bạn còn ' + totalAll + ' mục cần ôn ở các kỹ năng khác (chỉ bao gồm bài bạn đã học).'
-          : 'Hệ thống chỉ đưa các từ vựng, câu nói, chữ viết và ngữ pháp BẠN ĐÃ HỌC vào ôn tập. Bạn đã hoàn thành hết mục hôm nay, hãy học bài mới để tiếp tục mở rộng!'),
-        totalAll && REVIEW_SKILL !== 'all' ? h('button', { class: 'accent block', onclick: () => { REVIEW_SKILL = 'all'; reviewView(); } }, 'Chuyển sang Tất cả (' + totalAll + ' mục)') : null,
-        h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')
+      h('div', { class: 'panel stack center', style: { padding: '24px', borderRadius: '16px', gap: '10px' } },
+        h('h2', {}, REVIEW_SKILL === 'vocab' ? '🎉 Đã ôn hết từ mới hôm nay!' : '🎉 Đã hoàn thành xong phần ôn tập!'),
+        h('p', { class: 'muted center', style: { margin: 0 } },
+          REVIEW_SKILL === 'vocab'
+            ? 'Bạn đã hoàn thành toàn bộ các từ vựng đến hạn ôn hôm nay. Hãy học thêm bài mới hoặc sang tab Kỹ năng để luyện Nghe - Nói - Đọc - Viết!'
+            : 'Bạn đã hoàn thành xong các mục đến hạn hôm nay.'
+        ),
+        h('div', { class: 'row center', style: { gap: '8px', marginTop: '12px' } },
+          h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
+          h('button', { class: 'ghost', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
+        )
       )
     ));
     return;
@@ -8905,11 +8899,14 @@ function reviewView() {
     if (!item) {
       checkAch();
       mount(h('div', { class: 'stack-lg' }, head(),
-        h('div', { class: 'panel stack center' },
-          h('h2', {}, 'Xong phiên ôn tập!'),
-          h('p', { class: 'muted' }, 'Bạn đã ôn ' + count + ' lượt lặp lại ngắt quãng.'),
-          counts.all > count ? h('button', { class: 'accent block', onclick: () => reviewView() }, 'Ôn tiếp các mục còn lại') : null,
-          h('button', { class: 'primary block', onclick: () => go('home') }, 'Về trang Học')
+        h('div', { class: 'panel stack center', style: { padding: '24px', borderRadius: '16px', gap: '10px' } },
+          h('h2', {}, REVIEW_SKILL === 'vocab' ? '🎉 Xong phiên ôn tập từ mới!' : '🎉 Xong phiên ôn tập!'),
+          h('p', { class: 'muted center', style: { margin: 0 } }, 'Bạn đã hoàn thành ' + count + ' lượt lặp lại ngắt quãng.'),
+          counts[REVIEW_SKILL] > count ? h('button', { class: 'accent block', onclick: () => reviewView() }, 'Ôn tiếp các từ còn lại') : null,
+          h('div', { class: 'row center', style: { gap: '8px', marginTop: '12px' } },
+            h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
+            h('button', { class: 'ghost', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
+          )
         )
       ));
       return;
@@ -9386,9 +9383,20 @@ function renderSpeakSkills(code, d) {
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   const dueSpk = srsDueItems(code, 'speak').length;
   return [
-    h('div', { class: 'stack' },
+    h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
-      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null
+      h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎙️ Ôn tập kỹ năng Nói'),
+          dueSpk > 0 ? h('span', { class: 'chip accent' }, dueSpk + ' câu cần ôn') : h('span', { class: 'chip good' }, 'Đã ôn hết ✓')
+        ),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện phát âm từng câu bằng Micro AI chấm điểm độ chính xác % và ôn lại theo chu kỳ riêng của kỹ năng Nói.'),
+        dueSpk > 0 ? h('button', {
+          class: 'accent block',
+          style: { fontWeight: 700, padding: '10px 14px', borderRadius: '10px' },
+          onclick: () => { REVIEW_SKILL = 'speak'; go('review'); }
+        }, '🎙️ Bắt đầu ôn tập các câu nói đến hạn (' + dueSpk + ' câu)') : null
+      )
     ),
     !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
@@ -9528,10 +9536,14 @@ function renderWriteSkills(code, d) {
     )
   ];
   if (code === 'en') {
+    const writeCard = h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+      h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '✍️ Ôn tập kỹ năng Viết'),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện viết email thực tế trong môi trường công việc: điền từ vựng đúng ngữ cảnh để hoàn thiện văn bản và chấm điểm tự động.')
+    );
     if (!t.fill) {
-      return [...writeHead, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.')];
+      return [...writeHead, writeCard, h('p', { class: 'note' }, 'Chủ đề này chưa có bài điền email. Chọn chủ đề khác.')];
     }
-    return [...writeHead, fillBlock(t)];
+    return [...writeHead, writeCard, fillBlock(t)];
   }
   const chars = [...new Set(t.vocab.flatMap((v) => [...plain(v.w)]).filter((c) => /[㐀-鿿]/.test(c)))];
   const kanji = (t.kanji || []).map((k) => k.k);
@@ -9612,14 +9624,12 @@ function renderListenSkills(code, d) {
   return [
     h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
-      h('div', { class: 'panel', style: { padding: '12px 14px', background: 'var(--sunk)', borderRadius: '12px' } },
+      h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
         h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('div', { class: 'stack', style: { gap: '2px' } },
-            h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, t.sub || t.title),
-            h('span', { class: 'small muted' }, (t.vocab || []).length + ' từ vựng · ' + vocabsWithEx.length + ' câu giao tiếp')
-          ),
+          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎧 Ôn tập kỹ năng Nghe'),
           toggleTextBtn
         ),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện nghe phản xạ câu bài học: Tắm ngôn ngữ tự động phát liên tục hoặc ẩn chữ để luyện nghe chay.'),
         playAllBtn
       )
     ),
@@ -9678,7 +9688,7 @@ function renderReadSkills(code, d) {
     const cleanEmail = t.fill.text.replace(/\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, '$1');
     readingTextEl = h('div', { class: 'panel stack', style: { gap: '8px', background: 'var(--sunk)', borderRadius: '12px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
-        h('h3', { style: { margin: 0 } }, '📖 Bài đọc tình huống thực tế'),
+        h('h3', { style: { margin: 0 } }, '📖 Ôn tập Đọc hiểu tình huống'),
         spk(code, cleanEmail)
       ),
       h('div', { lang: 'en', style: { fontSize: '.98rem', lineHeight: 1.6, whiteSpace: 'pre-wrap', padding: '6px 0' } }, cleanEmail),
