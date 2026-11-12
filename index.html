@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-2115';
+const APP_BUILD_ID = '20261112-2145';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -10877,6 +10877,964 @@ const JLPT_INFO = {
   'N1': { time: '170 phút', qs: 115, pass: '100 / 180 điểm (Điểm liệt mỗi phần 19/60)', parts: ['Kiến thức ngôn ngữ & Đọc hiểu (110 phút)', 'Nghe hiểu (60 phút)'], desc: 'Cấp độ cao nhất: Hiểu tiếng Nhật trong nhiều hoàn cảnh đa dạng, bài luận trừu tượng, logic học thuật.' }
 };
 
+
+// =====================================================================
+// DỮ LIỆU ĐỀ THI MẪU HSKK CHÍNH THỨC CẤP 3, 4, 5, 6 (CLEC / CTI)
+// =====================================================================
+let HSK_EXAM_MODE = 'hskk'; // 'hskk' (Khẩu ngữ HSKK) | 'written' (Thi viết HSK)
+let HSKK_LV = 'HSKK 4'; // 'HSKK 3' | 'HSKK 4' | 'HSKK 5' | 'HSKK 6'
+let HSKK_FILTER_PART = 'all'; // 'all' | 'p1' | 'p2' | 'p3'
+let HSKK_EXPANDED_ITEMS = {}; // { [key]: boolean }
+
+const HSKK_DATA = {
+  'HSKK 3': {
+    id: 'hskk-3',
+    level: 'HSKK 3',
+    name: 'HSK (三级) 口语 · Sơ cấp',
+    shortName: 'HSKK 3 (Sơ cấp)',
+    totalTime: '~15 phút (Chuẩn bị 6 phút)',
+    totalQs: 15,
+    passScore: '60 / 100 điểm',
+    audioDriveId: '1jW9Cb4vmOYZeq1wYLqba8OAroBr8KJID',
+    audioUrl: 'https://drive.google.com/uc?export=download&id=1jW9Cb4vmOYZeq1wYLqba8OAroBr8KJID',
+    audioName: 'HSK（三级）口语样卷.mp3',
+    desc: 'Đánh giá khả năng hiểu và giao tiếp phản xạ cơ bản trong đời sống, gia đình, công việc hàng ngày.',
+    partsSummary: [
+      'Phần 1: Nghe nhắc lại (听后重复) · 8 câu (10 giây/câu)',
+      'Phần 2: Nhìn tranh nói (看图说话) · 5 tranh đơn độc lập (15 giây/câu)',
+      'Phần 3: Trả lời câu hỏi (回答问题) · 2 câu đời sống cá nhân (Chuẩn bị 3p, nói 1.5p/câu)'
+    ],
+    sections: [
+      {
+        partId: 'p1',
+        title: 'Phần 1: Nghe nhắc lại (听后重复 · 8 câu)',
+        guide: 'Nghe 8 câu ngắn và lặp lại chính xác ngữ điệu, thanh điệu (10 giây/câu). Không dịch nghĩa trong đầu, nhẩm theo ngay khi tai nghe câu cuối.',
+        items: [
+          { qId: 1, text: '明天天气很好，我们去公园吧。', pinyin: 'Míngtiān tiānqì hěn hǎo, wǒmen qù gōngyuán ba.', trans: 'Ngày mai thời tiết rất đẹp, chúng ta đi công viên nhé.', tip: 'Chú ý biến điệu của 很 (thanh 3) và ngữ khí từ 吧 ở cuối câu.' },
+          { qId: 2, text: '请问，洗手间在哪儿？', pinyin: 'Qǐngwèn, xǐshǒujiān zài nǎr?', trans: 'Xin hỏi, nhà vệ sinh ở đâu?', tip: 'Âm uốn lưỡi 哪儿 (nǎr) và ngữ điệu câu hỏi lịch sự.' },
+          { qId: 3, text: '我已经学了一年汉语了。', pinyin: 'Wǒ yǐjīng xuéle yì nián Hànyǔ le.', trans: 'Tôi đã học tiếng Trung được một năm rồi.', tip: 'Trọng âm rơi vào 一年 (khoảng thời gian) và ngữ điệu tự nhiên.' },
+          { qId: 4, text: '桌子上有一杯热茶和两本书。', pinyin: 'Zhuōzi shang yǒu yì bēi rè chá hé liǎng běn shū.', trans: 'Trên bàn có một tách trà nóng và hai cuốn sách.', tip: 'Lưu ý từ chỉ số lượng: 一杯 (yì bēi) và 两本 (liǎng běn).' },
+          { qId: 5, text: '他是我们公司最热情的员工。', pinyin: 'Tā shì wǒmen gōngsī zuì rèqíng de yuángōng.', trans: 'Anh ấy là nhân viên nhiệt tình nhất công ty chúng tôi.', tip: 'Từ khóa trọng tâm: 最热情 (nhiệt tình nhất) và 员工 (nhân viên).' },
+          { qId: 6, text: '你现在忙吗？我想请你帮个忙。', pinyin: 'Nǐ xiànzài máng ma? Wǒ xiǎng qǐng nǐ bāng ge máng.', trans: 'Bây giờ bạn có bận không? Tôi muốn nhờ bạn giúp một việc.', tip: 'Động từ ly hợp 帮忙: 帮个忙.' },
+          { qId: 7, text: '今天晚上的电影七点半开始。', pinyin: 'Jīntiān wǎnshang de diànyǐng qī diǎn bàn kāishǐ.', trans: 'Bộ phim tối nay bắt đầu lúc 7 giờ rưỡi.', tip: 'Thời gian đứng trước động từ: 七点半开始.' },
+          { qId: 8, text: '祝你生日快乐，身体健康！', pinyin: 'Zhù nǐ shēngrì kuàilè, shēntǐ jiànkāng!', trans: 'Chúc bạn sinh nhật vui vẻ, dồi dào sức khỏe!', tip: 'Câu chúc khẩu ngữ bốn chữ phổ biến: 生日快乐, 身体健康.' }
+        ]
+      },
+      {
+        partId: 'p2',
+        title: 'Phần 2: Nhìn tranh nói (看图说话 · 5 câu)',
+        guide: 'Mỗi tranh nói trong 15 giây. Áp dụng công thức 3 câu: Chủ ngữ là ai + Đang làm gì ở đâu + Trạng thái / Cảm xúc.',
+        items: [
+          {
+            qId: 9,
+            title: 'Tranh 1 (Câu 9): Đọc báo',
+            svgKey: 'hskk3-newspaper',
+            scene: 'Một người đàn ông ngồi ghế chăm chú đọc báo',
+            sampleText: '这幅图是一位先生。他正坐在椅子上认真地看报纸。他看起来很专注，周围的环境也非常安静。',
+            pinyin: 'Zhè fú tú shì yí wèi xiānsheng. Tā zhèng zuò zài yǐzi shang rènzhēn de kàn bàozhǐ. Tā kàn qǐlái hěn zhuānzhù, zhōuwéi de huánjìng yě fēicháng ānjìng.',
+            trans: 'Bức tranh này là một quý ông. Anh ấy đang ngồi trên ghế chăm chú đọc báo. Trông anh ấy rất tập trung, môi trường xung quanh cũng vô cùng yên tĩnh.',
+            keywords: ['先生 (quý ông)', '看报纸 (đọc báo)', '认真 (chăm chú)', '安静 (yên tĩnh)']
+          },
+          {
+            qId: 10,
+            title: 'Tranh 2 (Câu 10): Che tay nhìn xa',
+            svgKey: 'hskk3-lookfar',
+            scene: 'Một bạn nam giơ tay lên trán che nắng nhìn về phía trước',
+            sampleText: '图中的年轻男生站在阳光下，用手搭在额头前向远方眺望。他好像在等待朋友，或者在寻找前方的路线。',
+            pinyin: 'Tú zhōng de niánqīng nánshēng zhàn zài yángguāng xià, yòng shǒu dā zài étóu qián xiàng yuǎnfāng tiàowàng. Tā hǎoxiàng zài děngdài péngyou, huòzhě zài xúnzhǎo qiánfāng de lùxiàn.',
+            trans: 'Chàng trai trẻ trong hình đứng dưới ánh mặt trời, đặt tay lên trán nhìn về phía xa. Cậu ấy dường như đang đợi bạn bè hoặc đang tìm đường phía trước.',
+            keywords: ['年轻男生 (chàng trai trẻ)', '看远方 (nhìn xa)', '寻找 (tìm kiếm)', '等待 (chờ đợi)']
+          },
+          {
+            qId: 11,
+            title: 'Tranh 3 (Câu 11): Hai đầu bếp làm bếp',
+            svgKey: 'hskk3-chefs',
+            scene: 'Hai đầu bếp nam nữ mặc đồng phục trắng mỉm cười chuẩn bị nấu ăn',
+            sampleText: '两位厨师穿着整洁的白色制服，微笑着站在厨房里。他们正在准备食材，看起来工作非常开心，一定能做出美味的菜肴。',
+            pinyin: 'Liǎng wèi chúshī chuānzhe zhěngjié de báisè zhìfú, wēixiàozhe zhàn zài chúfáng lǐ. Tāmen zhèngzài zhǔnbèi shícái, kàn qǐlái gōngzuò fēicháng kāixīn, yídìng néng zuòchū měiwèi de càiyáo.',
+            trans: 'Hai đầu bếp mặc đồng phục màu trắng sạch sẽ, mỉm cười đứng trong bếp. Họ đang chuẩn bị nguyên liệu, trông rất vui vẻ và chắc chắn sẽ làm ra những món ăn ngon.',
+            keywords: ['厨师 (đầu bếp)', '制服 (đồng phục)', '准备食材 (chuẩn bị nguyên liệu)', '美味 (thơm ngon)']
+          },
+          {
+            qId: 12,
+            title: 'Tranh 4 (Câu 12): Xe hỏng nắp capo mở',
+            svgKey: 'hskk3-brokencar',
+            scene: 'Chiếc ô tô mở nắp capo trên đường, cô gái đang gọi điện thoại cầu cứu',
+            sampleText: '汽车坏在路边了，前车盖被打开。一位女士站在车旁，正焦急地拿着手机打电话求助，希望救援人员尽快赶到。',
+            pinyin: 'Qìchē huài zài lùbiān le, qián chēgài bèi dǎkāi. Yí wèi nǚshì zhàn zài chē páng, zhèng jiāojí de názhe shǒujī dǎ diànhuà qiúzhù, xīwàng jiùyuán rényuán jìnkuài gǎndào.',
+            trans: 'Ô tô bị hỏng bên đường, nắp capo mở. Một người phụ nữ đứng cạnh xe, đang sốt ruột cầm điện thoại gọi trợ giúp, hy vọng nhân viên cứu hộ sớm tới.',
+            keywords: ['汽车坏了 (xe hỏng)', '车盖打开 (mở nắp capo)', '打电话求助 (gọi điện cầu cứu)', '焦急 (sốt ruột)']
+          },
+          {
+            qId: 13,
+            title: 'Tranh 5 (Câu 13): Đọc sách thư viện',
+            svgKey: 'hskk3-library',
+            scene: 'Cô gái ngồi trong thư viện chăm chú đọc sách',
+            sampleText: '在明亮安静的图书馆里，一位女同学坐在书桌旁，全神贯注地阅读一本厚厚的书。她非常热爱学习。',
+            pinyin: 'Zài míngliàng ānjìng de túshūguǎn lǐ, yí wèi nǚ tóngxué zuò zài shūzhuō páng, quánshén-guànzhù de yuèdú yì běn hòuhòu de shū. Tā fēicháng rè\'ài xuéxí.',
+            trans: 'Trong thư viện sáng sủa và yên tĩnh, một nữ sinh ngồi bên bàn học chăm chú đọc một cuốn sách dày. Cô ấy rất say mê học tập.',
+            keywords: ['图书馆 (thư viện)', '阅读 (đọc sách)', '全神贯注 (toàn tâm toàn ý)', '热爱学习 (yêu học tập)']
+          }
+        ]
+      },
+      {
+        partId: 'p3',
+        title: 'Phần 3: Trả lời câu hỏi (回答问题 · 2 câu)',
+        guide: '2 câu hỏi đời sống cá nhân. Chuẩn bị 3 phút, mỗi câu trả lời 1.5 phút. Trả lời trực diện, nêu lý do cụ thể và mở rộng liên hệ.',
+        items: [
+          {
+            qId: 14,
+            prompt: '请介绍一下你的一位家人。',
+            pinyin: 'Qǐng jièshào yíxià nǐ de yí wèi jiārén.',
+            trans: 'Hãy giới thiệu một người thân trong gia đình bạn.',
+            outline: 'Giới thiệu ai (mẹ) ➔ Nghề nghiệp & tính cách (ôn hòa, kiên nhẫn) ➔ Thói quen sinh hoạt ➔ Tình cảm gắn bó & bài học từ mẹ.',
+            sampleText: '我想介绍我的母亲。她今年五十多岁，是一名温和善良的小学老师。母亲每天都会早起为全家人准备可口健康的早餐。她平时喜欢种花、散步和做中国菜，待人非常有耐心。每当我在生活或学习中遇到挫折时，母亲总是温柔地倾听我的心声，并鼓励我勇敢面对困难。在我心里，母亲不仅是我最尊敬的长辈，更是我无话不谈的挚友。我非常爱我的母亲，希望她永远健康年轻。',
+            keywords: ['温和善良 (hiền từ lương thiện)', '小学老师 (giáo viên tiểu học)', '有耐心 (kiên nhẫn)', '倾听 (lắng nghe)', '健康快乐 (khỏe mạnh vui vẻ)']
+          },
+          {
+            qId: 15,
+            prompt: '你喜欢做什么样的工作？为什么？',
+            pinyin: 'Nǐ xǐhuan zuò shénmeyàng de gōngzuò? Wèishénme?',
+            trans: 'Bạn thích làm công việc thế nào? Vì sao?',
+            outline: 'Quan điểm (Thích công việc thương mại / quản lý bán hàng quốc tế) ➔ Lý do 1 (Giao tiếp đa văn hóa, dùng ngoại ngữ) ➔ Lý do 2 (Giải quyết vấn đề chuỗi cung ứng thực tế) ➔ Kết luận (Khẳng định giá trị bản thân).',
+            sampleText: '我非常喜欢从事跨文化商务管理和供应链方面的工作。首先，这类工作能让我充分发挥自己的外语优势，与来自不同国家的客户和供应商沟通合作，开阔国际化视野。其次，国际贸易涵盖了订单跟进、物流协调与谈判等复杂流程，每天都在解决实际问题，这能够极大地提升我的综合执行力。最后，我认为一份具有挑战性的工作能够帮助我不断走出舒适圈，实现个人价值。因此，我希望能在这类充满活力的环境中长期深耕。',
+            keywords: ['商务管理 (quản lý thương mại)', '供应链 (chuỗi cung ứng)', '跨文化沟通 (giao tiếp đa văn hóa)', '开阔视野 (mở rộng tầm nhìn)', '实现自我价值 (thực hiện giá trị bản thân)']
+          }
+        ]
+      }
+    ]
+  },
+  'HSKK 4': {
+    id: 'hskk-4',
+    level: 'HSKK 4',
+    name: 'HSK (四级) 口语 · Trung cấp',
+    shortName: 'HSKK 4 (Trung cấp)',
+    totalTime: '~20 phút (Chuẩn bị 10 phút)',
+    totalQs: 5,
+    passScore: '60 / 100 điểm',
+    audioDriveId: '1_fxgqLBM68MyuMNh9yLvhmeJ89vIHwaA',
+    audioUrl: 'https://drive.google.com/uc?export=download&id=1_fxgqLBM68MyuMNh9yLvhmeJ89vIHwaA',
+    audioName: 'HSK（四级）口语样卷.mp3',
+    desc: 'Đánh giá khả năng hiểu đoạn văn nói, thuật lại logic câu chuyện, kể chuyện chuỗi tranh và trả lời lưu loát phỏng vấn công sở.',
+    partsSummary: [
+      'Phần 1: Nghe thuật lại (听后复述) · 2 đoạn văn (40 giây/câu)',
+      'Phần 2: Nhìn chuỗi 3 tranh liên hoàn kể chuyện (看图说话) · Chuẩn bị 3p, nói 2 phút',
+      'Phần 3: Trả lời câu hỏi (回答问题) · 2 câu kế hoạch & công sở (Chuẩn bị 3.5p, nói 2p/câu)'
+    ],
+    sections: [
+      {
+        partId: 'p1',
+        title: 'Phần 1: Nghe thuật lại (听后复述 · 2 đoạn)',
+        guide: 'Nghe 2 đoạn văn (nghe 1 lần), sau đó thuật lại nội dung chính trong 40 giây/câu. Tốc ký 3 phần: Bối cảnh ➔ Mâu thuẫn/Diễn biến ➔ Kết cục/Bài học. Dùng từ nối: 首先 ➔ 接着 ➔ 后来 ➔ 最后.',
+        items: [
+          {
+            qId: 1,
+            title: 'Đoạn 1: Câu chuyện hòn đá và giá trị bản thân',
+            listenScript: '有个年轻人总是觉得自己很平凡，做什么事都缺乏自信。有一天，老师给了他一颗普通的石头，让他拿到菜市场去卖，但不管别人出多少钱都不能卖。结果在菜市场有人出两块钱，到了玉石市场竟然有人出两万块。这个故事告诉我们：一个人有没有价值，首先在于你把自己放在什么位置，并且相信自己的潜能。',
+            sampleText: '这段话讲述了一个年轻人寻找自我价值的故事。一位缺乏自信的青年向老师请教，老师让他拿一块普通石头去菜市场卖，有人出两元；随后拿到玉石市场，却有人出价两万元。故事深刻地告诉我们：人的价值大小取决于自我定位与所处的环境，只有树立自信并找到能发挥才干的平台，才能实现真正的人生价值。',
+            keywords: ['缺乏自信 (thiếu tự tin)', '自我定位 (định vị bản thân)', '平台 (nền tảng/môi trường)', '人生价值 (giá trị đời người)']
+          },
+          {
+            qId: 2,
+            title: 'Đoạn 2: Trí tuệ lắng nghe trong giao tiếp',
+            listenScript: '人的一生中，学会说话需要两三年，但学会闭嘴倾听却往往需要几十年。在日常交流中，很多人急于表达自己的看法，却忽略了对方真实的感受。真正聪明的人，懂得在适当的时候安静倾听，因为倾听不仅是对他人的尊重，也是吸收新知识、理解不同观点的最好方法。',
+            sampleText: '这段话说：我们学会说话只需两三年，但学会倾听却需几十年。在人际交往中，许多人急于表达自我而忽视他人感受。真正有智慧的人懂得适时安静倾听。倾听不仅是对他人的尊重，更是拓宽眼界、吸收新知与达成共识的最佳途径。',
+            keywords: ['学会倾听 (học cách lắng nghe)', '尊重他人 (tôn trọng người khác)', '人际交往 (giao tiếp xã hội)', '达成共识 (đạt đồng thuận)']
+          }
+        ]
+      },
+      {
+        partId: 'p2',
+        title: 'Phần 2: Nhìn chuỗi 3 tranh liên hoàn (看图说话 · 1 câu)',
+        guide: 'Chuỗi 3 tranh liên hoàn. Chuẩn bị 3 phút, kể chuyện hoàn chỉnh trong 2 phút. Biến thành câu chuyện có bối cảnh, cao trào và thông điệp nhân văn.',
+        items: [
+          {
+            qId: 3,
+            title: 'Chuỗi 3 tranh: Tình bạn giảng đường đến chặng đường trưởng thành',
+            sceneFlow: 'Tranh 1: Thảo luận học bài ➔ Tranh 2: Tốt nghiệp đại học tung mũ ➔ Tranh 3: Nâng ly chúc mừng',
+            svgKeys: ['hskk4-p1', 'hskk4-p2', 'hskk4-p3'],
+            imagesDesc: [
+              'Tranh 1: Nhóm sinh viên trong lớp học cùng nhau thảo luận bài học sôi nổi.',
+              'Tranh 2: Lễ tốt nghiệp đại học, các bạn mặc áo cử nhân hào hứng tung mũ lên trời.',
+              'Tranh 3: Nhóm bạn họp mặt nâng ly chúc mừng chặng đường mới sau khi tốt nghiệp.'
+            ],
+            sampleText: '这三幅图讲述了几个好朋友从大学同窗到走向社会的成长故事。在第一幅图中，他们是一群朝气蓬勃的大学生，在教室里互相帮助、共同讨论功课，为了学业目标而努力拼搏。到了第二幅图，他们顺利毕业了，大家穿着庄重的学士服，兴奋地把帽子抛向天空，记录下青春最美好的瞬间。在第三幅图中，毕业后他们聚在一起举杯庆祝，虽然各自将奔向不同的工作岗位，但深厚的友谊和共同奋斗的回忆永远不变。这段经历生动地告诉我们：珍惜青春与真挚的友谊，是我们人生中最宝贵的财富。',
+            keywords: ['大学同窗 (bạn học đại học)', '学士服 (áo cử nhân)', '毕业典礼 (lễ tốt nghiệp)', '各奔前程 (mỗi người một ngả)', '珍惜友谊 (trân trọng tình bạn)']
+          }
+        ]
+      },
+      {
+        partId: 'p3',
+        title: 'Phần 3: Trả lời câu hỏi (回答问题 · 2 câu)',
+        guide: '2 câu hỏi phỏng vấn công sở & kế hoạch cá nhân. Chuẩn bị 3.5 phút, mỗi câu trả lời 2 phút. Áp dụng mô hình PEEL (Point ➔ Explanation ➔ Example ➔ Link).',
+        items: [
+          {
+            qId: 4,
+            prompt: '如果给你七天假，你打算怎么安排？',
+            pinyin: 'Rúguǒ gěi nǐ qī tiān jià, nǐ dǎsuàn zěnme ānpái?',
+            trans: 'Nếu cho bạn 7 ngày nghỉ, bạn sắp xếp thế nào?',
+            outline: 'Point (Kế hoạch 3 giai đoạn: Nghỉ ngơi - Du lịch - Tái khởi động) ➔ 2 ngày dưỡng sức, 3 ngày trải nghiệm thiên nhiên, 2 ngày tổng kết và học ngoại ngữ ➔ Link (Tái tạo năng lượng và nâng cao hiệu quả làm việc).',
+            sampleText: '如果给我七天假期，我会做一份劳逸结合、充实有序的安排。首先，前两天我会用来彻底放松身心。平时工作节奏较快，我可以在家里睡个好觉、做做护肤，安安静静地读一本好书，调整疲惫状态。接着，中间的三天我打算和家人来一次近郊短途旅行。我们可以去大自然中爬山徒步，品尝地道的特色美食，既能增进家庭感情，又能呼吸新鲜空气、开阔心胸。最后两天，我会回到家中休整作息，总结近期的工作进展，并抽出时间在 Lingogo 上系统复习外语。这样七天下来，既得到了身心休整，又为下一阶段的工作积蓄了饱满的动力。',
+            keywords: ['劳逸结合 (lao động kết hợp nghỉ ngơi)', '短途旅行 (du lịch ngắn ngày)', '调整作息 (điều chỉnh sinh hoạt)', '充实有序 (đầy đủ ngăn nắp)']
+          },
+          {
+            qId: 5,
+            prompt: '刚到一个新公司工作时，为了使自己更快适应环境，你会怎么做？',
+            pinyin: 'Gāng dào yí gè xīn gōngsī gōngzuò shí, wèile shǐ zìjǐ gèng kuài shìyìng huánjìng, nǐ huì zěnme zuò?',
+            trans: 'Khi mới vào công ty mới, để nhanh thích nghi môi trường bạn sẽ làm gì?',
+            outline: 'Point (Chủ động tìm hiểu, hòa nhập tích cực và kỷ luật công việc) ➔ 3 hành động: Nắm rõ quy trình ➔ Khiêm tốn học hỏi đồng nghiệp ➔ Ghi chép cẩn thận hoàn thành đúng hạn ➔ Link (Tạo dựng uy tín và sự tin cậy lâu dài).',
+            sampleText: '面对进入新公司的适应期，我会采取三个积极有效的步骤：第一，主动熟悉公司的规章制度、业务系统以及日常工作流程，尽快掌握岗位所需的专业技能与操作规范；第二，以谦虚诚恳的态度与新同事和主管沟通，主动了解团队合作风格，遇到不懂的问题及时虚心请教，积极融入团队文化；第三，认真做好每天的工作日志，对分配的任务做到件件有落实、事事有回音，保证交付质量与效率。我相信，只要保持主动积极的心态和严谨负责的作风，就能在最短的时间内赢得团队的信任，迅速成为一名合格且高效的员工。',
+            keywords: ['熟悉流程 (nắm rõ quy trình)', '虚心请教 (khiêm tốn học hỏi)', '工作日志 (nhật ký công việc)', '件件有落实 (việc gì cũng có kết quả)', '赢得信任 (giành trọn niềm tin)']
+          }
+        ]
+      }
+    ]
+  },
+  'HSKK 5': {
+    id: 'hskk-5',
+    level: 'HSKK 5',
+    name: 'HSK (五级) 口语 · Cao cấp 5',
+    shortName: 'HSKK 5 (Cao cấp 5)',
+    totalTime: '~23 phút (Chuẩn bị 10 phút)',
+    totalQs: 5,
+    passScore: '60 / 100 điểm',
+    audioDriveId: '1plDtNh_7j7WzV4dWpmPoBx82ycqXG2_o',
+    audioUrl: 'https://drive.google.com/uc?export=download&id=1plDtNh_7j7WzV4dWpmPoBx82ycqXG2_o',
+    audioName: 'HSK（五级）口语样卷.mp3',
+    desc: 'Đánh giá khả năng tóm tắt phân tích bài nói dài, nhìn tranh kể chuyện có chiều sâu tâm lý và nghị luận xã hội / triết lý sống.',
+    partsSummary: [
+      'Phần 1: Nghe thuật lại câu chuyện (听后复述) · 2 đoạn văn (1.5 phút/câu)',
+      'Phần 2: Nhìn chuỗi 3 tranh nhân văn (看图说话) · Chuẩn bị 3p, nói 2 phút',
+      'Phần 3: Trả lời câu hỏi (回答问题) · 2 câu Công nghệ & Triết lý sống (Chuẩn bị 3.5p, nói 2.5p/câu)'
+    ],
+    sections: [
+      {
+        partId: 'p1',
+        title: 'Phần 1: Nghe thuật lại câu chuyện (听后复述 · 2 đoạn)',
+        guide: 'Nghe đoạn văn dài (nghe 1 lần), sau đó thuật lại trong 1.5 phút/câu. Nắm chắc cốt truyện, logic nhân vật và thông điệp triết lý.',
+        items: [
+          {
+            qId: 1,
+            title: 'Đoạn 1: Chậu hoa rỗng và bài học về lòng trung thực',
+            listenScript: '国王想要挑选一位诚实善良的王位继承人，于是给全国的孩子每人发了一粒花种，宣布谁能种出最美丽的花，谁就是下一任国王。有个叫雄日的小男孩精心耕种，按时浇水施肥，但花盆里始终没有发芽。到了评选那天，其他孩子都捧着盛开的花盆，唯独雄日捧着空花盆流下了眼泪。国王走过花盆丛，最终宣布雄日成为继承人。原来国王发下的种子全都是煮熟的。这个故事告诉我们：诚实的品德比虚假的光鲜珍贵千百倍。',
+            sampleText: '这个故事讲述了老国王挑选继承人的智谋。国王发给每位孩童一粒花种，许诺种出最美之花者将继承王位。男孩雄日悉心照料却未能发芽，评选日唯有他坦诚捧着空花盆前来，其他人则捧着绚丽的花朵。最终国王选定雄日，因所有种子事先均已被煮熟。故事启示我们：诚实正直是立身之本，真实的品行远胜于任何虚伪的外表。',
+            keywords: ['挑选继承人 (chọn người kế vị)', '精心耕种 (tận tâm chăm sóc)', '煮熟的花种 (hạt giống đã luộc)', '诚实正直 (trung thực chính trực)']
+          },
+          {
+            qId: 2,
+            title: 'Đoạn 2: Nghệ thuật thích nghi của nước trong Đạo giáo',
+            listenScript: '中国古代哲学家老子常说：“上善若水。”水是世界上最柔和的事物，却能够穿透最坚硬的岩石；水顺应容器的形状，入方则方，入圆则圆，滋养万物却从不与世相争。在现代快节奏、充满不确定性的社会中，我们也应当学习水的智慧：在面对挫折时保持韧性，在遇到变化时灵活变通，以包容宽广的心态待人接物。',
+            sampleText: '老子云“上善若水”。水至柔却能滴水穿石；水善利万物而不争，随物赋形、方圆自如。这启示现代人在面对多变的外部环境与挫折时，应具备如水一般的适应力与韧性。既要坚定内在目标，又要懂得灵活变通、宽容处世，方能在不确定性中行稳致远。',
+            keywords: ['上善若水 (thiện lành như nước)', '滴水穿石 (nước chảy đá mòn)', '灵活变通 (linh hoạt biến chuyển)', '包容宽厚 (bao dung độ lượng)']
+          }
+        ]
+      },
+      {
+        partId: 'p2',
+        title: 'Phần 2: Nhìn chuỗi 3 tranh nhân văn (看图说话 · 1 câu)',
+        guide: 'Chuỗi 3 tranh kể chuyện về tình cha con. Chuẩn bị 3 phút, trình bày liền mạch trong 2 phút.',
+        items: [
+          {
+            qId: 3,
+            title: 'Chuỗi 3 tranh: Tình cha con và hành trình tập đi xe đạp',
+            sceneFlow: 'Tranh 1: Bé ngã xe đạp được cha nâng đỡ ➔ Tranh 2: Cha chạy theo giữ yên xe ➔ Tranh 3: Bé tự tin đạp xe, cha mỉm cười tự hào',
+            svgKeys: ['hskk5-p1', 'hskk5-p2', 'hskk5-p3'],
+            imagesDesc: [
+              'Tranh 1: Bé trai ngã xe đạp, người cha chạy lại đỡ và ân cần động viên con.',
+              'Tranh 2: Người cha chạy theo phía sau, một tay giữ yên xe giúp con lấy lại thăng bằng.',
+              'Tranh 3: Bé trai đã tự tin đạp xe tiến về phía trước, người cha mỉm cười tự hào chạy theo.'
+            ],
+            sampleText: '这组图片生动展现了父爱与成长的温暖过程。刚开始学骑自行车时，小男孩不小心摔倒在地上，膝盖受了伤，心里既害怕又沮丧。父亲立刻快步蹲下身来，耐心地安慰他，用温暖的话语鼓励他勇敢面对挫折。接着，父亲一直陪伴在孩子身后，一边奔跑一边紧紧扶着车尾，指导孩子掌握平衡，给予了小男孩无比踏实的安全感。最后，在父亲坚持不懈的陪伴与信任下，小男孩终于学会了独立骑行，脸上洋溢着自豪灿烂的笑容，而父亲也在身后露出了欣慰骄傲的目光。这幅画面生动地说明：面对成长中的坎坷与挑战，父母耐心的陪伴与坚定的鼓励，是帮助我们勇敢站起来、驶向广阔未来的最大力量。',
+            keywords: ['学骑自行车 (tập đi xe đạp)', '跌倒与挫折 (ngã và thất bại)', '耐心陪伴 (kiên nhẫn đồng hành)', '安全感 (cảm giác an toàn)', '自豪与欣慰 (tự hào và an lòng)']
+          }
+        ]
+      },
+      {
+        partId: 'p3',
+        title: 'Phần 3: Trả lời câu hỏi (回答问题 · 2 câu)',
+        guide: '2 câu hỏi nghị luận xã hội và triết lý sống. Chuẩn bị 3.5 phút, mỗi câu trả lời 2.5 phút theo mô hình PEEL.',
+        items: [
+          {
+            qId: 4,
+            prompt: '你认为互联网对你的生活产生了哪些影响？',
+            pinyin: 'Nǐ rènwéi hùliánwǎng duì nǐ de shēnghuó chǎnshēngle nǎxiē yǐngxiǎng?',
+            trans: 'Bạn cho rằng Internet đã mang lại những ảnh hưởng gì đối với cuộc sống của bạn?',
+            outline: 'Point (Ảnh hưởng sâu rộng và mang tính cách mạng) ➔ Explanation 1: Học tập & tri thức (Học ngoại ngữ online, Lingogo, tiếp cận thư viện toàn cầu) ➔ Explanation 2: Làm việc (Hệ thống ERP, remote work, cộng tác xuyên biên giới) ➔ Counterpoint & Link (Cần tự kỷ luật, cân bằng thị lực và thời gian).',
+            sampleText: '互联网对我的工作、学习以及生活模式带来了极其深远且革命性的积极影响。首先在知识获取方面，互联网彻底打破了地域与资源的壁垒。作为一名外语学习者，我借助网络语言平台和专业学习软件，随时随地都能与母语者互动交流、查阅国际专业词汇，使我的学习效率获得了质的飞跃。其次在职业协作方面，云端协作工具、企业管理系统和远程会议，使得跨国商务沟通变得无缝顺畅，工作不再受制于实体工位。当然，互联网也是一把双刃剑，海量碎片化信息容易分散注意力，长期面对屏幕也会影响身心健康。因此我认为，善用互联网的关键在于树立高度的自律意识，将网络作为赋能自我的利器，而不是被虚拟算法所吞噬。',
+            keywords: ['革命性影响 (ảnh hưởng mang tính cách mạng)', '打破壁垒 (phá bỏ rào cản)', '云端协作 (cộng tác đám mây)', '双刃剑 (con dao hai lưỡi)', '自律意识 (ý thức tự kỷ luật)']
+          },
+          {
+            qId: 5,
+            prompt: '人们常说：“活到老，学到老。”你是怎么理解这句话的？请谈谈你的看法。',
+            pinyin: 'Rénmen cháng shuō: “Huó dào lǎo, xué dào lǎo.” Nǐ shì zěnme lǐjiě zhè jù huà de? Qǐng tán tan nǐ de kànfǎ.',
+            trans: 'Người ta thường nói: "Sống đến già, học đến già." Bạn hiểu câu nói này như thế nào? Hãy chia sẻ quan điểm của bạn.',
+            outline: 'Point (Chân lý sinh tồn trong kỷ nguyên AI và lối sống hạnh phúc) ➔ Lý do 1 (Công nghệ đổi mới từng ngày, kiến thức cũ nhanh lỗi thời, cần nâng cấp nhận thức) ➔ Lý do 2 (Học tập nuôi dưỡng tâm hồn, giữ não bộ minh mẫn và trẻ trung) ➔ Link (Xem học tập suốt đời là lối sống hạnh phúc).',
+            sampleText: '“活到老，学到老”不仅是一句流传千古的哲理名言，更是当代人在快速变迁的数字时代所必需的核心生存智慧。首先从时代发展的客观要求来看，当今世界正经历着人工智能与数字化浪潮的深刻变革，知识的更新周期已缩短至数月。仅凭我们在学校阶段掌握的知识储备，根本无法胜任漫长的职业生涯。唯有保持“终身学习”的心态，不断迭代自己的技能体系与认知维度，才能在激烈的竞争中立于不败之地。其次从个体生命的精神层面而言，学习并非仅仅局限于功利性的职业晋升，它更是保持精神活力与生命好奇心的源泉。无论是钻研一门新语言、领略异国文化，还是探寻未知领域，都能使我们的大脑保持敏锐，延缓认知衰老。总而言之，将学习视作一种持续一生的生活方式，才能让我们在每一个人生阶段都焕发光彩、从容优雅。',
+            keywords: ['终身学习 (học tập suốt đời)', '人工智能浪潮 (làn sóng AI)', '迭代认知 (cập nhật nhận thức)', '精神活力 (sức sống tinh thần)', '从容优雅 (ung dung thanh lịch)']
+          }
+        ]
+      }
+    ]
+  },
+  'HSKK 6': {
+    id: 'hskk-6',
+    level: 'HSKK 6',
+    name: 'HSK (六级) 口语 · Cao cấp 6',
+    shortName: 'HSKK 6 (Cao cấp 6)',
+    totalTime: '~23 phút (Chuẩn bị 10 phút)',
+    totalQs: 5,
+    passScore: '60 / 100 điểm',
+    audioDriveId: '1QNKC69-tYbceoAr18cdKcID1b8HY_Jnm',
+    audioUrl: 'https://drive.google.com/uc?export=download&id=1QNKC69-tYbceoAr18cdKcID1b8HY_Jnm',
+    audioName: 'HSK（六级）口语样卷.mp3',
+    desc: 'Cấp độ khẩu ngữ cao nhất: Thuật lại bài luận chuyên sâu, nhìn chuỗi 4 tranh y tế nhân văn có bố cục chặt chẽ và nghị luận xã hội học theo chuẩn PEEL.',
+    partsSummary: [
+      'Phần 1: Nghe thuật lại chuyên sâu (听后复述) · 2 đoạn văn (1.5 phút/câu)',
+      'Phần 2: Nhìn chuỗi 4 tranh chuyên sâu (看图说话) · Chuẩn bị 3p, nói 2 phút',
+      'Phần 3: Trả lời câu hỏi nghị luận xã hội (回答问题) · 2 câu chuyên sâu (Chuẩn bị 3.5p, nói 2.5p/câu)'
+    ],
+    sections: [
+      {
+        partId: 'p1',
+        title: 'Phần 1: Nghe thuật lại chuyên sâu (听后复述 · 2 đoạn)',
+        guide: 'Nghe 2 đoạn văn nghị luận & triết lý sâu sắc. Thuật lại trong 1.5 phút/câu với vốn từ vựng cao cấp, cấu trúc câu chặt chẽ.',
+        items: [
+          {
+            qId: 1,
+            title: 'Đoạn 1: Nghệ thuật cắt tỉa cành cây và triết lý buông bỏ (断舍离)',
+            listenScript: '一位游客在果园看到果农剪掉许多正在开花的茂盛树枝，感到十分不解。果农笑着解释道：一棵树所能吸收的养分是有限的，如果任由所有枝桠随意生长、繁花盛开，最终结出的果实只会又小又涩。只有果断剪去冗余的侧枝，集中养分供给核心主干，才能结出硕大甘甜的优质果实。人生何尝不是如此？在充满诱惑的现代社会中，懂得断舍离，聚焦于自己最核心的目标，才能真正有所建树。',
+            sampleText: '这段短文借果农修剪枝桠之理，阐明了深刻的人生取舍智慧。果树养分有限，若放任枝繁叶茂，则果实苦涩瘦小；唯有修剪冗枝、聚焦主干，方能结出硕果。人生亦然，面对纷繁诱惑与有限精力，我们必须学会“断舍离”，舍弃琐碎无益的欲望，聚精会神深耕核心领域，才能在事业与人生中铸就卓越成果。',
+            keywords: ['修剪枝桠 (cắt tỉa cành cây)', '有限养分 (dinh dưỡng hữu hạn)', '断舍离 (triết lý buông bỏ)', '深耕核心 (đào sâu cốt lõi)']
+          },
+          {
+            qId: 2,
+            title: 'Đoạn 2: Trí tuệ cây tre và giai đoạn tích lũy sâu sắc (厚积薄发)',
+            listenScript: '毛竹在最初的四年里，仅仅长出几厘米的细芽，表面上毫无动静。然而在那漫长的四年中，它的根系已经在土壤深处蔓延了数百平米，深深地扎根于大地。到了第五年，竹子每天以三十厘米的速度疯狂生长，仅仅用六周时间就能长到十五米高。很多人在奋斗初期因为看不到立竿见影的成果而选择放弃，却不知道那正是积累底蕴、厚积薄发的关键时期。',
+            sampleText: '毛竹在前四年看似停滞，仅萌发数厘米，实则根系在地下广袤蔓延；及至第五年，它以惊人速度在六周内拔节十五米。这种自然规律生动揭示了“厚积薄发”的真谛：在事业初期，当未见显性成果时，切忌急功近利。潜心积蓄实力、深扎根基，方能在机遇来临时实现爆发式的飞跃成长。',
+            keywords: ['毛竹生长 (cây tre sinh trưởng)', '扎根大地 (bén rễ vào lòng đất)', '厚积薄发 (tích lũy sâu dày bộc phát)', '急功近利 (hám lợi trước mắt)']
+          }
+        ]
+      },
+      {
+        partId: 'p2',
+        title: 'Phần 2: Nhìn chuỗi 4 tranh chuyên sâu (看图说话 · 1 câu)',
+        guide: 'Chuỗi 4 tranh chuyên sâu về Y tế & Tình người. Chuẩn bị 3 phút, kể chuyện liền mạch 2 phút. Dùng các thành ngữ 4 chữ: 医者仁心, 妙手回春, 康复出院, 阖家欢乐.',
+        items: [
+          {
+            qId: 3,
+            title: 'Chuỗi 4 tranh: Y đức lương y và niềm hạnh phúc sum vầy',
+            sceneFlow: 'Tranh 1: Xem phim X-quang ➔ Tranh 2: Phẫu thuật ➔ Tranh 3: Cụ bà tri ân ➔ Tranh 4: Xuất viện sum vầy',
+            svgKeys: ['hskk6-p1', 'hskk6-p2', 'hskk6-p3', 'hskk6-p4'],
+            imagesDesc: [
+              'Tranh 1: Bác sĩ tận tâm chỉ lên phim chụp X-quang giải thích bệnh án cho cụ bà.',
+              'Tranh 2: Kíp phẫu thuật tập trung cao độ trong phòng mổ dưới ánh đèn không hắt bóng.',
+              'Tranh 3: Cụ bà hồi phục sức khỏe trên giường bệnh, mỉm cười nắm tay tri ân bác sĩ và y tá.',
+              'Tranh 4: Gia đình ba thế hệ cùng nắm tay cụ bà vui vẻ xuất viện trở về tổ ấm sum vầy.'
+            ],
+            sampleText: '这四幅图片生动地呈现了一段充满温情与医者仁心的感人故事。在第一幅图中，一位年迈的老奶奶身体不适前来就医，主任医生神情专注、极其耐心地指着X光片为老人家详细解释病情与治疗方案，让患者和家属原本焦虑的心情安定下来。第二幅图中，手术室内无影灯下，医疗团队分工严谨、全神贯注地实施微创手术，体现出极其高超的专业水准与敬业精神。第三幅图中，手术非常成功，老奶奶精神矍铄地靠在病床上，紧紧握着查房医生的手连声道谢，医患之间流淌着真挚的信任与感动。最后在第四幅图中，老人家终于康复出院，祖孙三代喜笑颜开地簇拥着老人步出医院大门，重返温馨的家庭生活。这组画面不仅讴歌了白衣天使妙手回春的高尚医德，更展现了现代医疗与家庭关爱共同构筑的生命希望。',
+            keywords: ['医者仁心 (y đức lương y)', '妙手回春 (tay nghề chữa bệnh thần kỳ)', '全神贯注 (toàn tâm toàn ý)', '康复出院 (hồi phục xuất viện)', '阖家欢乐 (cả nhà sum vầy)']
+          }
+        ]
+      },
+      {
+        partId: 'p3',
+        title: 'Phần 3: Trả lời câu hỏi nghị luận xã hội (回答问题 · 2 câu)',
+        guide: '2 câu hỏi nghị luận xã hội và đầu tư bản thân. Chuẩn bị 3.5 phút, mỗi câu trả lời 2.5 phút theo mô hình PEEL (Point ➔ Explanation ➔ Example ➔ Link).',
+        items: [
+          {
+            qId: 4,
+            prompt: '你觉得自己和父母那一代人有什么相同和不同的地方？',
+            pinyin: 'Nǐ juéde zìjǐ hé fùmǔ nà yídài rén yǒu shénme xiāngtóng hé bùtóng de dìfang?',
+            trans: 'Bạn cảm thấy bản thân và thế hệ cha mẹ có những điểm gì giống và khác nhau?',
+            outline: 'Point (Kế thừa bền chặt về giá trị gia đình nhưng khác biệt rõ rệt về nhân sinh quan và phương thức sống) ➔ Giống nhau: Coi trọng tình thân, cần cù lao động ➔ Khác nhau: Cha mẹ ưu tiên ổn định; thế hệ trẻ đề cao trải nghiệm, công nghệ, cân bằng WLB ➔ Link: Sự tiếp nối hòa hợp giữa các thế hệ.',
+            sampleText: '对比我们这一代青年与父母那一代人，我认为既有血脉相连的精神基石，也有时代赋予的鲜明差异。首先在相同点方面，两代人都深刻秉持着中华民族优良的家庭伦理观，将对家人的关爱与责任视作行事的首要准则；在职业道德上，双方都推崇脚踏实地、诚实守信的奋斗精神。然而在生活观念与价值追求上，两代人呈现出显著的不同。父母辈成长于物资相对匮乏的岁月，他们的职业诉求普遍倾向于体制内、铁饭碗式的“绝对稳定”，生活方式偏于克勤克俭；而我们在全球化与互联网普及的环境中长大，视野更加开阔，更渴望通过终身学习探索多元可能性，注重个人价值的实现，并且倡导工作与生活品质的高效平衡（Work-Life Balance）。我认为，这种代际差异并非对立隔阂，而是社会物质繁荣与文明进步在不同时代人身上的美好印记。',
+            keywords: ['精神基石 (nền tảng tinh thần)', '家庭伦理 (luân thường gia đình)', '追求稳定 (theo đuổi ổn định)', '多元可能 (khả năng đa dạng)', '代际差异 (khác biệt thế hệ)']
+          },
+          {
+            qId: 5,
+            prompt: '有人说“最好的投资就是投资自己”，你赞成这个观点吗？请说明理由。',
+            pinyin: 'Yǒu rén shuō “zuì hǎo de tóuzī jiùshì tóuzī zìjǐ”, nǐ zànchéng zhège guāndiǎn ma? Qǐng shuōmíng lǐyóu.',
+            trans: 'Có người nói: "Khoản đầu tư tốt nhất chính là đầu tư vào bản thân mình", bạn có tán thành quan điểm này không? Hãy giải thích lý do.',
+            outline: 'Point (Hoàn toàn đồng tình, tỉ suất sinh lời vĩnh cửu) ➔ Lý do 1: Tri thức, ngoại ngữ, kỹ năng nghề nghiệp là tài sản vô hình không bị lạm phát hay tước đoạt ➔ Lý do 2: Sức khỏe thể chất và tâm trí vững vàng là gốc rễ của mọi thành công ➔ Link: Đầu tư cho bản thân giúp vững vàng trước mọi biến động.',
+            sampleText: '我完全赞成“最好的投资就是投资自己”这一观点。在这个充满不确定性的现代社会，投资自己是抵御风险、实现跨越式成长最可靠的途径。首先从认知与技能层面来看，外部的金融资产和物质财富可能会随着经济周期的波动而贬值，但沉淀在自己大脑中的专业技能、外语素养以及解决复杂问题的能力，是任何外部力量都无法剥夺的持久资产。比如在如今人工智能迅速发展的时代，唯有持续学习与升级自己的认知体系，才能保持核心竞争力。其次从身心健康层面而言，良好的体魄与从容稳定的心态是追求一切理想的基石。注重规律作息、坚持体育锻炼并学会情绪管理，能让我们在面对高强度工作挑战时始终保持充沛的精力与敏锐的判断力。总而言之，把有限的时间、金钱与精力聚焦于自身的增值，不仅能让我们在职场上走得更稳更远，更能让我们拥有丰盈自足、充满无限可能的人生。',
+            keywords: ['最好的投资 (khoản đầu tư tốt nhất)', '抵御风险 (chống chịu rủi ro)', '持久资产 (tài sản vĩnh cửu)', '认知体系 (hệ thống nhận thức)', '核心竞争力 (năng lực cạnh tranh cốt lõi)']
+          }
+        ]
+      }
+    ]
+  }
+};
+
+// Hình vẽ minh họa SVG chuẩn phong cách Lingogo
+function renderHskkSvg(key) {
+  const svgs = {
+    'hskk3-newspaper': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="30" y="80" width="140" height="8" rx="3" fill="#334155"/><rect x="80" y="35" width="40" height="45" rx="4" fill="#0f766e"/><circle cx="100" cy="25" r="12" fill="#fed7aa"/><rect x="65" y="45" width="70" height="35" rx="3" fill="#f8fafc"/><line x1="75" y1="52" x2="125" y2="52" stroke="#94a3b8" stroke-width="2"/><line x1="75" y1="58" x2="125" y2="58" stroke="#94a3b8" stroke-width="2"/><line x1="75" y1="64" x2="115" y2="64" stroke="#94a3b8" stroke-width="2"/><text x="100" y="105" text-anchor="middle" fill="#94a3b8" font-size="11">先生看报纸 (Đọc báo)</text></svg>',
+    'hskk3-lookfar': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><circle cx="160" cy="30" r="18" fill="#f59e0b" opacity="0.8"/><circle cx="90" cy="35" r="14" fill="#fed7aa"/><rect x="75" y="52" width="30" height="45" rx="4" fill="#2563eb"/><path d="M100 55 L115 35 L105 32" stroke="#fed7aa" stroke-width="4" stroke-linecap="round" fill="none"/><line x1="20" y1="100" x2="180" y2="100" stroke="#475569" stroke-width="2"/><text x="100" y="115" text-anchor="middle" fill="#94a3b8" font-size="11">手搭额头往前看 (Nhìn xa)</text></svg>',
+    'hskk3-chefs': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="20" y="70" width="160" height="35" rx="4" fill="#334155"/><circle cx="70" cy="35" r="12" fill="#fed7aa"/><path d="M60 25 C60 12 80 12 80 25 Z" fill="#f8fafc"/><rect x="58" y="48" width="24" height="28" fill="#f8fafc" rx="2"/><circle cx="130" cy="35" r="12" fill="#fcd34d"/><path d="M120 25 C120 12 140 12 140 25 Z" fill="#f8fafc"/><rect x="118" y="48" width="24" height="28" fill="#f8fafc" rx="2"/><circle cx="95" cy="80" r="6" fill="#ef4444"/><circle cx="105" cy="80" r="5" fill="#10b981"/><text x="100" y="115" text-anchor="middle" fill="#94a3b8" font-size="11">两位厨师准备做饭 (Hai đầu bếp)</text></svg>',
+    'hskk3-brokencar': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="30" y="55" width="85" height="30" rx="4" fill="#0284c7"/><path d="M45 55 L60 38 L95 38 L105 55 Z" fill="#38bdf8"/><line x1="30" y1="55" x2="20" y2="38" stroke="#f59e0b" stroke-width="3"/><circle cx="50" cy="85" r="10" fill="#0f172a"/><circle cx="95" cy="85" r="10" fill="#0f172a"/><circle cx="150" cy="40" r="11" fill="#fed7aa"/><rect x="142" y="52" width="16" height="35" rx="3" fill="#ec4899"/><rect x="156" y="38" width="5" height="10" rx="1" fill="#475569"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="11">车坏了女士打电话 (Xe hỏng gọi cứu hộ)</text></svg>',
+    'hskk3-library': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="25" y="15" width="40" height="85" rx="3" fill="#334155"/><rect x="30" y="25" width="6" height="20" fill="#ef4444"/><rect x="38" y="23" width="7" height="22" fill="#10b981"/><rect x="47" y="27" width="6" height="18" fill="#f59e0b"/><rect x="75" y="65" width="105" height="10" rx="2" fill="#475569"/><circle cx="125" cy="38" r="12" fill="#fed7aa"/><rect x="115" y="52" width="20" height="28" rx="2" fill="#8b5cf6"/><path d="M110 65 L125 58 L140 65" stroke="#f8fafc" stroke-width="4" fill="none"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="11">图书馆认真看书 (Đọc sách thư viện)</text></svg>',
+    'hskk4-p1': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="30" y="15" width="140" height="35" rx="4" fill="#065f46"/><text x="100" y="36" text-anchor="middle" fill="#6ee7b7" font-size="12" font-weight="bold">大学课堂 · 互相讨论</text><circle cx="65" cy="70" r="11" fill="#fed7aa"/><circle cx="135" cy="70" r="11" fill="#fcd34d"/><rect x="55" y="82" width="20" height="20" rx="3" fill="#3b82f6"/><rect x="125" y="82" width="20" height="20" rx="3" fill="#ec4899"/><rect x="80" y="78" width="40" height="15" rx="2" fill="#475569"/><text x="100" y="114" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 1: Thảo luận học bài</text></svg>',
+    'hskk4-p2': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><circle cx="100" cy="58" r="13" fill="#fed7aa"/><rect x="88" y="72" width="24" height="30" rx="3" fill="#1e1b4b"/><polygon points="100,20 115,28 100,36 85,28" fill="#0f172a"/><polygon points="70,15 82,22 70,28 58,22" fill="#0f172a"/><polygon points="130,12 142,18 130,24 118,18" fill="#0f172a"/><circle cx="50" cy="35" r="3" fill="#f59e0b"/><circle cx="150" cy="30" r="3" fill="#ec4899"/><text x="100" y="114" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 2: Tốt nghiệp tung mũ</text></svg>',
+    'hskk4-p3': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="40" y="70" width="120" height="10" rx="3" fill="#475569"/><circle cx="70" cy="50" r="11" fill="#fed7aa"/><circle cx="130" cy="50" r="11" fill="#fed7aa"/><path d="M85 58 L95 48" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/><path d="M115 58 L105 48" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="46" r="4" fill="#fbbf24"/><text x="100" y="105" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 3: Nâng ly chúc mừng</text></svg>',
+    'hskk5-p1': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><line x1="30" y1="85" x2="60" y2="70" stroke="#64748b" stroke-width="3"/><circle cx="35" cy="85" r="10" fill="#334155"/><circle cx="70" cy="85" r="10" fill="#334155"/><circle cx="55" cy="72" r="8" fill="#fed7aa"/><circle cx="115" cy="45" r="12" fill="#fed7aa"/><rect x="105" y="58" width="22" height="30" rx="3" fill="#0f766e"/><path d="M105 70 Q85 75 70 73" stroke="#fed7aa" stroke-width="3" stroke-linecap="round" fill="none"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 1: Ngã xe cha chạy lại an ủi</text></svg>',
+    'hskk5-p2': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><line x1="60" y1="80" x2="95" y2="80" stroke="#64748b" stroke-width="3"/><circle cx="55" cy="80" r="12" fill="#334155"/><circle cx="105" cy="80" r="12" fill="#334155"/><circle cx="80" cy="50" r="10" fill="#fed7aa"/><rect x="74" y="61" width="14" height="20" rx="2" fill="#f59e0b"/><circle cx="140" cy="42" r="12" fill="#fed7aa"/><rect x="130" y="55" width="20" height="30" rx="3" fill="#0f766e"/><path d="M130 65 L95 65" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 2: Cha giữ yên xe chạy cùng con</text></svg>',
+    'hskk5-p3': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><line x1="100" y1="80" x2="135" y2="80" stroke="#64748b" stroke-width="3"/><circle cx="95" cy="80" r="12" fill="#334155"/><circle cx="145" cy="80" r="12" fill="#334155"/><circle cx="120" cy="48" r="10" fill="#fed7aa"/><rect x="114" y="59" width="14" height="20" rx="2" fill="#10b981"/><circle cx="45" cy="45" r="12" fill="#fed7aa"/><rect x="36" y="58" width="18" height="28" rx="3" fill="#0f766e"/><path d="M38 62 L25 50" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 3: Con tự tin đạp xe, cha tự hào</text></svg>',
+    'hskk6-p1': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="75" y="20" width="50" height="40" rx="3" fill="#0284c7"/><path d="M90 30 Q100 25 110 30 M90 40 Q100 35 110 40 M100 25 L100 55" stroke="#e0f2fe" stroke-width="2" fill="none"/><circle cx="45" cy="45" r="12" fill="#fed7aa"/><rect x="36" y="58" width="18" height="30" rx="3" fill="#f8fafc"/><circle cx="155" cy="50" r="12" fill="#e2e8f0"/><rect x="146" y="63" width="18" height="25" rx="3" fill="#475569"/><line x1="55" y1="60" x2="75" y2="40" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 1: Bác sĩ xem X-quang giải thích</text></svg>',
+    'hskk6-p2': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><polygon points="100,10 70,30 130,30" fill="#fef08a" opacity="0.6"/><circle cx="100" cy="15" r="8" fill="#fde047"/><rect x="50" y="70" width="100" height="20" rx="3" fill="#475569"/><circle cx="75" cy="52" r="10" fill="#67e8f9"/><circle cx="125" cy="52" r="10" fill="#67e8f9"/><rect x="68" y="63" width="14" height="20" rx="2" fill="#0891b2"/><rect x="118" y="63" width="14" height="20" rx="2" fill="#0891b2"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 2: Kíp phẫu thuật tập trung cao độ</text></svg>',
+    'hskk6-p3': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><rect x="40" y="60" width="75" height="30" rx="4" fill="#334155"/><circle cx="60" cy="50" r="10" fill="#e2e8f0"/><rect x="52" y="61" width="16" height="15" fill="#f43f5e" rx="2"/><circle cx="140" cy="42" r="12" fill="#fed7aa"/><rect x="131" y="55" width="18" height="30" rx="3" fill="#f8fafc"/><path d="M70 65 L130 65" stroke="#fed7aa" stroke-width="3" stroke-linecap="round"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 3: Cụ bà mỉm cười tri ân bác sĩ</text></svg>',
+    'hskk6-p4': '<svg viewBox="0 0 200 120" width="100%" height="120" style="border-radius:10px;background:#1e293b;"><circle cx="45" cy="45" r="11" fill="#fed7aa"/><rect x="36" y="57" width="18" height="30" rx="3" fill="#3b82f6"/><circle cx="85" cy="50" r="10" fill="#e2e8f0"/><rect x="77" y="61" width="16" height="26" rx="3" fill="#ec4899"/><circle cx="125" cy="60" r="8" fill="#fde047"/><rect x="118" y="69" width="14" height="18" rx="2" fill="#10b981"/><circle cx="160" cy="45" r="11" fill="#fed7aa"/><rect x="151" y="57" width="18" height="30" rx="3" fill="#8b5cf6"/><line x1="20" y1="95" x2="180" y2="95" stroke="#475569" stroke-width="2"/><text x="100" y="112" text-anchor="middle" fill="#94a3b8" font-size="10">Tranh 4: Gia đình vui vẻ xuất viện sum vầy</text></svg>'
+  };
+  const d = document.createElement('div');
+  d.style.width = '100%';
+  d.innerHTML = svgs[key] || '<div style="padding:20px;text-align:center;color:var(--muted);">[Hình ảnh minh họa]</div>';
+  return d;
+}
+
+// Đồng hồ bấm giờ thi thử chuẩn format HSKK
+function createHskkTimer(prepSec, speakSec) {
+  const box = h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '8px 12px', margin: '4px 0', border: '1px solid var(--line)' } });
+  let state = 'idle'; // 'idle', 'prep', 'speaking', 'done'
+  let interval = null;
+  let remaining = 0;
+
+  const statusEl = h('b', { style: { fontSize: '.84rem', color: 'var(--teal)' } }, '⏱️ ' + (prepSec ? 'Chuẩn bị ' + prepSec + 's ➔ ' : '') + 'Nói ' + speakSec + 's');
+  const timerBadge = h('span', { class: 'chip small', style: { display: 'none', fontWeight: 700 } });
+  const actionBtn = h('button', { class: 'mini ghost', style: { fontWeight: 600 } }, '▶ Bấm giờ thi');
+  const skipBtn = h('button', { class: 'mini accent', style: { display: 'none' } }, 'Nói ngay ➔');
+
+  function updateDisplay() {
+    const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const s = String(remaining % 60).padStart(2, '0');
+    if (state === 'prep') {
+      timerBadge.style.display = 'inline-block';
+      timerBadge.className = 'chip small';
+      timerBadge.style.background = '#f59e0b';
+      timerBadge.style.color = '#000';
+      timerBadge.textContent = '⏳ Chuẩn bị: ' + m + ':' + s;
+      skipBtn.style.display = 'inline-block';
+      actionBtn.textContent = '⏹ Dừng';
+    } else if (state === 'speaking') {
+      timerBadge.style.display = 'inline-block';
+      timerBadge.className = 'chip small';
+      timerBadge.style.background = remaining <= 10 ? 'var(--bad)' : 'var(--teal)';
+      timerBadge.style.color = '#fff';
+      timerBadge.textContent = '🎙️ Đang nói: ' + m + ':' + s;
+      skipBtn.style.display = 'none';
+      actionBtn.textContent = '⏹ Dừng';
+    } else if (state === 'done') {
+      timerBadge.style.display = 'inline-block';
+      timerBadge.className = 'chip good small';
+      timerBadge.style.background = '';
+      timerBadge.style.color = '';
+      timerBadge.textContent = '✓ Đã hết giờ!';
+      skipBtn.style.display = 'none';
+      actionBtn.textContent = '↺ Bấm lại';
+    } else {
+      timerBadge.style.display = 'none';
+      skipBtn.style.display = 'none';
+      actionBtn.textContent = '▶ Bấm giờ thi';
+    }
+  }
+
+  function startSpeaking() {
+    state = 'speaking';
+    remaining = speakSec;
+    updateDisplay();
+    clearInterval(interval);
+    interval = setInterval(() => {
+      remaining--;
+      if (remaining <= 0) {
+        clearInterval(interval);
+        state = 'done';
+        updateDisplay();
+      } else {
+        updateDisplay();
+      }
+    }, 1000);
+  }
+
+  function startTimer() {
+    if (prepSec > 0) {
+      state = 'prep';
+      remaining = prepSec;
+      updateDisplay();
+      clearInterval(interval);
+      interval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          startSpeaking();
+        } else {
+          updateDisplay();
+        }
+      }, 1000);
+    } else {
+      startSpeaking();
+    }
+  }
+
+  actionBtn.onclick = () => {
+    if (state === 'idle' || state === 'done') {
+      startTimer();
+    } else {
+      clearInterval(interval);
+      state = 'idle';
+      updateDisplay();
+    }
+  };
+
+  skipBtn.onclick = () => {
+    startSpeaking();
+  };
+
+  box.replaceChildren(
+    h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } }, statusEl, timerBadge),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, skipBtn, actionBtn)
+    )
+  );
+  return box;
+}
+
+// Bộ thu âm & nhận diện khẩu ngữ HSKK với MediaRecorder & Web Speech
+function createHskkRecorder(item) {
+  const box = h('div', { class: 'ielts-speak-recorder stack', style: { margin: '6px 0' } });
+  let isRecording = false;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let stream = null;
+  let timerInterval = null;
+  let seconds = 0;
+  let recognizedText = '';
+
+  const statusLabel = h('p', { class: 'small muted', style: { margin: '0' } }, 'Bấm Micro để ghi âm câu trả lời tiếng Trung của bạn:');
+  const timerBadge = h('span', { class: 'chip small', style: { display: 'none', background: 'var(--bad)', color: '#fff', fontWeight: 700 } }, '● Đang ghi âm: 00:00');
+  const transcriptEl = h('div', { class: 'small', style: { display: 'none', background: 'rgba(15, 82, 87, 0.05)', padding: '8px 10px', borderRadius: '8px', lineHeight: 1.5, margin: '4px 0' } });
+  const audioPlayerWrap = h('div', { style: { display: 'none', margin: '4px 0' } });
+
+  const recordBtn = h('button', {
+    class: 'primary mini',
+    style: { display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 600 },
+    onclick: async () => {
+      if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+  }, '🎙️ Bấm để ghi âm');
+
+  async function startRecording() {
+    isRecording = true;
+    box.className = 'ielts-speak-recorder recording stack';
+    recordBtn.className = 'accent mini';
+    recordBtn.textContent = '⏹ Dừng ghi âm';
+    timerBadge.style.display = 'inline-block';
+    statusLabel.textContent = 'Đang ghi âm... Hãy nói to và rõ câu trả lời vào micro:';
+    transcriptEl.style.display = 'block';
+    transcriptEl.textContent = 'Đang nhận diện giọng nói (zh-CN)...';
+    audioPlayerWrap.style.display = 'none';
+
+    seconds = 0;
+    timerBadge.textContent = '● Đang ghi âm: 00:00';
+    timerInterval = setInterval(() => {
+      seconds++;
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      timerBadge.textContent = '● Đang ghi âm: ' + m + ':' + s;
+    }, 1000);
+
+    recordedChunks = [];
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+        };
+        mediaRecorder.onstop = () => {
+          const mime = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
+          const blob = new Blob(recordedChunks, { type: mime });
+          const url = URL.createObjectURL(blob);
+          const aud = h('audio', { controls: 'controls', src: url, style: { width: '100%', height: '36px', marginTop: '4px' } });
+          audioPlayerWrap.replaceChildren(
+            h('p', { class: 'small muted', style: { margin: '2px 0', fontWeight: 600 } }, '🎧 Nghe lại phần nói khẩu ngữ vừa ghi âm của bạn:'),
+            aud
+          );
+          audioPlayerWrap.style.display = 'block';
+          if (stream) {
+            try { stream.getTracks().forEach((t) => t.stop()); } catch (e) {}
+          }
+        };
+        mediaRecorder.start();
+      } catch (err) {
+        console.log('MediaRecorder info:', err);
+      }
+    }
+
+    tryListen('zh', (interim) => {
+      if (isRecording) {
+        transcriptEl.textContent = interim;
+      }
+    }).then((said) => {
+      if (said) {
+        recognizedText = said;
+        const charCount = said.replace(/[\s\p{P}]/gu, '').length;
+        transcriptEl.replaceChildren(
+          h('p', { style: { margin: 0, fontWeight: 600 } }, '🗣️ Máy nghe được: “' + said + '”'),
+          h('div', { class: 'row between wrap', style: { marginTop: '4px', alignItems: 'center', gap: '4px' } },
+            h('span', { class: 'chip good small' }, 'Độ dài: ' + charCount + ' chữ Hán'),
+            h('span', { class: 'small muted' }, charCount >= 20 ? '✓ Phát âm rõ ràng, độ dài tốt!' : '💡 Nên nói thêm chi tiết để đạt điểm cao hơn')
+          )
+        );
+      } else if (!recognizedText) {
+        transcriptEl.textContent = 'Đã hoàn thành lượt nói. Bạn có thể nghe lại audio bên dưới!';
+      }
+    }).catch(() => {});
+  }
+
+  function stopRecording() {
+    isRecording = false;
+    clearInterval(timerInterval);
+    if (ACTIVE_STOP_FN) {
+      try { ACTIVE_STOP_FN(); } catch (e) {}
+      ACTIVE_STOP_FN = null;
+    }
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      try { mediaRecorder.stop(); } catch (e) {}
+    }
+    box.className = 'ielts-speak-recorder stack';
+    recordBtn.className = 'ghost mini';
+    recordBtn.textContent = '🔄 Ghi âm lại';
+    statusLabel.textContent = 'Đã hoàn thành ghi âm (' + seconds + 's):';
+    timerBadge.style.display = 'none';
+  }
+
+  box.replaceChildren(
+    h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } }, statusLabel, timerBadge, recordBtn),
+    transcriptEl,
+    audioPlayerWrap
+  );
+  return box;
+}
+
+// Render giao diện phòng Luyện thi Khẩu ngữ HSKK
+function renderHskkExamView() {
+  const code = 'zh';
+  const curData = HSKK_DATA[HSKK_LV] || HSKK_DATA['HSKK 4'];
+  const levels = ['HSKK 3', 'HSKK 4', 'HSKK 5', 'HSKK 6'];
+
+  const header = h('div', { class: 'stack', style: { gap: '4px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, 'Kỳ Thi Khẩu Ngữ HSKK (Cấp 3–6)'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: 'exam_hskk' }),
+        langSwitch()
+      )
+    ),
+    h('h1', { style: { margin: 0 } }, 'Luyện Thi HSKK Khẩu Ngữ'),
+    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+      'Đề mẫu chính thức CTI/CLEC · Nghe thuật lại, Nhìn tranh kể chuyện & Nghị luận PEEL'
+    )
+  );
+
+  const modeSwitcher = h('div', { class: 'ielts-mode-switch', style: { margin: '6px 0 10px 0' } },
+    h('button', {
+      class: 'primary',
+      style: { fontWeight: 700, borderRadius: '12px' },
+      onclick: () => { HSK_EXAM_MODE = 'hskk'; examTabView(); }
+    }, '🎙️ HSKK Khẩu Ngữ (3–6)'),
+    h('button', {
+      class: 'ghost',
+      style: { fontWeight: 700, borderRadius: '12px' },
+      onclick: () => { HSK_EXAM_MODE = 'written'; examTabView(); }
+    }, '📝 HSK Thi Viết (1–6)')
+  );
+
+  // Chọn cấp độ HSKK 3 - 6
+  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 10px 0' } },
+    ...levels.map((lv) => h('button', {
+      class: 'mini' + (HSKK_LV === lv ? ' primary' : ' ghost'),
+      style: { fontWeight: 700, minWidth: '72px' },
+      onclick: () => { HSKK_LV = lv; examTabView(); }
+    }, HSKK_DATA[lv].shortName))
+  );
+
+  // Thẻ Cấu trúc đề & Audio chính thức
+  const structureCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '📋 ' + curData.name),
+      h('span', { class: 'chip good', style: { fontWeight: 700 } }, curData.totalTime)
+    ),
+    h('p', { class: 'small', style: { margin: 0 } }, curData.desc),
+    h('div', { class: 'row between', style: { flexWrap: 'wrap', gap: '8px', background: 'var(--sunk)', padding: '10px 14px', borderRadius: '10px' } },
+      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tổng số câu:'), h('b', {}, curData.totalQs + ' câu')),
+      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tiêu chuẩn ĐẬU:'), h('b', { style: { color: 'var(--good)' } }, curData.passScore))
+    ),
+    h('div', { class: 'stack', style: { gap: '4px' } },
+      h('p', { class: 'label', style: { margin: 0 } }, 'Phân bổ các phần thi khẩu ngữ:'),
+      ...curData.partsSummary.map((part) => h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        h('span', { style: { color: 'var(--teal)' } }, '✔'),
+        h('span', { class: 'small' }, part)
+      ))
+    ),
+    // Audio Player cho Đề mẫu chính thức
+    h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+        h('b', { style: { color: 'var(--teal)', fontSize: '.9rem' } }, '🎧 Đĩa Audio Đề Thi Chính Thức (MP3): ' + curData.audioName),
+        h('a', {
+          href: curData.audioUrl,
+          target: '_blank',
+          class: 'chip good small',
+          style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+        }, '⬇️ Tải / Mở trên Google Drive')
+      ),
+      h('audio', {
+        controls: 'controls',
+        src: curData.audioUrl,
+        style: { width: '100%', height: '36px', marginTop: '4px' }
+      }),
+      h('p', { class: 'small muted', style: { margin: 0, fontSize: '.75rem' } },
+        '💡 Bạn có thể nghe toàn bộ đĩa thi ở trên, hoặc bấm nút loa 🔊 ở từng câu hỏi bên dưới để luyện nghe và nhại theo (Shadowing) từng câu/đoạn.'
+      )
+    )
+  );
+
+  // Thẻ Cẩm nang chiến lược làm bài thi Khẩu ngữ (Collapsible)
+  const strategyCard = h('details', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px' } },
+    h('summary', { style: { fontWeight: 700, color: 'var(--teal)', cursor: 'pointer', fontSize: '1.02rem' } }, '💡 Cẩm nang chiến lược 3 dạng bài thi Khẩu ngữ HSKK (Chuẩn CLEC) ▾'),
+    h('div', { class: 'stack', style: { gap: '10px', marginTop: '8px' } },
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+        h('b', { style: { color: 'var(--teal)' } }, '1. Nghe nhắc lại (HSKK 3) & Nghe thuật lại (HSKK 4–6)'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.45 } },
+          '• Với HSKK 3: Không dịch thầm sang tiếng Việt trong đầu; nhẩm theo ngay khi tai nghe câu cuối; bắt đúng từ khóa động từ + danh từ chính.\n' +
+          '• Với HSKK 4–6: Quy tắc tốc ký 3 phần: Bối cảnh (Ai, ở đâu, khi nào) ➔ Diễn biến (Mâu thuẫn, thử thách) ➔ Kết cục (Bài học, chân lý). Sử dụng từ nối giữ nhịp: 首先 ➔ 接着 ➔ 后来 ➔ 最后.'
+        )
+      ),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+        h('b', { style: { color: 'var(--teal)' } }, '2. Nhìn tranh nói (Tranh đơn & Chuỗi tranh liên hoàn)'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.45 } },
+          '• Tranh đơn (HSKK 3): Công thức 3 câu: Chủ ngữ là ai + Đang làm gì ở đâu + Trạng thái / Cảm xúc.\n' +
+          '• Chuỗi 3–4 tranh (HSKK 4–6): Biến thành một câu chuyện hoàn chỉnh có diễn biến tâm lý và thông điệp: 1. Thiết lập bối cảnh ➔ 2. Cao trào/khó khăn ➔ 3. Nỗ lực đồng hành vượt qua ➔ 4. Thành quả, niềm vui và bài học nhân văn.'
+        )
+      ),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+        h('b', { style: { color: 'var(--teal)' } }, '3. Trả lời câu hỏi mở / Nghị luận xã hội (Mô hình PEEL)'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.45 } },
+          '• P (Point): Trả lời trực diện quan điểm trong 1–2 câu đầu.\n' +
+          '• E (Explanation): Đưa ra 2 luận điểm giải thích rõ ràng (一方面... 另一方面...).\n' +
+          '• E (Example): Lấy dẫn chứng thực tế từ công việc, cuộc sống hoặc hiện tượng xã hội.\n' +
+          '• L (Link): Tóm tắt thông điệp và liên hệ hành động.'
+        )
+      )
+    )
+  );
+
+  // Bộ lọc phần thi
+  const filterTabs = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 6px 0' } },
+    h('button', {
+      class: 'mini' + (HSKK_FILTER_PART === 'all' ? ' primary' : ' ghost'),
+      onclick: () => { HSKK_FILTER_PART = 'all'; examTabView(); }
+    }, 'Tất cả câu hỏi (' + curData.totalQs + ')'),
+    h('button', {
+      class: 'mini' + (HSKK_FILTER_PART === 'p1' ? ' primary' : ' ghost'),
+      onclick: () => { HSKK_FILTER_PART = 'p1'; examTabView(); }
+    }, 'Phần 1: Nghe phản xạ'),
+    h('button', {
+      class: 'mini' + (HSKK_FILTER_PART === 'p2' ? ' primary' : ' ghost'),
+      onclick: () => { HSKK_FILTER_PART = 'p2'; examTabView(); }
+    }, 'Phần 2: Nhìn tranh'),
+    h('button', {
+      class: 'mini' + (HSKK_FILTER_PART === 'p3' ? ' primary' : ' ghost'),
+      onclick: () => { HSKK_FILTER_PART = 'p3'; examTabView(); }
+    }, 'Phần 3: Trả lời câu hỏi')
+  );
+
+  // Danh sách các phần thi và câu hỏi tương tác
+  const sectionsToRender = (HSKK_FILTER_PART === 'all')
+    ? curData.sections
+    : curData.sections.filter((s) => s.partId === HSKK_FILTER_PART);
+
+  const sectionElements = sectionsToRender.map((sec) => {
+    const secHeader = h('div', { class: 'stack', style: { gap: '2px', marginTop: '6px' } },
+      h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, sec.title),
+      h('p', { class: 'small muted', style: { margin: 0 } }, sec.guide)
+    );
+
+    const itemCards = sec.items.map((it) => {
+      const itemKey = curData.id + '-' + it.qId;
+      const isExpanded = !!HSKK_EXPANDED_ITEMS[itemKey];
+
+      // Thẻ từng câu hỏi
+      const card = h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px' } });
+
+      // 1. DẠNG NGHE NHẮC LẠI (HSKK 3)
+      if (sec.partId === 'p1' && curData.id === 'hskk-3') {
+        card.replaceChildren(
+          h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+            h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId),
+            h('span', { class: 'small muted' }, '⏱️ 10 giây nhắc lại'),
+            h('div', { class: 'row', style: { gap: '4px' } },
+              spk('zh', it.text),
+              spk('zh', it.text, { slow: true })
+            )
+          ),
+          h('h3', { lang: 'zh-Hans', style: { margin: '2px 0', fontSize: '1.2rem', color: 'var(--ink)' } }, it.text),
+          h('p', { class: 'small pinyin', style: { margin: 0, color: 'var(--teal)' } }, it.pinyin),
+          h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghĩa: ' + it.trans),
+          it.tip ? h('p', { class: 'small', style: { margin: 0, color: '#f59e0b', fontSize: '.78rem' } }, '💡 ' + it.tip) : null,
+          createHskkTimer(0, 10),
+          createHskkRecorder(it)
+        );
+        return card;
+      }
+
+      // 2. DẠNG NGHE THUẬT LẠI (HSKK 4, 5, 6)
+      if (sec.partId === 'p1') {
+        const speakTime = (curData.id === 'hskk-4') ? 40 : 90;
+        card.replaceChildren(
+          h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+            h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId + ' · Thuật lại'),
+            h('span', { class: 'small muted' }, '⏱️ Nói trong ' + speakTime + 's'),
+            h('div', { class: 'row', style: { gap: '4px' } },
+              spk('zh', it.listenScript),
+              spk('zh', it.listenScript, { slow: true })
+            )
+          ),
+          h('b', { style: { fontSize: '.98rem', color: 'var(--teal)' } }, it.title),
+          h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+            h('p', { class: 'small label', style: { margin: 0, color: 'var(--muted)' } }, '🎧 Bài nghe mẫu (Bấm loa để nghe hoặc đọc thầm):'),
+            h('p', { lang: 'zh-Hans', style: { margin: '6px 0 0 0', fontSize: '1.02rem', lineHeight: 1.55 } }, it.listenScript)
+          ),
+          createHskkTimer(0, speakTime),
+          createHskkRecorder(it),
+          // Accordion bài thuật lại mẫu
+          h('details', { style: { marginTop: '4px' } },
+            h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Gợi ý tóm tắt & Thuật lại mẫu (Chuẩn HSK 3.0) ▾'),
+            h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.07)', borderRadius: '10px', padding: '10px', marginTop: '6px', gap: '6px' } },
+              h('div', { class: 'row between', style: { alignItems: 'center' } },
+                h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: 700 } }, 'Bài thuật lại mẫu:'),
+                spk('zh', it.sampleText)
+              ),
+              h('p', { lang: 'zh-Hans', style: { margin: 0, lineHeight: 1.55, fontWeight: 500 } }, it.sampleText),
+              it.keywords ? h('div', { class: 'stack', style: { gap: '2px', marginTop: '4px' } },
+                h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Từ khóa ghi điểm:'),
+                h('div', { class: 'row wrap', style: { gap: '4px' } },
+                  ...it.keywords.map((kw) => h('span', { class: 'chip small' }, kw))
+                )
+              ) : null
+            )
+          )
+        );
+        return card;
+      }
+
+      // 3. DẠNG NHÌN TRANH NÓI (Phần 2)
+      if (sec.partId === 'p2') {
+        const isSinglePic = !!it.svgKey;
+        const prepTime = isSinglePic ? 0 : 180;
+        const speakTime = isSinglePic ? 15 : 120;
+
+        const pictureArea = isSinglePic
+          ? renderHskkSvg(it.svgKey)
+          : h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '6px', margin: '4px 0' } },
+              ...(it.svgKeys || []).map((k, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center' } },
+                renderHskkSvg(k),
+                h('p', { class: 'small muted', style: { margin: 0, fontSize: '.72rem', lineHeight: 1.2 } }, (it.imagesDesc && it.imagesDesc[idx]) || '')
+              ))
+            );
+
+        card.replaceChildren(
+          h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+            h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId + ' · Nhìn tranh nói'),
+            h('span', { class: 'small muted' }, (prepTime ? 'Chuẩn bị 3p · ' : '') + 'Nói ' + speakTime + 's'),
+            spk('zh', it.sampleText)
+          ),
+          h('b', { style: { fontSize: '.98rem', color: 'var(--teal)' } }, it.title || it.scene),
+          pictureArea,
+          it.sceneFlow ? h('p', { class: 'small', style: { margin: '2px 0', color: 'var(--teal)', fontWeight: 600 } }, 'Diễn biến: ' + it.sceneFlow) : null,
+          createHskkTimer(prepTime, speakTime),
+          createHskkRecorder(it),
+          // Accordion bài mẫu
+          h('details', { style: { marginTop: '4px' } },
+            h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Bài kể chuyện mẫu chuẩn HSK 3.0 & Từ khóa ▾'),
+            h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.07)', borderRadius: '10px', padding: '10px', marginTop: '6px', gap: '6px' } },
+              h('div', { class: 'row between', style: { alignItems: 'center' } },
+                h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: 700 } }, 'Bài nói mẫu chuẩn:'),
+                spk('zh', it.sampleText)
+              ),
+              h('p', { lang: 'zh-Hans', style: { margin: 0, lineHeight: 1.55, fontWeight: 500 } }, it.sampleText),
+              it.pinyin ? h('p', { class: 'small pinyin', style: { margin: 0, color: 'var(--teal)' } }, it.pinyin) : null,
+              it.trans ? h('p', { class: 'small muted', style: { margin: 0 } }, 'Dịch nghĩa: ' + it.trans) : null,
+              it.keywords ? h('div', { class: 'stack', style: { gap: '2px', marginTop: '4px' } },
+                h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Từ vựng đắt giá:'),
+                h('div', { class: 'row wrap', style: { gap: '4px' } },
+                  ...it.keywords.map((kw) => h('span', { class: 'chip small' }, kw))
+                )
+              ) : null
+            )
+          )
+        );
+        return card;
+      }
+
+      // 4. DẠNG TRẢ LỜI CÂU HỎI MỞ / NGHỊ LUẬN (Phần 3)
+      const prepTime = (curData.id === 'hskk-3') ? 180 : 210;
+      const speakTime = (curData.id === 'hskk-3') ? 90 : ((curData.id === 'hskk-4') ? 120 : 150);
+
+      card.replaceChildren(
+        h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+          h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId + ' · Trả lời câu hỏi'),
+          h('span', { class: 'small muted' }, 'Chuẩn bị 3.5p · Nói ' + (speakTime / 60) + ' phút'),
+          h('div', { class: 'row', style: { gap: '4px' } },
+            spk('zh', it.prompt),
+            spk('zh', it.sampleText)
+          )
+        ),
+        h('h3', { lang: 'zh-Hans', style: { margin: '2px 0', fontSize: '1.15rem', color: 'var(--ink)' } }, it.prompt),
+        it.pinyin ? h('p', { class: 'small pinyin', style: { margin: 0, color: 'var(--teal)' } }, it.pinyin) : null,
+        it.trans ? h('p', { class: 'small muted', style: { margin: 0 } }, 'Dịch nghĩa: ' + it.trans) : null,
+        it.outline ? h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '8px 10px', margin: '2px 0' } },
+          h('b', { style: { color: 'var(--teal)', fontSize: '.84rem' } }, '🎯 Dàn ý gợi ý (PEEL):'),
+          h('p', { class: 'small', style: { margin: '2px 0 0 0', lineHeight: 1.4 } }, it.outline)
+        ) : null,
+        createHskkTimer(prepTime, speakTime),
+        createHskkRecorder(it),
+        // Accordion bài văn mẫu hoàn chỉnh
+        h('details', { style: { marginTop: '4px' } },
+          h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Bài văn mẫu hoàn chỉnh chuẩn HSK 3.0 & Từ khóa ▾'),
+          h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.07)', borderRadius: '10px', padding: '10px', marginTop: '6px', gap: '6px' } },
+            h('div', { class: 'row between', style: { alignItems: 'center' } },
+              h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: 700 } }, 'Bài văn mẫu chuẩn:'),
+              spk('zh', it.sampleText)
+            ),
+            h('p', { lang: 'zh-Hans', style: { margin: 0, lineHeight: 1.55, fontWeight: 500 } }, it.sampleText),
+            it.keywords ? h('div', { class: 'stack', style: { gap: '2px', marginTop: '4px' } },
+              h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Từ khóa đắt giá:'),
+              h('div', { class: 'row wrap', style: { gap: '4px' } },
+                ...it.keywords.map((kw) => h('span', { class: 'chip small' }, kw))
+              )
+            ) : null
+          )
+        )
+      );
+      return card;
+    });
+
+    return h('div', { class: 'stack', style: { gap: '8px' } }, secHeader, ...itemCards);
+  });
+
+  mount(h('div', { class: 'stack-lg' },
+    header,
+    modeSwitcher,
+    lvSelector,
+    structureCard,
+    strategyCard,
+    filterTabs,
+    ...sectionElements
+  ));
+}
+
+
 function examTabView() {
   const code = S.lang;
   if (code === 'en') {
@@ -10884,6 +11842,10 @@ function examTabView() {
   }
 
   const isZh = code === 'zh';
+  if (isZh && HSK_EXAM_MODE === 'hskk') {
+    return renderHskkExamView();
+  }
+
   const levels = isZh ? ['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6'] : ['N5', 'N4', 'N3', 'N2', 'N1'];
   if (!levels.includes(EXAM_LV[code])) {
     EXAM_LV[code] = levels[0];
@@ -10906,6 +11868,19 @@ function examTabView() {
         : 'Khung đề thi chuẩn JLPT Japan Foundation, thời gian thi, điểm liệt và bài thi mẫu.'
     )
   );
+
+  const modeSwitcher = isZh ? h('div', { class: 'ielts-mode-switch', style: { margin: '6px 0 10px 0' } },
+    h('button', {
+      class: 'ghost',
+      style: { fontWeight: 700, borderRadius: '12px' },
+      onclick: () => { HSK_EXAM_MODE = 'hskk'; examTabView(); }
+    }, '🎙️ HSKK Khẩu Ngữ (3–6)'),
+    h('button', {
+      class: 'primary',
+      style: { fontWeight: 700, borderRadius: '12px' },
+      onclick: () => { HSK_EXAM_MODE = 'written'; examTabView(); }
+    }, '📝 HSK Thi Viết (1–6)')
+  ) : null;
 
   const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '6px 0 12px 0' } },
     ...levels.map((lv) => h('button', {
@@ -10971,7 +11946,7 @@ function examTabView() {
     ))
   );
 
-  mount(h('div', { class: 'stack-lg' }, header, lvSelector, structureCard, mockTestCard, tipsCard));
+  mount(h('div', { class: 'stack-lg' }, header, modeSwitcher, lvSelector, structureCard, mockTestCard, tipsCard));
 }
 
 // Chế độ thi thử Demo cho HSK / JLPT
