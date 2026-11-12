@@ -505,28 +505,31 @@ body { overflow-x: hidden; }
   }
 }
 .skill-tabs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  display: flex;
+  gap: 6px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 4px;
   margin: 6px 0 10px 0;
+  overflow-x: auto;
 }
 .skill-tab-btn {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 10px 14px;
-  font-size: .95rem;
+  gap: 4px;
+  padding: 10px 6px;
+  font-size: .88rem;
   font-weight: 600;
   border-radius: 10px;
   border: none;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
+  white-space: nowrap;
   transition: all .2s ease;
 }
 .skill-tab-btn.active {
@@ -781,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1525';
+const APP_BUILD_ID = '20261112-1545';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1976,16 +1979,13 @@ function setTabs(show) {
     return true;
   });
   nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', {
-    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write'))) ? 'page' : null,
+    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write' || VIEW === 'listen' || VIEW === 'read'))) ? 'page' : null,
     onclick: () => go(k)
   }, icon(d), label)));
 }
 function go(k) {
-  if (k === 'speak') {
-    SKILL_TAB = 'speak';
-    VIEW = 'skills';
-  } else if (k === 'write') {
-    SKILL_TAB = 'write';
+  if (k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
+    SKILL_TAB = k;
     VIEW = 'skills';
   } else {
     VIEW = k;
@@ -6824,21 +6824,16 @@ function ieltsView(t, initialSkill = 'listen') {
   go('ielts');
 }
 
-let IELTS_MODE = 'volumes'; // 'volumes' (ieltsonlinetests.com) hoặc 'topics' (90 chủ đề)
+let IELTS_MODE = 'volumes'; // Thuần túy đề thi IELTS chính thức theo năm (ieltsonlinetests.com)
 let IELTS_CURRENT_VOL = '2026-1'; // Mặc định mở bộ đề mới nhất năm 2026 ở trên đầu
 let IELTS_FILTER_YEAR = 'all'; // 'all', 2026, 2025, 2024, 2023, 2022
 
 function ieltsTabView() {
   const code = S.lang;
   if (code !== 'en') return go('home');
-  const d = DATA[code];
-  
-  const currentVol = (IELTS_MODE === 'volumes')
-    ? (IELTS_IOT_VOLUMES.find((v) => v.vol === IELTS_CURRENT_VOL) || IELTS_IOT_VOLUMES[0])
-    : null;
-  const t = (IELTS_MODE === 'volumes' && currentVol)
-    ? { id: 'vol_' + currentVol.vol, lang: 'en', title: currentVol.title, sub: currentVol.sub, level: currentVol.targetBand }
-    : (d.topics.find((x) => x.id === IELTS_TOPIC[code]) || d.topics[0]);
+  IELTS_MODE = 'volumes';
+  const currentVol = IELTS_IOT_VOLUMES.find((v) => v.vol === IELTS_CURRENT_VOL) || IELTS_IOT_VOLUMES[0];
+  const t = { id: 'vol_' + currentVol.vol, lang: 'en', title: currentVol.title, sub: currentVol.sub, level: currentVol.targetBand };
   
   IELTS_CURRENT_TOPIC = t;
   const data = getIeltsData(t, currentVol);
@@ -6890,21 +6885,6 @@ function ieltsTabView() {
     }
   }, ...volGroups);
 
-  const topicPick = topicPicker(code, IELTS_TOPIC, ieltsTabView);
-
-  const modeSwitch = h('div', { class: 'ielts-mode-switch' },
-    h('button', {
-      class: IELTS_MODE === 'volumes' ? 'primary' : 'ghost',
-      style: { border: IELTS_MODE === 'volumes' ? 'none' : '1px solid var(--line)' },
-      onclick: () => { IELTS_MODE = 'volumes'; ieltsTabView(); }
-    }, '📚 Đề thi 2022–2026'),
-    h('button', {
-      class: IELTS_MODE === 'topics' ? 'primary' : 'ghost',
-      style: { border: IELTS_MODE === 'topics' ? 'none' : '1px solid var(--line)' },
-      onclick: () => { IELTS_MODE = 'topics'; ieltsTabView(); }
-    }, '🎯 90 Chủ đề A1–C2')
-  );
-
   const head = h('div', { class: 'stack' },
     h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
       h('h1', { style: { margin: 0 } }, 'Luyện IELTS'),
@@ -6918,9 +6898,8 @@ function ieltsTabView() {
         langSwitch()
       )
     ),
-    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com/vi/ielts-exam-library) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
-    modeSwitch,
-    IELTS_MODE === 'volumes' ? h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect) : topicPick,
+    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
+    h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect),
     h('div', { class: 'ielts-info-banner' },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
         h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
@@ -7750,9 +7729,11 @@ function topicCard(t, nx, num) {
       return h('div', { class: 'row', style: { gap: '6px', alignItems: 'stretch' } }, lessonBtn, resetBtn);
     }),
     h('div', { class: 'extras' },
+      t.lang === 'en' && h('button', { class: 'mini', onclick: () => { LISTEN_TOPIC[t.lang] = t.id; go('listen'); } }, 'Nghe'),
+      h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Nói'),
+      t.lang === 'en' && h('button', { class: 'mini', onclick: () => { READ_TOPIC[t.lang] = t.id; go('read'); } }, 'Đọc'),
       (t.gram && t.gram.length) && h('button', { class: 'mini', onclick: () => grammarView(t) }, 'Ngữ pháp'),
       (t.kanji && t.kanji.length) && h('button', { class: 'mini', onclick: () => kanjiView(t) }, 'Kanji (' + t.kanji.length + ')'),
-      h('button', { class: 'mini', onclick: () => { SPEAK_TOPIC[t.lang] = t.id; go('speak'); } }, 'Nói'),
       (LANGS[t.lang].cjk || t.fill) && h('button', { class: 'mini', onclick: () => { WRITE_TOPIC[t.lang] = t.id; go('write'); } }, 'Viết'),
       done > 0 && h('button', {
         class: 'ghost mini',
@@ -9347,7 +9328,7 @@ function reviewView() {
   show();
 }
 // ===== Luyện nói =====
-const SPEAK_TOPIC = {}, WRITE_TOPIC = {};
+const LISTEN_TOPIC = {}, SPEAK_TOPIC = {}, READ_TOPIC = {}, WRITE_TOPIC = {};
 function topicPicker(code, store, onChange) {
   const d = DATA[code]; const nx = nextLesson(d);
   if (!store[code]) store[code] = (nx ? nx.t : d.topics[0]).id;
@@ -9380,16 +9361,9 @@ function renderSpeakSkills(code, d) {
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   const dueSpk = srsDueItems(code, 'speak').length;
   return [
-    code === 'en' ? ieltsTipBox('Tip: 6 Tình huống ứng biến & Công thức P-E-E-R', [
-      'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
-      'Trả lời mở rộng: Áp dụng P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result) tránh cộc lốc.',
-      'Cần thời gian suy nghĩ: Dùng filler học thuật "That’s a thought-provoking question, let me consider that for a moment..."',
-      'Hạn chế tối đa fillers rác (uhm, ah, like, you know) bằng cách pause 1 giây để thở và sắp xếp câu.'
-    ], 'speaking') : null,
     h('div', { class: 'stack' },
       pick,
-      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null,
-      code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'speak') }, '🏆 Luyện IELTS Speaking Part 1, 2, 3 của chủ đề này →') : null
+      dueSpk > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'speak'; go('review'); } }, '🎙️ Ôn tập ngắt quãng: Có ' + dueSpk + ' câu cần ôn hôm nay') : null
     ),
     !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
@@ -9523,17 +9497,9 @@ function renderWriteSkills(code, d) {
   const t = d.topics.find((x) => x.id === WRITE_TOPIC[code]) || d.topics[0];
   const dueWr = code !== 'en' ? srsDueItems(code, 'write').length : 0;
   const writeHead = [
-    code === 'en' ? ieltsTipBox('Tip: 4 Quy tắc dấu phẩy & Cấu trúc Causes-Solutions', [
-      'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
-      'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
-      'Quy tắc 3: Dùng cặp dấu phẩy bao quanh mệnh đề quan hệ không xác định.',
-      'Quy tắc 4: Tránh lỗi Comma Splice (ghép 2 câu độc lập chỉ bằng dấu phẩy).',
-      'Task 2 Causes & Solutions: Mở bài 2 câu ➔ Thân bài 1 Nguyên nhân ➔ Thân bài 2 Giải pháp ➔ Kết bài 1–2 câu.'
-    ], 'writing') : null,
     h('div', { class: 'stack' },
       pick,
-      dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null,
-      code === 'en' ? h('button', { class: 'primary block', style: { margin: '4px 0 8px 0' }, onclick: () => ieltsView(t, 'write') }, '🏆 Luyện IELTS Writing Task 1 & 2 của chủ đề này →') : null
+      dueWr > 0 ? h('button', { class: 'accent block', style: { margin: '4px 0 8px 0' }, onclick: () => { REVIEW_SKILL = 'write'; go('review'); } }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null
     )
   ];
   if (code === 'en') {
@@ -9556,29 +9522,254 @@ function renderWriteSkills(code, d) {
   ];
 }
 
+// ===== Luyện Nghe (Chỉ chứa nội dung bài học, không có IELTS/tips) =====
+function renderListenSkills(code, d) {
+  const pick = topicPicker(code, LISTEN_TOPIC, () => skillsView('listen'));
+  const t = d.topics.find((x) => x.id === LISTEN_TOPIC[code]) || d.topics[0];
+  const vocabsWithEx = (t.vocab || []).filter((v) => v.ex);
+  
+  let isPlayingAll = false;
+  let playIndex = 0;
+  let playTimeout = null;
+
+  const playAllBtn = h('button', {
+    class: 'primary block',
+    style: { margin: '4px 0 8px 0', fontSize: '.95rem', fontWeight: 600, padding: '10px 14px', borderRadius: '12px' },
+    onclick: () => {
+      if (isPlayingAll) {
+        isPlayingAll = false;
+        if (playTimeout) clearTimeout(playTimeout);
+        playAllBtn.textContent = '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)';
+        playAllBtn.classList.remove('accent');
+        playAllBtn.classList.add('primary');
+        return;
+      }
+      if (!vocabsWithEx.length) { toast('Chủ đề này chưa có câu ví dụ.'); return; }
+      isPlayingAll = true;
+      playIndex = 0;
+      playAllBtn.classList.remove('primary');
+      playAllBtn.classList.add('accent');
+
+      function playNext() {
+        if (!isPlayingAll) return;
+        if (playIndex >= vocabsWithEx.length) {
+          isPlayingAll = false;
+          playAllBtn.textContent = '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)';
+          playAllBtn.classList.remove('accent');
+          playAllBtn.classList.add('primary');
+          toast('Đã phát xong toàn bộ câu trong chủ đề!');
+          return;
+        }
+        const v = vocabsWithEx[playIndex];
+        playAllBtn.textContent = '⏹ Đang phát câu ' + (playIndex + 1) + '/' + vocabsWithEx.length + ' (Bấm để dừng)';
+        say(code, v.ex);
+        playIndex++;
+        playTimeout = setTimeout(playNext, 3800);
+      }
+      playNext();
+    }
+  }, '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)');
+
+  let hideEnglish = false;
+  const toggleTextBtn = h('button', {
+    class: 'ghost mini',
+    style: { fontSize: '.8rem', padding: '6px 12px' },
+    onclick: () => {
+      hideEnglish = !hideEnglish;
+      toggleTextBtn.textContent = hideEnglish ? '👁️ Hiện chữ tiếng Anh' : '🙈 Ẩn chữ (Nghe chay)';
+      const exTexts = document.querySelectorAll('.listen-ex-text');
+      exTexts.forEach((el) => {
+        el.style.opacity = hideEnglish ? '0' : '1';
+      });
+    }
+  }, '🙈 Ẩn chữ (Nghe chay)');
+
+  return [
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      pick,
+      h('div', { class: 'panel', style: { padding: '12px 14px', background: 'var(--sunk)', borderRadius: '12px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('div', { class: 'stack', style: { gap: '2px' } },
+            h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, t.sub || t.title),
+            h('span', { class: 'small muted' }, (t.vocab || []).length + ' từ vựng · ' + vocabsWithEx.length + ' câu giao tiếp')
+          ),
+          toggleTextBtn
+        ),
+        playAllBtn
+      )
+    ),
+    h('div', { class: 'stack', style: { gap: '10px' } },
+      h('h3', { style: { margin: '6px 0 0 0' } }, '🎧 Các câu luyện nghe trong bài học'),
+      ...vocabsWithEx.map((v, idx) => {
+        return h('div', { class: 'panel', style: { padding: '12px 14px', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '6px' } },
+          h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '10px' } },
+            h('div', { class: 'stack', style: { gap: '4px', flex: 1, minWidth: 0 } },
+              h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+                h('span', { class: 'chip good', style: { fontSize: '.72rem' } }, '#' + (idx + 1)),
+                h('span', { class: 'chip', style: { fontSize: '.75rem', fontWeight: 600 } }, plain(v.w))
+              ),
+              h('p', { class: 'listen-ex-text', lang: 'en', style: { fontSize: '1.02rem', fontWeight: 600, margin: '2px 0', lineHeight: 1.45, transition: 'opacity .2s' } }, v.ex),
+              v.exm ? h('p', { class: 'small muted', style: { margin: 0 } }, v.exm) : null
+            ),
+            h('div', { class: 'row', style: { gap: '6px', flex: 'none', alignItems: 'center' } },
+              spk(code, v.ex, { cls: 'big' }),
+              spk(code, v.ex, { slow: true, cls: 'big' })
+            )
+          )
+        );
+      })
+    ),
+    h('div', { class: 'stack', style: { gap: '8px', marginTop: '12px' } },
+      h('h3', { style: { margin: '6px 0 0 0' } }, 'Từ vựng & Phát âm trong bài'),
+      h('div', { class: 'stack', style: { gap: '6px' } },
+        ...(t.vocab || []).map((v) => h('div', { class: 'panel row between', style: { alignItems: 'center', padding: '10px 14px', borderRadius: '12px' } },
+          h('div', { class: 'stack', style: { gap: '2px', minWidth: 0 } },
+            h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+              h('b', { lang: 'en', style: { fontSize: '.98rem' } }, plain(v.w)),
+              v.r ? h('span', { class: 'ipa small', style: { color: 'var(--teal)' } }, v.r) : null
+            ),
+            h('span', { class: 'small muted' }, v.m)
+          ),
+          h('div', { class: 'row', style: { gap: '4px', flex: 'none' } },
+            spk(code, v.w),
+            spk(code, v.w, { slow: true })
+          )
+        ))
+      )
+    )
+  ];
+}
+
+// ===== Luyện Đọc (Chỉ chứa nội dung bài học, không có IELTS/tips) =====
+function renderReadSkills(code, d) {
+  const pick = topicPicker(code, READ_TOPIC, () => skillsView('read'));
+  const t = d.topics.find((x) => x.id === READ_TOPIC[code]) || d.topics[0];
+  const quizzes = t.quiz || [];
+  const vocabsWithEx = (t.vocab || []).filter((v) => v.ex);
+
+  // Email hoặc đoạn văn bản bài học
+  let readingTextEl = null;
+  if (t.fill && t.fill.text) {
+    const cleanEmail = t.fill.text.replace(/\[\[([^\]|]+)(?:\|[^\]]+)?\]\]/g, '$1');
+    readingTextEl = h('div', { class: 'panel stack', style: { gap: '8px', background: 'var(--sunk)', borderRadius: '12px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('h3', { style: { margin: 0 } }, '📖 Bài đọc tình huống thực tế'),
+        spk(code, cleanEmail)
+      ),
+      h('div', { lang: 'en', style: { fontSize: '.98rem', lineHeight: 1.6, whiteSpace: 'pre-wrap', padding: '6px 0' } }, cleanEmail),
+      t.fill.trans ? h('details', {},
+        h('summary', { class: 'small muted', style: { cursor: 'pointer' } }, 'Xem bản dịch tiếng Việt'),
+        h('p', { class: 'small muted', style: { margin: '6px 0 0 0', lineHeight: 1.5 } }, t.fill.trans)
+      ) : null
+    );
+  }
+
+  // Câu hỏi đọc hiểu tình huống bài học (t.quiz)
+  const quizEls = quizzes.map((q, qIdx) => {
+    const fbBox = h('div', { style: { marginTop: '8px' } });
+    let answered = false;
+
+    const optBtns = (q.o || []).map((optText, optIdx) => {
+      const btn = h('button', {
+        class: 'ghost block',
+        style: { textAlign: 'left', padding: '10px 14px', fontSize: '.92rem', borderRadius: '10px', margin: '4px 0' },
+        onclick: () => {
+          if (answered) return;
+          answered = true;
+          const isRight = optIdx === q.a;
+          optBtns.forEach((b, idx) => {
+            b.disabled = true;
+            if (idx === q.a) b.classList.add('good', 'right');
+            else if (idx === optIdx) b.classList.add('wrong');
+          });
+          fbBox.replaceChildren(
+            h('div', { class: 'feedback ' + (isRight ? 'ok' : 'no'), style: { margin: 0, padding: '8px 12px', borderRadius: '8px' } },
+              h('strong', {}, isRight ? 'Chính xác!' : 'Chưa đúng.'),
+              q.why ? ' ' + q.why : ''
+            )
+          );
+        }
+      }, h('span', { style: { fontWeight: 600, marginRight: '6px' } }, (optIdx + 1) + '.'), optText);
+      return btn;
+    });
+
+    return h('div', { class: 'panel stack', style: { gap: '6px', borderRadius: '12px' } },
+      h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px' } },
+        h('div', { class: 'stack', style: { gap: '4px', flex: 1 } },
+          h('span', { class: 'chip accent', style: { fontSize: '.72rem', alignSelf: 'flex-start' } }, 'Tình huống #' + (qIdx + 1)),
+          h('p', { lang: 'en', style: { fontWeight: 600, fontSize: '.98rem', margin: '2px 0', lineHeight: 1.45 } }, q.q)
+        ),
+        spk(code, q.q)
+      ),
+      h('div', { class: 'stack', style: { gap: '2px' } }, ...optBtns),
+      fbBox
+    );
+  });
+
+  return [
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      pick,
+      readingTextEl
+    ),
+    quizzes.length > 0 ? h('div', { class: 'stack', style: { gap: '10px' } },
+      h('h3', { style: { margin: '8px 0 0 0' } }, '❓ Trắc nghiệm đọc hiểu tình huống bài học'),
+      ...quizEls
+    ) : null,
+    vocabsWithEx.length > 0 ? h('div', { class: 'stack', style: { gap: '8px', marginTop: '10px' } },
+      h('h3', { style: { margin: '6px 0 0 0' } }, '📖 Đọc câu ví dụ & ngữ cảnh từ vựng'),
+      ...vocabsWithEx.map((v) => h('div', { class: 'panel stack', style: { gap: '4px', borderRadius: '12px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { class: 'chip good', style: { fontSize: '.78rem' } }, plain(v.w)),
+          spk(code, v.ex)
+        ),
+        h('p', { lang: 'en', style: { fontWeight: 600, margin: '2px 0' } }, v.ex),
+        v.exm ? h('p', { class: 'small muted', style: { margin: 0 } }, v.exm) : null
+      ))
+    ) : null
+  ];
+}
+
 function skillsView(tab) {
   if (tab) SKILL_TAB = tab;
   VIEW = 'skills';
   setTabs(true);
   const code = S.lang, d = DATA[code];
-  const curTopicId = (SKILL_TAB === 'speak' ? SPEAK_TOPIC[code] : WRITE_TOPIC[code]);
+  
+  if (code === 'en') {
+    if (!['listen', 'speak', 'read', 'write'].includes(SKILL_TAB)) {
+      SKILL_TAB = 'listen';
+    }
+  } else {
+    if (!['speak', 'write'].includes(SKILL_TAB)) {
+      SKILL_TAB = 'speak';
+    }
+  }
+
+  const curTopicId = (
+    SKILL_TAB === 'listen' ? LISTEN_TOPIC[code] :
+    SKILL_TAB === 'speak' ? SPEAK_TOPIC[code] :
+    SKILL_TAB === 'read' ? READ_TOPIC[code] :
+    WRITE_TOPIC[code]
+  );
   const t = d.topics.find((x) => x.id === curTopicId) || d.topics[0];
 
-  const writeTabLabel = code === 'en' ? '✍️ Luyện viết email' : '✍️ Luyện viết chữ';
+  const skillTabsDef = (code === 'en') ? [
+    ['listen', '🎧 Nghe'],
+    ['speak', '🎙️ Nói'],
+    ['read', '📖 Đọc'],
+    ['write', '✍️ Viết']
+  ] : [
+    ['speak', '🎙️ Luyện nói'],
+    ['write', '✍️ Luyện viết chữ']
+  ];
 
   const navSub = h('div', { class: 'skill-tabs', role: 'tablist' },
-    h('button', {
-      class: 'skill-tab-btn' + (SKILL_TAB === 'speak' ? ' active' : ''),
+    ...skillTabsDef.map(([skKey, skLabel]) => h('button', {
+      class: 'skill-tab-btn' + (SKILL_TAB === skKey ? ' active' : ''),
       role: 'tab',
-      'aria-selected': SKILL_TAB === 'speak' ? 'true' : 'false',
-      onclick: () => { SKILL_TAB = 'speak'; skillsView(); }
-    }, '🎙️ Luyện nói'),
-    h('button', {
-      class: 'skill-tab-btn' + (SKILL_TAB === 'write' ? ' active' : ''),
-      role: 'tab',
-      'aria-selected': SKILL_TAB === 'write' ? 'true' : 'false',
-      onclick: () => { SKILL_TAB = 'write'; skillsView(); }
-    }, writeTabLabel)
+      'aria-selected': String(SKILL_TAB === skKey),
+      onclick: () => { SKILL_TAB = skKey; skillsView(); }
+    }, skLabel))
   );
 
   const head = h('div', { class: 'stack', style: { gap: '6px' } },
@@ -9592,7 +9783,11 @@ function skillsView(tab) {
     navSub
   );
 
-  const bodyElements = (SKILL_TAB === 'speak') ? renderSpeakSkills(code, d) : renderWriteSkills(code, d);
+  let bodyElements = [];
+  if (SKILL_TAB === 'listen') bodyElements = renderListenSkills(code, d);
+  else if (SKILL_TAB === 'speak') bodyElements = renderSpeakSkills(code, d);
+  else if (SKILL_TAB === 'read') bodyElements = renderReadSkills(code, d);
+  else bodyElements = renderWriteSkills(code, d);
 
   mount(h('div', { class: 'stack-lg' },
     head,
@@ -9600,10 +9795,22 @@ function skillsView(tab) {
   ));
 }
 
+function listenView() {
+  SKILL_TAB = 'listen';
+  VIEW = 'skills';
+  skillsView('listen');
+}
+
 function speakView() {
   SKILL_TAB = 'speak';
   VIEW = 'skills';
   skillsView('speak');
+}
+
+function readView() {
+  SKILL_TAB = 'read';
+  VIEW = 'skills';
+  skillsView('read');
 }
 
 function writeView() {
