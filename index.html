@@ -739,7 +739,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0755';
+const APP_BUILD_ID = '20261112-0835';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -7722,7 +7722,7 @@ function lessonView(t, i) {
         h('span', { class: 'chip', style: { fontSize: '1rem', fontWeight: 700, padding: '3px 14px' } }, 'Tập viết (không có nét mờ)')
       );
       const stepLabel = strokeStepBadge.firstChild;
-      let mistakes = 0, completed = false, writer = null, totalStrokes = 0, isAnimating = false, blindMode = true, showNumbers = false, strokePositions = [];
+      let mistakes = 0, completed = false, writer = null, totalStrokes = 0, isAnimating = false, blindMode = true;
 
       const toggleOutlineBtn = h('button', { class: 'ghost mini', onclick: () => {
         blindMode = !blindMode;
@@ -7730,36 +7730,18 @@ function lessonView(t, i) {
         startQuiz(blindMode);
       } }, 'Hiện nét mờ');
 
-      const toggleNumbersBtn = h('button', { class: 'ghost mini', onclick: () => {
-        showNumbers = !showNumbers;
-        toggleNumbersBtn.textContent = showNumbers ? 'Ẩn số nét' : 'Hiện số nét';
-        if (showNumbers) {
-          writer && writer.showOutline();
-          renderStrokeNumbers(wbox, strokePositions, totalStrokes, 0);
-        } else {
-          if (blindMode && writer) writer.hideOutline();
-          renderStrokeNumbers(wbox, strokePositions, 0, 0);
-        }
-      } }, 'Hiện số nét');
-
       const startQuiz = (blind) => {
         if (!writer) return;
         isAnimating = false;
         blindMode = blind;
         toggleOutlineBtn.textContent = blind ? 'Hiện nét mờ' : 'Ẩn nét mờ';
         mistakes = 0;
-        if (showNumbers) {
-          writer.showOutline();
-          renderStrokeNumbers(wbox, strokePositions, totalStrokes, 0);
-        } else {
-          blind ? writer.hideOutline() : writer.showOutline();
-          renderStrokeNumbers(wbox, strokePositions, 0, 0);
-        }
+        blind ? writer.hideOutline() : writer.showOutline();
         stepLabel.className = 'chip ' + (blind ? '' : 'good');
         stepLabel.textContent = blind ? 'Tập viết (không có nét mờ)' : 'Tập viết (có nét mờ)';
         const strokeInfo = totalStrokes ? ' (' + totalStrokes + ' nét)' : '';
         info.textContent = blind
-          ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Bấm “Hiện số nét” nếu cần xem thứ tự nét.'
+          ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem lại.'
           : 'Đồ theo nét mờ' + strokeInfo + ': Viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem cách viết.';
         writer.quiz({
           showHintAfterMisses: 2,
@@ -7779,9 +7761,6 @@ function lessonView(t, i) {
               h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (totalStrokes ? '/' + totalStrokes : '')),
               h('span', { class: 'small muted' }, s.strokesRemaining > 0 ? 'Đúng rồi! Còn ' + s.strokesRemaining + ' nét.' : 'Đã hoàn thành nét cuối!')
             );
-            if (showNumbers) {
-              renderStrokeNumbers(wbox, strokePositions, totalStrokes, (s && s.strokeNum != null) ? s.strokeNum + 1 : 0);
-            }
           },
           onComplete: (s) => {
             completed = true;
@@ -7789,9 +7768,6 @@ function lessonView(t, i) {
             stepLabel.className = 'chip good';
             stepLabel.textContent = 'Hoàn thành ' + (totalStrokes ? totalStrokes + ' nét' : '!');
             info.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét! Sai ' + mistakes + ' lần.');
-            if (showNumbers) {
-              renderStrokeNumbers(wbox, strokePositions, totalStrokes, totalStrokes);
-            }
             update();
             submit();
           }
@@ -7806,7 +7782,6 @@ function lessonView(t, i) {
         stepLabel.className = 'chip good';
         stepLabel.textContent = 'Nét 1' + (totalStrokes ? ' / ' + totalStrokes : '');
         info.textContent = 'Đang chạy thứ tự nét: Nét 1' + (totalStrokes ? '/' + totalStrokes : '') + '...';
-        renderStrokeNumbers(wbox, strokePositions, 1, 0);
 
         if (writer._renderState) {
           const orig = writer._renderState._onStateChange;
@@ -7830,7 +7805,6 @@ function lessonView(t, i) {
                   stepLabel.className = 'chip good';
                   stepLabel.textContent = 'Nét ' + num + (totalStrokes ? ' / ' + totalStrokes : '');
                   info.textContent = 'Đang chạy nét ' + num + (totalStrokes ? '/' + totalStrokes : '') + '...';
-                  renderStrokeNumbers(wbox, strokePositions, num, num - 1);
                 }
               }
             }
@@ -7844,7 +7818,6 @@ function lessonView(t, i) {
             stepLabel.className = 'chip good';
             stepLabel.textContent = 'Đã chạy xong ' + (totalStrokes ? totalStrokes + ' nét' : '!');
             info.textContent = 'Đã xem xong thứ tự nét. Hãy tự viết lại vào ô (không có nét mờ)!';
-            renderStrokeNumbers(wbox, strokePositions, totalStrokes, 0);
             setTimeout(() => {
               startQuiz(true);
             }, 1000);
@@ -7859,7 +7832,7 @@ function lessonView(t, i) {
         ex.v && h('p', { class: 'center' }, h('b', { lang: LANGS[code].lang }, plain(ex.v.w)), ' · ', ex.v.m, strokeChip),
         ex.k && h('p', { class: 'center' }, h('b', { lang: 'ja' }, ex.k.k), ' · ', ex.k.hv, strokeChip),
         wbox, strokeStepBadge, info,
-        h('div', { class: 'listen' }, btnStroke, h('button', { onclick: () => startQuiz(true) }, 'Viết lại'), toggleNumbersBtn, toggleOutlineBtn)
+        h('div', { class: 'listen' }, btnStroke, h('button', { onclick: () => startQuiz(true) }, 'Viết lại'), toggleOutlineBtn)
       );
       btn.textContent = 'Bỏ qua'; ready = () => true;
 
@@ -8742,25 +8715,13 @@ function charView(code, c, list) {
     h('span', { class: 'chip', style: { fontSize: '1rem', fontWeight: 700, padding: '3px 14px' } }, 'Tập viết (không có nét mờ)')
   );
   const stepLabel = strokeStepBadge.firstChild;
-  let writer = null, totalStrokes = 0, isAnimating = false, blindMode = true, showNumbers = false, strokePositions = [];
+  let writer = null, totalStrokes = 0, isAnimating = false, blindMode = true;
 
   const toggleOutlineBtn = h('button', { class: 'ghost mini', onclick: () => {
     blindMode = !blindMode;
     toggleOutlineBtn.textContent = blindMode ? 'Hiện nét mờ' : 'Ẩn nét mờ';
     quiz(blindMode);
   } }, 'Hiện nét mờ');
-
-  const toggleNumbersBtn = h('button', { class: 'ghost mini', onclick: () => {
-    showNumbers = !showNumbers;
-    toggleNumbersBtn.textContent = showNumbers ? 'Ẩn số nét' : 'Hiện số nét';
-    if (showNumbers) {
-      writer && writer.showOutline();
-      renderStrokeNumbers(box, strokePositions, totalStrokes, 0);
-    } else {
-      if (blindMode && writer) writer.hideOutline();
-      renderStrokeNumbers(box, strokePositions, 0, 0);
-    }
-  } }, 'Hiện số nét');
 
   const again = h('button', { onclick: () => quiz(true) }, 'Viết lại');
 
@@ -8769,18 +8730,12 @@ function charView(code, c, list) {
     isAnimating = false;
     blindMode = blind;
     toggleOutlineBtn.textContent = blind ? 'Hiện nét mờ' : 'Ẩn nét mờ';
-    if (showNumbers) {
-      writer.showOutline();
-      renderStrokeNumbers(box, strokePositions, totalStrokes, 0);
-    } else {
-      blind ? writer.hideOutline() : writer.showOutline();
-      renderStrokeNumbers(box, strokePositions, 0, 0);
-    }
+    blind ? writer.hideOutline() : writer.showOutline();
     stepLabel.className = 'chip ' + (blind ? '' : 'good');
     stepLabel.textContent = blind ? 'Tập viết (không có nét mờ)' : 'Tập viết (có nét mờ)';
     const strokeInfo = totalStrokes ? ' (' + totalStrokes + ' nét)' : '';
     status.textContent = blind
-      ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Bấm “Hiện số nét” nếu cần xem thứ tự nét.'
+      ? 'Tập viết không có nét mờ' + strokeInfo + ': Nhớ chữ rồi viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem lại.'
       : 'Đồ theo chữ mờ' + strokeInfo + ': Viết từng nét vào ô. Bấm “Xem thứ tự nét” nếu cần xem cách viết.';
     writer.quiz({
       showHintAfterMisses: 2,
@@ -8799,9 +8754,6 @@ function charView(code, c, list) {
           h('span', { class: 'chip good', style: { fontSize: '.85rem', padding: '2px 8px', marginRight: '6px' } }, 'Nét ' + cur + (totalStrokes ? '/' + totalStrokes : '')),
           h('span', { class: 'small muted' }, s.strokesRemaining > 0 ? 'Đúng rồi! Còn ' + s.strokesRemaining + ' nét nữa.' : 'Đã hoàn thành nét cuối!')
         );
-        if (showNumbers) {
-          renderStrokeNumbers(box, strokePositions, totalStrokes, (s && s.strokeNum != null) ? s.strokeNum + 1 : 0);
-        }
       },
       onComplete: (s) => {
         const k = sid(code, c);
@@ -8812,9 +8764,6 @@ function charView(code, c, list) {
         stepLabel.className = 'chip good';
         stepLabel.textContent = 'Hoàn thành ' + (totalStrokes ? totalStrokes + ' nét' : '!');
         status.textContent = (s.totalMistakes === 0 ? 'Hoàn hảo! Viết đúng cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét không sai lần nào.' : 'Xong cả ' + (totalStrokes ? totalStrokes + ' ' : '') + 'nét! Sai ' + s.totalMistakes + ' lần.') + ' Bấm “Viết lại” để thử viết lại.';
-        if (showNumbers) {
-          renderStrokeNumbers(box, strokePositions, totalStrokes, totalStrokes);
-        }
       }
     });
   };
@@ -8827,7 +8776,6 @@ function charView(code, c, list) {
     stepLabel.className = 'chip good';
     stepLabel.textContent = 'Nét 1' + (totalStrokes ? ' / ' + totalStrokes : '');
     status.textContent = 'Đang chạy thứ tự nét: Nét 1' + (totalStrokes ? '/' + totalStrokes : '') + '...';
-    renderStrokeNumbers(box, strokePositions, 1, 0);
 
     if (writer._renderState) {
       const orig = writer._renderState._onStateChange;
@@ -8851,7 +8799,6 @@ function charView(code, c, list) {
               stepLabel.className = 'chip good';
               stepLabel.textContent = 'Nét ' + num + (totalStrokes ? ' / ' + totalStrokes : '');
               status.textContent = 'Đang chạy nét ' + num + (totalStrokes ? '/' + totalStrokes : '') + '...';
-              renderStrokeNumbers(box, strokePositions, num, num - 1);
             }
           }
         }
@@ -8865,7 +8812,6 @@ function charView(code, c, list) {
         stepLabel.className = 'chip good';
         stepLabel.textContent = 'Đã chạy xong ' + (totalStrokes ? totalStrokes + ' nét' : '!');
         status.textContent = 'Đã xem xong thứ tự nét. Giờ hãy tự viết lại vào ô (không có nét mờ)!';
-        renderStrokeNumbers(box, strokePositions, totalStrokes, 0);
         setTimeout(() => {
           quiz(true);
         }, 1000);
@@ -8906,7 +8852,7 @@ function charView(code, c, list) {
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: writeView }, 'Danh sách chữ'), h('span', { class: 'muted small' }, (idx + 1) + '/' + list.length)),
     h('div', { class: 'center' }, h('span', { class: 'big', lang: L().lang }, c), strokeBadge),
     box, strokeStepBadge, status,
-    h('div', { class: 'listen' }, btnStroke, again, toggleNumbersBtn, toggleOutlineBtn, spk(code, sayText, { cls: 'big' })),
+    h('div', { class: 'listen' }, btnStroke, again, toggleOutlineBtn, spk(code, sayText, { cls: 'big' })),
     h('div', { class: 'row' }, idx > 0 && h('button', { class: 'grow', onclick: () => charView(code, list[idx - 1], list) }, '← Chữ trước'), idx < list.length - 1 && h('button', { class: 'grow', onclick: () => charView(code, list[idx + 1], list) }, 'Chữ sau →')),
     h('div', { class: 'panel stack' }, info)
   ));
