@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1450';
+const APP_BUILD_ID = '20261112-1505';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -6384,7 +6384,7 @@ function showIeltsTipsModal(defaultTab) {
     bodyArea.replaceChildren();
 
     if (activeTab === 'roadmap') {
-      bodyArea.appendChild(h('p', { class: 'small muted' }, 'Lộ trình 4 giai đoạn chuẩn bị thi từ nền tảng đến 7.5+ IELTS từ chuyên mục IELTS Tips của IELTS Online Tests:'));
+      bodyArea.appendChild(h('p', { class: 'small muted' }, 'Lộ trình 4 giai đoạn chuẩn bị thi từ nền tảng đến 7.5+ IELTS từ chuyên mục Cẩm nang Tip:'));
       IELTS_TIPS_DATA.roadmap.forEach((r) => {
         bodyArea.appendChild(h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,0.06)', borderLeft: '4px solid var(--teal)' } },
           h('div', { class: 'row between', style: { alignItems: 'center' } },
@@ -6488,7 +6488,7 @@ function showIeltsTipsModal(defaultTab) {
     h('div', { class: 'row between', style: { alignItems: 'center', flexShrink: 0, marginBottom: '8px' } },
       h('div', { class: 'stack', style: { gap: '2px' } },
         h('span', { class: 'chip accent', style: { fontWeight: 700 } }, 'ieltsonlinetests.com · Sally Wiki'),
-        h('h2', { style: { margin: '4px 0 0 0', fontSize: '1.25rem' } }, '💡 Cẩm nang IELTS Tips & Lộ trình 4 Kỹ năng')
+        h('h2', { style: { margin: '4px 0 0 0', fontSize: '1.25rem' } }, '💡 Cẩm nang Tip & Lộ trình 4 Kỹ năng')
       ),
       h('button', { class: 'ghost mini', style: { flexShrink: 0, fontSize: '.9rem', padding: '4px 8px' }, onclick: () => overlay.remove() }, '✕ Đóng')
     ),
@@ -6500,21 +6500,90 @@ function showIeltsTipsModal(defaultTab) {
   document.body.appendChild(overlay);
 }
 
-function getIeltsTipForStep(ex, code) {
-  if (code !== 'en') return null;
+function getTipForStep(ex, code) {
+  if (!ex) return null;
+  if (ex.type === 'order') {
+    if (code === 'en') return '💡 Tip: Trật tự từ S + V + O. Tránh lỗi Comma Splice (ghép 2 mệnh đề chỉ bằng dấu phẩy) - hãy dùng liên từ nối (FANBOYS) hoặc dấu chấm phẩy.';
+    if (code === 'ja') return '💡 Tip: Vị ngữ động từ/tính từ luôn nằm ở CUỐI câu. Trợ từ (は, が, を, に, で, と) luôn đứng ngay sau danh từ mà nó bổ nghĩa.';
+    if (code === 'zh') return '💡 Tip: Trật tự ngữ pháp cơ bản: Chủ ngữ + [Thời gian/Địa điểm] + Phó từ + Động từ + Tân ngữ. Trạng từ thời gian luôn đứng trước động từ.';
+    return '💡 Tip: Sắp xếp các từ theo đúng cấu trúc ngữ pháp và trật tự câu.';
+  }
+  if (ex.type === 'gquiz') {
+    if (code === 'en') return '💡 Tip: Xác định từ loại cần điền (danh từ, động từ, tính từ hay giới từ) dựa vào các từ đứng liền trước và sau trong câu.';
+    if (code === 'ja') return '💡 Tip: Xác định trợ từ đi kèm và thể chia của động từ/tính từ (thể từ điển, thể て, thể ない) để chọn dạng ngữ pháp đúng.';
+    if (code === 'zh') return '💡 Tip: Chú ý vị trí của lượng từ, phó từ phủ định (不/没) và trợ từ kết cấu (的/得/地) trong mẫu câu.';
+    return '💡 Tip: Quan sát kỹ dấu hiệu ngữ pháp trong câu để chọn đáp án chính xác.';
+  }
   if (ex.type === 'quiz') {
-    return '💡 Mẹo IELTS Speaking: Dùng công thức P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result) khi trả lời phỏng vấn để bài nói có cấu trúc mạch lạc, tránh cộc lốc.';
+    if (code === 'en') return '💡 Tip: Đọc kỹ từ khóa (keywords) trong câu hỏi, chú ý bẫy từ đồng nghĩa (paraphrase) và loại trừ các đáp án chứa thông tin sai lệch.';
+    return '💡 Tip: Bám sát câu hỏi để tìm từ khóa trong ngữ cảnh, chú ý các từ phủ định hoặc điều kiện để không bị chọn nhầm bẫy.';
   }
   if (ex.type === 'fill') {
-    return '💡 Mẹo IELTS Writing: Đặt dấu phẩy sau các trạng từ liên kết (Consequently, Moreover) hoặc mệnh đề phụ thuộc (Although...) đứng đầu câu để đạt Band 7+ Grammatical Range.';
+    return '💡 Tip: Đọc lướt cả câu để nắm ý nghĩa toàn cảnh trước khi điền, chú ý liên từ nối câu và sự hòa hợp thì của mệnh đề.';
   }
   if (ex.type === 'speak') {
-    return '💡 Mẹo IELTS Speaking: Hạn chế tối đa filler rác (uhm, like, you know); tập thói quen tạm dừng im lặng (pause) 1 giây để thở và sắp xếp câu từ chuẩn xác.';
+    if (code === 'en') return '💡 Tip: Dùng công thức P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result); tạm dừng (pause) ngắn 1 giây để thở thay vì dùng filler rác (uhm, like).';
+    if (code === 'ja') return '💡 Tip: Chú ý cao độ ngữ điệu (Pitch Accent), ngắt nghỉ đúng chỗ và phát âm rõ âm ngắt (っ), trường âm (ー).';
+    if (code === 'zh') return '💡 Tip: Chú ý chuẩn hóa 4 thanh điệu (đặc biệt thanh 1 ngân cao phẳng, thanh 4 dứt khoát) và biến điệu của 一, 不.';
+    return '💡 Tip: Giữ nhịp thở đều, tạm dừng ngắn 1 giây giữa các vế câu và phát âm to, dứt khoát.';
   }
-  if (ex.type === 'order' || ex.type === 'gquiz') {
-    return '💡 Mẹo IELTS Ngữ pháp: Tránh lỗi Comma Splice (ghép 2 mệnh đề độc lập chỉ bằng dấu phẩy). Dùng liên từ FANBOYS hoặc chấm phẩy để nối câu.';
+  if (ex.type === 'write') {
+    return '💡 Tip: Quy tắc viết thuận tay: từ trên xuống dưới, từ trái sang phải, ngang trước sổ sau, ngoài trước trong sau, vào trước đóng sau.';
   }
-  return '💡 Mẹo IELTS Paraphrase: Đề thi IELTS luôn paraphrase từ khóa; hãy ghi nhớ từ đồng nghĩa và collocations tự nhiên của từ này khi làm bài đọc và nghe.';
+  if (ex.type === 'meaning' || ex.type === 'listen' || ex.type === 'reverse') {
+    if (code === 'en') return '💡 Tip: Ghi nhớ từ vựng kèm câu ví dụ và collocations đi kèm; liên tưởng từ đồng nghĩa để nhớ sâu và lâu hơn.';
+    return '💡 Tip: Gắn kết từ vựng với nghĩa Hán Việt gốc; âm Hán Việt chiếm hơn 70% từ vựng giúp bạn suy luận nghĩa từ mới cực nhanh.';
+  }
+  return null;
+}
+
+function stepTipBadge(ex, code) {
+  if (!ex || ex.type === 'intro' || ex.type === 'kintro' || ex.type === 'gintro') return null;
+  const tip = getTipForStep(ex, code);
+  if (!tip) return null;
+  let open = false;
+  const tipText = h('p', {
+    class: 'small',
+    style: { display: 'none', margin: '4px 0 0 0', color: '#b45309', lineHeight: 1.45, fontWeight: 500 }
+  }, tip);
+  const btn = h('button', {
+    type: 'button',
+    class: 'ghost mini',
+    style: {
+      padding: '2px 8px',
+      fontSize: '.74rem',
+      color: '#d97706',
+      borderColor: 'rgba(217, 119, 6, 0.35)',
+      borderRadius: '8px',
+      fontWeight: 600,
+      cursor: 'pointer'
+    },
+    onclick: () => {
+      open = !open;
+      tipText.style.display = open ? 'block' : 'none';
+      btn.textContent = open ? '💡 Tip ▴' : '💡 Tip ▾';
+    }
+  }, '💡 Tip ▾');
+
+  return h('div', {
+    class: 'step-tip-bar',
+    style: {
+      alignSelf: 'flex-start',
+      margin: '0 0 8px 0',
+      padding: '4px 10px',
+      background: 'rgba(217, 119, 6, 0.08)',
+      borderRadius: '8px',
+      border: '1px dashed rgba(217, 119, 6, 0.3)',
+      maxWidth: '100%',
+      boxSizing: 'border-box'
+    }
+  },
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px' } },
+      h('span', { class: 'small', style: { color: '#b45309', fontWeight: 600 } }, '💡 Gợi ý làm bài:'),
+      btn
+    ),
+    tipText
+  );
 }
 
 
@@ -6811,7 +6880,7 @@ function ieltsTabView() {
           class: 'mini ghost',
           style: { border: '1px solid #d97706', color: '#d97706', fontWeight: 600, padding: '4px 8px' },
           onclick: () => showIeltsTipsModal(IELTS_ACTIVE_SKILL)
-        }, '💡 Cẩm nang Tips'),
+        }, '💡 Cẩm nang Tip'),
         feedbackBtn({ mode: 'ielts', topicId: t.id, topicTitle: t.sub || t.title }),
         langSwitch()
       )
@@ -6986,7 +7055,7 @@ function renderIeltsListening(t, data) {
         statusText
       ),
       h('p', { class: 'small muted' }, 'Lắng nghe đoạn hội thoại hoặc độc thoại chuẩn bản xứ, sau đó hoàn thành các câu hỏi bên dưới.'),
-      ieltsTipBox('Chiến lược & Bẫy nghe IELTS (Listening Tips)', [
+      ieltsTipBox('Tip: Chiến lược & Bẫy nghe (Listening)', [
         'Dự đoán loại từ (danh từ số ít/nhiều, tên riêng, con số) trong 30–45s trước khi nghe.',
         'Cảnh giác bẫy Distractor: Người nói thường đưa thông tin rồi sửa lại (Actually, Sorry, However, I thought so at first but...).',
         'Tuân thủ tuyệt đối giới hạn số từ và chính tả (Spelling, số nhiều -s/-es).',
@@ -7166,7 +7235,7 @@ function renderIeltsSpeaking(t, data) {
       container.replaceChildren(
         h('div', { class: 'panel stack' },
           h('b', {}, 'Part 1: Personal Interview (Phỏng vấn cá nhân)'),
-          ieltsTipBox('Tips phòng thi Speaking Part 1', [
+          ieltsTipBox('Tip: Phòng thi Speaking Part 1', [
             'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
             'Tránh trả lời cộc lốc: Áp dụng công thức P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result).',
             'Tránh nhồi nhét idioms sáo rỗng ("rain cats and dogs"), dùng Collocations tự nhiên.'
@@ -7269,7 +7338,7 @@ function renderIeltsSpeaking(t, data) {
             h('span', { class: 'small muted' }, 'Part 2 Long Turn')
           ),
           h('h3', { style: { margin: '6px 0' } }, spk.part2.title),
-          ieltsTipBox('Tips chuẩn bị 1 phút & nói 2 phút (Part 2 Long Turn)', [
+          ieltsTipBox('Tip: Chuẩn bị 1 phút & nói 2 phút (Part 2 Long Turn)', [
             'Lập dàn ý bám sát 4 câu hỏi gợi ý trên Cue Card (Who - When - Where - Why).',
             'Xử lý khi bị "lệch tủ": Bình tĩnh kể chuyện chân thực tự nhiên thay vì cố nhớ bài mẫu.',
             'Tránh filler rác (uhm, ah, like, you know): Tập thói quen tạm dừng im lặng 1 giây để thở và sắp xếp ý.'
@@ -7300,7 +7369,7 @@ function renderIeltsSpeaking(t, data) {
       container.replaceChildren(
         h('div', { class: 'panel stack' },
           h('b', {}, 'Part 3: Two-way Discussion (Thảo luận phản biện sâu)'),
-          ieltsTipBox('Chiến lược phản biện Speaking Part 3', [
+          ieltsTipBox('Tip: Chiến lược phản biện Speaking Part 3', [
             'Cần thời gian suy nghĩ: Dùng filler học thuật "That’s a thought-provoking question, let me consider that for a moment..."',
             'Tránh connectives overload: Đừng bắt đầu mọi câu bằng Furthermore/Moreover, hãy dùng Also, On top of that, In fact.',
             'Chưa có trải nghiệm: "To be fair, I don’t have much firsthand experience with this, but from what I’ve observed..."'
@@ -7429,7 +7498,7 @@ function renderIeltsReading(t, data) {
     h('div', { class: 'panel stack' },
       h('div', { class: 'row between' },
         h('b', {}, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
-      ieltsTipBox('Chiến lược Đọc Band 8.0+ (Reading Strategies)', [
+      ieltsTipBox('Tip: Chiến lược Đọc hiệu quả', [
         'Đọc tổng quan 1–2 phút nắm cấu trúc trước khi trả lời câu hỏi.',
         'Skimming tốc độ: Đọc lướt tiêu đề, Topic sentence đầu đoạn và câu kết luận.',
         'Scanning chính xác: Dùng mắt quét từ khóa khó thay thế (tên riêng, số liệu, năm) không đọc chi tiết.',
@@ -7536,7 +7605,7 @@ function renderIeltsWriting(t, data) {
           wordCountBadge
         ),
         h('p', { class: 'small muted' }, 'Chèn nhanh liên từ học thuật Band 7.5+:'),
-        ieltsTipBox('Chiến lược Writing Task 1 & Task 2 (Band 7.0+ Tips)', [
+        ieltsTipBox('Tip: Chiến lược Writing Task 1 & Task 2', [
           'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
           'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
           'Quy tắc 3: Dùng cặp dấu phẩy bao quanh mệnh đề quan hệ không xác định.',
@@ -8533,8 +8602,8 @@ function lessonView(t, i) {
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
         !r.correct && !r.align && r.expected && ex.type !== 'order' && ex.type !== 'quiz' && ex.type !== 'gquiz' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
         r.note && ex.type !== 'quiz' && h('p', { class: 'small' }, r.note),
-        (code === 'en' && getIeltsTipForStep(ex, code)) ? h('div', { class: 'ielts-tip-box', style: { margin: '6px 0 2px 0', padding: '6px 10px', fontSize: '.82rem' } },
-          h('p', { style: { margin: 0, color: '#b45309' } }, getIeltsTipForStep(ex, code))
+        getTipForStep(ex, code) ? h('div', { class: 'ielts-tip-box', style: { margin: '6px 0 2px 0', padding: '8px 12px', fontSize: '.84rem', borderRadius: '10px' } },
+          h('p', { style: { margin: 0, color: '#b45309', fontWeight: 500, lineHeight: 1.45 } }, getTipForStep(ex, code))
         ) : null,
         ex.type === 'order' ? orderFeedback(code, ex, r) : null,
         ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
@@ -8556,6 +8625,7 @@ function lessonView(t, i) {
     mount(h('div', { class: 'stack-lg' },
       h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('div', { class: 'bar' }, h('i', { style: { width: (done / total * 100) + '%' } })), feedbackBtn()),
       retried.has(ex.n) && first.has(ex.n) && h('span', { class: 'chip', style: { alignSelf: 'flex-start' } }, 'Làm lại câu chưa đúng'),
+      stepTipBadge(ex, code),
       body, h('div', { class: 'dock stack', style: { gap: '6px' } }, btn, h('p', { class: 'keyhint' }, 'Phím 1–4 để chọn · Enter để kiểm tra / tiếp tục')), fb));
     update();
   }
@@ -8877,7 +8947,10 @@ function reviewView() {
         const g = a.score >= 90 ? 4 : a.score >= 70 ? 3 : a.score >= 50 ? 2 : 1;
         resultBox.replaceChildren(
           h('div', { class: 'score', style: { color: ok ? 'var(--good)' : 'var(--ink)' } }, a.score + '%'),
-          h('p', { class: 'center small muted', lang: L().lang }, 'Máy nghe được: “' + said + '”')
+          h('p', { class: 'center small muted', lang: L().lang }, 'Máy nghe được: “' + said + '”'),
+          h('div', { class: 'ielts-tip-box', style: { margin: '6px 0 0 0', padding: '6px 10px', fontSize: '.82rem', borderRadius: '8px', textAlign: 'left' } },
+            h('p', { style: { margin: 0, color: '#b45309', fontWeight: 500 } }, getTipForStep({ type: 'speak' }, code))
+          )
         );
         finishSpeak(g, ok, 'Điểm phát âm ' + a.score + '%');
       }, (selfGrade) => {
@@ -9099,6 +9172,9 @@ function reviewView() {
             h('p', { class: 'pat', style: { margin: 0 } }, g.t),
             g.f && h('p', { class: 'small', lang: langAttr, style: { margin: 0 } }, g.f),
             ...(g.notes || []).map((n) => h('p', { class: 'small', style: { margin: 0 } }, n))
+          ),
+          h('div', { class: 'ielts-tip-box', style: { margin: '4px 0 0 0', padding: '8px 12px', fontSize: '.84rem', borderRadius: '10px', textAlign: 'left' } },
+            h('p', { style: { margin: 0, color: '#b45309', fontWeight: 500, lineHeight: 1.45 } }, getTipForStep({ type: q.type === 'order' ? 'order' : 'gquiz' }, code))
           )
         );
         setTimeout(() => say(code, q.e[0]), 250);
@@ -9186,7 +9262,7 @@ function renderSpeakSkills(code, d) {
   const items = speakItems(code, t), groups = [...new Set(items.map((x) => x.group))];
   const dueSpk = srsDueItems(code, 'speak').length;
   return [
-    code === 'en' ? ieltsTipBox('IELTS Speaking Tips: 6 Tình huống ứng biến & Công thức P-E-E-R', [
+    code === 'en' ? ieltsTipBox('Tip: 6 Tình huống ứng biến & Công thức P-E-E-R', [
       'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
       'Trả lời mở rộng: Áp dụng P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result) tránh cộc lốc.',
       'Cần thời gian suy nghĩ: Dùng filler học thuật "That’s a thought-provoking question, let me consider that for a moment..."',
@@ -9329,7 +9405,7 @@ function renderWriteSkills(code, d) {
   const t = d.topics.find((x) => x.id === WRITE_TOPIC[code]) || d.topics[0];
   const dueWr = code !== 'en' ? srsDueItems(code, 'write').length : 0;
   const writeHead = [
-    code === 'en' ? ieltsTipBox('IELTS Writing Tips: 4 Quy tắc dấu phẩy Band 7+ & Cấu trúc Causes-Solutions', [
+    code === 'en' ? ieltsTipBox('Tip: 4 Quy tắc dấu phẩy & Cấu trúc Causes-Solutions', [
       'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
       'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
       'Quy tắc 3: Dùng cặp dấu phẩy bao quanh mệnh đề quan hệ không xác định.',
