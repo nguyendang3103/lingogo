@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-2215';
+const APP_BUILD_ID = '20261113-0655';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -6582,11 +6582,38 @@ function stepTipBadge(ex, code) {
 }
 
 
+const IELTS_AUDIO_MAP = {
+  '2026-1': 'English/audio/ielts/iot-2026-1.mp3',
+  '2026-2': 'English/audio/ielts/iot-2026-2.mp3',
+  '2025-1': 'English/audio/ielts/iot-2025-1.mp3',
+  '2025-2': 'English/audio/ielts/iot-2025-2.mp3',
+  '2024-1': 'English/audio/ielts/iot-2024-1.mp3',
+  '2024-2': 'English/audio/ielts/iot-2024-2.mp3',
+  '2023-1': 'English/audio/ielts/iot-2023-1.mp3',
+  '2023-2': 'English/audio/ielts/iot-2023-2.mp3',
+  '2022-1': 'English/audio/ielts/iot-2022-1.mp3',
+  '2022-2': 'English/audio/ielts/iot-2022-2.mp3',
+  '1': 'English/audio/ielts/iot-2022-1.mp3',
+  '2': 'English/audio/ielts/iot-2022-2.mp3',
+  '3': 'English/audio/ielts/iot-2023-2.mp3',
+  '4': 'English/audio/ielts/iot-2024-2.mp3',
+  '5': 'English/audio/ielts/iot-2025-2.mp3',
+  '6': 'English/audio/ielts/iot-2025-1.mp3',
+  '7': 'English/audio/ielts/iot-2023-1.mp3',
+  '8': 'English/audio/ielts/iot-2024-1.mp3'
+};
+
 // Sinh bộ đề IELTS 4 kỹ năng hoàn chỉnh cho bất kỳ chủ đề tiếng Anh nào
 function getIeltsData(t, currentVol) {
   if (IELTS_MODE === 'volumes') {
-    const volId = (currentVol && currentVol.vol) || IELTS_CURRENT_VOL || 1;
-    if (IELTS_IOT_TESTS[volId]) return IELTS_IOT_TESTS[volId];
+    const volId = (currentVol && currentVol.vol) || IELTS_CURRENT_VOL || '2026-1';
+    if (IELTS_IOT_TESTS[volId]) {
+      const testObj = IELTS_IOT_TESTS[volId];
+      if (testObj.listening && !testObj.listening.audioSrc && IELTS_AUDIO_MAP[volId]) {
+        testObj.listening.audioSrc = IELTS_AUDIO_MAP[volId];
+      }
+      return testObj;
+    }
   }
   const lvl = t.level || 'B1';
   const band = bandOfLevel(lvl);
@@ -6912,55 +6939,89 @@ function ieltsTabView() {
 function renderIeltsListening(t, data) {
   const code = 'en';
   const ls = data.listening;
+  const audioSrc = ls.audioSrc || IELTS_AUDIO_MAP[IELTS_CURRENT_VOL] || 'English/audio/ielts/iot-2026-1.mp3';
   let isPlaying = false;
   let showTranscript = false;
   let slowSpeed = false;
 
-  const statusText = h('span', { class: 'small muted' }, 'Sẵn sàng phát bài nghe');
-  const transcriptBox = h('div', { class: 'panel', style: { display: 'none', background: 'var(--surface)', fontSize: '.9rem', lineHeight: 1.6, whiteSpace: 'pre-wrap' } }, ls.transcript);
+  const statusText = h('span', { class: 'small muted' }, 'Sẵn sàng phát đĩa nghe MP3');
+
+  const audioPlayer = h('audio', {
+    controls: 'controls',
+    preload: 'metadata',
+    src: audioSrc,
+    style: { width: '100%', height: '38px', marginTop: '4px' }
+  });
 
   const playBtn = h('button', { class: 'primary', onclick: () => {
-    if (isPlaying) {
-      if ('speechSynthesis' in window) speechSynthesis.cancel();
-      isPlaying = false;
-      playBtn.textContent = '▶ Nghe bài nói';
-      statusText.textContent = 'Đã tạm dừng';
+    if (!audioPlayer.paused) {
+      audioPlayer.pause();
     } else {
-      isPlaying = true;
-      playBtn.textContent = '⏸ Tạm dừng';
-      statusText.textContent = 'Đang phát bài nghe IELTS…';
-      say(code, ls.audioText, slowSpeed);
-      setTimeout(() => {
-        if (!speechSynthesis.speaking) {
-          isPlaying = false;
-          playBtn.textContent = '▶ Nghe bài nói';
-          statusText.textContent = 'Đã nghe xong';
-        }
-      }, 3000);
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      audioPlayer.playbackRate = slowSpeed ? 0.8 : 1.0;
+      audioPlayer.play().catch(() => {
+        say(code, ls.audioText, slowSpeed);
+      });
     }
   } }, '▶ Nghe bài nói');
 
-  const replayBtn = h('button', { class: 'ghost mini', onclick: () => {
-    if ('speechSynthesis' in window) speechSynthesis.cancel();
+  audioPlayer.addEventListener('play', () => {
     isPlaying = true;
     playBtn.textContent = '⏸ Tạm dừng';
-    statusText.textContent = 'Đang phát lại từ đầu…';
-    say(code, ls.audioText, slowSpeed);
+    statusText.textContent = 'Đang phát bài nghe IELTS…';
+  });
+  audioPlayer.addEventListener('pause', () => {
+    isPlaying = false;
+    playBtn.textContent = '▶ Nghe bài nói';
+    if (audioPlayer.currentTime > 0 && !audioPlayer.ended) {
+      statusText.textContent = 'Đã tạm dừng';
+    }
+  });
+  audioPlayer.addEventListener('ended', () => {
+    isPlaying = false;
+    playBtn.textContent = '▶ Nghe bài nói';
+    statusText.textContent = 'Đã nghe xong ✓';
+  });
+
+  const replayBtn = h('button', { class: 'ghost mini', onclick: () => {
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    audioPlayer.currentTime = 0;
+    audioPlayer.playbackRate = slowSpeed ? 0.8 : 1.0;
+    audioPlayer.play().catch(() => {
+      say(code, ls.audioText, slowSpeed);
+    });
   } }, '⏪ Nghe lại từ đầu');
 
   const speedBtn = h('button', { class: 'ghost mini', onclick: () => {
     slowSpeed = !slowSpeed;
+    audioPlayer.playbackRate = slowSpeed ? 0.8 : 1.0;
     speedBtn.textContent = slowSpeed ? 'Tốc độ: 0.8x (Chậm)' : 'Tốc độ: 1.0x (Chuẩn)';
-    if (isPlaying) {
-      say(code, ls.audioText, slowSpeed);
-    }
   } }, 'Tốc độ: 1.0x (Chuẩn)');
+
+  const transcriptBox = h('div', {
+    class: 'panel stack',
+    style: { display: 'none', background: 'var(--surface)', fontSize: '.9rem', lineHeight: 1.55, gap: '8px' }
+  },
+    ...(ls.lines && ls.lines.length
+      ? ls.lines.map((ln) => h('div', { class: 'panel', style: { background: 'var(--sunk)', padding: '8px 10px', borderRadius: '8px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px' } },
+            h('b', { style: { color: 'var(--teal)' } }, ln.speaker + ':'),
+            h('div', { class: 'row', style: { gap: '4px' } },
+              spk('en', ln.text),
+              spk('en', ln.text, { slow: true })
+            )
+          ),
+          h('p', { lang: 'en', style: { margin: '4px 0 2px 0' } }, ln.text),
+          ln.vi ? h('p', { class: 'small muted', style: { margin: 0 } }, ln.vi) : null
+        ))
+      : [h('div', { style: { whiteSpace: 'pre-wrap' } }, ls.transcript)])
+  );
 
   const transcriptToggleBtn = h('button', { class: 'ghost mini', onclick: () => {
     showTranscript = !showTranscript;
-    transcriptBox.style.display = showTranscript ? 'block' : 'none';
-    transcriptToggleBtn.textContent = showTranscript ? 'Ẩn Transcript ▴' : '📜 Xem Transcript (Kịch bản) ▾';
-  } }, '📜 Xem Transcript (Kịch bản) ▾');
+    transcriptBox.style.display = showTranscript ? 'flex' : 'none';
+    transcriptToggleBtn.textContent = showTranscript ? 'Ẩn Transcript ▴' : '📜 Xem Transcript & Nghe từng câu ▾';
+  } }, '📜 Xem Transcript & Nghe từng câu ▾');
 
   // Question 1: Multiple Choice
   let selectedMc = null;
@@ -7035,6 +7096,18 @@ function renderIeltsListening(t, data) {
         'Tuân thủ tuyệt đối giới hạn số từ và chính tả (Spelling, số nhiều -s/-es).',
         'Bỏ qua ngay khi bị lỡ (Move on): Không dừng lại suy nghĩ tránh mất điểm 3–4 câu kế tiếp.'
       ], 'listening'),
+      h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '10px 12px', gap: '6px' } },
+        h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+          h('b', { style: { color: 'var(--teal)', fontSize: '.88rem' } }, '🎧 Đĩa Audio Đề Thi IELTS (MP3): ' + (ls.title || 'Section 1')),
+          h('a', {
+            href: audioSrc,
+            download: audioSrc.split('/').pop(),
+            class: 'chip good small',
+            style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+          }, '⬇️ Tải MP3')
+        ),
+        audioPlayer
+      ),
       h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap' } }, playBtn, replayBtn, speedBtn, transcriptToggleBtn),
       transcriptBox
     ),
@@ -11702,8 +11775,9 @@ const HSKK_DATA = {
     totalTime: '~15 phút (Chuẩn bị 6 phút)',
     totalQs: 15,
     passScore: '60 / 100 điểm',
-    audioDriveId: '1jW9Cb4vmOYZeq1wYLqba8OAroBr8KJID',
-    audioUrl: 'https://drive.google.com/uc?export=download&id=1jW9Cb4vmOYZeq1wYLqba8OAroBr8KJID',
+    audioDriveId: '1yyTka-8teBGOUETRUO3wrY4kO10Rtqs3',
+    audioUrl: 'Chinese/audio/hskk/hskk3.mp3',
+    pdfUrl: 'Chinese/audio/hskk/HSKK3.pdf',
     audioName: 'HSK（三级）口语样卷.mp3',
     desc: 'Đánh giá khả năng hiểu và giao tiếp phản xạ cơ bản trong đời sống, gia đình, công việc hàng ngày.',
     partsSummary: [
@@ -11715,16 +11789,16 @@ const HSKK_DATA = {
       {
         partId: 'p1',
         title: 'Phần 1: Nghe nhắc lại (听后重复 · 8 câu)',
-        guide: 'Nghe 8 câu ngắn và lặp lại chính xác ngữ điệu, thanh điệu (10 giây/câu). Không dịch nghĩa trong đầu, nhẩm theo ngay khi tai nghe câu cuối.',
+        guide: 'Nghe 8 câu ngắn từ đĩa thi gốc và lặp lại chính xác ngữ điệu, thanh điệu (10 giây/câu). Không dịch nghĩa trong đầu, nhẩm theo ngay khi tai nghe câu cuối.',
         items: [
-          { qId: 1, text: '明天天气很好，我们去公园吧。', pinyin: 'Míngtiān tiānqì hěn hǎo, wǒmen qù gōngyuán ba.', trans: 'Ngày mai thời tiết rất đẹp, chúng ta đi công viên nhé.', tip: 'Chú ý biến điệu của 很 (thanh 3) và ngữ khí từ 吧 ở cuối câu.' },
-          { qId: 2, text: '请问，洗手间在哪儿？', pinyin: 'Qǐngwèn, xǐshǒujiān zài nǎr?', trans: 'Xin hỏi, nhà vệ sinh ở đâu?', tip: 'Âm uốn lưỡi 哪儿 (nǎr) và ngữ điệu câu hỏi lịch sự.' },
-          { qId: 3, text: '我已经学了一年汉语了。', pinyin: 'Wǒ yǐjīng xuéle yì nián Hànyǔ le.', trans: 'Tôi đã học tiếng Trung được một năm rồi.', tip: 'Trọng âm rơi vào 一年 (khoảng thời gian) và ngữ điệu tự nhiên.' },
-          { qId: 4, text: '桌子上有一杯热茶和两本书。', pinyin: 'Zhuōzi shang yǒu yì bēi rè chá hé liǎng běn shū.', trans: 'Trên bàn có một tách trà nóng và hai cuốn sách.', tip: 'Lưu ý từ chỉ số lượng: 一杯 (yì bēi) và 两本 (liǎng běn).' },
-          { qId: 5, text: '他是我们公司最热情的员工。', pinyin: 'Tā shì wǒmen gōngsī zuì rèqíng de yuángōng.', trans: 'Anh ấy là nhân viên nhiệt tình nhất công ty chúng tôi.', tip: 'Từ khóa trọng tâm: 最热情 (nhiệt tình nhất) và 员工 (nhân viên).' },
-          { qId: 6, text: '你现在忙吗？我想请你帮个忙。', pinyin: 'Nǐ xiànzài máng ma? Wǒ xiǎng qǐng nǐ bāng ge máng.', trans: 'Bây giờ bạn có bận không? Tôi muốn nhờ bạn giúp một việc.', tip: 'Động từ ly hợp 帮忙: 帮个忙.' },
-          { qId: 7, text: '今天晚上的电影七点半开始。', pinyin: 'Jīntiān wǎnshang de diànyǐng qī diǎn bàn kāishǐ.', trans: 'Bộ phim tối nay bắt đầu lúc 7 giờ rưỡi.', tip: 'Thời gian đứng trước động từ: 七点半开始.' },
-          { qId: 8, text: '祝你生日快乐，身体健康！', pinyin: 'Zhù nǐ shēngrì kuàilè, shēntǐ jiànkāng!', trans: 'Chúc bạn sinh nhật vui vẻ, dồi dào sức khỏe!', tip: 'Câu chúc khẩu ngữ bốn chữ phổ biến: 生日快乐, 身体健康.' }
+          { qId: 1, audioSrc: 'Chinese/audio/hskk/hskk3-q1.mp3', text: '汉字的历史很长。', pinyin: 'Hànzì de lìshǐ hěn cháng.', trans: 'Lịch sử của chữ Hán rất lâu đời.', tip: 'Chú ý biến điệu của hai thanh 3 đi liền nhau: 很长 (hěn cháng).' },
+          { qId: 2, audioSrc: 'Chinese/audio/hskk/hskk3-q2.mp3', text: '他是我以前的邻居。', pinyin: 'Tā shì wǒ yǐqián de línjū.', trans: 'Anh ấy là hàng xóm trước đây của tôi.', tip: 'Từ khóa định ngữ thời gian: 以前的邻居 (hàng xóm trước đây).' },
+          { qId: 3, audioSrc: 'Chinese/audio/hskk/hskk3-q3.mp3', text: '现在已经是夏天了。', pinyin: 'Xiànzài yǐjīng shì xiàtiān le.', trans: 'Bây giờ đã là mùa hè rồi.', tip: 'Cấu trúc chỉ sự thay đổi trạng thái: 已经...了 (đã... rồi).' },
+          { qId: 4, audioSrc: 'Chinese/audio/hskk/hskk3-q4.mp3', text: '我觉得蓝色的更好看。', pinyin: 'Wǒ juéde lánsè de gèng hǎokàn.', trans: 'Tôi cảm thấy cái màu xanh lam đẹp hơn.', tip: 'Phó từ chỉ mức độ so sánh hơn: 更 (gèng) + 好看.' },
+          { qId: 5, audioSrc: 'Chinese/audio/hskk/hskk3-q5.mp3', text: '老师，祝您节日快乐！', pinyin: 'Lǎoshī, zhù nín jiérì kuàilè!', trans: 'Thầy/Cô ơi, chúc thầy/cô ngày lễ vui vẻ!', tip: 'Đại từ kính trọng 您 (nín) và ngữ điệu chúc mừng tươi vui.' },
+          { qId: 6, audioSrc: 'Chinese/audio/hskk/hskk3-q6.mp3', text: '会议马上就要开始了。', pinyin: 'Huìyì mǎshàng jiù yào kāishǐ le.', trans: 'Cuộc họp sắp bắt đầu ngay bây giờ rồi.', tip: 'Cấu trúc hành động sắp xảy ra: 马上就要...了.' },
+          { qId: 7, audioSrc: 'Chinese/audio/hskk/hskk3-q7.mp3', text: '我每天骑自行车去学校。', pinyin: 'Wǒ měitiān qí zìxíngchē qù xuéxiào.', trans: 'Mỗi ngày tôi đều đạp xe đạp đến trường.', tip: 'Câu liên động chỉ phương tiện + đích đến: 骑自行车去学校.' },
+          { qId: 8, audioSrc: 'Chinese/audio/hskk/hskk3-q8.mp3', text: '你等一下，我马上就回来。', pinyin: 'Nǐ děng yíxià, wǒ mǎshàng jiù huílái.', trans: 'Bạn đợi một chút nhé, tôi sẽ quay lại ngay.', tip: 'Phó từ 马上就 (ngay lập tức) + bổ ngữ xu hướng 回来.' }
         ]
       },
       {
@@ -11819,8 +11893,9 @@ const HSKK_DATA = {
     totalTime: '~20 phút (Chuẩn bị 10 phút)',
     totalQs: 5,
     passScore: '60 / 100 điểm',
-    audioDriveId: '1_fxgqLBM68MyuMNh9yLvhmeJ89vIHwaA',
-    audioUrl: 'https://drive.google.com/uc?export=download&id=1_fxgqLBM68MyuMNh9yLvhmeJ89vIHwaA',
+    audioDriveId: '1gn0_1kenGQ6Yoc2Gd5R_JHFgYNNN0cvV',
+    audioUrl: 'Chinese/audio/hskk/hskk4.mp3',
+    pdfUrl: 'Chinese/audio/hskk/HSKK4.pdf',
     audioName: 'HSK（四级）口语样卷.mp3',
     desc: 'Đánh giá khả năng hiểu đoạn văn nói, thuật lại logic câu chuyện, kể chuyện chuỗi tranh và trả lời lưu loát phỏng vấn công sở.',
     partsSummary: [
@@ -11832,21 +11907,23 @@ const HSKK_DATA = {
       {
         partId: 'p1',
         title: 'Phần 1: Nghe thuật lại (听后复述 · 2 đoạn)',
-        guide: 'Nghe 2 đoạn văn (nghe 1 lần), sau đó thuật lại nội dung chính trong 40 giây/câu. Tốc ký 3 phần: Bối cảnh ➔ Mâu thuẫn/Diễn biến ➔ Kết cục/Bài học. Dùng từ nối: 首先 ➔ 接着 ➔ 后来 ➔ 最后.',
+        guide: 'Nghe 2 đoạn văn từ đĩa thi gốc (nghe 1 lần), sau đó thuật lại nội dung chính trong 40 giây/câu. Tốc ký 3 phần: Bối cảnh ➔ Mâu thuẫn/Diễn biến ➔ Kết cục/Bài học. Dùng từ nối: 首先 ➔ 接着 ➔ 后来 ➔ 最后.',
         items: [
           {
             qId: 1,
-            title: 'Đoạn 1: Câu chuyện hòn đá và giá trị bản thân',
-            listenScript: '有个年轻人总是觉得自己很平凡，做什么事都缺乏自信。有一天，老师给了他一颗普通的石头，让他拿到菜市场去卖，但不管别人出多少钱都不能卖。结果在菜市场有人出两块钱，到了玉石市场竟然有人出两万块。这个故事告诉我们：一个人有没有价值，首先在于你把自己放在什么位置，并且相信自己的潜能。',
-            sampleText: '这段话讲述了一个年轻人寻找自我价值的故事。一位缺乏自信的青年向老师请教，老师让他拿一块普通石头去菜市场卖，有人出两元；随后拿到玉石市场，却有人出价两万元。故事深刻地告诉我们：人的价值大小取决于自我定位与所处的环境，只有树立自信并找到能发挥才干的平台，才能实现真正的人生价值。',
-            keywords: ['缺乏自信 (thiếu tự tin)', '自我定位 (định vị bản thân)', '平台 (nền tảng/môi trường)', '人生价值 (giá trị đời người)']
+            audioSrc: 'Chinese/audio/hskk/hskk4-q1.mp3',
+            title: 'Đoạn 1: Kỷ niệm ngày quen nhau và lễ cưới ý nghĩa',
+            listenScript: '我们俩打算今年九月五号结婚。选择那天结婚，是因为我们两个是七年前的那天认识的。',
+            sampleText: '这段话讲了一对恋人决定在今年九月五号结婚。之所以挑选九月五号这个特别的日子，是因为七年前的这一天正是他们两个人初次相识的纪念日，非常有意义。',
+            keywords: ['九月五号 (ngày 5/9)', '结婚 (kết hôn)', '七年前 (7 năm trước)', '认识 (quen biết)']
           },
           {
             qId: 2,
-            title: 'Đoạn 2: Trí tuệ lắng nghe trong giao tiếp',
-            listenScript: '人的一生中，学会说话需要两三年，但学会闭嘴倾听却往往需要几十年。在日常交流中，很多人急于表达自己的看法，却忽略了对方真实的感受。真正聪明的人，懂得在适当的时候安静倾听，因为倾听不仅是对他人的尊重，也是吸收新知识、理解不同观点的最好方法。',
-            sampleText: '这段话说：我们学会说话只需两三年，但学会倾听却需几十年。在人际交往中，许多人急于表达自我而忽视他人感受。真正有智慧的人懂得适时安静倾听。倾听不仅是对他人的尊重，更是拓宽眼界、吸收新知与达成共识的最佳途径。',
-            keywords: ['学会倾听 (học cách lắng nghe)', '尊重他人 (tôn trọng người khác)', '人际交往 (giao tiếp xã hội)', '达成共识 (đạt đồng thuận)']
+            audioSrc: 'Chinese/audio/hskk/hskk4-q2.mp3',
+            title: 'Đoạn 2: Đánh giá và quyết định chọn mua/thuê nhà',
+            listenScript: '这个房子周围环境不错，很安静。虽然现在交通不太方便，但年底就通地铁了。当然，最关键的一点是，这个房子的价格是我们可以接受的。',
+            sampleText: '说话人看中了一套房子。首先，房子周边的环境优美而且非常安静；其次，虽然目前交通还不太便利，但到了年底就会开通地铁；最关键的原因是这套房子的价格合理，在他们能够接受的预算范围之内。',
+            keywords: ['周围环境 (môi trường xung quanh)', '安静 (yên tĩnh)', '年底通地铁 (cuối năm thông tàu điện ngầm)', '价格可以接受 (giá cả chấp nhận được)']
           }
         ]
       },
@@ -11905,8 +11982,9 @@ const HSKK_DATA = {
     totalTime: '~23 phút (Chuẩn bị 10 phút)',
     totalQs: 5,
     passScore: '60 / 100 điểm',
-    audioDriveId: '1plDtNh_7j7WzV4dWpmPoBx82ycqXG2_o',
-    audioUrl: 'https://drive.google.com/uc?export=download&id=1plDtNh_7j7WzV4dWpmPoBx82ycqXG2_o',
+    audioDriveId: '1Lj_alo-KwFd7C2ZoXI_GnzM-0hDm-CfV',
+    audioUrl: 'Chinese/audio/hskk/hskk5.mp3',
+    pdfUrl: 'Chinese/audio/hskk/HSKK5.pdf',
     audioName: 'HSK（五级）口语样卷.mp3',
     desc: 'Đánh giá khả năng tóm tắt phân tích bài nói dài, nhìn tranh kể chuyện có chiều sâu tâm lý và nghị luận xã hội / triết lý sống.',
     partsSummary: [
@@ -11918,21 +11996,23 @@ const HSKK_DATA = {
       {
         partId: 'p1',
         title: 'Phần 1: Nghe thuật lại câu chuyện (听后复述 · 2 đoạn)',
-        guide: 'Nghe đoạn văn dài (nghe 1 lần), sau đó thuật lại trong 1.5 phút/câu. Nắm chắc cốt truyện, logic nhân vật và thông điệp triết lý.',
+        guide: 'Nghe đoạn văn dài từ đĩa thi gốc (nghe 1 lần), sau đó thuật lại trong 1.5 phút/câu. Nắm chắc cốt truyện, logic nhân vật và thông điệp triết lý.',
         items: [
           {
             qId: 1,
-            title: 'Đoạn 1: Chậu hoa rỗng và bài học về lòng trung thực',
-            listenScript: '国王想要挑选一位诚实善良的王位继承人，于是给全国的孩子每人发了一粒花种，宣布谁能种出最美丽的花，谁就是下一任国王。有个叫雄日的小男孩精心耕种，按时浇水施肥，但花盆里始终没有发芽。到了评选那天，其他孩子都捧着盛开的花盆，唯独雄日捧着空花盆流下了眼泪。国王走过花盆丛，最终宣布雄日成为继承人。原来国王发下的种子全都是煮熟的。这个故事告诉我们：诚实的品德比虚假的光鲜珍贵千百倍。',
-            sampleText: '这个故事讲述了老国王挑选继承人的智谋。国王发给每位孩童一粒花种，许诺种出最美之花者将继承王位。男孩雄日悉心照料却未能发芽，评选日唯有他坦诚捧着空花盆前来，其他人则捧着绚丽的花朵。最终国王选定雄日，因所有种子事先均已被煮熟。故事启示我们：诚实正直是立身之本，真实的品行远胜于任何虚伪的外表。',
-            keywords: ['挑选继承人 (chọn người kế vị)', '精心耕种 (tận tâm chăm sóc)', '煮熟的花种 (hạt giống đã luộc)', '诚实正直 (trung thực chính trực)']
+            audioSrc: 'Chinese/audio/hskk/hskk5-q1.mp3',
+            title: 'Đoạn 1: Đi đường vòng trong núi và niềm vui ngắm phong cảnh',
+            listenScript: '有人去山中看望朋友，因为是第一次去，所以绕了很多弯路，用了很长时间才找到朋友的房子。朋友知道后，对没有亲自前去迎接而感到抱歉。他却笑着说：“我虽然走了不少弯路，但也在这个过程中看到了许多风景：路边的野花、天空的白云，这些都令我心情愉快。我应该谢谢你才对。”',
+            sampleText: '这个故事讲述了一个人第一次去山里拜访朋友，由于不熟悉路线走了许多弯路，花了很长时间才抵达。朋友因为没去迎接而感到十分抱歉，但他却乐观地表示：虽然走了弯路，却在沿途欣赏到了路边的野花和天空的白云等美丽风景，心情非常愉悦。这启示我们：人生走弯路时不必沮丧，学会欣赏沿途的风景也是一种收获。',
+            keywords: ['看望朋友 (thăm bạn)', '绕弯路 (đi đường vòng)', '感到抱歉 (cảm thấy áy náy)', '沿途风景 (phong cảnh dọc đường)', '心情愉快 (tâm trạng vui vẻ)']
           },
           {
             qId: 2,
-            title: 'Đoạn 2: Nghệ thuật thích nghi của nước trong Đạo giáo',
-            listenScript: '中国古代哲学家老子常说：“上善若水。”水是世界上最柔和的事物，却能够穿透最坚硬的岩石；水顺应容器的形状，入方则方，入圆则圆，滋养万物却从不与世相争。在现代快节奏、充满不确定性的社会中，我们也应当学习水的智慧：在面对挫折时保持韧性，在遇到变化时灵活变通，以包容宽广的心态待人接物。',
-            sampleText: '老子云“上善若水”。水至柔却能滴水穿石；水善利万物而不争，随物赋形、方圆自如。这启示现代人在面对多变的外部环境与挫折时，应具备如水一般的适应力与韧性。既要坚定内在目标，又要懂得灵活变通、宽容处世，方能在不确定性中行稳致远。',
-            keywords: ['上善若水 (thiện lành như nước)', '滴水穿石 (nước chảy đá mòn)', '灵活变通 (linh hoạt biến chuyển)', '包容宽厚 (bao dung độ lượng)']
+            audioSrc: 'Chinese/audio/hskk/hskk5-q2.mp3',
+            title: 'Đoạn 2: Làm người lắng nghe khi trẻ kể chuyện để nuôi dưỡng niềm yêu thích đọc sách',
+            listenScript: '当孩子讲故事时，父母应该善于做孩子的听众。不管之前有没有听过，你都要表现出好像是第一次听到的那种新鲜感，甚至可以一边听一边好奇地发问。这样的小互动不仅能引起孩子的兴趣，更能让孩子获得阅读的成就感。如果能经常这样的话，父母会惊喜地发现，孩子已经喜欢上了阅读。',
+            sampleText: '这段话谈到了父母如何培养孩子的阅读兴趣。当孩子讲故事时，无论父母以前是否听过，都应该耐心做好听众，表现出第一次听到的新鲜感，并好奇地与孩子互动提问。这种积极的回应不仅能激发孩子的表达欲，还能让他们获得阅读的成就感，久而久之孩子就会真正爱上阅读。',
+            keywords: ['做孩子的听众 (làm người nghe của con)', '新鲜感 (cảm giác mới mẻ)', '好奇发问 (tò mò đặt câu hỏi)', '成就感 (cảm giác thành tựu)', '喜欢上阅读 (yêu thích đọc sách)']
           }
         ]
       },
@@ -11991,8 +12071,9 @@ const HSKK_DATA = {
     totalTime: '~23 phút (Chuẩn bị 10 phút)',
     totalQs: 5,
     passScore: '60 / 100 điểm',
-    audioDriveId: '1QNKC69-tYbceoAr18cdKcID1b8HY_Jnm',
-    audioUrl: 'https://drive.google.com/uc?export=download&id=1QNKC69-tYbceoAr18cdKcID1b8HY_Jnm',
+    audioDriveId: '1t63BR11bBCk6OetqVSHrPsNXwdRUDqaw',
+    audioUrl: 'Chinese/audio/hskk/hskk6.mp3',
+    pdfUrl: 'Chinese/audio/hskk/HSKK6.pdf',
     audioName: 'HSK（六级）口语样卷.mp3',
     desc: 'Cấp độ khẩu ngữ cao nhất: Thuật lại bài luận chuyên sâu, nhìn chuỗi 4 tranh y tế nhân văn có bố cục chặt chẽ và nghị luận xã hội học theo chuẩn PEEL.',
     partsSummary: [
@@ -12004,21 +12085,23 @@ const HSKK_DATA = {
       {
         partId: 'p1',
         title: 'Phần 1: Nghe thuật lại chuyên sâu (听后复述 · 2 đoạn)',
-        guide: 'Nghe 2 đoạn văn nghị luận & triết lý sâu sắc. Thuật lại trong 1.5 phút/câu với vốn từ vựng cao cấp, cấu trúc câu chặt chẽ.',
+        guide: 'Nghe 2 đoạn văn nghị luận & triết lý sâu sắc từ đĩa thi gốc. Thuật lại trong 1.5 phút/câu với vốn từ vựng cao cấp, cấu trúc câu chặt chẽ.',
         items: [
           {
             qId: 1,
-            title: 'Đoạn 1: Nghệ thuật cắt tỉa cành cây và triết lý buông bỏ (断舍离)',
-            listenScript: '一位游客在果园看到果农剪掉许多正在开花的茂盛树枝，感到十分不解。果农笑着解释道：一棵树所能吸收的养分是有限的，如果任由所有枝桠随意生长、繁花盛开，最终结出的果实只会又小又涩。只有果断剪去冗余的侧枝，集中养分供给核心主干，才能结出硕大甘甜的优质果实。人生何尝不是如此？在充满诱惑的现代社会中，懂得断舍离，聚焦于自己最核心的目标，才能真正有所建树。',
-            sampleText: '这段短文借果农修剪枝桠之理，阐明了深刻的人生取舍智慧。果树养分有限，若放任枝繁叶茂，则果实苦涩瘦小；唯有修剪冗枝、聚焦主干，方能结出硕果。人生亦然，面对纷繁诱惑与有限精力，我们必须学会“断舍离”，舍弃琐碎无益的欲望，聚精会神深耕核心领域，才能在事业与人生中铸就卓越成果。',
-            keywords: ['修剪枝桠 (cắt tỉa cành cây)', '有限养分 (dinh dưỡng hữu hạn)', '断舍离 (triết lý buông bỏ)', '深耕核心 (đào sâu cốt lõi)']
+            audioSrc: 'Chinese/audio/hskk/hskk6-q1.mp3',
+            title: 'Đoạn 1: Người mù xách đèn lồng đi đêm — Giúp người chính là giúp mình',
+            listenScript: '有个盲人在夜晚走路的时候，手里总是提着一个灯笼。别人看见了就好奇地问：“你自己看不见，为什么还要提着灯笼走路？”盲人回答说：“我提灯笼可以为别人照路，为别人提供光明。这样一来，别人也就容易看到我，不会撞到我了。”是的，很多时候，我们在帮助别人的同时，其实也是在帮助自己。',
+            sampleText: '这段话讲述了一位盲人夜间出行总是提着灯笼的故事。路人对此感到不解，盲人解释说：提灯笼既能为他人照亮道路、提供光明，同时也能让别人清楚地看见自己，从而避免撞到自己。这个富有哲理的故事告诉我们：在生活中，帮助他人与帮助自己是相辅相成的，成就别人往往也是在保护和成就自己。',
+            keywords: ['盲人提灯笼 (người mù xách đèn lồng)', '为别人照路 (soi đường cho người khác)', '提供光明 (mang lại ánh sáng)', '避免相撞 (tránh va chạm)', '助人即助己 (giúp người là giúp mình)']
           },
           {
             qId: 2,
-            title: 'Đoạn 2: Trí tuệ cây tre và giai đoạn tích lũy sâu sắc (厚积薄发)',
-            listenScript: '毛竹在最初的四年里，仅仅长出几厘米的细芽，表面上毫无动静。然而在那漫长的四年中，它的根系已经在土壤深处蔓延了数百平米，深深地扎根于大地。到了第五年，竹子每天以三十厘米的速度疯狂生长，仅仅用六周时间就能长到十五米高。很多人在奋斗初期因为看不到立竿见影的成果而选择放弃，却不知道那正是积累底蕴、厚积薄发的关键时期。',
-            sampleText: '毛竹在前四年看似停滞，仅萌发数厘米，实则根系在地下广袤蔓延；及至第五年，它以惊人速度在六周内拔节十五米。这种自然规律生动揭示了“厚积薄发”的真谛：在事业初期，当未见显性成果时，切忌急功近利。潜心积蓄实力、深扎根基，方能在机遇来临时实现爆发式的飞跃成长。',
-            keywords: ['毛竹生长 (cây tre sinh trưởng)', '扎根大地 (bén rễ vào lòng đất)', '厚积薄发 (tích lũy sâu dày bộc phát)', '急功近利 (hám lợi trước mắt)']
+            audioSrc: 'Chinese/audio/hskk/hskk6-q2.mp3',
+            title: 'Đoạn 2: Nguồn gốc của sự mệt mỏi tâm lý và niềm vui từ đam mê',
+            listenScript: '很多人都有这种感觉：当我们在做自己喜欢的事情时，很少感到疲劳。比如在一个假日里，你到湖边去钓鱼，整整坐了十个小时，可你一点儿都不觉得累，因为钓鱼是你的兴趣，你从中享受到了快乐。产生疲劳感的主要原因是对某项工作特别厌烦，心理上的疲劳往往比肉体上的体力消耗更让人难以忍受。',
+            sampleText: '这段话分析了疲劳感产生的深层原因。当人们从事自己热爱的事情时，比如在湖边连续钓鱼十个小时，往往丝毫不觉得疲倦，因为内心享受着兴趣带来的快乐。相反，令人产生强烈疲劳感的根源往往是对所做工作的厌烦情绪。心理上的倦怠与疲惫，远比单纯的身体体力消耗更让人难以忍受。',
+            keywords: ['喜欢的事情 (việc yêu thích)', '湖边钓鱼 (câu cá bên hồ)', '享受快乐 (tận hưởng niềm vui)', '对工作厌烦 (chán ghét công việc)', '心理疲劳 (mệt mỏi tâm lý)']
           }
         ]
       },
@@ -12387,21 +12470,30 @@ function renderHskkExamView() {
     // Audio Player cho Đề mẫu chính thức
     h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '12px', gap: '6px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-        h('b', { style: { color: 'var(--teal)', fontSize: '.9rem' } }, '🎧 Đĩa Audio Đề Thi Chính Thức (MP3): ' + curData.audioName),
-        h('a', {
-          href: curData.audioUrl,
-          target: '_blank',
-          class: 'chip good small',
-          style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
-        }, '⬇️ Tải / Mở trên Google Drive')
+        h('b', { style: { color: 'var(--teal)', fontSize: '.9rem' } }, '🎧 Đĩa Audio Đề Thi Chính Thức (MP3 Gốc CLEC): ' + curData.audioName),
+        h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+          curData.pdfUrl ? h('a', {
+            href: curData.pdfUrl,
+            target: '_blank',
+            class: 'chip accent small',
+            style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+          }, '📄 Xem Đề PDF Gốc') : null,
+          h('a', {
+            href: curData.audioUrl,
+            download: curData.audioName,
+            class: 'chip good small',
+            style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+          }, '⬇️ Tải MP3 Gốc')
+        )
       ),
       h('audio', {
         controls: 'controls',
+        preload: 'metadata',
         src: curData.audioUrl,
-        style: { width: '100%', height: '36px', marginTop: '4px' }
+        style: { width: '100%', height: '38px', marginTop: '4px' }
       }),
       h('p', { class: 'small muted', style: { margin: 0, fontSize: '.75rem' } },
-        '💡 Bạn có thể nghe toàn bộ đĩa thi ở trên, hoặc bấm nút loa 🔊 ở từng câu hỏi bên dưới để luyện nghe và nhại theo (Shadowing) từng câu/đoạn.'
+        '💡 Bạn có thể nghe toàn bộ đĩa thi gốc ở trên, hoặc bấm thanh phát audio / nút loa 🔊 ở từng câu hỏi bên dưới để luyện nghe và nhại theo (Shadowing) từng câu cắt trực tiếp từ băng gốc.'
       )
     )
   );
@@ -12479,12 +12571,18 @@ function renderHskkExamView() {
         card.replaceChildren(
           h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
             h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId),
-            h('span', { class: 'small muted' }, '⏱️ 10 giây nhắc lại'),
+            h('span', { class: 'small muted' }, '⏱️ 10 giây nhắc lại · Audio băng gốc'),
             h('div', { class: 'row', style: { gap: '4px' } },
-              spk('zh', it.text),
-              spk('zh', it.text, { slow: true })
+              spk('zh', it.text, { src: it.audioSrc }),
+              spk('zh', it.text, { src: it.audioSrc, slow: true })
             )
           ),
+          it.audioSrc ? h('audio', {
+            controls: 'controls',
+            preload: 'metadata',
+            src: it.audioSrc,
+            style: { width: '100%', height: '34px', margin: '2px 0' }
+          }) : null,
           h('h3', { lang: 'zh-Hans', style: { margin: '2px 0', fontSize: '1.2rem', color: 'var(--ink)' } }, it.text),
           h('p', { class: 'small pinyin', style: { margin: 0, color: 'var(--teal)' } }, it.pinyin),
           h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghĩa: ' + it.trans),
@@ -12501,15 +12599,21 @@ function renderHskkExamView() {
         card.replaceChildren(
           h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
             h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Câu ' + it.qId + ' · Thuật lại'),
-            h('span', { class: 'small muted' }, '⏱️ Nói trong ' + speakTime + 's'),
+            h('span', { class: 'small muted' }, '⏱️ Nói trong ' + speakTime + 's · Audio băng gốc'),
             h('div', { class: 'row', style: { gap: '4px' } },
-              spk('zh', it.listenScript),
-              spk('zh', it.listenScript, { slow: true })
+              spk('zh', it.listenScript, { src: it.audioSrc }),
+              spk('zh', it.listenScript, { src: it.audioSrc, slow: true })
             )
           ),
           h('b', { style: { fontSize: '.98rem', color: 'var(--teal)' } }, it.title),
+          it.audioSrc ? h('audio', {
+            controls: 'controls',
+            preload: 'metadata',
+            src: it.audioSrc,
+            style: { width: '100%', height: '36px', margin: '2px 0' }
+          }) : null,
           h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
-            h('p', { class: 'small label', style: { margin: 0, color: 'var(--muted)' } }, '🎧 Bài nghe mẫu (Bấm loa để nghe hoặc đọc thầm):'),
+            h('p', { class: 'small label', style: { margin: 0, color: 'var(--muted)' } }, '🎧 Lời thoại gốc từ băng thi CLEC (Bấm loa hoặc thanh phát để nghe):'),
             h('p', { lang: 'zh-Hans', style: { margin: '6px 0 0 0', fontSize: '1.02rem', lineHeight: 1.55 } }, it.listenScript)
           ),
           createHskkTimer(0, speakTime),
@@ -12810,7 +12914,13 @@ function startExamDemo(code, lv) {
         h('span', { class: 'small muted' }, 'Điểm: ' + score)
       ),
       h('div', { class: 'panel card stack', style: { gap: '12px', borderRadius: '14px' } },
-        h('p', { class: 'label', style: { margin: 0 } }, isZh ? 'Chọn từ thích hợp điền vào chỗ trống:' : '正しい言葉を一つ選んでください:'),
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('p', { class: 'label', style: { margin: 0 } }, isZh ? 'Chọn từ thích hợp điền vào chỗ trống:' : '正しい言葉を一つ選んでください:'),
+          h('div', { class: 'row', style: { gap: '4px' } },
+            spk(code, q.full),
+            spk(code, q.full, { slow: true })
+          )
+        ),
         h('h2', { lang: LANGS[code].lang, style: { margin: '8px 0', fontSize: '1.25rem', lineHeight: 1.5 } }, q.prompt),
         q.meaning ? h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa: ' + q.meaning) : null,
         h('div', { class: 'options', style: { marginTop: '12px' } },
