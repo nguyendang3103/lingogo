@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1630';
+const APP_BUILD_ID = '20261112-1645';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1957,39 +1957,41 @@ let KNOWLEDGE_TAB = 'gram'; // 'gram' | 'chars' | 'kana'
 let EXAM_LV = { zh: 'HSK 1', ja: 'N5' };
 const TABS = [
   ['home', 'Học', ICON.home],
-  ['skills', 'Kỹ năng', ICON.skills],
-  ['ielts', 'Luyện IELTS', ICON.book],
-  ['knowledge', 'Kiến thức', ICON.book],
   ['exam', 'Luyện thi', ICON.exam],
+  ['knowledge', 'Kiến thức', ICON.book],
   ['progress', 'Tiến độ', ICON.chart]
 ];
 function setTabs(show) {
   const nav = document.getElementById('tabs'); nav.hidden = !show;
   document.body.classList.toggle('lessonmode', !show);
   if (!show) return;
-  const filtered = TABS.filter(([k]) => {
-    if (k === 'ielts') return S.lang === 'en'; // Chỉ tiếng Anh có tab Luyện IELTS
-    if (k === 'knowledge') return S.lang !== 'en'; // Tiếng Trung & Nhật có tab Kiến thức
-    if (k === 'exam') return S.lang !== 'en'; // Tiếng Trung & Nhật có tab Luyện HSK / Luyện JLPT
-    return true;
-  }).map(([k, label, d]) => {
+  const code = S.lang;
+  const tabsList = TABS.map(([k, label, d]) => {
     if (k === 'exam') {
-      const examLabel = S.lang === 'zh' ? 'Luyện HSK' : 'Luyện JLPT';
+      const examLabel = code === 'en' ? 'Luyện IELTS' : (code === 'zh' ? 'Luyện HSK' : 'Luyện JLPT');
       return [k, examLabel, d];
     }
     return [k, label, d];
   });
-  nav.replaceChildren(...filtered.map(([k, label, d]) => h('button', {
-    'aria-current': (VIEW === k || (k === 'skills' && (VIEW === 'speak' || VIEW === 'write' || VIEW === 'listen' || VIEW === 'read')) || (k === 'knowledge' && (VIEW === 'grammar' || VIEW === 'kanji' || VIEW === 'knowledge')) || (k === 'exam' && VIEW === 'exam')) ? 'page' : null,
-    onclick: () => go(k)
-  }, icon(d), label)));
+  nav.replaceChildren(...tabsList.map(([k, label, d]) => {
+    const isCur = (VIEW === k) ||
+      (k === 'home' && (VIEW === 'home' || VIEW === 'review')) ||
+      (k === 'exam' && (VIEW === 'exam' || VIEW === 'ielts')) ||
+      (k === 'knowledge' && (VIEW === 'knowledge' || VIEW === 'grammar' || VIEW === 'kanji'));
+    return h('button', {
+      'aria-current': isCur ? 'page' : null,
+      onclick: () => go(k)
+    }, icon(d), label);
+  }));
 }
 function go(k) {
-  if (k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
-    SKILL_TAB = k;
-    VIEW = 'skills';
-  } else if (k === 'grammar') {
-    KNOWLEDGE_TAB = 'gram';
+  if (k === 'skills' || k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
+    // 4 Kỹ năng đã được tích hợp đầy đủ vào từng bài học -> chuyển về trang Học
+    VIEW = 'home';
+  } else if (k === 'exam') {
+    VIEW = S.lang === 'en' ? 'ielts' : 'exam';
+  } else if (k === 'grammar' || k === 'kanji') {
+    KNOWLEDGE_TAB = k === 'kanji' ? 'chars' : 'gram';
     VIEW = 'knowledge';
   } else {
     VIEW = k;
@@ -2005,13 +2007,13 @@ async function route() {
     ({
       home: homeView,
       review: reviewView,
-      skills: skillsView,
+      skills: homeView,
       ielts: ieltsTabView,
       knowledge: knowledgeTabView,
       grammar: knowledgeTabView,
       exam: examTabView,
-      speak: speakView,
-      write: writeView,
+      speak: homeView,
+      write: homeView,
       progress: progressView
     })[VIEW]();
   } catch (e) {
@@ -8114,9 +8116,12 @@ function buildSteps(t, i) {
   const allWords = d.topics.flatMap((x) => x.vocab);
   const topicWords = t.vocab;
   const opt = (v, field) => shuffle([v, ...sample(topicWords.length >= 6 ? topicWords : allWords, 3, (x) => x.id === v.id || x[field] === v[field])]);
+
   if (l.kind === 'learn') {
+    // 1. TỪ VỰNG MỚI (Vocabulary)
     l.words.forEach((v, n0) => steps.push({ type: 'intro', v, tip: n0 === 0 }));
-    // Lồng thẻ ngữ pháp vào bài học sớm để người học nắm cấu trúc câu
+
+    // Lồng thẻ ngữ pháp vào bài học sớm (tiếng Trung & Nhật)
     let currentGid = null;
     if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
       const learnIdx = t.lessons.slice(0, i).filter((x) => x.kind === 'learn').length;
@@ -8124,8 +8129,12 @@ function buildSteps(t, i) {
       const g = d.grammar[currentGid];
       if (g) steps.push({ type: 'gintro', gid: currentGid, g });
     }
+
+    // Trắc nghiệm từ vựng: Chọn nghĩa đúng & Phản xạ từ
     shuffle(l.words).forEach((v) => steps.push({ type: 'meaning', v, opts: opt(v, 'm') }));
-    if (code !== 'en') { // Hán Việt của từng chữ trong từ
+
+    // Hán Việt của từng chữ (với tiếng Trung & Nhật)
+    if (code !== 'en') {
       const chars = [...new Map(l.words.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
       const pool = [...new Set(allWords.flatMap((w) => hvParts(code, w.w)).map((x) => x.hv).filter(Boolean))];
       sample(chars, 2).forEach((x) => {
@@ -8140,12 +8149,48 @@ function buildSteps(t, i) {
         if (dis.length === 3) steps.push({ type: 'hvw', v: x.v, c: x.c, m: x.m, correct, opts: shuffle([correct, ...dis]) });
       });
     }
-    sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
-    sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
-    
-    // LỒNG CÁC BÀI TẬP ĐẶT CÂU & NGỮ PHÁP
+
+    // 2. KỸ NĂNG NGHE (Listening)
+    // Nghe và chọn từ vừa nghe thấy
+    sample(l.words, Math.min(2, l.words.length)).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    sample(l.words, Math.min(2, l.words.length)).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
+
+    // 3. KỸ NĂNG NÓI (Speaking) - Micro AI chấm phát âm câu giao tiếp
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    const orderWords = withEx.length ? withEx.slice(0, Math.min(3, withEx.length)) : [];
+    const spWord = withEx[0] || l.words[0];
+    if (spWord) {
+      steps.push({
+        type: 'speak',
+        text: spWord.ex || spWord.w,
+        r: spWord.ex ? spWord.exr : spWord.r,
+        m: spWord.ex ? spWord.exm : spWord.m,
+        scene: '🎙️ Luyện nói Micro AI · Câu bài học'
+      });
+    }
+    // Luyện thêm 1 câu từ hội thoại chủ đề (nếu có)
+    const dlgs = getTopicDialogues(t);
+    if (dlgs && dlgs.length) {
+      const dLine = dlgs[i % dlgs.length];
+      if (dLine && dLine.t) {
+        steps.push({
+          type: 'speak',
+          text: dLine.t,
+          r: dLine.r,
+          m: dLine.m,
+          scene: '🎙️ Luyện nói Micro AI · Hội thoại: ' + (dLine.s || 'Giao tiếp thực tế')
+        });
+      }
+    }
+
+    // 4. KỸ NĂNG ĐỌC (Reading) - Đọc hiểu tình huống / trắc nghiệm chủ đề
+    if (t.quiz && t.quiz.length) {
+      const qIndex = i % t.quiz.length;
+      steps.push({ type: 'quiz', q: t.quiz[qIndex] });
+    }
+
+    // 5. KỸ NĂNG VIẾT (Writing)
+    // Sắp xếp câu hoàn chỉnh (order)
+    const orderWords = withEx.length ? withEx.slice(0, Math.min(2, withEx.length)) : [];
     orderWords.forEach((v) => {
       steps.push({
         type: 'order',
@@ -8169,7 +8214,7 @@ function buildSteps(t, i) {
       });
     }
 
-    // Bài tập trắc nghiệm ngữ pháp
+    // Bài tập ngữ pháp / điền từ
     if ((code === 'zh' || code === 'ja') && currentGid && d.grammar) {
       const qStep = makeGrammarQuizStep(code, currentGid);
       if (qStep) steps.push(qStep);
@@ -8198,12 +8243,11 @@ function buildSteps(t, i) {
       }
     }
 
+    // Tập viết chữ Hán / Kanji (với CJK)
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
     }
-    const sp = l.words.find((v) => v.ex) || l.words[0];
-    if (sp) steps.push({ type: 'speak', text: sp.ex || sp.w, r: sp.ex ? sp.exr : sp.r, m: sp.ex ? sp.exm : sp.m });
   } else if (l.kind === 'kanji') {
     const pool = t.kanji.length >= 4 ? t.kanji : d.topics.flatMap((x) => x.kanji || []);
     l.kanji.forEach((k) => steps.push({ type: 'kintro', k }));
@@ -8219,9 +8263,15 @@ function buildSteps(t, i) {
     (t.sents || []).slice(0, 4).forEach((s) => { steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); steps.push({ type: 'speak', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '' }); });
     (t.coach || []).slice(0, 2).forEach((c) => steps.push({ type: 'speak', text: c.sa, m: c.q + (c.vi ? ' · ' + c.vi : ''), scene: 'Trả lời câu hỏi' }));
   } else {
+    // kind === 'review': Tổng ôn đầy đủ 4 kỹ năng
     const weak = topicWords.slice().sort((a, b) => ((S.srs[sid(code, a.id)] || { b: 0 }).b - (S.srs[sid(code, b.id)] || { b: 0 }).b));
-    weak.slice(0, 8).forEach((v, n) => steps.push(n % 2 ? { type: 'reverse', v, opts: opt(v, 'w') } : { type: 'meaning', v, opts: opt(v, 'm') }));
+    weak.slice(0, 6).forEach((v, n) => steps.push(n % 2 ? { type: 'reverse', v, opts: opt(v, 'w') } : { type: 'meaning', v, opts: opt(v, 'm') }));
     sample(topicWords, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    
+    // Luyện nói trong review
+    const spCandidate = topicWords.find((v) => v.ex) || topicWords[0];
+    if (spCandidate) steps.push({ type: 'speak', text: spCandidate.ex || spCandidate.w, r: spCandidate.ex ? spCandidate.exr : spCandidate.r, m: spCandidate.ex ? spCandidate.exm : spCandidate.m, scene: '🎙️ Luyện nói tổng ôn' });
+    
     sample(t.kanji || [], 3).forEach((k) => steps.push({ type: 'kanji', k, opts: shuffle([k, ...sample(t.kanji.length >= 4 ? t.kanji : d.topics.flatMap((x) => x.kanji || []), 3, (x) => x.k === k.k)]) }));
     sample(t.quiz, 2).forEach((q) => steps.push({ type: 'quiz', q }));
     if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
@@ -8229,6 +8279,12 @@ function buildSteps(t, i) {
         const qStep = makeGrammarQuizStep(code, gid);
         if (qStep) steps.push(qStep);
       });
+    }
+    // Sắp xếp câu trong review
+    const revEx = topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
+    if (revEx.length) {
+      const v = revEx[0];
+      steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v });
     }
   }
   return steps;
@@ -8886,7 +8942,7 @@ function reviewView() {
         ),
         h('div', { class: 'row center', style: { gap: '8px', marginTop: '12px' } },
           h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
-          h('button', { class: 'ghost', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
+          h('button', { class: 'ghost', onclick: () => go('exam') }, 'Đến tab Luyện thi')
         )
       )
     ));
@@ -8905,7 +8961,7 @@ function reviewView() {
           counts[REVIEW_SKILL] > count ? h('button', { class: 'accent block', onclick: () => reviewView() }, 'Ôn tiếp các từ còn lại') : null,
           h('div', { class: 'row center', style: { gap: '8px', marginTop: '12px' } },
             h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
-            h('button', { class: 'ghost', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
+            h('button', { class: 'ghost', onclick: () => go('exam') }, 'Đến tab Luyện thi')
           )
         )
       ));
@@ -10353,14 +10409,85 @@ function grammarTabView() {
   knowledgeTabView();
 }
 
+function renderEnglishKnowledgeView() {
+  const d = DATA.en;
+  const subtabs = [
+    { k: 'patterns', label: '📖 Cấu trúc & Mẫu câu' },
+    { k: 'tips', label: '💡 Cẩm nang & Mẹo học' }
+  ];
+  if (KNOWLEDGE_TAB !== 'patterns' && KNOWLEDGE_TAB !== 'tips') {
+    KNOWLEDGE_TAB = 'patterns';
+  }
+
+  const header = h('div', { class: 'stack', style: { gap: '4px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('p', { class: 'label', style: { margin: 0 } }, 'Kiến thức Tiếng Anh'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+        feedbackBtn({ mode: 'knowledge_en' }),
+        langSwitch()
+      )
+    ),
+    h('h1', { style: { margin: 0 } }, 'Kiến thức & Mẫu câu Tiếng Anh'),
+    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+      'Tổng hợp cấu trúc câu giao tiếp theo chủ đề, cụm từ thông dụng và cẩm nang mẹo học phản xạ.'
+    )
+  );
+
+  const navSub = h('div', { class: 'skill-tabs', style: { margin: '6px 0 12px 0' } },
+    ...subtabs.map((st) => h('button', {
+      class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
+      onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
+    }, st.label))
+  );
+
+  let body = null;
+  if (KNOWLEDGE_TAB === 'patterns') {
+    const topicsWithEx = (d.topics || []).filter((t) => (t.vocab || []).some((v) => v.ex));
+    const items = [];
+    topicsWithEx.forEach((t) => {
+      const sents = (t.vocab || []).filter((v) => v.ex).slice(0, 4);
+      items.push(h('div', { class: 'panel card stack', style: { gap: '8px', padding: '14px', borderRadius: '14px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { style: { color: 'var(--teal)', fontSize: '1.05rem' } }, t.sub || t.title),
+          h('span', { class: 'chip accent', style: { fontSize: '.75rem' } }, (t.cat || 'A1').toUpperCase())
+        ),
+        ...sents.map((v) => h('div', {
+          class: 'panel stack',
+          style: { background: 'var(--sunk)', padding: '10px 12px', borderRadius: '10px', gap: '4px' }
+        },
+          h('div', { class: 'row between', style: { alignItems: 'center' } },
+            h('span', { style: { fontWeight: 700, fontSize: '.95rem', color: 'var(--ink)' } }, v.w + ' (' + v.m + ')'),
+            spk('en', v.ex)
+          ),
+          h('p', { style: { margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--teal)' } }, v.ex),
+          v.exm && h('p', { class: 'small muted', style: { margin: 0 } }, v.exm),
+          v.d && h('p', { class: 'small', style: { margin: 0, color: 'var(--accent)' } }, '💡 Cấu trúc: ' + v.d)
+        ))
+      ));
+    });
+    body = h('div', { class: 'stack-lg' }, ...items);
+  } else {
+    const tipsList = [
+      { t: '🎧 Bí quyết luyện nghe phản xạ', c: 'Nghe từng câu ngắn, tập lặp lại thành tiếng (shadowing). Tắm ngôn ngữ mỗi ngày 15-20 phút theo chủ đề bài học.' },
+      { t: '🎙️ Phương pháp luyện nói chuẩn bản ngữ', c: 'Tận dụng Micro AI trong từng bài học để kiểm tra độ chính xác phát âm %. Chú ý phát âm rõ âm đuôi (ending sounds) và nối âm.' },
+      { t: '📖 Kỹ năng đọc hiểu văn bản & email', c: 'Đọc theo cụm từ (chunking) thay vì dịch từng từ đơn lẻ. Chú ý các từ nối (linking words) để nắm cấu trúc ý chính.' },
+      { t: '✍️ Kỹ thuật viết câu và email công việc', c: 'Viết câu ngắn gọn, chuẩn cấu trúc S + V + O. Áp dụng ngay các từ vựng và mẫu câu đã học vào bài tập viết của từng chủ đề.' }
+    ];
+    body = h('div', { class: 'stack', style: { gap: '10px' } },
+      ...tipsList.map((tip) => h('div', { class: 'panel card stack', style: { gap: '6px', padding: '14px', borderRadius: '12px' } },
+        h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, tip.t),
+        h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.55 } }, tip.c)
+      ))
+    );
+  }
+
+  mount(h('div', { class: 'stack-lg' }, header, navSub, body));
+}
+
 function knowledgeTabView() {
   const code = S.lang;
   if (code === 'en') {
-    return mount(h('div', { class: 'stack-lg' },
-      h('h1', {}, 'Kiến thức'),
-      h('p', { class: 'note' }, 'Tab Kiến thức chuyên sâu hiện có cho Tiếng Trung và Tiếng Nhật. Với Tiếng Anh, các kỹ năng được chia theo 4 tab Nghe - Nói - Đọc - Viết trong tab Kỹ năng.'),
-      h('button', { class: 'primary block', onclick: () => go('skills') }, 'Đến tab Kỹ năng')
-    ));
+    return renderEnglishKnowledgeView();
   }
 
   const isJa = code === 'ja';
