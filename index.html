@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1730';
+const APP_BUILD_ID = '20261112-1845';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1624,14 +1624,14 @@ function nextLesson(d, cat) {
 }
 function lessonTitle(t, i) {
   const l = t.lessons[i];
-  if (l.kind === 'review') return 'Tổng ôn 4 Kỹ năng cả chủ đề';
+  if (l.kind === 'review') return 'Ôn tập cả chủ đề';
   if (l.kind === 'quiz') return 'Đọc hiểu tình huống' + (t.lessons.filter((x) => x.kind === 'quiz').length > 1 ? ' ' + (t.lessons.filter((x) => x.kind === 'quiz').indexOf(l) + 1) : '');
   if (l.kind === 'fill') return t.lang === 'en' ? 'Viết thực hành (Email)' : 'Viết thực hành (Hội thoại)';
   if (l.kind === 'speak') return 'Luyện Nói hội thoại chuyên sâu';
   if (l.kind === 'kanji') return 'Tập viết Kanji · ' + l.kanji.map((k) => k.k).join(' ');
   const n = t.lessons.filter((x) => x.kind === 'learn').indexOf(l) + 1;
   const ws = l.words.map((w) => plain(w.w).replace(/[.…\s]+$/, '')).slice(0, 3).join(', ');
-  return 'Bài ' + n + ' (Nghe · Nói · Đọc · Viết) · ' + ws + (l.words.length > 3 ? '…' : '');
+  return 'Bài ' + n + ' · ' + ws + (l.words.length > 3 ? '…' : '');
 }
 // ===== Hệ thống Spaced Repetition cho tất cả các kỹ năng (Từ vựng, Nói, Viết, Ngữ pháp) =====
 const CARDS = {}, SPEAK_CARDS = {}, WRITE_CARDS = {}, GRAM_CARDS = {};
@@ -8859,11 +8859,9 @@ function reviewView() {
   if (!queue.length) {
     mount(h('div', { class: 'stack-lg' }, head(),
       h('div', { class: 'panel stack center', style: { padding: '24px', borderRadius: '16px', gap: '10px' } },
-        h('h2', {}, REVIEW_SKILL === 'vocab' ? '🎉 Đã ôn hết từ mới hôm nay!' : '🎉 Đã hoàn thành xong phần ôn tập!'),
+        h('h2', {}, '🎉 Đã ôn hết từ mới hôm nay!'),
         h('p', { class: 'muted center', style: { margin: 0 } },
-          REVIEW_SKILL === 'vocab'
-            ? 'Bạn đã hoàn thành toàn bộ các từ vựng đến hạn ôn hôm nay. Hãy học thêm bài mới hoặc sang tab Kỹ năng để luyện Nghe - Nói - Đọc - Viết!'
-            : 'Bạn đã hoàn thành xong các mục đến hạn hôm nay.'
+          'Bạn đã hoàn thành toàn bộ các từ vựng đến hạn ôn hôm nay. Hãy học thêm bài mới để tiếp tục lộ trình!'
         ),
         h('div', { class: 'row center', style: { gap: '8px', marginTop: '12px' } },
           h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
