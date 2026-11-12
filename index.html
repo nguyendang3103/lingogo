@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-2145';
+const APP_BUILD_ID = '20261112-2215';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -10233,14 +10233,829 @@ function grammarTopicQuiz(t, backTo) {
   grammarQuizView(null, false, { qs, title: 'Quiz ngữ pháp · ' + (t.sub || t.title), onBack: () => grammarView(t, backTo), t });
 }
 // ===== Tab Ngữ pháp: kiến thức theo cấp độ + quiz riêng =====
-const GQ = { zh: 'all', ja: 'all' };
-const GQ_SEARCH = { zh: '', ja: '' };
+const EN_GRAMMAR_POINTS = [
+  {
+    "gid": "en_pres_simple",
+    "lv": "A1",
+    "topics": [
+      {
+        "title": "Giao tiếp hàng ngày & Công việc"
+      }
+    ],
+    "g": {
+      "t": "Thì Hiện tại đơn (Present Simple)",
+      "zh": "Công thức: S + V(s/es) | S + am/is/are",
+      "f": "(+) S + V(s/es) / be | (-) S + do/does not + V-inf / be not | (?) Do/Does + S + V-inf? / Be + S?",
+      "notes": [
+        "📌 Cách dùng: Diễn tả sự thật hiển nhiên, quy luật tự nhiên, thói quen lặp đi lặp lại hoặc lịch trình cố định của phương tiện giao thông/sự kiện.",
+        "📌 Dấu hiệu nhận biết: always, usually, often, sometimes, rarely, never, every day/week/month, in the morning/evening."
+      ],
+      "ex": [
+        [
+          "Water boils at 100 degrees Celsius under standard atmospheric pressure.",
+          "Nước sôi ở 100 độ C dưới áp suất khí quyển tiêu chuẩn.",
+          "Chân lý khoa học hiển nhiên"
+        ],
+        [
+          "Our project team meets every Monday morning to review weekly deliverables.",
+          "Đội ngũ dự án của chúng tôi họp vào mỗi sáng thứ Hai để rà soát các hạng mục tuần.",
+          "Lịch trình / Thói quen làm việc"
+        ],
+        [
+          "The express train to London departs at 8:15 AM sharp.",
+          "Chuyến tàu tốc hành đi London khởi hành lúc đúng 8:15 sáng.",
+          "Lịch trình tàu xe cố định"
+        ]
+      ],
+      "kw": [
+        "boils",
+        "meets",
+        "departs"
+      ]
+    }
+  },
+  {
+    "gid": "en_pres_cont",
+    "lv": "A1",
+    "topics": [
+      {
+        "title": "Hành động đang diễn ra & Kế hoạch"
+      }
+    ],
+    "g": {
+      "t": "Thì Hiện tại tiếp diễn (Present Continuous)",
+      "zh": "Công thức: S + am/is/are + V-ing",
+      "f": "(+) S + am/is/are + V-ing | (-) S + am/is/are not + V-ing | (?) Am/Is/Are + S + V-ing?",
+      "notes": [
+        "📌 Cách dùng: Diễn tả hành động đang xảy ra ngay lúc nói, xu hướng biến đổi trong xã hội, hoặc một kế hoạch chắc chắn trong tương lai gần có sắp xếp trước.",
+        "📌 Dấu hiệu: now, right now, at the moment, currently, Listen!, Look!...",
+        "⚠️ Lưu ý: Không chia thì tiếp diễn với các động từ chỉ nhận thức, cảm xúc, sở hữu (stative verbs) như: know, believe, understand, belong, want, need."
+      ],
+      "ex": [
+        [
+          "We are currently testing the new user interface before the official launch.",
+          "Chúng tôi hiện đang kiểm thử giao diện người dùng mới trước đợt phát hành chính thức.",
+          "Dự án đang triển khai"
+        ],
+        [
+          "Listen! The marketing director is presenting the quarterly revenue report.",
+          "Lắng nghe kìa! Giám đốc tiếp thị đang trình bày báo cáo doanh thu quý.",
+          "Hành động diễn ra ngay lúc nói"
+        ],
+        [
+          "I am meeting the prospective partners for lunch this Thursday.",
+          "Tôi sẽ gặp các đối tác tiềm năng vào bữa trưa thứ Năm tuần này.",
+          "Lịch hẹn đã lên kế hoạch chắc chắn"
+        ]
+      ],
+      "kw": [
+        "are currently testing",
+        "is presenting",
+        "am meeting"
+      ]
+    }
+  },
+  {
+    "gid": "en_future_simple",
+    "lv": "A1",
+    "topics": [
+      {
+        "title": "Dự định tương lai"
+      }
+    ],
+    "g": {
+      "t": "Tương lai đơn & Be Going To (Will vs. Be Going To)",
+      "zh": "Công thức: S + will + V-inf vs. S + am/is/are going to + V-inf",
+      "f": "Will: Quyết định tức thời ngay khi nói, lời hứa, dự đoán chủ quan | Be going to: Kế hoạch đã có ý định từ trước, dự đoán có căn cứ xác thực trước mắt.",
+      "notes": [
+        "📌 \"Will\": Dùng khi đột ngột đưa ra quyết định hoặc đưa ra lời đề nghị giúp đỡ (\"I will carry this bag for you\").",
+        "📌 \"Be going to\": Dùng khi thấy bằng chứng rõ ràng (\"Look at those black clouds! It is going to rain\")."
+      ],
+      "ex": [
+        [
+          "Don’t worry about the customer inquiry; I will reply to them right away.",
+          "Đừng lo về thắc mắc của khách hàng; tôi sẽ trả lời họ ngay lập tức.",
+          "Quyết định tức thời lúc nói"
+        ],
+        [
+          "Based on current order volumes, we are going to exceed our monthly target.",
+          "Dựa trên lượng đơn đặt hàng hiện tại, chúng ta chắc chắn sẽ vượt mục tiêu tháng.",
+          "Dự đoán có bằng chứng cụ thể"
+        ],
+        [
+          "Our department is going to relocate to the new headquarters next quarter.",
+          "Phòng ban của chúng tôi dự định sẽ chuyển sang trụ sở mới vào quý tới.",
+          "Kế hoạch đã chuẩn bị trước"
+        ]
+      ],
+      "kw": [
+        "will reply",
+        "are going to exceed",
+        "is going to relocate"
+      ]
+    }
+  },
+  {
+    "gid": "en_articles",
+    "lv": "A1",
+    "topics": [
+      {
+        "title": "Quy tắc dùng mạo từ"
+      }
+    ],
+    "g": {
+      "t": "Mạo từ tiếng Anh (Articles: A / An / The & Zero Article)",
+      "zh": "Công thức: A/An + N đếm được số ít | The + N xác định | Ø + N chung chung",
+      "f": "A/An: đối tượng chưa xác định hoặc nhắc lần đầu, nghề nghiệp | The: đối tượng cả hai đều biết, duy nhất | Zero Article (Ø): danh từ số nhiều hoặc không đếm được mang tính bao quát.",
+      "notes": [
+        "📌 Dùng \"An\" trước các từ phát âm bằng nguyên âm (/i/, /e/, /æ/, /ʌ/, /ɒ/, /u/...) như an hour (/ˈaʊər/), an honest review.",
+        "📌 Dùng \"The\" trước các địa danh số nhiều, dãy núi, dòng sông, nhạc cụ, đại dương (The Pacific Ocean, The Netherlands, play the piano)."
+      ],
+      "ex": [
+        [
+          "She works as an operations coordinator at a multinational logistics firm.",
+          "Cô ấy làm điều phối viên vận hành tại một công ty logistics đa quốc gia.",
+          "Nghề nghiệp dùng an/a"
+        ],
+        [
+          "The strategic partnership agreement that we negotiated last week has been signed.",
+          "Thỏa thuận hợp tác chiến lược mà chúng ta đã đàm phán tuần trước đã được ký.",
+          "Đối tượng đã xác định cụ thể"
+        ],
+        [
+          "Clear communication is fundamental to efficient cross-functional collaboration.",
+          "Giao tiếp rõ ràng là điều cốt lõi cho sự cộng tác hiệu quả giữa các phòng ban.",
+          "Danh từ trừu tượng dùng Zero Article"
+        ]
+      ],
+      "kw": [
+        "an operations coordinator",
+        "The strategic partnership",
+        "Clear communication"
+      ]
+    }
+  },
+  {
+    "gid": "en_past_simple",
+    "lv": "A2",
+    "topics": [
+      {
+        "title": "Sự kiện quá khứ"
+      }
+    ],
+    "g": {
+      "t": "Thì Quá khứ đơn (Past Simple)",
+      "zh": "Công thức: S + V2/ed | S + was/were",
+      "f": "(+) S + V-ed / V2 | (-) S + did not + V-inf | (?) Did + S + V-inf?",
+      "notes": [
+        "📌 Cách dùng: Diễn tả một hành động đã diễn ra và kết thúc hoàn toàn trong quá khứ, xác định rõ thời điểm.",
+        "📌 Dấu hiệu: yesterday, last night/month/year, two weeks ago, in 2021, when I started...",
+        "📌 Quy tắc phát âm đuôi -ed: /id/ sau t, d; /t/ sau các phụ âm vô thanh (k, p, f, s, sh, ch); /d/ cho các trường hợp còn lại."
+      ],
+      "ex": [
+        [
+          "Our company launched its first international branch in Singapore three years ago.",
+          "Công ty chúng tôi đã khai trương chi nhánh quốc tế đầu tiên tại Singapore ba năm trước.",
+          "Sự kiện đã kết thúc trong quá khứ"
+        ],
+        [
+          "Did the finance team approve the revised procurement budget yesterday?",
+          "Đội tài chính đã phê duyệt ngân sách mua sắm sửa đổi ngày hôm qua chưa?",
+          "Câu hỏi quá khứ với Did"
+        ],
+        [
+          "The system suffered an unexpected downtime during peak traffic hours last night.",
+          "Hệ thống đã gặp sự cố gián đoạn bất ngờ trong giờ cao điểm tối qua.",
+          "Hành động chấm dứt trong quá khứ"
+        ]
+      ],
+      "kw": [
+        "launched",
+        "Did the finance team approve",
+        "suffered"
+      ]
+    }
+  },
+  {
+    "gid": "en_modals_basic",
+    "lv": "A2",
+    "topics": [
+      {
+        "title": "Động từ khuyết thiếu cơ bản"
+      }
+    ],
+    "g": {
+      "t": "Động từ khuyết thiếu (Can, Could, Should, Must, Have to)",
+      "zh": "Công thức: S + Modal + V-inf (nguyên thể không chia)",
+      "f": "Can/Could: Khả năng, yêu cầu lịch sự | Should: Lời khuyên nên làm | Must: Bắt buộc từ lương tâm/quy tắc nghiêm ngặt | Have to: Bắt buộc do hoàn cảnh khách quan.",
+      "notes": [
+        "📌 Phủ định quan trọng: \"Mustn’t\" = cấm tuyệt đối; \"Don’t have to\" = không bắt buộc, không cần thiết.",
+        "📌 Yêu cầu lịch sự trong công sở: Dùng \"Could you please...\" hoặc \"Would you mind...\" thay vì dùng \"Can you...\"."
+      ],
+      "ex": [
+        [
+          "Could you please provide the latest project updates before our client briefing?",
+          "Bạn có thể vui lòng cung cấp thông tin cập nhật dự án mới nhất trước buổi gặp khách hàng không?",
+          "Đưa ra yêu cầu lịch sự"
+        ],
+        [
+          "All employees must follow the strict security guidelines when accessing remote servers.",
+          "Tất cả nhân viên bắt buộc phải tuân theo hướng dẫn bảo mật nghiêm ngặt khi truy cập máy chủ từ xa.",
+          "Quy định bắt buộc"
+        ],
+        [
+          "You don’t have to submit the physical paper form if you have completed the online submission.",
+          "Bạn không cần phải nộp biểu mẫu giấy nếu bạn đã hoàn tất nộp đơn trực tuyến.",
+          "Không bắt buộc (don’t have to)"
+        ]
+      ],
+      "kw": [
+        "Could you please provide",
+        "must follow",
+        "don’t have to submit"
+      ]
+    }
+  },
+  {
+    "gid": "en_comparison",
+    "lv": "A2",
+    "topics": [
+      {
+        "title": "Cấu trúc so sánh"
+      }
+    ],
+    "g": {
+      "t": "So sánh hơn & So sánh nhất (Comparatives & Superlatives)",
+      "zh": "Công thức: adj-er / more adj + than | the adj-est / the most adj",
+      "f": "So sánh hơn: S1 + V + adj-er / more adj + than + S2 | So sánh nhất: S + V + the + adj-est / most adj + N | So sánh bằng: as + adj/adv + as",
+      "notes": [
+        "📌 Tính từ ngắn (1 âm tiết): thêm -er/-est (faster, greatest).",
+        "📌 Tính từ dài (2 âm tiết trở lên): dùng more / most (more effective, the most innovative).",
+        "📌 Từ nhấn mạnh so sánh hơn: much, far, significantly, slightly (VD: significantly more affordable)."
+      ],
+      "ex": [
+        [
+          "The second software proposal is far more cost-effective than the initial quote.",
+          "Đề xuất phần mềm thứ hai tiết kiệm chi phí hơn rất nhiều so với bảng báo giá ban đầu.",
+          "Nhấn mạnh so sánh hơn với far"
+        ],
+        [
+          "This is undeniably the most innovative feature we have released this year.",
+          "Đây không còn nghi ngờ gì nữa là tính năng sáng tạo nhất mà chúng tôi phát hành năm nay.",
+          "So sánh nhất"
+        ],
+        [
+          "Our current server response rate is just as fast as the industry benchmark.",
+          "Tốc độ phản hồi máy chủ hiện tại của chúng tôi nhanh ngang ngửa với chuẩn mức chung của ngành.",
+          "So sánh bằng as... as"
+        ]
+      ],
+      "kw": [
+        "far more cost-effective",
+        "the most innovative",
+        "just as fast as"
+      ]
+    }
+  },
+  {
+    "gid": "en_quantifiers",
+    "lv": "A2",
+    "topics": [
+      {
+        "title": "Từ định lượng"
+      }
+    ],
+    "g": {
+      "t": "Từ định lượng (Some, Any, Much, Many, A few, A little)",
+      "zh": "Công thức: Many/Few + N số nhiều | Much/Little + N không đếm được",
+      "f": "A few / A little: Có một chút, đủ dùng (mang nghĩa tích cực) | Few / Little: Quá ít, hầu như không có (mang nghĩa tiêu cực, thiếu thốn).",
+      "notes": [
+        "📌 Some: Dùng trong câu khẳng định hoặc câu hỏi mời lịch sự (\"Would you like some tea?\").",
+        "📌 Any: Dùng trong câu phủ định và câu hỏi nghi vấn (\"Do you have any questions?\")."
+      ],
+      "ex": [
+        [
+          "There are a few minor adjustments needed before we publish the annual report.",
+          "Có một vài điều chỉnh nhỏ cần thiết trước khi chúng tôi xuất bản báo cáo thường niên.",
+          "A few + N số nhiều (tích cực)"
+        ],
+        [
+          "We have very little time left to finalize the legal documentation before the closing date.",
+          "Chúng ta còn rất ít thời gian để hoàn thiện hồ sơ pháp lý trước ngày ký kết.",
+          "Little + N không đếm được (thiếu thốn)"
+        ],
+        [
+          "Do you have any suggestions on how to optimize our warehouse logistics workflow?",
+          "Bạn có đề xuất nào về cách tối ưu hóa quy trình logistics kho bãi của chúng ta không?",
+          "Any trong câu hỏi"
+        ]
+      ],
+      "kw": [
+        "a few minor adjustments",
+        "very little time",
+        "any suggestions"
+      ]
+    }
+  },
+  {
+    "gid": "en_pres_perf",
+    "lv": "B1",
+    "topics": [
+      {
+        "title": "Trải nghiệm & Thành tựu"
+      }
+    ],
+    "g": {
+      "t": "Thì Hiện tại hoàn thành (Present Perfect)",
+      "zh": "Công thức: S + have/has + V3/ed",
+      "f": "(+) S + have/has + V3/ed | (-) S + have/has not + V3/ed | (?) Have/Has + S + V3/ed?",
+      "notes": [
+        "📌 Cách dùng: (1) Hành động xảy ra trong quá khứ và kết quả còn ảnh hưởng trực tiếp đến hiện tại; (2) Hành động bắt đầu trong quá khứ kéo dài đến nay; (3) Diễn tả kinh nghiệm sống (ever/never).",
+        "📌 Since vs. For: \"Since\" + mốc thời gian (since 2015, since morning) | \"For\" + khoảng thời gian (for 6 years, for two hours).",
+        "📌 Từ khóa nhận biết: already, yet, just, recently, so far, up to now, ever, never."
+      ],
+      "ex": [
+        [
+          "Our engineering team has collaborated with enterprise clients for over seven years.",
+          "Đội ngũ kỹ thuật của chúng tôi đã hợp tác với các khách hàng doanh nghiệp trong hơn bảy năm.",
+          "Hành động kéo dài từ quá khứ đến nay"
+        ],
+        [
+          "The audit committee has already finalized the risk evaluation matrix.",
+          "Ủy ban kiểm toán đã hoàn tất ma trận đánh giá rủi ro rồi.",
+          "Hành động vừa hoàn thành có kết quả hiện tại"
+        ],
+        [
+          "Have you ever negotiated an agreement with high-profile international stakeholders?",
+          "Bạn đã bao giờ đàm phán một thỏa thuận với các bên liên quan quốc tế tên tuổi chưa?",
+          "Hỏi về kinh nghiệm sống với ever"
+        ]
+      ],
+      "kw": [
+        "has collaborated",
+        "has already finalized",
+        "Have you ever negotiated"
+      ]
+    }
+  },
+  {
+    "gid": "en_past_cont",
+    "lv": "B1",
+    "topics": [
+      {
+        "title": "Hành động xen vào trong quá khứ"
+      }
+    ],
+    "g": {
+      "t": "Thì Quá khứ tiếp diễn (Past Continuous)",
+      "zh": "Công thức: S + was/were + V-ing",
+      "f": "Diễn tả hành động đang diễn ra tại một thời điểm cụ thể trong quá khứ hoặc đang diễn ra thì bị hành động khác xen vào (When / While).",
+      "notes": [
+        "📌 Cấu trúc When / While: While + Quá khứ tiếp diễn (hành động dài), Quá khứ đơn (hành động ngắn cắt ngang).",
+        "📌 Hai hành động song song: While S1 was V-ing, S2 was V-ing (VD: While John was speaking, Mary was taking notes)."
+      ],
+      "ex": [
+        [
+          "While the operations team was deploying the patch, the payment gateway went offline.",
+          "Trong khi đội vận hành đang triển khai bản vá, cổng thanh toán đã bất ngờ mất kết nối.",
+          "Hành động đang diễn ra bị ngắt quãng"
+        ],
+        [
+          "At 3:30 PM yesterday, we were interviewing prospective senior software architects.",
+          "Vào lúc 3:30 chiều hôm qua, chúng tôi đang phỏng vấn các kiến trúc sư phần mềm cấp cao tiềm năng.",
+          "Thời điểm cụ thể trong quá khứ"
+        ],
+        [
+          "While the market analysts were compiling data, management was evaluating strategic risks.",
+          "Trong khi các chuyên viên phân tích thị trường đang tổng hợp dữ liệu, ban quản lý đang đánh giá các rủi ro chiến lược.",
+          "Hai hành động diễn ra song song"
+        ]
+      ],
+      "kw": [
+        "was deploying",
+        "were interviewing",
+        "were compiling"
+      ]
+    }
+  },
+  {
+    "gid": "en_passive_voice",
+    "lv": "B1",
+    "topics": [
+      {
+        "title": "Câu bị động"
+      }
+    ],
+    "g": {
+      "t": "Câu bị động (Passive Voice)",
+      "zh": "Công thức: S + be (chia thì) + V3/ed (+ by O)",
+      "f": "Hiện tại đơn: is/am/are + V3/ed | Quá khứ đơn: was/were + V3/ed | Hiện tại hoàn thành: have/has been + V3/ed | Động từ khuyết thiếu: modal + be + V3/ed.",
+      "notes": [
+        "📌 Công dụng: Nhấn mạnh vào đối tượng chịu tác động của hành động thay vì người thực hiện, đặc biệt phổ biến trong báo cáo công việc, tài liệu kỹ thuật và học thuật.",
+        "📌 Lược bỏ \"by O\" khi tân ngữ không xác định (by people, by someone, by them...)."
+      ],
+      "ex": [
+        [
+          "All commercial contracts must be thoroughly examined by corporate legal counsel before signing.",
+          "Tất cả hợp đồng thương mại bắt buộc phải được luật sư doanh nghiệp kiểm tra kỹ lưỡng trước khi ký.",
+          "Bị động với Modal Verb"
+        ],
+        [
+          "Millions of encrypted financial transactions are processed securely by our platform every single day.",
+          "Hàng triệu giao dịch tài chính mã hóa được nền tảng của chúng tôi xử lý an toàn mỗi ngày.",
+          "Bị động thì Hiện tại đơn"
+        ],
+        [
+          "The multi-million-dollar infrastructure upgrade was accomplished ahead of schedule.",
+          "Việc nâng cấp cơ sở hạ tầng trị giá hàng triệu đô la đã được hoàn thành trước thời hạn.",
+          "Bị động thì Quá khứ đơn"
+        ]
+      ],
+      "kw": [
+        "must be thoroughly examined",
+        "are processed securely",
+        "was accomplished"
+      ]
+    }
+  },
+  {
+    "gid": "en_conditionals_1_2",
+    "lv": "B1",
+    "topics": [
+      {
+        "title": "Câu điều kiện Loại 1 & 2"
+      }
+    ],
+    "g": {
+      "t": "Câu điều kiện Loại 1 & Loại 2 (Conditionals Type 1 & 2)",
+      "zh": "Công thức: If + V(pres), will + V-inf vs. If + V(past), would + V-inf",
+      "f": "Loại 1 (Thực tế): If + Hiện tại đơn, S + will/can + V-inf | Loại 2 (Giả định hiện tại): If + Quá khứ đơn, S + would/could + V-inf (to be dùng were cho mọi ngôi).",
+      "notes": [
+        "📌 Loại 1: Diễn tả điều kiện có thật, hoàn toàn có khả năng xảy ra ở hiện tại hoặc tương lai.",
+        "📌 Loại 2: Giả định trái ngược với sự thật ở hiện tại hoặc đưa ra lời khuyên (\"If I were you, I would accept the promotion\")."
+      ],
+      "ex": [
+        [
+          "If our product meets quality inspection standards, the overseas distributor will order 10,000 units.",
+          "Nếu sản phẩm của chúng ta đạt tiêu chuẩn kiểm định chất lượng, nhà phân phối nước ngoài sẽ đặt 10.000 chiếc.",
+          "Điều kiện Loại 1 có thật"
+        ],
+        [
+          "If we had a larger digital marketing budget, we would aggressively expand into European markets.",
+          "Nếu chúng ta có ngân sách tiếp thị số lớn hơn, chúng ta sẽ mở rộng mạnh mẽ sang các thị trường châu Âu.",
+          "Điều kiện Loại 2 trái hiện tại"
+        ],
+        [
+          "If I were in the CEO’s position, I would diversify our portfolio into sustainable clean energy.",
+          "Nếu tôi ở vị trí của CEO, tôi sẽ đa dạng hóa danh mục đầu tư sang năng lượng sạch bền vững.",
+          "Lời khuyên giả định (If I were you)"
+        ]
+      ],
+      "kw": [
+        "will order",
+        "would aggressively expand",
+        "would diversify"
+      ]
+    }
+  },
+  {
+    "gid": "en_rel_clauses",
+    "lv": "B1",
+    "topics": [
+      {
+        "title": "Mệnh đề quan hệ"
+      }
+    ],
+    "g": {
+      "t": "Mệnh đề quan hệ (Relative Clauses: Who, Whom, Which, That, Whose)",
+      "zh": "Công thức: Who (người), Which (vật), That (thay thế), Whose (sở hữu)",
+      "f": "Mệnh đề xác định (Defining): Không có dấu phẩy, không thể bỏ được, dùng được \"that\" | Mệnh đề không xác định (Non-defining): Nằm giữa hai dấu phẩy, cung cấp thông tin phụ, KHÔNG dùng \"that\".",
+      "notes": [
+        "📌 \"Whom\": Làm tân ngữ chỉ người, thường đứng sau giới từ (VD: The client to whom I presented the proposal...).",
+        "📌 \"Whose\": Chỉ sở hữu cho cả người và danh từ vật (The company whose product succeeded...).",
+        "📌 Có thể lược bỏ đại từ quan hệ khi nó đóng vai trò tân ngữ trong mệnh đề xác định (The phone [that] I bought)."
+      ],
+      "ex": [
+        [
+          "The lead architect who developed our microservices framework won the regional tech excellence award.",
+          "Kiến trúc sư trưởng người phát triển khung kiến trúc microservices của chúng tôi đã đoạt giải thưởng công nghệ xuất sắc khu vực.",
+          "Mệnh đề xác định chỉ người"
+        ],
+        [
+          "Our European headquarters, which was officially established in Zurich in 2018, oversees all continental logistics.",
+          "Trụ sở châu Âu của chúng tôi, nơi được thành lập tại Zurich vào năm 2018, giám sát toàn bộ hoạt động logistics toàn lục địa.",
+          "Mệnh đề không xác định có dấu phẩy"
+        ],
+        [
+          "We prefer partnering with vendors whose supply chains meet rigorous environmental compliance standards.",
+          "Chúng tôi ưu tiên hợp tác với các nhà cung cấp có chuỗi cung ứng đáp ứng các tiêu chuẩn tuân thủ môi trường nghiêm ngặt.",
+          "Đại từ sở hữu whose"
+        ]
+      ],
+      "kw": [
+        "who developed",
+        "which was officially established",
+        "whose supply chains meet"
+      ]
+    }
+  },
+  {
+    "gid": "en_reported_speech",
+    "lv": "B2",
+    "topics": [
+      {
+        "title": "Câu tường thuật gián tiếp"
+      }
+    ],
+    "g": {
+      "t": "Câu tường thuật & Gián tiếp (Reported Speech)",
+      "zh": "Công thức: S + said / told O / asked + Mệnh đề lùi thì",
+      "f": "Quy tắc lùi thì: Hiện tại đơn ➔ Quá khứ đơn; Hiện tại tiếp diễn ➔ Quá khứ tiếp diễn; Hiện tại hoàn thành ➔ Quá khứ hoàn thành; Will ➔ Would; Can ➔ Could.",
+      "notes": [
+        "📌 Đổi trạng từ: today ➔ that day; yesterday ➔ the day before; tomorrow ➔ the following day; now ➔ then; here ➔ there.",
+        "📌 Câu hỏi gián tiếp: S + asked (O) + if/whether/wh-word + S + V (không đảo trợ động từ lên trước chủ ngữ)."
+      ],
+      "ex": [
+        [
+          "The director confirmed that the enterprise had achieved record profitability during the previous fiscal year.",
+          "Giám đốc đã xác nhận rằng doanh nghiệp đã đạt mức lợi nhuận kỷ lục trong năm tài chính trước đó.",
+          "Tường thuật lùi thì quá khứ hoàn thành"
+        ],
+        [
+          "The prospective client asked whether our technical support team offered 24/7 round-the-clock assistance.",
+          "Khách hàng tiềm năng đã hỏi liệu đội ngũ hỗ trợ kỹ thuật của chúng tôi có cung cấp hỗ trợ 24/7 hay không.",
+          "Câu hỏi Yes/No gián tiếp với whether"
+        ],
+        [
+          "The consultant recommended that the leadership team review the employee retention policies.",
+          "Chuyên gia tư vấn khuyến nghị rằng ban lãnh đạo nên xem xét lại các chính sách giữ chân nhân sự.",
+          "Tường thuật khuyến nghị"
+        ]
+      ],
+      "kw": [
+        "confirmed that",
+        "asked whether",
+        "recommended that"
+      ]
+    }
+  },
+  {
+    "gid": "en_gerund_inf",
+    "lv": "B2",
+    "topics": [
+      {
+        "title": "Danh động từ & Động từ nguyên mẫu"
+      }
+    ],
+    "g": {
+      "t": "Danh động từ & Động từ nguyên mẫu (Gerund vs. Infinitive: V-ing / To-V)",
+      "zh": "Công thức: Verb + V-ing vs. Verb + To-V",
+      "f": "Đi với V-ing: admit, avoid, consider, delay, involve, postpone, recommend, suggest, resist... | Đi với To-V: afford, decide, expect, hope, manage, plan, refuse, intend...",
+      "notes": [
+        "📌 Động từ đổi nghĩa theo V-ing và To-V:",
+        "• remember/forget + To-V: nhớ/quên phải làm gì (tương lai) | remember/forget + V-ing: nhớ/quên đã làm gì (quá khứ).",
+        "• stop + To-V: dừng lại để làm việc khác | stop + V-ing: dừng hẳn việc đang làm.",
+        "• regret + To-V: lấy làm tiếc khi phải báo tin | regret + V-ing: hối hận về việc đã làm trong quá khứ."
+      ],
+      "ex": [
+        [
+          "We must avoid making premature public announcements until full compliance clearance is granted.",
+          "Chúng ta phải tránh đưa ra các thông cáo sớm trước công chúng cho đến khi nhận được phê duyệt tuân thủ đầy đủ.",
+          "Avoid + V-ing"
+        ],
+        [
+          "The executive committee decided to allocate five million dollars toward artificial intelligence research.",
+          "Ủy ban điều hành đã quyết định phân bổ năm triệu đô la cho nghiên cứu trí tuệ nhân tạo.",
+          "Decide + To-V"
+        ],
+        [
+          "We deeply regret to inform all participants that the annual international symposium has been postponed.",
+          "Chúng tôi vô cùng lấy làm tiếc khi phải thông báo tới toàn thể người tham dự rằng hội nghị chuyên đề quốc tế thường niên đã bị hoãn.",
+          "Regret to-V (lấy làm tiếc thông báo)"
+        ]
+      ],
+      "kw": [
+        "avoid making",
+        "decided to allocate",
+        "regret to inform"
+      ]
+    }
+  },
+  {
+    "gid": "en_cond_3_mixed",
+    "lv": "B2",
+    "topics": [
+      {
+        "title": "Điều kiện Loại 3 & Hỗn hợp"
+      }
+    ],
+    "g": {
+      "t": "Câu điều kiện Loại 3 & Điều kiện hỗn hợp (Type 3 & Mixed Conditionals)",
+      "zh": "Công thức: If + had + V3/ed, would have + V3/ed",
+      "f": "Loại 3 (Tiếc nuối quá khứ): If + had + V3/ed, S + would/could have + V3/ed | Điều kiện hỗn hợp (Quá khứ ảnh hưởng Hiện tại): If + had + V3/ed, S + would + V-inf (now).",
+      "notes": [
+        "📌 Đảo ngữ Điều kiện Loại 3: Had + S + (not) + V3/ed, S + would have + V3/ed (rất trang trọng trong văn bản kinh doanh và học thuật).",
+        "📌 Ví dụ: \"Had we conducted thorough market testing, we would not have encountered these software setbacks.\""
+      ],
+      "ex": [
+        [
+          "If we had detected the security vulnerability earlier, we could have prevented the data breach entirely.",
+          "Nếu chúng ta phát hiện lỗ hổng bảo mật sớm hơn, chúng ta đã có thể ngăn chặn hoàn toàn vụ rò rỉ dữ liệu.",
+          "Điều kiện Loại 3 tiếc nuối quá khứ"
+        ],
+        [
+          "If he had accepted the regional manager position in London last year, he would be leading the overseas office right now.",
+          "Nếu anh ấy chấp nhận vị trí quản lý khu vực tại London năm ngoái, thì bây giờ anh ấy đã đang dẫn dắt văn phòng nước ngoài rồi.",
+          "Điều kiện hỗn hợp (quá khứ ➔ hiện tại)"
+        ],
+        [
+          "Had the management team executed the digital transformation on schedule, operational costs would have decreased significantly.",
+          "Nếu ban quản lý triển khai chuyển đổi số đúng kế hoạch, chi phí vận hành hẳn đã giảm đáng kể.",
+          "Đảo ngữ Điều kiện Loại 3"
+        ]
+      ],
+      "kw": [
+        "could have prevented",
+        "would be leading",
+        "Had the management team executed"
+      ]
+    }
+  },
+  {
+    "gid": "en_causative",
+    "lv": "B2",
+    "topics": [
+      {
+        "title": "Thể sai khiến & Nhờ vả"
+      }
+    ],
+    "g": {
+      "t": "Thể sai khiến (Causative Form: Have / Get something done)",
+      "zh": "Công thức: Have/Get + something + V3/ed (nhờ ai làm giúp)",
+      "f": "Chủ động: S + have + someone + V-inf | S + get + someone + to-V | Bị động: S + have/get + something + V3/ed (nhờ/thuê một đối tác hoặc chuyên gia hoàn thành công việc).",
+      "notes": [
+        "📌 \"I repaired the machine\" (tôi tự sửa) vs. \"I had the machine repaired\" (tôi thuê kỹ thuật viên đến sửa).",
+        "📌 Cấu trúc make: \"make someone do something\" (bắt buộc ai làm gì) và \"let someone do something\" (cho phép ai làm gì)."
+      ],
+      "ex": [
+        [
+          "Every rapidly growing company should have its financial accounts independently audited each year.",
+          "Mỗi công ty đang phát triển nhanh đều nên thuê kiểm toán độc lập các tài khoản tài chính của mình mỗi năm.",
+          "Have + something + V3/ed"
+        ],
+        [
+          "The lead engineer got the software developer to deploy the urgent security patch immediately.",
+          "Kỹ sư trưởng đã yêu cầu lập trình viên triển khai bản vá bảo mật khẩn cấp ngay lập tức.",
+          "Get + someone + to-V"
+        ],
+        [
+          "We need to have our legal documentation translated into Japanese prior to the negotiations.",
+          "Chúng ta cần dịch hồ sơ pháp lý sang tiếng Nhật trước khi tiến hành các cuộc đàm phán.",
+          "Causative passive"
+        ]
+      ],
+      "kw": [
+        "have its financial accounts independently audited",
+        "got the software developer to deploy",
+        "have our legal documentation translated"
+      ]
+    }
+  },
+  {
+    "gid": "en_inversion",
+    "lv": "C1",
+    "topics": [
+      {
+        "title": "Đảo ngữ cao cấp"
+      }
+    ],
+    "g": {
+      "t": "Đảo ngữ với phó từ phủ định (Inversion with Negative Adverbials)",
+      "zh": "Công thức: Trạng từ phủ định + Trợ động từ + S + V-chính",
+      "f": "Đứng đầu câu tạo điểm nhấn trang trọng: Never, Rarely, Seldom, Little, Hardly/Scarcely... when, No sooner... than, Not only... but also, Under no circumstances, Only after...",
+      "notes": [
+        "📌 No sooner + had + S + V3/ed + than + S + V2/ed: Vừa mới... thì đã...",
+        "📌 Under no circumstances + should/must + S + V-inf: Trong bất cứ hoàn cảnh nào cũng không được...",
+        "📌 Giúp nâng cao band điểm IELTS Writing Task 2 & Speaking Part 3 nhờ cấu trúc ngữ pháp phức tạp và chuẩn văn phong học thuật."
+      ],
+      "ex": [
+        [
+          "Not only did the enterprise surpass its annual revenue forecast, but it also expanded successfully into three foreign markets.",
+          "Doanh nghiệp không những vượt dự báo doanh thu hàng năm mà còn mở rộng thành công sang ba thị trường nước ngoài.",
+          "Đảo ngữ Not only... but also"
+        ],
+        [
+          "Hardly had the automated payment system been launched when thousands of transactions were processed smoothly.",
+          "Hệ thống thanh toán tự động vừa mới được ra mắt thì hàng ngàn giao dịch đã được xử lý êm đẹp.",
+          "Hardly had... when..."
+        ],
+        [
+          "Under no circumstances should sensitive customer credentials be stored in unencrypted format.",
+          "Trong bất kỳ hoàn cảnh nào, thông tin đăng nhập nhạy cảm của khách hàng cũng không được phép lưu trữ ở định dạng chưa mã hóa.",
+          "Đảo ngữ tuyệt đối Under no circumstances"
+        ]
+      ],
+      "kw": [
+        "Not only did",
+        "Hardly had",
+        "Under no circumstances should"
+      ]
+    }
+  },
+  {
+    "gid": "en_participle",
+    "lv": "C1",
+    "topics": [
+      {
+        "title": "Rút gọn mệnh đề phân từ"
+      }
+    ],
+    "g": {
+      "t": "Rút gọn mệnh đề bằng phân từ (Participle Clauses)",
+      "zh": "Công thức: V-ing (chủ động) / V3-ed (bị động) / Having + V3-ed (xong trước)",
+      "f": "Khi hai mệnh đề có cùng chủ ngữ, có thể giản lược liên từ và chủ ngữ của mệnh đề phụ, chuyển động từ sang dạng Present Participle (V-ing), Past Participle (V3/ed) hoặc Perfect Participle (Having + V3/ed).",
+      "notes": [
+        "📌 Diễn tả nguyên nhân: Knowing the project was urgent, we mobilized additional resources. (= Because we knew...).",
+        "📌 Diễn tả thứ tự trước sau: Having completed the feasibility study, the board gave the project final approval.",
+        "📌 Bị động: Designed with aerospace-grade carbon fiber, the chassis is remarkably lightweight yet robust."
+      ],
+      "ex": [
+        [
+          "Having evaluated all potential financial vulnerabilities, the investment board approved the multi-million-dollar acquisition.",
+          "Sau khi đã đánh giá toàn bộ các lỗ hổng tài chính tiềm ẩn, ban đầu tư đã phê duyệt thương vụ sáp nhập trị giá nhiều triệu đô la.",
+          "Perfect Participle chỉ hành động hoàn tất trước"
+        ],
+        [
+          "Recognizing the growing market appetite for green energy, the company pivoted its primary business model.",
+          "Nhận thấy sự thèm muốn ngày càng tăng của thị trường đối với năng lượng xanh, công ty đã chuyển trục mô hình kinh doanh cốt lõi.",
+          "Present Participle chỉ nguyên nhân / chủ động"
+        ],
+        [
+          "Guided by seasoned industry veterans, the ambitious startup successfully secured Series A funding.",
+          "Được dìu dắt bởi các chuyên gia kỳ cựu trong ngành, công ty khởi nghiệp đầy tham vọng đã gọi vốn Series A thành công.",
+          "Past Participle thể bị động"
+        ]
+      ],
+      "kw": [
+        "Having evaluated",
+        "Recognizing the growing",
+        "Guided by seasoned"
+      ]
+    }
+  },
+  {
+    "gid": "en_subjunctive",
+    "lv": "C1",
+    "topics": [
+      {
+        "title": "Thể giả định trong văn phong học thuật"
+      }
+    ],
+    "g": {
+      "t": "Thể giả định hiện đại (Subjunctive Mood)",
+      "zh": "Công thức: S + recommend/suggest/insist + that + S + (should) + V-inf",
+      "f": "Động từ: recommend, suggest, insist, demand, propose, mandate... | Tính từ: essential, crucial, vital, imperative, critical that S + (should) + V-inf (bare infinitive).",
+      "notes": [
+        "📌 Động từ trong mệnh đề that luôn ở dạng NGUYÊN THỂ BARE INFINITIVE với mọi ngôi (kể cả he/she/it và dù mệnh đề trước ở quá khứ).",
+        "📌 Phủ định: that + S + not + V-inf (không dùng does not / did not).",
+        "📌 Bị động: that + S + be + V3/ed (VD: that the policy be implemented)."
+      ],
+      "ex": [
+        [
+          "It is imperative that every single transaction be audited by an independent compliance officer prior to disbursement.",
+          "Điều cấp thiết là từng giao dịch một phải được kiểm toán bởi một cán bộ tuân thủ độc lập trước khi giải ngân.",
+          "Tính từ giả định imperative that + be V3/ed"
+        ],
+        [
+          "The chief risk officer strongly recommended that the corporation not enter volatile speculative markets.",
+          "Giám đốc quản trị rủi ro đã khuyến nghị mạnh mẽ rằng tập đoàn không nên bước vào các thị trường đầu cơ đầy biến động.",
+          "Giả định phủ định (that S + not + V-inf)"
+        ],
+        [
+          "The government mandate requires that all cloud data centers maintain carbon-neutral operations by 2030.",
+          "Quy định bắt buộc của chính phủ đòi hỏi rằng tất cả trung tâm dữ liệu đám mây phải duy trì hoạt động trung hòa carbon trước năm 2030.",
+          "Động từ giả định requires that + V-inf"
+        ]
+      ],
+      "kw": [
+        "imperative that every single transaction be",
+        "recommended that the corporation not enter",
+        "requires that all cloud data centers maintain"
+      ]
+    }
+  }
+];
+
+const GQ = { en: 'all', zh: 'all', ja: 'all' };
+const GQ_SEARCH = { en: '', zh: '', ja: '' };
 const GRAM_LEVELS = {
+  en: ['A1', 'A2', 'B1', 'B2', 'C1'],
   zh: ['HSK 1', 'HSK 2', 'HSK 3', 'HSK 4', 'HSK 5', 'HSK 6', 'HSK 7', 'HSK 8', 'HSK 9'],
   ja: ['N5', 'N4', 'N3', 'N2', 'N1']
 };
 function gqStore() { S.gq = S.gq || {}; S.gq.best = S.gq.best || {}; S.gq.wrong = S.gq.wrong || {}; return S.gq; }
 function grammarPoints(code = S.lang) {
+  if (code === 'en') return EN_GRAMMAR_POINTS;
   const d = DATA[code]; if (!d || !d.grammar) return [];
   const out = [], seen = {}, lvs = GRAM_LEVELS[code] || [];
   d.topics.forEach((t) => (t.gram || []).forEach((gid) => {
@@ -10413,13 +11228,12 @@ function grammarTabView() {
 }
 
 function renderEnglishKnowledgeView() {
-  const d = DATA.en;
   const subtabs = [
-    { k: 'patterns', label: '📖 Cấu trúc & Mẫu câu' },
+    { k: 'gram', label: '📖 Ngữ pháp Tiếng Anh' },
     { k: 'tips', label: '💡 Cẩm nang & Mẹo học' }
   ];
-  if (KNOWLEDGE_TAB !== 'patterns' && KNOWLEDGE_TAB !== 'tips') {
-    KNOWLEDGE_TAB = 'patterns';
+  if (KNOWLEDGE_TAB !== 'gram' && KNOWLEDGE_TAB !== 'tips') {
+    KNOWLEDGE_TAB = 'gram';
   }
 
   const header = h('div', { class: 'stack', style: { gap: '4px' } },
@@ -10430,9 +11244,9 @@ function renderEnglishKnowledgeView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, 'Kiến thức & Mẫu câu Tiếng Anh'),
+    h('h1', { style: { margin: 0 } }, 'Kiến thức & Ngữ pháp Tiếng Anh'),
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      'Tổng hợp cấu trúc câu giao tiếp theo chủ đề, cụm từ thông dụng và cẩm nang mẹo học phản xạ.'
+      'Hệ thống ngữ pháp chuẩn khung tham chiếu Châu Âu CEFR (A1–C1) cùng cẩm nang mẹo học phản xạ thực chiến.'
     )
   );
 
@@ -10444,37 +11258,30 @@ function renderEnglishKnowledgeView() {
   );
 
   let body = null;
-  if (KNOWLEDGE_TAB === 'patterns') {
-    const topicsWithEx = (d.topics || []).filter((t) => (t.vocab || []).some((v) => v.ex));
-    const items = [];
-    topicsWithEx.forEach((t) => {
-      const sents = (t.vocab || []).filter((v) => v.ex).slice(0, 4);
-      items.push(h('div', { class: 'panel card stack', style: { gap: '8px', padding: '14px', borderRadius: '14px' } },
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('b', { style: { color: 'var(--teal)', fontSize: '1.05rem' } }, t.sub || t.title),
-          h('span', { class: 'chip accent', style: { fontSize: '.75rem' } }, (t.cat || 'A1').toUpperCase())
-        ),
-        ...sents.map((v) => h('div', {
-          class: 'panel stack',
-          style: { background: 'var(--sunk)', padding: '10px 12px', borderRadius: '10px', gap: '4px' }
-        },
-          h('div', { class: 'row between', style: { alignItems: 'center' } },
-            h('span', { style: { fontWeight: 700, fontSize: '.95rem', color: 'var(--ink)' } }, v.w + ' (' + v.m + ')'),
-            spk('en', v.ex)
-          ),
-          h('p', { style: { margin: 0, fontWeight: 600, fontSize: '1.05rem', color: 'var(--teal)' } }, v.ex),
-          v.exm && h('p', { class: 'small muted', style: { margin: 0 } }, v.exm),
-          v.d && h('p', { class: 'small', style: { margin: 0, color: 'var(--accent)' } }, '💡 Cấu trúc: ' + v.d)
-        ))
-      ));
-    });
-    body = h('div', { class: 'stack-lg' }, ...items);
+  if (KNOWLEDGE_TAB === 'gram') {
+    body = renderKnowledgeGrammar('en');
   } else {
     const tipsList = [
-      { t: '🎧 Bí quyết luyện nghe phản xạ', c: 'Nghe từng câu ngắn, tập lặp lại thành tiếng (shadowing). Tắm ngôn ngữ mỗi ngày 15-20 phút theo chủ đề bài học.' },
-      { t: '🎙️ Phương pháp luyện nói chuẩn bản ngữ', c: 'Tận dụng Micro AI trong từng bài học để kiểm tra độ chính xác phát âm %. Chú ý phát âm rõ âm đuôi (ending sounds) và nối âm.' },
-      { t: '📖 Kỹ năng đọc hiểu văn bản & email', c: 'Đọc theo cụm từ (chunking) thay vì dịch từng từ đơn lẻ. Chú ý các từ nối (linking words) để nắm cấu trúc ý chính.' },
-      { t: '✍️ Kỹ thuật viết câu và email công việc', c: 'Viết câu ngắn gọn, chuẩn cấu trúc S + V + O. Áp dụng ngay các từ vựng và mẫu câu đã học vào bài tập viết của từng chủ đề.' }
+      {
+        t: '🎧 Kỹ thuật Shadowing để luyện phản xạ nói & ngữ điệu tự nhiên',
+        c: 'Nghe người bản ngữ nói một câu ngắn (khoảng 3–5 giây), bấm dừng rồi lập tức lặp lại y hệt về tốc độ, ngữ điệu và trọng âm. Sau khi quen, nói đè (nói song song) cùng lúc với audio. Mỗi ngày chỉ cần 15–20 phút là phản xạ khẩu hình miệng sẽ tự nhiên hơn rất nhiều.'
+      },
+      {
+        t: '🎙️ Bí quyết phát âm: Bật rõ âm đuôi (Ending Sounds) & Nối âm (Connected Speech)',
+        c: 'Người Việt thường có xu hướng bỏ quên các âm đuôi quan trọng như /s/, /z/, /t/, /d/, /ed/, /ks/, làm biến đổi nghĩa của câu. Khi nói, hãy chủ động liên kết phụ âm cuối của từ trước với nguyên âm đầu của từ sau (ví dụ: "turn on" -> "tur-non", "hold on" -> "hol-don") để câu nói mượt mà, lưu loát.'
+      },
+      {
+        t: '✍️ Viết Email công việc chuẩn 4C – Tuyệt đối không dịch Word-by-Word',
+        c: 'Email giao việc, đối tác cần tuân thủ 4C: Clear (rõ ràng), Concise (ngắn gọn, đi thẳng vào mục đích), Correct (chuẩn ngữ pháp và tên riêng), Courteous (lịch sự, dùng Would/Could thay vì Can/Will). Đừng dịch câu tiếng Việt sang tiếng Anh từng chữ mà hãy dùng các cấu trúc mẫu tiêu chuẩn (ví dụ: "I am writing to inquire about...", "Please find attached the requested report").'
+      },
+      {
+        t: '📖 Đọc hiểu siêu tốc với kỹ thuật Skimming & Scanning',
+        c: 'Khi đọc tài liệu dài, hợp đồng hay bài thi IELTS: (1) Skimming: Lướt nhanh tiêu đề, câu đầu và câu cuối mỗi đoạn trong 30 giây để nắm đại ý toàn bài. (2) Scanning: Quét mắt tìm chính xác các từ khóa mỏ neo (tên riêng, số liệu năm tháng, thuật ngữ in hoa) để trả lời câu hỏi mà không cần đọc từng chữ.'
+      },
+      {
+        t: '🧠 Ghi nhớ từ vựng vĩnh viễn theo Collocation & Spaced Repetition',
+        c: 'Không học từ vựng đơn lẻ (VD: không học mỗi từ "decision", mà học cả cụm "make an informed decision"). Kết hợp ôn tập ngắt quãng (Spaced Repetition) ở tab Ôn tập để não bộ ghi nhớ sâu vào vùng trí nhớ dài hạn thay vì học vẹt rồi quên sau vài ngày.'
+      }
     ];
     body = h('div', { class: 'stack', style: { gap: '10px' } },
       ...tipsList.map((tip) => h('div', { class: 'panel card stack', style: { gap: '6px', padding: '14px', borderRadius: '12px' } },
@@ -10583,7 +11390,7 @@ function renderKnowledgeGrammar(code) {
         type: 'search',
         class: 'gram-search-input',
         style: { flex: 1, minHeight: '44px', padding: '10px 14px' },
-        placeholder: isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm kiếm ngữ pháp HSK 1–6, từ khóa, ví dụ...',
+        placeholder: code === 'en' ? '🔍 Tìm kiếm ngữ pháp A1–C1, công thức, ví dụ...' : (isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm kiếm ngữ pháp HSK 1–6, từ khóa, ví dụ...'),
         value: GQ_SEARCH[code] || '',
         oninput: (e) => {
           GQ_SEARCH[code] = e.target.value;
@@ -10596,16 +11403,16 @@ function renderKnowledgeGrammar(code) {
     ),
     h('div', { class: 'row', style: { flexWrap: 'wrap', gap: '6px' } },
       chip('all', 'Tất cả (' + pts.length + ')'),
-      ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (isJa ? lv : lv.replace('HSK ', '')) + ' (' + count(lv) + ')'))
+      ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (code === 'en' ? lv : (isJa ? lv : lv.replace('HSK ', ''))) + ' (' + count(lv) + ')'))
     ),
-    h('div', { class: 'panel stack', style: { background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
+    code !== 'en' ? h('div', { class: 'panel stack', style: { background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
       h('h2', { style: { margin: 0, fontSize: '1.05rem' } }, '🎯 Luyện Quiz Ngữ Pháp'),
       h('p', { class: 'small muted', style: { margin: '4px 0 8px 0' } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
       h('div', { class: 'row', style: { gap: '8px' } },
         h('button', { class: 'primary grow', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'Tất cả cấp' : sel)),
         nWrong > 0 ? h('button', { class: 'accent', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai') : null
       )
-    ),
+    ) : null,
     h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
       h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm ngữ pháp') : (shown.length + ' điểm ngữ pháp')),
       shown.length > 0 && h('button', { id: 'toggle-gram-btn', class: 'ghost mini', onclick: toggleAll }, 'Mở tất cả')
@@ -10616,7 +11423,7 @@ function renderKnowledgeGrammar(code) {
         x.g.t, ' ', h('span', { class: 'chip good', style: { fontSize: '.7rem' } }, x.lv)
       ),
       h('div', { class: 'gram', style: { marginTop: '8px' } },
-        h('p', { lang: langAttr, class: 'muted', style: { fontWeight: 500 } }, x.g.zh),
+        x.g.zh && h('p', { lang: langAttr, class: 'muted', style: { fontWeight: 500 } }, x.g.zh),
         x.g.f && h('p', { class: 'pat', lang: langAttr }, x.g.f),
         ...(x.g.notes || []).map((n) => h('p', { style: { margin: '4px 0' } }, n)),
         ...x.g.ex.map((e) => h('div', { class: 'ex', style: { margin: '6px 0', padding: '8px', background: 'var(--sunk)', borderRadius: '8px' } },
@@ -10624,7 +11431,7 @@ function renderKnowledgeGrammar(code) {
           h('p', { class: 'small read', style: { textAlign: 'left', margin: '2px 0' } }, e[1]),
           h('p', { class: 'small muted', style: { margin: 0 } }, e[2])
         )),
-        h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong bài: ' + x.topics.map((t) => t.sub || t.title).join(' · '))
+        (x.topics && x.topics.length ? h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong: ' + x.topics.map((t) => t.sub || t.title).join(' · ')) : null)
       )
     ))
   );
