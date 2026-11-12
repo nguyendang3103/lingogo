@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1150';
+const APP_BUILD_ID = '20261112-1205';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8032,7 +8032,17 @@ function lessonView(t, i) {
 
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, 'Tập viết'),
-        ex.v && h('p', { class: 'center' }, h('b', { lang: LANGS[code].lang }, plain(ex.v.w)), ' · ', ex.v.m, strokeChip),
+        ex.v && h('p', { class: 'center' }, plain(ex.v.w).length > 1 ? [
+          'Tập viết chữ ',
+          h('b', { style: { fontSize: '1.25rem', color: 'var(--teal)', margin: '0 4px' }, lang: LANGS[code].lang }, ex.ch),
+          h('span', { class: 'small muted' }, ' (trong từ ' + plain(ex.v.w) + ' · ' + ex.v.m + ')'),
+          strokeChip
+        ] : [
+          h('b', { lang: LANGS[code].lang }, plain(ex.v.w)),
+          ' · ',
+          ex.v.m,
+          strokeChip
+        ]),
         ex.k && h('p', { class: 'center' }, h('b', { lang: 'ja' }, ex.k.k), ' · ', ex.k.hv, strokeChip),
         wbox, strokeStepBadge, info,
         h('div', { class: 'listen' }, btnStroke, h('button', { onclick: () => startQuiz(true) }, 'Viết lại'), toggleOutlineBtn)
@@ -8049,7 +8059,6 @@ function lessonView(t, i) {
           btnStroke.textContent = 'Xem thứ tự nét (' + totalStrokes + ' nét)';
         }
         const size = wbox.clientWidth || 260;
-        strokePositions = getStrokePositions(data, size, size, 12);
         writer = HanziWriter.create(wbox, ex.ch, {
           width: size, height: size, padding: 12, showCharacter: false, showOutline: false,
           strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222',
@@ -9202,7 +9211,6 @@ function charView(code, c, list) {
       strokeInfoRow.hidden = false;
     }
     const css = getComputedStyle(document.documentElement), size = box.clientWidth || 280;
-    strokePositions = getStrokePositions(data, size, size, 14);
     writer = HanziWriter.create(box, c, {
       width: size, height: size, padding: 14, showCharacter: false, showOutline: false, strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250,
       strokeColor: css.getPropertyValue('--ink').trim(), outlineColor: guideColor(), drawingColor: css.getPropertyValue('--teal').trim(),
