@@ -781,7 +781,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-1505';
+const APP_BUILD_ID = '20261112-1510';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8860,17 +8860,11 @@ function reviewView() {
         show();
       };
       const contTop = h('button', {
-        class: 'primary block',
+        class: 'primary block next-btn',
         style: { fontSize: '1.05rem', fontWeight: '700', padding: '12px 16px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const contBottom = h('button', {
-        class: 'primary block',
-        style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
-        onclick: onNext
-      }, 'Tiếp theo ➔');
       const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
-      const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const bs = opts.map((o, j) => h('button', { 'aria-keyshortcuts': String(j + 1), onclick: () => {
         const ok = o === answer, sec = (Date.now() - t0r) / 1000, g = !ok ? 1 : sec <= 4 ? 4 : sec <= 10 ? 3 : 2;
@@ -8883,7 +8877,6 @@ function reviewView() {
         }, h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'), ' · ' + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại ngay hôm nay')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        bottomDock.hidden = false;
         contTop.focus();
       } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
 
@@ -8895,8 +8888,7 @@ function reviewView() {
           h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })),
           back
         ),
-        h('div', { class: 'options' }, bs),
-        bottomDock
+        h('div', { class: 'options' }, bs)
       ));
     }
 
@@ -8914,17 +8906,11 @@ function reviewView() {
         show();
       };
       const contTop = h('button', {
-        class: 'primary block',
+        class: 'primary block next-btn',
         style: { fontSize: '1.05rem', fontWeight: '700', padding: '12px 16px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const contBottom = h('button', {
-        class: 'primary block',
-        style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
-        onclick: onNext
-      }, 'Tiếp theo ➔');
       const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
-      const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const finishSpeak = (g, ok, scoreText) => {
         S.srs[k] = srsNext(s, g);
@@ -8936,7 +8922,6 @@ function reviewView() {
         }, h('strong', {}, ok ? 'Đạt yêu cầu!' : 'Chưa đạt.'), ' · ' + (scoreText ? scoreText + ' · ' : '') + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại sớm')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        bottomDock.hidden = false;
         contTop.focus();
       };
 
@@ -8967,8 +8952,7 @@ function reviewView() {
           h('div', { class: 'listen', style: { justifyContent: 'center' } }, spk(code, targetText, { cls: 'big' })),
           ctrl,
           resultBox
-        ),
-        bottomDock
+        )
       ));
     }
 
@@ -8986,17 +8970,11 @@ function reviewView() {
         show();
       };
       const contTop = h('button', {
-        class: 'primary block',
+        class: 'primary block next-btn',
         style: { fontSize: '1.05rem', fontWeight: '700', padding: '12px 16px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const contBottom = h('button', {
-        class: 'primary block',
-        style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
-        onclick: onNext
-      }, 'Tiếp theo ➔');
       const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
-      const bottomDock = h('div', { class: 'dock stack', hidden: true }, contBottom);
 
       const finishWrite = (g, ok, note) => {
         S.srs[k] = srsNext(s, g);
@@ -9008,7 +8986,6 @@ function reviewView() {
         }, h('strong', {}, ok ? 'Đạt nét chữ!' : 'Chưa đạt.'), ' · ' + (note ? note + ' · ' : '') + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại sớm')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        bottomDock.hidden = false;
         contTop.focus();
       };
 
@@ -9059,8 +9036,7 @@ function reviewView() {
             h('button', { class: 'ghost mini', onclick: () => finishWrite(3, true, 'Đã viết xong') }, 'Đã viết trên giấy (Đạt)'),
             h('button', { class: 'ghost mini', onclick: () => finishWrite(1, false, 'Chưa nhớ nét') }, 'Chưa nhớ nét (Ôn lại)')
           )
-        ),
-        bottomDock
+        )
       ));
     }
 
@@ -9130,11 +9106,6 @@ function reviewView() {
         style: { fontSize: '1.05rem', fontWeight: '700', padding: '12px 16px', borderRadius: '12px' },
         onclick: onNext
       }, 'Tiếp theo ➔');
-      const contBottom = h('button', {
-        class: 'primary block next-btn',
-        style: { fontSize: '1rem', fontWeight: '700', padding: '10px 14px', borderRadius: '12px' },
-        onclick: onNext
-      }, 'Tiếp theo ➔');
       const verdict = h('div', { 'aria-live': 'assertive' });
       const topDock = h('div', { class: 'stack', style: { gap: '8px' }, hidden: true }, contTop, verdict);
       const fb = h('div', { 'aria-live': 'polite' });
@@ -9155,11 +9126,6 @@ function reviewView() {
         contTop.focus();
 
         fb.replaceChildren(
-          h('div', { style: { margin: '0 0 8px 0' } }, contBottom),
-          h('div', { class: 'feedback ' + (ok ? 'ok' : 'no') },
-            h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'),
-            ok ? (' · Ôn lại sau ' + ivText(S.srs[k])) : (' Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer) + ' · Ôn lại sớm')
-          ),
           h('div', { class: 'panel gram', style: { gap: '8px' } },
             h('div', { class: 'ex' },
               h('p', { lang: langAttr }, q.e[0], ' ', spk(code, q.e[0])),
