@@ -1655,6 +1655,11 @@ function parseSrsKey(k, code) {
   if (rest.startsWith('gram:')) {
     const gid = rest.slice(5);
     const d = DATA[code];
+    if (code === 'en') {
+      const it = (cardIndex(code) || {})[gid];
+      if (it && it.v && it.v.ex) return { skill: 'gram', key: k, id: gid, it };
+      return null;
+    }
     const gr = (grammarIndex(code) || {})[gid] || (d && d.grammar && d.grammar[gid] ? { gid, g: d.grammar[gid], lv: d.grammar[gid].lv } : null);
     if (!gr) return null;
     return { skill: 'gram', key: k, id: gid, it: gr };
@@ -1700,14 +1705,20 @@ function isLearned(code, parsed) {
     return !!(S.written && (S.written[sid(code, ch)] || 0) > 0);
   }
 
-  // 4. NGỮ PHÁP: Chỉ những điểm ngữ pháp của chủ đề đã học bài quiz/review hoặc đã làm quiz trong tab ngữ pháp
+  // 4. NGỮ PHÁP: Chỉ những điểm ngữ pháp của chủ đề đã học bài (bất kỳ bài học nào trong chủ đề) hoặc đã làm quiz trong tab ngữ pháp
   if (parsed.skill === 'gram') {
+    if (code === 'en') {
+      const it = parsed.it; if (!it || !it.v) return false;
+      const vId = it.v.id, t = it.t;
+      if (!t || !t.lessons) return false;
+      return t.lessons.some((l, i) => lessonDone(t, i) && l.words && l.words.some((w) => w.id === vId));
+    }
     const gid = parsed.id;
     const allPts = grammarPoints(code);
     const p = allPts.find((x) => x.gid === gid);
     if (!p) return false;
     const hasStudiedTopic = p.topics.some((t) => {
-      return t.lessons.some((l, i) => lessonDone(t, i) && (l.kind === 'quiz' || l.kind === 'review' || (t.lessons.length > 2 && i >= 1)));
+      return t.lessons.some((l, i) => lessonDone(t, i));
     });
     const hasGq = S.gq && (
       (S.gq.best && (S.gq.best[code + ':' + p.lv] != null || S.gq.best[code + ':topic'] != null)) ||
@@ -1741,11 +1752,23 @@ function ensureSrsItems(code) {
       }
     });
 
-    const gramDone = t.lessons.some((l, i) => lessonDone(t, i) && (l.kind === 'quiz' || l.kind === 'review'));
-    if (gramDone && t.gram && d.grammar) {
+    const hasAnyDone = t.lessons.some((l, i) => lessonDone(t, i));
+    if (hasAnyDone && t.gram && d.grammar) {
       t.gram.forEach((gid) => {
         const k = code + ':gram:' + gid;
         if (!S.srs[k] && d.grammar[gid]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+      });
+    }
+    if (hasAnyDone && code === 'en') {
+      t.lessons.forEach((l, i) => {
+        if (lessonDone(t, i)) {
+          (l.words || []).forEach((w) => {
+            if (w.ex) {
+              const k = code + ':gram:' + w.id;
+              if (!S.srs[k]) S.srs[k] = { b: 1, due: t0, last: t0 - 1 };
+            }
+          });
+        }
       });
     }
   });
@@ -7607,17 +7630,108 @@ function wordBlock(code, v, opts = {}) {
     code !== 'en' && !opts.hideMeaning && !opts.hideHv && hvBlock(code, v),
     !opts.hideMeaning && h('p', {}, h('b', {}, v.m), v.d && code === 'en' && h('span', { class: 'small muted', style: { display: 'block' } }, v.d)));
 }
+function renderHighlightedEx(text, word, langAttr) {
+  if (!text) return null;
+  const w = plain(word || '').trim();
+  if (!w) return h('span', { lang: langAttr }, text);
+  const escaped = w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  try {
+    const reg = new RegExp('(' + escaped + ')', 'gi');
+    const parts = text.split(reg);
+    return h('span', { lang: langAttr },
+      ...parts.map((p) => {
+        if (p.toLowerCase() === w.toLowerCase()) {
+          return h('span', {
+            style: {
+              color: 'var(--teal)',
+              fontWeight: '700',
+              textDecoration: 'underline',
+              textUnderlineOffset: '3px'
+            }
+          }, p);
+        }
+        return p;
+      })
+    );
+  } catch (e) {
+    return h('span', { lang: langAttr }, text);
+  }
+}
+
+function grammarTipForWord(code, v) {
+  if (!v) return null;
+  const d = DATA[code];
+  if (!d) return null;
+  let topic = null;
+  if (d.topics) {
+    for (const t of d.topics) {
+      if (t.vocab && t.vocab.some((w) => w.id === v.id)) {
+        topic = t;
+        break;
+      }
+    }
+  }
+  if (!topic) return null;
+  if ((code === 'zh' || code === 'ja') && topic.gram && topic.gram.length && d.grammar) {
+    const gid = topic.gram[0];
+    const g = d.grammar[gid];
+    if (g) {
+      return h('div', {
+        class: 'chip accent',
+        style: { alignSelf: 'flex-start', fontSize: '.78rem', marginTop: '4px', maxWidth: '100%', whiteSpace: 'normal', textAlign: 'left', lineHeight: 1.4 }
+      }, '💡 Cấu trúc: ' + (g.f ? g.f + ' · ' : '') + g.t);
+    }
+  }
+  if (code === 'en' && v.d) {
+    return h('div', {
+      class: 'chip accent',
+      style: { alignSelf: 'flex-start', fontSize: '.78rem', marginTop: '4px', maxWidth: '100%', whiteSpace: 'normal', textAlign: 'left', lineHeight: 1.4 }
+    }, '💡 Cấu trúc: ' + v.d);
+  }
+  return null;
+}
+
 function itemCard(code, v, tip) {
+  const gTip = grammarTipForWord(code, v);
   return h('div', { class: 'panel stack center' },
     h('p', { class: 'label' }, 'Từ mới · nghe và đọc to theo'),
     wordBlock(code, v),
     listenBtns(code, v.w),
     tip && code !== 'en' && hvParts(code, v.w).some((x) => x.hv) && h('p', { class: 'small muted' }, 'Mẹo: gắn nghĩa với âm Hán Việt (từ gốc Hán trong tiếng Việt) trước, rồi mới học cách đọc.'),
-    v.ex && h('div', { class: 'stack', style: { gap: '2px' } },
-      h('p', { lang: LANGS[code].lang }, '“' + v.ex + '”'),
-      v.exr && h('p', { class: 'small read' }, v.exr),
-      v.exm && h('p', { class: 'small muted' }, v.exm),
-      h('div', { class: 'listen' }, spk(code, v.ex))));
+    v.ex && h('div', {
+      class: 'panel stack',
+      style: {
+        marginTop: '12px',
+        padding: '12px 14px',
+        background: 'rgba(15,82,87,.07)',
+        border: '1px solid var(--line)',
+        borderRadius: '12px',
+        gap: '6px',
+        width: '100%',
+        boxSizing: 'border-box',
+        textAlign: 'left'
+      }
+    },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:'),
+        listenBtns(code, v.ex)
+      ),
+      h('p', {
+        lang: LANGS[code].lang,
+        style: { fontSize: '1.15rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
+      }, renderHighlightedEx(v.ex, v.w, LANGS[code].lang)),
+      v.exr && h('p', {
+        class: code === 'en' ? 'ipa' : 'read',
+        lang: code === 'ja' ? 'ja' : null,
+        style: { margin: 0, fontSize: '1rem', color: 'var(--teal)', fontWeight: 500 }
+      }, v.exr),
+      v.exm && h('p', {
+        class: 'small muted',
+        style: { margin: 0, fontSize: '.95rem', lineHeight: 1.4 }
+      }, v.exm),
+      gTip
+    )
+  );
 }
 function getOrderPinyin(code, ex) {
   if (ex.r) return ex.r;
@@ -7645,6 +7759,7 @@ function orderFeedback(code, ex, r) {
       style: { fontSize: '1.12rem', color: 'var(--teal)', fontWeight: 600, margin: '2px 0 0 0', textAlign: 'left', letterSpacing: '.25px', lineHeight: 1.45 }
     }, pinyinOrRead) : null,
     transText ? h('p', { class: 'order-trans', style: { fontSize: '1.05rem', color: 'var(--ink)', fontWeight: 500, margin: '4px 0 0 0', textAlign: 'left', lineHeight: 1.4 } }, labelPrefix + transText) : null,
+    ex.v && grammarTipForWord(code, ex.v),
     h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } },
       listenBtns(code, ex.text)
     )
@@ -7846,6 +7961,14 @@ function buildSteps(t, i) {
   const opt = (v, field) => shuffle([v, ...sample(topicWords.length >= 6 ? topicWords : allWords, 3, (x) => x.id === v.id || x[field] === v[field])]);
   if (l.kind === 'learn') {
     l.words.forEach((v, n0) => steps.push({ type: 'intro', v, tip: n0 === 0 }));
+    // Lồng thẻ ngữ pháp vào bài học sớm để người học nắm cấu trúc câu
+    let currentGid = null;
+    if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
+      const learnIdx = t.lessons.slice(0, i).filter((x) => x.kind === 'learn').length;
+      currentGid = t.gram[learnIdx % t.gram.length];
+      const g = d.grammar[currentGid];
+      if (g) steps.push({ type: 'gintro', gid: currentGid, g });
+    }
     shuffle(l.words).forEach((v) => steps.push({ type: 'meaning', v, opts: opt(v, 'm') }));
     if (code !== 'en') { // Hán Việt của từng chữ trong từ
       const chars = [...new Map(l.words.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
@@ -7864,22 +7987,65 @@ function buildSteps(t, i) {
     }
     sample(l.words, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
     sample(l.words, 2).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
+    
+    // LỒNG CÁC BÀI TẬP ĐẶT CÂU & NGỮ PHÁP
     const withEx = l.words.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3);
-    if (withEx.length) { const v = withEx[0]; steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }); }
-    else if (t.sents && t.sents.length) { const s = t.sents[i % t.sents.length]; steps.push({ type: 'order', text: s.chunks.join(''), r: s.r, trans: s.m || s.trans || '', tokens: s.chunks, raw: s.raw, s }); }
+    const orderWords = withEx.length ? withEx.slice(0, Math.min(3, withEx.length)) : [];
+    orderWords.forEach((v) => {
+      steps.push({
+        type: 'order',
+        text: v.ex,
+        r: v.exr,
+        trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'),
+        tokens: tokensOf(code, v.ex),
+        v
+      });
+    });
+    if (!orderWords.length && t.sents && t.sents.length) {
+      const s = t.sents[i % t.sents.length];
+      steps.push({
+        type: 'order',
+        text: s.chunks.join(''),
+        r: s.r,
+        trans: s.m || s.trans || '',
+        tokens: s.chunks,
+        raw: s.raw,
+        s
+      });
+    }
+
+    // Bài tập trắc nghiệm ngữ pháp
+    if ((code === 'zh' || code === 'ja') && currentGid && d.grammar) {
+      const qStep = makeGrammarQuizStep(code, currentGid);
+      if (qStep) steps.push(qStep);
+    } else if (code === 'en' && withEx.length) {
+      const vTarget = withEx[withEx.length - 1];
+      const plainWord = plain(vTarget.w);
+      const regexW = new RegExp('\\b' + plainWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+      if (regexW.test(vTarget.ex)) {
+        const prompt = vTarget.ex.replace(regexW, '＿＿＿＿＿＿');
+        const distPool = sample(allWords.filter((x) => x.id !== vTarget.id && x.w && plain(x.w) !== plainWord), 3).map((x) => plain(x.w));
+        if (distPool.length === 3) {
+          steps.push({
+            type: 'gquiz',
+            q: {
+              type: 'cloze',
+              label: 'Điền từ đúng vào cấu trúc câu',
+              prompt,
+              hint: vTarget.exm || vTarget.m,
+              answer: plainWord,
+              opts: shuffle([plainWord, ...distPool]),
+              e: [vTarget.ex, vTarget.exr || '', vTarget.exm || ''],
+              p: { g: { t: 'Cấu trúc câu: ' + (vTarget.d || vTarget.w), f: '', notes: [] } }
+            }
+          });
+        }
+      }
+    }
+
     if (LANGS[code].cjk) {
       const chs = [...new Set(l.words.map((v) => firstCjk(code, v.w)).filter(Boolean))];
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
-    }
-    if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
-      const learnIdx = t.lessons.slice(0, i).filter((x) => x.kind === 'learn').length;
-      const gid = t.gram[learnIdx % t.gram.length];
-      const g = d.grammar[gid];
-      if (g) {
-        steps.push({ type: 'gintro', gid, g });
-        const qStep = makeGrammarQuizStep(code, gid);
-        if (qStep) steps.push(qStep);
-      }
     }
     const sp = l.words.find((v) => v.ex) || l.words[0];
     if (sp) steps.push({ type: 'speak', text: sp.ex || sp.w, r: sp.ex ? sp.exr : sp.r, m: sp.ex ? sp.exm : sp.m });
@@ -8440,7 +8606,8 @@ function reviewView() {
     ['all', 'Tất cả'],
     ['vocab', 'Từ vựng'],
     ['speak', 'Nói'],
-    ...(code !== 'en' ? [['write', 'Luyện viết'], ['gram', 'Ngữ pháp']] : [])
+    ...(code !== 'en' ? [['write', 'Luyện viết']] : []),
+    ['gram', 'Ngữ pháp']
   ];
 
   const counts = {};
@@ -8541,22 +8708,71 @@ function reviewView() {
       if (it.v) {
         const v = it.v; sayText = v.w;
         front = h('div', { class: 'big', lang: L().lang }, plain(v.w));
-        back = h('div', { class: 'stack', hidden: true },
+        const gTip = grammarTipForWord(code, v);
+        back = h('div', { class: 'stack', hidden: true, style: { gap: '8px', marginTop: '8px' } },
           v.r && (v.r !== v.w ? h('div', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null }, v.r) : null),
+          h('p', { style: { fontSize: '1.25rem', fontWeight: 700, margin: '2px 0' } }, v.m),
+          v.d && code === 'en' && h('p', { class: 'small muted', style: { margin: 0 } }, v.d),
           code !== 'en' && hvBlock(code, v),
-          h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, v.m),
-          v.d && code === 'en' && h('p', { class: 'small muted' }, v.d),
-          v.ex && h('p', { lang: L().lang }, '“' + v.ex + '”'),
-          v.exr && h('p', { class: 'small read' }, v.exr),
-          v.exm && h('p', { class: 'small muted' }, v.exm)
+          v.ex && h('div', {
+            class: 'panel stack',
+            style: {
+              background: 'rgba(15,82,87,.07)',
+              border: '1px solid var(--line)',
+              borderRadius: '12px',
+              padding: '12px 14px',
+              gap: '6px',
+              marginTop: '6px',
+              textAlign: 'left'
+            }
+          },
+            h('div', { class: 'row between', style: { alignItems: 'center' } },
+              h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu kết hợp ngữ pháp:'),
+              listenBtns(code, v.ex)
+            ),
+            h('p', {
+              lang: L().lang,
+              style: { fontSize: '1.15rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
+            }, renderHighlightedEx(v.ex, v.w, L().lang)),
+            v.exr && h('p', {
+              class: code === 'en' ? 'ipa' : 'read',
+              lang: code === 'ja' ? 'ja' : null,
+              style: { margin: 0, fontSize: '1rem', color: 'var(--teal)', fontWeight: 500 }
+            }, v.exr),
+            v.exm && h('p', {
+              class: 'small muted',
+              style: { margin: 0, fontSize: '.95rem', lineHeight: 1.4 }
+            }, v.exm),
+            gTip
+          )
         );
       } else {
         const kj = it.k; sayText = kj.ex && kj.ex[0] ? plain(kj.ex[0][0]) : kj.k;
         front = h('div', { class: 'big', lang: 'ja' }, kj.k);
-        back = h('div', { class: 'stack', hidden: true },
-          h('p', { style: { fontSize: '1.2rem', fontWeight: 600 } }, kj.hv),
-          h('p', { class: 'small', lang: 'ja' }, 'On: ' + kj.on + ' · Kun: ' + kj.kun),
-          ...(kj.ex || []).slice(0, 3).map((e) => h('p', { class: 'small', lang: 'ja' }, ruby(e[0]), ' · ', h('span', { class: 'muted' }, e[1])))
+        back = h('div', { class: 'stack', hidden: true, style: { gap: '8px', marginTop: '8px' } },
+          h('p', { style: { fontSize: '1.3rem', fontWeight: 700, margin: '2px 0' } }, kj.hv + (kj.m ? ' (' + kj.m + ')' : '')),
+          h('p', { class: 'small', lang: 'ja', style: { color: 'var(--teal)', fontWeight: 600 } }, 'On: ' + kj.on + ' · Kun: ' + kj.kun),
+          kj.ex && kj.ex.length && h('div', {
+            class: 'panel stack',
+            style: {
+              background: 'rgba(15,82,87,.07)',
+              border: '1px solid var(--line)',
+              borderRadius: '12px',
+              padding: '12px 14px',
+              gap: '6px',
+              marginTop: '6px',
+              textAlign: 'left'
+            }
+          },
+            h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Từ ghép & Ví dụ đặt câu:'),
+            ...kj.ex.slice(0, 3).map((e) => h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px' } },
+              h('div', { class: 'stack', style: { gap: '2px' } },
+                h('p', { class: 'small', lang: 'ja', style: { fontSize: '1rem', margin: 0, fontWeight: 600 } }, ruby(e[0])),
+                h('p', { class: 'small muted', style: { margin: 0 } }, e[1])
+              ),
+              spk('ja', plain(e[0]))
+            ))
+          )
         );
       }
       const pool = Object.values(cardIndex(code)), t0r = Date.now();
@@ -8778,16 +8994,55 @@ function reviewView() {
     // 4. NGỮ PHÁP
     if (item.skill === 'gram') {
       const p = item.it;
-      const g = p.g || (DATA[code].grammar && DATA[code].grammar[p.gid]);
-      if (!g) {
-        queue.shift(); show(); return;
+      let g = p.g || (DATA[code].grammar && DATA[code].grammar[p.gid]);
+      let q = null;
+      if (code === 'en') {
+        const v = p.v;
+        if (!v || !v.ex) { queue.shift(); show(); return; }
+        const plainWord = plain(v.w);
+        const tokens = tokensOf('en', v.ex);
+        const allWords = (DATA.en.topics || []).flatMap((t) => t.vocab || []);
+        const isCloze = Math.random() < 0.5;
+        const regexW = new RegExp('\\b' + plainWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+        if (isCloze && regexW.test(v.ex)) {
+          const dist = sample(allWords.filter((w) => w.id !== v.id && w.w && plain(w.w) !== plainWord), 3).map((w) => plain(w.w));
+          q = {
+            type: 'cloze',
+            label: 'Điền từ đúng vào cấu trúc câu',
+            prompt: v.ex.replace(regexW, '＿＿＿＿＿＿'),
+            hint: v.exm || v.m,
+            answer: plainWord,
+            opts: shuffle([plainWord, ...dist]),
+            e: [v.ex, v.exr || '', v.exm || '']
+          };
+        } else {
+          let bank = shuffle(tokens.map((t, k) => ({ t, k })));
+          for (let n = 0; n < 6 && bank.every((b, i) => b.k === i); n++) bank = shuffle(bank);
+          q = {
+            type: 'order',
+            label: 'Sắp xếp các từ thành câu đúng',
+            prompt: v.exm || ('Câu có từ “' + plainWord + '” (' + v.m + ')'),
+            bank,
+            answer: tokens.join(' '),
+            e: [v.ex, v.exr || '', v.exm || '']
+          };
+        }
+        g = {
+          t: 'Cấu trúc câu: ' + (v.d || plainWord),
+          f: v.w + ' (' + v.m + ')',
+          notes: v.d ? [v.d] : []
+        };
+      } else {
+        if (!g) {
+          queue.shift(); show(); return;
+        }
+        const all = grammarPoints(code);
+        const pool = [...new Set(all.flatMap((x) => gqKeywords(x.g)))];
+        q = gqMake(p, all, pool) || {
+          type: 'cloze', p, e: g.ex[0], label: 'Điền từ đúng',
+          prompt: g.ex[0][0], hint: g.ex[0][2], answer: gqKeywords(g)[0] || '', opts: [gqKeywords(g)[0] || '', 'không', 'đã', 'sẽ']
+        };
       }
-      const all = grammarPoints(code);
-      const pool = [...new Set(all.flatMap((x) => gqKeywords(x.g)))];
-      const q = gqMake(p, all, pool) || {
-        type: 'cloze', p, e: g.ex[0], label: 'Điền từ đúng',
-        prompt: g.ex[0][0], hint: g.ex[0][2], answer: gqKeywords(g)[0] || '', opts: [gqKeywords(g)[0] || '', 'không', 'đã', 'sẽ']
-      };
 
       const langAttr = LANGS[code].lang;
       let done = false;
@@ -8867,7 +9122,7 @@ function reviewView() {
         const ans = h('div', { class: 'tokens answer', lang: langAttr, 'aria-label': 'Câu của bạn' }), poolTokens = h('div', { class: 'tokens', lang: langAttr });
         const checkBtn = h('button', { class: 'primary block next-btn', disabled: true, onclick: () => {
           if (done) return;
-          const ok = chosen.map((c) => c.t).join('') === q.answer;
+          const ok = code === 'en' ? chosen.map((c) => c.t).join(' ') === q.answer : chosen.map((c) => c.t).join('') === q.answer;
           checkBtn.hidden = true;
           ans.classList.add(ok ? 'right' : 'wrong');
           revealGrammar(ok);
