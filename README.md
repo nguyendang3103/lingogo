@@ -6,21 +6,20 @@
 
 ---
 
-App học tiếng Anh thương mại, tiếng Trung và tiếng Nhật trong một chỗ: lộ trình theo chủ đề, ôn tập ngắt quãng (SRS), luyện nói và tập viết chữ Hán, kana.
+App học Tiếng Anh (IELTS & Giao tiếp), Tiếng Trung (HSK) và Tiếng Nhật (JLPT) trong một giao diện hợp nhất: lộ trình theo chủ đề, ôn tập ngắt quãng (SRS), luyện phát âm chấm điểm AI, luyện viết chữ Hán / Kanji và luyện đề thi.
 
-- **Link chạy trực tiếp:** https://nguyendang3103.github.io/lingogo/
-- **Kho tri thức & ghi chú học tập:** Nằm trong thư mục `notes/` (`English Practice.md`, `Chinese Practice.md`, `Japanese Practice.md`).
+## Cấu trúc thư mục phân tách theo từng ngôn ngữ
 
-## Cấu trúc thư mục
+Toàn bộ tài nguyên được phân loại độc lập theo từng ngôn ngữ, giúp dễ dàng sao chép, trích xuất hoặc tái sử dụng cho các ứng dụng chuyên biệt khác:
 
-| Đường dẫn | Là gì |
-| --- | --- |
-| `index.html` | App web SPA chạy độc lập cho GitHub Pages và trình duyệt di động (PWA). |
-| `data/` | Dữ liệu bài học: `en.json` (32 chủ đề tiếng Anh), `zh.json` (45 chủ đề tiếng Trung), `ja.json` (16 bài tiếng Nhật N5), `strokes-*.json` (nét vẽ). |
-| `audio/` | Các gói âm thanh MP3 mã hóa base64 theo chủ đề. |
-| `tools/` | Các công cụ xử lý dữ liệu: `inline.py` (nhúng data vào HTML cho Claude/iPad), `add_hanviet.py`, `add_fill_pinyin.py`, `add_n5_extras.py`, `build.py`, `gen_ja_audio.py`. |
-| `source/` | Dữ liệu nguồn và bản xuất trung gian phục vụ các script trong `tools/`. |
-| `vendor/` | Dữ liệu nét chữ animCJK gốc. |
+| Thư mục | Nội dung | Mục đích |
+| --- | --- | --- |
+| 🇬🇧 **`English/`** | Toàn bộ tài nguyên tiếng Anh: `data/` (bài học `en.json`, `ielts_30day_listening.*`), `audio/` (gói audio base64 `w*.json`, file nghe đọc `mail/en-*.mp3`), `notes/` (`English Practice.md`), `source/`, `tools/` | Gói độc lập cho app học Tiếng Anh / IELTS |
+| 🇨🇳 **`Chinese/`** | Toàn bộ tài nguyên tiếng Trung: `data/` (bài học HSK 1–6 `zh.json`, nét chữ Hán `strokes-zh.json`), `audio/` (`zh-*.json`, `mail/zh-*.mp3`), `notes/` (`Chinese Practice.md`), `source/`, `tools/` | Gói độc lập cho app học Tiếng Trung HSK |
+| 🇯🇵 **`Japanese/`** | Toàn bộ tài nguyên tiếng Nhật: `data/` (bài học N5–N1 `ja.json`, nét Kanji/Kana `strokes-ja.json`), `audio/` (`ja-*.json`, `mail/ja-*.mp3`), `notes/` (`Japanese Practice.md`), `source/`, `tools/`, `vendor/` | Gói độc lập cho app học Tiếng Nhật JLPT |
+| 🌐 **`index.html`** | Ứng dụng web SPA Lingogo đa ngôn ngữ chính (GitHub Pages / PWA). | Hub tích hợp cả 3 ngôn ngữ |
+| 🛠️ **`tools/`** | Các công cụ tiện ích dùng chung (build, inline, migrate, kiểm tra lỗi). | Tiện ích hỗ trợ |
+| 📝 **`notes/`** | `Lịch học 3 ngôn ngữ.md` và các ghi chú tổng hợp. | Kế hoạch học tập |
 
 ## Chạy thử trên máy tính (Local)
 
@@ -34,10 +33,3 @@ App hỗ trợ đồng bộ tự động 2 chiều giữa nhiều thiết bị (
 - Bấm biểu tượng **🔄 Đồng bộ** trên app.
 - Nhập **GitHub Personal Access Token** (chỉ cần quyền `gist`).
 - Tiến độ bài học, điểm XP, chuỗi ngày streak và danh sách SRS sẽ tự động lưu và đồng bộ ngầm mỗi khi bạn học.
-
-## Đóng gói cho Claude Artifact / iPad (tránh lỗi 403 CORS)
-
-```bash
-python tools/inline.py index-inline.html
-```
-File `index-inline.html` tạo ra có nhúng sẵn dữ liệu, dùng để dán hoặc publish vào Claude Artifact.

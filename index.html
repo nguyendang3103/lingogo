@@ -742,7 +742,7 @@ body { overflow-x: hidden; }
 <nav class="tabs" id="tabs" aria-label="Điều hướng" hidden></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js"></script>
-<script src="data/ielts_30day_listening.js"></script>
+<script src="English/data/ielts_30day_listening.js"></script>
 <script>
 'use strict';
 /* =====================================================================
@@ -750,12 +750,13 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0930';
+const APP_BUILD_ID = '20261112-0940';
 const LANGS = {
-  en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
-  zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
-  ja: { label: '日本語', short: 'Nhật', tts: 'ja-JP', rec: 'ja-JP', lang: 'ja', cjk: true },
+  en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
+  zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
+  ja: { label: '日本語', short: 'Nhật', folder: 'Japanese', tts: 'ja-JP', rec: 'ja-JP', lang: 'ja', cjk: true },
 };
+const langFolder = (code) => (LANGS[code] && LANGS[code].folder) || (code === 'en' ? 'English' : (code === 'zh' ? 'Chinese' : 'Japanese'));
 
 // ===== Trạng thái học tập (lưu trên máy + đồng bộ tài khoản khi có) =====
 const KEY = 'noiduoc-v2'; // giữ khóa cũ để không mất tiến độ đã lưu trên máy
@@ -1098,7 +1099,8 @@ async function getJSON(path) {
 }
 async function loadLang(code) {
   if (!DATA[code]) {
-    const d = await getJSON('data/' + code + '.json');
+    const fld = langFolder(code);
+    const d = await getJSON(fld + '/data/' + code + '.json');
     d.topics.forEach((t) => { t.lang = code; t.lessons = planTopic(d, t); });
     DATA[code] = d;
     remapLessons(d);
@@ -1107,7 +1109,8 @@ async function loadLang(code) {
 }
 async function loadStrokes(code) {
   if (!STROKES[code]) {
-    try { STROKES[code] = await getJSON('data/strokes-' + code + '.json'); } catch (e) { STROKES[code] = {}; }
+    const fld = langFolder(code);
+    try { STROKES[code] = await getJSON(fld + '/data/strokes-' + code + '.json'); } catch (e) { STROKES[code] = {}; }
   }
   return STROKES[code];
 }
@@ -1210,7 +1213,8 @@ if ('speechSynthesis' in window) { pickVoices(); speechSynthesis.onvoiceschanged
 function bundleOf(code, text) {
   const d = DATA[code]; if (!d || !d.audio) return null;
   const a = d.audio[text]; if (a == null) return null;
-  return code === 'en' ? { file: 'audio/w' + a[0] + '.json', key: a[1] } : { file: 'audio/' + code + '-' + a + '.json', key: text };
+  const fld = langFolder(code);
+  return code === 'en' ? { file: fld + '/audio/w' + a[0] + '.json', key: a[1] } : { file: fld + '/audio/' + code + '-' + a + '.json', key: text };
 }
 async function clipFor(code, text) {
   const b = bundleOf(code, text); if (!b) return null;
@@ -9104,7 +9108,11 @@ function charView(code, c, list) {
 function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
   const spoken = full.replace(/^[AB][：:]\s*/gm, '');
-  const mailSrc = fill.audio || (tid ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  const fld = langFolder(code);
+  let mailSrc = fill.audio || (tid ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  if (mailSrc && mailSrc.startsWith('audio/')) {
+    mailSrc = fld + '/' + mailSrc;
+  }
   const badgeLabel = code === 'zh' ? '🎧 Giọng người Trung Quốc đọc' : (code === 'en' ? '🎧 Giọng Studio người thật' : '🎧 Giọng bản xứ');
   return h('div', { class: 'panel stack', style: { gap: '8px' } },
     h('div', { class: 'row between', style: { alignItems: 'center' } },
