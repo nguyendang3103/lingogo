@@ -428,6 +428,17 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
 /* ===== GIAO DIỆN IELTS & MOBILE RESPONSIVE ===== */
 #app { max-width: 560px; margin: 0 auto; overflow-x: hidden; width: 100%; box-sizing: border-box; }
 body { overflow-x: hidden; }
+.ielts-speak-recorder {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 6px 0;
+}
+.ielts-speak-recorder.recording {
+  border-color: var(--bad);
+  background: rgba(176, 61, 43, 0.04);
+}
 .ielts-mode-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -739,7 +750,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261112-0835';
+const APP_BUILD_ID = '20261112-0840';
 const LANGS = {
   en: { label: 'English', short: 'Anh', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1742,7 +1753,7 @@ const TABS = [
   ['home', 'Học', ICON.home],
   ['speak', 'Nói', ICON.speak],
   ['write', 'Viết', ICON.pen],
-  ['ielts', 'IELTS', ICON.book],
+  ['ielts', 'Luyện IELTS', ICON.book],
   ['grammar', 'Ngữ pháp', ICON.book],
   ['progress', 'Tiến độ', ICON.chart]
 ];
@@ -6810,6 +6821,135 @@ function renderIeltsListening(t, data) {
   );
 }
 
+// Bộ ghi âm & nhận diện giọng nói cho IELTS Speaking
+function createIeltsSpeechRecorder(promptText, sampleAnswer, onFinished) {
+  const box = h('div', { class: 'ielts-speak-recorder stack' });
+  let isRecording = false;
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let stream = null;
+  let timerInterval = null;
+  let seconds = 0;
+  let recognizedText = '';
+
+  const statusLabel = h('p', { class: 'small muted', style: { margin: '0' } }, 'Bấm Micro để ghi âm câu trả lời của bạn:');
+  const timerBadge = h('span', { class: 'chip small', style: { display: 'none', background: 'var(--bad)', color: '#fff', fontWeight: 700 } }, '● Đang ghi âm: 00:00');
+  const transcriptEl = h('div', { class: 'small', style: { display: 'none', background: 'rgba(15, 82, 87, 0.05)', padding: '8px 10px', borderRadius: '8px', lineHeight: 1.5, margin: '4px 0' } });
+  const audioPlayerWrap = h('div', { style: { display: 'none', margin: '4px 0' } });
+
+  const recordBtn = h('button', {
+    class: 'primary mini',
+    style: { display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 600 },
+    onclick: async () => {
+      if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+  }, '🎙️ Bấm để ghi âm');
+
+  async function startRecording() {
+    isRecording = true;
+    box.className = 'ielts-speak-recorder recording stack';
+    recordBtn.className = 'accent mini';
+    recordBtn.textContent = '⏹ Dừng ghi âm';
+    timerBadge.style.display = 'inline-block';
+    statusLabel.textContent = 'Đang ghi âm... Hãy nói to và rõ câu trả lời vào micro:';
+    transcriptEl.style.display = 'block';
+    transcriptEl.textContent = 'Đang nhận diện giọng nói...';
+    audioPlayerWrap.style.display = 'none';
+
+    seconds = 0;
+    timerBadge.textContent = '● Đang ghi âm: 00:00';
+    timerInterval = setInterval(() => {
+      seconds++;
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      timerBadge.textContent = '● Đang ghi âm: ' + m + ':' + s;
+    }, 1000);
+
+    // Thu âm bằng MediaRecorder nếu trình duyệt hỗ trợ
+    recordedChunks = [];
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+        };
+        mediaRecorder.onstop = () => {
+          const mime = (mediaRecorder && mediaRecorder.mimeType) || 'audio/webm';
+          const blob = new Blob(recordedChunks, { type: mime });
+          const url = URL.createObjectURL(blob);
+          const aud = h('audio', { controls: 'controls', src: url, style: { width: '100%', height: '36px', marginTop: '4px' } });
+          audioPlayerWrap.replaceChildren(
+            h('p', { class: 'small muted', style: { margin: '2px 0', fontWeight: 600 } }, '🎧 Nghe lại phần nói vừa ghi âm của bạn:'),
+            aud
+          );
+          audioPlayerWrap.style.display = 'block';
+          if (stream) {
+            try { stream.getTracks().forEach(t => t.stop()); } catch (e) {}
+          }
+        };
+        mediaRecorder.start();
+      } catch (err) {
+        console.log('MediaRecorder info:', err);
+      }
+    }
+
+    // Nhận diện chữ viết bằng Web Speech API
+    tryListen('en', (interim) => {
+      if (isRecording) {
+        transcriptEl.textContent = interim;
+      }
+    }).then((said) => {
+      if (said) {
+        recognizedText = said;
+        const words = said.trim().split(/\s+/).length;
+        transcriptEl.replaceChildren(
+          h('p', { style: { margin: 0, fontWeight: 600 } }, '🗣️ Máy nghe được: “' + said + '”'),
+          h('div', { class: 'row between wrap', style: { marginTop: '4px', alignItems: 'center', gap: '4px' } },
+            h('span', { class: 'chip good small' }, 'Độ dài: ' + words + ' từ'),
+            h('span', { class: 'small muted' }, words >= 12 ? '✓ Độ dài tốt chuẩn Band 7.0+' : '💡 Nên mở rộng thêm 1–2 câu giải thích/ví dụ')
+          )
+        );
+      } else if (!recognizedText) {
+        transcriptEl.textContent = 'Đã hoàn thành lượt nói. Bạn có thể nghe lại audio bên dưới!';
+      }
+      if (onFinished) onFinished(said);
+    }).catch(() => {});
+  }
+
+  function stopRecording() {
+    isRecording = false;
+    clearInterval(timerInterval);
+    box.className = 'ielts-speak-recorder stack';
+    recordBtn.className = 'ghost mini';
+    recordBtn.textContent = '🔄 Ghi âm lại';
+    timerBadge.style.display = 'none';
+    statusLabel.textContent = 'Đã hoàn thành lượt ghi âm!';
+
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      try { mediaRecorder.stop(); } catch (e) {}
+    }
+  }
+
+  const btnRow = h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
+    recordBtn,
+    timerBadge
+  );
+
+  box.replaceChildren(
+    statusLabel,
+    btnRow,
+    transcriptEl,
+    audioPlayerWrap
+  );
+
+  return box;
+}
+
 // 2. Giao diện IELTS Speaking
 function renderIeltsSpeaking(t, data) {
   const spk = data.speaking;
@@ -6852,11 +6992,14 @@ function renderIeltsSpeaking(t, data) {
               toggleModelBtn.textContent = showModel ? 'Ẩn câu trả lời mẫu' : '💡 Xem câu trả lời mẫu Band 8.0+';
             } }, '💡 Xem câu trả lời mẫu Band 8.0+');
 
+            const recBox = createIeltsSpeechRecorder(p.q, p.sa);
+
             return h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
               h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + p.q),
               p.vi && h('p', { class: 'small muted' }, p.vi),
               h('p', { class: 'small' }, h('span', { class: 'chip accent' }, 'Gợi ý bắt đầu:'), ' ' + p.st),
-              h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, toggleModelBtn),
+              recBox,
+              h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', marginTop: '4px' } }, toggleModelBtn),
               modelBox
             );
           })
@@ -6924,6 +7067,8 @@ function renderIeltsSpeaking(t, data) {
         toggleModelP2Btn.textContent = showModelP2 ? 'Ẩn bài mẫu độc thoại' : '💡 Xem bài nói mẫu Band 8.5';
       } }, '💡 Xem bài nói mẫu Band 8.5');
 
+      const cueRecorder = createIeltsSpeechRecorder(spk.part2.title, spk.part2.modelAnswer);
+
       container.replaceChildren(
         h('div', { class: 'ielts-cue-card stack' },
           h('div', { class: 'row between' },
@@ -6945,6 +7090,10 @@ function renderIeltsSpeaking(t, data) {
               h('div', { class: 'row wrap', style: { gap: '6px' } }, startPrepBtn, startSpeakBtn)
             )
           ),
+          h('div', { class: 'stack', style: { marginTop: '8px' } },
+            h('b', { style: { fontSize: '.88rem' } }, '🎙️ Thu âm bài nói 2 phút độc thoại của bạn:'),
+            cueRecorder
+          ),
           h('div', { class: 'row', style: { marginTop: '8px' } }, toggleModelP2Btn),
           modelP2Box
         ),
@@ -6964,15 +7113,19 @@ function renderIeltsSpeaking(t, data) {
             'Chưa có trải nghiệm: "To be fair, I don’t have much firsthand experience with this, but from what I’ve observed..."'
           ], 'speaking'),
           h('p', { class: 'small muted' }, 'Giám khảo sẽ mở rộng câu hỏi mang tính xã hội và tư duy phản biện. Đòi hỏi bạn dùng từ vựng nâng cao và cấu trúc lập luận nhiều chiều.'),
-          ...spk.part3.map((p, idx) => h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
-            h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + p.q),
-            p.vi && h('p', { class: 'small muted' }, p.vi),
-            h('div', { class: 'panel', style: { background: 'rgba(15, 82, 87, 0.05)', marginTop: '6px' } },
-              h('p', { class: 'label' }, 'Mẫu câu trả lời Band 8.5'),
-              h('p', { lang: 'en', style: { lineHeight: 1.6 } }, p.sa),
-              listenBtns('en', p.sa)
-            )
-          ))
+          ...spk.part3.map((p, idx) => {
+            const p3RecBox = createIeltsSpeechRecorder(p.q, p.sa);
+            return h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
+              h('p', { style: { fontWeight: 600 } }, (idx + 1) + '. ' + p.q),
+              p.vi && h('p', { class: 'small muted' }, p.vi),
+              p3RecBox,
+              h('div', { class: 'panel', style: { background: 'rgba(15, 82, 87, 0.05)', marginTop: '6px' } },
+                h('p', { class: 'label' }, 'Mẫu câu trả lời Band 8.5'),
+                h('p', { lang: 'en', style: { lineHeight: 1.6 } }, p.sa),
+                listenBtns('en', p.sa)
+              )
+            );
+          })
         ),
         h('div', { class: 'stack', style: { gap: '8px' } },
           h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 95, '8.5') }, 'Hoàn thành bài luyện Nói (+15 XP · Band 8.5)'),
