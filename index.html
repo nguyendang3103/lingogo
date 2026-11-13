@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1100';
+const APP_BUILD_ID = '20261113-1115';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -11470,11 +11470,10 @@ function renderDeepReadingGuide() {
 function renderEnglishKnowledgeView() {
   const subtabs = [
     { k: 'gram', label: '📖 Ngữ pháp Tiếng Anh' },
-    { k: 'tips', label: '💡 Cẩm nang & Mẹo học' },
-    { k: 'deepread', label: '📚 Deep Reading (Đọc Sâu)' }
+    { k: 'tips', label: '💡 Cẩm nang & Mẹo học' }
   ];
-  if (KNOWLEDGE_TAB !== 'gram' && KNOWLEDGE_TAB !== 'tips' && KNOWLEDGE_TAB !== 'deepread') {
-    KNOWLEDGE_TAB = 'gram';
+  if (KNOWLEDGE_TAB !== 'gram' && KNOWLEDGE_TAB !== 'tips') {
+    KNOWLEDGE_TAB = 'tips';
   }
 
   const header = h('div', { class: 'stack', style: { gap: '4px' } },
@@ -11501,14 +11500,15 @@ function renderEnglishKnowledgeView() {
   let body = null;
   if (KNOWLEDGE_TAB === 'gram') {
     body = renderKnowledgeGrammar('en');
-  } else if (KNOWLEDGE_TAB === 'deepread') {
-    body = renderDeepReadingGuide();
   } else {
+    const deepReadingSection = renderDeepReadingGuide();
+
+    const otherTipsHeader = h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '12px' } },
+      h('h3', { style: { margin: 0, fontSize: '1.1rem', color: 'var(--ink)' } }, '💡 Cẩm nang & Mẹo học phản xạ khác'),
+      h('span', { class: 'small muted' }, '5 mẹo thực chiến')
+    );
+
     const tipsList = [
-      {
-        t: '📚 Phương pháp Deep Reading: Đọc sâu 1 bài để khai thác trọn bộ tiếng Anh',
-        c: 'Thay vì đọc lướt qua hàng chục bài, hãy dành 15–20 phút mỗi ngày mổ xẻ từ vựng, collocations, cấu trúc câu và ngữ pháp từ một bài đọc duy nhất. Bạn hãy bấm sang tab "📚 Deep Reading (Đọc Sâu)" ở trên để xem trọn bộ quy trình 8 bước thực hành chi tiết!'
-      },
       {
         t: '🎧 Kỹ thuật Shadowing để luyện phản xạ nói & ngữ điệu tự nhiên',
         c: 'Nghe người bản ngữ nói một câu ngắn (khoảng 3–5 giây), bấm dừng rồi lập tức lặp lại y hệt về tốc độ, ngữ điệu và trọng âm. Sau khi quen, nói đè (nói song song) cùng lúc với audio. Mỗi ngày chỉ cần 15–20 phút là phản xạ khẩu hình miệng sẽ tự nhiên hơn rất nhiều.'
@@ -11530,7 +11530,10 @@ function renderEnglishKnowledgeView() {
         c: 'Không học từ vựng đơn lẻ (VD: không học mỗi từ "decision", mà học cả cụm "make an informed decision"). Kết hợp ôn tập ngắt quãng (Spaced Repetition) ở tab Ôn tập để não bộ ghi nhớ sâu vào vùng trí nhớ dài hạn thay vì học vẹt rồi quên sau vài ngày.'
       }
     ];
-    body = h('div', { class: 'stack', style: { gap: '10px' } },
+
+    body = h('div', { class: 'stack', style: { gap: '14px' } },
+      deepReadingSection,
+      otherTipsHeader,
       ...tipsList.map((tip) => h('div', { class: 'panel card stack', style: { gap: '6px', padding: '14px', borderRadius: '12px' } },
         h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, tip.t),
         h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.55 } }, tip.c)
