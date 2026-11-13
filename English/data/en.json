@@ -17245,8 +17245,1085 @@
       "gram": []
     },
     {
-      "id": "1",
+      "id": "177",
+      "category": "b2",
+      "phase": "B2 · Thương mại & Chuyên sâu",
+      "level": "B2",
+      "title": "Remote job interviews: 26 Mock Questions, Customer Success, Account Management & STAR Stories",
+      "sub": "Phỏng vấn việc làm từ xa (Remote): 26 câu hỏi phỏng vấn thực tế, The Coach, Customer Success & Kể chuyện STAR",
+      "vocab": [
+        {
+          "id": "E177-0",
+          "w": "walk me through",
+          "r": "/ˈwɔːk ˈmiː ˈθruː/",
+          "m": "trình bày tóm lược qua (kinh nghiệm / quy trình)",
+          "d": "common interview prompt asking a candidate to explain their background step by step",
+          "ex": "Could you walk me through your experience in international B2B Account Management?",
+          "exr": "",
+          "exm": "Bạn có thể trình bày tóm lược qua kinh nghiệm của mình trong mảng Quản lý Tài khoản B2B quốc tế không?"
+        },
+        {
+          "id": "E177-1",
+          "w": "end-to-end order management",
+          "r": "/ˌend.təˈend ˈɔːr.dɚ ˈmæn.ɪdʒ.mənt/",
+          "m": "quản lý đơn hàng trọn quy trình từ đầu đến cuối",
+          "d": "handling an order from initial intake and ERP entry through factory production, QC, and shipment",
+          "ex": "I owned end-to-end order management for key retail accounts across the US, UK, and Australia.",
+          "exr": "",
+          "exm": "Tôi phụ trách quản lý đơn hàng trọn quy trình từ đầu đến cuối cho các khách hàng bán lẻ lớn tại Mỹ, Anh và Úc."
+        },
+        {
+          "id": "E177-2",
+          "w": "cross-functional collaboration",
+          "r": "/ˌkrɔːsˈfʌŋk.ʃən.əl kəˌlæb.əˈreɪ.ʃən/",
+          "m": "sự phối hợp liên phòng ban",
+          "d": "working closely across Planning, Purchasing, QA/QC, Factory, and Logistics teams",
+          "ex": "Strong cross-functional collaboration helps resolve production bottlenecks before they delay shipment.",
+          "exr": "",
+          "exm": "Sự phối hợp liên phòng ban chặt chẽ giúp giải quyết các điểm nghẽn sản xuất trước khi làm trễ lịch xuất hàng."
+        },
+        {
+          "id": "E177-3",
+          "w": "take ownership",
+          "r": "/teɪk ˈoʊ.nɚ.ʃɪp/",
+          "m": "nhận trách nhiệm và chủ động giải quyết",
+          "d": "assuming full responsibility when an issue occurs and proactively driving a resolution",
+          "ex": "I take ownership when an order issue arises and propose practical solutions immediately.",
+          "exr": "",
+          "exm": "Tôi luôn nhận trách nhiệm khi có sự cố đơn hàng phát sinh và đề xuất phương án xử lý thực tế ngay lập tức."
+        },
+        {
+          "id": "E177-4",
+          "w": "delivery risk",
+          "r": "/dɪˈlɪv.ɚ.i rɪsk/",
+          "m": "rủi ro trễ hạn giao hàng",
+          "d": "potential delay that may prevent products from shipping by the agreed deadline",
+          "ex": "When there is a delivery risk, I inform the customer early and agree on a realistic next step.",
+          "exr": "",
+          "exm": "Khi có nguy cơ trễ hạn giao hàng, tôi thông báo sớm cho khách hàng và thống nhất bước xử lý thực tế tiếp theo."
+        },
+        {
+          "id": "E177-5",
+          "w": "order discrepancy",
+          "r": "/ˈɔːr.dɚ dɪˈskrep.ən.si/",
+          "m": "sự sai lệch thông tin đơn hàng",
+          "d": "mismatch between the purchase order, specifications, packaging, or factory schedule",
+          "ex": "We resolved the order discrepancy between the purchase order and the factory production schedule.",
+          "exr": "",
+          "exm": "Chúng tôi đã xử lý dứt điểm sự sai lệch thông tin giữa đơn đặt hàng và tiến độ sản xuất của nhà máy."
+        },
+        {
+          "id": "E177-6",
+          "w": "feasible option",
+          "r": "/ˈfiː.zə.bəl ˈɑːp.ʃən/",
+          "m": "phương án khả thi thực tế",
+          "d": "workable alternative that fits production constraints while satisfying customer requirements",
+          "ex": "I explained the production limitation clearly and offered feasible options using existing designs.",
+          "exr": "",
+          "exm": "Tôi đã giải thích rõ giới hạn kỹ thuật sản xuất và đề xuất các phương án khả thi dựa trên thiết kế có sẵn."
+        },
+        {
+          "id": "E177-7",
+          "w": "data accuracy",
+          "r": "/ˈdeɪ.t̬ə ˈæk.jɚ.ə.si/",
+          "m": "độ chính xác của dữ liệu",
+          "d": "correctness of information entered into systems, documents, invoices, and product records",
+          "ex": "I maintain strict data accuracy across ERP systems, product specifications, and shipping documents.",
+          "exr": "",
+          "exm": "Tôi duy trì độ chính xác dữ liệu nghiêm ngặt trên hệ thống ERP, quy cách sản phẩm và chứng từ xuất hàng."
+        },
+        {
+          "id": "E177-8",
+          "w": "single source of truth",
+          "r": "/ˌsɪŋ.ɡəl sɔːrs əv ˈtruːθ/",
+          "m": "nguồn dữ liệu chuẩn xác duy nhất",
+          "d": "practice of structuring information so everyone references the exact same verified version",
+          "ex": "I always use the latest customer-approved version as the single source of truth.",
+          "exr": "",
+          "exm": "Tôi luôn sử dụng phiên bản mới nhất được khách hàng phê duyệt làm nguồn thông tin chuẩn xác duy nhất."
+        },
+        {
+          "id": "E177-9",
+          "w": "STAR method",
+          "r": "/stɑːr ˈmeθ.əd/",
+          "m": "cấu trúc trả lời phỏng vấn STAR (Tình huống - Nhiệm vụ - Hành động - Kết quả)",
+          "d": "structured framework for answering behavioral interview questions: Situation, Task, Action, Result",
+          "ex": "Structuring behavioral answers with the STAR method makes your experience measurable and clear.",
+          "exr": "",
+          "exm": "Trình bày câu trả lời tình huống theo cấu trúc STAR giúp kinh nghiệm của bạn rõ ràng và đo lường được."
+        },
+        {
+          "id": "E177-10",
+          "w": "transferable skill",
+          "r": "/trænsˈfɝː.ə.bəl skɪl/",
+          "m": "kỹ năng có thể chuyển giao sang môi trường mới",
+          "d": "ability learned in one domain or role that can be directly applied to another",
+          "ex": "My B2B follow-up and client communication are highly transferable skills for Customer Success.",
+          "exr": "",
+          "exm": "Kỹ năng theo dõi công việc B2B và giao tiếp với khách hàng của tôi là những kỹ năng chuyển giao rất tốt cho vị trí Customer Success."
+        },
+        {
+          "id": "E177-11",
+          "w": "asynchronous communication",
+          "r": "/eɪˈsɪŋ.krə.nəs kəˌmjuː.nəˈkeɪ.ʃən/",
+          "m": "giao tiếp làm việc không đồng bộ múi giờ",
+          "d": "communication where team members exchange messages without expecting immediate real-time replies",
+          "ex": "Clear documentation and detailed notes are essential for effective asynchronous communication in remote teams.",
+          "exr": "",
+          "exm": "Tài liệu hóa rõ ràng và ghi chú chi tiết là điều tối quan trọng để giao tiếp không đồng bộ hiệu quả trong các đội ngũ làm việc từ xa."
+        },
+        {
+          "id": "E177-12",
+          "w": "customer onboarding",
+          "r": "/ˈkʌs.tə.mɚ ˈɑːnˌbɔːr.dɪŋ/",
+          "m": "hướng dẫn và hỗ trợ khách hàng mới ban đầu",
+          "d": "welcoming a new customer, setting up accounts, explaining workflows, and ensuring early success",
+          "ex": "During customer onboarding, I explain the workflow in simple steps and remove early blockers.",
+          "exr": "",
+          "exm": "Trong giai đoạn tiếp nhận khách hàng mới, tôi giải thích quy trình theo từng bước đơn giản và tháo gỡ các trở ngại ban đầu."
+        },
+        {
+          "id": "E177-13",
+          "w": "customer at risk",
+          "r": "/ˈkʌs.tə.mɚ æt rɪsk/",
+          "m": "khách hàng có nguy cơ rời bỏ dịch vụ hoặc ngừng đặt hàng",
+          "d": "an account showing signs of dissatisfaction, reduced usage, or pending contract non-renewal",
+          "ex": "We identified a customer at risk due to declining order frequency and agreed on a recovery plan.",
+          "exr": "",
+          "exm": "Chúng tôi đã nhận diện một khách hàng có nguy cơ rời bỏ do tần suất đặt hàng sụt giảm và thống nhất kế hoạch cứu vãn."
+        },
+        {
+          "id": "E177-14",
+          "w": "customer health score",
+          "r": "/ˈkʌs.tə.mɚ helθ skɔːr/",
+          "m": "điểm số đánh giá mức độ sức khỏe và hài lòng của khách hàng",
+          "d": "metric tracking customer activity, engagement, issue resolution speed, and likelihood to retain",
+          "ex": "A customer health score tracks activity signals, unresolved tickets, and renewal likelihood.",
+          "exr": "",
+          "exm": "Điểm sức khỏe khách hàng theo dõi các tín hiệu hoạt động, số phiếu yêu cầu chưa xử lý và khả năng tái ký hợp đồng."
+        },
+        {
+          "id": "E177-15",
+          "w": "high-volume portfolio",
+          "r": "/haɪ ˈvɑːl.juːm pɔːrtˈfoʊ.li.oʊ/",
+          "m": "danh mục quản lý nhiều khách hàng cùng lúc",
+          "d": "managing numerous active client accounts simultaneously with disciplined prioritization",
+          "ex": "To manage a high-volume portfolio, I prioritize accounts by business impact and deadline risk.",
+          "exr": "",
+          "exm": "Để quản lý một danh mục nhiều khách hàng, tôi sắp xếp thứ tự ưu tiên tài khoản theo mức độ tác động kinh doanh và rủi ro thời hạn."
+        },
+        {
+          "id": "E177-16",
+          "w": "recurring issue",
+          "r": "/rɪˈkɝː.ɪŋ ˈɪʃ.uː/",
+          "m": "sự cố hoặc lỗi lặp đi lặp lại",
+          "d": "problem that happens repeatedly and requires root cause analysis and systemic prevention",
+          "ex": "I documented recurring issues with carton labeling and proposed an updated verification checklist.",
+          "exr": "",
+          "exm": "Tôi đã ghi nhận lại các lỗi lặp đi lặp lại về nhãn thùng và đề xuất một danh sách kiểm tra đối chiếu cập nhật."
+        },
+        {
+          "id": "E177-17",
+          "w": "root cause",
+          "r": "/ruːt kɔːz/",
+          "m": "nguyên nhân gốc rễ của vấn đề",
+          "d": "underlying reason that started a fault or defect, discovered by analyzing the process",
+          "ex": "We analyzed the root cause of the delay with the production manager to prevent recurrence.",
+          "exr": "",
+          "exm": "Chúng tôi đã phân tích nguyên nhân gốc rễ của sự chậm trễ với quản đốc sản xuất để ngăn chặn việc tái diễn."
+        },
+        {
+          "id": "E177-18",
+          "w": "corrective action",
+          "r": "/kəˈrek.tɪv ˈæk.ʃən/",
+          "m": "hành động khắc phục và phòng ngừa sai sót",
+          "d": "step taken to eliminate the cause of an existing non-conformity and prevent repetition",
+          "ex": "We implemented corrective actions immediately by applying carton decals and updating print files.",
+          "exr": "",
+          "exm": "Chúng tôi đã thực hiện ngay các hành động khắc phục bằng cách dán decal thùng và cập nhật tệp in ấn."
+        },
+        {
+          "id": "E177-19",
+          "w": "attention to detail",
+          "r": "/əˈten.ʃən tə ˈdiː.teɪl/",
+          "m": "sự tỉ mỉ, cẩn trọng trong từng chi tiết",
+          "d": "thoroughness and accuracy in accomplishing tasks, catching discrepancies before shipment",
+          "ex": "Her strong attention to detail prevented costly discrepancies in the export shipping documents.",
+          "exr": "",
+          "exm": "Sự cẩn trọng tỉ mỉ của cô ấy đã ngăn ngừa những sai lệch tốn kém trong bộ chứng từ xuất khẩu."
+        },
+        {
+          "id": "E177-20",
+          "w": "Customer Required Date",
+          "r": "/ˈkʌs.tə.mɚ rɪˈkwaɪrd deɪt/",
+          "m": "ngày khách hàng yêu cầu giao hàng (CRD)",
+          "d": "specific date by which a buyer expects their goods to be manufactured and handed over to shipping",
+          "ex": "We aligned the factory production timeline with the Customer Required Date to protect the vessel booking.",
+          "exr": "",
+          "exm": "Chúng tôi đã khớp tiến độ sản xuất tại nhà máy với ngày khách yêu cầu giao hàng để đảm bảo lịch đặt tàu."
+        },
+        {
+          "id": "E177-21",
+          "w": "operational discipline",
+          "r": "/ˌɑː.pəˈreɪ.ʃən.əl ˈdɪs.ə.plɪn/",
+          "m": "kỷ luật trong quy trình vận hành",
+          "d": "consistent adherence to established standard operating procedures and meticulous record-keeping",
+          "ex": "Remote account management requires high operational discipline and consistent follow-up.",
+          "exr": "",
+          "exm": "Quản lý tài khoản từ xa đòi hỏi kỷ luật vận hành cao và sự theo sát công việc một cách kiên trì, nhất quán."
+        },
+        {
+          "id": "E177-22",
+          "w": "post-delivery follow-up",
+          "r": "/poʊst dɪˈlɪv.ɚ.i ˈfɑːl.oʊ.ʌp/",
+          "m": "chăm sóc và liên hệ khách hàng sau khi giao hàng",
+          "d": "proactive outreach to verify delivery condition, customer satisfaction, and upcoming seasonal orders",
+          "ex": "I conduct regular post-delivery follow-ups to ensure product quality and understand seasonal needs.",
+          "exr": "",
+          "exm": "Tôi thường xuyên liên hệ chăm sóc sau giao hàng để đảm bảo chất lượng sản phẩm và nắm bắt nhu cầu mùa vụ tiếp theo."
+        },
+        {
+          "id": "E177-23",
+          "w": "reactivate an inactive account",
+          "r": "/riːˈæk.tə.veɪt ən ɪnˈæk.tɪv əˈkaʊnt/",
+          "m": "kích hoạt lại tài khoản khách hàng ngưng hoạt động",
+          "d": "proactively reaching out to dormant past clients to explore new business and generate orders",
+          "ex": "I took the initiative to reactivate an inactive account, securing three new orders worth over USD 60,000.",
+          "exr": "",
+          "exm": "Tôi đã chủ động kích hoạt lại một khách hàng cũ không hoạt động, đem về 3 đơn hàng mới trị giá hơn 60.000 USD."
+        }
+      ],
+      "coach": [
+        {
+          "id": "c177-0",
+          "q": "Tell me about yourself / Walk me through your experience.",
+          "vi": "Hãy giới thiệu về bản thân và trình bày tóm lược kinh nghiệm làm việc của bạn.",
+          "st": "I have 9 years of experience across [roles], focusing on [responsibilities]. I am now looking for [target role]...",
+          "ph": [
+            "9 years of experience across Sales Admin, Furniture Merchandising, and B2B Account Management",
+            "customer communication, order processing, and ERP updates",
+            "production follow-up and shipping documents",
+            "looking for a remote role in Account Management or Customer Success"
+          ],
+          "sa": "I have 9 years of experience across Sales Administration, Furniture Merchandising, and B2B Account Management. My work has focused on customer communication, order processing, quotations, ERP updates, production follow-up, shipping documents, and issue resolution. I have worked with international customers and internal teams to make sure orders move smoothly and customers receive clear updates. I am now looking for a remote role in Account Management, Customer Success, Sales Coordination, Order Management, or B2B Customer Support, where I can use my follow-up, communication, and coordination skills.",
+          "ss": [
+            "9 years experience",
+            "B2B Account Management",
+            "order-to-delivery",
+            "remote role"
+          ],
+          "sc": "Opening question in a remote job interview."
+        },
+        {
+          "id": "c177-1",
+          "q": "Why Account Management or Customer Success?",
+          "vi": "Tại sao bạn lại quan tâm đến vị trí Quản lý tài khoản (Account Management) hoặc Customer Success?",
+          "st": "My background is in [core area], and the strongest part of my experience is [strengths]. That is why I want a remote role where I can...",
+          "ph": [
+            "background in B2B Account Management",
+            "order management, customer communication, delivery follow-up",
+            "ERP updates and coordination with internal teams",
+            "support daily operations, service quality, and long-term customer relationships"
+          ],
+          "sa": "My background is in B2B Account Management, but the strongest part of my experience is order management, customer communication, delivery follow-up, ERP updates, and coordination with internal teams. That is why I am interested in Account Management and Customer Success, and I am also open to roles such as Sales Coordination, Order Management, and B2B Customer Support. I want a remote role where I can use my follow-up, documentation, and customer communication skills to support daily operations, service quality, and long-term customer relationships.",
+          "ss": [
+            "B2B background",
+            "order management",
+            "documentation & follow-up",
+            "long-term relationships"
+          ],
+          "sc": "Explaining your career motivation and why you are targeting these specific roles."
+        },
+        {
+          "id": "c177-2",
+          "q": "What did you do in your most recent role?",
+          "vi": "Bạn đã đảm nhiệm những công việc gì trong vai trò gần đây nhất?",
+          "st": "In my most recent role at [Company], I supported [clients] from [start] to [finish] by...",
+          "ph": [
+            "most recent Account Management role at ANCO Pottery",
+            "supported international B2B customers from order confirmation to shipment",
+            "updated orders in ERP and followed up with the factory",
+            "checked labels and packaging, and coordinated inspections"
+          ],
+          "sa": "In my most recent Account Management role at ANCO Pottery, I supported international B2B customers from order confirmation to shipment. I confirmed customer requirements, updated orders in ERP, followed up with the factory, checked labels and packaging, and coordinated inspections. I also kept customers updated when there was a change, delay risk, or issue that needed attention.",
+          "ss": [
+            "ANCO Pottery",
+            "order confirmation to shipment",
+            "factory follow-up",
+            "inspections"
+          ],
+          "sc": "Describing day-to-day duties and operational scope in your latest position."
+        },
+        {
+          "id": "c177-3",
+          "q": "Which department are you in and what does your department mainly do? (The Coach)",
+          "vi": "Bạn thuộc bộ phận nào và bộ phận của bạn chủ yếu phụ trách công việc gì?",
+          "st": "I'm in the [department] team, where we mainly [verb phrase]...",
+          "ph": [
+            "in the sales / account management department",
+            "mainly support customers, follow up on orders, and coordinate with internal teams",
+            "keep the order process running smoothly",
+            "work closely with production, logistics, and quality teams"
+          ],
+          "sa": "I'm in the sales and account management department, where we mainly support international customers, manage orders, and coordinate with internal teams. We work closely with production, logistics, and quality teams to make sure orders move smoothly and customers receive timely updates.",
+          "ss": [
+            "sales department",
+            "account management",
+            "cross-functional coordination",
+            "keep process smooth"
+          ],
+          "sc": "The Coach prompt: describing your department function and operational scope."
+        },
+        {
+          "id": "c177-4",
+          "q": "What is the most exciting and least favorite part of your job? (The Coach)",
+          "vi": "Phần thú vị nhất và điều bạn ít thích nhất trong công việc là gì?",
+          "st": "I find [activity] most exciting because... On the other hand, my least favorite part is [activity], but I always...",
+          "ph": [
+            "find dealing with customers the most exciting part",
+            "enjoy understanding their needs and solving problems",
+            "least favorite part is paperwork and repetitive tasks",
+            "handle them carefully because they are necessary for smooth operations"
+          ],
+          "sa": "I find dealing with customers the most exciting part of my job because I enjoy understanding their needs and solving problems with the team. My least favorite part is paperwork and repetitive tasks, but I always handle them carefully because I know they are essential to keep operations smooth and avoid mistakes.",
+          "ss": [
+            "dealing with customers",
+            "problem solving",
+            "paperwork and repetitive tasks",
+            "careful execution"
+          ],
+          "sc": "The Coach prompt: articulating work preferences and professional discipline."
+        },
+        {
+          "id": "c177-5",
+          "q": "How do you manage an order from confirmation to shipment?",
+          "vi": "Bạn quản lý một đơn hàng từ lúc xác nhận đến khi xuất hàng như thế nào?",
+          "st": "First, I confirm [details]. Then I update [system] and coordinate with [teams] on...",
+          "ph": [
+            "confirm customer requirements and make sure information is complete",
+            "update the order in ERP",
+            "coordinate with factory on production timing, labels, packaging, and inspection",
+            "follow up on changes or risks, keep clear notes, and update the customer"
+          ],
+          "sa": "First, I confirm the customer requirements and make sure the information is complete. Then I update the order in the system and coordinate with the factory or internal teams on production timing, labels, packaging, inspection, and documents. I follow up on changes or risks, keep clear notes, and update the customer until the order or request is completed.",
+          "ss": [
+            "confirm requirements",
+            "ERP update",
+            "factory coordination",
+            "proactive updates"
+          ],
+          "sc": "Walkthrough of the full order-to-delivery lifecycle."
+        },
+        {
+          "id": "c177-6",
+          "q": "Tell me about a difficult customer request. (Lyprodan STAR Story)",
+          "vi": "Kể cho tôi về một lần bạn xử lý yêu cầu khó khăn hoặc phức tạp từ khách hàng.",
+          "st": "At [Company], a key customer asked for [difficult request]. Since [limitation], I [action] and proposed [solution]...",
+          "ph": [
+            "major customer asked for changes to mold, shape, color, and finishing",
+            "some changes were not feasible",
+            "explained the limitation clearly and offered practical options",
+            "guided customer toward existing designs and finishing choices",
+            "customer accepted and placed orders"
+          ],
+          "sa": "At Lyprodan, a key customer asked for changes to the mold, shape, color, and finishing. Some changes were not feasible, so I checked with the internal team, explained the limitation clearly, and offered practical options using existing designs and finishing choices. The customer accepted the solution, placed orders, and continued working with us.",
+          "ss": [
+            "Lyprodan story",
+            "feasibility check",
+            "practical options",
+            "protect relationship"
+          ],
+          "sc": "Behavioral question on managing unreasonable client demands without losing the business."
+        },
+        {
+          "id": "c177-7",
+          "q": "How do you handle a delivery risk?",
+          "vi": "Bạn xử lý rủi ro trễ hạn giao hàng như thế nào?",
+          "st": "I first check [root cause], confirm [timeline], look for [solutions], and inform [customer]...",
+          "ph": [
+            "check the real reason for the risk and confirm updated timeline with the factory",
+            "look for possible solutions and inform customer early",
+            "explain the situation honestly and agree on realistic next step",
+            "never make promises that compromise quality"
+          ],
+          "sa": "I first check the real reason for the risk and confirm the updated timeline with the factory or related team. Then I look for possible solutions and inform the customer early. If the timeline needs to change, I explain the situation honestly and agree on a realistic next step. I prefer clear communication instead of making a promise that may affect quality or service.",
+          "ss": [
+            "root cause",
+            "early notice",
+            "realistic next steps",
+            "honest communication"
+          ],
+          "sc": "Handling operational roadblocks and managing customer expectations."
+        },
+        {
+          "id": "c177-8",
+          "q": "How do you prioritize multiple customers and urgent orders?",
+          "vi": "Bạn sắp xếp thứ tự ưu tiên thế nào khi có nhiều khách hàng và đơn hàng gấp cùng lúc?",
+          "st": "I prioritize based on [criteria: urgency, impact, deadline risk]. For urgent tasks, I focus on...",
+          "ph": [
+            "prioritize based on urgency, customer impact, deadline risk, and task dependencies",
+            "review schedule regularly and keep clear notes",
+            "follow up early with factory and related teams",
+            "focus on next action first and make sure customer receives clear update"
+          ],
+          "sa": "I prioritize based on urgency, customer impact, deadline risk, and which task can block other work. I review the schedule regularly, keep clear notes, and follow up early with the factory or related teams. For urgent issues, I focus on the next action first and make sure the customer receives a clear update.",
+          "ss": [
+            "urgency vs impact",
+            "blockers",
+            "clear notes",
+            "next immediate action"
+          ],
+          "sc": "Managing workflow and multiple deadlines in a high-volume setting."
+        },
+        {
+          "id": "c177-9",
+          "q": "How do you ensure data accuracy?",
+          "vi": "Làm thế nào bạn đảm bảo độ chính xác của dữ liệu đơn hàng và khách hàng?",
+          "st": "I always check [latest approved version] before updating [system]. I treat [source] as the single source of truth...",
+          "ph": [
+            "check latest customer-approved information before updating ERP",
+            "verify product details, labels, packaging, quantity, and delivery dates",
+            "compare information with order documents and keep change records",
+            "use latest approved version as single source of truth"
+          ],
+          "sa": "I check the latest customer-approved information before updating an order or customer record, especially product details, labels, packaging, quantity, and delivery dates. I compare the information with order documents and keep clear records of changes. I always use the latest approved version as the single source of truth.",
+          "ss": [
+            "latest approved version",
+            "single source of truth",
+            "ERP verification",
+            "change logs"
+          ],
+          "sc": "Data integrity, ERP discipline, and error prevention."
+        },
+        {
+          "id": "c177-10",
+          "q": "Tell me about a mistake you made. (ANCO Pottery $200 STAR Story)",
+          "vi": "Kể cho tôi về một sai sót bạn từng mắc phải và cách bạn giải quyết.",
+          "st": "At [Company], I made an error with [task]. I immediately took ownership, [action], and [preventive measure]...",
+          "ph": [
+            "used old handover information instead of latest approved label and carton version",
+            "took responsibility immediately and informed customer",
+            "proposed carton decals as correction and coordinated Purchasing & factory",
+            "order delivered on time with correction cost around $200",
+            "added a stricter checking step to prevent repetition"
+          ],
+          "sa": "At ANCO Pottery, I used old handover information instead of the latest approved label and carton version. I took responsibility, informed the customer, proposed a correction solution using carton decals, and coordinated with Purchasing and the factory. The customer accepted the solution, the order was delivered on time, and I added a stricter checking step to avoid the same issue again.",
+          "ss": [
+            "ANCO story",
+            "take ownership",
+            "propose solution",
+            "stricter verification"
+          ],
+          "sc": "Behavioral question on accountability, problem-solving, and continuous improvement."
+        },
+        {
+          "id": "c177-11",
+          "q": "Tell me about a time you took initiative to drive business. (Reactivating $60,000 Inactive Account)",
+          "vi": "Kể về một lần bạn chủ động tạo ra cơ hội kinh doanh hoặc khôi phục khách hàng cũ.",
+          "st": "I noticed [inactive opportunity]. I took the initiative to [action], which resulted in [measurable outcome]...",
+          "ph": [
+            "noticed a customer contact in database inactive for several years",
+            "took initiative to reconnect and explore business opportunities",
+            "introduced new products and prepared quotations tailored to their needs",
+            "secured three new orders totaling over USD 60,000"
+          ],
+          "sa": "I noticed a customer contact in our company database that had been inactive for several years. I took the initiative to reconnect, introduced our new product lines, and prepared quotations based on their requirements. As a result, I secured three new orders, each worth over USD 20,000, bringing a total order value of more than USD 60,000 from the reactivated account.",
+          "ss": [
+            "STAR story",
+            "account reactivation",
+            "USD 60,000 new orders",
+            "proactive initiative"
+          ],
+          "sc": "STAR behavioral story demonstrating proactivity, initiative, and revenue impact."
+        },
+        {
+          "id": "c177-12",
+          "q": "What tools have you used to manage customer and order information?",
+          "vi": "Bạn đã từng sử dụng những công cụ nào để quản lý thông tin khách hàng và đơn hàng?",
+          "st": "I have used [tools: ERP, MISA AMIS, Base] to [purpose], along with [cloud/office tools] to...",
+          "ph": [
+            "ERP systems, MISA AMIS, and Base to manage customer, order, and task info",
+            "Microsoft Office (Excel, Word, Outlook, PowerPoint)",
+            "cloud-based storage to organize files and reports",
+            "tools help keep data updated and reduce missed details"
+          ],
+          "sa": "I have used ERP systems, MISA AMIS, and Base to manage customer, order, and internal task information. I also use Microsoft Office and cloud-based storage to organize files, reports, and shared documents. These tools help me keep information updated, follow up on work, and reduce missed details.",
+          "ss": [
+            "ERP systems",
+            "MISA AMIS & Base",
+            "MS Office & Excel",
+            "cloud-based storage"
+          ],
+          "sc": "Technical tools and software proficiency."
+        },
+        {
+          "id": "c177-13",
+          "q": "Why do you want remote work?",
+          "vi": "Tại sao bạn lại muốn tìm kiếm công việc làm từ xa (Remote)?",
+          "st": "My previous roles were [situation], which required [commute]. I want a remote role so I can [benefit] while continuing to...",
+          "ph": [
+            "previous roles were factory-based in Binh Duong requiring 6 days onsite",
+            "commute took significant daily time",
+            "use time more productively and maintain high focus",
+            "support international customers through clear communication, documentation, and follow-up"
+          ],
+          "sa": "I am looking for a role that is remote, hybrid, or based in Ho Chi Minh City, preferably near Binh Thanh. My previous roles were factory-based in Binh Duong and required onsite work six days a week, so the commute took significant time. I want to use my time more productively while continuing to support customers through clear communication, documentation, and follow-up.",
+          "ss": [
+            "remote/hybrid preference",
+            "productive time use",
+            "high follow-up discipline",
+            "work-life focus"
+          ],
+          "sc": "Explaining the transition from factory-based onsite work to remote/hybrid."
+        },
+        {
+          "id": "c177-14",
+          "q": "What is your development area?",
+          "vi": "Đâu là khía cạnh bạn đang muốn tiếp tục học hỏi và phát triển thêm?",
+          "st": "My direct experience is stronger in [strength]. However, I have [proactive learning] and am ready to...",
+          "ph": [
+            "direct experience stronger in B2B operations, order management, and ERP",
+            "developing further in modern CRM tools and SaaS Customer Success",
+            "used MISA AMIS, Base, and completed Customer Success training",
+            "ready to learn new products, systems, and workflows quickly"
+          ],
+          "sa": "My direct experience is stronger in B2B operations, order management, and ERP than in modern CRM tools or SaaS Customer Success. However, I have used MISA AMIS, Base, Microsoft Office, and cloud tools, and I have completed Customer Success training. I am ready to learn a new product, system, and process quickly.",
+          "ss": [
+            "honest self-awareness",
+            "Customer Success training",
+            "fast learner",
+            "B2B foundation"
+          ],
+          "sc": "Addressing areas for growth with a positive, proactive learning attitude."
+        },
+        {
+          "id": "c177-15",
+          "q": "Why did you leave your previous company?",
+          "vi": "Lý do bạn rời công ty cũ là gì?",
+          "st": "I learned a lot from [experience], but most roles were [constraint]. I am now looking for [new environment] where I can...",
+          "ph": [
+            "learned a lot about international B2B customers, order coordination, and factories",
+            "factory-based roles required 6 days onsite with long commute",
+            "seeking a remote, hybrid, or HCMC-based role",
+            "grow in a more international and dynamic environment"
+          ],
+          "sa": "I learned a lot from my previous roles, especially about international B2B customers, order coordination, and working with factories. Most of my previous roles were factory-based and required onsite work six days a week, so the commute took significant time. I am now looking for a remote, hybrid, or Ho Chi Minh City-based role where I can grow in a more international and dynamic environment.",
+          "ss": [
+            "positive takeaway",
+            "commute factor",
+            "career growth",
+            "international environment"
+          ],
+          "sc": "Professional explanation of career transition."
+        },
+        {
+          "id": "c177-16",
+          "q": "What makes you choose our company?",
+          "vi": "Điều gì khiến bạn lựa chọn và muốn làm việc tại công ty chúng tôi?",
+          "st": "I am interested in your company because of [product/mission]. I see that this role involves [responsibilities], which matches...",
+          "ph": [
+            "focus on solving customer problems in the industry",
+            "role involves customer communication, follow-up, and cross-functional coordination",
+            "matches my 9 years of practical B2B experience",
+            "contribute attention to detail and strong follow-up while growing with the team"
+          ],
+          "sa": "I am interested in your company because of its focus on product quality and customer support. I see that this role involves customer communication, follow-up, and coordination with different teams, which matches my previous experience. I believe I can contribute through my practical B2B experience, attention to detail, and strong follow-up, while continuing to grow in the role.",
+          "ss": [
+            "company alignment",
+            "skill matching",
+            "practical contribution",
+            "growth commitment"
+          ],
+          "sc": "Demonstrating company research and role alignment."
+        },
+        {
+          "id": "c177-17",
+          "q": "Why should we hire you?",
+          "vi": "Tại sao chúng tôi nên tuyển dụng bạn vào vị trí này?",
+          "st": "I bring [experience and key skills]. I am [qualities] and can [immediate value]...",
+          "ph": [
+            "bring 9 years of practical B2B experience",
+            "customer communication, order coordination, data accuracy, issue resolution",
+            "careful with details, proactive with follow-up",
+            "comfortable working with diverse internal teams and learning new systems quickly"
+          ],
+          "sa": "I bring 9 years of practical B2B experience in customer communication, order coordination, data accuracy, and issue resolution. I am careful with details, proactive with follow-up, and comfortable working with different internal teams. I can support daily customer operations well, and I can learn new systems quickly.",
+          "ss": [
+            "9 years experience",
+            "reliable follow-up",
+            "cross-functional",
+            "fast onboarding"
+          ],
+          "sc": "Closing pitch summarizing your unique value proposition."
+        },
+        {
+          "id": "c177-18",
+          "q": "What are your strengths and weakness?",
+          "vi": "Điểm mạnh và điểm yếu lớn nhất của bạn là gì?",
+          "st": "My key strengths are [strengths]. As for my weakness, [weakness], which I actively improve by...",
+          "ph": [
+            "strengths: follow-up, attention to detail, and cross-functional coordination",
+            "careful with order details and proactive communication",
+            "weakness: can be nervous speaking English when trying to be perfect",
+            "improving by preparing short answers, practicing out loud, and focusing on clarity over perfection"
+          ],
+          "sa": "My strengths are follow-up, attention to detail, and coordination. I am careful with order information, customer requirements, and deadlines. As for my weakness, sometimes I can be nervous when speaking English in an interview, especially when I want to give a perfect answer. I am improving this by preparing short answers, practising out loud, and focusing on clear communication instead of perfect grammar.",
+          "ss": [
+            "follow-up & detail",
+            "nervousness managed",
+            "practice out loud",
+            "clarity over perfection"
+          ],
+          "sc": "Classic strengths and weakness interview question."
+        },
+        {
+          "id": "c177-19",
+          "q": "How would your previous manager or team describe you?",
+          "vi": "Người quản lý hoặc đồng nghiệp cũ sẽ miêu tả về bạn như thế nào?",
+          "st": "I think they would describe me as [adjectives], because I [behavior] and [attitude]...",
+          "ph": [
+            "describe me as responsible, careful, and supportive",
+            "follow up on tasks, keep information organized, solve problems with the team",
+            "takes ownership when there is an issue and looks for practical solutions"
+          ],
+          "sa": "I think they would describe me as responsible, careful, and supportive. I follow up on tasks, keep information organized, and try to solve problems with the team. I am also someone who takes ownership when there is an issue and looks for a practical solution.",
+          "ss": [
+            "responsible",
+            "careful",
+            "supportive",
+            "problem-solver"
+          ],
+          "sc": "Third-party perspective on your work ethic and team collaboration."
+        },
+        {
+          "id": "c177-20",
+          "q": "How do you handle pressure or tight deadlines?",
+          "vi": "Bạn đối phó với áp lực và thời hạn sát nút (tight deadlines) như thế nào?",
+          "st": "I first check [what is most urgent], confirm [facts], focus on [next action], and...",
+          "ph": [
+            "check what is most urgent and what can affect customer or delivery",
+            "confirm facts with related team rather than making assumptions",
+            "focus on next action and update customer clearly",
+            "stay calm, organize by priority, avoid unconfirmed promises"
+          ],
+          "sa": "I first check what is most urgent and what can affect the customer or delivery timeline. Then I confirm the facts with the related team, focus on the next action, and update the customer clearly. I try to stay calm, organize the work by priority, and avoid making promises before I confirm the real situation.",
+          "ss": [
+            "stay calm",
+            "confirm facts",
+            "focus on next action",
+            "priority organization"
+          ],
+          "sc": "Stress management and operational composure under pressure."
+        },
+        {
+          "id": "c177-21",
+          "q": "What are your salary expectations?",
+          "vi": "Kỳ vọng về mức lương và chế độ đãi ngộ của bạn là bao nhiêu?",
+          "st": "I am open to discussing based on [scope & benefits]. My priority is [long-term fit]...",
+          "ph": [
+            "open to discussing based on role scope, working arrangement, and benefits",
+            "priority is finding a good long-term fit to contribute B2B experience",
+            "happy to understand the company budget for this position first"
+          ],
+          "sa": "I am open to discussing based on the role scope, working arrangement, and benefits. My priority is to find a good long-term fit where I can contribute my B2B customer support, order coordination, and follow-up experience. I would be happy to understand the company budget for this position first.",
+          "ss": [
+            "open discussion",
+            "role scope & benefits",
+            "long-term fit",
+            "ask company budget"
+          ],
+          "sc": "Navigating compensation discussions professionally and diplomatically."
+        },
+        {
+          "id": "c177-22",
+          "q": "How would you support a new customer during onboarding?",
+          "vi": "Bạn sẽ hỗ trợ khách hàng mới như thế nào trong giai đoạn tiếp nhận (onboarding)?",
+          "st": "I would first understand [goal & workflow], explain [process in steps], give [example], and...",
+          "ph": [
+            "understand customer goal, workflow, and main difficulty",
+            "explain process in simple steps and give practical examples",
+            "confirm next action clearly",
+            "follow up regularly and coordinate with internal team if blockers arise"
+          ],
+          "sa": "I would first understand the customer's goal, workflow, and main difficulty. Then I would explain the process in simple steps, give a practical example, and confirm the next action. After that, I would follow up regularly and coordinate with the right internal team if there is a blocker.",
+          "ss": [
+            "customer goal",
+            "simple steps",
+            "confirm next action",
+            "remove blockers"
+          ],
+          "sc": "Customer onboarding, guidance, and establishing early trust."
+        },
+        {
+          "id": "c177-23",
+          "q": "How would you manage a customer at risk?",
+          "vi": "Bạn quản lý và xử lý một khách hàng có nguy cơ rời bỏ (customer at risk) như thế nào?",
+          "st": "I would first understand [risk reason], confirm [facts], agree on [recovery plan], and...",
+          "ph": [
+            "understand reason for risk: low usage, unresolved issue, or unclear expectations",
+            "confirm facts with customer and internal teams",
+            "agree on a recovery plan with clear actions and deadlines",
+            "follow up closely until issue is resolved"
+          ],
+          "sa": "I would first understand the reason for the risk, such as low usage, an unresolved issue, or unclear expectations. I would confirm the facts with the customer and internal teams, then agree on a recovery plan with clear actions and deadlines. I would follow up until the issue is resolved.",
+          "ss": [
+            "root cause of risk",
+            "recovery plan",
+            "clear deadlines",
+            "follow up to resolution"
+          ],
+          "sc": "Churn prevention, conflict resolution, and account retention."
+        },
+        {
+          "id": "c177-24",
+          "q": "How would you manage a high-volume customer portfolio?",
+          "vi": "Bạn quản lý một danh mục nhiều khách hàng và tài khoản lớn như thế nào?",
+          "st": "I would organize customers by [priority criteria], maintain [system/notes], and...",
+          "ph": [
+            "organize customers by priority: customer impact, adoption risk, and next action",
+            "keep accurate notes and use clear follow-up schedule",
+            "prevent important tasks from being missed",
+            "for urgent issues, focus on immediate action and communicate clearly"
+          ],
+          "sa": "I would organize customers by priority, such as customer impact, delivery or adoption risk, and the next required action. I would keep accurate notes and use a clear follow-up schedule, so important tasks are not missed. For urgent issues, I would focus on the immediate action first and communicate clearly with the customer and internal teams.",
+          "ss": [
+            "portfolio prioritization",
+            "impact & risk",
+            "follow-up schedule",
+            "accurate documentation"
+          ],
+          "sc": "Time management, tooling, and portfolio management at scale."
+        },
+        {
+          "id": "c177-25",
+          "q": "How would you use customer data or a health score?",
+          "vi": "Bạn sử dụng dữ liệu khách hàng hoặc điểm sức khỏe khách hàng (health score) như thế nào?",
+          "st": "I would use data to [monitor activity]. If I noticed [risk signal], I would...",
+          "ph": [
+            "use data to understand whether customers are active or facing repeated issues",
+            "check reasons when risk signals appear and contact customer early",
+            "agree on next steps proactively",
+            "experience with ERP and order data, ready to learn company health score process"
+          ],
+          "sa": "I would use the data to understand whether customers are active, using key features, or facing repeated issues. If I saw a risk signal, I would check the reason, contact the customer early, and agree on the next step. My direct experience is in ERP and order data, but I am ready to learn each company’s customer-health process.",
+          "ss": [
+            "health score",
+            "risk signal",
+            "early contact",
+            "data-driven follow-up"
+          ],
+          "sc": "Leveraging metrics, usage data, and health scores to protect account health."
+        },
+        {
+          "id": "c177-26",
+          "q": "How do you learn a new system or product?",
+          "vi": "Bạn làm thế nào để nắm bắt và học nhanh một hệ thống phần mềm hoặc sản phẩm mới?",
+          "st": "I first learn [main workflow], then I [practice with examples], and...",
+          "ph": [
+            "learn main workflow and most important customer tasks first",
+            "practice with real examples, take clear notes, ask questions when needed",
+            "experience with ERP, MISA AMIS, Base, and cloud tools makes learning new systems comfortable"
+          ],
+          "sa": "I first learn the main workflow and the most important customer tasks. Then I practise with real examples, take clear notes, and ask questions when I need clarification. My experience with ERP, MISA AMIS, Base, and cloud-based tools has helped me become comfortable learning new systems.",
+          "ss": [
+            "core workflow first",
+            "real practice",
+            "clear notes",
+            "software agility"
+          ],
+          "sc": "Tool adaptability, learning agility, and independent onboarding."
+        },
+        {
+          "id": "c177-27",
+          "q": "How do you improve a recurring customer issue?",
+          "vi": "Bạn làm thế nào để cải thiện một vấn đề hoặc lỗi lặp đi lặp lại của khách hàng?",
+          "st": "I document [issue], check [root cause with teams], and propose [practical solution]...",
+          "ph": [
+            "document issue clearly and check root cause with related teams",
+            "suggest practical solutions in internal meetings",
+            "follow up on results and verify improvement",
+            "used this approach to strengthen label and order-detail checking"
+          ],
+          "sa": "I document the issue clearly, check the root cause with the related teams, and suggest a practical solution. Then I discuss it in an internal meeting and follow up on the result. I used this approach in my previous work to help improve label and order-detail checking.",
+          "ss": [
+            "document issue",
+            "root cause analysis",
+            "internal alignment",
+            "process improvement"
+          ],
+          "sc": "Continuous improvement, process optimization, and proactive problem solving."
+        },
+        {
+          "id": "c177-28",
+          "q": "What questions should you ask the interviewer about the first 90 days?",
+          "vi": "Bạn nên hỏi câu hỏi gì với người phỏng vấn về 90 ngày đầu làm việc?",
+          "st": "Could you share what success would look like in the first 90 days for this role?",
+          "ph": [
+            "what success looks like in the first 90 days",
+            "key expectations and deliverables",
+            "how progress is measured initially"
+          ],
+          "sa": "What would success look like in the first 90 days in this role? What are the key priorities you would like the new team member to accomplish during the onboarding period?",
+          "ss": [
+            "first 90 days",
+            "success definition",
+            "early priorities",
+            "reverse question"
+          ],
+          "sc": "Reverse question: demonstrating strategic focus and goal orientation."
+        },
+        {
+          "id": "c177-29",
+          "q": "What questions should you ask about customer challenges and key metrics?",
+          "vi": "Bạn nên hỏi câu hỏi gì về thách thức của khách hàng và các chỉ số đo lường quan trọng?",
+          "st": "What are the most common onboarding challenges, and which metrics are most critical?",
+          "ph": [
+            "most common onboarding or adoption challenges for customers",
+            "which metrics are most important for this role (retention, CSAT, delivery on-time)",
+            "which tools the team uses to manage customer health"
+          ],
+          "sa": "What are the most common onboarding or adoption challenges that customers face here? And which metrics—such as retention rate, on-time delivery, or CSAT—are most important for measuring success in this role?",
+          "ss": [
+            "onboarding challenges",
+            "success metrics",
+            "customer health tools",
+            "strategic engagement"
+          ],
+          "sc": "Reverse question: showing deep understanding of customer success and account management."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s177-0",
+          "title": "Opening Pitch & Department Overview (The Coach Framework)",
+          "lines": [
+            {
+              "t": "Could you please walk me through your background and the department you worked in?",
+              "r": "",
+              "m": "Bạn có thể vui lòng trình bày qua về quá trình làm việc và bộ phận bạn từng đảm nhiệm không?"
+            },
+            {
+              "t": "I'm in the sales and account management department, where we mainly support international customers and manage end-to-end orders.",
+              "r": "",
+              "m": "Tôi thuộc bộ phận kinh doanh và quản lý tài khoản, nơi chúng tôi chủ yếu hỗ trợ khách hàng quốc tế và quản lý đơn hàng từ đầu đến cuối."
+            },
+            {
+              "t": "What do you find most exciting about your day-to-day work?",
+              "r": "",
+              "m": "Điều gì khiến bạn cảm thấy hào hứng và thú vị nhất trong công việc hàng ngày?"
+            },
+            {
+              "t": "I find dealing with international customers and resolving cross-functional bottlenecks the most exciting part of my job.",
+              "r": "",
+              "m": "Tôi thấy việc giao tiếp với khách hàng quốc tế và giải quyết các điểm nghẽn liên phòng ban là phần thú vị nhất trong công việc."
+            },
+            {
+              "t": "Why are you targeting a remote role at this stage of your career?",
+              "r": "",
+              "m": "Tại sao bạn lại hướng đến công việc làm từ xa vào giai đoạn này trong sự nghiệp?"
+            },
+            {
+              "t": "My previous roles required long commutes to factory sites. Remote work allows me to use my time more productively with high operational discipline.",
+              "r": "",
+              "m": "Các vị trí trước đây của tôi đòi hỏi di chuyển xa đến nhà máy. Làm việc từ xa giúp tôi sử dụng thời gian năng suất hơn với tính kỷ luật vận hành cao."
+            }
+          ]
+        },
+        {
+          "id": "s177-1",
+          "title": "Operational Scenarios: Managing Delivery Risks & Data Accuracy",
+          "lines": [
+            {
+              "t": "How do you handle a situation where factory production falls behind schedule?",
+              "r": "",
+              "m": "Bạn xử lý thế nào khi tiến độ sản xuất tại nhà máy bị chậm so với kế hoạch?"
+            },
+            {
+              "t": "I investigate the root cause with the factory manager, verify the updated timeline, and present practical delivery options to the customer early.",
+              "r": "",
+              "m": "Tôi tìm hiểu nguyên nhân gốc rễ cùng quản đốc nhà máy, xác minh mốc thời gian cập nhật và sớm đưa ra các phương án giao hàng khả thi cho khách."
+            },
+            {
+              "t": "What is your approach to maintaining data accuracy across multiple client orders?",
+              "r": "",
+              "m": "Phương pháp của bạn để duy trì độ chính xác của dữ liệu trên nhiều đơn hàng là gì?"
+            },
+            {
+              "t": "I always verify the latest customer-approved specification and treat it as the single source of truth across ERP and shipping documents.",
+              "r": "",
+              "m": "Tôi luôn đối chiếu quy cách mới nhất được khách hàng duyệt và coi đó là nguồn thông tin chuẩn xác duy nhất trên ERP và chứng từ xuất khẩu."
+            }
+          ]
+        },
+        {
+          "id": "s177-2",
+          "title": "Customer Success: Onboarding New Accounts & Managing Churn Risk",
+          "lines": [
+            {
+              "t": "How would you guide a newly signed international customer through onboarding?",
+              "r": "",
+              "m": "Bạn sẽ hướng dẫn một khách hàng quốc tế mới ký hợp đồng như thế nào qua giai đoạn tiếp nhận ban đầu?"
+            },
+            {
+              "t": "I break down the workflow into clear, manageable steps, clarify communication channels, and confirm the next immediate milestone.",
+              "r": "",
+              "m": "Tôi chia nhỏ quy trình thành các bước rõ ràng, dễ thực hiện, làm rõ các kênh liên lạc và thống nhất mốc hành động tiếp theo."
+            },
+            {
+              "t": "What signals tell you that an existing customer account is at risk of leaving?",
+              "r": "",
+              "m": "Những dấu hiệu nào cho bạn biết một tài khoản khách hàng hiện tại đang có nguy cơ rời bỏ?"
+            },
+            {
+              "t": "Reduced ordering frequency, unanswered status reports, and repeated product issues are clear indicators that require an immediate recovery plan.",
+              "r": "",
+              "m": "Tần suất đặt hàng sụt giảm, không phản hồi báo cáo tiến độ và lỗi sản phẩm lặp lại là những dấu hiệu rõ ràng cần kế hoạch phục hồi ngay."
+            }
+          ]
+        },
+        {
+          "id": "s177-3",
+          "title": "Reverse Interviewing: High-Impact Questions for the Hiring Manager",
+          "lines": [
+            {
+              "t": "We have covered everything from our end. Do you have any questions for us?",
+              "r": "",
+              "m": "Phía chúng tôi đã trao đổi hết các nội dung. Bạn có câu hỏi nào dành cho chúng tôi không?"
+            },
+            {
+              "t": "Yes, thank you! What would success look like in the first 90 days for someone in this remote role?",
+              "r": "",
+              "m": "Vâng, cảm ơn anh/chị! Thành công trong 90 ngày đầu tiên của một người đảm nhận vị trí từ xa này sẽ được định nghĩa như thế nào?"
+            },
+            {
+              "t": "We expect complete ownership of client communication and seamless coordination with our operations team.",
+              "r": "",
+              "m": "Chúng tôi kỳ vọng sự chủ động làm chủ hoàn toàn khâu giao tiếp với khách và phối hợp nhịp nhàng với đội ngũ vận hành."
+            },
+            {
+              "t": "Which metrics or KPIs are most critical when evaluating customer health and performance here?",
+              "r": "",
+              "m": "Những chỉ số đo lường hoặc KPI nào là quan trọng nhất khi đánh giá sức khỏe khách hàng và hiệu quả công việc tại đây?"
+            }
+          ]
+        }
+      ],
+      "quiz": [
+        {
+          "q": "When asked 'Walk me through your experience', what is the most effective way to respond?",
+          "opts": [
+            "Recite your entire CV line by line starting from university graduation.",
+            "Highlight your core 9 years of experience, key operational strengths (order management, B2B communication, ERP), and why you are targeting this specific remote role.",
+            "Ask the interviewer to look at your resume and ask questions instead.",
+            "Focus only on personal hobbies and weekend interests."
+          ],
+          "a": 1,
+          "exp": "An effective elevator pitch summarizes your total experience, key operational strengths, and connects directly to the role you are applying for."
+        },
+        {
+          "q": "If an unexpected factory bottleneck puts a shipment at risk, what should you do first?",
+          "opts": [
+            "Wait until the shipping date arrives to see if the factory miraculously finishes on time.",
+            "Investigate the real root cause, confirm the updated timeline with the factory, and inform the customer early with practical options.",
+            "Blame the purchasing department in an email to the customer.",
+            "Promise the customer an impossible delivery date to keep them happy temporarily."
+          ],
+          "a": 1,
+          "exp": "Proactive communication, verifying the true root cause, and presenting realistic options early protects customer trust and quality."
+        },
+        {
+          "q": "What does using the latest customer-approved version as the 'single source of truth' achieve?",
+          "opts": [
+            "It prevents costly printing errors, packaging mismatches, and specification discrepancies across teams.",
+            "It eliminates the need to communicate with the factory.",
+            "It means you never have to update the ERP system again.",
+            "It allows you to skip final inspection."
+          ],
+          "a": 0,
+          "exp": "Having a single source of truth ensures all departments (Purchasing, Production, QC, Logistics) work with the exact same approved specifications."
+        },
+        {
+          "q": "How should you answer when asked about a mistake you made in your career?",
+          "opts": [
+            "Claim that you have never made any mistakes in 9 years of work.",
+            "Blame a former coworker or intern who has already left the company.",
+            "Take ownership honestly, explain the corrective action you took to solve it (e.g. applying decals, meeting the deadline), and describe the preventive system you put in place.",
+            "Say that mistakes are entirely the responsibility of upper management."
+          ],
+          "a": 2,
+          "exp": "Interviewers look for accountability, problem-solving under pressure, and systemic learning to prevent repeated errors."
+        },
+        {
+          "q": "In the STAR framework for answering behavioral questions, what does the 'R' stand for?",
+          "opts": [
+            "Routine (những thói quen hàng ngày)",
+            "Result (kết quả đo lường được, bài học hoặc tác động tích cực đạt được)",
+            "Reaction (phản ứng tức giận của sếp)",
+            "Revision (số lần sửa đổi hồ sơ)"
+          ],
+          "a": 1,
+          "exp": "R stands for Result: the measurable outcome, tangible impact (e.g., $60,000 in new orders, zero recurrences), or key operational lesson."
+        },
+        {
+          "q": "At the end of an interview, why is it critical to ask thoughtful questions to the interviewer?",
+          "opts": [
+            "It is not important; you should always decline to ask questions to end the meeting early.",
+            "It demonstrates genuine engagement, commercial mindset, and strategic curiosity about the team's first 90-day expectations and success metrics.",
+            "It gives you a chance to complain about previous interviewers.",
+            "It allows you to demand an immediate hiring decision on the spot."
+          ],
+          "a": 1,
+          "exp": "Reverse interviewing shows your preparation, professionalism, and readiness to deliver value from day one."
+        }
+      ],
+      "fill": {
+        "title": "Thư cảm ơn sau phỏng vấn (Post-Interview Thank You Email)",
+        "text": "Dear Sarah,\n\nThank you very much for taking the time to speak with me today about the remote [b1] position at your company. I really enjoyed learning more about your focus on [b2] and operational discipline across international markets.\n\nOur conversation reinforced my excitement about the role. With 9 years of experience in [b3] and B2B communication, I am confident in my ability to manage accounts from confirmation to shipment while treating the latest approved specifications as the [b4]. Furthermore, I look forward to applying my proactive follow-up and [b5] collaboration to support your team.\n\nPlease let me know if you need any additional information. I look forward to hearing about the next steps.\n\nWarm regards,\nDang Ngoc Kim Nguyen",
+        "blanks": [
+          {
+            "id": "b1",
+            "a": "Account Management",
+            "m": "Quản lý tài khoản"
+          },
+          {
+            "id": "b2",
+            "a": "customer onboarding",
+            "m": "tiếp nhận khách hàng mới"
+          },
+          {
+            "id": "b3",
+            "a": "end-to-end order management",
+            "m": "quản lý đơn hàng trọn quy trình"
+          },
+          {
+            "id": "b4",
+            "a": "single source of truth",
+            "m": "nguồn dữ liệu chuẩn xác duy nhất"
+          },
+          {
+            "id": "b5",
+            "a": "cross-functional",
+            "m": "liên phòng ban"
+          }
+        ],
+        "pool": [
+          "Account Management",
+          "customer onboarding",
+          "end-to-end order management",
+          "single source of truth",
+          "cross-functional",
+          "delivery risk",
+          "recurring issue",
+          "Customer Required Date"
+        ]
+      },
+      "gram": [],
       "pos": 46,
+      "catPos": 1
+    },
+    {
+      "id": "1",
+      "pos": 47,
       "title": "Meeting basics and introducing yourself",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -17643,12 +18720,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 1,
+      "catPos": 2,
       "level": "B2"
     },
     {
       "id": "2",
-      "pos": 47,
+      "pos": 48,
       "title": "Your company and your role",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -18155,12 +19232,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 2,
+      "catPos": 3,
       "level": "B2"
     },
     {
       "id": "3",
-      "pos": 48,
+      "pos": 49,
       "title": "Business emails: inquiries, quotations, follow-ups",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -18647,12 +19724,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 3,
+      "catPos": 4,
       "level": "B2"
     },
     {
       "id": "21",
-      "pos": 49,
+      "pos": 50,
       "title": "Emails to customers: confirmations, delays and apologies",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -19035,12 +20112,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 4,
+      "catPos": 5,
       "level": "B2"
     },
     {
       "id": "4",
-      "pos": 50,
+      "pos": 51,
       "title": "Presenting products and handling price questions",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -19636,12 +20713,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 5,
+      "catPos": 6,
       "level": "B2"
     },
     {
       "id": "22",
-      "pos": 51,
+      "pos": 52,
       "title": "Emails to suppliers and factories: orders, specifications, quality problems",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -20024,12 +21101,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 6,
+      "catPos": 7,
       "level": "B2"
     },
     {
       "id": "23",
-      "pos": 52,
+      "pos": 53,
       "title": "Emails to forwarders and carriers: bookings, documents, schedule changes",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -20412,12 +21489,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 7,
+      "catPos": 8,
       "level": "B2"
     },
     {
       "id": "24",
-      "pos": 53,
+      "pos": 54,
       "title": "Emails to overseas partners and distributors: introductions, proposals, follow-ups",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -20800,12 +21877,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 8,
+      "catPos": 9,
       "level": "B2"
     },
     {
       "id": "25",
-      "pos": 54,
+      "pos": 55,
       "title": "Emails to your team and management: updates, escalations, approvals",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -21188,12 +22265,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 9,
+      "catPos": 10,
       "level": "B2"
     },
     {
       "id": "5",
-      "pos": 55,
+      "pos": 56,
       "title": "Import-export 1: orders, Incoterms, payment",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -21590,12 +22667,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 10,
+      "catPos": 11,
       "level": "B2"
     },
     {
       "id": "6",
-      "pos": 56,
+      "pos": 57,
       "title": "Import-export 2: documents, shipping, complaints",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -22056,12 +23133,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 11,
+      "catPos": 12,
       "level": "B2"
     },
     {
       "id": "7",
-      "pos": 57,
+      "pos": 58,
       "title": "Negotiation: price, terms, conditional concessions",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -22640,12 +23717,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 12,
+      "catPos": 13,
       "level": "B2"
     },
     {
       "id": "26",
-      "pos": 58,
+      "pos": 59,
       "title": "Difficult emails: saying no, pushing back, chasing payment, complaints",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -23028,12 +24105,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 13,
+      "catPos": 14,
       "level": "B2"
     },
     {
       "id": "32",
-      "pos": 59,
+      "pos": 60,
       "title": "Wine and spirits 1: products, tasting and recommendations",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -23416,12 +24493,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 14,
+      "catPos": 15,
       "level": "B2"
     },
     {
       "id": "30",
-      "pos": 60,
+      "pos": 61,
       "title": "Biomass pellets 1: the product, quality and specifications",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -23804,13 +24881,13 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 15,
+      "catPos": 16,
       "level": "B2"
     },
     {
       "id": "27",
-      "pos": 61,
-      "catPos": 16,
+      "pos": 62,
+      "catPos": 17,
       "category": "b2",
       "phase": "B2 · Thương mại & Chuyên sâu",
       "level": "B2",
@@ -24228,7 +25305,7 @@
     },
     {
       "id": "8",
-      "pos": 62,
+      "pos": 63,
       "title": "Buying through a distributor: quotes, terms and written confirmation",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -24611,12 +25688,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 17,
+      "catPos": 18,
       "level": "B2"
     },
     {
       "id": "9",
-      "pos": 63,
+      "pos": 64,
       "title": "Technical specifications: robots, sensors and software",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -24999,12 +26076,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 18,
+      "catPos": 19,
       "level": "B2"
     },
     {
       "id": "12",
-      "pos": 64,
+      "pos": 65,
       "title": "Acceptance testing, warranty and after-sales service",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -25387,12 +26464,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 19,
+      "catPos": 20,
       "level": "B2"
     },
     {
       "id": "11",
-      "pos": 65,
+      "pos": 66,
       "title": "Shipping to Australia: couriers, air cargo and biosecurity",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -25775,12 +26852,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 20,
+      "catPos": 21,
       "level": "B2"
     },
     {
       "id": "10",
-      "pos": 66,
+      "pos": 67,
       "title": "Dangerous goods and compliance: batteries, radio equipment and HS codes",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26163,12 +27240,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 21,
+      "catPos": 22,
       "level": "B2"
     },
     {
       "id": "33",
-      "pos": 67,
+      "pos": 68,
       "title": "Wine and spirits 2: price lists, orders and distribution",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26551,12 +27628,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 22,
+      "catPos": 23,
       "level": "B2"
     },
     {
       "id": "31",
-      "pos": 68,
+      "pos": 69,
       "title": "Biomass pellets 2: bulk shipping, contracts and inspection",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -26939,13 +28016,13 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 23,
+      "catPos": 24,
       "level": "B2"
     },
     {
       "id": "174",
-      "pos": 69,
-      "catPos": 24,
+      "pos": 70,
+      "catPos": 25,
       "category": "b2",
       "phase": "B2 · Thương mại & Chuyên sâu",
       "level": "B2",
@@ -27775,12 +28852,12 @@
         "audio": ""
       },
       "gram": [],
-      "pos": 70,
-      "catPos": 25
+      "pos": 71,
+      "catPos": 26
     },
     {
       "id": "15",
-      "pos": 71,
+      "pos": 72,
       "title": "The wine trade: labels, licences and temperature control",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28163,12 +29240,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 26,
+      "catPos": 27,
       "level": "B2"
     },
     {
       "id": "13",
-      "pos": 72,
+      "pos": 73,
       "title": "OEM and ODM: working with factories on your own brand",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28551,12 +29628,12 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 27,
+      "catPos": 28,
       "level": "B2"
     },
     {
       "id": "16",
-      "pos": 73,
+      "pos": 74,
       "title": "Running the operation: owners, approvals and closing a shipment",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -28939,7 +30016,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 28,
+      "catPos": 29,
       "level": "B2"
     },
     {
@@ -29357,12 +30434,12 @@
         "audio": ""
       },
       "gram": [],
-      "pos": 74,
-      "catPos": 29
+      "pos": 75,
+      "catPos": 30
     },
     {
       "id": "20",
-      "pos": 75,
+      "pos": 76,
       "title": "Leading meetings: chairing, interrupting, closing",
       "sub": "",
       "phase": "B2 · Thương mại & Chuyên sâu",
@@ -29745,7 +30822,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 30,
+      "catPos": 31,
       "level": "B2"
     },
     {
@@ -30160,424 +31237,6 @@
       "fill": {
         "text": "Subject: Onboarding Kickoff & 30-Day Success Plan – Welcome to Our Platform!\n\nDear Sarah,\n\nWelcome aboard! As your dedicated Customer Success Manager, my priority is to help your team achieve your [[desired outcome|random guess|personal hobby]] as smoothly and quickly as possible.\n\nTo ensure seamless [[customer onboarding|factory demolition|holiday booking]], I have broken our implementation into three clear milestones over the next 30 days. Our focus is on driving practical [[product adoption|paper waste|office gossip]] across your regional coordinators while using your approved ERP master file as our [[single source of truth|secret rumor|temporary sketch]].\n\nThrough [[proactive engagement|silent waiting|angry arguing]], we will review your [[customer health score|blood pressure|weather map]] every Friday. If your team encounters any [[adoption blocker|traffic jam|coffee spill]], please flag it immediately so I can coordinate with our technical specialists and put a [[recovery plan|vacation request|shopping list]] in place before it impacts your schedule.\n\nLet's confirm Tuesday at 10:00 AM for our kickoff call.\n\nBest regards,\nSally Nguyen\nCustomer Success & Account Management",
         "trans": "Tiêu đề: Khởi động Onboarding & Kế hoạch Thành công 30 ngày – Chào mừng bạn đến với nền tảng của chúng tôi!\n\nThân gửi Sarah,\n\nChào mừng bạn đồng hành cùng chúng tôi! Trên cương vị là Quản lý Thành công Khách hàng (CSM) phụ trách trực tiếp, ưu tiên hàng đầu của tôi là giúp đội ngũ của bạn đạt được kết quả mong đợi một cách trôi chảy và nhanh chóng nhất.\n\nĐể đảm bảo quá trình hướng dẫn nhập cuộc (onboarding) diễn ra liền mạch, tôi đã chia lộ trình triển khai thành ba cột mốc rõ ràng trong 30 ngày tới. Trọng tâm của chúng ta là thúc đẩy việc áp dụng sản phẩm thực tế cho các điều phối viên khu vực của bạn, đồng thời sử dụng file dữ liệu gốc ERP đã duyệt làm nguồn dữ liệu chuẩn duy nhất.\n\nThông qua sự tương tác hỗ trợ chủ động, chúng ta sẽ cùng rà soát chỉ số sức khỏe tài khoản vào mỗi thứ Sáu. Nếu đội ngũ của bạn gặp bất kỳ rào cản tắc nghẽn nào trong quá trình sử dụng, xin hãy báo ngay để tôi phối hợp với bộ phận kỹ thuật và kích hoạt phương án xử lý kịp thời trước khi ảnh hưởng đến tiến độ của bạn.\n\nHãy xác nhận lịch họp khởi động vào 10:00 sáng thứ Ba tới nhé.\n\nTrân trọng,\nSally Nguyễn\nQuản trị Thành công Khách hàng & Tài khoản B2B",
-        "audio": ""
-      },
-      "gram": [],
-      "pos": 76,
-      "catPos": 31
-    },
-    {
-      "id": "177",
-      "category": "b2",
-      "phase": "B2 · Thương mại & Chuyên sâu",
-      "level": "B2",
-      "title": "Remote job interviews: Account Management, merchandising and STAR stories",
-      "sub": "Phỏng vấn việc làm từ xa (Remote): quản lý tài khoản B2B, theo dõi đơn hàng và kể chuyện theo khung STAR",
-      "vocab": [
-        {
-          "id": "E177-0",
-          "w": "walk me through",
-          "r": "/ˈwɔːk ˈmiː ˈθruː/",
-          "m": "trình bày tóm lược qua (kinh nghiệm / quy trình)",
-          "d": "common interview prompt asking a candidate to explain their background step by step",
-          "ex": "Could you walk me through your experience in international B2B Account Management?",
-          "exr": "",
-          "exm": "Bạn có thể trình bày tóm lược qua kinh nghiệm của mình trong mảng Quản lý Tài khoản B2B quốc tế không?"
-        },
-        {
-          "id": "E177-1",
-          "w": "end-to-end order management",
-          "r": "/ˌend.təˈend ˈɔːr.dɚ ˈmæn.ɪdʒ.mənt/",
-          "m": "quản lý đơn hàng trọn quy trình từ đầu đến cuối",
-          "d": "handling an order from initial intake and ERP entry through factory production, QC, and shipment",
-          "ex": "I owned end-to-end order management for key retail accounts across the US, UK, and Australia.",
-          "exr": "",
-          "exm": "Tôi phụ trách quản lý đơn hàng trọn quy trình từ đầu đến cuối cho các khách hàng lớn tại Mỹ, Anh và Úc."
-        },
-        {
-          "id": "E177-2",
-          "w": "cross-functional collaboration",
-          "r": "/ˌkrɔːsˈfʌŋk.ʃən.əl kəˌlæb.əˈreɪ.ʃən/",
-          "m": "sự phối hợp liên phòng ban",
-          "d": "working closely across Planning, Purchasing, QA/QC, Factory, and Logistics teams",
-          "ex": "Strong cross-functional collaboration helps resolve production bottlenecks before they delay shipment.",
-          "exr": "",
-          "exm": "Sự phối hợp liên phòng ban chặt chẽ giúp giải quyết các điểm nghẽn sản xuất trước khi làm trễ lịch xuất hàng."
-        },
-        {
-          "id": "E177-3",
-          "w": "take ownership",
-          "r": "/ˈteɪk ˈoʊ.nɚ.ʃɪp/",
-          "m": "nhận trách nhiệm và làm chủ vấn đề",
-          "d": "accepting full accountability for a task or mistake and driving it to a solution",
-          "ex": "I am someone who takes ownership when an issue arises and focuses on practical solutions.",
-          "exr": "",
-          "exm": "Tôi là người luôn chủ động nhận trách nhiệm khi có sự cố phát sinh và tập trung tìm giải pháp thực tế."
-        },
-        {
-          "id": "E177-4",
-          "w": "delivery-delay risk",
-          "r": "/dɪˈlɪv.ɚ.i dɪˈleɪ ˈrɪsk/",
-          "m": "rủi ro trễ hạn giao hàng",
-          "d": "any factor in material sourcing or production that threatens the promised shipment date",
-          "ex": "When I spot a delivery-delay risk, I verify the updated timeline with the factory and inform the client early.",
-          "exr": "",
-          "exm": "Khi phát hiện rủi ro trễ giao hàng, tôi xác minh lại tiến độ thực tế với nhà máy và báo sớm cho khách hàng."
-        },
-        {
-          "id": "E177-5",
-          "w": "order discrepancy",
-          "r": "/ˈɔːr.dɚ dɪˈskrep.ən.si/",
-          "m": "sự sai lệch thông tin đơn hàng",
-          "d": "a mismatch between the customer's Purchase Order, Proforma Invoice, or packaging specs",
-          "ex": "As a Furniture Merchandiser, I resolved order discrepancies between buyers and production teams.",
-          "exr": "",
-          "exm": "Khi làm Merchandiser ngành nội thất, tôi đã xử lý triệt để các sai lệch thông tin đơn hàng giữa khách và xưởng."
-        },
-        {
-          "id": "E177-6",
-          "w": "feasible option",
-          "r": "/ˈfiː.zə.bəl ˈɑːp.ʃən/",
-          "m": "phương án khả thi thực tế",
-          "d": "a realistic alternative that the factory can execute without compromising quality or lead time",
-          "ex": "Instead of making an unrealistic promise, I offered two feasible options for the customer to choose from.",
-          "exr": "",
-          "exm": "Thay vì hứa hẹn thiếu thực tế, tôi đã đưa ra hai phương án khả thi để khách hàng lựa chọn."
-        },
-        {
-          "id": "E177-7",
-          "w": "post-delivery follow-up",
-          "r": "/ˌpoʊst dɪˈlɪv.ɚ.i ˈfɑː.loʊ.ʌp/",
-          "m": "chăm sóc và hỏi thăm sau khi giao hàng",
-          "d": "contacting the customer after cargo arrival to check satisfaction and plan seasonal reorders",
-          "ex": "I conduct post-delivery follow-up to gather feedback and understand the client's next seasonal needs.",
-          "exr": "",
-          "exm": "Tôi thực hiện chăm sóc sau giao hàng để lắng nghe phản hồi và nắm bắt nhu cầu mùa vụ tiếp theo của khách."
-        },
-        {
-          "id": "E177-8",
-          "w": "data accuracy",
-          "r": "/ˈdeɪ.t̬ə ˈæk.jɚ.ə.si/",
-          "m": "độ chính xác của dữ liệu",
-          "d": "ensuring quantities, prices, barcodes, and shipping marks in ERP are 100% error-free",
-          "ex": "I ensure data accuracy by cross-checking every ERP entry against the latest approved documents.",
-          "exr": "",
-          "exm": "Tôi đảm bảo độ chính xác của dữ liệu bằng cách đối chiếu mọi thông tin nhập ERP với chứng từ đã duyệt mới nhất."
-        },
-        {
-          "id": "E177-9",
-          "w": "STAR method",
-          "r": "/ˈstɑːr ˈmeθ.əd/",
-          "m": "cấu trúc trả lời phỏng vấn STAR (Tình huống - Nhiệm vụ - Hành động - Kết quả)",
-          "d": "interview framework structuring behavioral answers into Situation, Task, Action, and Result",
-          "ex": "Using the STAR method helps you present verified achievements with clear, measurable outcomes.",
-          "exr": "",
-          "exm": "Sử dụng phương pháp STAR giúp bạn trình bày các thành tích thực tế kèm kết quả đo lường rõ ràng."
-        },
-        {
-          "id": "E177-10",
-          "w": "transferable skill",
-          "r": "/trænsˈfɝː.ə.bəl ˈskɪl/",
-          "m": "kỹ năng có thể chuyển giao sang môi trường mới",
-          "d": "core ability like proactive follow-up and stakeholder coordination that applies across industries",
-          "ex": "Proactive follow-up and data discipline are highly transferable skills for remote SaaS operations.",
-          "exr": "",
-          "exm": "Kỹ năng theo dõi chủ động và kỷ luật dữ liệu là những kỹ năng chuyển giao cực kỳ giá trị cho vận hành từ xa."
-        },
-        {
-          "id": "E177-11",
-          "w": "asynchronous communication",
-          "r": "/eɪˈsɪŋ.krə.nəs kəˌmjuː.nəˈkeɪ.ʃən/",
-          "m": "giao tiếp làm việc không đồng bộ múi giờ",
-          "d": "clear written updates and documentation that allow remote teams across timezones to progress without waiting",
-          "ex": "Working with US, UK, and European clients trained me in clear asynchronous communication.",
-          "exr": "",
-          "exm": "Kinh nghiệm làm việc với khách hàng Mỹ, Anh và châu Âu đã rèn cho tôi kỹ năng giao tiếp lệch múi giờ rất rõ ràng."
-        },
-        {
-          "id": "E177-12",
-          "w": "account status report",
-          "r": "/əˈkaʊnt ˈsteɪ.t̬əs rɪˈpɔːrt/",
-          "m": "báo cáo tiến độ tài khoản khách hàng định kỳ",
-          "d": "a structured weekly summary showing open orders, CRDs, potential risks, and next actions",
-          "ex": "I delivered weekly account status reports to keep clients across three regions fully aligned.",
-          "exr": "",
-          "exm": "Tôi gửi báo cáo tình trạng tài khoản hàng tuần để giúp khách hàng ở cả ba khu vực luôn nắm rõ tiến độ."
-        },
-        {
-          "id": "E177-13",
-          "w": "corrective action",
-          "r": "/kəˈrek.tɪv ˈæk.ʃən/",
-          "m": "bành động khắc phục và phòng ngừa",
-          "d": "a concrete step taken to fix a defect or mistake and prevent it from happening again",
-          "ex": "Whenever a mistake occurred, I executed immediate corrective action and tightened our checking process.",
-          "exr": "",
-          "exm": "Bất cứ khi nào có lỗi phát sinh, tôi đều thực hiện hành động khắc phục ngay và siết chặt quy trình kiểm tra."
-        },
-        {
-          "id": "E177-14",
-          "w": "attention to detail",
-          "r": "/əˈten.ʃən tə ˈdiː.teɪl/",
-          "m": "sự tỉ mỉ, cẩn trọng trong từng chi tiết",
-          "d": "carefulness in reviewing specifications, labels, contracts, and shipping documents",
-          "ex": "My strongest qualities are proactive follow-up, cross-functional coordination, and attention to detail.",
-          "exr": "",
-          "exm": "Điểm mạnh lớn nhất của tôi là sự chủ động theo sát công việc, phối hợp liên phòng ban và sự tỉ mỉ chi tiết."
-        },
-        {
-          "id": "E177-15",
-          "w": "Customer Required Date",
-          "r": "/ˈkʌs.tə.mɚ rɪˈkwaɪrd ˈdeɪt/",
-          "m": "ngày khách hàng yêu cầu giao hàng (CRD)",
-          "d": "the target date specified on a purchase order by which cargo must be shipped",
-          "ex": "I monitored production progress and Customer Required Dates across all export orders.",
-          "exr": "",
-          "exm": "Tôi theo sát tiến độ sản xuất và Ngày yêu cầu giao hàng (CRD) trên toàn bộ các đơn hàng xuất khẩu."
-        },
-        {
-          "id": "E177-16",
-          "w": "proforma invoice",
-          "r": "/proʊˈfɔːr.mə ˈɪn.vɔɪs/",
-          "m": "hóa đơn chiếu lệ (PI)",
-          "d": "a preliminary bill of sale sent to buyers ahead of shipment to confirm order details and payment terms",
-          "ex": "I processed Proforma Invoices and Purchase Orders for both sample and bulk furniture runs.",
-          "exr": "",
-          "exm": "Tôi xử lý Hóa đơn chiếu lệ (PI) và Đơn đặt hàng (PO) cho cả đơn hàng mẫu lẫn đơn sản xuất đại trà."
-        },
-        {
-          "id": "E177-17",
-          "w": "tight deadline",
-          "r": "/ˈtaɪt ˈded.laɪn/",
-          "m": "thời hạn gấp rút / sát nút",
-          "d": "a demanding schedule with very little time remaining before delivery",
-          "ex": "Under tight deadlines, I stay calm, prioritize by customer impact, and confirm facts before promising.",
-          "exr": "",
-          "exm": "Dưới áp lực hạn chót gấp rút, tôi giữ bình tĩnh, ưu tiên theo mức độ ảnh hưởng và xác minh kỹ trước khi hứa."
-        },
-        {
-          "id": "E177-18",
-          "w": "operational discipline",
-          "r": "/ˌɑː.pəˈreɪ.ʃən.əl ˈdɪs.ə.plɪn/",
-          "m": "kỷ luật vận hành",
-          "d": "consistent adherence to accurate documentation, timely reporting, and process verification",
-          "ex": "I bring nine years of international B2B communication and operational discipline to your team.",
-          "exr": "",
-          "exm": "Tôi mang đến 9 năm kinh nghiệm giao tiếp B2B quốc tế và tính kỷ luật vận hành cho đội ngũ của bạn."
-        },
-        {
-          "id": "E177-19",
-          "w": "long-term fit",
-          "r": "/ˌlɔːŋˈtɝːm ˈfɪt/",
-          "m": "sự phù hợp gắn bó lâu dài",
-          "d": "alignment between a candidate's skills, values, and career direction and the company's needs",
-          "ex": "My priority is finding a strong long-term fit where I can contribute to customer operations.",
-          "exr": "",
-          "exm": "Ưu tiên của tôi là tìm được một vị trí phù hợp lâu dài nơi tôi có thể đóng góp cho vận hành khách hàng."
-        }
-      ],
-      "quiz": [
-        {
-          "id": "q177-0",
-          "q": "An interviewer asks: 'Tell me about yourself and walk me through your experience.' Which structure is most effective for Sally's profile?",
-          "o": [
-            "Summarize 9 years across Sales Admin, Furniture Merchandising, and B2B Account Management, highlight end-to-end order coordination and ERP accuracy, and connect to the target remote role.",
-            "Recite every childhood school subject starting from primary school.",
-            "Say 'Everything is on my resume, please read it yourself.'"
-          ],
-          "a": 0,
-          "why": "A concise 60-second pitch summarizing core years of experience, key operational strengths, and alignment with the target remote role sets a strong professional tone."
-        },
-        {
-          "id": "q177-1",
-          "q": "When asked 'Why do you want remote work?', how should you frame your answer positively and professionally?",
-          "o": [
-            "Explain that after years of six-day onsite factory commutes, you want to invest that commute time into productive, focused customer communication, documentation, and follow-up.",
-            "Say that you want to sleep until noon and watch movies all day.",
-            "Complain bitterly about your previous boss."
-          ],
-          "a": 0,
-          "why": "Framing remote work around productivity, time optimization, and proven ability to support international clients through digital tools reassures employers of your work ethic."
-        },
-        {
-          "id": "q177-2",
-          "q": "An interviewer asks how you handle a delivery risk when a factory falls behind schedule. What is the best response?",
-          "o": [
-            "Check the real root cause and updated timeline with the factory first, explore practical options, and inform the customer early and honestly.",
-            "Wait until the customer complains two weeks after the missed shipment date.",
-            "Make a fake promise that the goods are already on the ship."
-          ],
-          "a": 0,
-          "why": "Employers value proactive risk communication—verifying facts internally first and presenting honest timelines alongside workable options."
-        },
-        {
-          "id": "q177-3",
-          "q": "How should you address a question about your development area when applying for a SaaS Customer Success role with a B2B manufacturing background?",
-          "o": [
-            "Acknowledge your direct strength is in B2B operations and ERP, highlight your completed Customer Success certifications and experience with MISA AMIS/Base, and show readiness to learn their CRM quickly.",
-            "Pretend you invented Salesforce and have 20 years of coding experience.",
-            "Say you have no weaknesses at all."
-          ],
-          "a": 0,
-          "why": "Honesty paired with concrete proof of continuous learning (CustomerSuccessU & LinkedIn certificates) and software adaptability builds high credibility."
-        },
-        {
-          "id": "q177-4",
-          "q": "What is the best strategy when answering 'What are your salary expectations?' early in an interview?",
-          "o": [
-            "Express openness to discuss based on role scope, working arrangement, and benefits, and ask to understand the company's budget range for the position.",
-            "Refuse to speak until they wire money immediately.",
-            "Say you will work for free forever."
-          ],
-          "a": 0,
-          "why": "Staying flexible while inquiring about the company's budgeted range keeps you in contention without underpricing or pricing yourself out prematurely."
-        },
-        {
-          "id": "q177-5",
-          "q": "Which question is strongest to ask the interviewer at the end of an Account Management or Customer Success interview?",
-          "o": [
-            "What would success look like in the first 90 days, and which metrics are most important for this role?",
-            "How soon can I take a month of vacation?",
-            "What does your company actually do?"
-          ],
-          "a": 0,
-          "why": "Asking about 90-day success criteria and key performance metrics shows an outcome-driven, proactive mindset."
-        }
-      ],
-      "speak": [
-        {
-          "id": "s177-0",
-          "title": "Answering 'Walk me through your experience' and 'Why remote work?'",
-          "lines": [
-            {
-              "t": "Thanks for joining us today, Sally. Could you walk me through your background and what brings you to this remote Account Manager role?",
-              "r": "",
-              "m": "Cảm ơn Sally đã tham gia buổi phỏng vấn hôm nay. Bạn có thể trình bày tóm lược về kinh nghiệm và điều gì đưa bạn đến vị trí Quản lý Tài khoản từ xa này?"
-            },
-            {
-              "t": "Certainly. I have nine years of experience across Sales Administration, Furniture Merchandising, and international B2B Account Management.",
-              "r": "",
-              "m": "Vâng ạ. Tôi có 9 năm kinh nghiệm trải đều từ Admin Kinh doanh, Merchandiser Nội thất đến Quản lý Tài khoản B2B quốc tế."
-            },
-            {
-              "t": "My work has focused on end-to-end order coordination, ERP data accuracy, production follow-up, and resolving issues for clients in the US, UK, Europe, and Australia.",
-              "r": "",
-              "m": "Công việc của tôi tập trung vào điều phối đơn hàng trọn quy trình, đảm bảo dữ liệu ERP chính xác, theo sát sản xuất và xử lý vấn đề cho khách hàng ở Mỹ, Anh, Châu Âu và Úc."
-            },
-            {
-              "t": "After years of commuting six days a week to factories in Binh Duong, I am seeking a remote role where I can channel that time into supporting customers and operations.",
-              "r": "",
-              "m": "Sau nhiều năm đi lại 6 ngày một tuần tới các nhà máy ở Bình Dương, tôi tìm kiếm công việc từ xa để dành trọn thời gian đó cho việc hỗ trợ khách hàng và vận hành hiệu quả hơn."
-            }
-          ]
-        },
-        {
-          "id": "s177-1",
-          "title": "Explaining how you manage orders and ensure data accuracy",
-          "lines": [
-            {
-              "t": "In a fast-paced remote team, how do you manage an order from confirmation to shipment without missing details?",
-              "r": "",
-              "m": "Trong một đội ngũ làm việc từ xa nhịp độ nhanh, bạn quản lý đơn hàng từ lúc xác nhận đến khi xuất tàu như thế nào để không sót chi tiết?"
-            },
-            {
-              "t": "First, I confirm all customer requirements and cross-check product specs, labels, packaging, and Customer Required Dates.",
-              "r": "",
-              "m": "Trước tiên, tôi xác nhận đầy đủ yêu cầu của khách và đối chiếu kỹ thông số sản phẩm, tem nhãn, bao bì cùng Ngày giao hàng yêu cầu (CRD)."
-            },
-            {
-              "t": "Then I update the order in ERP, using the latest approved version as our single source of truth.",
-              "r": "",
-              "m": "Sau đó tôi cập nhật đơn hàng lên ERP, luôn lấy bản được duyệt mới nhất làm nguồn dữ liệu chuẩn duy nhất."
-            },
-            {
-              "t": "I coordinate weekly with the factory on production and inspections, and send clear status updates until the shipment is completed.",
-              "r": "",
-              "m": "Tôi phối hợp hàng tuần với nhà máy về tiến độ sản xuất và kiểm hàng, đồng thời gửi báo cáo cập nhật rõ ràng cho đến khi lô hàng hoàn tất."
-            }
-          ]
-        }
-      ],
-      "coach": [
-        {
-          "id": "c177-0",
-          "q": "Tell me about yourself and walk me through your experience.",
-          "vi": "Hãy giới thiệu về bản thân và trình bày tóm lược kinh nghiệm làm việc của bạn.",
-          "st": "I have 9 years of experience across + roles + focusing on...",
-          "ph": [
-            "9 years of experience across Sales Admin, Furniture Merchandising, and B2B Account Management",
-            "customer communication, order processing, and ERP updates",
-            "production follow-up and shipping documents",
-            "looking for a remote role in Account Management or Customer Success"
-          ],
-          "sa": "I have 9 years of experience across Sales Administration, Furniture Merchandising, and B2B Account Management. My work has focused on customer communication, order processing, quotations, ERP updates, production follow-up, and issue resolution for international clients. I am now looking for a remote role in Account Management or Customer Success where I can contribute my follow-up and coordination skills.",
-          "ss": [
-            "international B2B",
-            "order-to-delivery",
-            "cross-functional"
-          ],
-          "sc": "Opening question in a remote job interview."
-        },
-        {
-          "id": "c177-1",
-          "q": "How do you handle a delivery risk or tight deadline?",
-          "vi": "Bạn xử lý rủi ro trễ hạn giao hàng hoặc áp lực thời hạn gấp rút như thế nào?",
-          "st": "I first check the real reason with the related team, then + action + and inform...",
-          "ph": [
-            "check the real reason and updated timeline with the factory",
-            "look for practical solutions",
-            "inform the customer early and honestly",
-            "agree on a realistic next step without making false promises"
-          ],
-          "sa": "I first check the real reason for the risk and confirm the updated timeline with the factory or related team. Then I look for practical solutions and inform the customer early. If the timeline needs to change, I explain the situation honestly and agree on a realistic next step rather than making a promise that could hurt quality.",
-          "ss": [
-            "prioritize by impact",
-            "stay calm",
-            "proactive update"
-          ],
-          "sc": "Answering a situational question about operational pressure and delivery management."
-        },
-        {
-          "id": "c177-2",
-          "q": "How do you ensure data accuracy across orders, labels, and customer records?",
-          "vi": "Làm thế nào bạn đảm bảo độ chính xác của dữ liệu trên đơn hàng, tem nhãn và hồ sơ khách hàng?",
-          "st": "I check the latest customer-approved information before + action + and always use...",
-          "ph": [
-            "verify the latest customer-approved version",
-            "cross-check product details, labels, packaging, and delivery dates",
-            "compare with order documents",
-            "use the latest approved version as the single source of truth"
-          ],
-          "sa": "I check the latest customer-approved information before updating an order or record, especially product details, labels, packaging, quantities, and delivery dates. I compare the details against official order documents and always use the latest approved version as the single source of truth.",
-          "ss": [
-            "ERP system",
-            "MISA AMIS",
-            "verification step"
-          ],
-          "sc": "Demonstrating operational discipline and accuracy in a remote coordination interview."
-        },
-        {
-          "id": "c177-3",
-          "q": "Why should we hire you for this remote Account Management / Customer Coordination role?",
-          "vi": "Tại sao chúng tôi nên tuyển dụng bạn cho vị trí Quản lý Tài khoản / Điều phối Khách hàng từ xa này?",
-          "st": "I bring 9 years of practical B2B experience in + skills + and I am...",
-          "ph": [
-            "9 years of practical B2B experience",
-            "careful with details and proactive with follow-up",
-            "comfortable coordinating across internal teams",
-            "quick to learn new ERP and CRM systems"
-          ],
-          "sa": "I bring 9 years of practical B2B experience in customer communication, order coordination, data accuracy, and issue resolution. I am careful with details, proactive with follow-up, and comfortable working across different internal teams. I can support daily customer operations reliably and learn your systems quickly.",
-          "ss": [
-            "customer ownership",
-            "operational discipline",
-            "long-term fit"
-          ],
-          "sc": "Closing pitch during a remote job interview."
-        }
-      ],
-      "fill": {
-        "text": "Subject: Application for Remote Account Manager – Dang Ngoc Kim Nguyen\n\nDear Hiring Manager,\n\nI am writing to apply for the Remote Account Manager position. I bring nine years of experience across sales administration, furniture merchandising, and international B2B account management, owning [[end-to-end order management|office cleaning|graphic drawing]] for clients across the US, UK, Europe, and Australia.\n\nIn my previous roles, I clarified customer requirements, prepared [[proforma invoice|medical receipt|cinema ticket]] documents, maintained high [[data accuracy|noise level|fuel consumption]] in ERP systems, and monitored production against every [[Customer Required Date|national holiday|lunch break]]. When a [[delivery-delay risk|weather forecast|sports match]] arose, I practiced [[cross-functional collaboration|solo guessing|silent waiting]] with factory and logistics teams to present customers with a [[feasible option|false promise|blank page]] early.\n\nBy taking initiative to [[reactivate an account|delete a file|close a shop]] that had been dormant for years, I secured three new orders totaling over USD 60,000. I have also completed Customer Success Fundamentals certifications to strengthen my approach to onboarding and retention.\n\nThank you for your time and consideration. I look forward to discussing how my operational discipline can support your team.\n\nKind regards,\nDang Ngoc Kim Nguyen (Sally)",
-        "trans": "Tiêu đề: Ứng tuyển vị trí Quản lý Tài khoản Từ xa (Remote Account Manager) – Đặng Ngọc Kim Nguyên\n\nKính gửi Quản lý Tuyển dụng,\n\nTôi viết thư này để ứng tuyển vào vị trí Quản lý Tài khoản Từ xa. Tôi mang đến 9 năm kinh nghiệm trong lĩnh vực admin kinh doanh, merchandiser ngành nội thất và quản lý tài khoản B2B quốc tế, trực tiếp phụ trách quản lý đơn hàng trọn quy trình từ đầu đến cuối cho khách hàng tại Mỹ, Anh, Châu Âu và Úc.\n\nTrong các vị trí trước đây, tôi làm rõ yêu cầu của khách hàng, lập chứng từ Hóa đơn chiếu lệ (PI), duy trì độ chính xác dữ liệu cao trên hệ thống ERP và theo sát tiến độ sản xuất theo đúng từng Ngày yêu cầu giao hàng (CRD). Khi phát sinh rủi ro trễ giao hàng, tôi thực hiện phối hợp liên phòng ban chặt chẽ với nhà máy và đội logistics để sớm đưa ra phương án khả thi cho khách hàng.\n\nNhờ chủ động kích hoạt lại một tài khoản khách hàng cũ đã ngưng giao dịch nhiều năm, tôi đã mang về 3 đơn hàng mới với tổng giá trị hơn 60.000 USD. Tôi cũng đã hoàn thành các chứng chỉ Nền tảng Quản trị Thành công Khách hàng (Customer Success Fundamentals) để nâng cao kỹ năng hướng dẫn và giữ chân khách hàng.\n\nCảm ơn ông/bà đã dành thời gian xem xét hồ sơ. Tôi rất mong có cơ hội trao đổi thêm về cách tính kỷ luật vận hành của mình có thể đóng góp cho đội ngũ của quý công ty.\n\nTrân trọng,\nĐặng Ngọc Kim Nguyên (Sally)",
         "audio": ""
       },
       "gram": [],

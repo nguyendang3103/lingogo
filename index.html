@@ -788,7 +788,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1135';
+const APP_BUILD_ID = '20261113-1250';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -803,7 +803,7 @@ const CATEGORIES = {
     { id: 'a1', name: 'Khởi động & Cơ bản', short: 'Sơ cấp 1', icon: '🐣', level: 'A1', count: '13 bài', desc: 'Chào hỏi, số đếm, màu sắc, gia đình, đồ dùng học tập, động vật, hoa quả, rau củ, đồ ăn, đồ uống, quần áo, sinh hoạt' },
     { id: 'a2', name: 'Đời sống & Giao tiếp', short: 'Sơ cấp 2', icon: '🌿', level: 'A2', count: '17 bài', desc: 'Thời tiết, nhà bếp, ngoại hình, cảm xúc, hành động cơ thể, giao thông, trường học, mua sắm, quê hương, quốc gia, côn trùng, hoa cỏ, hải sản, lễ Tết' },
     { id: 'b1', name: 'Trung cấp & Đời sống xã hội', short: 'Trung cấp', icon: '🎨', level: 'B1', count: '15 bài', desc: 'Nghề nghiệp, tính cách, công việc, thể thao, bóng đá, phim ảnh, du lịch, thời trang, y tế, bưu điện, ngân hàng, nghệ thuật, công nghệ, môi trường & tự nhiên, quân đội' },
-    { id: 'b2', name: 'Thương mại & Đi làm', short: 'Thương mại', icon: '💼', level: 'B2–B2+', count: '35 bài', desc: 'Trọn bộ Tiếng Anh Thương mại & Sự nghiệp Quốc tế (họp hành, đàm phán, chuỗi cung ứng SCOR, nội thất & chậu cảnh xuất khẩu, Customer Success, phỏng vấn Remote STAR, Lean Startup và AI Automation)' },
+    { id: 'b2', name: 'Thương mại & Đi làm', short: 'Thương mại', icon: '💼', level: 'B2–B2+', count: '35 bài', desc: 'Trọn bộ Tiếng Anh Thương mại & Sự nghiệp Quốc tế (phỏng vấn Remote STAR & The Coach 26 câu, họp hành, đàm phán, chuỗi cung ứng SCOR, nội thất & chậu cảnh xuất khẩu, Customer Success, Lean Startup và AI Automation)' },
     { id: 'c1', name: 'Cao cấp & Học thuật', short: 'Cao cấp', icon: '🏛️', level: 'C1', count: '5 bài', desc: 'Nghiên cứu học thuật, kinh tế vĩ mô toàn cầu, quản trị chiến lược M&A, khung pháp lý & IP, nghệ thuật tranh biện phản biện' },
     { id: 'c2', name: 'Thành thạo & Ngoại giao', short: 'Bậc thầy', icon: '👑', level: 'C2', count: '5 bài', desc: 'Quan hệ quốc tế & địa chính trị, triết học & nhận thức luận, nghệ thuật biên dịch, đạo đức AI tương lai, truyền thông khủng hoảng' },
     { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '📚', level: 'A1–C2', count: '90 bài', desc: 'Toàn bộ 90 bài học tiếng Anh phân loại chuẩn quốc tế theo trọn vẹn 6 bậc khung tham chiếu châu Âu CEFR từ A1 đến C2' }
@@ -11525,6 +11525,132 @@ function guideAccordionItem({ id, icon, title, subtitle, tag, content, defaultOp
   return h('details', detailsAttrs, summaryEl, bodyEl);
 }
 
+function renderInterviewGuide() {
+  const qItem = (qNum, qText, viText, ansText, tag = 'Interview Q&A') => h('details', {
+    class: 'panel stack',
+    style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px 12px', border: '1px solid var(--line)' }
+  },
+    h('summary', { style: { cursor: 'pointer', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' } },
+      h('div', { class: 'stack', style: { gap: '2px', minWidth: 0, flex: 1 } },
+        h('b', { style: { fontSize: '.92rem', color: 'var(--ink)' } }, qNum + '. ' + qText),
+        h('span', { class: 'small muted', style: { fontSize: '.8rem' } }, viText)
+      ),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexShrink: 0 } },
+        h('span', { class: 'chip small', style: { fontSize: '.7rem' } }, tag),
+        h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700 } }, '▾')
+      )
+    ),
+    h('div', { class: 'stack', style: { gap: '8px', marginTop: '10px', borderTop: '1px solid var(--line)', paddingTop: '10px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('b', { style: { fontSize: '.82rem', color: 'var(--teal)' } }, '💬 Câu trả lời mẫu (Spoken Answer):'),
+        listenBtns('en', ansText)
+      ),
+      h('blockquote', { style: { margin: '2px 0 0 0', padding: '8px 12px', borderLeft: '3px solid var(--teal)', background: 'var(--surface)', borderRadius: '6px', fontStyle: 'italic', fontSize: '.9rem', lineHeight: 1.55 } },
+        ansText
+      )
+    )
+  );
+
+  return h('div', { class: 'stack', style: { gap: '14px' } },
+    h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.08)', border: '1px solid var(--teal)', borderRadius: '12px', padding: '14px', gap: '6px' } },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+        h('b', { style: { color: 'var(--teal)', fontSize: '1rem' } }, '🎯 Cẩm nang 26 câu hỏi phỏng vấn Remote Job & The Coach'),
+        h('span', { class: 'chip good' }, 'B2 Thương mại · 26 câu hỏi')
+      ),
+      h('p', { class: 'small', style: { margin: 0, lineHeight: 1.5 } },
+        'Trọn bộ câu hỏi và câu trả lời mẫu tiếng Anh phỏng vấn các vị trí làm việc từ xa: Account Management, Customer Success, Sales Coordination và Order Management. Bấm vào từng câu để xem câu trả lời chi tiết và bấm loa 🔊 để nghe phát âm mẫu!'
+      )
+    ),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '🌟 Phần 1: Giới thiệu bản thân & Vị trí công việc (The Coach)'),
+      qItem('01', 'Tell me about yourself / Walk me through your experience.', 'Giới thiệu bản thân và tóm lược quá trình làm việc 9 năm', 'I have 9 years of experience across Sales Administration, Furniture Merchandising, and B2B Account Management. My work has focused on customer communication, order processing, quotations, ERP updates, production follow-up, shipping documents, and issue resolution. I have worked with international customers and internal teams to make sure orders move smoothly and customers receive clear updates. I am now looking for a remote role in Account Management, Customer Success, Sales Coordination, Order Management, or B2B Customer Support, where I can use my follow-up, communication, and coordination skills.', 'Pitch 9 năm'),
+      qItem('02', 'Which department are you in and what does your department mainly do?', 'Bạn thuộc bộ phận nào và bộ phận của bạn chủ yếu phụ trách công việc gì?', "I'm in the sales and account management department, where we mainly support international customers, manage orders, and coordinate with internal teams. We work closely with production, logistics, and quality teams to make sure orders move smoothly and customers receive timely updates.", 'The Coach'),
+      qItem('03', 'What is the most exciting part of your job?', 'Phần thú vị nhất trong công việc hàng ngày của bạn là gì?', 'I find dealing with customers the most exciting part of my job because I enjoy understanding their needs and solving problems with the team. I also like brainstorming ideas with the team when we need to resolve a bottleneck or improve a process.', 'The Coach'),
+      qItem('04', 'What is your least favorite part of the job?', 'Điều bạn ít thích nhất trong công việc là gì và cách bạn xử lý?', 'My least favorite part is paperwork and repetitive tasks, but I understand they are necessary to keep operations smooth. I always try to stay organized and complete them carefully so the rest of the order process can move without delay.', 'The Coach')
+    ),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '💼 Phần 2: 16 Câu hỏi phỏng vấn chung & Kỹ năng vận hành'),
+      qItem('05', 'Why Account Management or Customer Success?', 'Tại sao bạn lại quan tâm đến vị trí Quản lý tài khoản / Customer Success?', 'My background is in B2B Account Management, but the strongest part of my experience is order management, customer communication, delivery follow-up, ERP updates, and coordination with internal teams. That is why I am interested in Account Management and Customer Success. I want a remote role where I can use my follow-up, documentation, and customer communication skills to support daily operations, service quality, and long-term customer relationships.'),
+      qItem('06', 'What did you do in your most recent role at ANCO Pottery?', 'Bạn đã đảm nhiệm những công việc gì trong vai trò gần đây nhất?', 'In my most recent Account Management role at ANCO Pottery, I supported international B2B customers from order confirmation to shipment. I confirmed customer requirements, updated orders in ERP, followed up with the factory, checked labels and packaging, and coordinated inspections. I also kept customers updated when there was a change, delay risk, or issue that needed attention.'),
+      qItem('07', 'How do you manage an order from confirmation to shipment?', 'Quy trình quản lý đơn hàng từ lúc nhận đơn đến khi xuất hàng?', 'First, I confirm the customer requirements and make sure the information is complete. Then I update the order in the system and coordinate with the factory or internal teams on production timing, labels, packaging, inspection, and documents. I follow up on changes or risks, keep clear notes, and update the customer until the order or request is completed.'),
+      qItem('08', 'Tell me about a difficult customer request. (Lyprodan Case)', 'Xử lý yêu cầu khó của khách hàng khi vượt quá khả năng sản xuất?', 'At Lyprodan, a key customer asked for changes to the mold, shape, color, and finishing. Some changes were not feasible, so I checked with the internal team, explained the limitation clearly, and offered practical options using existing designs and finishing choices. The customer accepted the solution, placed orders, and continued working with us.', 'STAR'),
+      qItem('09', 'How do you handle a delivery risk?', 'Xử lý khi phát hiện nguy cơ trễ tiến độ giao hàng?', 'I first check the real reason for the risk and confirm the updated timeline with the factory or related team. Then I look for possible solutions and inform the customer early. If the timeline needs to change, I explain the situation honestly and agree on a realistic next step. I prefer clear communication instead of making a promise that may affect quality or service.'),
+      qItem('10', 'How do you prioritize multiple customers and urgent orders?', 'Cách sắp xếp thứ tự ưu tiên khi có nhiều khách hàng và đơn hàng gấp?', 'I prioritize based on urgency, customer impact, deadline risk, and which task can block other work. I review the schedule regularly, keep clear notes, and follow up early with the factory or related teams. For urgent issues, I focus on the next action first and make sure the customer receives a clear update.'),
+      qItem('11', 'How do you ensure data accuracy across ERP and documents?', 'Làm thế nào bạn đảm bảo độ chính xác dữ liệu trên ERP?', 'I check the latest customer-approved information before updating an order or customer record, especially product details, labels, packaging, quantity, and delivery dates. I compare the information with order documents and keep clear records of changes. I always use the latest approved version as the single source of truth.'),
+      qItem('12', 'Tell me about a mistake you made. (ANCO Pottery $200 Error)', 'Kể về một sai sót trong công việc và cách bạn chịu trách nhiệm giải quyết?', 'At ANCO Pottery, I used old handover information instead of the latest approved label and carton version. I took responsibility, informed the customer, proposed a correction solution using carton decals, and coordinated with Purchasing and the factory. The customer accepted the solution, the order was delivered on time, and I added a stricter checking step to avoid the same issue again.', 'STAR'),
+      qItem('13', 'What tools have you used to manage customer and order information?', 'Những công cụ phần mềm bạn đã thành thạo?', 'I have used ERP systems, MISA AMIS, and Base to manage customer, order, and internal task information. I also use Microsoft Office and cloud-based storage to organize files, reports, and shared documents. These tools help me keep information updated, follow up on work, and reduce missed details.'),
+      qItem('14', 'Why do you want remote work?', 'Tại sao bạn lại hướng tới công việc làm từ xa (Remote)?', 'I am looking for a role that is remote, hybrid, or based in Ho Chi Minh City, preferably near Binh Thanh. My previous roles were factory-based in Binh Duong and required onsite work six days a week, so the commute took significant time. I want to use my time more productively while continuing to support customers through clear communication, documentation, and follow-up.'),
+      qItem('15', 'What is your development area?', 'Điểm bạn đang muốn tiếp tục trau dồi và học hỏi thêm?', 'My direct experience is stronger in B2B operations, order management, and ERP than in modern CRM tools or SaaS Customer Success. However, I have used MISA AMIS, Base, Microsoft Office, and cloud tools, and I have completed Customer Success training. I am ready to learn a new product, system, and process quickly.'),
+      qItem('16', 'Why did you leave your previous company?', 'Lý do bạn tìm kiếm cơ hội công việc mới?', 'I learned a lot from my previous roles, especially about international B2B customers, order coordination, and working with factories. Most of my previous roles were factory-based and required onsite work six days a week, so the commute took significant time. I am now looking for a remote, hybrid, or Ho Chi Minh City-based role where I can grow in a more international and dynamic environment.'),
+      qItem('17', 'Why should we hire you?', 'Tại sao công ty nên lựa chọn tuyển dụng bạn?', 'I bring 9 years of practical B2B experience in customer communication, order coordination, data accuracy, and issue resolution. I am careful with details, proactive with follow-up, and comfortable working with different internal teams. I can support daily customer operations well, and I can learn new systems quickly.'),
+      qItem('18', 'What are your strengths and weakness?', 'Điểm mạnh lớn nhất và điểm yếu cần cải thiện?', 'My strengths are follow-up, attention to detail, and coordination. I am careful with order information, customer requirements, and deadlines. As for my weakness, sometimes I can be nervous when speaking English in an interview, especially when I want to give a perfect answer. I am improving this by preparing short answers, practising out loud, and focusing on clear communication instead of perfect grammar.'),
+      qItem('19', 'How do you handle pressure or tight deadlines?', 'Cách bạn đối phó với áp lực và deadline gấp rút?', 'I first check what is most urgent and what can affect the customer or delivery timeline. Then I confirm the facts with the related team, focus on the next action, and update the customer clearly. I try to stay calm, organize the work by priority, and avoid making promises before I confirm the real situation.'),
+      qItem('20', 'What are your salary expectations?', 'Kỳ vọng về mức lương và chế độ đãi ngộ?', 'I am open to discussing based on the role scope, working arrangement, and benefits. My priority is to find a good long-term fit where I can contribute my B2B customer support, order coordination, and follow-up experience. I would be happy to understand the company budget for this position first.')
+    ),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '🎯 Phần 3: 6 Tình huống Customer Success & Quản lý tài khoản'),
+      qItem('21', 'How would you support a new customer during onboarding?', 'Hỗ trợ khách hàng mới trong giai đoạn tiếp nhận (onboarding)?', "I would first understand the customer's goal, workflow, and main difficulty. Then I would explain the process in simple steps, give a practical example, and confirm the next action. After that, I would follow up regularly and coordinate with the right internal team if there is a blocker.", 'CS'),
+      qItem('22', 'How would you manage a customer at risk?', 'Xử lý và giữ chân khách hàng có nguy cơ rời bỏ (customer at risk)?', 'I would first understand the reason for the risk, such as low usage, an unresolved issue, or unclear expectations. I would confirm the facts with the customer and internal teams, then agree on a recovery plan with clear actions and deadlines. I would follow up until the issue is resolved.', 'CS'),
+      qItem('23', 'How would you manage a high-volume customer portfolio?', 'Quản lý danh mục nhiều khách hàng cùng lúc mà không bị sót việc?', 'I would organize customers by priority, such as customer impact, delivery or adoption risk, and the next required action. I would keep accurate notes and use a clear follow-up schedule, so important tasks are not missed. For urgent issues, I would focus on the immediate action first and communicate clearly with the customer and internal teams.', 'CS'),
+      qItem('24', 'How would you use customer data or a health score?', 'Ứng dụng dữ liệu và điểm sức khỏe khách hàng (health score)?', 'I would use the data to understand whether customers are active, using key features, or facing repeated issues. If I saw a risk signal, I would check the reason, contact the customer early, and agree on the next step. My direct experience is in ERP and order data, but I am ready to learn each company’s customer-health process.', 'CS'),
+      qItem('25', 'How do you learn a new system or product?', 'Phương pháp học nhanh phần mềm và sản phẩm mới?', 'I first learn the main workflow and the most important customer tasks. Then I practise with real examples, take clear notes, and ask questions when I need clarification. My experience with ERP, MISA AMIS, Base, and cloud-based tools has helped me become comfortable learning new systems.', 'CS'),
+      qItem('26', 'How do you improve a recurring customer issue?', 'Cải tiến và ngăn chặn vấn đề lặp đi lặp lại của khách hàng?', 'I document the issue clearly, check the root cause with the related teams, and suggest a practical solution. Then I discuss it in an internal meeting and follow up on the result. I used this approach in my previous work to help improve label and order-detail checking.', 'CS')
+    ),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '❓ Phần 4: 4 Câu hỏi ngược xuất sắc cho nhà tuyển dụng (Reverse Questions)'),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '8px' } },
+        h('b', { style: { color: 'var(--teal)' } }, '1. Thành công trong 90 ngày đầu tiên:'),
+        h('p', { class: 'small', style: { margin: '2px 0 0 0', fontStyle: 'italic', color: 'var(--ink)' } }, '“What would success look like in the first 90 days in this role? What key priorities should the new team member focus on first?”'),
+        h('b', { style: { color: 'var(--teal)', marginTop: '8px', display: 'block' } }, '2. Thách thức lớn nhất trong khâu onboarding của khách:'),
+        h('p', { class: 'small', style: { margin: '2px 0 0 0', fontStyle: 'italic', color: 'var(--ink)' } }, '“What are the most common onboarding or adoption challenges that customers face here?”'),
+        h('b', { style: { color: 'var(--teal)', marginTop: '8px', display: 'block' } }, '3. Các chỉ số đo lường hiệu quả (Metrics & KPIs):'),
+        h('p', { class: 'small', style: { margin: '2px 0 0 0', fontStyle: 'italic', color: 'var(--ink)' } }, '“Which metrics—such as retention rate, on-time delivery, or CSAT—are most important for measuring success in this role?”'),
+        h('b', { style: { color: 'var(--teal)', marginTop: '8px', display: 'block' } }, '4. Công cụ theo dõi sức khỏe khách hàng:'),
+        h('p', { class: 'small', style: { margin: '2px 0 0 0', fontStyle: 'italic', color: 'var(--ink)' } }, '“Which tools or systems does the team currently use to manage customer health, order status, and cross-functional communication?”')
+      )
+    ),
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '🚀 Phần 5: 3 Câu chuyện thực chiến theo khung STAR (Verified STAR Stories)'),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { style: { color: 'var(--teal)' } }, '⭐ Câu chuyện 1: Kích hoạt lại khách hàng cũ mang về hơn 60.000 USD đơn hàng'),
+          h('span', { class: 'chip good small' }, 'Initiative & Revenue')
+        ),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+          '• Situation: Phát hiện thông tin một khách hàng trong cơ sở dữ liệu công ty đã ngưng hoạt động trong nhiều năm.\n' +
+          '• Task: Chủ động liên hệ lại để khai thác cơ hội hợp tác kinh doanh mới.\n' +
+          '• Action: Proactively liên hệ, giới thiệu các dòng sản phẩm mới và chuẩn bị báo giá chi tiết phù hợp với nhu cầu của họ.\n' +
+          '• Result: Đem về 3 đơn hàng mới liên tiếp (mỗi đơn > 20.000 USD), với tổng giá trị đơn hàng vượt hơn 60.000 USD.'
+        )
+      ),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { style: { color: 'var(--teal)' } }, '⭐ Câu chuyện 2: Nhận trách nhiệm & xử lý sự cố nhãn dán thùng 200 USD (ANCO Pottery)'),
+          h('span', { class: 'chip small' }, 'Accountability & Problem Solving')
+        ),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+          '• Situation: Sử dụng thông tin bàn giao cũ thay vì bản market nhãn thùng mới nhất được khách duyệt.\n' +
+          '• Task: Nhận trách nhiệm, tìm giải pháp khắc phục mà không làm trễ ngày xuất hàng.\n' +
+          '• Action: Báo cáo khách hàng, đề xuất giải pháp in decal dán đè thay vì in lại toàn bộ thùng, phối hợp Phòng Mua hàng và Nhà máy kiểm tra đối chiếu.\n' +
+          '• Result: Chi phí khắc phục chỉ khoảng 200 USD, khách hàng hoàn toàn hài lòng, đơn hàng xuất đúng hạn và thiết lập quy trình kiểm tra 2 lớp để không bao giờ tái diễn.'
+        )
+      ),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('b', { style: { color: 'var(--teal)' } }, '⭐ Câu chuyện 3: Biến 4 yêu cầu tùy biến phức tạp thành 1 phương án khả thi (Lyprodan)'),
+          h('span', { class: 'chip small' }, 'Client Negotiation & Protection')
+        ),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+          '• Situation: Khách hàng lớn đòi hỏi thay đổi khuôn, hình dáng, màu sắc và độ hoàn thiện bề mặt mà nhà máy không thể đáp ứng.\n' +
+          '• Task: Bảo vệ mối quan hệ với khách hàng mà không đưa ra lời hứa vượt quá năng lực sản xuất.\n' +
+          '• Action: Giải thích rõ giới hạn kỹ thuật, định hướng khách hàng vào việc tùy chỉnh màu sơn hoàn thiện trên các mẫu thiết kế có sẵn.\n' +
+          '• Result: Khách hàng đồng thuận phương án khả thi, chốt đơn hàng và tiếp tục hợp tác lâu dài.'
+        )
+      )
+    )
+  );
+}
+
 function renderEnglishKnowledgeView() {
   const subtabs = [
     { k: 'gram', label: '📖 Ngữ pháp Tiếng Anh' },
@@ -11570,7 +11696,7 @@ function renderEnglishKnowledgeView() {
     const toolbar = h('div', { class: 'row between align-center wrap', style: { gap: '8px', margin: '4px 0 8px 0' } },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
         h('h2', { style: { margin: 0, fontSize: '1.08rem', color: 'var(--ink)' } }, '💡 Cẩm nang & Phương pháp học tiếng Anh'),
-        h('span', { class: 'chip small' }, '6 chuyên đề')
+        h('span', { class: 'chip small' }, '7 chuyên đề')
       ),
       h('button', {
         id: 'toggle-guides-btn',
@@ -11752,6 +11878,17 @@ function renderEnglishKnowledgeView() {
             )
           )
         )
+      }),
+
+      // 7. Cẩm nang Phỏng vấn Remote & Khung STAR
+      guideAccordionItem({
+        id: 'interview-prep',
+        icon: '🎙️',
+        title: 'Cẩm nang Phỏng vấn Remote & Khung STAR (26 câu hỏi mock interview & The Coach)',
+        subtitle: 'Bộ câu trả lời tiếng Anh mẫu chuẩn chỉnh, tình huống Customer Success, B2B Account Management và câu hỏi ngược cho nhà tuyển dụng',
+        tag: 'B2 Đi làm · 26 câu',
+        defaultOpen: false,
+        content: renderInterviewGuide()
       })
     ];
 
