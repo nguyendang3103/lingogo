@@ -788,7 +788,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1326';
+const APP_BUILD_ID = '20261113-1600';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -837,7 +837,7 @@ function cleanPhaseName(name) {
 }
 const EN_CATEGORIES = CATEGORIES.en;
 let subjectsOpen = false;
-const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'a1', zhCat: 'hsk1', jaCat: 'n5', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, gq: {}, ach: {}, t: 0 });
+const fresh = () => ({ v: 2, name: '', goal: 20, lang: 'en', enCat: 'a1', zhCat: 'hsk1', jaCat: 'n5', days: {}, dl: {}, pv: {}, srs: {}, lessons: {}, spoken: {}, written: {}, fill: {}, gq: {}, ach: {}, del: {}, delAll: 0, t: 0 });
 let S = fresh();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch (e) { /* bị chặn lưu trữ */ }
 const SYNC = { ref: null, timer: 0, seen: -1 };
@@ -851,16 +851,61 @@ function save() {
 function mergeState(a, b) {
   const [newer, older] = (a.t || 0) >= (b.t || 0) ? [a, b] : [b, a];
   const out = Object.assign(fresh(), older, newer);
-  out.days = Object.assign({}, older.days); for (const [k, v] of Object.entries(newer.days || {})) out.days[k] = Math.max(out.days[k] || 0, v);
-  out.dl = {}; for (const src of [older.dl || {}, newer.dl || {}]) for (const [d, m] of Object.entries(src)) { out.dl[d] = out.dl[d] || {}; for (const [c, v] of Object.entries(m)) out.dl[d][c] = Math.max(out.dl[d][c] || 0, v); }
-  out.pv = Object.assign({}, older.pv, newer.pv);
-  out.srs = Object.assign({}, older.srs); for (const [k, v] of Object.entries(newer.srs || {})) { const o = out.srs[k]; if (!o || (v.last || 0) > (o.last || 0) || ((v.last || 0) === (o.last || 0) && v.b >= o.b)) out.srs[k] = v; }
-  for (const f of ['lessons', 'spoken', 'written']) {
-    out[f] = Object.assign({}, older[f]);
-    for (const [k, v] of Object.entries(newer[f] || {})) { const o = out[f][k]; out[f][k] = typeof v === 'number' && typeof o === 'number' ? Math.max(v, o) : (typeof v === 'number' ? v : o != null ? o : v); }
+
+  // 1. Quản lý mốc xóa toàn bộ (delAll)
+  out.delAll = Math.max(older.delAll || 0, newer.delAll || 0);
+  if (out.delAll > 0 && (older.t || 0) <= out.delAll) {
+    return Object.assign(fresh(), newer, { del: newer.del || {}, delAll: out.delAll, t: Math.max(a.t || 0, b.t || 0) });
   }
-  out.fill = Object.assign({}, older.fill, newer.fill); out.ielts_challenge = Object.assign({}, older.ielts_challenge, newer.ielts_challenge); out.ach = Object.assign({}, older.ach, newer.ach);
-  out.name = newer.name || older.name; out.t = Math.max(a.t || 0, b.t || 0);
+
+  // 2. Gộp danh sách các mục đã xóa (tombstones)
+  out.del = Object.assign({}, older.del || {}, newer.del || {});
+
+  out.days = Object.assign({}, older.days);
+  for (const [k, v] of Object.entries(newer.days || {})) out.days[k] = Math.max(out.days[k] || 0, v);
+
+  out.dl = {};
+  for (const src of [older.dl || {}, newer.dl || {}]) {
+    for (const [d, m] of Object.entries(src)) {
+      out.dl[d] = out.dl[d] || {};
+      for (const [c, v] of Object.entries(m)) out.dl[d][c] = Math.max(out.dl[d][c] || 0, v);
+    }
+  }
+  out.pv = Object.assign({}, older.pv, newer.pv);
+
+  // 3. SRS: bỏ qua các mục đã xóa
+  out.srs = {};
+  for (const [k, v] of Object.entries(older.srs || {})) {
+    if (!out.del[k]) out.srs[k] = v;
+  }
+  for (const [k, v] of Object.entries(newer.srs || {})) {
+    if (!out.del[k]) {
+      const o = out.srs[k];
+      if (!o || (v.last || 0) > (o.last || 0) || ((v.last || 0) === (o.last || 0) && v.b >= o.b)) {
+        out.srs[k] = v;
+      }
+    }
+  }
+
+  // 4. lessons, spoken, written: bỏ qua các bài đã xóa
+  for (const f of ['lessons', 'spoken', 'written']) {
+    out[f] = {};
+    for (const [k, v] of Object.entries(older[f] || {})) {
+      if (!out.del[k]) out[f][k] = v;
+    }
+    for (const [k, v] of Object.entries(newer[f] || {})) {
+      if (!out.del[k]) {
+        const o = out[f][k];
+        out[f][k] = typeof v === 'number' && typeof o === 'number' ? Math.max(v, o) : (typeof v === 'number' ? v : o != null ? o : v);
+      }
+    }
+  }
+
+  out.fill = Object.assign({}, older.fill, newer.fill);
+  out.ielts_challenge = Object.assign({}, older.ielts_challenge, newer.ielts_challenge);
+  out.ach = Object.assign({}, older.ach, newer.ach);
+  out.name = newer.name || older.name;
+  out.t = Math.max(a.t || 0, b.t || 0);
   return out;
 }
 async function pullSync() {
@@ -947,6 +992,12 @@ async function pullGhSync(quiet = false) {
     if (!f || !f.content) return false;
     const remote = JSON.parse(f.content);
     if (remote && (remote.t || 0) !== GH_SYNC.seen) {
+      // Nếu máy hiện tại mới hơn remote (ví dụ vừa bấm xóa bài hoặc xóa toàn bộ), không nạp lại từ remote mà cập nhật lên remote
+      if ((S.t || 0) > (remote.t || 0)) {
+        GH_SYNC.seen = S.t || Date.now();
+        scheduleGhPush();
+        return false;
+      }
       const prevL = Object.keys(S.lessons || {}).length, prevS = Object.keys(S.srs || {}).length;
       S = mergeState(S, remote);
       GH_SYNC.seen = S.t || Date.now();
@@ -1120,7 +1171,7 @@ function srsNext(s, g) { // g: 1 Quên, 2 Khó, 3 Nhớ, 4 Dễ
   const b = g === 1 ? 0 : g === 2 ? Math.max(1, b0) : g === 3 ? Math.min(6, b0 + 1) : Math.min(6, b0 + 2);
   return { b, due: t + IV[b], last: t };
 }
-function srsRate(key, ok) { S.srs[key] = srsNext(S.srs[key], ok ? 3 : 1); save(); }
+function srsRate(key, ok) { if (S.del && S.del[key]) delete S.del[key]; S.srs[key] = srsNext(S.srs[key], ok ? 3 : 1); save(); }
 const ivText = (s) => { const n = s.due - todayN(); return n <= 1 ? 'ngày mai' : n < 30 ? n + ' ngày' : Math.round(n / 30) + ' tháng'; };
 
 // ===== Tải dữ liệu =====
@@ -1587,31 +1638,45 @@ const topicDone = (t) => t.lessons.every((l, i) => lessonDone(t, i));
 function resetLesson(t, i, opts = {}) {
   const code = t.lang;
   const k = lkey(t, i);
+  const now = Date.now();
   delete S.lessons[k];
+  S.del = S.del || {};
+  S.del[k] = now;
+  delete S.spoken[k];
+  delete S.written[k];
+  S.del['spk:' + k] = now;
+  S.del['wrt:' + k] = now;
 
   const l = t.lessons[i];
   if (l && l.words && l.words.length) {
     const isWordInOtherDone = (wId) => t.lessons.some((otherL, otherI) => otherI !== i && lessonDone(t, otherI) && otherL.words && otherL.words.some((ow) => ow.id === wId));
     l.words.forEach((w) => {
       if (!isWordInOtherDone(w.id)) {
-        delete S.srs[sid(code, w.id)];
+        const sKey = sid(code, w.id);
+        delete S.srs[sKey];
+        S.del[sKey] = now;
       }
     });
   }
   if (l && l.kind === 'kanji' && t.kanji) {
     t.kanji.forEach((kj) => {
-      delete S.srs[sid(code, kj.id)];
+      const sKey = sid(code, kj.id);
+      delete S.srs[sKey];
+      S.del[sKey] = now;
     });
   }
 
   const topicStillHasDone = t.lessons.some((otherL, otherI) => otherI !== i && lessonDone(t, otherI));
   if (!topicStillHasDone && t.gram) {
     t.gram.forEach((gid) => {
-      delete S.srs[code + ':gram:' + gid];
+      const sKey = code + ':gram:' + gid;
+      delete S.srs[sKey];
+      S.del[sKey] = now;
     });
   }
 
   save();
+  pushGhSync(true);
   if (!opts.silent) {
     toast('Đã xóa tiến độ bài ' + lessonTitle(t, i));
   }
@@ -8878,6 +8943,15 @@ function lessonView(t, i) {
     const correct = graded.filter((r) => r.correct).length, total = graded.length;
     const pct = total ? Math.round(correct / total * 100) : 100;
     const k = lkey(t, i), repeat = S.lessons[k] != null;
+    if (S.del && S.del[k]) delete S.del[k];
+    if (S.del && S.del['spk:' + k]) delete S.del['spk:' + k];
+    if (S.del && S.del['wrt:' + k]) delete S.del['wrt:' + k];
+    if (t.lessons[i] && t.lessons[i].words) {
+      t.lessons[i].words.forEach((w) => {
+        const sKey = sid(code, w.id);
+        if (S.del && S.del[sKey]) delete S.del[sKey];
+      });
+    }
     // XP: mỗi từ / kanji / câu / tình huống làm đúng ngay lần đầu = 5 XP; điền từ: 5 XP mỗi chỗ đúng
     const keyOf = (e) => e.v ? 'v' + e.v.id : e.k ? 'k' + e.k.id : e.type === 'gquiz' ? ('gq' + (e.q && e.q.p ? e.q.p.gid : '')) : e.type === 'quiz' ? ('qz' + (e.q ? (e.q.id || e.q.q) : '')) : e.type === 'write' ? 'w' + e.ch : 's' + (e.text || '');
     const won = new Set(); let fillXp = 0;
@@ -13625,18 +13699,16 @@ async function autoSync() {
             const remoteT = remote.t || 0;
             const localT = S.t || 0;
 
-            const merged = mergeState(S, remote);
-            const dl = Object.keys(merged.lessons || {}).length - prevL;
-            const ds = Object.keys(merged.srs || {}).length - prevS;
-            const dw = Object.keys(merged.written || {}).length - prevW;
-            const remoteHasMore = dl > 0 || ds > 0 || dw > 0;
-
-            if (remoteT > localT || remoteHasMore) {
+            if (remoteT > localT) {
+              const merged = mergeState(S, remote);
               S = merged;
               GH_SYNC.seen = S.t || Date.now();
               save();
               route();
-              const parts = [dl && (dl + ' bài'), ds && (ds + ' mục ôn'), dw && (dw + ' chữ viết')].filter(Boolean).join(', ');
+              const dl = Object.keys(merged.lessons || {}).length - prevL;
+              const ds = Object.keys(merged.srs || {}).length - prevS;
+              const dw = Object.keys(merged.written || {}).length - prevW;
+              const parts = [dl > 0 && (dl + ' bài'), ds > 0 && (ds + ' mục ôn'), dw > 0 && (dw + ' chữ viết')].filter(Boolean).join(', ');
               toast('Đã kéo (Pull): ' + (parts ? 'gộp thêm ' + parts + ' từ GitHub.' : 'tiến độ đã cập nhật mới nhất từ GitHub.'));
               return;
             } else {
@@ -14088,7 +14160,17 @@ function progressView() {
     [[20, 'Tối thiểu · 20 XP cơ bản (Focus: 40 XP / Duy trì: 10 XP)'], [30, 'Vừa phải · 30 XP cơ bản (Focus: 60 XP / Duy trì: 15 XP)'], [50, 'Nghiêm túc · 50 XP cơ bản (Focus: 100 XP / Duy trì: 25 XP)']].map(([v, l]) => h('option', { value: v, selected: (S.goal || 20) === v }, l)));
   const smartSchedCheck = h('input', { type: 'checkbox', id: 'smartSched', checked: S.smartSchedule !== false, onchange: (e) => { S.smartSchedule = e.target.checked; save(); toast('Đã cập nhật chế độ lộ trình.'); progressView(); } });
   let confirmReset = false;
-  const resetBtn = h('button', { class: 'ghost block', onclick: () => { if (!confirmReset) { confirmReset = true; resetBtn.textContent = 'Bấm lần nữa để xóa toàn bộ tiến độ của cả ba thứ tiếng'; return; } S = fresh(); save(); welcomeView(); } }, 'Xóa tiến độ và học lại từ đầu');
+  const resetBtn = h('button', { class: 'ghost block', onclick: async () => {
+    if (!confirmReset) { confirmReset = true; resetBtn.textContent = 'Bấm lần nữa để xóa toàn bộ tiến độ của cả ba thứ tiếng'; return; }
+    const resetTime = Date.now();
+    S = fresh();
+    S.delAll = resetTime;
+    S.t = resetTime;
+    save();
+    await pushGhSync(true);
+    toast('Đã xóa toàn bộ tiến độ và cập nhật lên máy chủ.');
+    welcomeView();
+  } }, 'Xóa tiến độ và học lại từ đầu');
   const c0 = S.lang, k0 = Object.keys(S.srs).filter((k) => k.startsWith(c0 + ':'));
   const xpTotal = (c) => Object.values(S.dl || {}).reduce((a, m) => a + (m[c] || 0), 0);
   const w0 = Object.keys(S.written).filter((k) => k.startsWith(c0 + ':')).length;
