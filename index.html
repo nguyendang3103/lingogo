@@ -788,7 +788,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1120';
+const APP_BUILD_ID = '20261113-1135';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -11988,10 +11988,14 @@ function renderKnowledgeChars(code) {
     const filteredRad = radicals.filter((x) => !q || x.r.includes(q) || x.p.includes(q) || x.m.toLowerCase().includes(q));
 
     return h('div', { class: 'stack-lg' },
-      h('div', { class: 'panel card stack', style: { gap: '10px' } },
-        h('h2', { style: { margin: 0 } }, '✍️ 7 Quy tắc bút thuận viết chữ Hán'),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Nắm vững quy tắc viết để nhớ mặt chữ nhanh gấp 3 lần và viết chữ đẹp chuẩn phong cách:'),
-        ...rules.map((ru) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+      guideAccordionItem({
+        id: 'zh-stroke-rules',
+        icon: '✍️',
+        title: '7 Quy tắc bút thuận viết chữ Hán',
+        subtitle: 'Quy tắc vàng giúp nhớ mặt chữ nhanh gấp 3 lần và viết chữ chuẩn phong cách',
+        tag: '7 quy tắc',
+        defaultOpen: false,
+        content: rules.map((ru) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
           h('div', { class: 'row between', style: { alignItems: 'center' } },
             h('b', { style: { color: 'var(--teal)' } }, ru.title),
             h('button', {
@@ -12003,7 +12007,7 @@ function renderKnowledgeChars(code) {
           h('p', { class: 'small', style: { margin: '4px 0 2px 0' } }, ru.desc),
           h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa Hán Việt: ' + ru.hv)
         ))
-      ),
+      }),
       h('div', { class: 'panel card stack', style: { gap: '10px' } },
         h('div', { class: 'row between', style: { alignItems: 'center' } },
           h('h2', { style: { margin: 0 } }, '🈴 Bộ thủ thường gặp nhất'),
@@ -13204,23 +13208,24 @@ function examTabView() {
     )
   );
 
-  const tipsCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
-    h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '💡 Cẩm nang mẹo làm bài thi ' + (isZh ? 'HSK' : 'JLPT')),
-    ...(isZh ? [
-      { t: '1. Phân bổ thời gian phần Đọc hiểu', d: 'Mỗi câu đọc hiểu HSK chỉ nên làm dưới 50 giây. Đọc câu hỏi và phương án A/B/C/D trước rồi mới quay lại quét từ khóa trong bài đọc.' },
-      { t: '2. Chiến thuật bắt Keyword bài Nghe', d: 'Tận dụng 15-30 giây trước khi đoạn audio phát để nhìn nhanh các đáp án. Chú ý các từ nối chuyển ý (但是, 不过, 虽然, 尽管) vì câu trả lời đúng thường nằm ngay phía sau.' },
-      { t: '3. Quy tắc ngữ pháp phần Viết sắp xếp câu', d: 'Xác định cấu trúc cốt lõi: Ai làm gì (Chủ ngữ + Vị ngữ + Tân ngữ). Ghi nhớ các cấu trúc câu đặc biệt: câu chữ 把 (Chủ + 把 + Tân + Động từ + Thành phần khác) và câu bị động 被.' }
-    ] : [
+  const tipsCard = guideAccordionItem({
+    id: 'jlpt-tips-' + curLv,
+    icon: '💡',
+    title: 'Cẩm nang 3 mẹo làm bài thi JLPT (' + curLv + ')',
+    subtitle: 'Chiến thuật phân bổ thời gian và mẹo xử lý từng dạng bài thi JLPT',
+    tag: '3 mẹo thi',
+    defaultOpen: false,
+    content: [
       { t: '1. Tốc độ phần Kiến thức ngôn ngữ (Mondai 1-4)', d: 'Phần Kanji và Từ vựng phải làm thật nhanh (15-20 phút). Tuyệt đối không dừng lại quá 30 giây ở một từ Kanji chưa nhớ để dành thời gian cho bài đọc hiểu.' },
       { t: '2. Kỹ năng làm bài tìm sao ★ trong Ngữ pháp', d: 'Ghép các cụm từ đi liền với nhau thành cặp trước (VD: て-form đi với ください, danh từ đi với trợ từ tương ứng), sau đó mới đặt vào câu hoàn chỉnh.' },
       { t: '3. Bí quyết nghe hiểu Mondai phản xạ nhanh', d: 'Nắm chắc ngữ điệu hỏi và các cặp câu đáp trả thông dụng (đặc biệt là kính ngữ 敬語 và khiêm nhường ngữ 謙譲語). Nghe ngay từ đầu câu để xác định đối tượng hành động.' }
-    ]).map((tip) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+    ].map((tip) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
       h('b', { style: { color: 'var(--teal)' } }, tip.t),
       h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, tip.d)
     ))
-  );
+  });
 
-  mount(h('div', { class: 'stack-lg' }, header, modeSwitcher, lvSelector, structureCard, mockTestCard, tipsCard));
+  mount(h('div', { class: 'stack-lg' }, header, lvSelector, structureCard, mockTestCard, tipsCard));
 }
 
 // Chế độ thi thử Demo cho HSK / JLPT
