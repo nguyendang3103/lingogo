@@ -770,6 +770,10 @@ body { overflow-x: hidden; }
   font-weight: 700 !important;
   box-shadow: 0 2px 8px rgba(217, 119, 6, 0.4) !important;
 }
+summary.guide-summary::-webkit-details-marker { display: none; }
+summary.guide-summary { list-style: none; }
+details[open] > summary .guide-arrow { transform: rotate(180deg); }
+.guide-arrow { display: inline-block; transition: transform .2s ease; }
 </style>
 
 <div id="app"><p class="loading">Đang tải…</p></div>
@@ -784,7 +788,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1115';
+const APP_BUILD_ID = '20261113-1120';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -11467,6 +11471,60 @@ function renderDeepReadingGuide() {
   );
 }
 
+function guideAccordionItem({ id, icon, title, subtitle, tag, content, defaultOpen = false }) {
+  const summaryEl = h('summary', {
+    class: 'guide-summary',
+    style: {
+      cursor: 'pointer',
+      padding: '14px 16px',
+      userSelect: 'none',
+      listStyle: 'none',
+      outline: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px'
+    }
+  },
+    h('div', { class: 'row', style: { gap: '12px', alignItems: 'center', flex: 1, minWidth: 0 } },
+      h('span', { style: { fontSize: '1.45rem', flexShrink: 0 } }, icon),
+      h('div', { style: { minWidth: 0, flex: 1 } },
+        h('b', { style: { fontSize: '1rem', color: 'var(--ink)', display: 'block', lineHeight: 1.35 } }, title),
+        subtitle ? h('p', { class: 'small muted', style: { margin: '3px 0 0 0', lineHeight: 1.35, fontSize: '.83rem' } }, subtitle) : null
+      )
+    ),
+    h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexShrink: 0 } },
+      tag ? h('span', { class: 'chip small', style: { fontWeight: 600 } }, tag) : null,
+      h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700, fontSize: '.95rem' } }, '▾')
+    )
+  );
+
+  const bodyEl = h('div', {
+    class: 'guide-body stack',
+    style: {
+      padding: '16px',
+      borderTop: '1px solid var(--line)',
+      gap: '14px',
+      background: 'var(--surface)'
+    }
+  }, content);
+
+  const detailsAttrs = {
+    class: 'panel card guide-accordion-item',
+    style: {
+      padding: 0,
+      borderRadius: '14px',
+      overflow: 'hidden',
+      background: 'var(--surface)',
+      border: '1px solid var(--line)',
+      transition: 'all .2s ease'
+    }
+  };
+  if (defaultOpen) detailsAttrs.open = 'open';
+
+  return h('details', detailsAttrs, summaryEl, bodyEl);
+}
+
 function renderEnglishKnowledgeView() {
   const subtabs = [
     { k: 'gram', label: '📖 Ngữ pháp Tiếng Anh' },
@@ -11501,44 +11559,203 @@ function renderEnglishKnowledgeView() {
   if (KNOWLEDGE_TAB === 'gram') {
     body = renderKnowledgeGrammar('en');
   } else {
-    const deepReadingSection = renderDeepReadingGuide();
+    const toggleAllGuides = () => {
+      const details = document.querySelectorAll('.guide-accordion-item');
+      const anyClosed = [...details].some((d) => !d.open);
+      details.forEach((d) => { d.open = anyClosed; });
+      const btn = document.getElementById('toggle-guides-btn');
+      if (btn) btn.textContent = anyClosed ? '📁 Thu gọn tất cả' : '📖 Mở tất cả';
+    };
 
-    const otherTipsHeader = h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '12px' } },
-      h('h3', { style: { margin: 0, fontSize: '1.1rem', color: 'var(--ink)' } }, '💡 Cẩm nang & Mẹo học phản xạ khác'),
-      h('span', { class: 'small muted' }, '5 mẹo thực chiến')
+    const toolbar = h('div', { class: 'row between align-center wrap', style: { gap: '8px', margin: '4px 0 8px 0' } },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+        h('h2', { style: { margin: 0, fontSize: '1.08rem', color: 'var(--ink)' } }, '💡 Cẩm nang & Phương pháp học tiếng Anh'),
+        h('span', { class: 'chip small' }, '6 chuyên đề')
+      ),
+      h('button', {
+        id: 'toggle-guides-btn',
+        class: 'ghost mini',
+        style: { fontWeight: 600, color: 'var(--teal)' },
+        onclick: toggleAllGuides
+      }, '📖 Mở tất cả')
     );
 
-    const tipsList = [
-      {
-        t: '🎧 Kỹ thuật Shadowing để luyện phản xạ nói & ngữ điệu tự nhiên',
-        c: 'Nghe người bản ngữ nói một câu ngắn (khoảng 3–5 giây), bấm dừng rồi lập tức lặp lại y hệt về tốc độ, ngữ điệu và trọng âm. Sau khi quen, nói đè (nói song song) cùng lúc với audio. Mỗi ngày chỉ cần 15–20 phút là phản xạ khẩu hình miệng sẽ tự nhiên hơn rất nhiều.'
-      },
-      {
-        t: '🎙️ Bí quyết phát âm: Bật rõ âm đuôi (Ending Sounds) & Nối âm (Connected Speech)',
-        c: 'Người Việt thường có xu hướng bỏ quên các âm đuôi quan trọng như /s/, /z/, /t/, /d/, /ed/, /ks/, làm biến đổi nghĩa của câu. Khi nói, hãy chủ động liên kết phụ âm cuối của từ trước với nguyên âm đầu của từ sau (ví dụ: "turn on" -> "tur-non", "hold on" -> "hol-don") để câu nói mượt mà, lưu loát.'
-      },
-      {
-        t: '✍️ Viết Email công việc chuẩn 4C – Tuyệt đối không dịch Word-by-Word',
-        c: 'Email giao việc, đối tác cần tuân thủ 4C: Clear (rõ ràng), Concise (ngắn gọn, đi thẳng vào mục đích), Correct (chuẩn ngữ pháp và tên riêng), Courteous (lịch sự, dùng Would/Could thay vì Can/Will). Đừng dịch câu tiếng Việt sang tiếng Anh từng chữ mà hãy dùng các cấu trúc mẫu tiêu chuẩn (ví dụ: "I am writing to inquire about...", "Please find attached the requested report").'
-      },
-      {
-        t: '📖 Đọc hiểu siêu tốc với kỹ thuật Skimming & Scanning',
-        c: 'Khi đọc tài liệu dài, hợp đồng hay bài thi IELTS: (1) Skimming: Lướt nhanh tiêu đề, câu đầu và câu cuối mỗi đoạn trong 30 giây để nắm đại ý toàn bài. (2) Scanning: Quét mắt tìm chính xác các từ khóa mỏ neo (tên riêng, số liệu năm tháng, thuật ngữ in hoa) để trả lời câu hỏi mà không cần đọc từng chữ.'
-      },
-      {
-        t: '🧠 Ghi nhớ từ vựng vĩnh viễn theo Collocation & Spaced Repetition',
-        c: 'Không học từ vựng đơn lẻ (VD: không học mỗi từ "decision", mà học cả cụm "make an informed decision"). Kết hợp ôn tập ngắt quãng (Spaced Repetition) ở tab Ôn tập để não bộ ghi nhớ sâu vào vùng trí nhớ dài hạn thay vì học vẹt rồi quên sau vài ngày.'
-      }
+    const guides = [
+      // 1. Deep Reading
+      guideAccordionItem({
+        id: 'deepread',
+        icon: '📚',
+        title: 'Deep Reading: Cách đọc sâu để bứt phá tiếng Anh & IELTS mỗi ngày',
+        subtitle: 'Bí quyết nghiên cứu đa tầng (từ vựng, collocations, cấu trúc câu, ngữ pháp) từ 1 bài đọc duy nhất',
+        tag: 'IELTS 7.0+ · 8 bước',
+        defaultOpen: false,
+        content: renderDeepReadingGuide()
+      }),
+
+      // 2. Kỹ thuật Shadowing
+      guideAccordionItem({
+        id: 'shadowing',
+        icon: '🎧',
+        title: 'Kỹ thuật Shadowing để luyện phản xạ nói & ngữ điệu tự nhiên',
+        subtitle: 'Nói đè song song theo người bản ngữ để chuẩn hóa phát âm, ngữ điệu và nhịp thở',
+        tag: 'Luyện Nói',
+        defaultOpen: false,
+        content: h('div', { class: 'stack', style: { gap: '10px' } },
+          h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+            'Kỹ thuật Shadowing (nói nhại có kiểm soát) là phương pháp hàng đầu được các nhà ngôn ngữ học và chuyên gia phiên dịch áp dụng để xây dựng phản xạ khẩu hình miệng và chuẩn hóa ngữ điệu bản xứ mà không cần phải nhồi nhét lý thuyết ngữ pháp.'
+          ),
+          h('div', { class: 'stack', style: { gap: '8px' } },
+            h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '📋 Quy trình 3 bước thực hành chuẩn:'),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', {}, '1. Nghe & Cảm nhận nhịp điệu (Listen): '),
+              h('span', { class: 'small' }, 'Nghe câu ngắn (khoảng 3–5 giây) của người bản xứ không nhìn chữ để tai hoàn toàn tập trung vào ngữ điệu, trọng âm câu và chỗ ngắt nghỉ.')
+            ),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', {}, '2. Dừng & Lặp lại (Pause & Repeat): '),
+              h('span', { class: 'small' }, 'Bấm tạm dừng sau mỗi câu, lập tức mô phỏng lại y hệt về tốc độ, cao độ giọng nói và khẩu hình miệng.')
+            ),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', {}, '3. Nói đè đồng thời (Simultaneous Shadowing): '),
+              h('span', { class: 'small' }, 'Sau khi quen, bật audio chạy liên tục và nói đè cùng lúc với audio với độ trễ dưới 0.3 giây. Luyện tập 15–20 phút mỗi ngày trong tab Học của Lingogo sẽ giúp bạn nói mượt mà, không còn khựng lại dịch thầm trong đầu.')
+            )
+          )
+        )
+      }),
+
+      // 3. Phát âm âm đuôi & nối âm
+      guideAccordionItem({
+        id: 'pronunciation',
+        icon: '🎙️',
+        title: 'Bí quyết phát âm: Bật rõ âm đuôi (Ending Sounds) & Nối âm (Connected Speech)',
+        subtitle: 'Khắc phục lỗi nuốt âm cuối của người Việt và nói lưu loát, tự nhiên như người bản xứ',
+        tag: 'Phát âm chuẩn',
+        defaultOpen: false,
+        content: h('div', { class: 'stack', style: { gap: '10px' } },
+          h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+            'Tiếng Việt là ngôn ngữ đơn âm tiết khép kín, trong khi tiếng Anh là ngôn ngữ đa âm tiết luôn có phụ âm cuối bật ra (/s/, /z/, /t/, /d/, /ed/, /ks/). Việc nuốt âm cuối khiến người nước ngoài không thể phân biệt được từ bạn đang nói.'
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+            h('b', { style: { color: 'var(--teal)' } }, '⚠️ Ví dụ điển hình nếu bỏ quên âm đuôi:'),
+            h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+              'Các từ “wife” (/f/ - vợ), “white” (/t/ - trắng), “wine” (/n/ - rượu), “wide” (/d/ - rộng), “why” (tại sao) nếu bạn bỏ quên âm đuôi thì phát âm ra đều thành “oai”, khiến người nghe hoàn toàn bối rối.'
+            )
+          ),
+          h('div', { class: 'stack', style: { gap: '6px' } },
+            h('b', { style: { fontSize: '.95rem', color: 'var(--teal)' } }, '🔗 3 Quy tắc nối âm (Connected Speech) giúp nói mượt:'),
+            h('p', { class: 'small', style: { margin: 0, lineHeight: 1.5 } },
+              '• Phụ âm cuối nối nguyên âm đầu: “hold on” ➔ /həʊl-dɒn/, “turn on” ➔ /tɜː-nɒn/, “check out” ➔ /tʃe-kaʊt/.\n' +
+              '• Nuốt âm (Elision): Khi âm /t/ hoặc /d/ đứng giữa hai phụ âm, có thể lướt qua: “next day” ➔ /neks-deɪ/, “last night” ➔ /lɑːs-naɪt/.\n' +
+              '• Âm /t/ vỗ (Flap T kiểu Mỹ): Âm /t/ kẹp giữa hai nguyên âm phát âm thành /d/ nhẹ: “water” ➔ /wɔː-dər/, “better” ➔ /be-dər/.'
+            )
+          )
+        )
+      }),
+
+      // 4. Viết email 4C
+      guideAccordionItem({
+        id: 'email4c',
+        icon: '✍️',
+        title: 'Viết Email công việc chuẩn 4C – Tuyệt đối không dịch Word-by-Word',
+        subtitle: 'Quy tắc vàng viết thư điện tử đối tác, đồng nghiệp chuyên nghiệp, rõ ràng và lịch sự',
+        tag: 'Email 4C',
+        defaultOpen: false,
+        content: h('div', { class: 'stack', style: { gap: '10px' } },
+          h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+            'Trong môi trường làm việc quốc tế, email không chỉ là công cụ trao đổi thông tin mà còn phản ánh sự chuyên nghiệp của bạn. Hãy tuân thủ nghiêm ngặt bộ tiêu chuẩn 4C:'
+          ),
+          h('div', { class: 'stack', style: { gap: '8px' } },
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '1. Clear (Rõ ràng): '),
+              h('span', { class: 'small' }, 'Mục đích viết thư phải nằm ngay câu đầu tiên. Người nhận bận rộn chỉ cần đọc 5 giây là biết bạn cần gì.')
+            ),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '2. Concise (Súc tích): '),
+              h('span', { class: 'small' }, 'Mỗi đoạn văn tối đa 2–3 câu. Dùng bullet points cho các yêu cầu, mốc thời gian hoặc danh sách công việc.')
+            ),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '3. Correct (Chính xác): '),
+              h('span', { class: 'small' }, 'Kiểm tra kỹ tên riêng, chức danh đối tác, số liệu hợp đồng và file đính kèm trước khi nhấn gửi.')
+            ),
+            h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '4. Courteous (Lịch sự & Tôn trọng): '),
+              h('span', { class: 'small' }, 'Sử dụng “Could you please / Would you mind” thay vì mệnh lệnh thức “You must / Please do”.')
+            )
+          ),
+          h('div', { class: 'panel', style: { background: 'rgba(15, 82, 87, 0.08)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '12px' } },
+            h('b', { style: { color: 'var(--teal)' } }, '📩 Mẫu câu thực chiến hay dùng nhất:'),
+            h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.55 } },
+              '• Mở đầu: “I am writing to update you on...” hoặc “Further to our discussion yesterday...”\n' +
+              '• Đính kèm: “Please find attached the latest report for your review.”\n' +
+              '• Thúc đẩy hành động: “Could you please confirm if this proposal aligns with your expectation by Thursday?”\n' +
+              '• Kết thư: “Should you have any questions, please feel free to reach out.”'
+            )
+          )
+        )
+      }),
+
+      // 5. Skimming & Scanning
+      guideAccordionItem({
+        id: 'skimscan',
+        icon: '📖',
+        title: 'Đọc hiểu siêu tốc với kỹ thuật Skimming & Scanning',
+        subtitle: 'Phương pháp giải quyết bài đọc dài, tài liệu hợp đồng và bài thi IELTS Reading',
+        tag: 'Chiến lược Đọc',
+        defaultOpen: false,
+        content: h('div', { class: 'stack', style: { gap: '10px' } },
+          h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+            'Khi phải xử lý những văn bản dài hàng nghìn từ hoặc bài thi IELTS Reading bị giới hạn 60 phút, đọc từng chữ từ đầu đến cuối là nguyên nhân chính khiến bạn thiếu thời gian. Hãy phối hợp nhịp nhàng 2 kỹ thuật sau:'
+          ),
+          h('div', { class: 'row wrap', style: { gap: '10px' } },
+            h('div', { class: 'panel stack', style: { flex: '1 1 240px', background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '1. Skimming (Đọc lướt 30–60s)'),
+              h('p', { class: 'small', style: { margin: 0, lineHeight: 1.5 } },
+                '• Đọc tiêu đề, tóm tắt và câu đầu tiên (Topic Sentence) của từng đoạn văn.\n' +
+                '• Mục đích: Nắm được bố cục bài viết để biết thông tin loại nào nằm ở đoạn nào trong văn bản.'
+              )
+            ),
+            h('div', { class: 'panel stack', style: { flex: '1 1 240px', background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+              h('b', { style: { color: 'var(--teal)' } }, '2. Scanning (Quét mỏ neo)'),
+              h('p', { class: 'small', style: { margin: 0, lineHeight: 1.5 } },
+                '• Giữ từ khóa câu hỏi trong đầu và lướt mắt tìm mỏ neo: con số, ngày tháng, tên riêng viết hoa, từ in nghiêng.\n' +
+                '• Không đọc hiểu cả câu, chỉ dừng lại đọc kỹ khi mắt chạm trúng vị trí từ khóa.'
+              )
+            )
+          ),
+          h('p', { class: 'small muted', style: { margin: 0, fontStyle: 'italic' } },
+            '💡 Mẹo vàng: Dùng Skimming để định vị đoạn văn chứa thông tin, sau đó dùng Scanning để khoanh vùng câu trả lời chính xác.'
+          )
+        )
+      }),
+
+      // 6. Collocation & Spaced Repetition
+      guideAccordionItem({
+        id: 'collocation',
+        icon: '🧠',
+        title: 'Ghi nhớ từ vựng vĩnh viễn theo Collocation & Spaced Repetition',
+        subtitle: 'Không học từ vựng đơn lẻ — kết hợp lặp lại ngắt quãng để đưa từ vào trí nhớ dài hạn',
+        tag: 'Trí nhớ dài hạn',
+        defaultOpen: false,
+        content: h('div', { class: 'stack', style: { gap: '10px' } },
+          h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+            'Học từ vựng theo danh sách đơn lẻ kèm nghĩa tiếng Việt là phương pháp học thụ động khiến bạn nhớ từ nhưng không thể mở miệng nói được một câu tự nhiên.'
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+            h('b', { style: { color: 'var(--teal)' } }, '✨ Bí quyết 1: Học theo cụm Collocations'),
+            h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+              'Thay vì học từ riêng lẻ “decision = quyết định”, hãy học cả cụm: “make an informed decision” (đưa ra quyết định sáng suốt). Thay vì học “mistake = lỗi”, hãy học “admit a mistake” (nhận lỗi). Não bộ sẽ lưu trữ cả cụm ngữ cảnh để khi nói bạn chỉ cần bật ra cả câu.'
+            )
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+            h('b', { style: { color: 'var(--teal)' } }, '🔄 Bí quyết 2: Lặp lại ngắt quãng (Spaced Repetition)'),
+            h('p', { class: 'small', style: { margin: '4px 0 0 0', lineHeight: 1.5 } },
+              'Theo đường cong lãng quên của Hermann Ebbinghaus, não người quên 70% kiến thức mới sau 24 giờ. Ôn tập đúng các điểm vàng (sau 1 ngày ➔ 3 ngày ➔ 7 ngày ➔ 14 ngày ➔ 30 ngày) sẽ chuyển từ vựng từ vùng nhớ tạm thời sang vùng trí nhớ vĩnh viễn. Tab Ôn tập của Lingogo tự động áp dụng quy luật này để nhắc nhở bạn.'
+            )
+          )
+        )
+      })
     ];
 
-    body = h('div', { class: 'stack', style: { gap: '14px' } },
-      deepReadingSection,
-      otherTipsHeader,
-      ...tipsList.map((tip) => h('div', { class: 'panel card stack', style: { gap: '6px', padding: '14px', borderRadius: '12px' } },
-        h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, tip.t),
-        h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.55 } }, tip.c)
-      ))
-    );
+    body = h('div', { class: 'stack', style: { gap: '10px' } }, toolbar, ...guides);
   }
 
   mount(h('div', { class: 'stack-lg' }, header, navSub, body));
