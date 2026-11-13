@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-0655';
+const APP_BUILD_ID = '20261113-0820';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8404,7 +8404,7 @@ function lessonView(t, i) {
     if (!ex) return finish();
     if (CURRENT_CTX) {
       CURRENT_CTX.stepType = ex.type;
-      CURRENT_CTX.stepItem = ex.v ? (plain(ex.v.w) + (ex.v.m ? ' (' + ex.v.m + ')' : '')) : (ex.text || (ex.k ? ex.k.k : (ex.g ? ex.g.t : (ex.q ? (ex.q.p.g.t + ': ' + ex.q.prompt) : ''))));
+      CURRENT_CTX.stepItem = ex.v ? (plain(ex.v.w) + (ex.v.m ? ' (' + ex.v.m + ')' : '')) : (ex.text || (ex.k ? ex.k.k : (ex.g ? ex.g.t : (ex.q ? (ex.q.p && ex.q.p.g ? (ex.q.p.g.t + ': ' + ex.q.prompt) : (ex.q.q || '')) : ''))));
     }
     let checked = false, ready = () => false, resp = null, after = () => {}, body, gradeFn = () => ({ correct: true });
     const btn = h('button', { class: 'primary block' }, 'Kiểm tra');
@@ -8818,7 +8818,7 @@ function lessonView(t, i) {
           if (!prev || prev.last !== todayN() || !r.correct) srsRate(k, r.correct);
         }
         if (ex.k) srsRate(sid(code, ex.k.id), r.correct);
-        if (ex.q) srsRate(sid(code, ex.q.id), r.correct);
+        if (ex.q && ex.q.id) srsRate(sid(code, ex.q.id), r.correct);
         if (ex.type === 'speak' && resp) srsRate(code + ':speak:' + plain(ex.text), resp.score >= 70);
         if (ex.type === 'write') srsRate(code + ':write:' + ex.ch, r.correct);
         if (ex.type === 'gquiz') {
@@ -8879,7 +8879,7 @@ function lessonView(t, i) {
     const pct = total ? Math.round(correct / total * 100) : 100;
     const k = lkey(t, i), repeat = S.lessons[k] != null;
     // XP: mỗi từ / kanji / câu / tình huống làm đúng ngay lần đầu = 5 XP; điền từ: 5 XP mỗi chỗ đúng
-    const keyOf = (e) => e.v ? 'v' + e.v.id : e.k ? 'k' + e.k.id : e.q ? 'q' + e.q.id : e.type === 'gquiz' ? 'gq' + e.q.p.gid : e.type === 'write' ? 'w' + e.ch : 's' + (e.text || '');
+    const keyOf = (e) => e.v ? 'v' + e.v.id : e.k ? 'k' + e.k.id : e.type === 'gquiz' ? ('gq' + (e.q && e.q.p ? e.q.p.gid : '')) : e.type === 'quiz' ? ('qz' + (e.q ? (e.q.id || e.q.q) : '')) : e.type === 'write' ? 'w' + e.ch : 's' + (e.text || '');
     const won = new Set(); let fillXp = 0;
     all.forEach((r) => { if (r.ex.type === 'fill') fillXp += XP_ITEM * (r.ok || 0); else if (r.correct && !(r.ex.type === 'write' && r.self)) won.add(keyOf(r.ex)); });
     let xp = XP_ITEM * won.size + fillXp; if (repeat) xp = Math.ceil(xp / 2);
