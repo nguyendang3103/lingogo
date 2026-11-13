@@ -784,7 +784,7 @@ body { overflow-x: hidden; }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1035';
+const APP_BUILD_ID = '20261113-1100';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -11290,12 +11290,190 @@ function grammarTabView() {
   knowledgeTabView();
 }
 
+function renderDeepReadingGuide() {
+  const steps = [
+    {
+      num: '1',
+      title: 'Chọn một bài đọc mỗi ngày',
+      tag: 'Khởi động',
+      desc: 'Bạn không nhất thiết phải chọn một bài báo quá dài. Hãy chọn một văn bản ngắn hoặc một phần bài viết phù hợp với trình độ và quỹ thời gian của bạn (bài đọc IELTS, báo chí BBC/CNN/The Guardian, hoặc một bài viết chuyên ngành).',
+      key: '💡 Nguyên tắc vàng: Điều quan trọng không phải là bạn đọc được bao nhiêu bài, mà là bạn khai thác và học hỏi được bao nhiêu từ một bài đọc duy nhất.'
+    },
+    {
+      num: '2',
+      title: 'Loại bỏ những yếu tố gây xao nhãng',
+      tag: 'Môi trường',
+      desc: 'Deep reading đòi hỏi sự tập trung cao độ để mổ xẻ câu chữ. Nếu đọc online, bạn rất dễ bị xao nhãng bởi quảng cáo, thông báo và hyperlink. Hãy in bài viết ra giấy hoặc sao chép sang Word/Notion, tắt các tab trình duyệt và thông báo mạng xã hội.',
+      key: '🎯 Mục tiêu: Biến khoảng thời gian đọc thành một buổi học tập trung sâu, thay vì vừa đọc vừa lướt Internet.'
+    },
+    {
+      num: '3',
+      title: 'Đọc toàn bài & Thử thách tóm tắt trong 5 câu',
+      tag: 'Thấu hiểu',
+      desc: 'Ở lần đọc đầu tiên, hãy đọc toàn bộ bài viết với tốc độ bình thường. Sau đó, đặt thử thách: viết một bản tóm tắt ngắn về nội dung vừa đọc trong không quá 5 câu.',
+      key: '❓ Tự vấn 3 câu hỏi cốt lõi:\n• Chủ đề chính của bài viết là gì?\n• Tác giả muốn truyền tải thông điệp gì?\n• Những luận điểm chính nào được dùng để phát triển chủ đề?\n➔ Giúp bạn kiểm tra xem mình thực sự hiểu nội dung hay chỉ nhận diện từ vựng bề mặt.'
+    },
+    {
+      num: '4',
+      title: 'Đọc lần hai và phân biệt Facts vs Opinions',
+      tag: 'Tư duy phản biện',
+      desc: 'Ở lần đọc thứ hai, hãy chú ý đến tính chất của các thông tin mà bài viết đưa ra, phân định rạch ròi giữa Facts (sự kiện, số liệu khách quan) và Opinions (quan điểm, nhận định chủ quan của tác giả).',
+      key: '🔍 Kỹ năng IELTS then chốt: Hãy tự hỏi “Is the writer expressing an opinion or trying to persuade?”. Nhận diện mục đích tác giả giúp giải quyết chính xác các câu hỏi True/False/Not Given và Yes/No/Not Given trong đề thi.'
+    },
+    {
+      num: '5',
+      title: 'Phân tích Từ vựng & Collocations thực chiến',
+      tag: 'Vốn từ tự nhiên',
+      desc: 'Đừng cố ghi chép mọi từ mới. Thay vào đó, hãy chọn lọc những từ và cụm từ hữu ích mà bạn có thể áp dụng vào kỹ năng Nói và Viết. Đặc biệt chú ý đến Collocations (các từ luôn đi kèm với nhau).',
+      key: '✨ Ví dụ thực tế:\nThay vì chỉ học “maintain = duy trì”, hãy ghi lại cả cụm cách từ này được sử dụng:\n• maintain a balance (duy trì sự cân bằng)\n• maintain relationships (gìn giữ mối quan hệ)\n• maintain a healthy lifestyle (duy trì lối sống lành mạnh)\n➔ Biết cách dùng từ trong ngữ cảnh tự nhiên thay vì ghép từ word-by-word.'
+    },
+    {
+      num: '6',
+      title: 'Phân tích cách xây dựng câu (Sentence Construction)',
+      tag: 'Cấu trúc câu',
+      desc: 'Mổ xẻ cách tác giả kết hợp câu đơn và câu phức: Quan sát độ dài của câu, các từ nối liên kết (linking words) và vị trí của các thành phần chính (Chủ ngữ - Động từ) và mệnh đề phụ.',
+      key: '✍️ Ví dụ: Thay vì chỉ học từ “however”, hãy quan sát cách tác giả chuyển mạch lập luận:\n“Many people enjoy working from home. However, this arrangement can also create communication problems.”\n➔ Hãy thử viết ngay một câu mới sử dụng cấu trúc tương tự để diễn đạt ý của bạn.'
+    },
+    {
+      num: '7',
+      title: 'Phân tích cách xây dựng đoạn văn (Paragraph & Coherence)',
+      tag: 'Mạch liên kết',
+      desc: 'Sau từng câu, hãy nhìn vào toàn bộ đoạn văn: Câu chủ đề (Topic Sentence) nằm ở đâu? Những câu sau phát triển ý thế nào (bằng ví dụ, số liệu hay phản biện)? Mạch văn liên kết bằng từ nối hay cách lặp lại từ khóa?',
+      key: '📈 Ứng dụng: Bước này đặc biệt hữu ích cho IELTS Writing Task 2 & Reading, giúp bạn nắm vững cách Develop ideas (phát triển luận điểm) và duy trì Coherence & Cohesion xuyên suốt.'
+    },
+    {
+      num: '8',
+      title: 'Phân tích Ngữ pháp ứng dụng (Grammar in Action)',
+      tag: 'Ngữ pháp thực tế',
+      desc: 'Thay vì học lý thuyết ngữ pháp khô khan, hãy chọn vài câu phức tạp trong bài để mổ xẻ: Xác định thì (Tenses), mạo từ (Articles), mệnh đề quan hệ, đảo ngữ hoặc thể bị động.',
+      key: '🛠️ Luyện tập: Thử xác định chủ ngữ và động từ chính, xem các mệnh đề kết nối bằng từ nào, rồi viết lại một câu tương đương. Bạn sẽ biến ngữ pháp của tác giả thành vốn phản xạ của mình.'
+    }
+  ];
+
+  const schedule = [
+    { time: '5 phút', act: 'Đọc toàn bài tốc độ bình thường & Nắm bắt ý chính', icon: '📖' },
+    { time: '3 phút', act: 'Viết tóm tắt nội dung bài viết (không quá 5 câu)', icon: '✍️' },
+    { time: '3 phút', act: 'Phân tích & gạch chân Facts vs Opinions của tác giả', icon: '🔍' },
+    { time: '5 phút', act: 'Trích xuất Vocabulary, Collocations & cụm từ tự nhiên', icon: '🧠' },
+    { time: 'Thêm thời gian', act: 'Mổ xẻ cấu trúc câu phức, đoạn văn & ngữ pháp nổi bật', icon: '⚙️' }
+  ];
+
+  const banner = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'linear-gradient(135deg, rgba(15, 82, 87, 0.12), rgba(16, 185, 129, 0.08))', border: '1px solid var(--teal)', borderRadius: '14px', padding: '16px' } },
+    h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+        h('span', { style: { fontSize: '1.6rem' } }, '📚'),
+        h('div', {},
+          h('h2', { style: { margin: 0, fontSize: '1.2rem', color: 'var(--teal)' } }, 'Deep Reading: Phương Pháp Đọc Sâu'),
+          h('p', { class: 'small muted', style: { margin: '2px 0 0 0' } }, 'Bí quyết khai thác triệt để từ vựng, ngữ pháp & cấu trúc câu mỗi ngày')
+        )
+      ),
+      h('span', { class: 'chip good', style: { fontWeight: 700 } }, 'Chuẩn IELTS 7.0+')
+    ),
+    h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+      'Không phải lúc nào đọc nhiều bài cũng đem lại hiệu quả. Khi chỉ cần tìm kiếm thông tin, bạn có thể đọc lướt (Skimming & Scanning). Nhưng để thực sự nâng cao trình độ tiếng Anh, bạn cần đọc chậm lại và thực hiện “Deep Reading” — chủ động phân tích cách tác giả người bản xứ sử dụng từ vựng, collocations, cấu trúc câu, liên kết ý và ngữ pháp.'
+    ),
+    h('div', { class: 'row wrap', style: { gap: '8px', marginTop: '4px' } },
+      h('a', {
+        href: 'https://ieltsonlinetests.com/vi/reading-tips/deep-reading-cach-doc-sau-de-cai-thien-tieng-anh-moi-ngay',
+        target: '_blank',
+        class: 'chip accent small',
+        style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+      }, '🌐 Xem bài viết gốc trên IELTS Online Tests (IOT) ↗')
+    )
+  );
+
+  const compareCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
+    h('b', { style: { fontSize: '1.05rem', color: 'var(--ink)' } }, '⚖️ So sánh: Đọc Lướt (Skim/Scan) vs Đọc Sâu (Deep Reading)'),
+    h('div', { class: 'row wrap', style: { gap: '10px' } },
+      h('div', { class: 'panel stack', style: { flex: '1 1 240px', background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          h('span', { class: 'chip small' }, 'Tốc độ nhanh'),
+          h('b', { style: { fontSize: '.92rem' } }, '⚡ Đọc lướt (Skimming & Scanning)')
+        ),
+        h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.5, whiteSpace: 'pre-line' } },
+          '• Mục tiêu: Tìm kiếm thông tin nhanh, nắm đại ý hoặc tìm câu trả lời tức thời.\n• Cách đọc: Quét mắt qua tiêu đề, đoạn đầu/cuối, nhấp hyperlink và nhảy cóc qua các đoạn.\n• Nhược điểm: Chỉ nhận diện mặt chữ, ít đọng lại từ vựng sâu hay cấu trúc diễn đạt.'
+        )
+      ),
+      h('div', { class: 'panel stack', style: { flex: '1 1 240px', background: 'rgba(15, 82, 87, 0.08)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '12px', gap: '6px' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          h('span', { class: 'chip good small' }, 'Học sâu & Hiệu quả cao'),
+          h('b', { style: { fontSize: '.92rem', color: 'var(--teal)' } }, '🔍 Đọc sâu (Deep Reading)')
+        ),
+        h('p', { class: 'small', style: { margin: 0, lineHeight: 1.5, whiteSpace: 'pre-line' } },
+          '• Mục tiêu: Học cách người bản ngữ tư duy và sử dụng tiếng Anh trong thực tế.\n• Cách đọc: Đọc chậm, phân tích từ vựng kèm collocations, mổ xẻ ngữ pháp và cấu trúc câu.\n• Ưu điểm: Đọc ít nhưng học được nhiều, phục vụ trực tiếp cho cả 4 kỹ năng Nghe–Nói–Đọc–Viết.'
+        )
+      )
+    )
+  );
+
+  const stepsList = h('div', { class: 'stack', style: { gap: '10px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h3', { style: { margin: 0, fontSize: '1.1rem' } }, '📋 Quy trình 8 bước thực hành Deep Reading mỗi ngày'),
+      h('span', { class: 'small muted' }, '8 bước chuẩn hóa')
+    ),
+    ...steps.map((s) => h('div', { class: 'panel card stack', style: { gap: '8px', padding: '14px', borderRadius: '12px', background: 'var(--surface)' } },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+        h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+          h('span', { style: { display: 'inline-flex', width: '26px', height: '26px', borderRadius: '50%', background: 'var(--teal)', color: '#fff', alignItems: 'center', justifyContent: 'center', fontSize: '.85rem', fontWeight: 700 } }, s.num),
+          h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, s.title)
+        ),
+        h('span', { class: 'chip small' }, s.tag)
+      ),
+      h('p', { class: 'small', style: { margin: 0, lineHeight: 1.55 } }, s.desc),
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '8px', padding: '10px', fontSize: '.84rem', lineHeight: 1.5, whiteSpace: 'pre-line' } },
+        s.key
+      )
+    ))
+  );
+
+  const scheduleCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, '⏱️ Thời gian biểu Deep Reading (15–20 phút/ngày)'),
+      h('span', { class: 'chip good small' }, 'Lộ trình tối ưu')
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } },
+      'Bạn không nhất thiết phải làm hết cả 8 bước nếu quỹ thời gian hạn hẹp. Dưới đây là phân bổ thời gian thực chiến hàng ngày:'
+    ),
+    h('div', { class: 'stack', style: { gap: '6px' } },
+      ...schedule.map((item) => h('div', { class: 'row between align-center', style: { background: 'var(--sunk)', padding: '8px 12px', borderRadius: '8px', gap: '8px' } },
+        h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+          h('span', {}, item.icon),
+          h('span', { class: 'small', style: { fontWeight: 500 } }, item.act)
+        ),
+        h('b', { class: 'chip accent small', style: { flexShrink: 0 } }, item.time)
+      ))
+    ),
+    h('p', { class: 'small muted', style: { margin: '4px 0 0 0', lineHeight: 1.45, fontStyle: 'italic' } },
+      '💡 Lời khuyên: Khi có ít thời gian, hãy ưu tiên: Đọc hiểu ➔ Vocabulary & Collocations. Khi có nhiều thời gian hơn vào cuối tuần, mổ xẻ sâu thêm Cấu trúc câu, Cách liên kết đoạn văn và Ngữ pháp.'
+    )
+  );
+
+  const summaryCard = h('div', { class: 'panel stack', style: { background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #10b981', borderRadius: '12px', padding: '14px', gap: '8px' } },
+    h('b', { style: { color: '#047857', fontSize: '1.02rem' } }, '🌟 Triết lý: Đọc ít hơn nhưng học được nhiều hơn'),
+    h('p', { class: 'small', style: { margin: 0, lineHeight: 1.6 } },
+      '“Một người có thể đọc hàng chục bài viết mỗi ngày nhưng chỉ nhớ được rất ít từ và cấu trúc mới. Ngược lại, việc dành thời gian nghiên cứu kỹ một bài viết có thể giúp bạn học được Vocabulary, Collocations, Sentence Structures, Paragraph Organization và Grammar từ cùng một nguồn duy nhất.”'
+    ),
+    h('p', { class: 'small', style: { margin: 0, fontWeight: 600, color: '#047857' } },
+      '👉 Đọc chậm hơn, phân tích kỹ hơn và quan trọng nhất: Đừng chỉ học xem tác giả nói gì — hãy học cách tác giả sử dụng tiếng Anh để nói điều đó!'
+    )
+  );
+
+  return h('div', { class: 'stack', style: { gap: '14px' } },
+    banner,
+    compareCard,
+    stepsList,
+    scheduleCard,
+    summaryCard
+  );
+}
+
 function renderEnglishKnowledgeView() {
   const subtabs = [
     { k: 'gram', label: '📖 Ngữ pháp Tiếng Anh' },
-    { k: 'tips', label: '💡 Cẩm nang & Mẹo học' }
+    { k: 'tips', label: '💡 Cẩm nang & Mẹo học' },
+    { k: 'deepread', label: '📚 Deep Reading (Đọc Sâu)' }
   ];
-  if (KNOWLEDGE_TAB !== 'gram' && KNOWLEDGE_TAB !== 'tips') {
+  if (KNOWLEDGE_TAB !== 'gram' && KNOWLEDGE_TAB !== 'tips' && KNOWLEDGE_TAB !== 'deepread') {
     KNOWLEDGE_TAB = 'gram';
   }
 
@@ -11309,7 +11487,7 @@ function renderEnglishKnowledgeView() {
     ),
     h('h1', { style: { margin: 0 } }, 'Kiến thức & Ngữ pháp Tiếng Anh'),
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      'Hệ thống ngữ pháp chuẩn khung tham chiếu Châu Âu CEFR (A1–C1) cùng cẩm nang mẹo học phản xạ thực chiến.'
+      'Hệ thống ngữ pháp chuẩn khung CEFR (A1–C1), phương pháp Deep Reading phân tích sâu và cẩm nang mẹo học phản xạ.'
     )
   );
 
@@ -11323,8 +11501,14 @@ function renderEnglishKnowledgeView() {
   let body = null;
   if (KNOWLEDGE_TAB === 'gram') {
     body = renderKnowledgeGrammar('en');
+  } else if (KNOWLEDGE_TAB === 'deepread') {
+    body = renderDeepReadingGuide();
   } else {
     const tipsList = [
+      {
+        t: '📚 Phương pháp Deep Reading: Đọc sâu 1 bài để khai thác trọn bộ tiếng Anh',
+        c: 'Thay vì đọc lướt qua hàng chục bài, hãy dành 15–20 phút mỗi ngày mổ xẻ từ vựng, collocations, cấu trúc câu và ngữ pháp từ một bài đọc duy nhất. Bạn hãy bấm sang tab "📚 Deep Reading (Đọc Sâu)" ở trên để xem trọn bộ quy trình 8 bước thực hành chi tiết!'
+      },
       {
         t: '🎧 Kỹ thuật Shadowing để luyện phản xạ nói & ngữ điệu tự nhiên',
         c: 'Nghe người bản ngữ nói một câu ngắn (khoảng 3–5 giây), bấm dừng rồi lập tức lặp lại y hệt về tốc độ, ngữ điệu và trọng âm. Sau khi quen, nói đè (nói song song) cùng lúc với audio. Mỗi ngày chỉ cần 15–20 phút là phản xạ khẩu hình miệng sẽ tự nhiên hơn rất nhiều.'
