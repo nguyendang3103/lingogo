@@ -788,7 +788,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1600';
+const APP_BUILD_ID = '20261113-1915';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -8004,7 +8004,7 @@ function orderFeedback(code, ex, r) {
   );
 }
 function quizFeedback(code, ex, r) {
-  const correctOpt = ex.q.o[ex.q.a];
+  const correctOpt = ((ex.q.o || ex.q.opts || [])[ex.q.a]) || '';
   const correctPinyin = (ex.q.r && ex.q.r[ex.q.a]) || '';
   const hasAudio = (code === 'zh' || code === 'en' || code === 'ja') && /[一-鿿\w]/.test(correctOpt);
   return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
@@ -8519,7 +8519,8 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Kanji này đọc Hán Việt là gì?'), h('div', { class: 'big', lang: 'ja' }, ex.k.k), c.el);
       gradeFn = () => ({ correct: c.sel() === ex.k, expected: ex.k.hv + ' · on: ' + ex.k.on + ' · kun: ' + ex.k.kun });
     } else if (ex.type === 'quiz') {
-      const opts = shuffle(ex.q.o.map((o, k) => ({ o, k, r: (ex.q.r && ex.q.r[k]) || '' })));
+      const qOpts = ex.q.o || ex.q.opts || [];
+      const opts = shuffle(qOpts.map((o, k) => ({ o, k, r: (ex.q.r && ex.q.r[k]) || '' })));
       const c = choose(opts, (x) => h('span', { lang: code === 'en' ? 'en' : LANGS[code].lang }, x.o));
       c.setCorrect(opts.find((x) => x.k === ex.q.a));
       const origAfter = after;
@@ -8532,7 +8533,7 @@ function lessonView(t, i) {
         });
       };
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, '📖 Kỹ năng Đọc hiểu · Tình huống thực tế'), h('p', { class: 'q' }, ex.q.q), c.el);
-      gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: ex.q.o[ex.q.a], note: ex.q.why });
+      gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: (ex.q.o || ex.q.opts || [])[ex.q.a], note: ex.q.why || ex.q.exp || '' });
     } else if (ex.type === 'order') {
       const bank = shuffle(ex.tokens.map((t2, k) => ({ t: t2, k })));
       if (bank.every((b, k) => b.k === k) && bank.length > 1) bank.push(bank.shift());
@@ -8925,7 +8926,7 @@ function lessonView(t, i) {
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
       if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
-      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) setTimeout(() => say(code, ex.q.o[ex.q.a]), 250);
+      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) setTimeout(() => say(code, optTarget), 250); }
       if (ex.type === 'gquiz') setTimeout(() => say(code, ex.q.e[0]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp theo ➔'; btn.onclick = step; btn.focus();
     }
@@ -9964,7 +9965,7 @@ function renderReadSkills(code, d) {
     const fbBox = h('div', { style: { marginTop: '8px' } });
     let answered = false;
 
-    const optBtns = (q.o || []).map((optText, optIdx) => {
+    const optBtns = (q.o || q.opts || []).map((optText, optIdx) => {
       const btn = h('button', {
         class: 'ghost block',
         style: { textAlign: 'left', padding: '10px 14px', fontSize: '.92rem', borderRadius: '10px', margin: '4px 0' },
@@ -9980,7 +9981,7 @@ function renderReadSkills(code, d) {
           fbBox.replaceChildren(
             h('div', { class: 'feedback ' + (isRight ? 'ok' : 'no'), style: { margin: 0, padding: '8px 12px', borderRadius: '8px' } },
               h('strong', {}, isRight ? 'Chính xác!' : 'Chưa đúng.'),
-              q.why ? ' ' + q.why : ''
+              (q.why || q.exp) ? ' ' + (q.why || q.exp) : ''
             )
           );
         }

@@ -18218,7 +18218,15 @@
             "Focus only on personal hobbies and weekend interests."
           ],
           "a": 1,
-          "exp": "An effective elevator pitch summarizes your total experience, key operational strengths, and connects directly to the role you are applying for."
+          "exp": "An effective elevator pitch summarizes your total experience, key operational strengths, and connects directly to the role you are applying for.",
+          "id": "Q177-0",
+          "o": [
+            "Recite your entire CV line by line starting from university graduation.",
+            "Highlight your core 9 years of experience, key operational strengths (order management, B2B communication, ERP), and why you are targeting this specific remote role.",
+            "Ask the interviewer to look at your resume and ask questions instead.",
+            "Focus only on personal hobbies and weekend interests."
+          ],
+          "why": "An effective elevator pitch summarizes your total experience, key operational strengths, and connects directly to the role you are applying for."
         },
         {
           "q": "If an unexpected factory bottleneck puts a shipment at risk, what should you do first?",
@@ -18229,7 +18237,15 @@
             "Promise the customer an impossible delivery date to keep them happy temporarily."
           ],
           "a": 1,
-          "exp": "Proactive communication, verifying the true root cause, and presenting realistic options early protects customer trust and quality."
+          "exp": "Proactive communication, verifying the true root cause, and presenting realistic options early protects customer trust and quality.",
+          "id": "Q177-1",
+          "o": [
+            "Wait until the shipping date arrives to see if the factory miraculously finishes on time.",
+            "Investigate the real root cause, confirm the updated timeline with the factory, and inform the customer early with practical options.",
+            "Blame the purchasing department in an email to the customer.",
+            "Promise the customer an impossible delivery date to keep them happy temporarily."
+          ],
+          "why": "Proactive communication, verifying the true root cause, and presenting realistic options early protects customer trust and quality."
         },
         {
           "q": "What does using the latest customer-approved version as the 'single source of truth' achieve?",
@@ -18240,7 +18256,15 @@
             "It allows you to skip final inspection."
           ],
           "a": 0,
-          "exp": "Having a single source of truth ensures all departments (Purchasing, Production, QC, Logistics) work with the exact same approved specifications."
+          "exp": "Having a single source of truth ensures all departments (Purchasing, Production, QC, Logistics) work with the exact same approved specifications.",
+          "id": "Q177-2",
+          "o": [
+            "It prevents costly printing errors, packaging mismatches, and specification discrepancies across teams.",
+            "It eliminates the need to communicate with the factory.",
+            "It means you never have to update the ERP system again.",
+            "It allows you to skip final inspection."
+          ],
+          "why": "Having a single source of truth ensures all departments (Purchasing, Production, QC, Logistics) work with the exact same approved specifications."
         },
         {
           "q": "How should you answer when asked about a mistake you made in your career?",
@@ -18251,7 +18275,15 @@
             "Say that mistakes are entirely the responsibility of upper management."
           ],
           "a": 2,
-          "exp": "Interviewers look for accountability, problem-solving under pressure, and systemic learning to prevent repeated errors."
+          "exp": "Interviewers look for accountability, problem-solving under pressure, and systemic learning to prevent repeated errors.",
+          "id": "Q177-3",
+          "o": [
+            "Claim that you have never made any mistakes in 9 years of work.",
+            "Blame a former coworker or intern who has already left the company.",
+            "Take ownership honestly, explain the corrective action you took to solve it (e.g. applying decals, meeting the deadline), and describe the preventive system you put in place.",
+            "Say that mistakes are entirely the responsibility of upper management."
+          ],
+          "why": "Interviewers look for accountability, problem-solving under pressure, and systemic learning to prevent repeated errors."
         },
         {
           "q": "In the STAR framework for answering behavioral questions, what does the 'R' stand for?",
@@ -18262,7 +18294,15 @@
             "Revision (số lần sửa đổi hồ sơ)"
           ],
           "a": 1,
-          "exp": "R stands for Result: the measurable outcome, tangible impact (e.g., $60,000 in new orders, zero recurrences), or key operational lesson."
+          "exp": "R stands for Result: the measurable outcome, tangible impact (e.g., $60,000 in new orders, zero recurrences), or key operational lesson.",
+          "id": "Q177-4",
+          "o": [
+            "Routine (những thói quen hàng ngày)",
+            "Result (kết quả đo lường được, bài học hoặc tác động tích cực đạt được)",
+            "Reaction (phản ứng tức giận của sếp)",
+            "Revision (số lần sửa đổi hồ sơ)"
+          ],
+          "why": "R stands for Result: the measurable outcome, tangible impact (e.g., $60,000 in new orders, zero recurrences), or key operational lesson."
         },
         {
           "q": "At the end of an interview, why is it critical to ask thoughtful questions to the interviewer?",
@@ -18273,49 +18313,22 @@
             "It allows you to demand an immediate hiring decision on the spot."
           ],
           "a": 1,
-          "exp": "Reverse interviewing shows your preparation, professionalism, and readiness to deliver value from day one."
+          "exp": "Reverse interviewing shows your preparation, professionalism, and readiness to deliver value from day one.",
+          "id": "Q177-5",
+          "o": [
+            "It is not important; you should always decline to ask questions to end the meeting early.",
+            "It demonstrates genuine engagement, commercial mindset, and strategic curiosity about the team's first 90-day expectations and success metrics.",
+            "It gives you a chance to complain about previous interviewers.",
+            "It allows you to demand an immediate hiring decision on the spot."
+          ],
+          "why": "Reverse interviewing shows your preparation, professionalism, and readiness to deliver value from day one."
         }
       ],
       "fill": {
         "title": "Thư cảm ơn sau phỏng vấn (Post-Interview Thank You Email)",
-        "text": "Dear Sarah,\n\nThank you very much for taking the time to speak with me today about the remote [b1] position at your company. I really enjoyed learning more about your focus on [b2] and operational discipline across international markets.\n\nOur conversation reinforced my excitement about the role. With 9 years of experience in [b3] and B2B communication, I am confident in my ability to manage accounts from confirmation to shipment while treating the latest approved specifications as the [b4]. Furthermore, I look forward to applying my proactive follow-up and [b5] collaboration to support your team.\n\nPlease let me know if you need any additional information. I look forward to hearing about the next steps.\n\nWarm regards,\nDang Ngoc Kim Nguyen",
-        "blanks": [
-          {
-            "id": "b1",
-            "a": "Account Management",
-            "m": "Quản lý tài khoản"
-          },
-          {
-            "id": "b2",
-            "a": "customer onboarding",
-            "m": "tiếp nhận khách hàng mới"
-          },
-          {
-            "id": "b3",
-            "a": "end-to-end order management",
-            "m": "quản lý đơn hàng trọn quy trình"
-          },
-          {
-            "id": "b4",
-            "a": "single source of truth",
-            "m": "nguồn dữ liệu chuẩn xác duy nhất"
-          },
-          {
-            "id": "b5",
-            "a": "cross-functional",
-            "m": "liên phòng ban"
-          }
-        ],
-        "pool": [
-          "Account Management",
-          "customer onboarding",
-          "end-to-end order management",
-          "single source of truth",
-          "cross-functional",
-          "delivery risk",
-          "recurring issue",
-          "Customer Required Date"
-        ]
+        "text": "Dear Sarah,\n\nThank you very much for taking the time to speak with me today about the remote [[Account Management|delivery risk|recurring issue]] position at your company. I really enjoyed learning more about your focus on [[customer onboarding|Customer Required Date|cross-functional]] and operational discipline across international markets.\n\nOur conversation reinforced my excitement about the role. With 9 years of experience in [[end-to-end order management|Account Management|delivery risk]] and B2B communication, I am confident in my ability to manage accounts from confirmation to shipment while treating the latest approved specifications as the [[single source of truth|operational discipline|recurring issue]]. Furthermore, I look forward to applying my proactive follow-up and [[cross-functional|customer onboarding|data accuracy]] collaboration to support your team.\n\nPlease let me know if you need any additional information. I look forward to hearing about the next steps.\n\nWarm regards,\nDang Ngoc Kim Nguyen",
+        "trans": "Kính gửi Sarah,\n\nCảm ơn chị rất nhiều vì đã dành thời gian trao đổi với tôi hôm nay về vị trí Quản lý Tài khoản (Account Management) làm việc từ xa tại công ty. Tôi rất thích thú khi được tìm hiểu sâu hơn về định hướng tiếp nhận khách hàng mới (customer onboarding) và tính kỷ luật vận hành của quý công ty trên các thị trường quốc tế.\n\nCuộc trò chuyện càng củng cố thêm niềm hào hứng của tôi đối với vị trí này. Với 9 năm kinh nghiệm trong quản lý đơn hàng trọn quy trình (end-to-end order management) và giao tiếp B2B, tôi hoàn toàn tự tin vào năng lực quản lý các tài khoản khách hàng từ khâu xác nhận đến khi xuất hàng, đồng thời luôn lấy bản đặc tả kỹ thuật được duyệt mới nhất làm nguồn dữ liệu chuẩn xác duy nhất (single source of truth). Hơn nữa, tôi rất mong được vận dụng khả năng theo sát chủ động và phối hợp liên phòng ban (cross-functional) để đồng hành cùng đội ngũ của công ty.\n\nXin vui lòng báo cho tôi biết nếu chị cần thêm bất kỳ thông tin nào. Tôi rất mong sớm nhận được phản hồi về các bước tiếp theo.\n\nTrân trọng,\nĐặng Ngọc Kim Nguyên",
+        "audio": ""
       },
       "gram": [],
       "pos": 46,
