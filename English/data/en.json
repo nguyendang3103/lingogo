@@ -37032,8 +37032,8 @@
       "a8064e1fe1aa"
     ],
     "cross-functional": [
-      2,
-      "99f1def0cd9e"
+      "177",
+      "b9a3688b2fbb"
     ],
     "We set up a cross-functional team for the launch.": [
       2,
@@ -37420,16 +37420,16 @@
       "f0eb7764c3ea"
     ],
     "root cause": [
-      6,
-      "e478c26c7ce1"
+      "177",
+      "6730f85c1352"
     ],
     "We need the root cause, not just a replacement.": [
       6,
       "a31a664da0c6"
     ],
     "corrective action": [
-      6,
-      "73f9b589750c"
+      "177",
+      "ff4141bf61e1"
     ],
     "Please send your corrective action plan by Monday.": [
       6,
@@ -40120,8 +40120,8 @@
       "59aa5447b567"
     ],
     "recurring issue": [
-      "L9",
-      "9a1eee5ce0b0"
+      "177",
+      "95a2e346e12d"
     ],
     "Late documents are a recurring issue with this forwarder.": [
       "L9",
@@ -43530,6 +43530,502 @@
     "The main lessons learned are to share best practice early and to use a benchmark for every new supplier.": [
       "C20",
       "4fc8280ac732"
+    ],
+    "A customer health score tracks activity signals, unresolved tickets, and renewal likelihood.": [
+      "177",
+      "e41d6ed18b6e"
+    ],
+    "Account Management": [
+      "177",
+      "4c53e388246e"
+    ],
+    "At ANCO Pottery, I used old handover information instead of the latest approved label and carton version. I took responsibility, informed the customer, proposed a correction solution using carton decals, and coordinated with Purchasing and the factory. The customer accepted the solution, the order was delivered on time, and I added a stricter checking step to avoid the same issue again.": [
+      "177",
+      "9bc7c3302a21"
+    ],
+    "At Lyprodan, a key customer asked for changes to the mold, shape, color, and finishing. Some changes were not feasible, so I checked with the internal team, explained the limitation clearly, and offered practical options using existing designs and finishing choices. The customer accepted the solution, placed orders, and continued working with us.": [
+      "177",
+      "7cd0c1cd7c6f"
+    ],
+    "Clear documentation and detailed notes are essential for effective asynchronous communication in remote teams.": [
+      "177",
+      "fd81322e5a43"
+    ],
+    "Could you please walk me through your background and the department you worked in?": [
+      "177",
+      "0d318e4cabae"
+    ],
+    "Could you walk me through your experience in international B2B Account Management?": [
+      "177",
+      "d2ef6e7216b6"
+    ],
+    "Customer Required Date": [
+      "177",
+      "37a168538832"
+    ],
+    "During customer onboarding, I explain the workflow in simple steps and remove early blockers.": [
+      "177",
+      "93bf29df212b"
+    ],
+    "First, I confirm the customer requirements and make sure the information is complete. Then I update the order in the system and coordinate with the factory or internal teams on production timing, labels, packaging, inspection, and documents. I follow up on changes or risks, keep clear notes, and update the customer until the order or request is completed.": [
+      "177",
+      "0864034eef20"
+    ],
+    "Her strong attention to detail prevented costly discrepancies in the export shipping documents.": [
+      "177",
+      "ce07c68e8e8d"
+    ],
+    "How do you ensure data accuracy?": [
+      "177",
+      "dc905f8857bf"
+    ],
+    "How do you handle a delivery risk?": [
+      "177",
+      "c3622e373901"
+    ],
+    "How do you handle a situation where factory production falls behind schedule?": [
+      "177",
+      "ec29ed15ef1e"
+    ],
+    "How do you handle pressure or tight deadlines?": [
+      "177",
+      "6a7a884e696e"
+    ],
+    "How do you improve a recurring customer issue?": [
+      "177",
+      "23c26f98a1c4"
+    ],
+    "How do you learn a new system or product?": [
+      "177",
+      "f36325ae4208"
+    ],
+    "How do you manage an order from confirmation to shipment?": [
+      "177",
+      "d225f1a6b5b2"
+    ],
+    "How do you prioritize multiple customers and urgent orders?": [
+      "177",
+      "3f9c5f46f3c7"
+    ],
+    "How would you guide a newly signed international customer through onboarding?": [
+      "177",
+      "134e662687f7"
+    ],
+    "How would you manage a customer at risk?": [
+      "177",
+      "72e545606808"
+    ],
+    "How would you manage a high-volume customer portfolio?": [
+      "177",
+      "84a1326bde41"
+    ],
+    "How would you support a new customer during onboarding?": [
+      "177",
+      "0afe0870b8ec"
+    ],
+    "How would you use customer data or a health score?": [
+      "177",
+      "82a00933e26f"
+    ],
+    "How would your previous manager or team describe you?": [
+      "177",
+      "e9648a950415"
+    ],
+    "I always use the latest customer-approved version as the single source of truth.": [
+      "177",
+      "deed7b3273da"
+    ],
+    "I always verify the latest customer-approved specification and treat it as the single source of truth across ERP and shipping documents.": [
+      "177",
+      "66dce0d0fd08"
+    ],
+    "I am interested in your company because of its focus on product quality and customer support. I see that this role involves customer communication, follow-up, and coordination with different teams, which matches my previous experience. I believe I can contribute through my practical B2B experience, attention to detail, and strong follow-up, while continuing to grow in the role.": [
+      "177",
+      "5166042d102a"
+    ],
+    "I am looking for a role that is remote, hybrid, or based in Ho Chi Minh City, preferably near Binh Thanh. My previous roles were factory-based in Binh Duong and required onsite work six days a week, so the commute took significant time. I want to use my time more productively while continuing to support customers through clear communication, documentation, and follow-up.": [
+      "177",
+      "d7238b57d88c"
+    ],
+    "I am open to discussing based on the role scope, working arrangement, and benefits. My priority is to find a good long-term fit where I can contribute my B2B customer support, order coordination, and follow-up experience. I would be happy to understand the company budget for this position first.": [
+      "177",
+      "e190712beb89"
+    ],
+    "I break down the workflow into clear, manageable steps, clarify communication channels, and confirm the next immediate milestone.": [
+      "177",
+      "ca194ed84319"
+    ],
+    "I bring 9 years of practical B2B experience in customer communication, order coordination, data accuracy, and issue resolution. I am careful with details, proactive with follow-up, and comfortable working with different internal teams. I can support daily customer operations well, and I can learn new systems quickly.": [
+      "177",
+      "311c20b1a393"
+    ],
+    "I check the latest customer-approved information before updating an order or customer record, especially product details, labels, packaging, quantity, and delivery dates. I compare the information with order documents and keep clear records of changes. I always use the latest approved version as the single source of truth.": [
+      "177",
+      "4484eeea0a33"
+    ],
+    "I conduct regular post-delivery follow-ups to ensure product quality and understand seasonal needs.": [
+      "177",
+      "99fcbf4fe91e"
+    ],
+    "I document the issue clearly, check the root cause with the related teams, and suggest a practical solution. Then I discuss it in an internal meeting and follow up on the result. I used this approach in my previous work to help improve label and order-detail checking.": [
+      "177",
+      "14e1368f1491"
+    ],
+    "I documented recurring issues with carton labeling and proposed an updated verification checklist.": [
+      "177",
+      "2be36fc22444"
+    ],
+    "I explained the production limitation clearly and offered feasible options using existing designs.": [
+      "177",
+      "6ac3c4432a78"
+    ],
+    "I find dealing with customers the most exciting part of my job because I enjoy understanding their needs and solving problems with the team. My least favorite part is paperwork and repetitive tasks, but I always handle them carefully because I know they are essential to keep operations smooth and avoid mistakes.": [
+      "177",
+      "0841edd3a7b3"
+    ],
+    "I find dealing with international customers and resolving cross-functional bottlenecks the most exciting part of my job.": [
+      "177",
+      "114e3573a3e0"
+    ],
+    "I first check the real reason for the risk and confirm the updated timeline with the factory or related team. Then I look for possible solutions and inform the customer early. If the timeline needs to change, I explain the situation honestly and agree on a realistic next step. I prefer clear communication instead of making a promise that may affect quality or service.": [
+      "177",
+      "fc5fb45ebfd7"
+    ],
+    "I first check what is most urgent and what can affect the customer or delivery timeline. Then I confirm the facts with the related team, focus on the next action, and update the customer clearly. I try to stay calm, organize the work by priority, and avoid making promises before I confirm the real situation.": [
+      "177",
+      "77ec2927e2fa"
+    ],
+    "I first learn the main workflow and the most important customer tasks. Then I practise with real examples, take clear notes, and ask questions when I need clarification. My experience with ERP, MISA AMIS, Base, and cloud-based tools has helped me become comfortable learning new systems.": [
+      "177",
+      "ece341a90af2"
+    ],
+    "I have 9 years of experience across Sales Administration, Furniture Merchandising, and B2B Account Management. My work has focused on customer communication, order processing, quotations, ERP updates, production follow-up, shipping documents, and issue resolution. I have worked with international customers and internal teams to make sure orders move smoothly and customers receive clear updates. I am now looking for a remote role in Account Management, Customer Success, Sales Coordination, Order Management, or B2B Customer Support, where I can use my follow-up, communication, and coordination skills.": [
+      "177",
+      "5c64dc8c17a2"
+    ],
+    "I have used ERP systems, MISA AMIS, and Base to manage customer, order, and internal task information. I also use Microsoft Office and cloud-based storage to organize files, reports, and shared documents. These tools help me keep information updated, follow up on work, and reduce missed details.": [
+      "177",
+      "44930c7aaa94"
+    ],
+    "I investigate the root cause with the factory manager, verify the updated timeline, and present practical delivery options to the customer early.": [
+      "177",
+      "bdf26526a2e7"
+    ],
+    "I learned a lot from my previous roles, especially about international B2B customers, order coordination, and working with factories. Most of my previous roles were factory-based and required onsite work six days a week, so the commute took significant time. I am now looking for a remote, hybrid, or Ho Chi Minh City-based role where I can grow in a more international and dynamic environment.": [
+      "177",
+      "6cc230e849b5"
+    ],
+    "I maintain strict data accuracy across ERP systems, product specifications, and shipping documents.": [
+      "177",
+      "c8167dc1b20c"
+    ],
+    "I noticed a customer contact in our company database that had been inactive for several years. I took the initiative to reconnect, introduced our new product lines, and prepared quotations based on their requirements. As a result, I secured three new orders, each worth over USD 20,000, bringing a total order value of more than USD 60,000 from the reactivated account.": [
+      "177",
+      "42ee0431c32e"
+    ],
+    "I owned end-to-end order management for key retail accounts across the US, UK, and Australia.": [
+      "177",
+      "29e29d944d4e"
+    ],
+    "I prioritize based on urgency, customer impact, deadline risk, and which task can block other work. I review the schedule regularly, keep clear notes, and follow up early with the factory or related teams. For urgent issues, I focus on the next action first and make sure the customer receives a clear update.": [
+      "177",
+      "b7af72195df5"
+    ],
+    "I take ownership when an order issue arises and propose practical solutions immediately.": [
+      "177",
+      "c5117361b43c"
+    ],
+    "I think they would describe me as responsible, careful, and supportive. I follow up on tasks, keep information organized, and try to solve problems with the team. I am also someone who takes ownership when there is an issue and looks for a practical solution.": [
+      "177",
+      "17777251a6b2"
+    ],
+    "I took the initiative to reactivate an inactive account, securing three new orders worth over USD 60,000.": [
+      "177",
+      "ae47e8f81927"
+    ],
+    "I would first understand the customer's goal, workflow, and main difficulty. Then I would explain the process in simple steps, give a practical example, and confirm the next action. After that, I would follow up regularly and coordinate with the right internal team if there is a blocker.": [
+      "177",
+      "7f838cdef4fb"
+    ],
+    "I would first understand the reason for the risk, such as low usage, an unresolved issue, or unclear expectations. I would confirm the facts with the customer and internal teams, then agree on a recovery plan with clear actions and deadlines. I would follow up until the issue is resolved.": [
+      "177",
+      "d125c4a3ef40"
+    ],
+    "I would organize customers by priority, such as customer impact, delivery or adoption risk, and the next required action. I would keep accurate notes and use a clear follow-up schedule, so important tasks are not missed. For urgent issues, I would focus on the immediate action first and communicate clearly with the customer and internal teams.": [
+      "177",
+      "4cd9590d3b9b"
+    ],
+    "I would use the data to understand whether customers are active, using key features, or facing repeated issues. If I saw a risk signal, I would check the reason, contact the customer early, and agree on the next step. My direct experience is in ERP and order data, but I am ready to learn each company’s customer-health process.": [
+      "177",
+      "bf3f6e10d98e"
+    ],
+    "I'm in the sales and account management department, where we mainly support international customers and manage end-to-end orders.": [
+      "177",
+      "28aae8013712"
+    ],
+    "I'm in the sales and account management department, where we mainly support international customers, manage orders, and coordinate with internal teams. We work closely with production, logistics, and quality teams to make sure orders move smoothly and customers receive timely updates.": [
+      "177",
+      "5fedc6cf2f2a"
+    ],
+    "In my most recent Account Management role at ANCO Pottery, I supported international B2B customers from order confirmation to shipment. I confirmed customer requirements, updated orders in ERP, followed up with the factory, checked labels and packaging, and coordinated inspections. I also kept customers updated when there was a change, delay risk, or issue that needed attention.": [
+      "177",
+      "91ef201cf6b7"
+    ],
+    "My B2B follow-up and client communication are highly transferable skills for Customer Success.": [
+      "177",
+      "d67a9d7e5d64"
+    ],
+    "My background is in B2B Account Management, but the strongest part of my experience is order management, customer communication, delivery follow-up, ERP updates, and coordination with internal teams. That is why I am interested in Account Management and Customer Success, and I am also open to roles such as Sales Coordination, Order Management, and B2B Customer Support. I want a remote role where I can use my follow-up, documentation, and customer communication skills to support daily operations, service quality, and long-term customer relationships.": [
+      "177",
+      "ff71e61734d0"
+    ],
+    "My direct experience is stronger in B2B operations, order management, and ERP than in modern CRM tools or SaaS Customer Success. However, I have used MISA AMIS, Base, Microsoft Office, and cloud tools, and I have completed Customer Success training. I am ready to learn a new product, system, and process quickly.": [
+      "177",
+      "08face64aca1"
+    ],
+    "My previous roles required long commutes to factory sites. Remote work allows me to use my time more productively with high operational discipline.": [
+      "177",
+      "7496f4d46743"
+    ],
+    "My strengths are follow-up, attention to detail, and coordination. I am careful with order information, customer requirements, and deadlines. As for my weakness, sometimes I can be nervous when speaking English in an interview, especially when I want to give a perfect answer. I am improving this by preparing short answers, practising out loud, and focusing on clear communication instead of perfect grammar.": [
+      "177",
+      "f4a45460fc32"
+    ],
+    "Reduced ordering frequency, unanswered status reports, and repeated product issues are clear indicators that require an immediate recovery plan.": [
+      "177",
+      "1e3f753a42c1"
+    ],
+    "Remote account management requires high operational discipline and consistent follow-up.": [
+      "177",
+      "2aacf61fc434"
+    ],
+    "STAR method": [
+      "177",
+      "d55bcd1db84d"
+    ],
+    "Strong cross-functional collaboration helps resolve production bottlenecks before they delay shipment.": [
+      "177",
+      "54e48e143575"
+    ],
+    "Structuring behavioral answers with the STAR method makes your experience measurable and clear.": [
+      "177",
+      "86bfa87591b1"
+    ],
+    "Tell me about a difficult customer request. (Lyprodan STAR Story)": [
+      "177",
+      "f30c96af6672"
+    ],
+    "Tell me about a mistake you made. (ANCO Pottery $200 STAR Story)": [
+      "177",
+      "722555da316c"
+    ],
+    "Tell me about a time you took initiative to drive business. (Reactivating $60,000 Inactive Account)": [
+      "177",
+      "aef274d9acf8"
+    ],
+    "Tell me about yourself / Walk me through your experience.": [
+      "177",
+      "d91d1ed2327a"
+    ],
+    "To manage a high-volume portfolio, I prioritize accounts by business impact and deadline risk.": [
+      "177",
+      "a7286b381ec7"
+    ],
+    "We aligned the factory production timeline with the Customer Required Date to protect the vessel booking.": [
+      "177",
+      "3cc69f043eec"
+    ],
+    "We analyzed the root cause of the delay with the production manager to prevent recurrence.": [
+      "177",
+      "65b1e7fa0a5e"
+    ],
+    "We expect complete ownership of client communication and seamless coordination with our operations team.": [
+      "177",
+      "0f4464981c29"
+    ],
+    "We have covered everything from our end. Do you have any questions for us?": [
+      "177",
+      "480d9d4e87d9"
+    ],
+    "We identified a customer at risk due to declining order frequency and agreed on a recovery plan.": [
+      "177",
+      "dc7a094e2c72"
+    ],
+    "We implemented corrective actions immediately by applying carton decals and updating print files.": [
+      "177",
+      "25d6690ed7bc"
+    ],
+    "We resolved the order discrepancy between the purchase order and the factory production schedule.": [
+      "177",
+      "adbc51ab0296"
+    ],
+    "What are the most common onboarding or adoption challenges that customers face here? And which metrics—such as retention rate, on-time delivery, or CSAT—are most important for measuring success in this role?": [
+      "177",
+      "253b64f61b93"
+    ],
+    "What are your salary expectations?": [
+      "177",
+      "5f26997ead98"
+    ],
+    "What are your strengths and weakness?": [
+      "177",
+      "50f6e5924e65"
+    ],
+    "What did you do in your most recent role?": [
+      "177",
+      "c2d52db6fbbf"
+    ],
+    "What do you find most exciting about your day-to-day work?": [
+      "177",
+      "1a11c938a2d7"
+    ],
+    "What is the most exciting and least favorite part of your job? (The Coach)": [
+      "177",
+      "b46cfb5ec810"
+    ],
+    "What is your approach to maintaining data accuracy across multiple client orders?": [
+      "177",
+      "2ba453fa5de9"
+    ],
+    "What is your development area?": [
+      "177",
+      "e62326b4318b"
+    ],
+    "What makes you choose our company?": [
+      "177",
+      "2b1939202cb7"
+    ],
+    "What questions should you ask about customer challenges and key metrics?": [
+      "177",
+      "6927fe71e560"
+    ],
+    "What questions should you ask the interviewer about the first 90 days?": [
+      "177",
+      "c3013cc624d8"
+    ],
+    "What signals tell you that an existing customer account is at risk of leaving?": [
+      "177",
+      "0b3d93222189"
+    ],
+    "What tools have you used to manage customer and order information?": [
+      "177",
+      "4f45602e382c"
+    ],
+    "What would success look like in the first 90 days in this role? What are the key priorities you would like the new team member to accomplish during the onboarding period?": [
+      "177",
+      "5fba68ee0c4d"
+    ],
+    "When there is a delivery risk, I inform the customer early and agree on a realistic next step.": [
+      "177",
+      "916e2ce9051d"
+    ],
+    "Which department are you in and what does your department mainly do? (The Coach)": [
+      "177",
+      "5c3311ba6d2e"
+    ],
+    "Which metrics or KPIs are most critical when evaluating customer health and performance here?": [
+      "177",
+      "7393eca42e34"
+    ],
+    "Why Account Management or Customer Success?": [
+      "177",
+      "c3a1c3ea1b8f"
+    ],
+    "Why are you targeting a remote role at this stage of your career?": [
+      "177",
+      "d8985cacc4ba"
+    ],
+    "Why did you leave your previous company?": [
+      "177",
+      "902ee0225fbe"
+    ],
+    "Why do you want remote work?": [
+      "177",
+      "eb18ab723edb"
+    ],
+    "Why should we hire you?": [
+      "177",
+      "4ef131e12473"
+    ],
+    "Yes, thank you! What would success look like in the first 90 days for someone in this remote role?": [
+      "177",
+      "6c61bddc7d8a"
+    ],
+    "asynchronous communication": [
+      "177",
+      "fbf84315cd28"
+    ],
+    "attention to detail": [
+      "177",
+      "a170e74461db"
+    ],
+    "cross-functional collaboration": [
+      "177",
+      "6dc3cba85847"
+    ],
+    "customer at risk": [
+      "177",
+      "aef31d59a6aa"
+    ],
+    "customer health score": [
+      "177",
+      "2f550858f21a"
+    ],
+    "customer onboarding": [
+      "177",
+      "dea61ac58e9c"
+    ],
+    "data accuracy": [
+      "177",
+      "1050d05539ac"
+    ],
+    "delivery risk": [
+      "177",
+      "fd1d51d97189"
+    ],
+    "end-to-end order management": [
+      "177",
+      "f0ef9d1fe63c"
+    ],
+    "feasible option": [
+      "177",
+      "fc16cb4f4d10"
+    ],
+    "high-volume portfolio": [
+      "177",
+      "958977af4d77"
+    ],
+    "operational discipline": [
+      "177",
+      "78467461969c"
+    ],
+    "order discrepancy": [
+      "177",
+      "6de5ddc0ea1e"
+    ],
+    "post-delivery follow-up": [
+      "177",
+      "8cd8b72f6912"
+    ],
+    "reactivate an inactive account": [
+      "177",
+      "11ee143b33fe"
+    ],
+    "single source of truth": [
+      "177",
+      "ba6693c1debf"
+    ],
+    "take ownership": [
+      "177",
+      "ea2293612117"
+    ],
+    "transferable skill": [
+      "177",
+      "8bbaba9c6491"
+    ],
+    "walk me through": [
+      "177",
+      "ef9eb9f3f3e9"
     ]
   },
   "audioKind": "bundle"
