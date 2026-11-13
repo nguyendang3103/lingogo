@@ -788,7 +788,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-1915';
+const APP_BUILD_ID = '20261113-2115';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -12419,6 +12419,7 @@ const HSKK_DATA = {
           {
             qId: 9,
             title: 'Tranh 1 (Câu 9): Đọc báo',
+            imgUrl: 'Chinese/images/hskk/hskk3-q9.jpg',
             svgKey: 'hskk3-newspaper',
             scene: 'Một người đàn ông ngồi ghế chăm chú đọc báo',
             sampleText: '这幅图是一位先生。他正坐在椅子上认真地看报纸。他看起来很专注，周围的环境也非常安静。',
@@ -12429,6 +12430,7 @@ const HSKK_DATA = {
           {
             qId: 10,
             title: 'Tranh 2 (Câu 10): Che tay nhìn xa',
+            imgUrl: 'Chinese/images/hskk/hskk3-q10.jpg',
             svgKey: 'hskk3-lookfar',
             scene: 'Một bạn nam giơ tay lên trán che nắng nhìn về phía trước',
             sampleText: '图中的年轻男生站在阳光下，用手搭在额头前向远方眺望。他好像在等待朋友，或者在寻找前方的路线。',
@@ -12439,6 +12441,7 @@ const HSKK_DATA = {
           {
             qId: 11,
             title: 'Tranh 3 (Câu 11): Hai đầu bếp làm bếp',
+            imgUrl: 'Chinese/images/hskk/hskk3-q11.jpg',
             svgKey: 'hskk3-chefs',
             scene: 'Hai đầu bếp nam nữ mặc đồng phục trắng mỉm cười chuẩn bị nấu ăn',
             sampleText: '两位厨师穿着整洁的白色制服，微笑着站在厨房里。他们正在准备食材，看起来工作非常开心，一定能做出美味的菜肴。',
@@ -12449,6 +12452,7 @@ const HSKK_DATA = {
           {
             qId: 12,
             title: 'Tranh 4 (Câu 12): Xe hỏng nắp capo mở',
+            imgUrl: 'Chinese/images/hskk/hskk3-q12.jpg',
             svgKey: 'hskk3-brokencar',
             scene: 'Chiếc ô tô mở nắp capo trên đường, cô gái đang gọi điện thoại cầu cứu',
             sampleText: '汽车坏在路边了，前车盖被打开。一位女士站在车旁，正焦急地拿着手机打电话求助，希望救援人员尽快赶到。',
@@ -12459,6 +12463,7 @@ const HSKK_DATA = {
           {
             qId: 13,
             title: 'Tranh 5 (Câu 13): Đọc sách thư viện',
+            imgUrl: 'Chinese/images/hskk/hskk3-q13.jpg',
             svgKey: 'hskk3-library',
             scene: 'Cô gái ngồi trong thư viện chăm chú đọc sách',
             sampleText: '在明亮安静的图书馆里，一位女同学坐在书桌旁，全神贯注地阅读一本厚厚的书。她非常热爱学习。',
@@ -12546,6 +12551,11 @@ const HSKK_DATA = {
             qId: 3,
             title: 'Chuỗi 3 tranh: Tình bạn giảng đường đến chặng đường trưởng thành',
             sceneFlow: 'Tranh 1: Thảo luận học bài ➔ Tranh 2: Tốt nghiệp đại học tung mũ ➔ Tranh 3: Nâng ly chúc mừng',
+            imgUrls: [
+              'Chinese/images/hskk/hskk4-p1.jpg',
+              'Chinese/images/hskk/hskk4-p2.jpg',
+              'Chinese/images/hskk/hskk4-p3.jpg'
+            ],
             svgKeys: ['hskk4-p1', 'hskk4-p2', 'hskk4-p3'],
             imagesDesc: [
               'Tranh 1: Nhóm sinh viên trong lớp học cùng nhau thảo luận bài học sôi nổi.',
@@ -12635,6 +12645,11 @@ const HSKK_DATA = {
             qId: 3,
             title: 'Chuỗi 3 tranh: Tình cha con và hành trình tập đi xe đạp',
             sceneFlow: 'Tranh 1: Bé ngã xe đạp được cha nâng đỡ ➔ Tranh 2: Cha chạy theo giữ yên xe ➔ Tranh 3: Bé tự tin đạp xe, cha mỉm cười tự hào',
+            imgUrls: [
+              'Chinese/images/hskk/hskk5-p1.jpg',
+              'Chinese/images/hskk/hskk5-p2.jpg',
+              'Chinese/images/hskk/hskk5-p3.jpg'
+            ],
             svgKeys: ['hskk5-p1', 'hskk5-p2', 'hskk5-p3'],
             imagesDesc: [
               'Tranh 1: Bé trai ngã xe đạp, người cha chạy lại đỡ và ân cần động viên con.',
@@ -12724,6 +12739,12 @@ const HSKK_DATA = {
             qId: 3,
             title: 'Chuỗi 4 tranh: Y đức lương y và niềm hạnh phúc sum vầy',
             sceneFlow: 'Tranh 1: Xem phim X-quang ➔ Tranh 2: Phẫu thuật ➔ Tranh 3: Cụ bà tri ân ➔ Tranh 4: Xuất viện sum vầy',
+            imgUrls: [
+              'Chinese/images/hskk/hskk6-p1.jpg',
+              'Chinese/images/hskk/hskk6-p2.jpg',
+              'Chinese/images/hskk/hskk6-p3.jpg',
+              'Chinese/images/hskk/hskk6-p4.jpg'
+            ],
             svgKeys: ['hskk6-p1', 'hskk6-p2', 'hskk6-p3', 'hskk6-p4'],
             imagesDesc: [
               'Tranh 1: Bác sĩ tận tâm chỉ lên phim chụp X-quang giải thích bệnh án cho cụ bà.',
@@ -12892,6 +12913,176 @@ function createHskkTimer(prepSec, speakSec) {
       h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } }, skipBtn, actionBtn)
     )
   );
+  return box;
+}
+
+// Bộ luyện nói & chấm điểm AI chuẩn kỳ thi HSKK (giống giao diện bài học)
+function createHskkSpeakingPractice(item, curData, targetText) {
+  const box = h('div', {
+    class: 'panel stack',
+    style: {
+      background: 'rgba(15, 82, 87, 0.05)',
+      borderRadius: '12px',
+      padding: '12px',
+      margin: '8px 0',
+      gap: '8px',
+      border: '1px solid rgba(15, 82, 87, 0.18)'
+    }
+  });
+
+  const spokenKey = 'zh:hskk:' + curData.id + '-q' + item.qId;
+  const initBest = S.spoken[spokenKey];
+  let attempts = 0;
+  let currentBest = initBest || 0;
+
+  const headerEl = h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+    h('div', { class: 'row', style: { alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+      h('span', { class: 'label', style: { color: 'var(--teal)', fontWeight: 700, margin: 0, fontSize: '.84rem' } }, '🎙️ Luyện nói theo mẫu & Chấm điểm AI'),
+      currentBest > 0 ? h('span', { class: 'chip good small', style: { fontWeight: 700 } }, 'Kỷ lục: ' + currentBest + '%') : null
+    ),
+    h('div', { class: 'row', style: { gap: '4px' } },
+      spk('zh', targetText),
+      spk('zh', targetText, { slow: true })
+    )
+  );
+
+  const cleanTarget = plain(targetText);
+  const wordsBox = h('div', {
+    class: 'words',
+    lang: 'zh-Hans',
+    style: {
+      fontSize: cleanTarget.length > 60 ? '1.08rem' : (cleanTarget.length > 25 ? '1.25rem' : '1.5rem'),
+      lineHeight: 1.6,
+      justifyContent: 'center',
+      textAlign: 'center',
+      margin: '4px 0'
+    }
+  }, cleanTarget);
+
+  const hintEl = h('p', { class: 'center small muted', style: { margin: '2px 0' } },
+    currentBest > 0 ? 'Bấm micro để nói lại và nâng cao điểm' : 'Bấm micro rồi đọc to câu trả lời bằng tiếng Trung'
+  );
+
+  const micBtn = h('button', {
+    class: 'mic',
+    'aria-label': 'Bấm để nói tiếng Trung',
+    style: { width: '74px', height: '74px', margin: '4px auto', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    onclick: async (e) => {
+      const b = e.currentTarget;
+      if (b.classList.contains('live')) {
+        if (ACTIVE_STOP_FN) { ACTIVE_STOP_FN(); return; }
+      }
+      b.classList.add('live');
+      hintEl.textContent = 'Đang nghe... Bạn hãy đọc to và rõ ràng câu trên';
+      try {
+        const said = await tryListen('zh', (interim) => {
+          if (interim) hintEl.textContent = 'Đang nghe: “' + interim + '”';
+        });
+        b.classList.remove('live');
+        hintEl.textContent = 'Bấm micro để nói lại và nâng cao điểm';
+        if (said) {
+          handleSpeechResult(said);
+        }
+      } catch (err) {
+        b.classList.remove('live');
+        hintEl.textContent = 'Bấm micro rồi đọc to câu trả lời bằng tiếng Trung';
+      }
+    }
+  }, icon(ICON.speak));
+
+  const selfBtn = h('button', {
+    class: 'ghost mini',
+    style: { opacity: .75, alignSelf: 'center', margin: '2px auto' },
+    onclick: () => {
+      attempts++;
+      currentBest = Math.max(currentBest, 85);
+      S.spoken[spokenKey] = currentBest;
+      addXp(XP_ITEM, 'zh');
+      checkAch();
+      save();
+      resultBox.replaceChildren(
+        h('div', { class: 'score', style: { color: 'var(--good)', fontSize: '2rem', margin: '2px 0' } }, '85%'),
+        h('p', { class: 'center small', style: { color: 'var(--good)', fontWeight: 600 } }, '✓ Đã ghi nhận bạn tự đọc to và hoàn thành câu nói!')
+      );
+    }
+  }, 'Tự đọc (không dùng micro)');
+
+  const resultBox = h('div', { class: 'stack center', style: { gap: '3px' } });
+
+  if (currentBest > 0) {
+    resultBox.replaceChildren(
+      h('div', {
+        class: 'score',
+        style: {
+          color: currentBest >= 80 ? 'var(--good)' : (currentBest >= 60 ? '#f59e0b' : 'var(--ink)'),
+          fontSize: '2rem',
+          margin: '2px 0'
+        }
+      }, currentBest + '%'),
+      h('p', { class: 'center small muted', style: { margin: '2px 0' } }, 'Điểm cao nhất hiện tại: ' + currentBest + '% · Bấm Micro để nói lại và nâng cao điểm số!')
+    );
+  }
+
+  function handleSpeechResult(said) {
+    attempts++;
+    const prevBest = currentBest;
+    const a = align('zh', cleanTarget, said);
+    const score = a.score;
+    currentBest = Math.max(currentBest, score);
+    S.spoken[spokenKey] = currentBest;
+    addXp(score >= 70 ? XP_ITEM : 1, 'zh');
+    checkAch();
+    save();
+
+    // Cập nhật từng chữ Hán: đúng (xanh lá), sai/thiếu (đỏ lượn sóng)
+    wordsBox.replaceChildren(...a.units.map((w, idx) => h('span', { class: a.hit[idx] ? 'hit' : 'miss' }, w)));
+
+    const isImproved = attempts > 1 && score > prevBest;
+    const isLower = attempts > 1 && score < currentBest;
+
+    resultBox.replaceChildren(
+      h('div', {
+        class: 'score',
+        style: {
+          color: score >= 80 ? 'var(--good)' : (score >= 60 ? '#f59e0b' : 'var(--bad)'),
+          fontSize: '2.4rem',
+          margin: '4px 0 2px 0'
+        }
+      }, score + '%'),
+      isImproved
+        ? h('p', { class: 'center small', style: { color: 'var(--good)', fontWeight: 700, margin: '2px 0' } }, '🎉 Điểm tăng: ' + prevBest + '% ➔ ' + score + '% (+' + (score - prevBest) + '%)!')
+        : isLower
+        ? h('p', { class: 'center small muted', style: { margin: '2px 0' } }, 'Lần nói này: ' + score + '% · Điểm cao nhất: ' + currentBest + '% (giữ nguyên)')
+        : h('p', { class: 'center small muted', style: { margin: '2px 0' } }, 'Điểm cao nhất: ' + currentBest + '%'),
+      h('p', { class: 'center small muted', lang: 'zh-Hans', style: { margin: '3px 0', lineHeight: 1.4 } }, 'Máy nghe được: “' + said + '”'),
+      h('p', { class: 'center small', style: { margin: '3px 0' } },
+        score >= 80
+          ? 'Rất tốt! Bạn có thể luyện nói thêm câu khác, hoặc bấm Micro nói lại để nâng % cao hơn.'
+          : (score >= 60
+            ? 'Khá tốt! Chữ gạch đỏ uốn lượn là chữ máy chưa nghe rõ. Bạn hãy bấm Micro nói lại để cải thiện % điểm nhé!'
+            : 'Chữ gạch đỏ là chữ máy chưa nghe rõ hoặc phát âm sai thanh điệu. Nghe loa mẫu rồi bấm Micro nói lại nhé!')),
+      h('p', { class: 'center small muted', style: { fontSize: '.8rem', margin: '4px 0 0 0' } },
+        'Đã thử ' + attempts + ' lần · Bấm Micro để nói lại không giới hạn'
+      )
+    );
+  }
+
+  // Tùy chọn thu âm phòng thi thực tế (accordion collapse)
+  const mockRecordingDetails = h('details', { style: { marginTop: '6px', borderTop: '1px dashed var(--line)', paddingTop: '6px' } },
+    h('summary', { style: { cursor: 'pointer', fontSize: '.82rem', color: 'var(--muted)', fontWeight: 600 } }, '🎙️ Tùy chọn: Thu âm bài thi thực tế (Nghe lại audio của bạn) ▾'),
+    createHskkRecorder(item)
+  );
+
+  box.replaceChildren(
+    headerEl,
+    wordsBox,
+    hintEl,
+    micBtn,
+    selfBtn,
+    resultBox,
+    mockRecordingDetails
+  );
+
   return box;
 }
 
@@ -13185,7 +13376,7 @@ function renderHskkExamView() {
           h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghĩa: ' + it.trans),
           it.tip ? h('p', { class: 'small', style: { margin: 0, color: '#f59e0b', fontSize: '.78rem' } }, '💡 ' + it.tip) : null,
           createHskkTimer(0, 10),
-          createHskkRecorder(it)
+          createHskkSpeakingPractice(it, curData, it.text)
         );
         return card;
       }
@@ -13214,7 +13405,7 @@ function renderHskkExamView() {
             h('p', { lang: 'zh-Hans', style: { margin: '6px 0 0 0', fontSize: '1.02rem', lineHeight: 1.55 } }, it.listenScript)
           ),
           createHskkTimer(0, speakTime),
-          createHskkRecorder(it),
+          createHskkSpeakingPractice(it, curData, it.sampleText),
           // Accordion bài thuật lại mẫu
           h('details', { style: { marginTop: '4px' } },
             h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Gợi ý tóm tắt & Thuật lại mẫu (Chuẩn HSK 3.0) ▾'),
@@ -13238,18 +13429,55 @@ function renderHskkExamView() {
 
       // 3. DẠNG NHÌN TRANH NÓI (Phần 2)
       if (sec.partId === 'p2') {
-        const isSinglePic = !!it.svgKey;
+        const isSinglePic = !it.svgKeys && !it.imgUrls;
         const prepTime = isSinglePic ? 0 : 180;
         const speakTime = isSinglePic ? 15 : 120;
 
-        const pictureArea = isSinglePic
-          ? renderHskkSvg(it.svgKey)
-          : h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '6px', margin: '4px 0' } },
-              ...(it.svgKeys || []).map((k, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center' } },
-                renderHskkSvg(k),
-                h('p', { class: 'small muted', style: { margin: 0, fontSize: '.72rem', lineHeight: 1.2 } }, (it.imagesDesc && it.imagesDesc[idx]) || '')
-              ))
-            );
+        let pictureArea;
+        if (it.imgUrl) {
+          pictureArea = h('div', { style: { textAlign: 'center', margin: '8px 0' } },
+            h('img', {
+              src: it.imgUrl,
+              alt: it.title || it.scene || 'Tranh đề thi HSKK',
+              loading: 'lazy',
+              style: {
+                maxWidth: '100%',
+                maxHeight: '360px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
+                objectFit: 'contain',
+                border: '1px solid rgba(255,255,255,0.12)'
+              }
+            })
+          );
+        } else if (it.imgUrls && it.imgUrls.length) {
+          pictureArea = h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', margin: '8px 0' } },
+            ...it.imgUrls.map((url, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center', background: 'rgba(0,0,0,0.15)', padding: '8px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' } },
+              h('img', {
+                src: url,
+                alt: 'Tranh ' + (idx + 1),
+                loading: 'lazy',
+                style: {
+                  width: '100%',
+                  height: '145px',
+                  objectFit: 'cover',
+                  borderRadius: '8px'
+                }
+              }),
+              h('span', { class: 'chip small', style: { fontSize: '.72rem', alignSelf: 'center', fontWeight: 700 } }, 'Tranh ' + (idx + 1)),
+              h('p', { class: 'small muted', style: { margin: 0, fontSize: '.72rem', lineHeight: 1.25 } }, (it.imagesDesc && it.imagesDesc[idx]) || '')
+            ))
+          );
+        } else if (isSinglePic) {
+          pictureArea = renderHskkSvg(it.svgKey);
+        } else {
+          pictureArea = h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '6px', margin: '4px 0' } },
+            ...(it.svgKeys || []).map((k, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center' } },
+              renderHskkSvg(k),
+              h('p', { class: 'small muted', style: { margin: 0, fontSize: '.72rem', lineHeight: 1.2 } }, (it.imagesDesc && it.imagesDesc[idx]) || '')
+            ))
+          );
+        }
 
         card.replaceChildren(
           h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
@@ -13261,7 +13489,7 @@ function renderHskkExamView() {
           pictureArea,
           it.sceneFlow ? h('p', { class: 'small', style: { margin: '2px 0', color: 'var(--teal)', fontWeight: 600 } }, 'Diễn biến: ' + it.sceneFlow) : null,
           createHskkTimer(prepTime, speakTime),
-          createHskkRecorder(it),
+          createHskkSpeakingPractice(it, curData, it.sampleText),
           // Accordion bài mẫu
           h('details', { style: { marginTop: '4px' } },
             h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Bài kể chuyện mẫu chuẩn HSK 3.0 & Từ khóa ▾'),
@@ -13306,7 +13534,7 @@ function renderHskkExamView() {
           h('p', { class: 'small', style: { margin: '2px 0 0 0', lineHeight: 1.4 } }, it.outline)
         ) : null,
         createHskkTimer(prepTime, speakTime),
-        createHskkRecorder(it),
+        createHskkSpeakingPractice(it, curData, it.sampleText),
         // Accordion bài văn mẫu hoàn chỉnh
         h('details', { style: { marginTop: '4px' } },
           h('summary', { style: { cursor: 'pointer', fontWeight: 600, color: 'var(--teal)', fontSize: '.88rem' } }, '📖 Xem Bài văn mẫu hoàn chỉnh chuẩn HSK 3.0 & Từ khóa ▾'),
