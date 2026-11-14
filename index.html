@@ -583,6 +583,165 @@ body { overflow-x: hidden; }
   border-left: 4px solid var(--teal);
   scrollbar-width: thin;
 }
+
+/* ===== Màn hình chính: Tab danh mục, Biểu đồ tuần mini & Lộ trình cán đích ===== */
+.pick-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 4px;
+  margin: 8px 0 16px 0;
+}
+.pick-tab-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .84rem;
+  cursor: pointer;
+  transition: all .2s ease;
+  white-space: nowrap;
+}
+.pick-tab-btn.active {
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
+}
+@media (max-width: 480px) {
+  .pick-tab-btn {
+    font-size: .76rem;
+    padding: 8px 2px;
+    gap: 3px;
+  }
+}
+.mini-week-box {
+  background: var(--sunk);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin: 8px 0 6px 0;
+}
+.mini-week {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 56px;
+  margin-top: 4px;
+}
+.mini-day {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2px;
+  font-size: .68rem;
+  color: var(--muted);
+  min-width: 0;
+}
+.mini-day.today {
+  font-weight: 700;
+  color: var(--ink);
+}
+.mini-day .mini-val {
+  font-size: .62rem;
+  line-height: 1;
+  color: var(--muted);
+  min-height: 9px;
+  font-variant-numeric: tabular-nums;
+}
+.mini-day.today .mini-val {
+  color: var(--amber);
+  font-weight: 700;
+}
+.mini-bar-wrap {
+  width: 100%;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.mini-bar-wrap i {
+  width: 100%;
+  background: var(--teal);
+  border-radius: 3px 3px 0 0;
+  transition: height .3s ease;
+}
+.mini-day.today .mini-bar-wrap i {
+  background: var(--amber);
+}
+.mini-day.met .mini-bar-wrap i {
+  background: var(--good);
+}
+.mini-day .mini-lbl {
+  font-size: .66rem;
+  white-space: nowrap;
+}
+.pace-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+.pace-btn {
+  padding: 8px 6px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+  text-align: center;
+}
+.pace-btn.active {
+  background: var(--teal);
+  color: #fff;
+  border-color: var(--teal);
+  box-shadow: 0 2px 6px rgba(15, 82, 87, 0.25);
+}
+.level-step-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: .74rem;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+.level-step-chip.done {
+  background: var(--good-bg);
+  color: var(--good);
+  border-color: rgba(35, 120, 74, 0.25);
+}
+.level-step-chip.cur {
+  background: rgba(226, 144, 47, 0.12);
+  color: var(--amber);
+  border-color: var(--amber);
+  font-weight: 700;
+}
+.level-step-chip.upcoming {
+  opacity: .6;
+  background: var(--sunk);
+}
+
 .ielts-passage p { margin-bottom: 12px; }
 .ielts-cue-card {
   background: #fdfaf3;
@@ -788,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261113-2115';
+const APP_BUILD_ID = '20261114-0740';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -829,6 +988,135 @@ const CATEGORIES = {
     { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Lộ trình tiếng Nhật toàn diện 26 bài học từ sơ cấp N5 đến cao cấp N1' }
   ]
 };
+
+
+// ===== DỮ LIỆU ĐỊNH DANH BÀI HỌC, TIẾN ĐỘ & LỘ TRÌNH DỰ BÁO CÁN ĐÍCH =====
+const TOPIC_META = {"en":{"1":["b2",6],"2":["b2",6],"3":["b2",6],"4":["b2",6],"5":["b2",6],"6":["b2",6],"7":["b2",6],"8":["b2",6],"9":["b2",6],"10":["b2",6],"11":["b2",6],"12":["b2",6],"13":["b2",6],"15":["b2",6],"16":["b2",6],"20":["b2",6],"21":["b2",6],"22":["b2",6],"23":["b2",6],"24":["b2",6],"25":["b2",6],"26":["b2",6],"27":["b2",6],"30":["b2",6],"31":["b2",6],"32":["b2",6],"33":["b2",6],"34":["a1",5],"35":["a1",5],"36":["a2",5],"37":["a2",5],"38":["a1",5],"39":["b1",5],"40":["a2",5],"41":["b1",5],"42":["b1",5],"43":["b1",5],"44":["b1",5],"45":["b1",5],"101":["a1",9],"102":["a1",6],"103":["a1",9],"104":["a1",8],"105":["a1",9],"106":["a1",8],"107":["a1",8],"108":["a1",9],"109":["a1",9],"110":["a1",11],"111":["a2",13],"112":["a2",7],"113":["a2",9],"114":["a2",6],"115":["a2",7],"116":["a2",7],"117":["a2",7],"118":["a2",8],"119":["a2",7],"120":["a2",8],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",6],"125":["b1",16],"126":["b1",6],"127":["b1",7],"128":["b1",7],"129":["b1",7],"130":["b1",7],"131":["b1",7],"132":["b1",7],"133":["b1",7],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3],"174":["b2",6],"175":["b2",6],"176":["b2",6],"177":["b2",7],"178":["b2",6],"179":["b2",6],"180":["b2",6],"181":["b2",6]},"zh":{"1":["hsk1",4],"2":["hsk1",4],"3":["hsk1",4],"4":["hsk2",4],"5":["hsk2",4],"6":["hsk2",4],"7":["hsk2",4],"9":["hsk2",4],"11":["hsk3",4],"12":["hsk2",4],"13":["hsk2",4],"14":["hsk3",4],"15":["hsk3",4],"17":["hsk5",4],"18":["hsk6",4],"19":["hsk6",4],"20":["hsk5",4],"21":["hsk5",4],"22":["hsk6",4],"23":["hsk6",4],"25":["hsk3",4],"26":["hsk3",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",4],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"33":["hsk5",4],"34":["hsk5",4],"35":["hsk5",4],"36":["hsk1",4],"37":["hsk3",4],"38":["hsk3",4],"39":["hsk3",4],"41":["hsk3",4],"42":["hsk4",4],"43":["hsk4",4],"44":["hsk3",4],"46":["hsk1",4],"47":["hsk1",4],"48":["hsk1",4],"49":["hsk2",4],"50":["hsk2",4],"51":["hsk2",4],"52":["hsk7",4],"53":["hsk7",4],"54":["hsk8",4],"55":["hsk8",4],"56":["hsk9",4],"57":["hsk9",4]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n4",18],"9":["n4",11],"10":["n4",7],"11":["n4",9],"12":["n4",13],"13":["n4",11],"14":["n4",10],"15":["n5",27],"16":["n4",6],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3],"26":["n4",9]}};
+const CAT_TOTAL_LESSONS = {"en":{"a1":101,"a2":124,"b1":101,"b2":211,"c1":17,"c2":15},"zh":{"hsk1":28,"hsk2":40,"hsk3":40,"hsk4":32,"hsk5":24,"hsk6":16,"hsk7":8,"hsk8":8,"hsk9":8},"ja":{"n5":112,"n4":94,"n3":9,"n2":9,"n1":9}};
+const LANG_TOTAL_LESSONS = {"en":569,"zh":204,"ja":233};
+let PICK_TAB = 'progress'; // 'progress' | 'schedule' | 'roadmap'
+let STUDY_PACE = 'schedule'; // 'schedule' | 'daily1' | 'daily2'
+
+function getLangProgress(code) {
+  const meta = (TOPIC_META && TOPIC_META[code]) || {};
+  const catDone = {};
+  const catTotal = (CAT_TOTAL_LESSONS && CAT_TOTAL_LESSONS[code]) || {};
+  let totalDone = 0;
+  
+  const prefix = code + ':';
+  Object.keys(S.lessons || {}).forEach(k => {
+    if (!k.startsWith(prefix)) return;
+    const rest = k.slice(prefix.length);
+    const dash = rest.lastIndexOf('-');
+    if (dash === -1) return;
+    const topicId = rest.slice(0, dash);
+    const topicInfo = meta[topicId];
+    const cat = topicInfo ? topicInfo[0] : 'other';
+    catDone[cat] = (catDone[cat] || 0) + 1;
+    totalDone++;
+  });
+
+  const totalAll = (LANG_TOTAL_LESSONS && LANG_TOTAL_LESSONS[code]) || 1;
+  const pct = Math.min(100, Math.round((totalDone / totalAll) * 100));
+  const remaining = Math.max(0, totalAll - totalDone);
+
+  const cats = (CATEGORIES[code] || []).filter(c => c.id !== 'all');
+  let curCat = cats[0] || { id: 'all', short: 'Tất cả', name: 'Tất cả' };
+  for (const c of cats) {
+    const done = catDone[c.id] || 0;
+    const tot = catTotal[c.id] || 0;
+    if (done < tot) {
+      curCat = c;
+      break;
+    }
+  }
+  const curCatDone = catDone[curCat.id] || 0;
+  const curCatTotal = catTotal[curCat.id] || 1;
+  const curCatPct = Math.min(100, Math.round((curCatDone / curCatTotal) * 100));
+  const curCatRemaining = Math.max(0, curCatTotal - curCatDone);
+
+  return {
+    code,
+    totalDone,
+    totalAll,
+    pct,
+    remaining,
+    catDone,
+    catTotal,
+    curCat,
+    curCatDone,
+    curCatTotal,
+    curCatPct,
+    curCatRemaining
+  };
+}
+
+function calcFinishEstimate(remLessons, pace = STUDY_PACE, code = 'en') {
+  if (remLessons <= 0) return { days: 0, weeks: 0, timeText: 'Đã hoàn thành! 🎉', dateStr: 'Hôm nay', monthYearStr: 'Đã xong' };
+  
+  let lessonsPerDay = 1;
+  if (pace === 'daily1') lessonsPerDay = 1;
+  else if (pace === 'daily2') lessonsPerDay = 2;
+  else {
+    if (code === 'en') lessonsPerDay = 3 / 7;
+    else if (code === 'zh') lessonsPerDay = 2 / 7;
+    else if (code === 'ja') lessonsPerDay = 1.5 / 7;
+    else lessonsPerDay = 2 / 7;
+  }
+  
+  const days = Math.ceil(remLessons / lessonsPerDay);
+  const weeks = Math.round((days / 7) * 10) / 10;
+  
+  const targetDate = new Date();
+  targetDate.setDate(targetDate.getDate() + days);
+  
+  const day = targetDate.getDate();
+  const month = targetDate.getMonth() + 1;
+  const year = targetDate.getFullYear();
+  const dateStr = (day < 10 ? '0' + day : day) + '/' + (month < 10 ? '0' + month : month) + '/' + year;
+  const monthYearStr = 'Tháng ' + (month < 10 ? '0' + month : month) + '/' + year;
+
+  let timeText = '';
+  if (days < 14) {
+    timeText = '~' + days + ' ngày (' + dateStr + ')';
+  } else if (weeks < 8) {
+    timeText = '~' + Math.round(weeks) + ' tuần (' + dateStr + ')';
+  } else {
+    const months = Math.round((days / 30) * 10) / 10;
+    timeText = '~' + months + ' tháng (' + monthYearStr + ')';
+  }
+
+  return { days, weeks, timeText, dateStr, monthYearStr };
+}
+
+function renderMiniWeekChart(code, t) {
+  const days = Array.from({ length: 7 }, (_, i) => t - 6 + i);
+  const xd = (d) => xpOf(d, code);
+  const g = goal(code, t);
+  const max = Math.max(g, ...days.map(xd), 10);
+  const wd = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+
+  return h('div', { class: 'mini-week-box' },
+    h('div', { class: 'row between', style: { marginBottom: '3px', fontSize: '.74rem', color: 'var(--muted)' } },
+      h('span', { style: { fontWeight: 600 } }, 'XP 7 ngày qua:'),
+      h('span', {}, 'Mục tiêu hôm nay: ' + g + ' XP')
+    ),
+    h('div', { class: 'mini-week', role: 'img', 'aria-label': days.map((d) => wd[dayDate(d).getUTCDay()] + ': ' + xd(d) + ' XP').join(', ') },
+      days.map((d) => {
+        const val = xd(d);
+        const isToday = d === t;
+        const pct = Math.min(100, Math.round((val / max) * 100));
+        return h('div', { class: 'mini-day' + (isToday ? ' today' : '') + (val >= g ? ' met' : ''), title: wd[dayDate(d).getUTCDay()] + ': ' + val + ' XP' },
+          h('span', { class: 'mini-val' }, val > 0 ? val : ''),
+          h('div', { class: 'mini-bar-wrap' },
+            h('i', { style: { height: Math.max(pct > 0 ? 12 : 4, pct) + '%' } })
+          ),
+          h('span', { class: 'mini-lbl' }, wd[dayDate(d).getUTCDay()])
+        );
+      })
+    )
+  );
+}
 
 // Loại bỏ tiền tố cấp độ (như A1., A1 ·, HSK 1 ·, JLPT N5 ·) ở đầu tên chủ đề/nhóm
 function cleanPhaseName(name) {
@@ -2038,45 +2326,340 @@ async function route() {
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
 const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến C2', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–9)', ja: 'Tiếng Nhật · JLPT N5–N1' };
-function pickView() {
-  setTabs(false);
-  const t = todayN();
-  const sch = getDaySchedule(t);
+function renderProgressTabContent(t, sch) {
   const isSunday = sch.focus === 'all';
-  mount(h('div', { class: 'stack-lg', style: { paddingTop: '16px' } },
-    h('div', { class: 'stack', style: { gap: '4px' } },
-      h('p', { class: 'label' }, 'Lingogo'),
-      h('h1', {}, 'Chào ' + S.name + ', hôm nay học gì?')),
+  return [
     h('div', { class: 'panel', style: { padding: '12px 16px', background: 'rgba(15,82,87,.08)', border: '1px solid var(--teal)', borderRadius: '14px', display: 'flex', flexDirection: 'column', gap: '4px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
         h('span', { class: 'chip accent', style: { fontSize: '.75rem', fontWeight: 700 } }, '📅 Lịch học ' + sch.name),
         h('span', { class: 'small muted' }, isSunday ? 'Tổng ôn cả 3 thứ tiếng' : ('Trọng tâm: ' + LANGS[sch.focus].label))
       ),
       h('p', { style: { fontWeight: 700, margin: '4px 0 2px 0', fontSize: '1.02rem', color: 'var(--ink)' } }, sch.title),
-      h('p', { class: 'small muted', style: { margin: 0 } }, sch.desc)
+      h('p', { class: 'small muted', style: { margin: 0 } }, sch.desc),
+      h('div', { style: { marginTop: '6px' } },
+        h('button', { class: 'ghost mini', style: { fontSize: '.76rem', padding: '3px 8px' }, onclick: () => { PICK_TAB = 'schedule'; pickView(); } }, 'Xem toàn bộ thời gian biểu tuần 7 ngày →')
+      )
     ),
-    h('div', { class: 'langpick' }, Object.entries(LANGS).map(([c, v], i) => {
+    h('div', { class: 'stack', style: { gap: '12px' } }, Object.entries(LANGS).map(([c, v], i) => {
       const g = goal(c, t);
-      const x = xpOf(t, c), f = h('i');
-      requestAnimationFrame(() => { f.style.width = Math.min(100, Math.round((x / g) * 100)) + '%'; });
-      const lessons = Object.keys(S.lessons).filter((k) => k.startsWith(c + ':')).length;
+      const x = xpOf(t, c);
+      const isMet = x >= g;
+      const prog = getLangProgress(c);
       const isFocus = sch.focus === c;
-      return h('button', {
-        class: 'langcard' + (c === S.lang ? ' cur' : '') + (isFocus ? ' focus-day' : ''),
-        'aria-keyshortcuts': String(i + 1),
-        onclick: () => { S.lang = c; save(); go('home'); }
+      const isSelected = c === S.lang;
+      const st = streak(c);
+      const lng = longest(c);
+
+      return h('div', {
+        class: 'panel stack' + (isFocus ? ' focus-day' : ''),
+        style: {
+          padding: '16px',
+          border: isFocus ? '2px solid var(--teal)' : isSelected ? '1px solid var(--teal)' : '1px solid var(--line)',
+          borderRadius: '16px',
+          background: isFocus ? 'rgba(15,82,87,.04)' : 'var(--surface)',
+          gap: '10px'
+        }
       },
-        h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true' }, GLYPH[c]),
-        h('span', {},
-          h('span', { class: 'name', lang: v.lang }, v.label),
-          h('span', { class: 'muted small' }, '  ' + SUBTITLE[c]),
-          isFocus ? h('span', { class: 'chip accent', style: { marginLeft: '8px', fontSize: '.7rem', verticalAlign: 'middle' } }, '🎯 Trọng tâm hôm nay') : null
+        // Top header
+        h('div', { class: 'row between', style: { alignItems: 'flex-start' } },
+          h('div', { class: 'row', style: { gap: '10px', alignItems: 'center' } },
+            h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.6rem', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', background: 'var(--sunk)', fontWeight: 800 } }, GLYPH[c]),
+            h('div', {},
+              h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+                h('b', { style: { fontSize: '1.05rem' } }, v.label),
+                isFocus ? h('span', { class: 'chip accent', style: { fontSize: '.7rem', padding: '2px 6px' } }, '🎯 Trọng tâm hôm nay') : null,
+                isSelected ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '2px 5px' } }, 'Đang chọn') : null
+              ),
+              h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, SUBTITLE[c])
+            )
+          ),
+          h('span', { class: 'chip' + (isMet ? ' good' : ''), style: { fontSize: '.76rem', fontWeight: 600 } },
+            isMet ? '✓ Đã đạt ' + x + '/' + g + ' XP' : 'Còn ' + (g - x) + ' XP'
+          )
         ),
-        h('span', { class: 'small muted' }, x + '/' + g + ' XP hôm nay · chuỗi ' + streak(c) + ' ngày · ' + lessons + ' bài đã học'),
-        h('span', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu ' + v.short, 'aria-valuenow': x, 'aria-valuemax': g }, f)
+        // Stats grid
+        h('div', { class: 'stats', style: { gridTemplateColumns: 'repeat(3, 1fr)', margin: '2px 0' } },
+          h('div', { class: 'stat', style: { padding: '8px 4px' } },
+            h('b', { style: { fontSize: '.95rem' } }, x + '/' + g),
+            h('span', { style: { fontSize: '.72rem' } }, 'XP hôm nay')
+          ),
+          h('div', { class: 'stat', style: { padding: '8px 4px' } },
+            h('b', { style: { fontSize: '.95rem' } }, '🔥 ' + st + ' ngày'),
+            h('span', { style: { fontSize: '.72rem' } }, 'Kỷ lục: ' + lng + 'd')
+          ),
+          h('div', { class: 'stat', style: { padding: '8px 4px' } },
+            h('b', { style: { fontSize: '.95rem' } }, prog.totalDone + '/' + prog.totalAll),
+            h('span', { style: { fontSize: '.72rem' } }, 'Đã học (' + prog.pct + '%)')
+          )
+        ),
+        // Mini week chart
+        renderMiniWeekChart(c, t),
+        // Action buttons
+        h('div', { class: 'row', style: { gap: '8px', marginTop: '4px' } },
+          h('button', {
+            class: 'primary block',
+            style: { flex: 2, padding: '10px 14px', fontSize: '.88rem', fontWeight: 700 },
+            onclick: () => { S.lang = c; save(); go('home'); }
+          }, 'Vào học ' + v.short + ' ngay →'),
+          h('button', {
+            class: 'ghost mini',
+            style: { flex: 1, whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px' },
+            onclick: () => { PICK_TAB = 'roadmap'; pickView(); }
+          }, 'Xem lộ trình 🚀')
+        )
       );
-    })),
-    h('p', { class: 'small muted center' }, 'Lộ trình thông minh: Luân phiên trọng tâm & duy trì lặp lại ngắt quãng để tránh loạn ngôn ngữ.')));
+    }))
+  ];
+}
+
+function renderScheduleTabContent(t, sch) {
+  const curDayIdx = new Date().getDay();
+  const dayOrder = [1, 2, 3, 4, 5, 6, 0]; // Thứ 2 -> Chủ Nhật
+
+  return [
+    h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', border: '1px solid var(--teal)', borderRadius: '14px', padding: '14px 16px', gap: '6px' } },
+      h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
+        h('span', { style: { fontSize: '1.2rem' } }, '🧠'),
+        h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Thời gian biểu chống loạn ngôn ngữ (Focus Rotation)')
+      ),
+      h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.6 } },
+        'Học đồng thời 3 thứ tiếng dễ gây hiện tượng giao thoa ngôn ngữ (linguistic interference). Nguyên lý tối ưu: Mỗi ngày tập trung nạp kiến thức chuyên sâu 1 thứ tiếng (Focus 25–30p), 2 thứ tiếng còn lại chỉ ôn nhẹ Spaced Repetition (5–10p) để duy trì phản xạ.'
+      )
+    ),
+    // Today highlight card
+    h('div', { class: 'panel stack', style: { background: 'var(--surface)', border: '2px solid var(--amber)', borderRadius: '16px', padding: '16px', gap: '8px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('span', { class: 'chip accent', style: { fontWeight: 700 } }, '✨ HÔM NAY: ' + sch.name),
+        h('span', { class: 'small muted' }, sch.focus === 'all' ? 'Tổng ôn cả 3 thứ tiếng' : ('Trọng tâm: ' + LANGS[sch.focus].label))
+      ),
+      h('h3', { style: { margin: '2px 0', fontSize: '1.1rem' } }, sch.title),
+      h('p', { class: 'small muted', style: { margin: 0 } }, sch.desc),
+      h('button', {
+        class: 'primary block',
+        style: { marginTop: '8px', padding: '10px' },
+        onclick: () => {
+          if (sch.focus !== 'all') S.lang = sch.focus;
+          save();
+          go('home');
+        }
+      }, sch.focus === 'all' ? 'Bắt đầu tổng ôn Chủ Nhật →' : ('Bắt đầu học trọng tâm ' + LANGS[sch.focus].label + ' →'))
+    ),
+    // 7-day timetable
+    h('div', { class: 'stack', style: { gap: '8px' } },
+      h('h3', { style: { margin: '8px 0 2px 0', fontSize: '.95rem', color: 'var(--muted)' } }, '📅 LỊCH TRỌNG TÂM TRONG TUẦN (THỨ 2 – CHỦ NHẬT)'),
+      dayOrder.map(dayNum => {
+        const item = WEEKLY_SCHEDULE[dayNum];
+        const isToday = dayNum === curDayIdx;
+        const focusLang = item.focus === 'all' ? null : LANGS[item.focus];
+
+        return h('div', {
+          class: 'panel stack',
+          style: {
+            padding: '12px 14px',
+            borderRadius: '12px',
+            border: isToday ? '2px solid var(--teal)' : '1px solid var(--line)',
+            background: isToday ? 'rgba(15,82,87,.04)' : 'var(--surface)',
+            gap: '4px'
+          }
+        },
+          h('div', { class: 'row between', style: { alignItems: 'center' } },
+            h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+              h('b', { style: { fontSize: '.96rem' } }, item.name),
+              focusLang
+                ? h('span', { class: 'chip', style: { fontSize: '.72rem', padding: '2px 6px' } }, focusLang.label)
+                : h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 6px' } }, '🧘 Spaced Repetition 3 tiếng'),
+              isToday ? h('span', { class: 'chip accent', style: { fontSize: '.68rem', padding: '2px 5px', fontWeight: 700 } }, 'HÔM NAY') : null
+            ),
+            h('span', { class: 'small muted', style: { fontSize: '.75rem', fontWeight: 600 } },
+              focusLang ? 'Trọng tâm: ~40 XP' : 'Mỗi tiếng: ~20 XP'
+            )
+          ),
+          h('p', { class: 'small muted', style: { margin: '2px 0 0 0', lineHeight: 1.5 } }, item.desc)
+        );
+      })
+    ),
+    // Golden hours card
+    h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '14px', padding: '14px', gap: '8px' } },
+      h('b', { style: { fontSize: '.92rem' } }, '⏰ Khung giờ vàng học tập được chuyên gia đề xuất:'),
+      h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '8px' } },
+        h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '10px', padding: '10px' } },
+          h('b', { style: { fontSize: '.84rem', color: 'var(--teal)' } }, '🌅 Buổi sáng (6:30 – 7:00 / 12:30 – 13:00)'),
+          h('p', { class: 'small muted', style: { margin: '4px 0 0 0', fontSize: '.76rem', lineHeight: 1.5 } },
+            'Nạp bài mới cho ngôn ngữ trọng tâm. Lúc này não bộ đang ở sóng Alpha/Beta, khả năng ghi nhớ từ vựng và câu mới đạt hiệu suất cao nhất.'
+          )
+        ),
+        h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '10px', padding: '10px' } },
+          h('b', { style: { fontSize: '.84rem', color: 'var(--amber)' } }, '🌙 Buổi tối (21:00 – 21:30)'),
+          h('p', { class: 'small muted', style: { margin: '4px 0 0 0', fontSize: '.76rem', lineHeight: 1.5 } },
+            'Ôn tập Spaced Repetition (SRS) thẻ từ và câu đã học. Ôn trước khi đi ngủ giúp não bộ chuyển hóa kiến thức vào bộ nhớ dài hạn qua giấc ngủ sâu.'
+          )
+        )
+      )
+    )
+  ];
+}
+
+function renderRoadmapTabContent(t) {
+  const paces = [
+    { id: 'schedule', name: '📅 Lịch chuẩn', desc: 'Theo thời gian biểu (~2–3 bài/tuần)' },
+    { id: 'daily1', name: '⚡ 1 bài/ngày', desc: '7 bài/tuần cho tiếng tập trung' },
+    { id: 'daily2', name: '🔥 2 bài/ngày', desc: '14 bài/tuần · Tăng tốc bứt phá' }
+  ];
+
+  return [
+    // Header & pace selector
+    h('div', { class: 'panel stack', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '14px', padding: '14px', gap: '8px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('b', { style: { fontSize: '.96rem' } }, '🚀 Chọn tốc độ học để dự báo ngày cán đích:'),
+        h('span', { class: 'small muted' }, 'Lộ trình 3 ngôn ngữ')
+      ),
+      h('div', { class: 'pace-selector' },
+        paces.map(p => h('button', {
+          class: 'pace-btn' + (STUDY_PACE === p.id ? ' active' : ''),
+          onclick: () => { STUDY_PACE = p.id; pickView(); }
+        },
+          h('div', { style: { fontWeight: 700 } }, p.name),
+          h('div', { class: 'small', style: { fontSize: '.68rem', opacity: .85, marginTop: '2px' } }, p.desc)
+        ))
+      ),
+      h('p', { class: 'small muted', style: { margin: '2px 0 0 0', fontSize: '.76rem' } },
+        STUDY_PACE === 'schedule'
+          ? '💡 Lịch chuẩn: Tiếng Anh ~3 bài/tuần (T2, T4, T7); Tiếng Trung ~2 bài/tuần (T3, T6); Tiếng Nhật ~1.5 bài/tuần (T5 + CN).'
+          : STUDY_PACE === 'daily1'
+          ? '💡 Tốc độ 1 bài/ngày: Hoàn thành 1 bài mỗi ngày liên tục cho ngôn ngữ trọng tâm.'
+          : '💡 Tốc độ 2 bài/ngày: Cường độ cao, hoàn thành 2 bài mỗi ngày giúp rút ngắn một nửa thời gian.'
+      )
+    ),
+    // 3 Language Roadmap Cards
+    h('div', { class: 'stack', style: { gap: '14px' } }, Object.entries(LANGS).map(([c, v]) => {
+      const p = getLangProgress(c);
+      const estCur = calcFinishEstimate(p.curCatRemaining, STUDY_PACE, c);
+      const estAll = calcFinishEstimate(p.remaining, STUDY_PACE, c);
+      const cats = (CATEGORIES[c] || []).filter(item => item.id !== 'all');
+
+      return h('div', {
+        class: 'panel stack',
+        style: {
+          padding: '16px',
+          borderRadius: '16px',
+          border: '1px solid var(--line)',
+          background: 'var(--surface)',
+          gap: '12px'
+        }
+      },
+        // Card top header
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+            h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.4rem', width: '34px', height: '34px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', background: 'var(--sunk)', fontWeight: 800 } }, GLYPH[c]),
+            h('div', {},
+              h('b', { style: { fontSize: '1.05rem' } }, v.label),
+              h('span', { class: 'small muted', style: { display: 'block', fontSize: '.76rem' } }, SUBTITLE[c])
+            )
+          ),
+          h('span', { class: 'chip' + (p.pct >= 100 ? ' good' : ''), style: { fontWeight: 700 } },
+            p.totalDone + '/' + p.totalAll + ' bài (' + p.pct + '%)'
+          )
+        ),
+        // Entire Course Finish Estimate Box
+        h('div', { class: 'panel', style: { padding: '10px 12px', background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '12px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
+            h('span', { class: 'small', style: { fontWeight: 700 } }, '🏁 Dự kiến hoàn thành toàn bộ khóa học:'),
+            h('b', { style: { color: p.remaining === 0 ? 'var(--good)' : 'var(--teal)', fontSize: '.9rem' } }, estAll.timeText)
+          ),
+          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ toàn khóa', 'aria-valuenow': p.totalDone, 'aria-valuemax': p.totalAll },
+            h('i', { style: { width: p.pct + '%' } })
+          ),
+          h('div', { class: 'row between small muted', style: { fontSize: '.72rem', marginTop: '4px' } },
+            h('span', {}, 'Đã học ' + p.totalDone + ' bài'),
+            h('span', {}, 'Còn lại ' + p.remaining + ' bài')
+          )
+        ),
+        // Current Level Estimate Box
+        h('div', { class: 'panel', style: { padding: '10px 12px', background: 'rgba(15,82,87,.04)', border: '1px solid rgba(15,82,87,.15)', borderRadius: '12px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
+            h('span', { class: 'small', style: { fontWeight: 700 } }, '🎯 Cấp độ hiện tại (' + p.curCat.short + '):'),
+            h('b', { style: { color: p.curCatRemaining === 0 ? 'var(--good)' : 'var(--amber)', fontSize: '.88rem' } }, estCur.timeText)
+          ),
+          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ cấp độ hiện tại', 'aria-valuenow': p.curCatDone, 'aria-valuemax': p.curCatTotal },
+            h('i', { style: { width: p.curCatPct + '%', background: 'var(--amber)' } })
+          ),
+          h('div', { class: 'row between small muted', style: { fontSize: '.72rem', marginTop: '4px' } },
+            h('span', {}, p.curCatDone + '/' + p.curCatTotal + ' bài (' + p.curCatPct + '%)'),
+            h('span', {}, 'Còn lại ' + p.curCatRemaining + ' bài để hoàn thành ' + p.curCat.short)
+          )
+        ),
+        // Level Stepper
+        h('div', { class: 'stack', style: { gap: '6px' } },
+          h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Lộ trình các cấp độ:'),
+          h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+            cats.map(cat => {
+              const done = p.catDone[cat.id] || 0;
+              const tot = p.catTotal[cat.id] || 0;
+              const isCur = cat.id === p.curCat.id && done < tot;
+              const isDone = done >= tot && tot > 0;
+              const statusClass = isDone ? 'done' : isCur ? 'cur' : 'upcoming';
+              const iconPrefix = isDone ? '✓' : isCur ? '▶' : '⏳';
+
+              return h('span', {
+                class: 'level-step-chip ' + statusClass,
+                title: cat.name + ': ' + done + '/' + tot + ' bài'
+              },
+                h('span', {}, iconPrefix),
+                h('span', {}, cat.short),
+                h('span', { style: { fontSize: '.68rem', opacity: .8 } }, done + '/' + tot)
+              );
+            })
+          )
+        ),
+        // Action button
+        h('button', {
+          class: 'primary block',
+          style: { padding: '9px 12px', fontSize: '.86rem', fontWeight: 600, marginTop: '2px' },
+          onclick: () => { S.lang = c; save(); go('home'); }
+        }, 'Học tiếp ' + v.label + ' →')
+      );
+    }))
+  ];
+}
+
+function pickView() {
+  setTabs(false);
+  const t = todayN();
+  const sch = getDaySchedule(t);
+
+  const tabsBar = h('div', { class: 'pick-tabs', role: 'tablist' },
+    [
+      ['progress', '📊 Tiến độ 3 tiếng'],
+      ['schedule', '📅 Thời gian biểu'],
+      ['roadmap', '🚀 Lộ trình & Cán đích']
+    ].map(([id, label]) => h('button', {
+      class: 'pick-tab-btn' + (PICK_TAB === id ? ' active' : ''),
+      role: 'tab',
+      'aria-selected': String(PICK_TAB === id),
+      onclick: () => { PICK_TAB = id; pickView(); }
+    }, label))
+  );
+
+  let tabContent;
+  if (PICK_TAB === 'schedule') {
+    tabContent = renderScheduleTabContent(t, sch);
+  } else if (PICK_TAB === 'roadmap') {
+    tabContent = renderRoadmapTabContent(t);
+  } else {
+    tabContent = renderProgressTabContent(t, sch);
+  }
+
+  mount(h('div', { class: 'stack-lg', style: { paddingTop: '16px' } },
+    h('div', { class: 'stack', style: { gap: '4px' } },
+      h('p', { class: 'label' }, 'Lingogo'),
+      h('h1', {}, 'Chào ' + S.name + ', hôm nay học gì?'),
+      h('p', { class: 'small muted', style: { margin: 0 } },
+        'Hôm nay là ' + sch.name + ' · Luân phiên trọng tâm & duy trì Spaced Repetition'
+      )
+    ),
+    tabsBar,
+    ...tabContent
+  ));
 }
 
 // ===== Màn hình chào =====
@@ -2307,11 +2890,47 @@ function homeView() {
     h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
       feedbackBtn(),
       syncButton()),
+    (() => {
+      const p = getLangProgress(S.lang);
+      const estCur = calcFinishEstimate(p.curCatRemaining, STUDY_PACE, S.lang);
+      return h('div', {
+        class: 'panel',
+        style: {
+          padding: '10px 14px',
+          background: 'rgba(15,82,87,.05)',
+          border: '1px solid rgba(15,82,87,.15)',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '8px',
+          cursor: 'pointer',
+          margin: '4px 0'
+        },
+        onclick: () => { PICK_TAB = 'roadmap'; go('pick'); }
+      },
+        h('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 } },
+          h('span', { style: { fontSize: '1.2rem', flexShrink: 0 } }, '🚀'),
+          h('div', { style: { minWidth: 0 } },
+            h('div', { style: { fontSize: '.86rem', fontWeight: 600 } },
+              'Lộ trình ' + LANGS[S.lang].short + ': ' + p.totalDone + '/' + p.totalAll + ' bài (' + p.pct + '%)'
+            ),
+            h('div', { class: 'small muted', style: { fontSize: '.76rem' } },
+              p.remaining === 0 ? '🎉 Đã hoàn thành toàn bộ khóa học!' : ('Dự kiến xong ' + p.curCat.short + ': ' + estCur.timeText)
+            )
+          )
+        ),
+        h('button', {
+          class: 'ghost mini',
+          style: { whiteSpace: 'nowrap', padding: '4px 10px', fontSize: '.76rem', fontWeight: 600, flexShrink: 0 }
+        }, 'Xem lộ trình →')
+      );
+    })(),
     catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v2.80 · Cập nhật 11/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.50 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
