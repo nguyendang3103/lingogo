@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-0935';
+const APP_BUILD_ID = '20261114-1025';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -980,12 +980,12 @@ const CATEGORIES = {
     { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '287 bài', desc: 'Toàn bộ 287 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
   ],
   ja: [
-    { id: 'n5', name: 'Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Chào hỏi, ngày giờ, mua sắm, gia đình, sinh hoạt, du lịch và trọn bộ 101 chữ Hán Kanji N5' },
-    { id: 'n4', name: 'Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Giao thông, sở thích, cuộc hẹn, hướng dẫn, ăn uống, tiền tệ, 12 thể động từ và Kanji N4' },
-    { id: 'n3', name: 'Trung cấp 1', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Văn phòng & công việc, đời sống & xử lý sự cố, trải nghiệm văn hóa và du lịch Nhật Bản' },
-    { id: 'n2', name: 'Trung cấp 2', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Đàm phán kinh doanh, kính ngữ thương mại & tác phong công sở, xã hội & công nghệ' },
-    { id: 'n1', name: 'Cao cấp', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Kinh tế vĩ mô & toàn cầu, pháp chế & quản trị doanh nghiệp, tư tưởng & mỹ học Nhật Bản' },
-    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Lộ trình tiếng Nhật toàn diện 26 bài học từ sơ cấp N5 đến cao cấp N1' }
+    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Minna no Nihongo bài 1–7 & 101 chữ Hán Kanji N5' },
+    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Minna no Nihongo bài 8–14, 12 thể động từ và Kanji N4' },
+    { id: 'n3', name: 'N3 · Giao tiếp công sở', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Chuyên đề liên lạc văn phòng, đời sống và xử lý sự cố' },
+    { id: 'n2', name: 'N2 · Đàm phán thương mại', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Chuyên đề kính ngữ thương mại, hợp đồng và tác phong' },
+    { id: 'n1', name: 'N1 · Kinh tế & Xã hội', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Chuyên đề kinh tế vĩ mô, pháp chế và tư tưởng Nhật Bản' },
+    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Giáo trình Sơ cấp Minna no Nihongo N5–N4 và các chuyên đề giao tiếp ứng dụng 26 bài học' }
   ]
 };
 
@@ -1135,7 +1135,12 @@ function calcFinishEstimate(remTopics, remLessons, pace = STUDY_PACE, code = 'en
     else topicsPerDay = 2 / 7;
   }
 
-  const effectiveRem = Math.max(remTopics, Math.ceil(remLessons / 4.5));
+  // Hệ số quy đổi số tiết học nhỏ sang số buổi học trọng tâm (mỗi buổi 25-30p):
+  // - Tiếng Nhật: trung bình 9.5 tiết/chủ đề (do bài Kanji N5 101 chữ và bài Minna no Nihongo dài 50-80 từ)
+  // - Tiếng Trung: trung bình 6.7 tiết/chủ đề
+  // - Tiếng Anh: trung bình 6.3 tiết/chủ đề
+  const lessonDivisor = code === 'ja' ? 9.5 : (code === 'zh' ? 6.7 : 6);
+  const effectiveRem = Math.max(remTopics, Math.ceil(remLessons / lessonDivisor));
   const days = Math.max(1, Math.ceil(effectiveRem / topicsPerDay));
   const weeks = Math.round((days / 7) * 10) / 10;
 
@@ -2681,7 +2686,12 @@ function renderRoadmapTabContent(t) {
         // Entire Course Finish Estimate Box
         h('div', { class: 'panel', style: { padding: '10px 12px', background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '12px' } },
           h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
-            h('span', { class: 'small', style: { fontWeight: 700 } }, '🏁 Dự kiến hoàn thành toàn bộ khóa học:'),
+            h('span', { class: 'small', style: { fontWeight: 700 } }, c === 'ja'
+              ? '🏁 Dự kiến hoàn thành Giáo trình Sơ cấp Minna & Giao tiếp (26 bài):'
+              : (c === 'zh'
+                ? '🏁 Dự kiến hoàn thành Toàn bộ Giáo trình HSK 3.0 (287 bài):'
+                : '🏁 Dự kiến hoàn thành Toàn bộ Khóa học Tiếng Anh B2–C2 (90 bài):')
+            ),
             h('b', { style: { color: p.remainingTopics === 0 ? 'var(--good)' : 'var(--teal)', fontSize: '.9rem' } }, estAll.timeText)
           ),
           h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ toàn khóa', 'aria-valuenow': p.totalLessonsDone, 'aria-valuemax': p.totalAllLessons },
@@ -2689,7 +2699,9 @@ function renderRoadmapTabContent(t) {
           ),
           h('div', { class: 'row between small muted', style: { fontSize: '.72rem', marginTop: '4px' } },
             h('span', {}, 'Đã học ' + p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.totalLessonsDone + '/' + p.totalAllLessons + ' tiết luyện tập)'),
-            h('span', {}, 'Còn lại ' + p.remainingTopics + ' bài để hoàn thành toàn khóa')
+            h('span', {}, c === 'ja'
+              ? 'Còn lại ' + p.remainingTopics + ' bài để hoàn thành giáo trình sơ cấp N5–N4 & giao tiếp'
+              : 'Còn lại ' + p.remainingTopics + ' bài để hoàn thành toàn khóa')
           )
         ),
         // Current Level Estimate Box
