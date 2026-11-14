@@ -947,11 +947,11 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1438';
+const APP_BUILD_ID = '20261114-1446';
 const LANGS = {
-  en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
-  zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
-  ja: { label: '日本語', short: 'Nhật', folder: 'Japanese', tts: 'ja-JP', rec: 'ja-JP', lang: 'ja', cjk: true },
+  en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
+  zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
+  ja: { label: '日本語', vi: 'Tiếng Nhật', short: 'Nhật', folder: 'Japanese', tts: 'ja-JP', rec: 'ja-JP', lang: 'ja', cjk: true },
 };
 const langFolder = (code) => (LANGS[code] && LANGS[code].folder) || (code === 'en' ? 'English' : (code === 'zh' ? 'Chinese' : 'Japanese'));
 
@@ -3080,6 +3080,42 @@ function renderRoadmapTabContent(t) {
 }
 
 let PICK_SRS_PRELOADED = false;
+function langFlagSvg(code) {
+  const wrap = document.createElement('span');
+  wrap.style.display = 'inline-flex';
+  wrap.style.alignItems = 'center';
+  wrap.style.justifyContent = 'center';
+  wrap.style.width = '44px';
+  wrap.style.height = '32px';
+  wrap.style.borderRadius = '6px';
+  wrap.style.overflow = 'hidden';
+  wrap.style.boxShadow = '0 1px 4px rgba(0,0,0,.35)';
+  if (code === 'en') {
+    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
+      '<rect width="60" height="40" fill="#012169"/>' +
+      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>' +
+      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="4"/>' +
+      '<path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>' +
+      '<path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>' +
+      '</svg>';
+  } else if (code === 'zh') {
+    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
+      '<rect width="60" height="40" fill="#DE2910"/>' +
+      '<polygon points="12,6 14.1,12.5 20.9,12.5 15.4,16.5 17.5,23 12,19 6.5,23 8.6,16.5 3.1,12.5 9.9,12.5" fill="#FFDE00"/>' +
+      '<circle cx="24" cy="5.5" r="1.8" fill="#FFDE00"/>' +
+      '<circle cx="28" cy="9.5" r="1.8" fill="#FFDE00"/>' +
+      '<circle cx="28" cy="15.5" r="1.8" fill="#FFDE00"/>' +
+      '<circle cx="24" cy="19.5" r="1.8" fill="#FFDE00"/>' +
+      '</svg>';
+  } else {
+    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
+      '<rect width="60" height="40" fill="#ffffff"/>' +
+      '<circle cx="30" cy="20" r="11" fill="#BC002D"/>' +
+      '</svg>';
+  }
+  return wrap;
+}
+
 function pickView() {
   setTabs(false);
   const t = todayN();
@@ -3102,12 +3138,11 @@ function pickView() {
         const isCur = S.lang === c;
         return h('button', {
           class: 'langcard' + (isCur ? ' cur' : ''),
+          style: { display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px' },
           onclick: () => { S.lang = c; save(); go('home'); }
         },
-          h('div', { class: 'glyph', lang: lg.lang }, lg.glyph),
-          h('div', { class: 'name' }, lg.vi),
-          h('div', { class: 'small muted' }, lg.sub),
-          h('div', { class: 'small', style: { color: 'var(--teal)', fontWeight: 700 } }, 'Vào học ' + lg.short + ' →')
+          h('div', { class: 'glyph', style: { flexShrink: '0' } }, langFlagSvg(c)),
+          h('div', { class: 'name', style: { fontSize: '1.25rem', fontWeight: 700 } }, lg.vi)
         );
       })
     );
