@@ -1,5 +1,5 @@
 {
-  "build": "20261114-1156",
-  "version": "3.61",
-  "updated": "2026-11-14 11:56"
+  "version": "3.62",
+  "build": "20261114-1438",
+  "message": "Màn hình chính tối giản chỉ hiển thị 3 lựa chọn ngôn ngữ (Tiếng Anh, Tiếng Trung, Tiếng Nhật) và gộp Tiến độ, Thời gian biểu, Lộ trình vào trong nút Lộ trình"
 }
