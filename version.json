@@ -1,5 +1,5 @@
 {
-  "version": "3.68",
-  "build": "20261114-2015",
-  "message": "Sửa lỗi phát âm iOS Safari (#9) và hiện đầy đủ chữ hiragana tiếng Nhật (#8)"
+  "version": "3.69",
+  "build": "20261114-2050",
+  "message": "Gỡ banner Luyện đọc 301 riêng khỏi màn hình Học và gộp các bài bổ sung vào đúng lộ trình HSK 2–3"
 }
