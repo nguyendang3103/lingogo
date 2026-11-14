@@ -514,15 +514,17 @@ body { overflow-x: hidden; }
   padding: 4px;
   margin: 6px 0 10px 0;
   overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
+.skill-tabs::-webkit-scrollbar { display: none; }
 .skill-tab-btn {
-  flex: 1;
-  min-width: 0;
+  flex: 1 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 10px 6px;
+  padding: 10px 10px;
   font-size: .88rem;
   font-weight: 600;
   border-radius: 10px;
@@ -535,9 +537,36 @@ body { overflow-x: hidden; }
 }
 .skill-tab-btn.active {
   background: var(--teal);
-  color: #fff;
+  color: var(--teal-ink);
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
+}
+.skill-tabs.knowledge-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+}
+.skill-tabs.knowledge-tabs.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 460px) {
+  .skill-tabs.knowledge-tabs.cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .skill-tabs.knowledge-tabs.cols-3 .skill-tab-btn:last-child {
+    grid-column: span 2;
+  }
+}
+.skill-tabs.knowledge-tabs .skill-tab-btn {
+  flex: initial;
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+  min-height: 44px;
+  padding: 8px 10px;
+  font-size: .84rem;
 }
 .ielts-tabs {
   display: grid;
@@ -568,7 +597,7 @@ body { overflow-x: hidden; }
 }
 .ielts-tab-btn.active {
   background: var(--teal);
-  color: #fff;
+  color: var(--teal-ink);
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
 }
@@ -614,7 +643,7 @@ body { overflow-x: hidden; }
 }
 .pick-tab-btn.active {
   background: var(--teal);
-  color: #fff;
+  color: var(--teal-ink);
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
 }
@@ -948,7 +977,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-2050';
+const APP_BUILD_ID = '20261114-2235';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3707,7 +3736,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.69 · Cập nhật 14/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.70 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -13749,9 +13778,11 @@ function renderEnglishKnowledgeView() {
     )
   );
 
-  const navSub = h('div', { class: 'skill-tabs', style: { margin: '6px 0 12px 0' } },
+  const navSub = h('div', { class: 'skill-tabs knowledge-tabs', role: 'tablist', style: { margin: '6px 0 12px 0' } },
     ...subtabs.map((st) => h('button', {
       class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
+      role: 'tab',
+      'aria-selected': String(KNOWLEDGE_TAB === st.k),
       onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
     }, st.label))
   );
@@ -14009,13 +14040,15 @@ function knowledgeTabView() {
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
       isJa
         ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
-        : 'Tổng hợp ngữ pháp HSK 1–6, hội thoại đọc hiểu 301, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
+        : 'Tổng hợp ngữ pháp HSK 1–9, hội thoại đọc hiểu 301, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
     )
   );
 
-  const navSub = h('div', { class: 'skill-tabs', style: { margin: '6px 0 12px 0' } },
+  const navSub = h('div', { class: 'skill-tabs knowledge-tabs' + (subtabs.length === 3 ? ' cols-3' : ''), role: 'tablist', style: { margin: '6px 0 12px 0' } },
     ...subtabs.map((st) => h('button', {
       class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
+      role: 'tab',
+      'aria-selected': String(KNOWLEDGE_TAB === st.k),
       onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
     }, st.label))
   );
@@ -14074,7 +14107,7 @@ function renderKnowledgeGrammar(code) {
         type: 'search',
         class: 'gram-search-input',
         style: { flex: 1, minHeight: '44px', padding: '10px 14px' },
-        placeholder: code === 'en' ? '🔍 Tìm kiếm ngữ pháp A1–C1, công thức, ví dụ...' : (isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm ngữ pháp HSK 1–4 (Quyển 1–4) & HSK 5–9, từ khóa, lỗi sai...'),
+        placeholder: code === 'en' ? '🔍 Tìm kiếm ngữ pháp A1–C1, công thức, ví dụ...' : (isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm ngữ pháp HSK 1–9, Quyển 1–4, từ khóa...'),
         value: GQ_SEARCH[code] || '',
         oninput: (e) => {
           GQ_SEARCH[code] = e.target.value;
