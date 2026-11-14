@@ -1,5 +1,5 @@
 {
-  "version": "3.67",
-  "build": "20261114-1750",
-  "message": "Ẩn dòng chữ Đã học ở app cũ trên các bài đã hoàn thành"
+  "version": "3.68",
+  "build": "20261114-2015",
+  "message": "Sửa lỗi phát âm iOS Safari (#9) và hiện đầy đủ chữ hiragana tiếng Nhật (#8)"
 }
