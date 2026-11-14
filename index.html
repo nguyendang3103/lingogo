@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-0740';
+const APP_BUILD_ID = '20261114-0815';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -992,17 +992,24 @@ const CATEGORIES = {
 
 // ===== DỮ LIỆU ĐỊNH DANH BÀI HỌC, TIẾN ĐỘ & LỘ TRÌNH DỰ BÁO CÁN ĐÍCH =====
 const TOPIC_META = {"en":{"1":["b2",6],"2":["b2",6],"3":["b2",6],"4":["b2",6],"5":["b2",6],"6":["b2",6],"7":["b2",6],"8":["b2",6],"9":["b2",6],"10":["b2",6],"11":["b2",6],"12":["b2",6],"13":["b2",6],"15":["b2",6],"16":["b2",6],"20":["b2",6],"21":["b2",6],"22":["b2",6],"23":["b2",6],"24":["b2",6],"25":["b2",6],"26":["b2",6],"27":["b2",6],"30":["b2",6],"31":["b2",6],"32":["b2",6],"33":["b2",6],"34":["a1",5],"35":["a1",5],"36":["a2",5],"37":["a2",5],"38":["a1",5],"39":["b1",5],"40":["a2",5],"41":["b1",5],"42":["b1",5],"43":["b1",5],"44":["b1",5],"45":["b1",5],"101":["a1",9],"102":["a1",6],"103":["a1",9],"104":["a1",8],"105":["a1",9],"106":["a1",8],"107":["a1",8],"108":["a1",9],"109":["a1",9],"110":["a1",11],"111":["a2",13],"112":["a2",7],"113":["a2",9],"114":["a2",6],"115":["a2",7],"116":["a2",7],"117":["a2",7],"118":["a2",8],"119":["a2",7],"120":["a2",8],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",6],"125":["b1",16],"126":["b1",6],"127":["b1",7],"128":["b1",7],"129":["b1",7],"130":["b1",7],"131":["b1",7],"132":["b1",7],"133":["b1",7],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3],"174":["b2",6],"175":["b2",6],"176":["b2",6],"177":["b2",7],"178":["b2",6],"179":["b2",6],"180":["b2",6],"181":["b2",6]},"zh":{"1":["hsk1",4],"2":["hsk1",4],"3":["hsk1",4],"4":["hsk2",4],"5":["hsk2",4],"6":["hsk2",4],"7":["hsk2",4],"9":["hsk2",4],"11":["hsk3",4],"12":["hsk2",4],"13":["hsk2",4],"14":["hsk3",4],"15":["hsk3",4],"17":["hsk5",4],"18":["hsk6",4],"19":["hsk6",4],"20":["hsk5",4],"21":["hsk5",4],"22":["hsk6",4],"23":["hsk6",4],"25":["hsk3",4],"26":["hsk3",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",4],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"33":["hsk5",4],"34":["hsk5",4],"35":["hsk5",4],"36":["hsk1",4],"37":["hsk3",4],"38":["hsk3",4],"39":["hsk3",4],"41":["hsk3",4],"42":["hsk4",4],"43":["hsk4",4],"44":["hsk3",4],"46":["hsk1",4],"47":["hsk1",4],"48":["hsk1",4],"49":["hsk2",4],"50":["hsk2",4],"51":["hsk2",4],"52":["hsk7",4],"53":["hsk7",4],"54":["hsk8",4],"55":["hsk8",4],"56":["hsk9",4],"57":["hsk9",4]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n4",18],"9":["n4",11],"10":["n4",7],"11":["n4",9],"12":["n4",13],"13":["n4",11],"14":["n4",10],"15":["n5",27],"16":["n4",6],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3],"26":["n4",9]}};
+const CAT_TOTAL_TOPICS = {"en":{"a1":13,"a2":17,"b1":15,"b2":35,"c1":5,"c2":5},"zh":{"hsk1":7,"hsk2":10,"hsk3":10,"hsk4":8,"hsk5":6,"hsk6":4,"hsk7":2,"hsk8":2,"hsk9":2},"ja":{"n5":8,"n4":9,"n3":3,"n2":3,"n1":3}};
 const CAT_TOTAL_LESSONS = {"en":{"a1":101,"a2":124,"b1":101,"b2":211,"c1":17,"c2":15},"zh":{"hsk1":28,"hsk2":40,"hsk3":40,"hsk4":32,"hsk5":24,"hsk6":16,"hsk7":8,"hsk8":8,"hsk9":8},"ja":{"n5":112,"n4":94,"n3":9,"n2":9,"n1":9}};
+const LANG_TOTAL_TOPICS = {"en":90,"zh":51,"ja":26};
 const LANG_TOTAL_LESSONS = {"en":569,"zh":204,"ja":233};
 let PICK_TAB = 'progress'; // 'progress' | 'schedule' | 'roadmap'
 let STUDY_PACE = 'schedule'; // 'schedule' | 'daily1' | 'daily2'
 
 function getLangProgress(code) {
-  const meta = (TOPIC_META && TOPIC_META[code]) || {};
-  const catDone = {};
-  const catTotal = (CAT_TOTAL_LESSONS && CAT_TOTAL_LESSONS[code]) || {};
-  let totalDone = 0;
+  const metaObj = (TOPIC_META && TOPIC_META[code]) || {};
+  const catTopicTotal = (CAT_TOTAL_TOPICS && CAT_TOTAL_TOPICS[code]) || {};
+  const catLessonTotal = (CAT_TOTAL_LESSONS && CAT_TOTAL_LESSONS[code]) || {};
   
+  const catTopicDone = {};
+  const catLessonDone = {};
+  let totalLessonsDone = 0;
+  let totalTopicsDone = 0;
+  
+  const topicDoneCount = {};
   const prefix = code + ':';
   Object.keys(S.lessons || {}).forEach(k => {
     if (!k.startsWith(prefix)) return;
@@ -1010,66 +1017,131 @@ function getLangProgress(code) {
     const dash = rest.lastIndexOf('-');
     if (dash === -1) return;
     const topicId = rest.slice(0, dash);
-    const topicInfo = meta[topicId];
-    const cat = topicInfo ? topicInfo[0] : 'other';
-    catDone[cat] = (catDone[cat] || 0) + 1;
-    totalDone++;
+    topicDoneCount[topicId] = (topicDoneCount[topicId] || 0) + 1;
+    totalLessonsDone++;
+    
+    const info = metaObj[topicId];
+    if (info) {
+      const cat = info[0];
+      catLessonDone[cat] = (catLessonDone[cat] || 0) + 1;
+    }
   });
 
-  const totalAll = (LANG_TOTAL_LESSONS && LANG_TOTAL_LESSONS[code]) || 1;
-  const pct = Math.min(100, Math.round((totalDone / totalAll) * 100));
-  const remaining = Math.max(0, totalAll - totalDone);
+  // Một chủ đề được tính hoàn thành khi học xong các tiết hoặc >= 80% bài nhỏ
+  Object.entries(metaObj).forEach(([tid, [cat, lCount]]) => {
+    const done = topicDoneCount[tid] || 0;
+    if (done >= Math.max(1, Math.ceil(lCount * 0.8))) {
+      catTopicDone[cat] = (catTopicDone[cat] || 0) + 1;
+      totalTopicsDone++;
+    }
+  });
 
+  const totalAllTopics = (LANG_TOTAL_TOPICS && LANG_TOTAL_TOPICS[code]) || 1;
+  const totalAllLessons = (LANG_TOTAL_LESSONS && LANG_TOTAL_LESSONS[code]) || 1;
+  
+  const pct = Math.min(100, Math.round((totalLessonsDone / totalAllLessons) * 100));
+  const remainingTopics = Math.max(0, totalAllTopics - totalTopicsDone);
+  const remainingLessons = Math.max(0, totalAllLessons - totalLessonsDone);
+
+  // Xác định Cấp độ Hiện tại (Active Category):
   const cats = (CATEGORIES[code] || []).filter(c => c.id !== 'all');
-  let curCat = cats[0] || { id: 'all', short: 'Tất cả', name: 'Tất cả' };
-  for (const c of cats) {
-    const done = catDone[c.id] || 0;
-    const tot = catTotal[c.id] || 0;
-    if (done < tot) {
-      curCat = c;
-      break;
+  const userCatId = code === 'en' ? S.enCat : code === 'zh' ? S.zhCat : S.jaCat;
+  let curCat = null;
+  
+  // 1. Ưu tiên cấp độ người dùng đang chọn học trong app
+  if (userCatId && userCatId !== 'all') {
+    const found = cats.find(c => c.id === userCatId);
+    if (found) curCat = found;
+  }
+  
+  // 2. Nếu chưa có hoặc là 'all', tìm cấp độ cao nhất mà người dùng đang có tiến độ
+  if (!curCat) {
+    for (let i = cats.length - 1; i >= 0; i--) {
+      const c = cats[i];
+      const lDone = catLessonDone[c.id] || 0;
+      const lTot = catLessonTotal[c.id] || 0;
+      if (lDone > 0 && lDone < lTot) {
+        curCat = c;
+        break;
+      }
     }
   }
-  const curCatDone = catDone[curCat.id] || 0;
-  const curCatTotal = catTotal[curCat.id] || 1;
-  const curCatPct = Math.min(100, Math.round((curCatDone / curCatTotal) * 100));
-  const curCatRemaining = Math.max(0, curCatTotal - curCatDone);
+  
+  // 3. Fallback: Cấp độ đầu tiên chưa hoàn thành
+  if (!curCat) {
+    for (const c of cats) {
+      const topDone = catTopicDone[c.id] || 0;
+      const topTot = catTopicTotal[c.id] || 0;
+      if (topDone < topTot) {
+        curCat = c;
+        break;
+      }
+    }
+  }
+  if (!curCat) curCat = cats[0] || { id: 'all', short: 'Tất cả', name: 'Tất cả' };
+
+  const curCatTopicsDone = catTopicDone[curCat.id] || 0;
+  const curCatTopicsTotal = catTopicTotal[curCat.id] || 1;
+  const curCatLessonsDone = catLessonDone[curCat.id] || 0;
+  const curCatLessonsTotal = catLessonTotal[curCat.id] || 1;
+  const curCatPct = Math.min(100, Math.round((curCatLessonsDone / curCatLessonsTotal) * 100));
+  const curCatRemainingTopics = Math.max(0, curCatTopicsTotal - curCatTopicsDone);
+  const curCatRemainingLessons = Math.max(0, curCatLessonsTotal - curCatLessonsDone);
 
   return {
     code,
-    totalDone,
-    totalAll,
+    totalTopicsDone,
+    totalAllTopics,
+    totalLessonsDone,
+    totalAllLessons,
     pct,
-    remaining,
-    catDone,
-    catTotal,
+    remainingTopics,
+    remainingLessons,
+    catTopicDone,
+    catTopicTotal,
+    catLessonDone,
+    catLessonTotal,
     curCat,
-    curCatDone,
-    curCatTotal,
+    curCatTopicsDone,
+    curCatTopicsTotal,
+    curCatLessonsDone,
+    curCatLessonsTotal,
     curCatPct,
-    curCatRemaining
+    curCatRemainingTopics,
+    curCatRemainingLessons
   };
 }
 
-function calcFinishEstimate(remLessons, pace = STUDY_PACE, code = 'en') {
-  if (remLessons <= 0) return { days: 0, weeks: 0, timeText: 'Đã hoàn thành! 🎉', dateStr: 'Hôm nay', monthYearStr: 'Đã xong' };
-  
-  let lessonsPerDay = 1;
-  if (pace === 'daily1') lessonsPerDay = 1;
-  else if (pace === 'daily2') lessonsPerDay = 2;
-  else {
-    if (code === 'en') lessonsPerDay = 3 / 7;
-    else if (code === 'zh') lessonsPerDay = 2 / 7;
-    else if (code === 'ja') lessonsPerDay = 1.5 / 7;
-    else lessonsPerDay = 2 / 7;
+function calcFinishEstimate(remTopics, remLessons, pace = STUDY_PACE, code = 'en') {
+  if (remTopics <= 0 && remLessons <= 0) {
+    return { days: 0, weeks: 0, timeText: 'Đã hoàn thành! 🎉', dateStr: 'Hôm nay', monthYearStr: 'Đã xong' };
   }
-  
-  const days = Math.ceil(remLessons / lessonsPerDay);
+
+  // Tốc độ học: tính theo số chủ đề/bài học mỗi ngày
+  // Mỗi buổi trọng tâm (25–30 phút) người học hoàn thành 1 chủ đề (gồm từ vựng + ngữ pháp + luyện nói + tổng ôn)
+  let topicsPerDay = 1;
+  if (pace === 'daily1') {
+    topicsPerDay = 1; // 1 bài/ngày (7 bài/tuần)
+  } else if (pace === 'daily2') {
+    topicsPerDay = 2; // 2 bài/ngày (14 bài/tuần)
+  } else {
+    // Lịch chuẩn luân phiên 3 thứ tiếng:
+    // Tiếng Anh: T2, T4, T7 (3 bài/tuần)
+    // Tiếng Trung: T3, T6 (2 bài/tuần)
+    // Tiếng Nhật: T5 (1 bài/tuần)
+    if (code === 'en') topicsPerDay = 3 / 7;
+    else if (code === 'zh') topicsPerDay = 2 / 7;
+    else if (code === 'ja') topicsPerDay = 1 / 7;
+    else topicsPerDay = 2 / 7;
+  }
+
+  const effectiveRem = Math.max(remTopics, Math.ceil(remLessons / 4.5));
+  const days = Math.max(1, Math.ceil(effectiveRem / topicsPerDay));
   const weeks = Math.round((days / 7) * 10) / 10;
-  
+
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + days);
-  
+
   const day = targetDate.getDate();
   const month = targetDate.getMonth() + 1;
   const year = targetDate.getFullYear();
@@ -1077,9 +1149,9 @@ function calcFinishEstimate(remLessons, pace = STUDY_PACE, code = 'en') {
   const monthYearStr = 'Tháng ' + (month < 10 ? '0' + month : month) + '/' + year;
 
   let timeText = '';
-  if (days < 14) {
+  if (days <= 14) {
     timeText = '~' + days + ' ngày (' + dateStr + ')';
-  } else if (weeks < 8) {
+  } else if (weeks <= 8) {
     timeText = '~' + Math.round(weeks) + ' tuần (' + dateStr + ')';
   } else {
     const months = Math.round((days / 30) * 10) / 10;
@@ -2388,8 +2460,8 @@ function renderProgressTabContent(t, sch) {
             h('span', { style: { fontSize: '.72rem' } }, 'Kỷ lục: ' + lng + 'd')
           ),
           h('div', { class: 'stat', style: { padding: '8px 4px' } },
-            h('b', { style: { fontSize: '.95rem' } }, prog.totalDone + '/' + prog.totalAll),
-            h('span', { style: { fontSize: '.72rem' } }, 'Đã học (' + prog.pct + '%)')
+            h('b', { style: { fontSize: '.95rem' } }, prog.totalTopicsDone + '/' + prog.totalAllTopics + ' bài'),
+            h('span', { style: { fontSize: '.72rem' } }, prog.pct + '% (' + prog.totalLessonsDone + ' tiết)')
           )
         ),
         // Mini week chart
@@ -2501,7 +2573,7 @@ function renderScheduleTabContent(t, sch) {
 
 function renderRoadmapTabContent(t) {
   const paces = [
-    { id: 'schedule', name: '📅 Lịch chuẩn', desc: 'Theo thời gian biểu (~2–3 bài/tuần)' },
+    { id: 'schedule', name: '📅 Lịch chuẩn', desc: 'Theo thời gian biểu (~1–3 bài/tuần)' },
     { id: 'daily1', name: '⚡ 1 bài/ngày', desc: '7 bài/tuần cho tiếng tập trung' },
     { id: 'daily2', name: '🔥 2 bài/ngày', desc: '14 bài/tuần · Tăng tốc bứt phá' }
   ];
@@ -2524,17 +2596,17 @@ function renderRoadmapTabContent(t) {
       ),
       h('p', { class: 'small muted', style: { margin: '2px 0 0 0', fontSize: '.76rem' } },
         STUDY_PACE === 'schedule'
-          ? '💡 Lịch chuẩn: Tiếng Anh ~3 bài/tuần (T2, T4, T7); Tiếng Trung ~2 bài/tuần (T3, T6); Tiếng Nhật ~1.5 bài/tuần (T5 + CN).'
+          ? '💡 Lịch chuẩn: Tiếng Anh ~3 bài/tuần (T2, T4, T7); Tiếng Trung ~2 bài/tuần (T3, T6); Tiếng Nhật ~1 bài/tuần (T5).'
           : STUDY_PACE === 'daily1'
-          ? '💡 Tốc độ 1 bài/ngày: Hoàn thành 1 bài mỗi ngày liên tục cho ngôn ngữ trọng tâm.'
+          ? '💡 Tốc độ 1 bài/ngày: Mỗi ngày hoàn thành trọn vẹn 1 bài cho ngôn ngữ trọng tâm.'
           : '💡 Tốc độ 2 bài/ngày: Cường độ cao, hoàn thành 2 bài mỗi ngày giúp rút ngắn một nửa thời gian.'
       )
     ),
     // 3 Language Roadmap Cards
     h('div', { class: 'stack', style: { gap: '14px' } }, Object.entries(LANGS).map(([c, v]) => {
       const p = getLangProgress(c);
-      const estCur = calcFinishEstimate(p.curCatRemaining, STUDY_PACE, c);
-      const estAll = calcFinishEstimate(p.remaining, STUDY_PACE, c);
+      const estCur = calcFinishEstimate(p.curCatRemainingTopics, p.curCatRemainingLessons, STUDY_PACE, c);
+      const estAll = calcFinishEstimate(p.remainingTopics, p.remainingLessons, STUDY_PACE, c);
       const cats = (CATEGORIES[c] || []).filter(item => item.id !== 'all');
 
       return h('div', {
@@ -2557,35 +2629,35 @@ function renderRoadmapTabContent(t) {
             )
           ),
           h('span', { class: 'chip' + (p.pct >= 100 ? ' good' : ''), style: { fontWeight: 700 } },
-            p.totalDone + '/' + p.totalAll + ' bài (' + p.pct + '%)'
+            p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.pct + '%)'
           )
         ),
         // Entire Course Finish Estimate Box
         h('div', { class: 'panel', style: { padding: '10px 12px', background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '12px' } },
           h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
             h('span', { class: 'small', style: { fontWeight: 700 } }, '🏁 Dự kiến hoàn thành toàn bộ khóa học:'),
-            h('b', { style: { color: p.remaining === 0 ? 'var(--good)' : 'var(--teal)', fontSize: '.9rem' } }, estAll.timeText)
+            h('b', { style: { color: p.remainingTopics === 0 ? 'var(--good)' : 'var(--teal)', fontSize: '.9rem' } }, estAll.timeText)
           ),
-          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ toàn khóa', 'aria-valuenow': p.totalDone, 'aria-valuemax': p.totalAll },
+          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ toàn khóa', 'aria-valuenow': p.totalLessonsDone, 'aria-valuemax': p.totalAllLessons },
             h('i', { style: { width: p.pct + '%' } })
           ),
           h('div', { class: 'row between small muted', style: { fontSize: '.72rem', marginTop: '4px' } },
-            h('span', {}, 'Đã học ' + p.totalDone + ' bài'),
-            h('span', {}, 'Còn lại ' + p.remaining + ' bài')
+            h('span', {}, 'Đã học ' + p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.totalLessonsDone + '/' + p.totalAllLessons + ' tiết luyện tập)'),
+            h('span', {}, 'Còn lại ' + p.remainingTopics + ' bài để hoàn thành toàn khóa')
           )
         ),
         // Current Level Estimate Box
         h('div', { class: 'panel', style: { padding: '10px 12px', background: 'rgba(15,82,87,.04)', border: '1px solid rgba(15,82,87,.15)', borderRadius: '12px' } },
           h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
-            h('span', { class: 'small', style: { fontWeight: 700 } }, '🎯 Cấp độ hiện tại (' + p.curCat.short + '):'),
-            h('b', { style: { color: p.curCatRemaining === 0 ? 'var(--good)' : 'var(--amber)', fontSize: '.88rem' } }, estCur.timeText)
+            h('span', { class: 'small', style: { fontWeight: 700 } }, '🎯 Cấp độ hiện tại (' + (p.curCat.level || p.curCat.short) + ' · ' + p.curCat.name + '):'),
+            h('b', { style: { color: p.curCatRemainingTopics === 0 ? 'var(--good)' : 'var(--amber)', fontSize: '.88rem' } }, estCur.timeText)
           ),
-          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ cấp độ hiện tại', 'aria-valuenow': p.curCatDone, 'aria-valuemax': p.curCatTotal },
+          h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Tiến độ cấp độ hiện tại', 'aria-valuenow': p.curCatLessonsDone, 'aria-valuemax': p.curCatLessonsTotal },
             h('i', { style: { width: p.curCatPct + '%', background: 'var(--amber)' } })
           ),
           h('div', { class: 'row between small muted', style: { fontSize: '.72rem', marginTop: '4px' } },
-            h('span', {}, p.curCatDone + '/' + p.curCatTotal + ' bài (' + p.curCatPct + '%)'),
-            h('span', {}, 'Còn lại ' + p.curCatRemaining + ' bài để hoàn thành ' + p.curCat.short)
+            h('span', {}, p.curCatTopicsDone + '/' + p.curCatTopicsTotal + ' bài (' + p.curCatPct + '%)'),
+            h('span', {}, 'Còn lại ' + p.curCatRemainingTopics + ' bài để hoàn thành ' + (p.curCat.level || p.curCat.short))
           )
         ),
         // Level Stepper
@@ -2593,9 +2665,9 @@ function renderRoadmapTabContent(t) {
           h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Lộ trình các cấp độ:'),
           h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
             cats.map(cat => {
-              const done = p.catDone[cat.id] || 0;
-              const tot = p.catTotal[cat.id] || 0;
-              const isCur = cat.id === p.curCat.id && done < tot;
+              const done = p.catTopicDone[cat.id] || 0;
+              const tot = p.catTopicTotal[cat.id] || 0;
+              const isCur = cat.id === p.curCat.id;
               const isDone = done >= tot && tot > 0;
               const statusClass = isDone ? 'done' : isCur ? 'cur' : 'upcoming';
               const iconPrefix = isDone ? '✓' : isCur ? '▶' : '⏳';
@@ -2892,7 +2964,7 @@ function homeView() {
       syncButton()),
     (() => {
       const p = getLangProgress(S.lang);
-      const estCur = calcFinishEstimate(p.curCatRemaining, STUDY_PACE, S.lang);
+      const estCur = calcFinishEstimate(p.curCatRemainingTopics, p.curCatRemainingLessons, STUDY_PACE, S.lang);
       return h('div', {
         class: 'panel',
         style: {
@@ -2913,10 +2985,10 @@ function homeView() {
           h('span', { style: { fontSize: '1.2rem', flexShrink: 0 } }, '🚀'),
           h('div', { style: { minWidth: 0 } },
             h('div', { style: { fontSize: '.86rem', fontWeight: 600 } },
-              'Lộ trình ' + LANGS[S.lang].short + ': ' + p.totalDone + '/' + p.totalAll + ' bài (' + p.pct + '%)'
+              'Lộ trình ' + LANGS[S.lang].short + ': ' + p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.pct + '%)'
             ),
             h('div', { class: 'small muted', style: { fontSize: '.76rem' } },
-              p.remaining === 0 ? '🎉 Đã hoàn thành toàn bộ khóa học!' : ('Dự kiến xong ' + p.curCat.short + ': ' + estCur.timeText)
+              p.remainingTopics === 0 ? '🎉 Đã hoàn thành toàn bộ khóa học!' : ('Dự kiến xong ' + (p.curCat.level || p.curCat.short) + ': ' + estCur.timeText)
             )
           )
         ),
@@ -2930,7 +3002,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.50 · Cập nhật 14/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.51 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
