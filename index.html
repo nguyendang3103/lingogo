@@ -948,7 +948,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1740';
+const APP_BUILD_ID = '20261114-1750';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3517,7 +3517,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.66 · Cập nhật 14/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.67 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9001,7 +9001,7 @@ function topicCard(t, nx, num) {
         h('span', { class: 'dot', 'aria-hidden': 'true' }, dn ? '✓' : i + 1),
         h('span', { class: 'meta' },
           h('span', { lang: l.kind === 'learn' ? L().lang : null }, lessonTitle(t, i)),
-          dn && h('span', { class: 'small muted', style: { display: 'block' } }, typeof S.lessons[lkey(t, i)] === 'number' ? 'Tốt nhất ' + S.lessons[lkey(t, i)] + '%' : 'Đã học ở app cũ')
+          dn && typeof S.lessons[lkey(t, i)] === 'number' && h('span', { class: 'small muted', style: { display: 'block' } }, 'Tốt nhất ' + S.lessons[lkey(t, i)] + '%')
         )
       );
 
@@ -10429,7 +10429,7 @@ function lessonView(t, i) {
   }
 
   const isDone = lessonDone(t, i);
-  const oldScoreText = typeof S.lessons[lkey(t, i)] === 'number' ? ('Điểm cao nhất: ' + S.lessons[lkey(t, i)] + '%') : 'Đã học ở app cũ';
+  const oldScoreText = typeof S.lessons[lkey(t, i)] === 'number' ? ('Điểm cao nhất: ' + S.lessons[lkey(t, i)] + '%') : '';
 
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('span', { class: 'muted small grow' }, t.sub || t.title), feedbackBtn()),
@@ -10448,8 +10448,8 @@ function lessonView(t, i) {
     },
       h('div', { class: 'stack', style: { gap: '2px', minWidth: '180px', flex: 1 } },
         h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-          h('span', { class: 'chip good', style: { fontSize: '.75rem', padding: '2px 8px' } }, '✓ Bài học cũ'),
-          h('span', { class: 'small muted', style: { fontSize: '.84rem' } }, oldScoreText)
+          h('span', { class: 'chip good', style: { fontSize: '.75rem', padding: '2px 8px' } }, '✓ Đã hoàn thành'),
+          oldScoreText && h('span', { class: 'small muted', style: { fontSize: '.84rem' } }, oldScoreText)
         ),
         h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, 'Bạn có thể xóa tiến độ bài này để học lại từ đầu như bài mới.')
       ),
@@ -10487,7 +10487,7 @@ function lessonView(t, i) {
             lessonView(t, i);
           }
         }
-      }, 'Xóa tiến độ bài học cũ')
+      }, 'Xóa tiến độ bài này')
     )));
 }
 
