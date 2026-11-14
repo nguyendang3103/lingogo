@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1105';
+const APP_BUILD_ID = '20261114-1120';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1567,6 +1567,30 @@ async function loadStrokes(code) {
     try { STROKES[code] = await getJSON(fld + '/data/strokes-' + code + '.json'); } catch (e) { STROKES[code] = {}; }
   }
   return STROKES[code];
+}
+async function loadCharStrokeData(code, ch) {
+  if (!ch) return null;
+  const strokes = await loadStrokes(code);
+  if (strokes[ch]) return strokes[ch];
+  const urls = code === 'ja'
+    ? [
+        'https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0.2/' + encodeURIComponent(ch) + '.json',
+        'https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/' + encodeURIComponent(ch) + '.json'
+      ]
+    : ['https://cdn.jsdelivr.net/npm/hanzi-writer-data@2.0/' + encodeURIComponent(ch) + '.json'];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.strokes) {
+          strokes[ch] = data;
+          return data;
+        }
+      }
+    } catch (e) {}
+  }
+  return null;
 }
 
 function getStrokePositions(charData, width, height, padding) {
@@ -2293,6 +2317,10 @@ function ruby(s) {
   }
   if (last < s.length) frag.append(s.slice(last));
   return frag;
+}
+function jaHiraganaFromRaw(raw) {
+  if (!raw) return '';
+  return String(raw).replace(/([㐀-鿿々]+)\{([^}]+)\}/g, '$2').replace(/\s+/g, '');
 }
 const app = document.getElementById('app');
 function mount(...nodes) { app.replaceChildren(...nodes.flat(9).filter((n) => n != null && n !== false)); window.scrollTo(0, 0); }
@@ -9559,8 +9587,8 @@ function lessonView(t, i) {
       btn.textContent = 'Bỏ qua'; ready = () => true;
 
       setTimeout(async () => {
-        const data = (await loadStrokes(code))[ex.ch];
-        if (!data || !window.HanziWriter) { info.textContent = 'Chưa có dữ liệu nét cho chữ này.'; return; }
+        const data = await loadCharStrokeData(code, ex.ch);
+        if (!data || !window.HanziWriter) { info.textContent = window.HanziWriter ? 'Chưa có dữ liệu nét cho chữ này.' : 'Không tải được công cụ viết. Kiểm tra mạng rồi mở lại.'; return; }
         totalStrokes = (data.strokes && data.strokes.length) || 0;
         if (totalStrokes) {
           strokeChip.textContent = totalStrokes + ' nét';
@@ -9569,13 +9597,13 @@ function lessonView(t, i) {
         }
         const size = wbox.clientWidth || 260;
         writer = HanziWriter.create(wbox, ex.ch, {
-          width: size, height: size, padding: 12, showCharacter: false, showOutline: false,
+          width: size, height: size, padding: 12, showCharacter: false, showOutline: true,
           strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222',
           outlineColor: guideColor(),
           drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257',
           charDataLoader: (c, ok) => ok(data)
         });
-        startQuiz(true);
+        startQuiz(false);
       }, 50);
 
       gradeFn = () => completed ? { correct: mistakes <= 3, note: mistakes <= 3 ? 'Viết tốt.' : 'Thử viết lại vài lần cho quen tay.', self: false } : { correct: true, self: true };
@@ -9654,9 +9682,10 @@ function lessonView(t, i) {
             );
           })());
       drawSpeak();
+      const readingLine = ex.r || (code === 'ja' && ex.raw ? jaHiraganaFromRaw(ex.raw) : '');
       body = h('div', { class: 'stack center' }, h('p', { class: 'label' }, ex.scene || '🎙️ Kỹ năng Nói · Micro AI phát âm theo mẫu'),
         wordsBox,
-        ex.r && h('p', { class: 'read' }, ex.r), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status, speakResult);
+        readingLine && readingLine !== plain(ex.text) && h('p', { class: 'read', lang: LANGS[code].lang }, readingLine), ex.m && h('p', {}, ex.m), listenBtns(code, ex.text), status, speakResult);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp tục'; ready = () => true; after = () => status.replaceChildren();
       gradeFn = () => {
         if (!resp || resp.self) return { correct: true, self: true };
@@ -10142,12 +10171,13 @@ function reviewView() {
         finishSpeak(selfGrade >= 3 ? 3 : 1, selfGrade >= 3, 'Tự đánh giá');
       }, [['Chưa tốt', 1], ['Tạm ổn', 2], ['Nói tốt', 3]]);
 
+      const readingLine = it.r || (code === 'ja' && it.raw ? jaHiraganaFromRaw(it.raw) : '');
       return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
         topDock,
         h('div', { class: 'panel card stack center', style: { gap: '10px' } },
           h('p', { class: 'small muted' }, 'Bấm Micro và nói lại câu này theo phương pháp lặp lại ngắt quãng:'),
           wordsBox,
-          it.r && it.r !== targetText ? h('p', { class: code === 'en' ? 'ipa' : 'read', style: { margin: 0, textAlign: 'center' } }, it.r) : null,
+          readingLine && readingLine !== targetText ? h('p', { class: code === 'en' ? 'ipa' : 'read', lang: L().lang, style: { margin: 0, textAlign: 'center' } }, readingLine) : null,
           it.m ? h('p', { class: 'small muted center', style: { fontSize: '1.05rem', margin: 0 } }, it.m) : null,
           h('div', { class: 'listen', style: { justifyContent: 'center' } }, spk(code, targetText, { cls: 'big' })),
           ctrl,
@@ -10159,11 +10189,15 @@ function reviewView() {
     // 3. LUYỆN VIẾT
     if (item.skill === 'write') {
       const c = item.id;
+      const chars = [...String(c || '')].filter((x) => /[\u4e00-\u9fff\u3040-\u30ff]/.test(x));
+      let activeCh = chars[0] || c;
       const hint = item.it.hint || charHint(code, c);
       const wbox = h('div', { class: 'charbox', style: { margin: '0 auto' } });
       const info = h('p', { class: 'small muted center' }, 'Đang tải nét chữ…');
       const verdict = h('div', { 'aria-live': 'assertive' });
       let wrongFlag = false;
+      let writer = null;
+      let blindMode = false;
       const onNext = () => {
         queue.shift();
         if (wrongFlag) queue.push(item);
@@ -10189,12 +10223,45 @@ function reviewView() {
         contTop.focus();
       };
 
-      setTimeout(async () => {
-        const strokes = await loadStrokes(code);
-        const data = strokes[c];
+      const toggleOutlineBtn = h('button', {
+        class: 'ghost mini',
+        onclick: () => {
+          if (!writer) return;
+          blindMode = !blindMode;
+          toggleOutlineBtn.textContent = blindMode ? 'Hiện nét mờ' : 'Ẩn nét mờ';
+          blindMode ? writer.hideOutline() : writer.showOutline();
+        }
+      }, 'Ẩn nét mờ');
+      const strokeAnimBtn = h('button', {
+        class: 'ghost mini',
+        onclick: () => {
+          if (!writer) return;
+          writer.cancelQuiz();
+          writer.showOutline();
+          writer.animateCharacter({
+            onComplete: () => {
+              blindMode ? writer.hideOutline() : writer.showOutline();
+              writer.quiz({
+                showHintAfterMisses: 2,
+                onComplete: (res) => {
+                  const ok = res.totalMistakes <= 3;
+                  info.textContent = ok ? 'Hoàn thành tốt! (Sai ' + res.totalMistakes + ' lần)' : 'Hoàn thành nhưng sai ' + res.totalMistakes + ' lần.';
+                  finishWrite(ok ? (res.totalMistakes === 0 ? 4 : 3) : 1, ok);
+                }
+              });
+            }
+          });
+        }
+      }, 'Xem thứ tự nét');
+
+      const loadCharIntoBox = async (ch) => {
+        activeCh = ch;
+        wbox.replaceChildren();
+        info.textContent = 'Đang tải nét chữ…';
+        const data = await loadCharStrokeData(code, ch);
         if (!data || !window.HanziWriter) {
           info.replaceChildren(
-            h('p', {}, 'Chữ: ', h('b', { lang: LANGS[code].lang }, c), (hint ? ' (' + hint + ')' : '')),
+            h('p', {}, 'Chữ: ', h('b', { lang: LANGS[code].lang }, ch), (hint ? ' (' + hint + ')' : '')),
             h('div', { class: 'row center', style: { gap: '8px' } },
               h('button', { class: 'mini', onclick: () => finishWrite(3, true, 'Đã nhớ chữ') }, 'Tôi đã nhớ chữ này'),
               h('button', { class: 'mini ghost', onclick: () => finishWrite(1, false, 'Cần ôn lại') }, 'Chưa nhớ')
@@ -10203,14 +10270,14 @@ function reviewView() {
           return;
         }
         const size = Math.min(260, window.innerWidth - 64);
-        const writer = HanziWriter.create(wbox, c, {
-          width: size, height: size, padding: 12, showCharacter: false, showOutline: false,
+        writer = HanziWriter.create(wbox, ch, {
+          width: size, height: size, padding: 12, showCharacter: false, showOutline: !blindMode,
           strokeColor: getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#222',
           outlineColor: guideColor(),
           drawingColor: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0f5257',
-          charDataLoader: (ch, ok) => ok(data)
+          charDataLoader: (charName, ok) => ok(data)
         });
-        info.textContent = 'Hãy nhớ chữ và viết từng nét vào ô (không nét mờ)';
+        info.textContent = 'Đồ theo nét mờ để nhớ thứ tự nét (bấm “Ẩn nét mờ” để tự viết không gợi ý)';
         writer.quiz({
           showHintAfterMisses: 2,
           onComplete: (res) => {
@@ -10219,7 +10286,23 @@ function reviewView() {
             finishWrite(ok ? (res.totalMistakes === 0 ? 4 : 3) : 1, ok);
           }
         });
-      }, 50);
+      };
+
+      setTimeout(() => loadCharIntoBox(activeCh), 50);
+
+      const charPicker = chars.length > 1
+        ? h('div', { class: 'row center', style: { gap: '6px' } }, chars.map((ch) =>
+            h('button', {
+              class: 'mini ' + (ch === activeCh ? 'primary' : 'ghost'),
+              lang: LANGS[code].lang,
+              onclick: (e) => {
+                [...e.currentTarget.parentNode.children].forEach((b) => { b.classList.remove('primary'); b.classList.add('ghost'); });
+                e.currentTarget.classList.remove('ghost'); e.currentTarget.classList.add('primary');
+                loadCharIntoBox(ch);
+              }
+            }, ch)
+          ))
+        : null;
 
       return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
         topDock,
@@ -10230,8 +10313,13 @@ function reviewView() {
             hint ? h('b', {}, hint) : null,
             spk(code, c)
           ),
+          charPicker,
           wbox,
           info,
+          h('div', { class: 'row center wrap', style: { gap: '8px' } },
+            strokeAnimBtn,
+            toggleOutlineBtn
+          ),
           h('div', { class: 'row center', style: { gap: '8px' } },
             h('button', { class: 'ghost mini', onclick: () => finishWrite(3, true, 'Đã viết xong') }, 'Đã viết trên giấy (Đạt)'),
             h('button', { class: 'ghost mini', onclick: () => finishWrite(1, false, 'Chưa nhớ nét') }, 'Chưa nhớ nét (Ôn lại)')
@@ -10537,9 +10625,10 @@ function speakOne(t, it, all) {
     );
   }, [['Còn vấp', 40], ['Khá ổn', 70], ['Trôi chảy', 90]]);
 
+  const readingLine = it.r || (code === 'ja' && it.raw ? jaHiraganaFromRaw(it.raw) : '');
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: speakView }, 'Danh sách câu'), h('span', { class: 'muted small' }, (idx + 1) + '/' + lines.length)),
-    h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, it.group), words, it.r && it.r !== it.text && h('p', { class: 'read' }, it.r), it.m && h('p', { class: 'muted' }, it.m), listenBtns(code, it.text)),
+    h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, it.group), words, readingLine && readingLine !== it.text && h('p', { class: 'read', lang: L().lang }, readingLine), it.m && h('p', { class: 'muted' }, it.m), listenBtns(code, it.text)),
     ctrl, result, next && h('button', { class: 'block', onclick: () => speakOne(t, next, all) }, 'Câu tiếp theo')));
 }
 function coachView(t, c) {
@@ -11119,7 +11208,7 @@ function charView(code, c, list) {
   ));
 
   setTimeout(async () => {
-    const data = (await loadStrokes(code))[c];
+    const data = await loadCharStrokeData(code, c);
     if (!data || !window.HanziWriter) { status.textContent = window.HanziWriter ? 'Chưa có dữ liệu nét cho chữ này.' : 'Không tải được công cụ viết. Kiểm tra mạng rồi mở lại.'; return; }
     totalStrokes = (data.strokes && data.strokes.length) || 0;
     if (totalStrokes) {
