@@ -1,5 +1,5 @@
 {
-  "version": "3.63",
-  "build": "20261114-1446",
-  "message": "Hiển thị lá cờ và tên Tiếng Anh, Tiếng Trung, Tiếng Nhật trên màn hình chính"
+  "version": "3.64",
+  "build": "20261114-1555",
+  "message": "Tích hợp giáo trình 301 câu đàm thoại tiếng Hoa: từ vựng (lược trùng), ví dụ đặt câu, hội thoại, trắc nghiệm & điền từ đọc hiểu"
 }

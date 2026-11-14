@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1446';
+const APP_BUILD_ID = '20261114-1555';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -991,11 +991,11 @@ const CATEGORIES = {
 
 
 // ===== DỮ LIỆU ĐỊNH DANH BÀI HỌC, TIẾN ĐỘ & LỘ TRÌNH DỰ BÁO CÁN ĐÍCH =====
-const TOPIC_META = {"en":{"1":["b2",6],"2":["b2",6],"3":["b2",6],"4":["b2",6],"5":["b2",6],"6":["b2",6],"7":["b2",6],"8":["b2",6],"9":["b2",6],"10":["b2",6],"11":["b2",6],"12":["b2",6],"13":["b2",6],"15":["b2",6],"16":["b2",6],"20":["b2",6],"21":["b2",6],"22":["b2",6],"23":["b2",6],"24":["b2",6],"25":["b2",6],"26":["b2",6],"27":["b2",6],"30":["b2",6],"31":["b2",6],"32":["b2",6],"33":["b2",6],"34":["a1",5],"35":["a1",5],"36":["a2",5],"37":["a2",5],"38":["a1",5],"39":["b1",5],"40":["a2",5],"41":["b1",5],"42":["b1",5],"43":["b1",5],"44":["b1",5],"45":["b1",5],"101":["a1",9],"102":["a1",6],"103":["a1",9],"104":["a1",8],"105":["a1",9],"106":["a1",8],"107":["a1",8],"108":["a1",9],"109":["a1",9],"110":["a1",11],"111":["a2",13],"112":["a2",7],"113":["a2",9],"114":["a2",6],"115":["a2",7],"116":["a2",7],"117":["a2",7],"118":["a2",8],"119":["a2",7],"120":["a2",8],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",6],"125":["b1",16],"126":["b1",6],"127":["b1",7],"128":["b1",7],"129":["b1",7],"130":["b1",7],"131":["b1",7],"132":["b1",7],"133":["b1",7],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3],"174":["b2",6],"175":["b2",6],"176":["b2",6],"177":["b2",7],"178":["b2",6],"179":["b2",6],"180":["b2",6],"181":["b2",6]},"zh":{"36":["hsk1",5],"1":["hsk1",7],"48":["hsk1",7],"3":["hsk1",6],"46":["hsk1",7],"2":["hsk1",7],"47":["hsk1",6],"58":["hsk1",7],"59":["hsk1",7],"60":["hsk1",7],"61":["hsk1",7],"49":["hsk2",7],"51":["hsk2",5],"50":["hsk2",5],"4":["hsk2",4],"5":["hsk2",4],"6":["hsk2",6],"7":["hsk2",4],"12":["hsk2",4],"13":["hsk2",4],"9":["hsk2",4],"62":["hsk2",8],"63":["hsk2",8],"64":["hsk2",8],"11":["hsk3",4],"14":["hsk3",4],"15":["hsk3",5],"37":["hsk3",4],"38":["hsk3",5],"39":["hsk3",6],"41":["hsk3",6],"44":["hsk3",5],"25":["hsk3",4],"26":["hsk3",4],"65":["hsk3",7],"66":["hsk3",7],"67":["hsk3",7],"68":["hsk3",7],"69":["hsk3",7],"70":["hsk3",7],"71":["hsk3",7],"72":["hsk3",7],"73":["hsk3",7],"74":["hsk3",7],"75":["hsk3",7],"76":["hsk3",7],"77":["hsk3",7],"42":["hsk4",7],"43":["hsk4",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",5],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"78":["hsk4",7],"79":["hsk4",7],"80":["hsk4",7],"81":["hsk4",7],"82":["hsk4",7],"83":["hsk4",7],"84":["hsk4",7],"85":["hsk4",7],"86":["hsk4",7],"87":["hsk4",7],"88":["hsk4",7],"89":["hsk4",7],"90":["hsk4",7],"91":["hsk4",7],"92":["hsk4",7],"93":["hsk4",7],"94":["hsk4",7],"95":["hsk4",7],"96":["hsk4",7],"97":["hsk4",7],"98":["hsk4",7],"99":["hsk4",7],"100":["hsk4",7],"101":["hsk4",7],"102":["hsk4",7],"103":["hsk4",7],"104":["hsk4",7],"105":["hsk4",7],"106":["hsk4",7],"107":["hsk4",7],"33":["hsk5",5],"20":["hsk5",5],"34":["hsk5",4],"35":["hsk5",4],"17":["hsk5",4],"21":["hsk5",7],"108":["hsk5",8],"109":["hsk5",8],"110":["hsk5",8],"111":["hsk5",8],"112":["hsk5",8],"113":["hsk5",8],"114":["hsk5",8],"115":["hsk5",8],"116":["hsk5",8],"117":["hsk5",8],"118":["hsk5",8],"119":["hsk5",8],"120":["hsk5",8],"121":["hsk5",8],"122":["hsk5",8],"123":["hsk5",7],"124":["hsk5",7],"125":["hsk5",7],"126":["hsk5",7],"127":["hsk5",7],"128":["hsk5",7],"129":["hsk5",7],"130":["hsk5",7],"131":["hsk5",7],"132":["hsk5",7],"133":["hsk5",7],"134":["hsk5",7],"135":["hsk5",7],"136":["hsk5",7],"137":["hsk5",7],"138":["hsk5",7],"139":["hsk5",7],"140":["hsk5",7],"141":["hsk5",7],"142":["hsk5",7],"143":["hsk5",7],"144":["hsk5",7],"145":["hsk5",7],"146":["hsk5",7],"147":["hsk5",7],"148":["hsk5",7],"149":["hsk5",7],"150":["hsk5",7],"151":["hsk5",7],"152":["hsk5",7],"153":["hsk5",7],"154":["hsk5",7],"155":["hsk5",7],"156":["hsk5",7],"157":["hsk5",7],"22":["hsk6",4],"18":["hsk6",4],"19":["hsk6",7],"23":["hsk6",4],"158":["hsk6",8],"159":["hsk6",8],"160":["hsk6",8],"161":["hsk6",8],"162":["hsk6",8],"163":["hsk6",8],"164":["hsk6",8],"165":["hsk6",8],"166":["hsk6",8],"167":["hsk6",8],"168":["hsk6",8],"169":["hsk6",8],"170":["hsk6",8],"171":["hsk6",8],"172":["hsk6",8],"173":["hsk6",8],"174":["hsk6",8],"175":["hsk6",7],"176":["hsk6",7],"177":["hsk6",7],"178":["hsk6",7],"179":["hsk6",7],"180":["hsk6",7],"181":["hsk6",7],"182":["hsk6",7],"183":["hsk6",7],"184":["hsk6",7],"185":["hsk6",7],"186":["hsk6",7],"187":["hsk6",7],"188":["hsk6",7],"189":["hsk6",7],"190":["hsk6",7],"191":["hsk6",7],"192":["hsk6",7],"193":["hsk6",7],"194":["hsk6",7],"195":["hsk6",7],"196":["hsk6",7],"197":["hsk6",7],"198":["hsk6",7],"199":["hsk6",7],"200":["hsk6",7],"201":["hsk6",7],"202":["hsk6",7],"203":["hsk6",7],"204":["hsk6",7],"205":["hsk6",7],"206":["hsk6",7],"207":["hsk6",7],"208":["hsk6",7],"209":["hsk6",7],"52":["hsk7",4],"53":["hsk7",4],"210":["hsk7",7],"211":["hsk7",7],"212":["hsk7",7],"213":["hsk7",7],"214":["hsk7",7],"215":["hsk7",7],"216":["hsk7",7],"217":["hsk7",7],"218":["hsk7",7],"219":["hsk7",7],"220":["hsk7",7],"221":["hsk7",7],"222":["hsk7",7],"223":["hsk7",7],"224":["hsk7",7],"225":["hsk7",7],"226":["hsk7",7],"227":["hsk7",7],"228":["hsk7",7],"229":["hsk7",7],"230":["hsk7",7],"231":["hsk7",7],"232":["hsk7",7],"233":["hsk7",7],"234":["hsk7",7],"235":["hsk7",7],"236":["hsk7",7],"237":["hsk7",7],"54":["hsk8",4],"55":["hsk8",4],"238":["hsk8",7],"239":["hsk8",7],"240":["hsk8",7],"241":["hsk8",7],"242":["hsk8",7],"243":["hsk8",7],"244":["hsk8",7],"245":["hsk8",7],"246":["hsk8",7],"247":["hsk8",7],"248":["hsk8",7],"249":["hsk8",7],"250":["hsk8",7],"251":["hsk8",7],"252":["hsk8",7],"253":["hsk8",7],"254":["hsk8",7],"255":["hsk8",7],"256":["hsk8",7],"257":["hsk8",7],"258":["hsk8",7],"259":["hsk8",7],"260":["hsk8",7],"261":["hsk8",7],"262":["hsk8",7],"263":["hsk8",7],"264":["hsk8",7],"265":["hsk8",7],"56":["hsk9",4],"57":["hsk9",4],"266":["hsk9",7],"267":["hsk9",7],"268":["hsk9",7],"269":["hsk9",7],"270":["hsk9",7],"271":["hsk9",7],"272":["hsk9",7],"273":["hsk9",7],"274":["hsk9",7],"275":["hsk9",7],"276":["hsk9",7],"277":["hsk9",7],"278":["hsk9",7],"279":["hsk9",7],"280":["hsk9",7],"281":["hsk9",7],"282":["hsk9",7],"283":["hsk9",7],"284":["hsk9",7],"285":["hsk9",7],"286":["hsk9",7],"287":["hsk9",7],"288":["hsk9",7],"289":["hsk9",7],"290":["hsk9",7],"291":["hsk9",7],"292":["hsk9",7],"293":["hsk9",7]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n4",18],"9":["n4",11],"10":["n4",7],"11":["n4",9],"12":["n4",13],"13":["n4",11],"14":["n4",10],"15":["n5",27],"16":["n4",6],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3],"26":["n4",9]}};
+const TOPIC_META = {"en":{"1":["b2",6],"2":["b2",6],"3":["b2",6],"4":["b2",6],"5":["b2",6],"6":["b2",6],"7":["b2",6],"8":["b2",6],"9":["b2",6],"10":["b2",6],"11":["b2",6],"12":["b2",6],"13":["b2",6],"15":["b2",6],"16":["b2",6],"20":["b2",6],"21":["b2",6],"22":["b2",6],"23":["b2",6],"24":["b2",6],"25":["b2",6],"26":["b2",6],"27":["b2",6],"30":["b2",6],"31":["b2",6],"32":["b2",6],"33":["b2",6],"34":["a1",5],"35":["a1",5],"36":["a2",5],"37":["a2",5],"38":["a1",5],"39":["b1",5],"40":["a2",5],"41":["b1",5],"42":["b1",5],"43":["b1",5],"44":["b1",5],"45":["b1",5],"101":["a1",9],"102":["a1",6],"103":["a1",9],"104":["a1",8],"105":["a1",9],"106":["a1",8],"107":["a1",8],"108":["a1",9],"109":["a1",9],"110":["a1",11],"111":["a2",13],"112":["a2",7],"113":["a2",9],"114":["a2",6],"115":["a2",7],"116":["a2",7],"117":["a2",7],"118":["a2",8],"119":["a2",7],"120":["a2",8],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",6],"125":["b1",16],"126":["b1",6],"127":["b1",7],"128":["b1",7],"129":["b1",7],"130":["b1",7],"131":["b1",7],"132":["b1",7],"133":["b1",7],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3],"174":["b2",6],"175":["b2",6],"176":["b2",6],"177":["b2",7],"178":["b2",6],"179":["b2",6],"180":["b2",6],"181":["b2",6]},"zh":{"36":["hsk1",5],"1":["hsk1",7],"48":["hsk1",7],"3":["hsk1",6],"46":["hsk1",7],"2":["hsk1",7],"47":["hsk1",6],"58":["hsk1",7],"59":["hsk1",7],"60":["hsk1",7],"61":["hsk1",7],"49":["hsk2",8],"51":["hsk2",6],"50":["hsk2",6],"4":["hsk2",5],"5":["hsk2",6],"6":["hsk2",7],"7":["hsk2",5],"12":["hsk2",5],"13":["hsk2",5],"9":["hsk2",5],"62":["hsk2",8],"63":["hsk2",9],"64":["hsk2",9],"11":["hsk3",4],"14":["hsk3",7],"15":["hsk3",7],"37":["hsk3",5],"38":["hsk3",5],"39":["hsk3",6],"41":["hsk3",9],"44":["hsk3",6],"25":["hsk3",4],"26":["hsk3",4],"65":["hsk3",10],"66":["hsk3",7],"67":["hsk3",8],"68":["hsk3",9],"69":["hsk3",8],"70":["hsk3",8],"71":["hsk3",9],"72":["hsk3",7],"73":["hsk3",7],"74":["hsk3",7],"75":["hsk3",8],"76":["hsk3",8],"77":["hsk3",7],"42":["hsk4",8],"43":["hsk4",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",5],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"78":["hsk4",7],"79":["hsk4",7],"80":["hsk4",7],"81":["hsk4",7],"82":["hsk4",7],"83":["hsk4",7],"84":["hsk4",7],"85":["hsk4",7],"86":["hsk4",7],"87":["hsk4",7],"88":["hsk4",7],"89":["hsk4",7],"90":["hsk4",7],"91":["hsk4",7],"92":["hsk4",7],"93":["hsk4",7],"94":["hsk4",7],"95":["hsk4",7],"96":["hsk4",7],"97":["hsk4",7],"98":["hsk4",7],"99":["hsk4",7],"100":["hsk4",7],"101":["hsk4",7],"102":["hsk4",7],"103":["hsk4",7],"104":["hsk4",7],"105":["hsk4",7],"106":["hsk4",7],"107":["hsk4",7],"33":["hsk5",5],"20":["hsk5",5],"34":["hsk5",4],"35":["hsk5",4],"17":["hsk5",4],"21":["hsk5",7],"108":["hsk5",8],"109":["hsk5",8],"110":["hsk5",8],"111":["hsk5",8],"112":["hsk5",8],"113":["hsk5",8],"114":["hsk5",8],"115":["hsk5",8],"116":["hsk5",8],"117":["hsk5",8],"118":["hsk5",8],"119":["hsk5",8],"120":["hsk5",8],"121":["hsk5",8],"122":["hsk5",8],"123":["hsk5",7],"124":["hsk5",7],"125":["hsk5",7],"126":["hsk5",7],"127":["hsk5",7],"128":["hsk5",7],"129":["hsk5",7],"130":["hsk5",7],"131":["hsk5",7],"132":["hsk5",7],"133":["hsk5",7],"134":["hsk5",7],"135":["hsk5",7],"136":["hsk5",7],"137":["hsk5",7],"138":["hsk5",7],"139":["hsk5",7],"140":["hsk5",7],"141":["hsk5",7],"142":["hsk5",7],"143":["hsk5",7],"144":["hsk5",7],"145":["hsk5",7],"146":["hsk5",7],"147":["hsk5",7],"148":["hsk5",7],"149":["hsk5",7],"150":["hsk5",7],"151":["hsk5",7],"152":["hsk5",7],"153":["hsk5",7],"154":["hsk5",7],"155":["hsk5",7],"156":["hsk5",7],"157":["hsk5",7],"22":["hsk6",4],"18":["hsk6",4],"19":["hsk6",7],"23":["hsk6",4],"158":["hsk6",8],"159":["hsk6",8],"160":["hsk6",8],"161":["hsk6",8],"162":["hsk6",8],"163":["hsk6",8],"164":["hsk6",8],"165":["hsk6",8],"166":["hsk6",8],"167":["hsk6",8],"168":["hsk6",8],"169":["hsk6",8],"170":["hsk6",8],"171":["hsk6",8],"172":["hsk6",8],"173":["hsk6",8],"174":["hsk6",8],"175":["hsk6",7],"176":["hsk6",7],"177":["hsk6",7],"178":["hsk6",7],"179":["hsk6",7],"180":["hsk6",7],"181":["hsk6",7],"182":["hsk6",7],"183":["hsk6",7],"184":["hsk6",7],"185":["hsk6",7],"186":["hsk6",7],"187":["hsk6",7],"188":["hsk6",7],"189":["hsk6",7],"190":["hsk6",7],"191":["hsk6",7],"192":["hsk6",7],"193":["hsk6",7],"194":["hsk6",7],"195":["hsk6",7],"196":["hsk6",7],"197":["hsk6",7],"198":["hsk6",7],"199":["hsk6",7],"200":["hsk6",7],"201":["hsk6",7],"202":["hsk6",7],"203":["hsk6",7],"204":["hsk6",7],"205":["hsk6",7],"206":["hsk6",7],"207":["hsk6",7],"208":["hsk6",7],"209":["hsk6",7],"52":["hsk7",4],"53":["hsk7",4],"210":["hsk7",7],"211":["hsk7",7],"212":["hsk7",7],"213":["hsk7",7],"214":["hsk7",7],"215":["hsk7",7],"216":["hsk7",7],"217":["hsk7",7],"218":["hsk7",7],"219":["hsk7",7],"220":["hsk7",7],"221":["hsk7",7],"222":["hsk7",7],"223":["hsk7",7],"224":["hsk7",7],"225":["hsk7",7],"226":["hsk7",7],"227":["hsk7",7],"228":["hsk7",7],"229":["hsk7",7],"230":["hsk7",7],"231":["hsk7",7],"232":["hsk7",7],"233":["hsk7",7],"234":["hsk7",7],"235":["hsk7",7],"236":["hsk7",7],"237":["hsk7",7],"54":["hsk8",4],"55":["hsk8",4],"238":["hsk8",7],"239":["hsk8",7],"240":["hsk8",7],"241":["hsk8",7],"242":["hsk8",7],"243":["hsk8",7],"244":["hsk8",7],"245":["hsk8",7],"246":["hsk8",7],"247":["hsk8",7],"248":["hsk8",7],"249":["hsk8",7],"250":["hsk8",7],"251":["hsk8",7],"252":["hsk8",7],"253":["hsk8",7],"254":["hsk8",7],"255":["hsk8",7],"256":["hsk8",7],"257":["hsk8",7],"258":["hsk8",7],"259":["hsk8",7],"260":["hsk8",7],"261":["hsk8",7],"262":["hsk8",7],"263":["hsk8",7],"264":["hsk8",7],"265":["hsk8",7],"56":["hsk9",4],"57":["hsk9",4],"266":["hsk9",7],"267":["hsk9",7],"268":["hsk9",7],"269":["hsk9",7],"270":["hsk9",7],"271":["hsk9",7],"272":["hsk9",7],"273":["hsk9",7],"274":["hsk9",7],"275":["hsk9",7],"276":["hsk9",7],"277":["hsk9",7],"278":["hsk9",7],"279":["hsk9",7],"280":["hsk9",7],"281":["hsk9",7],"282":["hsk9",7],"283":["hsk9",7],"284":["hsk9",7],"285":["hsk9",7],"286":["hsk9",7],"287":["hsk9",7],"288":["hsk9",7],"289":["hsk9",7],"290":["hsk9",7],"291":["hsk9",7],"292":["hsk9",7],"293":["hsk9",7]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n4",18],"9":["n4",11],"10":["n4",7],"11":["n4",9],"12":["n4",13],"13":["n4",11],"14":["n4",10],"15":["n5",27],"16":["n4",6],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3],"26":["n4",9]}};
 const CAT_TOTAL_TOPICS = {"en":{"a1":13,"a2":17,"b1":15,"b2":35,"c1":5,"c2":5},"zh":{"hsk1":11,"hsk2":13,"hsk3":23,"hsk4":38,"hsk5":56,"hsk6":56,"hsk7":30,"hsk8":30,"hsk9":30},"ja":{"n5":8,"n4":9,"n3":3,"n2":3,"n1":3}};
-const CAT_TOTAL_LESSONS = {"en":{"a1":101,"a2":124,"b1":101,"b2":211,"c1":17,"c2":15},"zh":{"hsk1":73,"hsk2":71,"hsk3":138,"hsk4":246,"hsk5":394,"hsk6":400,"hsk7":204,"hsk8":204,"hsk9":204},"ja":{"n5":112,"n4":94,"n3":9,"n2":9,"n1":9}};
+const CAT_TOTAL_LESSONS = {"en":{"a1":101,"a2":124,"b1":101,"b2":211,"c1":17,"c2":15},"zh":{"hsk1":73,"hsk2":84,"hsk3":160,"hsk4":247,"hsk5":394,"hsk6":400,"hsk7":204,"hsk8":204,"hsk9":204},"ja":{"n5":112,"n4":94,"n3":9,"n2":9,"n1":9}};
 const LANG_TOTAL_TOPICS = {"en":90,"zh":287,"ja":26};
-const LANG_TOTAL_LESSONS = {"en":569,"zh":1934,"ja":233};
+const LANG_TOTAL_LESSONS = {"en":569,"zh":1970,"ja":233};
 let PICK_TAB = 'progress'; // 'progress' | 'schedule' | 'roadmap'
 let STUDY_PACE = 'schedule'; // 'schedule' | 'daily1' | 'daily2'
 let ROADMAP_LANG = ''; // '' (mặc định dùng S.lang) | 'all' | 'en' | 'zh' | 'ja'
@@ -2498,9 +2498,11 @@ function setTabs(show) {
   }));
 }
 function go(k) {
-  if (k === 'skills' || k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
-    // 4 Kỹ năng đã được tích hợp đầy đủ vào từng bài học -> chuyển về trang Học
-    VIEW = 'home';
+  if (k === 'skills') {
+    VIEW = 'skills';
+  } else if (k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
+    SKILL_TAB = k;
+    VIEW = 'skills';
   } else if (k === 'exam') {
     VIEW = S.lang === 'en' ? 'ielts' : 'exam';
   } else if (k === 'grammar' || k === 'kanji') {
@@ -2520,13 +2522,13 @@ async function route() {
     ({
       home: homeView,
       review: reviewView,
-      skills: homeView,
+      skills: () => skillsView(SKILL_TAB),
       ielts: ieltsTabView,
       knowledge: knowledgeTabView,
       grammar: knowledgeTabView,
       exam: examTabView,
-      speak: homeView,
-      write: homeView,
+      speak: () => skillsView('speak'),
+      write: () => skillsView('write'),
       progress: progressView
     })[VIEW]();
   } catch (e) {
@@ -3482,11 +3484,41 @@ function homeView() {
         }, 'Xem lộ trình →')
       );
     })(),
+    S.lang === 'zh' ? h('div', {
+      class: 'row between',
+      role: 'button',
+      tabIndex: 0,
+      style: {
+        padding: '10px 14px',
+        background: 'rgba(45,212,191,.07)',
+        border: '1px solid rgba(45,212,191,.24)',
+        borderRadius: '12px',
+        alignItems: 'center',
+        gap: '8px',
+        cursor: 'pointer',
+        margin: '4px 0'
+      },
+      onclick: () => { KNOWLEDGE_TAB = 'read301'; go('knowledge'); },
+      onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); KNOWLEDGE_TAB = 'read301'; go('knowledge'); } }
+    },
+      h('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 } },
+        h('span', { style: { fontSize: '1.2rem', flexShrink: 0 } }, '📘'),
+        h('div', { style: { minWidth: 0 } },
+          h('div', { style: { fontSize: '.86rem', fontWeight: 600, color: 'var(--teal)' } }, 'Giáo trình 301 câu đàm thoại tiếng Hoa'),
+          h('div', { class: 'small muted', style: { fontSize: '.76rem' } }, 'Hội thoại, đọc hiểu chọn trắc nghiệm & điền từ theo từng chủ đề')
+        )
+      ),
+      h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: { whiteSpace: 'nowrap', padding: '4px 10px', fontSize: '.76rem', fontWeight: 600, flexShrink: 0, color: 'var(--teal)' }
+      }, 'Luyện đọc 301 →')
+    ) : null,
     catBar,
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.51 · Cập nhật 14/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.64 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9125,8 +9157,11 @@ function itemCard(code, v, tip) {
         textAlign: 'left'
       }
     },
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
-        h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:'),
+      h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+          h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:'),
+          v.exSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.12)', color: 'var(--teal)' } }, '📘 ' + v.exSrc) : null
+        ),
         listenBtns(code, v.ex)
       ),
       h('p', {
@@ -9181,7 +9216,7 @@ function orderFeedback(code, ex, r) {
 function quizFeedback(code, ex, r) {
   const correctOpt = ((ex.q.o || ex.q.opts || [])[ex.q.a]) || '';
   const correctPinyin = (ex.q.r && ex.q.r[ex.q.a]) || '';
-  const hasAudio = (code === 'zh' || code === 'en' || code === 'ja') && /[一-鿿\w]/.test(correctOpt);
+  const hasAudio = (code === 'zh' ? /[\u4e00-\u9fff]/.test(correctOpt) : (code === 'en' || code === 'ja')) && /[一-鿿\w]/.test(correctOpt);
   return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
     h('p', { class: 'big', lang: LANGS[code].lang, style: { fontSize: '1.25rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, plain(correctOpt)),
     correctPinyin ? h('p', {
@@ -9585,10 +9620,14 @@ function buildSteps(t, i) {
       sample(chs, Math.min(2, chs.length)).forEach((c) => steps.push({ type: 'write', ch: c, v: l.words.find((v) => plain(v.w).includes(c)) }));
     }
 
-    // Điền từ vào email công việc / đoạn văn (nếu có fill và là bài học cuối của chủ đề)
+    // Điền từ vào email công việc / đoạn hội thoại 301
     const learnTotal = t.lessons.filter((x) => x.kind === 'learn').length;
-    if (t.fill && i === Math.max(0, learnTotal - 1)) {
-      steps.push({ type: 'fill', fill: t.fill });
+    const learnFills = topicFillsList(t);
+    if (learnFills.length) {
+      const fillSlot = i - Math.max(0, learnTotal - learnFills.length);
+      if (fillSlot >= 0 && learnFills[fillSlot]) {
+        steps.push({ type: 'fill', fill: learnFills[fillSlot] });
+      }
     }
   } else if (l.kind === 'kanji') {
     const pool = t.kanji.length >= 4 ? t.kanji : d.topics.flatMap((x) => x.kanji || []);
@@ -9598,7 +9637,8 @@ function buildSteps(t, i) {
   } else if (l.kind === 'quiz') {
     l.quiz.forEach((q) => steps.push({ type: 'quiz', q }));
   } else if (l.kind === 'fill') {
-    steps.push({ type: 'fill', fill: t.fill });
+    const fList = topicFillsList(t);
+    if (fList.length) steps.push({ type: 'fill', fill: fList[0] });
     sample(topicWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3), 2).forEach((v) => steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v }));
   } else if (l.kind === 'speak') {
     t.speak.forEach((sc) => sc.lines.forEach((ln) => steps.push({ type: 'speak', text: ln.t, r: ln.r, m: ln.m, scene: sc.title })));
@@ -9628,11 +9668,119 @@ function buildSteps(t, i) {
       const v = revEx[0];
       steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v });
     }
-    if (t.fill) {
-      steps.push({ type: 'fill', fill: t.fill });
+    const revFills = topicFillsList(t);
+    if (revFills.length) {
+      steps.push({ type: 'fill', fill: revFills[0] });
     }
   }
   return steps;
+}
+
+const READ_DLG_IDX = {}, READ_FILL_IDX = {}, READ_MODE = {}, READ_QUIZ_IDX = {};
+
+function topicFillsList(t) {
+  if (!t) return [];
+  if (Array.isArray(t.fills) && t.fills.length) return t.fills.filter((f) => f && f.text);
+  return (t.fill && t.fill.text) ? [t.fill] : [];
+}
+
+function resolveQuizDialogue(t, q) {
+  if (!q) return null;
+  if (Array.isArray(q.dialogue) && q.dialogue.length) {
+    return { title: q.dialogueTitle || 'Đoạn hội thoại đọc hiểu', src: q.src || '', lines: q.dialogue };
+  }
+  if (q.speakIdx != null && t && Array.isArray(t.speak) && t.speak[q.speakIdx] && Array.isArray(t.speak[q.speakIdx].lines)) {
+    const sc = t.speak[q.speakIdx];
+    return { title: sc.title || 'Đoạn hội thoại đọc hiểu', src: q.src || sc.src || '', lines: sc.lines };
+  }
+  return null;
+}
+
+async function playLinesSeq(code, lines, btn) {
+  if (btn.dataset.playing === '1') {
+    btn.dataset.playing = '0';
+    btn.dataset.seq = String((+btn.dataset.seq || 0) + 1);
+    if (window.speechSynthesis) try { window.speechSynthesis.cancel(); } catch {}
+    btn.textContent = '🔊 Nghe cả bài';
+    return;
+  }
+  const mySeq = String((+btn.dataset.seq || 0) + 1);
+  btn.dataset.seq = mySeq;
+  btn.dataset.playing = '1';
+  btn.textContent = '⏹️ Dừng';
+  try {
+    for (const ln of lines) {
+      if (!btn.isConnected || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
+      if (ln && ln.t) await say(code, ln.t);
+    }
+  } finally {
+    if (btn.dataset.seq === mySeq) {
+      btn.dataset.playing = '0';
+      btn.textContent = '🔊 Nghe cả bài';
+    }
+  }
+}
+
+function renderDialogueCard(code, title, src, lines, opts = {}) {
+  let showPy = opts.defaultShowPy !== false;
+  let showVi = !!opts.defaultShowVi;
+  const pyNodes = [], viNodes = [];
+  const pyBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showPy ? 'Ẩn Pinyin' : 'Hiện Pinyin');
+  const viBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa');
+  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn) }, '🔊 Nghe cả bài');
+  const syncVisibility = () => {
+    pyNodes.forEach((n) => { n.style.display = showPy ? 'block' : 'none'; });
+    viNodes.forEach((n) => { n.style.display = showVi ? 'block' : 'none'; });
+    pyBtn.textContent = showPy ? 'Ẩn Pinyin' : 'Hiện Pinyin';
+    viBtn.textContent = showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa';
+  };
+  pyBtn.onclick = () => { showPy = !showPy; syncVisibility(); };
+  viBtn.onclick = () => { showVi = !showVi; syncVisibility(); };
+
+  const rows = (lines || []).map((ln) => {
+    const pyEl = ln.r ? h('p', { class: 'small read', style: { margin: '2px 0 0 0', textAlign: 'left', color: 'var(--teal)', display: showPy ? 'block' : 'none' } }, ln.r) : null;
+    const viEl = ln.m ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left', display: showVi ? 'block' : 'none' } }, ln.m) : null;
+    if (pyEl) pyNodes.push(pyEl);
+    if (viEl) viNodes.push(viEl);
+    return h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px', padding: '6px 0', borderBottom: '1px dashed rgba(148,163,184,.18)' } },
+      h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
+        h('div', { style: { display: 'flex', gap: '6px', alignItems: 'baseline', flexWrap: 'wrap' } },
+          ln.s ? h('span', { class: 'small', style: { fontWeight: 700, color: 'var(--teal)', flexShrink: 0 } }, ln.s + ':') : null,
+          h('span', { lang: LANGS[code].lang, style: { fontSize: opts.compact ? '1.05rem' : '1.14rem', fontWeight: 600, lineHeight: 1.45 } }, ln.t)
+        ),
+        pyEl,
+        viEl
+      ),
+      spk(code, ln.t, { mini: true })
+    );
+  });
+
+  return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'rgba(15,23,42,.35)', border: '1px solid rgba(45,212,191,.22)' } },
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+        h('strong', { style: { fontSize: '.9rem' } }, title || 'Hội thoại đọc hiểu'),
+        src ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + src) : null
+      ),
+      h('div', { class: 'row', style: { gap: '5px', flexWrap: 'wrap' } }, playAllBtn, pyBtn, viBtn)
+    ),
+    h('div', { class: 'stack', style: { gap: '2px' } }, ...rows)
+  );
+}
+
+function buildFillInputs(code, fill, onChange) {
+  const parts = (fill.text || '').split(/(\[\[[^\]]+\]\])/);
+  const sels = [];
+  const box = h('div', { class: 'fill', lang: LANGS[code].lang }, parts.map((p) => {
+    const m = p.match(/^\[\[(.+)\]\]$/);
+    if (!m) return p;
+    const os = m[1].split('|');
+    const s = h('select', { 'aria-label': 'Chọn từ' }, h('option', { value: '' }, '…'), shuffle(os).map((o) => h('option', { value: o }, o)));
+    s.dataset.ok = os[0];
+    if (onChange) s.addEventListener('change', onChange);
+    sels.push(s);
+    return s;
+  }));
+  return { box, sels };
 }
 
 function lessonView(t, i) {
@@ -9707,7 +9855,13 @@ function lessonView(t, i) {
           }
         });
       };
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, '📖 Kỹ năng Đọc hiểu · Tình huống thực tế'), h('p', { class: 'q' }, ex.q.q), c.el);
+      const dlg = resolveQuizDialogue(t, ex.q);
+      body = h('div', { class: 'stack' },
+        h('p', { class: 'label' }, dlg ? '📖 Đọc hiểu hội thoại · Chọn đáp án đúng' : '📖 Kỹ năng Đọc hiểu · Tình huống thực tế'),
+        dlg ? renderDialogueCard(code, dlg.title, dlg.src, dlg.lines, { defaultShowPy: true, defaultShowVi: false, compact: true }) : null,
+        h('p', { class: 'q' }, ex.q.q),
+        c.el
+      );
       gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: (ex.q.o || ex.q.opts || [])[ex.q.a], note: ex.q.why || ex.q.exp || '' });
     } else if (ex.type === 'order') {
       const bank = shuffle(ex.tokens.map((t2, k) => ({ t: t2, k })));
@@ -9748,15 +9902,16 @@ function lessonView(t, i) {
       gradeFn = () => ({ correct: typedOn() ? strip(typed.value) === strip(code === 'en' ? ex.tokens.join(' ') : ex.tokens.join('')) : joined(chosen.map((c) => c.t)) === joined(ex.tokens), expected: code === 'en' ? ex.text : ex.tokens.join('') });
       setTimeout(draw);
     } else if (ex.type === 'fill') {
-      const parts = ex.fill.text.split(/(\[\[[^\]]+\]\])/);
-      const sels = [];
-      const box = h('div', { class: 'fill', lang: LANGS[code].lang }, parts.map((p) => {
-        const m = p.match(/^\[\[(.+)\]\]$/); if (!m) return p;
-        const os = m[1].split('|'); const s = h('select', { 'aria-label': 'Chọn từ' }, h('option', { value: '' }, '…'), shuffle(os).map((o) => h('option', { value: o }, o)));
-        s.dataset.ok = os[0]; s.addEventListener('change', update); sels.push(s); return s;
-      }));
-      body = h('div', { class: 'stack' }, h('p', { class: 'label' }, code === 'en' ? '✍️ Kỹ năng Viết · Điền từ vào email công việc' : '✍️ Kỹ năng Viết · Điền từ vào đoạn hội thoại'), h('div', { class: 'panel' }, box),
-        ex.fill.trans && h('details', {}, h('summary', { class: 'small muted' }, 'Xem nghĩa'), h('p', { class: 'small muted' }, ex.fill.trans)));
+      const { box, sels } = buildFillInputs(code, ex.fill, update);
+      body = h('div', { class: 'stack' },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+          h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? '✍️ Kỹ năng Viết · Điền từ vào email công việc' : '✍️ Đọc & Điền từ vào đoạn hội thoại'),
+          ex.fill.src ? h('span', { class: 'chip', style: { fontSize: '.7rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + ex.fill.src) : null
+        ),
+        ex.fill.title ? h('p', { class: 'small muted', style: { margin: 0 } }, ex.fill.title) : null,
+        h('div', { class: 'panel' }, box),
+        ex.fill.trans && h('details', {}, h('summary', { class: 'small muted' }, 'Xem nghĩa'), h('p', { class: 'small muted' }, ex.fill.trans))
+      );
       ready = () => sels.every((s) => s.value);
       after = () => sels.forEach((s) => { s.disabled = true; s.classList.add(s.value === s.dataset.ok ? 'right' : 'wrong'); });
       gradeFn = () => { const ok = sels.filter((s) => s.value === s.dataset.ok).length; return { correct: ok === sels.length, ok, expected: sels.map((s) => s.dataset.ok).join(' · '), note: ok + '/' + sels.length + ' chỗ đúng' }; };
@@ -10100,9 +10255,9 @@ function lessonView(t, i) {
         ) : null,
         ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v)) : null
       ),
-      ex.type === 'fill' ? fillReveal(code, ex.fill, t.id) : '');
+      ex.type === 'fill' ? fillReveal(code, ex.fill, (ex.fill.src && !ex.fill.audio) ? null : t.id) : '');
       if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
-      if (ex.type === 'quiz' && (code === 'zh' || code === 'en')) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) setTimeout(() => say(code, optTarget), 250); }
+      if (ex.type === 'quiz' && (code === 'en' || (code === 'zh' && /[\u4e00-\u9fff]/.test(((ex.q.o || ex.q.opts || [])[ex.q.a]) || '')))) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) setTimeout(() => say(code, optTarget), 250); }
       if (ex.type === 'gquiz') setTimeout(() => say(code, ex.q.e[0]), 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp theo ➔'; btn.onclick = step; btn.focus();
     }
@@ -11313,6 +11468,231 @@ function renderReadSkills(code, d) {
   ];
 }
 
+function renderSkillsMcqPanel(code, t, quizzes, onRefresh = () => skillsView('read')) {
+  let qIdx = Math.min(READ_QUIZ_IDX[t.id] || 0, quizzes.length - 1);
+  if (qIdx < 0) qIdx = 0;
+  const q = quizzes[qIdx];
+  const dlg = resolveQuizDialogue(t, q);
+  const qOpts = q.o || q.opts || [];
+  const opts = shuffle(qOpts.map((o, k) => ({ o, k, r: (q.r && q.r[k]) || '' })));
+  let picked = null;
+  let graded = false;
+  const fbEl = h('div', { class: 'stack', style: { gap: '8px' }, 'aria-live': 'polite' });
+  const optBtns = [];
+  const checkBtn = h('button', { type: 'button', disabled: true }, 'Kiểm tra');
+  const nextBtn = quizzes.length > 1 ? h('button', {
+    type: 'button', class: 'ghost mini',
+    onclick: () => { READ_QUIZ_IDX[t.id] = (qIdx + 1) % quizzes.length; onRefresh(); }
+  }, 'Câu tiếp theo ➔') : null;
+  const retryBtn = h('button', {
+    type: 'button', class: 'ghost mini', hidden: true,
+    onclick: () => onRefresh()
+  }, '↻ Làm lại');
+
+  const optsWrap = h('div', { class: 'stack', style: { gap: '8px' } }, ...opts.map((opt) => {
+    const b = h('button', {
+      type: 'button',
+      style: { textAlign: 'left', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(15,23,42,.35)', color: 'inherit', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '3px' },
+      onclick: () => {
+        if (graded) return;
+        picked = opt;
+        optBtns.forEach((ob) => {
+          const isSel = ob === b;
+          ob.style.borderColor = isSel ? 'var(--teal)' : 'var(--line)';
+          ob.style.background = isSel ? 'rgba(45,212,191,.14)' : 'rgba(15,23,42,.35)';
+        });
+        checkBtn.disabled = false;
+      }
+    }, h('span', { lang: LANGS[code].lang, style: { fontWeight: 600 } }, opt.o));
+    optBtns.push(b);
+    return b;
+  }));
+
+  checkBtn.onclick = () => {
+    if (graded || !picked) return;
+    graded = true;
+    checkBtn.disabled = true;
+    retryBtn.hidden = false;
+    const isOk = picked.k === q.a;
+    optBtns.forEach((b, j) => {
+      b.disabled = true;
+      if (opts[j].k === q.a) {
+        b.style.borderColor = '#22c55e';
+        b.style.background = 'rgba(34,197,94,.16)';
+      } else if (opts[j] === picked) {
+        b.style.borderColor = '#ef4444';
+        b.style.background = 'rgba(239,68,68,.16)';
+      }
+      if (opts[j].r) {
+        b.appendChild(h('span', { class: 'small read', style: { color: 'var(--teal)', fontWeight: 600 } }, opts[j].r));
+      }
+    });
+    fbEl.replaceChildren(
+      h('div', { class: 'feedback ' + (isOk ? 'ok' : 'no') },
+        h('strong', {}, isOk ? 'Chính xác!' : 'Chưa đúng'),
+        quizFeedback(code, { q }, { correct: isOk, note: q.why || q.exp || '' })
+      )
+    );
+  };
+
+  const navPills = quizzes.length > 1 ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+    ...quizzes.map((_, idx) => h('button', {
+      type: 'button',
+      class: 'ghost mini',
+      style: idx === qIdx
+        ? { background: 'rgba(45,212,191,.18)', border: '1px solid var(--teal)', color: 'var(--teal)', fontWeight: 700, borderRadius: '999px', padding: '4px 10px' }
+        : { border: '1px solid var(--line)', borderRadius: '999px', padding: '4px 10px' },
+      onclick: () => { READ_QUIZ_IDX[t.id] = idx; onRefresh(); }
+    }, 'Câu ' + (idx + 1)))
+  ) : null;
+
+  return h('div', { class: 'stack', style: { gap: '12px' } },
+    navPills,
+    dlg ? renderDialogueCard(code, dlg.title, dlg.src, dlg.lines, { defaultShowPy: true, defaultShowVi: false, compact: true }) : null,
+    h('p', { class: 'q', style: { margin: '2px 0' } }, q.q),
+    optsWrap,
+    h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap', alignItems: 'center' } }, checkBtn, retryBtn, nextBtn),
+    fbEl
+  );
+}
+
+function renderSkillsFillPanel(code, t, fills, onRefresh = () => skillsView('read')) {
+  let fIdx = Math.min(READ_FILL_IDX[t.id] || 0, fills.length - 1);
+  if (fIdx < 0) fIdx = 0;
+  const fillObj = fills[fIdx];
+  const navPills = fills.length > 1 ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+    ...fills.map((f, idx) => h('button', {
+      type: 'button',
+      class: 'ghost mini',
+      style: idx === fIdx
+        ? { background: 'rgba(45,212,191,.18)', border: '1px solid var(--teal)', color: 'var(--teal)', fontWeight: 700, borderRadius: '999px', padding: '4px 10px' }
+        : { border: '1px solid var(--line)', borderRadius: '999px', padding: '4px 10px' },
+      onclick: () => { READ_FILL_IDX[t.id] = idx; onRefresh(); }
+    }, 'Bài ' + (idx + 1) + (f.src ? ' · ' + f.src.replace('301 · ', '') : '')))
+  ) : null;
+
+  const fbEl = h('div', { class: 'stack', style: { gap: '8px' }, 'aria-live': 'polite' });
+  const checkBtn = h('button', { type: 'button', disabled: true }, 'Kiểm tra');
+  const retryBtn = h('button', { type: 'button', class: 'ghost mini', hidden: true, onclick: () => onRefresh() }, '↻ Làm lại');
+  const { box, sels } = buildFillInputs(code, fillObj, () => {
+    checkBtn.disabled = !sels.every((s) => s.value);
+  });
+
+  checkBtn.onclick = () => {
+    let ok = 0;
+    sels.forEach((s) => {
+      s.disabled = true;
+      const right = s.value === s.dataset.ok;
+      if (right) ok++;
+      s.classList.add(right ? 'right' : 'wrong');
+    });
+    checkBtn.disabled = true;
+    retryBtn.hidden = false;
+    fbEl.replaceChildren(
+      h('div', { class: 'feedback ' + (ok === sels.length ? 'ok' : 'no') },
+        h('strong', {}, ok === sels.length ? 'Chính xác tuyệt đối!' : 'Đúng ' + ok + '/' + sels.length + ' chỗ trống'),
+        ok < sels.length ? h('p', { class: 'small', lang: LANGS[code].lang, style: { margin: '4px 0 0 0' } }, 'Đáp án: ' + sels.map((s) => s.dataset.ok).join(' · ')) : null
+      ),
+      fillReveal(code, fillObj, (fillObj.src && !fillObj.audio) ? null : t.id)
+    );
+  };
+
+  return h('div', { class: 'stack', style: { gap: '10px' } },
+    navPills,
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+      h('span', { class: 'small', style: { fontWeight: 700 } }, fillObj.title || 'Điền từ thích hợp vào đoạn hội thoại'),
+      fillObj.src ? h('span', { class: 'chip', style: { fontSize: '.7rem', padding: '1px 8px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + fillObj.src) : null
+    ),
+    h('div', { class: 'panel' }, box),
+    fillObj.trans ? h('details', {}, h('summary', { class: 'small muted' }, 'Xem nghĩa đoạn hội thoại'), h('p', { class: 'small muted', style: { marginTop: '6px', lineHeight: 1.5 } }, fillObj.trans)) : null,
+    h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } }, checkBtn, retryBtn),
+    fbEl
+  );
+}
+
+function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
+  if (code !== 'zh') return renderReadSkills(code, d);
+  const pick = topicPicker(code, READ_TOPIC, onRefresh);
+  const t = d.topics.find((x) => x.id === READ_TOPIC[code]) || d.topics[0];
+  if (!t) return [pick];
+
+  const out = [pick];
+  const speaks = Array.isArray(t.speak) ? t.speak : [];
+  if (speaks.length) {
+    let dIdx = Math.min(READ_DLG_IDX[t.id] || 0, speaks.length - 1);
+    if (dIdx < 0) dIdx = 0;
+    const sc = speaks[dIdx];
+    const dlgTabs = speaks.length > 1 ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+      ...speaks.map((item, idx) => h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: idx === dIdx
+          ? { background: 'rgba(45,212,191,.18)', border: '1px solid var(--teal)', color: 'var(--teal)', fontWeight: 700, borderRadius: '999px', padding: '4px 10px' }
+          : { border: '1px solid var(--line)', borderRadius: '999px', padding: '4px 10px' },
+        onclick: () => { READ_DLG_IDX[t.id] = idx; onRefresh(); }
+      }, (idx + 1) + '. ' + (item.title || 'Hội thoại')))
+    ) : null;
+    out.push(h('div', { class: 'card stack', style: { gap: '10px' } },
+      h('p', { class: 'label', style: { margin: 0 } }, '💬 Hội thoại & Bài đọc giáo trình 301'),
+      dlgTabs,
+      renderDialogueCard(code, sc.title, sc.src, sc.lines, { defaultShowPy: true, defaultShowVi: true })
+    ));
+  }
+
+  const quizzes = Array.isArray(t.quiz) ? t.quiz : [];
+  const fills = topicFillsList(t);
+  if (quizzes.length || fills.length) {
+    let mode = READ_MODE[t.id] || (quizzes.length ? 'mcq' : 'fill');
+    if (mode === 'mcq' && !quizzes.length) mode = 'fill';
+    if (mode === 'fill' && !fills.length) mode = 'mcq';
+    const modeRow = h('div', { class: 'row', style: { gap: '8px', flexWrap: 'wrap' } },
+      quizzes.length ? h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: mode === 'mcq'
+          ? { background: 'var(--teal)', color: '#052e2b', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
+          : { border: '1px solid var(--line)', borderRadius: '10px', padding: '7px 12px' },
+        onclick: () => { READ_MODE[t.id] = 'mcq'; onRefresh(); }
+      }, '☑️ Trắc nghiệm đọc hiểu (' + quizzes.length + ')') : null,
+      fills.length ? h('button', {
+        type: 'button',
+        class: 'ghost mini',
+        style: mode === 'fill'
+          ? { background: 'var(--teal)', color: '#052e2b', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
+          : { border: '1px solid var(--line)', borderRadius: '10px', padding: '7px 12px' },
+        onclick: () => { READ_MODE[t.id] = 'fill'; onRefresh(); }
+      }, '✍️ Điền từ vào hội thoại (' + fills.length + ')') : null
+    );
+    out.push(h('div', { class: 'card stack', style: { gap: '12px' } },
+      h('p', { class: 'label', style: { margin: 0 } }, '📝 Thực hành Đọc hiểu hội thoại'),
+      modeRow,
+      mode === 'mcq' ? renderSkillsMcqPanel(code, t, quizzes, onRefresh) : renderSkillsFillPanel(code, t, fills, onRefresh)
+    ));
+  }
+
+  const exVocab = (t.vocab || []).filter((v) => v.ex);
+  if (exVocab.length) {
+    out.push(h('div', { class: 'card stack', style: { gap: '10px' } },
+      h('p', { class: 'label', style: { margin: 0 } }, '📖 Câu ví dụ theo giáo trình (' + exVocab.length + ')'),
+      ...exVocab.map((v) => h('div', { class: 'row between', style: { gap: '10px', alignItems: 'flex-start', padding: '8px 0', borderBottom: '1px dashed rgba(148,163,184,.18)' } },
+        h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
+          h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+            h('strong', { lang: LANGS[code].lang, style: { color: 'var(--teal)' } }, plain(v.w)),
+            h('span', { class: 'small muted' }, '— ' + v.m),
+            v.exSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.12)', color: 'var(--teal)' } }, '📘 ' + v.exSrc) : null
+          ),
+          h('p', { lang: LANGS[code].lang, style: { margin: '2px 0 0 0', fontSize: '1.05rem', fontWeight: 600 } }, v.ex),
+          v.exr ? h('p', { class: 'small read', style: { margin: 0, textAlign: 'left' } }, v.exr) : null,
+          v.exm ? h('p', { class: 'small muted', style: { margin: 0 } }, v.exm) : null
+        ),
+        listenBtns(code, v.ex)
+      ))
+    ));
+  }
+
+  return out;
+}
+
 function skillsView(tab) {
   if (tab) SKILL_TAB = tab;
   VIEW = 'skills';
@@ -11361,7 +11741,7 @@ function skillsView(tab) {
   let bodyElements = [];
   if (SKILL_TAB === 'listen') bodyElements = renderListenSkills(code, d);
   else if (SKILL_TAB === 'speak') bodyElements = renderSpeakSkills(code, d);
-  else if (SKILL_TAB === 'read') bodyElements = renderReadSkills(code, d);
+  else if (SKILL_TAB === 'read') bodyElements = renderReadSkillsRich(code, d);
   else bodyElements = renderWriteSkills(code, d);
 
   mount(h('div', { class: 'stack-lg' },
@@ -11582,9 +11962,9 @@ function charView(code, c, list) {
 }
 function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
-  const spoken = full.replace(/^[AB][：:]\s*/gm, '');
+  const spoken = code === 'zh' ? full.replace(/^[^\n：:]{1,8}[：:]\s*/gm, '') : full.replace(/^[AB][：:]\s*/gm, '');
   const fld = langFolder(code);
-  let mailSrc = fill.audio || (tid ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  let mailSrc = fill.audio || (tid && !fill.src ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
   if (mailSrc && mailSrc.startsWith('audio/')) {
     mailSrc = fld + '/' + mailSrc;
   }
@@ -13273,6 +13653,7 @@ function knowledgeTabView() {
       ]
     : [
         { k: 'gram', label: '📖 Ngữ pháp HSK' },
+        { k: 'read301', label: '💬 Hội thoại & Đọc 301' },
         { k: 'chiet_tu', label: '🧩 Chiết tự & Mẹo nhớ chữ' },
         { k: 'chars', label: '🈴 Bộ thủ & Bút thuận' }
       ];
@@ -13289,11 +13670,11 @@ function knowledgeTabView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức & Ngữ pháp HSK'),
+    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức, Ngữ pháp & Đọc 301'),
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
       isJa
         ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
-        : 'Tổng hợp ngữ pháp HSK 1–6, chiết tự & mẹo nhớ chữ Hán theo Lục thư, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
+        : 'Tổng hợp ngữ pháp HSK 1–6, hội thoại đọc hiểu 301, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
     )
   );
 
@@ -13306,6 +13687,7 @@ function knowledgeTabView() {
 
   let body = null;
   if (KNOWLEDGE_TAB === 'gram') body = renderKnowledgeGrammar(code);
+  else if (KNOWLEDGE_TAB === 'read301') body = h('div', { class: 'stack-lg' }, ...renderReadSkillsRich(code, DATA[code], () => knowledgeTabView()));
   else if (KNOWLEDGE_TAB === 'chiet_tu') body = renderKnowledgeChietTu(code);
   else if (KNOWLEDGE_TAB === 'chars') body = renderKnowledgeChars(code);
   else if (KNOWLEDGE_TAB === 'kana') body = renderKnowledgeKana(code);
@@ -15053,6 +15435,7 @@ function examTabView() {
     return renderHskkExamView();
   }
 
+  const isZh = code === 'zh';
   const levels = ['N5', 'N4', 'N3', 'N2', 'N1'];
   if (!levels.includes(EXAM_LV[code])) {
     EXAM_LV[code] = levels[0];
