@@ -103,7 +103,8 @@ select { width: 100%; }
 .langcard { width: 100%; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: center; text-align: left; padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); }
 .langcard:hover { border-color: var(--teal); }
 .langcard.cur { border: 2px solid var(--teal); }
-.langcard .glyph { grid-row: span 3; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; background: var(--sunk); font-size: 1.9rem; font-weight: 700; color: var(--teal); }
+.langcard .glyph { grid-row: span 3; width: 64px; height: 64px; border-radius: 16px; overflow: hidden; padding: 0; display: grid; place-items: center; background: var(--sunk); font-size: 1.9rem; font-weight: 700; color: var(--teal); }
+.langcard .glyph svg { display: block; width: 100%; height: 100%; }
 .langcard .name { font-size: 1.2rem; font-weight: 700; }
 .langcard .bar { grid-column: 2; }
 .langchip { min-height: 40px; padding: 6px 12px; border-radius: 99px; font-weight: 600; gap: 6px; }
@@ -947,7 +948,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1555';
+const APP_BUILD_ID = '20261114-1645';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3084,35 +3085,33 @@ function renderRoadmapTabContent(t) {
 let PICK_SRS_PRELOADED = false;
 function langFlagSvg(code) {
   const wrap = document.createElement('span');
-  wrap.style.display = 'inline-flex';
-  wrap.style.alignItems = 'center';
-  wrap.style.justifyContent = 'center';
-  wrap.style.width = '44px';
-  wrap.style.height = '32px';
-  wrap.style.borderRadius = '6px';
+  wrap.style.display = 'block';
+  wrap.style.width = '100%';
+  wrap.style.height = '100%';
+  wrap.style.borderRadius = 'inherit';
   wrap.style.overflow = 'hidden';
-  wrap.style.boxShadow = '0 1px 4px rgba(0,0,0,.35)';
   if (code === 'en') {
-    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
-      '<rect width="60" height="40" fill="#012169"/>' +
-      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>' +
-      '<path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="4"/>' +
-      '<path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>' +
-      '<path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>' +
+    wrap.innerHTML = '<svg viewBox="0 0 64 64" width="64" height="64" style="display:block;width:100%;height:100%" aria-hidden="true">' +
+      '<rect width="64" height="64" fill="#012169"/>' +
+      '<path d="M0,0 L64,64 M64,0 L0,64" stroke="#fff" stroke-width="11"/>' +
+      '<path d="M0,0 L64,64 M64,0 L0,64" stroke="#C8102E" stroke-width="5.5"/>' +
+      '<path d="M32,0 V64 M0,32 H64" stroke="#fff" stroke-width="16"/>' +
+      '<path d="M32,0 V64 M0,32 H64" stroke="#C8102E" stroke-width="9.5"/>' +
       '</svg>';
   } else if (code === 'zh') {
-    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
-      '<rect width="60" height="40" fill="#DE2910"/>' +
-      '<polygon points="12,6 14.1,12.5 20.9,12.5 15.4,16.5 17.5,23 12,19 6.5,23 8.6,16.5 3.1,12.5 9.9,12.5" fill="#FFDE00"/>' +
-      '<circle cx="24" cy="5.5" r="1.8" fill="#FFDE00"/>' +
-      '<circle cx="28" cy="9.5" r="1.8" fill="#FFDE00"/>' +
-      '<circle cx="28" cy="15.5" r="1.8" fill="#FFDE00"/>' +
-      '<circle cx="24" cy="19.5" r="1.8" fill="#FFDE00"/>' +
+    wrap.innerHTML = '<svg viewBox="0 0 64 64" width="64" height="64" style="display:block;width:100%;height:100%" aria-hidden="true">' +
+      '<rect width="64" height="64" fill="#DE2910"/>' +
+      '<polygon points="16.0,9.5 18.1,16.1 25.0,16.1 19.5,20.1 21.6,26.7 16.0,22.6 10.4,26.7 12.5,20.1 7.0,16.1 13.9,16.1" fill="#FFDE00"/>' +
+      '<polygon points="32.3,6.3 32.0,8.4 34.0,9.4 31.8,9.8 31.6,11.9 30.5,10.0 28.4,10.5 29.9,8.9 28.8,7.0 30.8,7.9" fill="#FFDE00"/>' +
+      '<polygon points="38.1,13.9 37.1,15.8 38.7,17.4 36.5,17.0 35.5,19.0 35.2,16.8 33.0,16.5 35.0,15.5 34.6,13.3 36.2,14.9" fill="#FFDE00"/>' +
+      '<polygon points="36.0,22.0 36.7,24.1 38.9,24.1 37.1,25.4 37.8,27.4 36.0,26.1 34.2,27.4 34.9,25.4 33.1,24.1 35.3,24.1" fill="#FFDE00"/>' +
+      '<polygon points="32.0,29.2 31.9,31.4 34.0,32.1 31.9,32.7 31.8,34.9 30.6,33.1 28.5,33.7 29.9,32.0 28.6,30.2 30.7,30.9" fill="#FFDE00"/>' +
       '</svg>';
   } else {
-    wrap.innerHTML = '<svg viewBox="0 0 60 40" width="44" height="32" aria-hidden="true">' +
-      '<rect width="60" height="40" fill="#ffffff"/>' +
-      '<circle cx="30" cy="20" r="11" fill="#BC002D"/>' +
+    wrap.innerHTML = '<svg viewBox="0 0 64 64" width="64" height="64" style="display:block;width:100%;height:100%" aria-hidden="true">' +
+      '<rect width="64" height="64" fill="#ffffff"/>' +
+      '<circle cx="32" cy="32" r="17" fill="#BC002D"/>' +
+      '<rect x="0.5" y="0.5" width="63" height="63" rx="15.5" fill="none" stroke="rgba(15,23,42,0.12)"/>' +
       '</svg>';
   }
   return wrap;
@@ -3518,7 +3517,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.64 · Cập nhật 14/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.65 · Cập nhật 14/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
