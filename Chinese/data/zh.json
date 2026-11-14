@@ -65341,12 +65341,20 @@
     "位": {
       "hv": "vị",
       "m": "chỗ, vị trí",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 立 (Lập: đứng thẳng)",
+      "story": "Chỗ mà một con người (亻) đang đứng thẳng (立) đĩnh đạc chính là VỊ TRÍ, CHỖ ĐỨNG (位 wèi).",
+      "type": "Hội ý",
+      "ex": "座位 (zuòwèi - chỗ ngồi), 位置 (wèizhì - vị trí), 这位 (vị này)"
     },
     "小": {
       "hv": "tiểu",
       "m": "nhỏ",
-      "rad": "小"
+      "rad": "小",
+      "parts": "Ba giọt nước / hạt cát nhỏ tách ra hai bên",
+      "story": "Nét sổ ở giữa bị hai nét phẩy nhỏ hai bên phân chia rẽ nhỏ ra, biểu thị sự NHỎ BÉ, ÍT ỎI (小 xiǎo).",
+      "type": "Chỉ sự",
+      "ex": "小时 (xiǎoshí - tiếng/giờ), 小孩 (trẻ nhỏ), 小心 (cẩn thận)"
     },
     "杯": {
       "hv": "bôi",
@@ -65386,7 +65394,11 @@
     "坐": {
       "hv": "tọa",
       "m": "ngồi",
-      "rad": "土"
+      "rad": "土",
+      "parts": "人 + 人 (Hai người) + 土 (Thổ: mặt đất)",
+      "story": "Hai người (人人) ngồi đối diện nhau trên nền đất (土 tǔ) hàn huyên tâm sự -> NGỒI (坐 zuò).",
+      "type": "Hội ý",
+      "ex": "请坐 (qǐngzuò - mời ngồi), 坐车 (zuòchē - đi xe), 坐飞机 (đi máy bay)"
     },
     "觉": {
       "hv": "giác",
@@ -65431,7 +65443,11 @@
     "冷": {
       "hv": "lãnh",
       "m": "lạnh",
-      "rad": "冫"
+      "rad": "冫",
+      "parts": "冫 (Băng: nước đá) + 令 (Lệnh: sắc lệnh)",
+      "story": "Trời giáng sắc lệnh (令 lìng) đưa những tảng băng tuyết (冫 bīng) rơi xuống làm vạn vật buốt LẠNH (冷 lěng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "天气冷 (trời lạnh), 冷水 (nước lạnh), 冷静 (bình tĩnh)"
     },
     "意": {
       "hv": "ý",
@@ -65441,7 +65457,11 @@
     "风": {
       "hv": "phong",
       "m": "gió",
-      "rad": "风"
+      "rad": "风",
+      "parts": "几 (Gió thổi căng buồm) + 乂 (Gió chuyển hướng)",
+      "story": "Cánh buồm đón luồng không khí cuộn xoáy di chuyển vù vù thổi bay lá cây -> GIÓ (风 fēng).",
+      "type": "Hội ý & Tượng hình",
+      "ex": "大风 (dàfēng - gió to), 风景 (fēngjǐng - phong cảnh), 风格 (phong cách)"
     },
     "边": {
       "hv": "biên",
@@ -65461,7 +65481,11 @@
     "会": {
       "hv": "hội",
       "m": "họp; biết",
-      "rad": "人"
+      "rad": "人",
+      "parts": "人 (nhiều người tụ họp) + 云 (nói chuyện, mây tụ)",
+      "story": "Mọi người (人 rén) tụ họp lại cùng bàn bạc trao đổi (云 yún) tạo thành CUỘC HỌP, qua trao đổi mà BIẾT (会 huì).",
+      "type": "Hội ý",
+      "ex": "开会 (kāihuì - họp), 学会 (học được), 会议 (hội nghị)"
     },
     "出": {
       "hv": "xuất",
@@ -65516,7 +65540,11 @@
     "热": {
       "hv": "nhiệt",
       "m": "nóng",
-      "rad": "灬"
+      "rad": "灬",
+      "parts": "执 (Chấp: nắm giữ đồ vật) + 灬 (Hỏa: bốn đốm lửa bốc)",
+      "story": "Đất nung và đồ vật hơ trên ngọn lửa hồng (灬 huǒ) tỏa ra hơi NÓNG (热 rè) hừng hực.",
+      "type": "Hội ý",
+      "ex": "热天 (ngày nóng), 热情 (nhiệt tình), 热水 (nước nóng)"
     },
     "警": {
       "hv": "cảnh",
@@ -65536,7 +65564,11 @@
     "日": {
       "hv": "nhật",
       "m": "ngày",
-      "rad": "日"
+      "rad": "日",
+      "parts": "Vòng tròn có vết đen ở giữa tượng trưng cho vầng thái dương",
+      "story": "Mô phỏng hình ảnh mặt trời rực rỡ, dấu chấm ở giữa là vết đen mặt trời giúp phân biệt với hình tròn trống -> MẶT TRỜI, NGÀY (日 rì).",
+      "type": "Tượng hình",
+      "ex": "日子 (rìzi - ngày tháng), 日本 (Rìběn - Nhật Bản), 日记 (rìjì - nhật ký)"
     },
     "奶": {
       "hv": "nãi",
@@ -65601,7 +65633,11 @@
     "高": {
       "hv": "cao",
       "m": "cao",
-      "rad": "高"
+      "rad": "高",
+      "parts": "Tòa lâu đài / tháp canh nhiều tầng có mái che và cửa sổ",
+      "story": "Mô phỏng ngọn tháp canh cao vút có nóc mái nhọn, đài quan sát ở giữa và cổng thành cao ráo bên dưới -> CHIỀU CAO, CAO (高 gāo).",
+      "type": "Tượng hình",
+      "ex": "高兴 (gāoxìng - vui vẻ), 高度 (gāodù - độ cao), 高级 (cao cấp)"
     },
     "决": {
       "hv": "quyết",
@@ -65636,7 +65672,11 @@
     "花": {
       "hv": "hoa",
       "m": "hoa",
-      "rad": "艹"
+      "rad": "艹",
+      "parts": "艹 (Thảo: cây cỏ) + 化 (Hóa: biến hóa nở rộ)",
+      "story": "Cây cỏ (艹 cǎo) trải qua ngày tháng biến hóa (化 huà) kỳ diệu nở bung thành những BÔNG HOA (花 huā) rực rỡ ngát hương.",
+      "type": "Hình thanh & Hội ý",
+      "ex": "鲜花 (xiānhuā - hoa tươi), 花钱 (huāqián - tiêu tiền), 花园 (huāyuán - vườn hoa)"
     },
     "应": {
       "hv": "ứng",
@@ -65746,7 +65786,11 @@
     "人": {
       "hv": "nhân",
       "m": "người",
-      "rad": "人"
+      "rad": "人",
+      "parts": "Hình người đang sải hai chân bước đi",
+      "story": "Mô phỏng dáng đứng của con người đang sải hai bước chân hiên ngang tiến về phía trước -> CON NGƯỜI (人 rén).",
+      "type": "Tượng hình",
+      "ex": "人们 (rénmen - mọi người), 人口 (rénkǒu - dân số), 好人 (người tốt)"
     },
     "唱": {
       "hv": "xướng",
@@ -65766,7 +65810,11 @@
     "大": {
       "hv": "đại",
       "m": "lớn",
-      "rad": "大"
+      "rad": "大",
+      "parts": "Người dang rộng hai tay hai chân hiên ngang",
+      "story": "Hình vẽ một người đàn ông dũng cảm dang rộng hai cánh tay và hai chân hết cỡ để biểu thị sự TO LỚN, VĨ ĐẠI (大 dà).",
+      "type": "Tượng hình",
+      "ex": "大学 (dàxué - đại học), 大人 (người lớn), 大家 (mọi người)"
     },
     "到": {
       "hv": "đáo",
@@ -65826,7 +65874,11 @@
     "你": {
       "hv": "nễ",
       "m": "bạn",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 尔 (Nhĩ: bạn bè đối diện)",
+      "story": "Người (亻) đang đứng đối diện trò chuyện trước mặt mình chính là BẠN (你 nǐ).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "你好 (nǐhǎo - xin chào), 你们 (nǐmen - các bạn), 你的 (của bạn)"
     },
     "强": {
       "hv": "cường",
@@ -65886,12 +65938,20 @@
     "买": {
       "hv": "mãi",
       "m": "mua",
-      "rad": "大"
+      "rad": "大",
+      "parts": "乛 (lưới gom đồ) + 头 (của cải mang về)",
+      "story": "Bỏ tiền của ra để thu nhận đồ đạc về nhà mình chính là MUA (买 mǎi).",
+      "type": "Hội ý",
+      "ex": "买菜 (mǎicài - mua rau), 买单 (mǎidān - thanh toán), 买卖 (mua bán)"
     },
     "门": {
       "hv": "môn",
       "m": "cửa",
-      "rad": "门"
+      "rad": "门",
+      "parts": "Khung cánh cửa hai cánh khép mở",
+      "story": "Chữ phồn thể 門 vẽ hai cánh cửa lớn có then cài, chữ giản thể 门 giản lược lại thành khung cửa và cánh cửa -> CÁNH CỬA (门 mén).",
+      "type": "Tượng hình",
+      "ex": "门口 (ménkǒu - cổng/cửa), 开门 (kāimén - mở cửa), 门票 (vé vào cửa)"
     },
     "微": {
       "hv": "vi",
@@ -65906,7 +65966,11 @@
     "路": {
       "hv": "lộ",
       "m": "đường",
-      "rad": "足"
+      "rad": "足",
+      "parts": "足 (Túc: bước chân) + 各 (Các: từng người qua lại)",
+      "story": "Nơi bước chân (足 zú) của mỗi người (各 gè) cùng giẫm bước qua lại dập dìu tạo thành CON ĐƯỜNG (路 lù).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "马路 (mǎlù - đường phố), 路线 (lùxiàn - tuyến đường), 迷路 (lạc đường)"
     },
     "今": {
       "hv": "kim",
@@ -65996,7 +66060,11 @@
     "思": {
       "hv": "tư",
       "m": "nghĩ",
-      "rad": "心"
+      "rad": "心",
+      "parts": "田 (Điền: bộ não phân chia ô nếp nhăn) + 心 (Tâm: trái tim)",
+      "story": "Khối óc tư duy (田) kết hợp cùng cảm xúc rung động của trái tim (心 xīn) tạo nên sự SUY NGHĨ, TƯ DUY (思 sī).",
+      "type": "Hội ý",
+      "ex": "思想 (sīxiǎng - tư tưởng), 思考 (sīkǎo - suy ngẫm), 意思 (yìsi - ý nghĩa)"
     },
     "澡": {
       "hv": "tảo",
@@ -66006,7 +66074,11 @@
     "雨": {
       "hv": "vũ",
       "m": "mưa",
-      "rad": "雨"
+      "rad": "雨",
+      "parts": "一 (Trời) + 冂 (Mây giông bao phủ) + 丨 (Trục rơi) + 丶丶丶丶 (Bốn hạt mưa)",
+      "story": "Từ trên vòm trời (一) mây đen giăng kín (冂), những hạt nước mưa (丶丶丶丶) ào ào rơi xuống trần gian -> MƯA (雨 yǔ).",
+      "type": "Tượng hình",
+      "ex": "下雨 (xiàyǔ - trời mưa), 雨伞 (yǔsǎn - chiếc ô dù), 大雨 (mưa to)"
     },
     "员": {
       "hv": "viên",
@@ -66016,12 +66088,20 @@
     "谢": {
       "hv": "tạ",
       "m": "cảm ơn",
-      "rad": "讠"
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 身 (Thân: thân mình) + 寸 (Thốn: tấc lòng)",
+      "story": "Cúi gập thân mình (身 shēn), từ tận đáy tấc lòng (寸 cùn) cất lời nói (讠 yán) tri ân -> CẢM ƠN (谢 xiè).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "谢谢 (xièxie - cảm ơn), 感谢 (gǎnxiè - cảm tạ), 谢绝 (từ chối khéo)"
     },
     "好": {
       "hv": "hảo",
       "m": "tốt, hay; thích",
-      "rad": "女"
+      "rad": "女",
+      "parts": "女 (Nữ: người mẹ/phụ nữ) + 子 (Tử: con trẻ)",
+      "story": "Gia đình có mẹ (女 nǚ) hiền từ và con cái (子 zǐ) ngoan ngoãn yêu thương nhau, đó là điều TỐT ĐẸP nhất trần đời (好 hǎo).",
+      "type": "Hội ý",
+      "ex": "好人 (hǎorén - người tốt), 好吃 (hǎochī - ngon), 你好 (nǐhǎo - xin chào)"
     },
     "打": {
       "hv": "đả",
@@ -66056,7 +66136,11 @@
     "下": {
       "hv": "hạ",
       "m": "dưới, xuống",
-      "rad": "一"
+      "rad": "一",
+      "parts": "Vạch ngang làm chuẩn mốc, nét sổ buông thõng xuống dưới",
+      "story": "Lấy một đường ngang làm chuẩn mốc, dấu gạch sổ buông cắm xuống bên dưới đường chuẩn ấy để chỉ phương hướng PHÍA DƯỚI, ĐI XUỐNG (下 xià).",
+      "type": "Chỉ sự",
+      "ex": "下班 (xiàbān - tan làm), 下课 (xiàkè - tan học), 下雨 (xiàyǔ - trời mưa)"
     },
     "主": {
       "hv": "chủ",
@@ -66091,7 +66175,11 @@
     "喝": {
       "hv": "hát",
       "m": "uống",
-      "rad": "口"
+      "rad": "口",
+      "parts": "口 (Khẩu: cái miệng) + 曷 (Hạt: há họng thở dốc vì khát)",
+      "story": "Miệng (口 kǒu) đang khô khát há hốc cất tiếng gọi chén nước mát lành để UỐNG (喝 hē).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "喝茶 (hēchá - uống trà), 喝水 (uống nước), 喝酒 (hējiǔ - uống rượu)"
     },
     "哥": {
       "hv": "ca",
@@ -66136,7 +66224,11 @@
     "见": {
       "hv": "kiến",
       "m": "thấy, gặp",
-      "rad": "见"
+      "rad": "见",
+      "parts": "目 (Mắt) trên chân người (儿)",
+      "story": "Một người (儿) mở to đôi mắt (目 mù) chăm chú phóng tầm nhìn để NHÌN THẤY, GẶP GỠ (见 jiàn).",
+      "type": "Hội ý",
+      "ex": "看见 (kànjiàn - nhìn thấy), 再见 (zàijiàn - tạm biệt), 见面 (gặp mặt)"
     },
     "折": {
       "hv": "chiết",
@@ -66201,7 +66293,11 @@
     "友": {
       "hv": "hữu",
       "m": "bạn",
-      "rad": "又"
+      "rad": "又",
+      "parts": "又 (Hựu: bàn tay) + 又 (bàn tay nắm chặt)",
+      "story": "Hai bàn tay của hai người bạn bắt chặt lấy nhau cùng nhìn về một hướng -> BẠN BÈ, HỮU NGHỊ (友 yǒu).",
+      "type": "Hội ý",
+      "ex": "朋友 (péngyou - bạn bè), 友好 (yǒuhǎo - hữu nghị), 网友 (bạn qua mạng)"
     },
     "谁": {
       "hv": "thùy",
@@ -66211,7 +66307,11 @@
     "饭": {
       "hv": "phạn",
       "m": "cơm",
-      "rad": "饣"
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 反 (Phản: bàn tay xới cơm)",
+      "story": "Món ăn chính (饣) dùng bàn tay xới lên từng bát dẻo thơm chính là CƠM (饭 fàn).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "吃饭 (chīfàn - ăn cơm), 米饭 (mǐfàn - cơm trắng), 饭店 (fàndiàn - khách sạn/nhà hàng)"
     },
     "投": {
       "hv": "đầu",
@@ -66221,7 +66321,11 @@
     "能": {
       "hv": "năng",
       "m": "có thể",
-      "rad": "⺼"
+      "rad": "⺼",
+      "parts": "Mô phỏng hình chú gấu dũng mãnh, đầy sức lực và móng vuốt",
+      "story": "Hình vẽ chú gấu to lớn có đầu, thân mình vạm vỡ và đôi bàn chân dũng mãnh, biểu thị NĂNG LỰC to lớn CÓ THỂ làm được mọi việc (能 néng).",
+      "type": "Tượng hình",
+      "ex": "能够 (nénggòu - có thể), 能力 (nénglì - năng lực), 经常能 (thường có thể)"
     },
     "品": {
       "hv": "phẩm",
@@ -66231,7 +66335,11 @@
     "听": {
       "hv": "thính",
       "m": "nghe",
-      "rad": "口"
+      "rad": "口",
+      "parts": "口 (Khẩu: lời nói) + 斤 (Cân: chiếc rìu / cân nhắc)",
+      "story": "Mỗi lời nói cất ra từ miệng (口 kǒu) đều được tai đón nhận và cân nhắc (斤 jīn) suy ngẫm kỹ lưỡng -> LẮNG NGHE (听 tīng).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "听说 (tīngshuō - nghe nói), 听力 (tīnglì - kỹ năng nghe), 好听 (hay)"
     },
     "势": {
       "hv": "thế",
@@ -66241,12 +66349,20 @@
     "车": {
       "hv": "xa",
       "m": "xe",
-      "rad": "车"
+      "rad": "车",
+      "parts": "Tượng hình cỗ xe hai bánh nhìn từ trên xuống",
+      "story": "Mô phỏng trục xe ngang, trục dọc và hai bánh xe lăn bánh bon bon chở người trên đường -> XE CỘ (车 chē).",
+      "type": "Tượng hình",
+      "ex": "车站 (chēzhàn - bến xe/ga), 开车 (kāichē - lái xe), 火车 (tàu hỏa), 自行车 (xe đạp)"
     },
     "馆": {
       "hv": "quán",
       "m": "quán, toà nhà",
-      "rad": "饣"
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 官 (Quan: quan lại triều đình)",
+      "story": "Nơi phục vụ đồ ăn thức uống (饣) sang trọng tiếp đón các quan khách (官) chính là QUÁN / NHÀ KHÁCH (馆 guǎn).",
+      "type": "Hội ý",
+      "ex": "饭馆 (fànguǎn - quán ăn), 图书馆 (túshūguǎn - thư viện), 宾馆 (bīnguǎn - nhà nghỉ)"
     },
     "很": {
       "hv": "ngận",
@@ -66276,7 +66392,11 @@
     "药": {
       "hv": "dược",
       "m": "thuốc",
-      "rad": "艹"
+      "rad": "艹",
+      "parts": "艹 (Thảo: cây cỏ lá thuốc) + 约 (Ước: ước lượng / Nhạc: tiếng nhạc thư thái)",
+      "story": "Các vị thảo dược cây cỏ (艹 cǎo) phối ngũ ước lượng liều lượng tạo thành thang thuốc nhiệm màu đem lại niềm vui (乐 yuè) cho người bệnh -> THUỐC (药 yào).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "吃药 (chīyào - uống thuốc), 药店 (yàodiàn - hiệu thuốc), 中药 (thuốc bắc)"
     },
     "降": {
       "hv": "giáng",
@@ -66286,7 +66406,11 @@
     "做": {
       "hv": "tố",
       "m": "làm",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 故 (Cố: sự việc)",
+      "story": "Con người (亻) đem trí lực bắt tay tạo tác nên các sự việc thành công (故) -> LÀM (做 zuò).",
+      "type": "Hội ý",
+      "ex": "做饭 (zuòfàn - nấu cơm), 做事 (zuòshì - làm việc), 做法 (cách làm)"
     },
     "场": {
       "hv": "trường",
@@ -66301,7 +66425,11 @@
     "写": {
       "hv": "tả",
       "m": "viết",
-      "rad": "冖"
+      "rad": "冖",
+      "parts": "冖 (Mịch: chiếc mũ che) + 与 (Dữ: cho đi)",
+      "story": "Cúi đầu dưới mái che nắn nót từng nét mực gửi gắm tâm tư trao cho đời -> VIẾT (写 xiě).",
+      "type": "Hội ý",
+      "ex": "写字 (xiězì - viết chữ), 写作 (xiězuò - sáng tác), 写信 (viết thư)"
     },
     "签": {
       "hv": "thiêm",
@@ -66316,7 +66444,11 @@
     "读": {
       "hv": "độc",
       "m": "đọc",
-      "rad": "讠"
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 卖 (Mại: rao bán)",
+      "story": "Mở miệng phát ra lời nói (讠 yán) đều đặn như người bán hàng rao to từng chữ trên trang sách -> ĐỌC (读 dú).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "读书 (dúshū - đọc sách/đi học), 朗读 (lǎngdú - đọc to), 读者 (độc giả)"
     },
     "怎": {
       "hv": "chẩm",
@@ -66401,7 +66533,11 @@
     "爱": {
       "hv": "ái",
       "m": "yêu",
-      "rad": "爫"
+      "rad": "爫",
+      "parts": "爫 (bàn tay vuốt ve) + 冖 (mái che bảo bọc) + 友 (bạn bè) / 心 (trái tim)",
+      "story": "Dang rộng bàn tay (爫) che chở (冖) cho người mình thương yêu bằng cả tấm lòng chân thành (心) như người tri kỷ (友) -> TÌNH YÊU (爱 ài).",
+      "type": "Hội ý",
+      "ex": "爱情 (àiqíng - tình yêu), 爱好 (àihào - sở thích), 可爱 (kě'ài - đáng yêu)"
     },
     "作": {
       "hv": "tác",
@@ -66431,12 +66567,20 @@
     "块": {
       "hv": "khối",
       "m": "cục; đồng (tiền)",
-      "rad": "土"
+      "rad": "土",
+      "parts": "土 (Thổ: đất) + 夬 (Quái: bẻ đôi)",
+      "story": "Miếng đất (土 tǔ) được cắt gọt bẻ đôi thành từng KHỐI / MIẾNG (块 kuài), sau dùng làm đơn vị đếm tiền tệ.",
+      "type": "Hình thanh & Hội ý",
+      "ex": "一块钱 (yí kuài qián - một đồng tệ), 一块儿 (yíkuàir - cùng nhau), 冰块 (băng đá)"
     },
     "开": {
       "hv": "khai",
       "m": "mở",
-      "rad": "廾"
+      "rad": "廾",
+      "parts": "Hai cánh cổng lớn có chiếc then ngang rút ra",
+      "story": "Hai bàn tay nhấc chiếc then cài ngang cửa kéo sang hai bên để MỞ CỔNG (开 kāi).",
+      "type": "Hội ý",
+      "ex": "开门 (kāimén - mở cửa), 开车 (kāichē - lái xe), 开始 (kāishǐ - bắt đầu)"
     },
     "键": {
       "hv": "kiện",
@@ -66446,12 +66590,20 @@
     "安": {
       "hv": "an",
       "m": "yên, an",
-      "rad": "宀"
+      "rad": "宀",
+      "parts": "宀 (Miên: mái nhà) + 女 (Nữ: người phụ nữ)",
+      "story": "Dưới mái nhà (宀 mián) có bàn tay người phụ nữ (女 nǚ) tề gia nội trợ thì gia đình mới thực sự AN LÀNH, bình yên (安 ān).",
+      "type": "Hội ý",
+      "ex": "安全 (ānquán - an toàn), 平安 (píng'ān - bình an), 安静 (ānjìng - yên tĩnh)"
     },
     "走": {
       "hv": "tẩu",
       "m": "đi",
-      "rad": "走"
+      "rad": "走",
+      "parts": "土 (đất) + 止 (bước chân)",
+      "story": "Bàn chân (止 zhǐ) liên tục vung bước in dấu trên mặt đất (土 tǔ) -> ĐI BỘ, RỜI ĐI (走 zǒu).",
+      "type": "Hội ý",
+      "ex": "走路 (zǒulù - đi bộ), 走开 (zǒukāi - tránh ra), 逃走 (chạy trốn)"
     },
     "直": {
       "hv": "trực",
@@ -66486,7 +66638,11 @@
     "同": {
       "hv": "đồng",
       "m": "cùng",
-      "rad": "口"
+      "rad": "口",
+      "parts": "冂 (nhà lớn) + 一 (một lòng) + 口 (miệng)",
+      "story": "Mọi người cùng ở chung trong một nhà (冂) cùng cất một tiếng nói (口) đồng lòng nhất trí -> ĐỒNG LÒNG, GIỐNG NHAU (同 tóng).",
+      "type": "Hội ý",
+      "ex": "同学 (tóngxué - bạn cùng lớp), 同事 (đồng nghiệp), 同意 (đồng ý)"
     },
     "度": {
       "hv": "độ",
@@ -66501,7 +66657,11 @@
     "海": {
       "hv": "hải",
       "m": "biển",
-      "rad": "氵"
+      "rad": "氵",
+      "parts": "氵 (Thủy: nước) + 每 (Mỗi: mỗi ngày) / 母 (Mẹ hiền)",
+      "story": "Biển cả như người mẹ hiền (母) bao la, mỗi ngày (每 měi) đều dang tay đón nhận hàng trăm vạn dòng nước (氵 shuǐ) đổ về -> BIỂN CẢ (海 hǎi).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "大海 (dàhǎi - biển lớn), 海边 (hǎibiān - bờ biển), 海鲜 (hǎixiān - hải sản)"
     },
     "菜": {
       "hv": "thái",
@@ -66596,7 +66756,11 @@
     "名": {
       "hv": "danh",
       "m": "tên",
-      "rad": "口"
+      "rad": "口",
+      "parts": "夕 (Tịch: đêm tối) + 口 (Khẩu: cái miệng)",
+      "story": "Trong bóng đêm tối mịt (夕 xī) không nhìn rõ mặt nhau, bắt buộc phải cất miệng (口 kǒu) gọi TÊN NHAU (名 míng) để nhận diện.",
+      "type": "Hội ý",
+      "ex": "名字 (míngzi - tên), 著名 (zhùmíng - nổi tiếng), 报名 (bàomíng - đăng ký)"
     },
     "孩": {
       "hv": "hài",
@@ -66616,7 +66780,11 @@
     "茶": {
       "hv": "trà",
       "m": "trà",
-      "rad": "艹"
+      "rad": "艹",
+      "parts": "艹 (Thảo: lá cây) + 人 (Nhân: con người) + 木 (Mộc: thân cây gỗ)",
+      "story": "Con người (人 rén) đứng giữa trời đất hái từng búp lá cây (艹) trên cây chè cổ thụ (木 mù) pha chén nước thơm đượm -> TRÀ (茶 chá).",
+      "type": "Hội ý",
+      "ex": "喝茶 (hēchá - uống trà), 绿茶 (lǜchá - trà xanh), 茶馆 (quán trà)"
     },
     "系": {
       "hv": "hệ",
@@ -66676,12 +66844,20 @@
     "水": {
       "hv": "thủy",
       "m": "nước",
-      "rad": "水"
+      "rad": "水",
+      "parts": "Dòng nước chảy ở giữa và các giọt nước bắn ra hai bên",
+      "story": "Nét sổ móc ở giữa là dòng sông chính cuồn cuộn chảy, các nét chấm hai bên là bọt nước tung bay -> NƯỚC (水 shuǐ).",
+      "type": "Tượng hình",
+      "ex": "喝水 (hēshuǐ - uống nước), 水果 (shuǐguǒ - hoa quả), 开水 (kāishuǐ - nước sôi)"
     },
     "字": {
       "hv": "tự",
       "m": "chữ",
-      "rad": "子"
+      "rad": "子",
+      "parts": "宀 (Miên: mái nhà) + 子 (Tử: con trẻ)",
+      "story": "Để giữ gìn văn tự khỏi mai một, người xưa trân quý chữ viết như con thơ (子 zǐ) được nâng niu nuôi dạy dưới mái nhà (宀 mián). Đó là chữ viết (字 zì).",
+      "type": "Hội ý",
+      "ex": "汉字 (Hànzì - chữ Hán), 字典 (zìdiǎn - từ điển), 字母 (zìmǔ - chữ cái), 写字 (xiězì - viết chữ)"
     },
     "货": {
       "hv": "hóa",
@@ -66826,7 +67002,11 @@
     "多": {
       "hv": "đa",
       "m": "nhiều",
-      "rad": "夕"
+      "rad": "夕",
+      "parts": "夕 (Tịch: vầng trăng) + 夕 (vầng trăng chồng lên)",
+      "story": "Nhiều đêm trăng (夕 xī) trôi qua kế tiếp nhau, hai vầng trăng xếp chồng biểu thị số lượng NHIỀU (多 duō).",
+      "type": "Hội ý",
+      "ex": "多少 (duōshao - bao nhiêu), 很多 (hěnduō - rất nhiều), 多谢 (cảm ơn nhiều)"
     },
     "拍": {
       "hv": "phách",
@@ -66871,7 +67051,11 @@
     "关": {
       "hv": "quan",
       "m": "đóng; hải quan",
-      "rad": "丷"
+      "rad": "丷",
+      "parts": "Hai cánh cửa khép lại có chốt cài",
+      "story": "Hai cánh cửa khép chặt lại có chiếc then cài ngang bảo vệ cửa ải an toàn -> ĐÓNG LẠI (关 guān).",
+      "type": "Hội ý",
+      "ex": "关门 (guānmén - đóng cửa), 关灯 (guāndēng - tắt đèn), 关系 (guānxì - quan hệ)"
     },
     "交": {
       "hv": "giao",
@@ -66881,7 +67065,11 @@
     "少": {
       "hv": "thiểu",
       "m": "ít",
-      "rad": "小"
+      "rad": "小",
+      "parts": "小 (nhỏ) + nét phẩy gạt bớt",
+      "story": "Vốn đã nhỏ bé (小 xiǎo) lại có thêm nét phẩy gạt phăng bớt đi một phần nữa, biểu thị sự ÍT ỎI (少 shǎo).",
+      "type": "Chỉ sự",
+      "ex": "很少 (hěnshǎo - rất ít), 减少 (jiǎnshǎo - giảm bớt), 少年 (thiếu niên)"
     },
     "后": {
       "hv": "hậu",
@@ -66951,12 +67139,20 @@
     "跑": {
       "hv": "bào",
       "m": "chạy",
-      "rad": "足"
+      "rad": "足",
+      "parts": "足 (Túc: đôi bàn chân) + 包 (Bao: cuộn tròn bung nhanh)",
+      "story": "Đôi bàn chân (足 zú) dồn hết sức guồng nhanh như lốc cuộn (包 bāo) trên đường đua -> CHẠY (跑 pǎo).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "跑步 (pǎobù - chạy bộ), 赛跑 (chạy thi), 逃跑 (bỏ chạy)"
     },
     "公": {
       "hv": "công",
       "m": "chung, công",
-      "rad": "八"
+      "rad": "八",
+      "parts": "八 (Bát: chia đều ra) + 厶 (Khứ: sự riêng tư ích kỷ)",
+      "story": "Chia đều của cải (八) mà không giữ lại mảy may tư lợi cho riêng mình (厶), đó là sự CÔNG BẰNG, CÔNG CỘNG (公 gōng).",
+      "type": "Hội ý",
+      "ex": "公共汽车 (gōnggòng qìchē - xe buýt), 公园 (gōngyuán - công viên), 公司 (công ty)"
     },
     "境": {
       "hv": "cảnh",
@@ -67031,7 +67227,11 @@
     "山": {
       "hv": "sơn",
       "m": "núi",
-      "rad": "山"
+      "rad": "山",
+      "parts": "Ba ngọn núi nhấp nhô nối tiếp nhau",
+      "story": "Mô phỏng hình ảnh ba đỉnh núi sừng sững giữa đất trời, đỉnh ở giữa cao vút, hai đỉnh bên cạnh thoai thoải -> NÚI (山 shān).",
+      "type": "Tượng hình",
+      "ex": "爬山 (páshān - leo núi), 高山 (gāoshān - núi cao), 山水 (shānshuǐ - phong cảnh)"
     },
     "乐": {
       "hv": "nhạc",
@@ -67046,7 +67246,11 @@
     "朋": {
       "hv": "bằng",
       "m": "bạn",
-      "rad": "月"
+      "rad": "月",
+      "parts": "月 + 月 (Hai chuỗi ngọc vỏ sò sánh đôi)",
+      "story": "Thời cổ dùng vỏ sò xâu thành chuỗi làm tiền tệ, hai chuỗi vỏ sò xâu song song sánh bước bên nhau như đôi bạn thân thiết -> BẠN HỮU (朋 péng).",
+      "type": "Hội ý & Tượng hình",
+      "ex": "朋友 (péngyou - bạn bè), 亲朋 (họ hàng bạn hữu)"
     },
     "加": {
       "hv": "gia",
@@ -67086,7 +67290,11 @@
     "钱": {
       "hv": "tiền",
       "m": "tiền",
-      "rad": "钅"
+      "rad": "钅",
+      "parts": "钅 (Kim: kim loại đồng vàng) + 戋 (Tàn: mũi giáo nhỏ bảo vệ của cải)",
+      "story": "Miếng kim loại (钅 jīn) quý giá được con người cầm binh khí bảo vệ cất giữ để trao đổi hàng hóa -> TIỀN BẠC (钱 qián).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "钱包 (qiánbāo - ví tiền), 多少钱 (bao nhiêu tiền), 有钱 (giàu có)"
     },
     "成": {
       "hv": "thành",
@@ -67121,7 +67329,11 @@
     "雪": {
       "hv": "tuyết",
       "m": "tuyết",
-      "rad": "雨"
+      "rad": "雨",
+      "parts": "雨 (Vũ: mưa gió) + 彐 (Kê: bàn tay quét tuyết)",
+      "story": "Mưa lạnh từ trời rơi xuống kết tinh thành tuyết trắng phủ dày, bàn tay (彐) cầm chổi quét dọn -> TUYẾT (雪 xuě).",
+      "type": "Hội ý",
+      "ex": "下雪 (xiàxuě - tuyết rơi), 雪人 (người tuyết), 滑雪 (trượt tuyết)"
     },
     "发": {
       "hv": "phát",
@@ -67151,12 +67363,20 @@
     "感": {
       "hv": "cảm",
       "m": "cảm",
-      "rad": "心"
+      "rad": "心",
+      "parts": "咸 (Hàm: chạm tới, tất cả) + 心 (Tâm: trái tim)",
+      "story": "Mọi xúc cảm chạm tới (咸 xián) và làm rung động trái tim (心 xīn) tạo nên CẢM XÚC, LÒNG BIẾT ƠN (感 gǎn).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "感动 (gǎndòng - cảm động), 感谢 (gǎnxiè - cảm ơn), 感觉 (gǎnjué - cảm giác)"
     },
     "上": {
       "hv": "thượng",
       "m": "trên; lên",
-      "rad": "一"
+      "rad": "一",
+      "parts": "Vạch ngang làm chuẩn mốc, nét dựng đứng nhô lên phía trên",
+      "story": "Lấy một đường ngang làm chuẩn mốc, dấu gạch đứng nhô lên phía trên đường chuẩn ấy để chỉ phương hướng PHÍA TRÊN, ĐI LÊN (上 shàng).",
+      "type": "Chỉ sự",
+      "ex": "上班 (shàngbān - đi làm), 上网 (shàngwǎng - lướt web), 上面 (phía trên)"
     },
     "网": {
       "hv": "võng",
@@ -67191,7 +67411,11 @@
     "医": {
       "hv": "y",
       "m": "y học, chữa",
-      "rad": "匸"
+      "rad": "匸",
+      "parts": "匚 (Hộp đựng dụng cụ) + 矢 (Mũi tên phẫu thuật trị thương)",
+      "story": "Thầy thuốc mở hộp dụng cụ (匚 fāng) lấy mũi trâm và thuốc men (矢 shǐ) cứu chữa vết thương -> Y BÁC SĨ (医 yī).",
+      "type": "Hội ý",
+      "ex": "医生 (yīshēng - bác sĩ), 医院 (bệnh viện), 中医 (đông y)"
     },
     "服": {
       "hv": "phục",
@@ -67241,7 +67465,11 @@
     "问": {
       "hv": "vấn",
       "m": "hỏi",
-      "rad": "门"
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 口 (Khẩu: cái miệng)",
+      "story": "Đứng trước cánh cửa (门 mén) mở miệng (口 kǒu) cất tiếng HỎI THĂM (问 wèn) gia chủ.",
+      "type": "Hội ý",
+      "ex": "请问 (qǐngwèn - xin hỏi), 问题 (wèntí - câu hỏi/vấn đề), 访问 (fǎngwèn - thăm viếng)"
     },
     "辣": {
       "hv": "lạt",
@@ -67342,7 +67570,11 @@
     "明": {
       "hv": "minh",
       "m": "sáng; ngày mai",
-      "rad": "日"
+      "rad": "日",
+      "parts": "日 (Nhật: mặt trời) + 月 (Nguyệt: mặt trăng)",
+      "story": "Hai nguồn sáng rực rỡ nhất vũ trụ là mặt trời ban ngày (日 rì) và mặt trăng ban đêm (月 yuè) cùng kết hợp lại tạo nên sự TƯƠI SÁNG (明 míng).",
+      "type": "Hội ý",
+      "ex": "明天 (míngtiān - ngày mai), 明白 (míngbai - hiểu rõ), 聪明 (cōngming - thông minh)"
     },
     "团": {
       "hv": "đoàn",
@@ -67352,7 +67584,11 @@
     "请": {
       "hv": "thỉnh",
       "m": "mời; xin",
-      "rad": "讠"
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 青 (Thanh: trong sáng lịch thiệp)",
+      "story": "Nói ra những lời lẽ (讠 yán) lịch thiệp nhã nhặn trong trẻo (青 qīng) để đón tiếp khách quý -> XIN MỜI (请 qǐng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "请坐 (mời ngồi), 请问 (xin hỏi), 请客 (mời ăn cơm/chiêu đãi)"
     },
     "米": {
       "hv": "mễ",
@@ -67362,7 +67598,11 @@
     "中": {
       "hv": "trung",
       "m": "giữa; trúng",
-      "rad": "丨"
+      "rad": "丨",
+      "parts": "Tấm bia hình chữ nhật có mũi tên cắm trúng chính giữa",
+      "story": "Hình vẽ một mũi tên (丨) bắn xuyên qua hồng tâm tấm bia hình vuông (口) cắm trúng CHÍNH GIỮA (中 zhōng).",
+      "type": "Chỉ sự",
+      "ex": "中国 (Zhōngguó - Trung Quốc), 中文 (tiếng Trung), 中午 (buổi trưa)"
     },
     "集": {
       "hv": "tập",
@@ -67412,7 +67652,11 @@
     "住": {
       "hv": "trú",
       "m": "ở, trú",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 主 (Chủ: chủ nhân ngọn đèn)",
+      "story": "Con người (亻) làm chủ nhân (主) thắp sáng ngọn đèn trong ngôi nhà của mình -> CƯ TRÚ, Ở LẠI (住 zhù).",
+      "type": "Hội ý",
+      "ex": "住在 (zhùzài - sống ở), 住宿 (zhùsù - trọ lại), 居住 (jūzhù - cư trú)"
     },
     "貌": {
       "hv": "mạo",
@@ -67427,7 +67671,11 @@
     "信": {
       "hv": "tín",
       "m": "tin; thư",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 言 (Ngôn: lời nói)",
+      "story": "Lời nói (言 yán) của con người (亻 rén) phát ra phải thành thật, nhất ngôn cửu đỉnh mới giữ trọn chữ UY TÍN (信 xìn).",
+      "type": "Hội ý",
+      "ex": "相信 (xiāngxìn - tin tưởng), 信用 (xìnyòng - tín dụng), 微信 (Wēixìn - WeChat), 写信 (viết thư)"
     },
     "不": {
       "hv": "bất",
@@ -67437,7 +67685,11 @@
     "子": {
       "hv": "tử",
       "m": "con; hậu tố danh từ",
-      "rad": "子"
+      "rad": "子",
+      "parts": "Đứa trẻ sơ sinh quấn tã vung hai tay chào đời",
+      "story": "Nét ngang là hai cánh tay dang rộng mừng vui, nét cong móc là phần thân quấn tã của đứa trẻ mới sinh -> CON TRẺ (子 zǐ).",
+      "type": "Tượng hình",
+      "ex": "儿子 (érzi - con trai), 孩子 (háizi - trẻ con), 本子 (cuốn sổ)"
     },
     "持": {
       "hv": "trì",
@@ -67497,7 +67749,11 @@
     "休": {
       "hv": "hưu",
       "m": "nghỉ",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: người) + 木 (Mộc: cái cây)",
+      "story": "Người nông dân (亻 rén) làm lụng mệt nhọc dựa lưng vào gốc cây (木 mù) để hóng gió NGHỈ NGƠI (休 xiū).",
+      "type": "Hội ý",
+      "ex": "休息 (xiūxi - nghỉ ngơi), 退休 (tuìxiū - nghỉ hưu), 休假 (xiūjià - nghỉ phép)"
     },
     "规": {
       "hv": "quy",
@@ -67507,7 +67763,11 @@
     "吃": {
       "hv": "ngật",
       "m": "ăn",
-      "rad": "口"
+      "rad": "口",
+      "parts": "口 (Khẩu: cái miệng) + 乞 (Khất: xin cầu đồ ăn)",
+      "story": "Mở to chiếc miệng (口 kǒu) đón nhận thức ăn cầu xin được (乞 qǐ) bỏ vào bụng thưởng thức -> ĂN (吃 chī).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "吃饭 (chīfàn - ăn cơm), 好吃 (ngon), 小吃 (món ăn vặt)"
     },
     "床": {
       "hv": "sàng",
@@ -67527,7 +67787,11 @@
     "忙": {
       "hv": "mang",
       "m": "bận",
-      "rad": "忄"
+      "rad": "忄",
+      "parts": "忄 (Tâm: cõi lòng) + 亡 (Vong: mất đi, tiêu tan)",
+      "story": "Công việc ngập đầu khiến tấm lòng (忄 xīn) quay cuồng như mất đi (亡 wáng) sự bình yên tĩnh lặng, ấy là BẬN RỘN (忙 máng).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "很忙 (hěnmáng - rất bận), 帮忙 (bāngmáng - giúp đỡ), 匆忙 (cōngmáng - vội vã)"
     },
     "赛": {
       "hv": "trại",
@@ -67582,7 +67846,11 @@
     "件": {
       "hv": "kiện",
       "m": "món; văn kiện",
-      "rad": "亻"
+      "rad": "亻",
+      "parts": "亻 (Nhân: người) + 牛 (Ngưu: con bò)",
+      "story": "Thời xưa thịt một con bò (牛 niú) chia cho từng người (亻 rén) thành từng phần từng vụ -> KIỆN, VỤ VIỆC (件 jiàn).",
+      "type": "Hội ý",
+      "ex": "一件衣服 (một chiếc áo), 文件 (wénjiàn - tài liệu), 条件 (tiêu chuẩn)"
     },
     "量": {
       "hv": "lượng",
@@ -67597,7 +67865,11 @@
     "化": {
       "hv": "hóa",
       "m": "biến đổi",
-      "rad": "匕"
+      "rad": "匕",
+      "parts": "亻 (Nhân: người đứng thẳng) + 匕 (Chủy: người ngã lộn nhào)",
+      "story": "Từ một người đang đứng thẳng (亻) thoắt cái biến thành người ngã lộn nhào (匕), biểu thị sự BIẾN HÓA khôn lường (化 huà).",
+      "type": "Hội ý",
+      "ex": "变化 (biànhuà - biến hóa), 文化 (wénhuà - văn hóa), 现代化 (hiện đại hóa)"
     },
     "带": {
       "hv": "đới",
@@ -67672,7 +67944,11 @@
     "看": {
       "hv": "khán",
       "m": "xem",
-      "rad": "目"
+      "rad": "目",
+      "parts": "手 (Thủ: bàn tay) + 目 (Mục: con mắt)",
+      "story": "Đưa bàn tay (手 shǒu) lên che trên mắt (目 mù) như mái hiên để phóng tầm mắt NHÌN (看 kàn) ra phương xa.",
+      "type": "Hội ý",
+      "ex": "看见 (kànjiàn - nhìn thấy), 看书 (kànshū - đọc sách), 看电影 (kàndiànyǐng - xem phim)"
     },
     "巧": {
       "hv": "xảo",
@@ -67687,12 +67963,20 @@
     "卡": {
       "hv": "",
       "m": "thẻ",
-      "rad": "卜"
+      "rad": "卜",
+      "parts": "上 + 下",
+      "story": "Lên không được, xuống không xong, mắc kẹt ở giữa.",
+      "type": "Hội ý",
+      "ex": "银行卡 (thẻ ngân hàng), 卡车 (xe tải)"
     },
     "家": {
       "hv": "gia",
       "m": "nhà",
-      "rad": "宀"
+      "rad": "宀",
+      "parts": "宀 (Miên: mái nhà) + 豕 (Thỉ: con lợn, con heo)",
+      "story": "Thời cổ đại, dưới mái nhà (宀) có nuôi một chú lợn (豕) chứng tỏ gia đình no ấm, có của ăn của để, tạo thành MÁI NHÀ GIA ĐÌNH (家 jiā).",
+      "type": "Hội ý",
+      "ex": "回家 (huíjiā - về nhà), 大家 (dàjiā - mọi người), 家庭 (jiātíng - gia đình)"
     },
     "售": {
       "hv": "thụ",
@@ -67713,6 +67997,555 @@
       "hv": "hộ",
       "m": "giữ gìn, bảo vệ",
       "rad": "扌"
+    },
+    "闲": {
+      "hv": "nhàn",
+      "m": "Nhàn rỗi, thảnh thơi, rảnh rỗi",
+      "rad": "门",
+      "parts": "木 (Mộc: cây) + 门 (Môn: cửa)",
+      "story": "Người ta rảnh rỗi thì có thú ngồi trong nhà (门) ngắm cây cảnh (木) trồng trước cửa, hoặc ngắm trăng qua khe cửa (chữ phồn thể 閒 = 门 + 月).",
+      "type": "Hội ý",
+      "ex": "休闲 (xiūxián - nghỉ ngơi), 闲话 (xiánhuà - chuyện phiếm), 闲人 (xiánrén - người rảnh rỗi)"
+    },
+    "晴": {
+      "hv": "tình",
+      "m": "Trời nắng, quang đãng, không mây",
+      "rad": "日",
+      "parts": "日 (Nhật: mặt trời) + 青 (Thanh: xanh biếc)",
+      "story": "Trời trong xanh (青 qīng) lại có mặt trời (日 rì) chiếu sáng rực rỡ, tất là ngày trời nắng ráo (晴 qíng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "晴天 (qíngtiān - ngày nắng), 晴朗 (qínglǎng - quang đãng), 雨过天晴 (mưa tan trời lại sáng)"
+    },
+    "絮": {
+      "hv": "nhứ",
+      "m": "Lôi thôi, dài dòng, bông tơ",
+      "rad": "糸",
+      "parts": "女 (Nữ: con gái) + 口 (Khẩu: miệng) + 糸 (Mịch: sợi tơ)",
+      "story": "Con gái (女 nǚ) đã mở miệng (口 kǒu) nói thì dài dòng vô kể, như tằm nhả tơ (糸 mì), đấy gọi là lôi thôi dài dòng (絮 xù) vậy.",
+      "type": "Hội ý",
+      "ex": "絮叨 (xùdao - lải nhải), 絮语 (xùyǔ - thì thầm dài dòng), 棉絮 (miánxù - sợi bông)"
+    },
+    "男": {
+      "hv": "nam",
+      "m": "Đàn ông, con trai, phái nam",
+      "rad": "田",
+      "parts": "田 (Điền: đồng ruộng) + 力 (Lực: sức mạnh)",
+      "story": "Có sức lực (力 lì) để ra đồng ruộng (田 tián) cày cuốc làm việc nặng, ấy chính là người đàn ông con trai (男 nán).",
+      "type": "Hội ý",
+      "ex": "男人 (nánrén - đàn ông), 男生 (nánshēng - nam sinh), 男朋友 (bạn trai)"
+    },
+    "饮": {
+      "hv": "ẩm",
+      "m": "Uống, đồ uống",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 欠 (Khiếm: thiếu thốn)",
+      "story": "Thực phẩm (饣 shí) thiếu thốn (欠 qiàn) không có gì ăn, nên chỉ có thể UỐNG (饮 yǐn) nước cầm hơi.",
+      "type": "Hội ý",
+      "ex": "饮料 (yǐnliào - đồ uống), 饮食 (yǐnshí - ẩm thực), 冷饮 (lěngyǐn - đồ uống lạnh)"
+    },
+    "贡": {
+      "hv": "cống",
+      "m": "Cống nạp, dâng tặng, đóng góp",
+      "rad": "贝",
+      "parts": "工 (Công: việc làm) + 贝 (Bối: tiền tài, bảo vật)",
+      "story": "Thời buổi muốn có việc làm (工 gōng) thì phải có tiền của bảo vật (贝 bèi) đem đi CỐNG nạp (贡 gòng) cho cấp trên.",
+      "type": "Hội ý",
+      "ex": "贡献 (gòngxiàn - cống hiến), 进贡 (jìngòng - tiến cống), 贡品 (gòngpǐn - cống vật)"
+    },
+    "狂": {
+      "hv": "cuồng",
+      "m": "Điên cuồng, ngông cuồng, cuồng nhiệt",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: con chó) + 王 (Vương: vua)",
+      "story": "Con chó (犭 quǎn) mà lại đòi làm vua (王 wáng) cai trị thiên hạ thì đúng là CUỒNG ĐIÊN (狂 kuáng).",
+      "type": "Hội ý",
+      "ex": "疯狂 (fēngkuáng - điên cuồng), 狂热 (kuángrè - cuồng nhiệt), 狂风 (kuángfēng - cuồng phong)"
+    },
+    "针": {
+      "hv": "châm",
+      "m": "Cây kim, tiêm chích, châm cứu",
+      "rad": "钅",
+      "parts": "钅 (Kim: kim loại) + 十 (Thập: số mười)",
+      "story": "Một miếng kim loại (钅 jīn) mài giũa tỉ mỉ làm được mười (十 shí) CÂY KIM (针 zhēn) nhọn hoắt.",
+      "type": "Hội ý & Hình thanh",
+      "ex": "打针 (dǎzhēn - tiêm thuốc), 针灸 (zhēnjiǔ - châm cứu), 指南针 (zhǐnánzhēn - la bàn)"
+    },
+    "闻": {
+      "hv": "văn",
+      "m": "Nghe thấy, ngửi thấy, tin tức",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 耳 (Nhĩ: cái tai)",
+      "story": "Ghé cái tai (耳 ěr) vào khe cánh cửa (门 mén) để NGHE NGÓNG (闻 wén) tin tức bên ngoài.",
+      "type": "Hội ý",
+      "ex": "新闻 (xīnwén - tin tức), 闻名 (wénmíng - nổi tiếng), 闻一闻 (ngửi thử một chút)"
+    },
+    "闷": {
+      "hv": "muộn",
+      "m": "Buồn bực, bí bách, ngột ngạt",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa khép) + 心 (Tâm: trái tim, tấm lòng)",
+      "story": "Tấm lòng (心 xīn) bị giam hãm sau cánh cửa đóng kín (门 mén) không được sẻ chia nên sinh ra BUỒN BỰC, BÍ BÁCH (闷 mèn).",
+      "type": "Hội ý",
+      "ex": "郁闷 (yùmèn - u uất), 烦闷 (fánmèn - phiền muộn), 闷热 (mènrè - oi bức)"
+    },
+    "闯": {
+      "hv": "sấm",
+      "m": "Xông vào, phi nước đại, bươn chải",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 马 (Mã: con ngựa)",
+      "story": "Con ngựa chiến (马 mǎ) dũng mãnh phi nước đại XÔNG THẲNG qua cánh cửa (门 mén) phá tan vòng vây (闯 chuǎng).",
+      "type": "Hội ý",
+      "ex": "闯荡 (chuǎngdàng - bươn chải), 闯红灯 (chuǎnghóngdēng - vượt đèn đỏ), 闯入 (xông vào)"
+    },
+    "泪": {
+      "hv": "lệ",
+      "m": "Nước mắt, giọt lệ",
+      "rad": "氵",
+      "parts": "氵 (Thủy: giọt nước) + 目 (Mục: con mắt)",
+      "story": "Dòng nước (氵 shuǐ) tuôn chảy ra từ nơi khóe mắt (目 mù) trong lúc bi thương chính là NƯỚC MẮT (泪 lèi).",
+      "type": "Hội ý",
+      "ex": "眼泪 (yǎnlèi - nước mắt), 流泪 (liúlèi - rơi lệ), 泪水 (lèishuǐ - giọt lệ)"
+    },
+    "森": {
+      "hv": "sâm",
+      "m": "Rừng rậm, rậm rạp, u sầm",
+      "rad": "木",
+      "parts": "木 + 木 + 木 (Ba cây gộp lại)",
+      "story": "Một cây làm chẳng nên non, ba cây (木 mù) chụm lại bạt ngàn tạo thành RỪNG RẬM (森 sēn) bạt ngàn.",
+      "type": "Hội ý",
+      "ex": "森林 (sēnlín - rừng rậm), 阴森 (yīnsēn - u ám), 森严 (sēnyán - nghiêm ngặt)"
+    },
+    "林": {
+      "hv": "lâm",
+      "m": "Rừng cây, lùm cây, họ Lâm",
+      "rad": "木",
+      "parts": "木 + 木 (Hai cây đứng cạnh)",
+      "story": "Hai cái cây (木 mù) mọc san sát bên nhau tạo thành rừng nhỏ, lùm cây (林 lín).",
+      "type": "Hội ý",
+      "ex": "树林 (shùlín - rừng cây), 丛林 (cónglín - rừng rậm), 园林 (yuánlín - vườn cảnh)"
+    },
+    "炎": {
+      "hv": "viêm",
+      "m": "Nóng bức, rực lửa, sưng viêm",
+      "rad": "火",
+      "parts": "火 + 火 (Hai ngọn lửa chồng lên nhau)",
+      "story": "Hai ngọn lửa (火 huǒ) cùng bốc cháy hừng hực chồng lên nhau tạo nên sức nóng THIÊU ĐỐT, rực lửa (炎 yán).",
+      "type": "Hội ý",
+      "ex": "炎热 (yánrè - nóng nực), 发炎 (fāyán - phát viêm/sưng), 肺炎 (phế viêm/viêm phổi)"
+    },
+    "晶": {
+      "hv": "tinh",
+      "m": "Pha lê, sáng lấp lánh, kết tinh",
+      "rad": "日",
+      "parts": "日 + 日 + 日 (Ba mặt trời)",
+      "story": "Ba vầng thái dương (日 rì) cùng tỏa sáng rực rỡ, khúc xạ lấp lánh như viên PHA LÊ (晶 jīng).",
+      "type": "Hội ý",
+      "ex": "水晶 (shuǐjīng - pha lê), 结晶 (jiéjīng - kết tinh), 亮晶晶 (liàngjīngjīng - lấp lánh)"
+    },
+    "众": {
+      "hv": "chúng",
+      "m": "Đông người, quần chúng, số đông",
+      "rad": "人",
+      "parts": "人 + 人 + 人 (Ba người tụ họp)",
+      "story": "Nhiều người (人 rén) cùng đứng tụ họp bên nhau tạo thành ĐÁM ĐÔNG, QUẦN CHÚNG (众 zhòng).",
+      "type": "Hội ý",
+      "ex": "群众 (qúnzhòng - quần chúng), 观众 (guānzhòng - khán giả), 众多 (rất đông)"
+    },
+    "从": {
+      "hv": "tòng",
+      "m": "Đi theo, từ (đâu đến), tuân theo",
+      "rad": "人",
+      "parts": "人 + 人 (Một người theo sau một người)",
+      "story": "Một người (人) bước đi trước, một người (人) bước theo sau, biểu thị hành động ĐI THEO, TÙNG PHỤC (从 cóng).",
+      "type": "Hội ý",
+      "ex": "服从 (fúcóng - phục tòng), 从来 (cónglái - từ trước tới nay), 从小 (từ nhỏ)"
+    },
+    "尖": {
+      "hv": "tiêm",
+      "m": "Đầu nhọn, sắc bén, tinh anh",
+      "rad": "小",
+      "parts": "小 (Tiểu: nhỏ bé) + 大 (Đại: to lớn)",
+      "story": "Vật có phần đỉnh thì nhỏ xíu (小 xiǎo) còn phần đáy thì to bự (大 dà), tạo thành hình ĐẦU NHỌN (尖 jiān).",
+      "type": "Hội ý",
+      "ex": "尖锐 (jiānruì - sắc bén), 顶尖 (dǐngjiān - hàng đầu/đỉnh chóp), 刀尖 (mũi dao)"
+    },
+    "灭": {
+      "hv": "diệt",
+      "m": "Dập tắt, tiêu diệt, tàn lụi",
+      "rad": "火",
+      "parts": "一 (Nhất: thanh đậy ngang) + 火 (Hỏa: ngọn lửa)",
+      "story": "Dùng một nắp đậy (一) úp đè lên trên ngọn lửa (火 huǒ) để tước đi không khí, DẬP TẮT ngọn lửa (灭 miè).",
+      "type": "Hội ý",
+      "ex": "消灭 (xiāomiè - tiêu diệt), 灭火 (mièhuǒ - dập lửa), 熄灭 (tắt lịm)"
+    },
+    "囚": {
+      "hv": "tù",
+      "m": "Tù nhân, giam cầm, ngục tù",
+      "rad": "囗",
+      "parts": "囗 (Vi: bốn bức tường) + 人 (Nhân: con người)",
+      "story": "Con người (人 rén) bị nhốt kín bên trong bốn bức tường ngục tối (囗 wéi), ấy chính là TÙ NHÂN (囚 qiú).",
+      "type": "Hội ý",
+      "ex": "死囚 (sǐqiú - tử tù), 囚禁 (qiújìn - giam cầm), 囚犯 (tù nhân)"
+    },
+    "困": {
+      "hv": "khốn",
+      "m": "Khó khăn, buồn ngủ, vây hãm",
+      "rad": "囗",
+      "parts": "囗 (Vi: vây quanh) + 木 (Mộc: cái cây)",
+      "story": "Cái cây (木 mù) bị vây chặt trong bốn bức tường (囗 wéi) không có đất mọc rễ và đón nắng, rơi vào cảnh KHỐN KHÓ (困 kùn).",
+      "type": "Hội ý",
+      "ex": "困难 (kùnnan - khó khăn), 困境 (kùnjìng - cảnh ngộ khó khăn), 犯困 (buồn ngủ)"
+    },
+    "教": {
+      "hv": "giáo",
+      "m": "Dạy dỗ, giáo dục, tôn giáo",
+      "rad": "攵",
+      "parts": "孝 (Hiếu: hiếu thảo) + 攵 (Phác: roi vọt răn đe)",
+      "story": "Dùng sự nghiêm khắc roi vọt răn đe (攵) để rèn giũa con trẻ lòng hiếu thảo (孝), đó là sự DẠY DỖ, GIÁO DỤC (教 jiào).",
+      "type": "Hội ý",
+      "ex": "教育 (jiàoyù - giáo dục), 教师 (jiàoshī - giáo viên), 教室 (jiàoshì - phòng học)"
+    },
+    "笔": {
+      "hv": "bút",
+      "m": "Cây bút, ngòi bút, nét viết",
+      "rad": "竹",
+      "parts": "竹 (Trúc: cây tre trúc) + 毛 (Mao: lông thú)",
+      "story": "Cây bút lông truyền thống của người xưa có cán làm bằng thân cây trúc (竹 zhú) và đầu bút gắn bằng lông thú mềm (毛 máo) -> BÚT (笔 bǐ).",
+      "type": "Hội ý",
+      "ex": "铅笔 (qiānbǐ - bút chì), 毛笔 (máobǐ - bút lông), 笔记本 (bǐjìběn - vở ghi chép)"
+    },
+    "笑": {
+      "hv": "tiếu",
+      "m": "Cười, tiếng cười, nụ cười",
+      "rad": "竹",
+      "parts": "竹 (Trúc: bụi tre) + 夭 (Yêu: uốn lượn uyển chuyển)",
+      "story": "Gió thổi qua bụi trúc (竹) uốn lượn dập dờn xào xạc (夭), phát ra âm thanh như tiếng CƯỜI vui tươi (笑 xiào).",
+      "type": "Hội ý",
+      "ex": "微笑 (wēixiào - mỉm cười), 笑容 (xiàoróng - nụ cười), 笑话 (xiàohuà - chuyện cười)"
+    },
+    "哭": {
+      "hv": "khốc",
+      "m": "Khóc, than khóc, rơi lệ",
+      "rad": "口",
+      "parts": "口 + 口 (Hai con mắt mở to lệ nhòa) + 犬 (Khuyển: chú chó)",
+      "story": "Hai hốc mắt (口 口) mở to đầm đìa nước mắt, cất tiếng nức nở bi thương như tiếng sủa não nề của chú chó (犬) -> KHÓC (哭 kū).",
+      "type": "Hội ý",
+      "ex": "痛哭 (tòngkū - khóc nấc), 哭泣 (kūqì - khóc thút thít), 哭声 (tiếng khóc)"
+    },
+    "想": {
+      "hv": "tưởng",
+      "m": "Nghĩ, muốn, nhớ nhung, tưởng tượng",
+      "rad": "心",
+      "parts": "相 (Tương: nhìn nhau) + 心 (Tâm: trái tim)",
+      "story": "Hình bóng người ấy luôn in đậm trong trái tim (心 xīn) khiến ta ngày đêm nhìn ngắm (相 xiāng) và NHỚ NHUNG (想 xiǎng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "想念 (xiǎngniàn - nhớ nhung), 想法 (xiǎngfǎ - cách nghĩ), 想像 (xiǎngxiàng - tưởng tượng)"
+    },
+    "忘": {
+      "hv": "vong",
+      "m": "Quên lãng, bỏ quên",
+      "rad": "心",
+      "parts": "亡 (Vong: mất đi, tiêu tan) + 心 (Tâm: cõi lòng, trí nhớ)",
+      "story": "Ký ức trong cõi lòng (心 xīn) đã bị đánh mất tiêu tan (亡 wáng) không còn nhớ lại được nữa, ấy là QUÊN (忘 wàng).",
+      "type": "Hội ý",
+      "ex": "忘记 (wàngjì - quên mất), 忘掉 (quên hết), 难忘 (khó quên)"
+    },
+    "怕": {
+      "hv": "phạ",
+      "m": "Sợ hãi, lo sợ, e rằng",
+      "rad": "忄",
+      "parts": "忄 (Tâm: cõi lòng) + 白 (Bạch: trắng bệch)",
+      "story": "Trong lòng (忄) run rẩy khiếp đảm đến mức mặt mũi tái mét, TRẮNG BỆCH (白 bái) không còn giọt máu -> SỢ (怕 pà).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "害怕 (hàipà - sợ hãi), 恐怕 (kǒngpà - e rằng), 不怕 (không sợ)"
+    },
+    "饱": {
+      "hv": "bão",
+      "m": "No bụng, no nê, đầy đủ",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 包 (Bao: bao bọc tròn trịa)",
+      "story": "Nạp đủ đồ ăn (饣 shí) khiến chiếc bụng căng tròn như một chiếc bao (包 bāo) đầy ắp -> NO NÊ (饱 bǎo).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "吃饱 (chībǎo - ăn no), 饱满 (bǎomǎn - căng tràn), 温饱 (wēnbǎo - no ấm)"
+    },
+    "饿": {
+      "hv": "ngạ",
+      "m": "Đói bụng, thèm ăn",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 我 (Ngã: bản thân tôi)",
+      "story": "Bản thân tôi (我 wǒ) đang cồn cào tha thiết cần thức ăn (饣 shí) bỏ vào bụng -> ĐÓI (饿 è).",
+      "type": "Hội ý & Hình thanh",
+      "ex": "肚子饿 (đói bụng), 饥饿 (jī'è - đói khát), 挨饿 (nhịn đói)"
+    },
+    "体": {
+      "hv": "thể",
+      "m": "Thân thể, cơ thể, thể dục",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 本 (Bản: gốc rễ nền tảng)",
+      "story": "Thân thể con người (亻 rén) chính là cội nguồn gốc rễ (本 běn) của sinh mệnh -> THÂN THỂ (体 tǐ).",
+      "type": "Hội ý",
+      "ex": "身体 (shēntǐ - cơ thể), 体育 (tǐyù - thể dục), 体验 (tǐyàn - trải nghiệm)"
+    },
+    "借": {
+      "hv": "tá",
+      "m": "Vay, mượn, nhờ cậy",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 昔 (Tích: ngày xưa cũ)",
+      "story": "Con người (亻) vì túng thiếu mà mượn đồ cũ (昔) của bạn bè từ ngày xưa để dùng tạm -> MƯỢN / VAY (借 jiè).",
+      "type": "Hội ý",
+      "ex": "借钱 (jièqián - mượn tiền), 借书 (jièshū - mượn sách), 借口 (jièkǒu - viện cớ)"
+    },
+    "伴": {
+      "hv": "bạn",
+      "m": "Bạn bè, đi cùng, đồng hành",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 半 (Bán: một nửa)",
+      "story": "Con người (亻) san sẻ một nửa (半 bàn) niềm vui nỗi buồn trong cuộc đời bên cạnh ta chính là BẠN ĐỒNG HÀNH (伴 bàn).",
+      "type": "Hội ý",
+      "ex": "同伴 (tóngbàn - bạn đồng hành), 伴随 (bànsuí - đi cùng), 伙伴 (đối tác/bạn hữu)"
+    },
+    "仙": {
+      "hv": "tiên",
+      "m": "Tiên nhân, thần tiên, bất tử",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 山 (Sơn: núi non cao vời vợi)",
+      "story": "Con người (亻) lên núi cao (山 shān) tu đạo lánh xa bụi trần tục lụy, đắc đạo thành THẦN TIÊN (仙 xiān).",
+      "type": "Hội ý",
+      "ex": "神仙 (shénxiān - thần tiên), 水仙花 (hoa thủy tiên), 仙境 (cõi tiên)"
+    },
+    "他": {
+      "hv": "tha",
+      "m": "Anh ấy, ông ấy, cậu ấy",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 也 (Dã: cũng là)",
+      "story": "Người khác (亻) ngoài bạn và tôi, người ấy CŨNG LÀ (也 yě) một con người -> ANH ẤY (他 tā).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "他们 (tāmen - họ), 他的 (của anh ấy), 他人 (người khác)"
+    },
+    "她": {
+      "hv": "tha",
+      "m": "Cô ấy, bà ấy, chị ấy",
+      "rad": "女",
+      "parts": "女 (Nữ: người phụ nữ) + 也 (Dã: cũng là)",
+      "story": "Người phụ nữ (女 nǚ) thứ ba ngoài bạn và tôi -> CÔ ẤY (她 tā).",
+      "type": "Hội ý",
+      "ex": "她们 (tāmen - các cô ấy), 她的 (của cô ấy)"
+    },
+    "分": {
+      "hv": "phân",
+      "m": "Chia cắt, phút, điểm số, bộ phận",
+      "rad": "刀",
+      "parts": "八 (Bát: rẽ sang hai bên) + 刀 (Đao: con dao)",
+      "story": "Dùng con dao (刀 dāo) sắc bén cắt đôi đồ vật, làm rẽ sang hai bên (八 bā) thành từng PHẦN (分 fēn).",
+      "type": "Hội ý",
+      "ex": "分钟 (fēnzhōng - phút), 分手 (chia tay), 分开 (tách ra), 十分 (vô cùng)"
+    },
+    "城": {
+      "hv": "thành",
+      "m": "Thành phố, thành trì, bức tường thành",
+      "rad": "土",
+      "parts": "土 (Thổ: đất đai) + 成 (Thành: hoàn thành, vững vàng)",
+      "story": "Đất đai (土) đắp thành lũy cao kiên cố bảo vệ sự an toàn và thành tựu (成) của cư dân -> THÀNH PHỐ, THÀNH LŨY (城 chéng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "城市 (chéngshì - thành phố), 长城 (Chángchéng - Vạn Lý Trường Thành), 城堡 (lâu đài)"
+    },
+    "卖": {
+      "hv": "mại",
+      "m": "Bán ra, bán hàng",
+      "rad": "十",
+      "parts": "十 (Thập: đưa ra ngoài) + 买 (Mãi: mua vào)",
+      "story": "Thêm một dấu thập (十) bên trên chữ Mua (买), biểu thị việc xuất hàng ra ngoài chợ để BÁN (卖 mài).",
+      "type": "Hội ý",
+      "ex": "卖东西 (mài dōngxi - bán đồ), 外卖 (wàimài - đồ ăn giao tận nơi), 出卖 (bán đứng)"
+    },
+    "话": {
+      "hv": "thoại",
+      "m": "Lời nói, tiếng, lời thoại",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 舌 (Thiệt: chiếc lưỡi)",
+      "story": "Chiếc lưỡi (舌 shé) uốn lượn phát ra lời nói (讠 yán) tạo thành LỜI THOẠI, TIẾNG NÓI (话 huà).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "说话 (shuōhuà - nói chuyện), 电话 (diànhuà - điện thoại), 汉语 (tiếng Hán)"
+    },
+    "语": {
+      "hv": "ngữ",
+      "m": "Ngôn ngữ, tiếng, ngạn ngữ",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 五 (Ngũ: số năm) + 口 (Khẩu: miệng)",
+      "story": "Lời nói (讠 yán) của năm (五 wǔ) miệng (口 kǒu) người cùng hòa quyện tạo thành NGÔN NGỮ (语 yǔ).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "英语 (Yīngyǔ - tiếng Anh), 汉语 (Hànyǔ - tiếng Hán), 语法 (ngữ pháp)"
+    },
+    "说": {
+      "hv": "thuyết",
+      "m": "Nói, giải thích, thuyết phục",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 兑 (Đoái: nụ cười hân hoan)",
+      "story": "Cất lời nói (讠 yán) với nụ cười hân hoan rạng rỡ (兑 duì) để giải thích thuyết phục lòng người -> NÓI (说 shuō).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "说话 (shuōhuà - nói chuyện), 说明 (shuōmíng - thuyết minh/giải thích), 小说 (tiểu thuyết)"
+    },
+    "病": {
+      "hv": "bệnh",
+      "m": "Bị bệnh, đau ốm, căn bệnh",
+      "rad": "疒",
+      "parts": "疒 (Nạch: chiếc giường người ốm nằm) + 丙 (Bính: lửa nóng sốt bừng bừng)",
+      "story": "Người nằm liệt trên giường bệnh (疒) trán nóng bừng bừng như lửa đốt (丙 bǐng) -> BỊ BỆNH, ỐM ĐAU (病 bìng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "生病 (shēngbìng - bị bệnh), 医院 (yīyuàn - bệnh viện), 看病 (kànbìng - khám bệnh)"
+    },
+    "鸟": {
+      "hv": "điểu",
+      "m": "Con chim, loài chim",
+      "rad": "鸟",
+      "parts": "Tượng hình chú chim đậu trên cành có mỏ, mắt và đuôi dài",
+      "story": "Hình vẽ chú chim có mỏ nhọn, mắt tròn lấp lánh (dấu chấm) và bộ lông đuôi dài óng ả đang cất tiếng hót véo von -> CHIM (鸟 niǎo).",
+      "type": "Tượng hình",
+      "ex": "小鸟 (xiǎoniǎo - chim non), 飞鸟 (chim bay), 鸟巢 (tổ chim)"
+    },
+    "鱼": {
+      "hv": "ngư",
+      "m": "Con cá, loài cá",
+      "rad": "鱼",
+      "parts": "Tượng hình đầu nhọn, thân có vảy và vây đuôi cá bơi lội",
+      "story": "Hình ảnh con cá đang bơi lội tung tăng trong làn nước, phần đầu nhọn rẽ sóng, thân có vảy và đuôi chèo lái -> CÁ (鱼 yú).",
+      "type": "Tượng hình",
+      "ex": "吃鱼 (chīyú - ăn cá), 钓鱼 (diàoyú - câu cá), 鱼肉 (thịt cá)"
+    },
+    "狗": {
+      "hv": "cẩu",
+      "m": "Con chó, loài chó",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: loài thú bốn chân) + 句 (Cú: con non cuộn tròn)",
+      "story": "Chú chó nhỏ (犭) nằm cuộn tròn (句) canh cổng trung thành bên chủ -> CON CHÓ (狗 gǒu).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "小狗 (xiǎogǒu - chó con), 热狗 (règǒu - xúc xích hotdog), 猎狗 (chó săn)"
+    },
+    "猫": {
+      "hv": "miêu",
+      "m": "Con mèo, họ mèo",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: thú nuôi) + 苗 (Miêu: mạ non rình bắt chuột)",
+      "story": "Loài thú nhỏ (犭) rón rén nấp sau ruộng mạ non (苗 miáo) kiên nhẫn rình bắt lũ chuột phá hoại mùa màng -> CON MÈO (猫 māo).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "小猫 (xiǎomāo - mèo con), 熊猫 (xióngmāo - gấu trúc), 猫咪 (mèo cưng)"
+    },
+    "马": {
+      "hv": "mã",
+      "m": "Con ngựa, loài ngựa, họ Mã",
+      "rad": "马",
+      "parts": "Tượng hình đầu ngựa, chiếc bờm dài tung bay và bốn vó ngựa",
+      "story": "Mô phỏng hình ảnh chú ngựa chiến dũng mãnh, chiếc bờm dài bay trong gió và bốn vó ngựa phi nước đại nghìn dặm -> NGỰA (马 mǎ).",
+      "type": "Tượng hình",
+      "ex": "马上 (mǎshàng - ngay lập tức), 骑马 (qímǎ - cưỡi ngựa), 罗马 (La Mã)"
+    },
+    "月": {
+      "hv": "nguyệt",
+      "m": "Mặt trăng, tháng",
+      "rad": "月",
+      "parts": "Hình vẽ vầng trăng khuyết lưỡi liềm",
+      "story": "Vầng trăng khuyết lung linh soi sáng màn đêm, hai nét gạch bên trong biểu thị bóng tối trên bề mặt trăng -> MẶT TRĂNG, THÁNG (月 yuè).",
+      "type": "Tượng hình",
+      "ex": "月亮 (yuèliang - mặt trăng), 月份 (yuèfèn - tháng), 月光 (yuèguāng - ánh trăng)"
+    },
+    "火": {
+      "hv": "hỏa",
+      "m": "Ngọn lửa, bốc hỏa, tức giận",
+      "rad": "火",
+      "parts": "Ngọn lửa bốc cháy và hai tia lửa bắn ra hai bên",
+      "story": "Mô phỏng đống củi bốc cháy hừng hực, ngọn lửa vươn cao ở giữa và hai tàn lửa (丶, 丿) bắn ra xung quanh -> LỬA (火 huǒ).",
+      "type": "Tượng hình",
+      "ex": "火车 (huǒchē - tàu hỏa), 着火 (zháohuǒ - bén lửa), 发火 (nổi giận)"
+    },
+    "木": {
+      "hv": "mộc",
+      "m": "Cây cối, gỗ, đồ gỗ",
+      "rad": "木",
+      "parts": "Thân cây ở giữa, cành lá tỏa lên trên, rễ cây đâm xuống đất",
+      "story": "Nét ngang là cành cây, nét sổ là thân cây, hai nét xiên bên dưới là chùm rễ cây cắm sâu vào lòng đất -> CÂY GỖ (木 mù).",
+      "type": "Tượng hình",
+      "ex": "树木 (shùmù - cây cối), 木头 (mùtou - khúc gỗ), 木星 (sao Mộc)"
+    },
+    "土": {
+      "hv": "thổ",
+      "m": "Đất, đất đai, thổ nhưỡng",
+      "rad": "土",
+      "parts": "Mầm cây nhô lên trên mặt đất",
+      "story": "Nét ngang bên dưới là mặt đất bao la, nét sổ và gạch ngang bên trên là mầm cây đang trồi lên khỏi lòng đất mẹ -> ĐẤT ĐAI (土 tǔ).",
+      "type": "Tượng hình & Chỉ sự",
+      "ex": "土地 (tǔdì - đất đai), 土豆 (tǔdòu - khoai tây), 本土 (bản thổ)"
+    },
+    "田": {
+      "hv": "điền",
+      "m": "Ruộng, đồng ruộng, thửa đất",
+      "rad": "田",
+      "parts": "Khu đất vuông vức được bờ ruộng chia làm 4 ô",
+      "story": "Hình vẽ một mảnh ruộng lớn được chia thành bốn ô vuông nhỏ nhờ các con bờ đắp ngăn nắp -> ĐỒNG RUỘNG (田 tián).",
+      "type": "Tượng hình",
+      "ex": "田地 (tiándì - ruộng đất), 农田 (nóngtián - ruộng đồng), 油田 (mỏ dầu)"
+    },
+    "力": {
+      "hv": "lực",
+      "m": "Sức lực, sức mạnh, năng lực",
+      "rad": "力",
+      "parts": "Cánh tay gân guốc cơ bắp cuồn cuộn đang gồng lên",
+      "story": "Hình vẽ cánh tay người đàn ông đang dốc hết cơ bắp gân cốt để cày cuốc nâng vật nặng -> SỨC LỰC, SỨC MẠNH (力 lì).",
+      "type": "Tượng hình",
+      "ex": "力量 (lìliang - sức mạnh), 努力 (nǔlì - nỗ lực), 动力 (động lực)"
+    },
+    "女": {
+      "hv": "nữ",
+      "m": "Phụ nữ, con gái, phái đẹp",
+      "rad": "女",
+      "parts": "Người phụ nữ ngồi khép nép đoan trang chắp tay",
+      "story": "Hình ảnh người phụ nữ thời xưa ngồi duyên dáng, hai tay chắp phía trước đầy đoan trang và dịu dàng -> PHỤ NỮ (女 nǚ).",
+      "type": "Tượng hình",
+      "ex": "女人 (nǚrén - phụ nữ), 女儿 (nǚ'ér - con gái), 女生 (nữ sinh)"
+    },
+    "心": {
+      "hv": "tâm",
+      "m": "Trái tim, tấm lòng, tâm trí",
+      "rad": "心",
+      "parts": "Hình vẽ quả tim với bốn ngăn mạch máu",
+      "story": "Mô phỏng quả tim của con người với các van tim và giọt máu hồng đập nhịp đập cảm xúc -> TRÁI TIM, TẤM LÒNG (心 xīn).",
+      "type": "Tượng hình",
+      "ex": "小心 (xiǎoxīn - cẩn thận), 开心 (kāixīn - vui vẻ), 放心 (fàngxīn - yên tâm)"
+    },
+    "情": {
+      "hv": "tình",
+      "m": "Tình cảm, tâm tình, tình hình",
+      "rad": "忄",
+      "parts": "忄 (Tâm: trái tim) + 青 (Thanh: trong trẻo, chân thật)",
+      "story": "Những rung động trong sáng, thuần khiết (青 qīng) xuất phát từ tận sâu đáy lòng (忄 xīn) chính là TÌNH CẢM (情 qíng).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "心情 (xīnqíng - tâm trạng), 感情 (gǎnqíng - tình cảm), 事情 (shìqing - sự việc)"
+    },
+    "给": {
+      "hv": "cấp",
+      "m": "Cho, tặng, đưa cho, cung cấp",
+      "rad": "纟",
+      "parts": "纟 (Mịch: sợi tơ buộc quà) + 合 (Hợp: trao trọn vừa vặn)",
+      "story": "Dùng sợi tơ (纟) buộc món quà vừa vặn (合 hé) trao tận tay cho đối phương -> CHO, ĐƯA CHO (给 gěi).",
+      "type": "Hình thanh & Hội ý",
+      "ex": "送给 (sònggěi - tặng cho), 递给 (trao cho), 供给 (gōngjǐ - cung cấp)"
+    },
+    "长": {
+      "hv": "trường / trưởng",
+      "m": "Dài lâu, chiều dài / Lớn lên, trưởng thành",
+      "rad": "长",
+      "parts": "Cụ già râu tóc dài chống gậy",
+      "story": "Hình vẽ người già sống lâu năm tóc dài buông xõa bay trong gió -> DÀI LÂU (cháng 长) và TRƯỞNG THÀNH (zhǎng 长).",
+      "type": "Tượng hình",
+      "ex": "很长 (hěncháng - rất dài), 长大 (zhǎngdà - lớn lên), 校长 (hiệu trưởng)"
+    },
+    "道": {
+      "hv": "đạo",
+      "m": "Con đường, đạo lý, biết, nói",
+      "rad": "辶",
+      "parts": "辶 (bước chân đi trên đường) + 首 (Thủ: cái đầu, tư tưởng)",
+      "story": "Dùng cái đầu (首 shǒu) trí tuệ soi đường dẫn lối cho bước chân (辶) vững bước, ấy là CON ĐƯỜNG, ĐẠO LÝ (道 dào).",
+      "type": "Hội ý",
+      "ex": "知道 (zhīdào - biết), 道理 (dàolǐ - đạo lý), 道路 (con đường)"
     }
   },
   "audio": {
@@ -68679,5 +69512,1603 @@
     "摇": 36,
     "咬": 36
   },
-  "audioKind": "zh"
+  "audioKind": "zh",
+  "chiet_tu": [
+    {
+      "char": "闲",
+      "pinyin": "xián",
+      "hv": "Nhàn",
+      "m": "Nhàn rỗi, thảnh thơi, rảnh rỗi",
+      "type": "Hội ý",
+      "rad": "门",
+      "parts": "木 (Mộc: cây) + 门 (Môn: cửa)",
+      "story": "Người ta rảnh rỗi thì có thú ngồi trong nhà (门) ngắm cây cảnh (木) trồng trước cửa, hoặc ngắm trăng qua khe cửa (chữ phồn thể 閒 = 门 + 月).",
+      "ex": "休闲 (xiūxián - nghỉ ngơi), 闲话 (xiánhuà - chuyện phiếm), 闲人 (xiánrén - người rảnh rỗi)",
+      "strokes": 7
+    },
+    {
+      "char": "晴",
+      "pinyin": "qíng",
+      "hv": "Tình",
+      "m": "Trời nắng, quang đãng, không mây",
+      "type": "Hình thanh & Hội ý",
+      "rad": "日",
+      "parts": "日 (Nhật: mặt trời) + 青 (Thanh: xanh biếc)",
+      "story": "Trời trong xanh (青 qīng) lại có mặt trời (日 rì) chiếu sáng rực rỡ, tất là ngày trời nắng ráo (晴 qíng).",
+      "ex": "晴天 (qíngtiān - ngày nắng), 晴朗 (qínglǎng - quang đãng), 雨过天晴 (mưa tan trời lại sáng)",
+      "strokes": 12
+    },
+    {
+      "char": "絮",
+      "pinyin": "xù",
+      "hv": "Nhứ",
+      "m": "Lôi thôi, dài dòng, bông tơ",
+      "type": "Hội ý",
+      "rad": "糸",
+      "parts": "女 (Nữ: con gái) + 口 (Khẩu: miệng) + 糸 (Mịch: sợi tơ)",
+      "story": "Con gái (女 nǚ) đã mở miệng (口 kǒu) nói thì dài dòng vô kể, như tằm nhả tơ (糸 mì), đấy gọi là lôi thôi dài dòng (絮 xù) vậy.",
+      "ex": "絮叨 (xùdao - lải nhải), 絮语 (xùyǔ - thì thầm dài dòng), 棉絮 (miánxù - sợi bông)",
+      "strokes": 12
+    },
+    {
+      "char": "男",
+      "pinyin": "nán",
+      "hv": "Nam",
+      "m": "Đàn ông, con trai, phái nam",
+      "type": "Hội ý",
+      "rad": "田",
+      "parts": "田 (Điền: đồng ruộng) + 力 (Lực: sức mạnh)",
+      "story": "Có sức lực (力 lì) để ra đồng ruộng (田 tián) cày cuốc làm việc nặng, ấy chính là người đàn ông con trai (男 nán).",
+      "ex": "男人 (nánrén - đàn ông), 男生 (nánshēng - nam sinh), 男朋友 (bạn trai)",
+      "strokes": 7
+    },
+    {
+      "char": "饮",
+      "pinyin": "yǐn",
+      "hv": "Ẩm",
+      "m": "Uống, đồ uống",
+      "type": "Hội ý",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 欠 (Khiếm: thiếu thốn)",
+      "story": "Thực phẩm (饣 shí) thiếu thốn (欠 qiàn) không có gì ăn, nên chỉ có thể UỐNG (饮 yǐn) nước cầm hơi.",
+      "ex": "饮料 (yǐnliào - đồ uống), 饮食 (yǐnshí - ẩm thực), 冷饮 (lěngyǐn - đồ uống lạnh)",
+      "strokes": 7
+    },
+    {
+      "char": "贡",
+      "pinyin": "gòng",
+      "hv": "Cống",
+      "m": "Cống nạp, dâng tặng, đóng góp",
+      "type": "Hội ý",
+      "rad": "贝",
+      "parts": "工 (Công: việc làm) + 贝 (Bối: tiền tài, bảo vật)",
+      "story": "Thời buổi muốn có việc làm (工 gōng) thì phải có tiền của bảo vật (贝 bèi) đem đi CỐNG nạp (贡 gòng) cho cấp trên.",
+      "ex": "贡献 (gòngxiàn - cống hiến), 进贡 (jìngòng - tiến cống), 贡品 (gòngpǐn - cống vật)",
+      "strokes": 7
+    },
+    {
+      "char": "狂",
+      "pinyin": "kuáng",
+      "hv": "Cuồng",
+      "m": "Điên cuồng, ngông cuồng, cuồng nhiệt",
+      "type": "Hội ý",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: con chó) + 王 (Vương: vua)",
+      "story": "Con chó (犭 quǎn) mà lại đòi làm vua (王 wáng) cai trị thiên hạ thì đúng là CUỒNG ĐIÊN (狂 kuáng).",
+      "ex": "疯狂 (fēngkuáng - điên cuồng), 狂热 (kuángrè - cuồng nhiệt), 狂风 (kuángfēng - cuồng phong)",
+      "strokes": 7
+    },
+    {
+      "char": "针",
+      "pinyin": "zhēn",
+      "hv": "Châm",
+      "m": "Cây kim, tiêm chích, châm cứu",
+      "type": "Hội ý & Hình thanh",
+      "rad": "钅",
+      "parts": "钅 (Kim: kim loại) + 十 (Thập: số mười)",
+      "story": "Một miếng kim loại (钅 jīn) mài giũa tỉ mỉ làm được mười (十 shí) CÂY KIM (针 zhēn) nhọn hoắt.",
+      "ex": "打针 (dǎzhēn - tiêm thuốc), 针灸 (zhēnjiǔ - châm cứu), 指南针 (zhǐnánzhēn - la bàn)",
+      "strokes": 5
+    },
+    {
+      "char": "字",
+      "pinyin": "zì",
+      "hv": "Tự",
+      "m": "Chữ viết, chữ Hán, văn tự",
+      "type": "Hội ý",
+      "rad": "宀",
+      "parts": "宀 (Miên: mái nhà) + 子 (Tử: con trẻ)",
+      "story": "Để giữ gìn văn tự khỏi mai một, người xưa trân quý chữ viết như con thơ (子 zǐ) được nâng niu nuôi dạy dưới mái nhà (宀 mián). Đó là chữ viết (字 zì).",
+      "ex": "汉字 (Hànzì - chữ Hán), 字典 (zìdiǎn - từ điển), 字母 (zìmǔ - chữ cái), 写字 (xiězì - viết chữ)",
+      "strokes": 6
+    },
+    {
+      "char": "休",
+      "pinyin": "xiū",
+      "hv": "Hưu",
+      "m": "Nghỉ ngơi, ngừng lại, hưu trí",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: người) + 木 (Mộc: cái cây)",
+      "story": "Người nông dân (亻 rén) làm lụng mệt nhọc dựa lưng vào gốc cây (木 mù) để hóng gió NGHỈ NGƠI (休 xiū).",
+      "ex": "休息 (xiūxi - nghỉ ngơi), 退休 (tuìxiū - nghỉ hưu), 休假 (xiūjià - nghỉ phép)",
+      "strokes": 6
+    },
+    {
+      "char": "明",
+      "pinyin": "míng",
+      "hv": "Minh",
+      "m": "Sáng sủa, thông minh, ngày mai",
+      "type": "Hội ý",
+      "rad": "日",
+      "parts": "日 (Nhật: mặt trời) + 月 (Nguyệt: mặt trăng)",
+      "story": "Hai nguồn sáng rực rỡ nhất vũ trụ là mặt trời ban ngày (日 rì) và mặt trăng ban đêm (月 yuè) cùng kết hợp lại tạo nên sự TƯƠI SÁNG (明 míng).",
+      "ex": "明天 (míngtiān - ngày mai), 明白 (míngbai - hiểu rõ), 聪明 (cōngming - thông minh)",
+      "strokes": 8
+    },
+    {
+      "char": "安",
+      "pinyin": "ān",
+      "hv": "An",
+      "m": "Yên bình, an toàn, bình an",
+      "type": "Hội ý",
+      "rad": "宀",
+      "parts": "宀 (Miên: mái nhà) + 女 (Nữ: người phụ nữ)",
+      "story": "Dưới mái nhà (宀 mián) có bàn tay người phụ nữ (女 nǚ) tề gia nội trợ thì gia đình mới thực sự AN LÀNH, bình yên (安 ān).",
+      "ex": "安全 (ānquán - an toàn), 平安 (píng'ān - bình an), 安静 (ānjìng - yên tĩnh)",
+      "strokes": 6
+    },
+    {
+      "char": "家",
+      "pinyin": "jiā",
+      "hv": "Gia",
+      "m": "Nhà, gia đình, nhà cửa",
+      "type": "Hội ý",
+      "rad": "宀",
+      "parts": "宀 (Miên: mái nhà) + 豕 (Thỉ: con lợn, con heo)",
+      "story": "Thời cổ đại, dưới mái nhà (宀) có nuôi một chú lợn (豕) chứng tỏ gia đình no ấm, có của ăn của để, tạo thành MÁI NHÀ GIA ĐÌNH (家 jiā).",
+      "ex": "回家 (huíjiā - về nhà), 大家 (dàjiā - mọi người), 家庭 (jiātíng - gia đình)",
+      "strokes": 10
+    },
+    {
+      "char": "看",
+      "pinyin": "kàn",
+      "hv": "Khán",
+      "m": "Nhìn, xem, trông coi, thăm nom",
+      "type": "Hội ý",
+      "rad": "目",
+      "parts": "手 (Thủ: bàn tay) + 目 (Mục: con mắt)",
+      "story": "Đưa bàn tay (手 shǒu) lên che trên mắt (目 mù) như mái hiên để phóng tầm mắt NHÌN (看 kàn) ra phương xa.",
+      "ex": "看见 (kànjiàn - nhìn thấy), 看书 (kànshū - đọc sách), 看电影 (kàndiànyǐng - xem phim)",
+      "strokes": 9
+    },
+    {
+      "char": "问",
+      "pinyin": "wèn",
+      "hv": "Vấn",
+      "m": "Hỏi, thăm hỏi, vấn đáp",
+      "type": "Hội ý",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 口 (Khẩu: cái miệng)",
+      "story": "Đứng trước cánh cửa (门 mén) mở miệng (口 kǒu) cất tiếng HỎI THĂM (问 wèn) gia chủ.",
+      "ex": "请问 (qǐngwèn - xin hỏi), 问题 (wèntí - câu hỏi/vấn đề), 访问 (fǎngwèn - thăm viếng)",
+      "strokes": 6
+    },
+    {
+      "char": "闻",
+      "pinyin": "wén",
+      "hv": "Văn",
+      "m": "Nghe thấy, ngửi thấy, tin tức",
+      "type": "Hội ý",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 耳 (Nhĩ: cái tai)",
+      "story": "Ghé cái tai (耳 ěr) vào khe cánh cửa (门 mén) để NGHE NGÓNG (闻 wén) tin tức bên ngoài.",
+      "ex": "新闻 (xīnwén - tin tức), 闻名 (wénmíng - nổi tiếng), 闻一闻 (ngửi thử một chút)",
+      "strokes": 9
+    },
+    {
+      "char": "闷",
+      "pinyin": "mèn",
+      "hv": "Muộn",
+      "m": "Buồn bực, bí bách, ngột ngạt",
+      "type": "Hội ý",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa khép) + 心 (Tâm: trái tim, tấm lòng)",
+      "story": "Tấm lòng (心 xīn) bị giam hãm sau cánh cửa đóng kín (门 mén) không được sẻ chia nên sinh ra BUỒN BỰC, BÍ BÁCH (闷 mèn).",
+      "ex": "郁闷 (yùmèn - u uất), 烦闷 (fánmèn - phiền muộn), 闷热 (mènrè - oi bức)",
+      "strokes": 7
+    },
+    {
+      "char": "闯",
+      "pinyin": "chuǎng",
+      "hv": "Sấm",
+      "m": "Xông vào, phi nước đại, bươn chải",
+      "type": "Hội ý",
+      "rad": "门",
+      "parts": "门 (Môn: cánh cửa) + 马 (Mã: con ngựa)",
+      "story": "Con ngựa chiến (马 mǎ) dũng mãnh phi nước đại XÔNG THẲNG qua cánh cửa (门 mén) phá tan vòng vây (闯 chuǎng).",
+      "ex": "闯荡 (chuǎngdàng - bươn chải), 闯红灯 (chuǎnghóngdēng - vượt đèn đỏ), 闯入 (xông vào)",
+      "strokes": 6
+    },
+    {
+      "char": "信",
+      "pinyin": "xìn",
+      "hv": "Tín",
+      "m": "Tin tưởng, thư từ, uy tín",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 言 (Ngôn: lời nói)",
+      "story": "Lời nói (言 yán) của con người (亻 rén) phát ra phải thành thật, nhất ngôn cửu đỉnh mới giữ trọn chữ UY TÍN (信 xìn).",
+      "ex": "相信 (xiāngxìn - tin tưởng), 信用 (xìnyòng - tín dụng), 微信 (Wēixìn - WeChat), 写信 (viết thư)",
+      "strokes": 9
+    },
+    {
+      "char": "忙",
+      "pinyin": "máng",
+      "hv": "Mang",
+      "m": "Bận rộn, tất bật, vội vã",
+      "type": "Hội ý & Hình thanh",
+      "rad": "忄",
+      "parts": "忄 (Tâm: cõi lòng) + 亡 (Vong: mất đi, tiêu tan)",
+      "story": "Công việc ngập đầu khiến tấm lòng (忄 xīn) quay cuồng như mất đi (亡 wáng) sự bình yên tĩnh lặng, ấy là BẬN RỘN (忙 máng).",
+      "ex": "很忙 (hěnmáng - rất bận), 帮忙 (bāngmáng - giúp đỡ), 匆忙 (cōngmáng - vội vã)",
+      "strokes": 6
+    },
+    {
+      "char": "泪",
+      "pinyin": "lèi",
+      "hv": "Lệ",
+      "m": "Nước mắt, giọt lệ",
+      "type": "Hội ý",
+      "rad": "氵",
+      "parts": "氵 (Thủy: giọt nước) + 目 (Mục: con mắt)",
+      "story": "Dòng nước (氵 shuǐ) tuôn chảy ra từ nơi khóe mắt (目 mù) trong lúc bi thương chính là NƯỚC MẮT (泪 lèi).",
+      "ex": "眼泪 (yǎnlèi - nước mắt), 流泪 (liúlèi - rơi lệ), 泪水 (lèishuǐ - giọt lệ)",
+      "strokes": 8
+    },
+    {
+      "char": "森",
+      "pinyin": "sēn",
+      "hv": "Sâm",
+      "m": "Rừng rậm, rậm rạp, u sầm",
+      "type": "Hội ý",
+      "rad": "木",
+      "parts": "木 + 木 + 木 (Ba cây gộp lại)",
+      "story": "Một cây làm chẳng nên non, ba cây (木 mù) chụm lại bạt ngàn tạo thành RỪNG RẬM (森 sēn) bạt ngàn.",
+      "ex": "森林 (sēnlín - rừng rậm), 阴森 (yīnsēn - u ám), 森严 (sēnyán - nghiêm ngặt)",
+      "strokes": 12
+    },
+    {
+      "char": "林",
+      "pinyin": "lín",
+      "hv": "Lâm",
+      "m": "Rừng cây, lùm cây, họ Lâm",
+      "type": "Hội ý",
+      "rad": "木",
+      "parts": "木 + 木 (Hai cây đứng cạnh)",
+      "story": "Hai cái cây (木 mù) mọc san sát bên nhau tạo thành rừng nhỏ, lùm cây (林 lín).",
+      "ex": "树林 (shùlín - rừng cây), 丛林 (cónglín - rừng rậm), 园林 (yuánlín - vườn cảnh)",
+      "strokes": 8
+    },
+    {
+      "char": "炎",
+      "pinyin": "yán",
+      "hv": "Viêm",
+      "m": "Nóng bức, rực lửa, sưng viêm",
+      "type": "Hội ý",
+      "rad": "火",
+      "parts": "火 + 火 (Hai ngọn lửa chồng lên nhau)",
+      "story": "Hai ngọn lửa (火 huǒ) cùng bốc cháy hừng hực chồng lên nhau tạo nên sức nóng THIÊU ĐỐT, rực lửa (炎 yán).",
+      "ex": "炎热 (yánrè - nóng nực), 发炎 (fāyán - phát viêm/sưng), 肺炎 (phế viêm/viêm phổi)",
+      "strokes": 8
+    },
+    {
+      "char": "晶",
+      "pinyin": "jīng",
+      "hv": "Tinh",
+      "m": "Pha lê, sáng lấp lánh, kết tinh",
+      "type": "Hội ý",
+      "rad": "日",
+      "parts": "日 + 日 + 日 (Ba mặt trời)",
+      "story": "Ba vầng thái dương (日 rì) cùng tỏa sáng rực rỡ, khúc xạ lấp lánh như viên PHA LÊ (晶 jīng).",
+      "ex": "水晶 (shuǐjīng - pha lê), 结晶 (jiéjīng - kết tinh), 亮晶晶 (liàngjīngjīng - lấp lánh)",
+      "strokes": 12
+    },
+    {
+      "char": "众",
+      "pinyin": "zhòng",
+      "hv": "Chúng",
+      "m": "Đông người, quần chúng, số đông",
+      "type": "Hội ý",
+      "rad": "人",
+      "parts": "人 + 人 + 人 (Ba người tụ họp)",
+      "story": "Nhiều người (人 rén) cùng đứng tụ họp bên nhau tạo thành ĐÁM ĐÔNG, QUẦN CHÚNG (众 zhòng).",
+      "ex": "群众 (qúnzhòng - quần chúng), 观众 (guānzhòng - khán giả), 众多 (rất đông)",
+      "strokes": 6
+    },
+    {
+      "char": "从",
+      "pinyin": "cóng",
+      "hv": "Tòng",
+      "m": "Đi theo, từ (đâu đến), tuân theo",
+      "type": "Hội ý",
+      "rad": "人",
+      "parts": "人 + 人 (Một người theo sau một người)",
+      "story": "Một người (人) bước đi trước, một người (人) bước theo sau, biểu thị hành động ĐI THEO, TÙNG PHỤC (从 cóng).",
+      "ex": "服从 (fúcóng - phục tòng), 从来 (cónglái - từ trước tới nay), 从小 (từ nhỏ)",
+      "strokes": 4
+    },
+    {
+      "char": "卡",
+      "pinyin": "kǎ",
+      "hv": "Khạp",
+      "m": "Thẻ, kẹp, bị kẹt",
+      "type": "Hội ý",
+      "rad": "卜",
+      "parts": "上 (Thượng: lên) + 下 (Hạ: xuống)",
+      "story": "Lên (上 shàng) không xong mà xuống (下 xià) cũng chẳng được, ở giữa bị KẸT (卡 kǎ) lại, như chiếc thẻ nhét vào khe kẹp.",
+      "ex": "银行卡 (yínhángkǎ - thẻ ngân hàng), 卡车 (kǎchē - xe tải), 卡住 (kǎzhù - bị kẹt)",
+      "strokes": 5
+    },
+    {
+      "char": "尖",
+      "pinyin": "jiān",
+      "hv": "Tiêm",
+      "m": "Đầu nhọn, sắc bén, tinh anh",
+      "type": "Hội ý",
+      "rad": "小",
+      "parts": "小 (Tiểu: nhỏ bé) + 大 (Đại: to lớn)",
+      "story": "Vật có phần đỉnh thì nhỏ xíu (小 xiǎo) còn phần đáy thì to bự (大 dà), tạo thành hình ĐẦU NHỌN (尖 jiān).",
+      "ex": "尖锐 (jiānruì - sắc bén), 顶尖 (dǐngjiān - hàng đầu/đỉnh chóp), 刀尖 (mũi dao)",
+      "strokes": 6
+    },
+    {
+      "char": "灭",
+      "pinyin": "miè",
+      "hv": "Diệt",
+      "m": "Dập tắt, tiêu diệt, tàn lụi",
+      "type": "Hội ý",
+      "rad": "火",
+      "parts": "一 (Nhất: thanh đậy ngang) + 火 (Hỏa: ngọn lửa)",
+      "story": "Dùng một nắp đậy (一) úp đè lên trên ngọn lửa (火 huǒ) để tước đi không khí, DẬP TẮT ngọn lửa (灭 miè).",
+      "ex": "消灭 (xiāomiè - tiêu diệt), 灭火 (mièhuǒ - dập lửa), 熄灭 (tắt lịm)",
+      "strokes": 5
+    },
+    {
+      "char": "囚",
+      "pinyin": "qiú",
+      "hv": "Tù",
+      "m": "Tù nhân, giam cầm, ngục tù",
+      "type": "Hội ý",
+      "rad": "囗",
+      "parts": "囗 (Vi: bốn bức tường) + 人 (Nhân: con người)",
+      "story": "Con người (人 rén) bị nhốt kín bên trong bốn bức tường ngục tối (囗 wéi), ấy chính là TÙ NHÂN (囚 qiú).",
+      "ex": "死囚 (sǐqiú - tử tù), 囚禁 (qiújìn - giam cầm), 囚犯 (tù nhân)",
+      "strokes": 5
+    },
+    {
+      "char": "困",
+      "pinyin": "kùn",
+      "hv": "Khốn",
+      "m": "Khó khăn, buồn ngủ, vây hãm",
+      "type": "Hội ý",
+      "rad": "囗",
+      "parts": "囗 (Vi: vây quanh) + 木 (Mộc: cái cây)",
+      "story": "Cái cây (木 mù) bị vây chặt trong bốn bức tường (囗 wéi) không có đất mọc rễ và đón nắng, rơi vào cảnh KHỐN KHÓ (困 kùn).",
+      "ex": "困难 (kùnnan - khó khăn), 困境 (kùnjìng - cảnh ngộ khó khăn), 犯困 (buồn ngủ)",
+      "strokes": 7
+    },
+    {
+      "char": "好",
+      "pinyin": "hǎo",
+      "hv": "Hảo",
+      "m": "Tốt đẹp, hay, thân thiết",
+      "type": "Hội ý",
+      "rad": "女",
+      "parts": "女 (Nữ: người mẹ/phụ nữ) + 子 (Tử: con trẻ)",
+      "story": "Gia đình có mẹ (女 nǚ) hiền từ và con cái (子 zǐ) ngoan ngoãn yêu thương nhau, đó là điều TỐT ĐẸP nhất trần đời (好 hǎo).",
+      "ex": "好人 (hǎorén - người tốt), 好吃 (hǎochī - ngon), 你好 (nǐhǎo - xin chào)",
+      "strokes": 6
+    },
+    {
+      "char": "教",
+      "pinyin": "jiào",
+      "hv": "Giáo",
+      "m": "Dạy dỗ, giáo dục, tôn giáo",
+      "type": "Hội ý",
+      "rad": "攵",
+      "parts": "孝 (Hiếu: hiếu thảo) + 攵 (Phác: roi vọt răn đe)",
+      "story": "Dùng sự nghiêm khắc roi vọt răn đe (攵) để rèn giũa con trẻ lòng hiếu thảo (孝), đó là sự DẠY DỖ, GIÁO DỤC (教 jiào).",
+      "ex": "教育 (jiàoyù - giáo dục), 教师 (jiàoshī - giáo viên), 教室 (jiàoshì - phòng học)",
+      "strokes": 11
+    },
+    {
+      "char": "笔",
+      "pinyin": "bǐ",
+      "hv": "Bút",
+      "m": "Cây bút, ngòi bút, nét viết",
+      "type": "Hội ý",
+      "rad": "竹",
+      "parts": "竹 (Trúc: cây tre trúc) + 毛 (Mao: lông thú)",
+      "story": "Cây bút lông truyền thống của người xưa có cán làm bằng thân cây trúc (竹 zhú) và đầu bút gắn bằng lông thú mềm (毛 máo) -> BÚT (笔 bǐ).",
+      "ex": "铅笔 (qiānbǐ - bút chì), 毛笔 (máobǐ - bút lông), 笔记本 (bǐjìběn - vở ghi chép)",
+      "strokes": 10
+    },
+    {
+      "char": "笑",
+      "pinyin": "xiào",
+      "hv": "Tiếu",
+      "m": "Cười, tiếng cười, nụ cười",
+      "type": "Hội ý",
+      "rad": "竹",
+      "parts": "竹 (Trúc: bụi tre) + 夭 (Yêu: uốn lượn uyển chuyển)",
+      "story": "Gió thổi qua bụi trúc (竹) uốn lượn dập dờn xào xạc (夭), phát ra âm thanh như tiếng CƯỜI vui tươi (笑 xiào).",
+      "ex": "微笑 (wēixiào - mỉm cười), 笑容 (xiàoróng - nụ cười), 笑话 (xiàohuà - chuyện cười)",
+      "strokes": 10
+    },
+    {
+      "char": "哭",
+      "pinyin": "kū",
+      "hv": "Khốc",
+      "m": "Khóc, than khóc, rơi lệ",
+      "type": "Hội ý",
+      "rad": "口",
+      "parts": "口 + 口 (Hai con mắt mở to lệ nhòa) + 犬 (Khuyển: chú chó)",
+      "story": "Hai hốc mắt (口 口) mở to đầm đìa nước mắt, cất tiếng nức nở bi thương như tiếng sủa não nề của chú chó (犬) -> KHÓC (哭 kū).",
+      "ex": "痛哭 (tòngkū - khóc nấc), 哭泣 (kūqì - khóc thút thít), 哭声 (tiếng khóc)",
+      "strokes": 10
+    },
+    {
+      "char": "思",
+      "pinyin": "sī",
+      "hv": "Tư",
+      "m": "Suy nghĩ, tư duy, tưởng nhớ",
+      "type": "Hội ý",
+      "rad": "心",
+      "parts": "田 (Điền: bộ não phân chia ô nếp nhăn) + 心 (Tâm: trái tim)",
+      "story": "Khối óc tư duy (田) kết hợp cùng cảm xúc rung động của trái tim (心 xīn) tạo nên sự SUY NGHĨ, TƯ DUY (思 sī).",
+      "ex": "思想 (sīxiǎng - tư tưởng), 思考 (sīkǎo - suy ngẫm), 意思 (yìsi - ý nghĩa)",
+      "strokes": 9
+    },
+    {
+      "char": "想",
+      "pinyin": "xiǎng",
+      "hv": "Tưởng",
+      "m": "Nghĩ, muốn, nhớ nhung, tưởng tượng",
+      "type": "Hình thanh & Hội ý",
+      "rad": "心",
+      "parts": "相 (Tương: nhìn nhau) + 心 (Tâm: trái tim)",
+      "story": "Hình bóng người ấy luôn in đậm trong trái tim (心 xīn) khiến ta ngày đêm nhìn ngắm (相 xiāng) và NHỚ NHUNG (想 xiǎng).",
+      "ex": "想念 (xiǎngniàn - nhớ nhung), 想法 (xiǎngfǎ - cách nghĩ), 想像 (xiǎngxiàng - tưởng tượng)",
+      "strokes": 13
+    },
+    {
+      "char": "忘",
+      "pinyin": "wàng",
+      "hv": "Vong",
+      "m": "Quên lãng, bỏ quên",
+      "type": "Hội ý",
+      "rad": "心",
+      "parts": "亡 (Vong: mất đi, tiêu tan) + 心 (Tâm: cõi lòng, trí nhớ)",
+      "story": "Ký ức trong cõi lòng (心 xīn) đã bị đánh mất tiêu tan (亡 wáng) không còn nhớ lại được nữa, ấy là QUÊN (忘 wàng).",
+      "ex": "忘记 (wàngjì - quên mất), 忘掉 (quên hết), 难忘 (khó quên)",
+      "strokes": 7
+    },
+    {
+      "char": "怕",
+      "pinyin": "pà",
+      "hv": "Phạ",
+      "m": "Sợ hãi, lo sợ, e rằng",
+      "type": "Hội ý & Hình thanh",
+      "rad": "忄",
+      "parts": "忄 (Tâm: cõi lòng) + 白 (Bạch: trắng bệch)",
+      "story": "Trong lòng (忄) run rẩy khiếp đảm đến mức mặt mũi tái mét, TRẮNG BỆCH (白 bái) không còn giọt máu -> SỢ (怕 pà).",
+      "ex": "害怕 (hàipà - sợ hãi), 恐怕 (kǒngpà - e rằng), 不怕 (không sợ)",
+      "strokes": 8
+    },
+    {
+      "char": "饱",
+      "pinyin": "bǎo",
+      "hv": "Bão",
+      "m": "No bụng, no nê, đầy đủ",
+      "type": "Hội ý & Hình thanh",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 包 (Bao: bao bọc tròn trịa)",
+      "story": "Nạp đủ đồ ăn (饣 shí) khiến chiếc bụng căng tròn như một chiếc bao (包 bāo) đầy ắp -> NO NÊ (饱 bǎo).",
+      "ex": "吃饱 (chībǎo - ăn no), 饱满 (bǎomǎn - căng tràn), 温饱 (wēnbǎo - no ấm)",
+      "strokes": 8
+    },
+    {
+      "char": "饿",
+      "pinyin": "è",
+      "hv": "Ngạ",
+      "m": "Đói bụng, thèm ăn",
+      "type": "Hội ý & Hình thanh",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 我 (Ngã: bản thân tôi)",
+      "story": "Bản thân tôi (我 wǒ) đang cồn cào tha thiết cần thức ăn (饣 shí) bỏ vào bụng -> ĐÓI (饿 è).",
+      "ex": "肚子饿 (đói bụng), 饥饿 (jī'è - đói khát), 挨饿 (nhịn đói)",
+      "strokes": 10
+    },
+    {
+      "char": "饭",
+      "pinyin": "fàn",
+      "hv": "Phạn",
+      "m": "Cơm, bữa ăn",
+      "type": "Hội ý & Hình thanh",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 反 (Phản: bàn tay xới cơm)",
+      "story": "Món ăn chính (饣) dùng bàn tay xới lên từng bát dẻo thơm chính là CƠM (饭 fàn).",
+      "ex": "吃饭 (chīfàn - ăn cơm), 米饭 (mǐfàn - cơm trắng), 饭店 (fàndiàn - khách sạn/nhà hàng)",
+      "strokes": 7
+    },
+    {
+      "char": "馆",
+      "pinyin": "guǎn",
+      "hv": "Quán",
+      "m": "Nhà hàng, quán ăn, nơi đón tiếp",
+      "type": "Hội ý",
+      "rad": "饣",
+      "parts": "饣 (Thực: đồ ăn) + 官 (Quan: quan lại triều đình)",
+      "story": "Nơi phục vụ đồ ăn thức uống (饣) sang trọng tiếp đón các quan khách (官) chính là QUÁN / NHÀ KHÁCH (馆 guǎn).",
+      "ex": "饭馆 (fànguǎn - quán ăn), 图书馆 (túshūguǎn - thư viện), 宾馆 (bīnguǎn - nhà nghỉ)",
+      "strokes": 11
+    },
+    {
+      "char": "体",
+      "pinyin": "tǐ",
+      "hv": "Thể",
+      "m": "Thân thể, cơ thể, thể dục",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 本 (Bản: gốc rễ nền tảng)",
+      "story": "Thân thể con người (亻 rén) chính là cội nguồn gốc rễ (本 běn) của sinh mệnh -> THÂN THỂ (体 tǐ).",
+      "ex": "身体 (shēntǐ - cơ thể), 体育 (tǐyù - thể dục), 体验 (tǐyàn - trải nghiệm)",
+      "strokes": 7
+    },
+    {
+      "char": "位",
+      "pinyin": "wèi",
+      "hv": "Vị",
+      "m": "Vị trí, chỗ ngồi, vị (ngài)",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 立 (Lập: đứng thẳng)",
+      "story": "Chỗ mà một con người (亻) đang đứng thẳng (立) đĩnh đạc chính là VỊ TRÍ, CHỖ ĐỨNG (位 wèi).",
+      "ex": "座位 (zuòwèi - chỗ ngồi), 位置 (wèizhì - vị trí), 这位 (vị này)",
+      "strokes": 7
+    },
+    {
+      "char": "住",
+      "pinyin": "zhù",
+      "hv": "Trú",
+      "m": "Ở, cư trú, dừng lại",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 主 (Chủ: chủ nhân ngọn đèn)",
+      "story": "Con người (亻) làm chủ nhân (主) thắp sáng ngọn đèn trong ngôi nhà của mình -> CƯ TRÚ, Ở LẠI (住 zhù).",
+      "ex": "住在 (zhùzài - sống ở), 住宿 (zhùsù - trọ lại), 居住 (jūzhù - cư trú)",
+      "strokes": 7
+    },
+    {
+      "char": "做",
+      "pinyin": "zuò",
+      "hv": "Tố",
+      "m": "Làm, chế tác, hành động",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 故 (Cố: sự việc)",
+      "story": "Con người (亻) đem trí lực bắt tay tạo tác nên các sự việc thành công (故) -> LÀM (做 zuò).",
+      "ex": "做饭 (zuòfàn - nấu cơm), 做事 (zuòshì - làm việc), 做法 (cách làm)",
+      "strokes": 11
+    },
+    {
+      "char": "借",
+      "pinyin": "jiè",
+      "hv": "Tá",
+      "m": "Vay, mượn, nhờ cậy",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 昔 (Tích: ngày xưa cũ)",
+      "story": "Con người (亻) vì túng thiếu mà mượn đồ cũ (昔) của bạn bè từ ngày xưa để dùng tạm -> MƯỢN / VAY (借 jiè).",
+      "ex": "借钱 (jièqián - mượn tiền), 借书 (jièshū - mượn sách), 借口 (jièkǒu - viện cớ)",
+      "strokes": 10
+    },
+    {
+      "char": "件",
+      "pinyin": "jiàn",
+      "hv": "Kiện",
+      "m": "Kiện, việc, chiếc (áo)",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: người) + 牛 (Ngưu: con bò)",
+      "story": "Thời xưa thịt một con bò (牛 niú) chia cho từng người (亻 rén) thành từng phần từng vụ -> KIỆN, VỤ VIỆC (件 jiàn).",
+      "ex": "一件衣服 (một chiếc áo), 文件 (wénjiàn - tài liệu), 条件 (tiêu chuẩn)",
+      "strokes": 6
+    },
+    {
+      "char": "化",
+      "pinyin": "huà",
+      "hv": "Hóa",
+      "m": "Biến hóa, thay đổi, chuyển biến",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: người đứng thẳng) + 匕 (Chủy: người ngã lộn nhào)",
+      "story": "Từ một người đang đứng thẳng (亻) thoắt cái biến thành người ngã lộn nhào (匕), biểu thị sự BIẾN HÓA khôn lường (化 huà).",
+      "ex": "变化 (biànhuà - biến hóa), 文化 (wénhuà - văn hóa), 现代化 (hiện đại hóa)",
+      "strokes": 4
+    },
+    {
+      "char": "伴",
+      "pinyin": "bàn",
+      "hv": "Bạn",
+      "m": "Bạn bè, đi cùng, đồng hành",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 半 (Bán: một nửa)",
+      "story": "Con người (亻) san sẻ một nửa (半 bàn) niềm vui nỗi buồn trong cuộc đời bên cạnh ta chính là BẠN ĐỒNG HÀNH (伴 bàn).",
+      "ex": "同伴 (tóngbàn - bạn đồng hành), 伴随 (bànsuí - đi cùng), 伙伴 (đối tác/bạn hữu)",
+      "strokes": 7
+    },
+    {
+      "char": "仙",
+      "pinyin": "xiān",
+      "hv": "Tiên",
+      "m": "Tiên nhân, thần tiên, bất tử",
+      "type": "Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 山 (Sơn: núi non cao vời vợi)",
+      "story": "Con người (亻) lên núi cao (山 shān) tu đạo lánh xa bụi trần tục lụy, đắc đạo thành THẦN TIÊN (仙 xiān).",
+      "ex": "神仙 (shénxiān - thần tiên), 水仙花 (hoa thủy tiên), 仙境 (cõi tiên)",
+      "strokes": 5
+    },
+    {
+      "char": "你",
+      "pinyin": "nǐ",
+      "hv": "Nhĩ",
+      "m": "Bạn, anh, chị, cậu (đối phương)",
+      "type": "Hình thanh & Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 尔 (Nhĩ: bạn bè đối diện)",
+      "story": "Người (亻) đang đứng đối diện trò chuyện trước mặt mình chính là BẠN (你 nǐ).",
+      "ex": "你好 (nǐhǎo - xin chào), 你们 (nǐmen - các bạn), 你的 (của bạn)",
+      "strokes": 7
+    },
+    {
+      "char": "他",
+      "pinyin": "tā",
+      "hv": "Tha",
+      "m": "Anh ấy, ông ấy, cậu ấy",
+      "type": "Hình thanh & Hội ý",
+      "rad": "亻",
+      "parts": "亻 (Nhân: con người) + 也 (Dã: cũng là)",
+      "story": "Người khác (亻) ngoài bạn và tôi, người ấy CŨNG LÀ (也 yě) một con người -> ANH ẤY (他 tā).",
+      "ex": "他们 (tāmen - họ), 他的 (của anh ấy), 他人 (người khác)",
+      "strokes": 5
+    },
+    {
+      "char": "她",
+      "pinyin": "tā",
+      "hv": "Tha",
+      "m": "Cô ấy, bà ấy, chị ấy",
+      "type": "Hội ý",
+      "rad": "女",
+      "parts": "女 (Nữ: người phụ nữ) + 也 (Dã: cũng là)",
+      "story": "Người phụ nữ (女 nǚ) thứ ba ngoài bạn và tôi -> CÔ ẤY (她 tā).",
+      "ex": "她们 (tāmen - các cô ấy), 她的 (của cô ấy)",
+      "strokes": 6
+    },
+    {
+      "char": "分",
+      "pinyin": "fēn",
+      "hv": "Phân",
+      "m": "Chia cắt, phút, điểm số, bộ phận",
+      "type": "Hội ý",
+      "rad": "刀",
+      "parts": "八 (Bát: rẽ sang hai bên) + 刀 (Đao: con dao)",
+      "story": "Dùng con dao (刀 dāo) sắc bén cắt đôi đồ vật, làm rẽ sang hai bên (八 bā) thành từng PHẦN (分 fēn).",
+      "ex": "分钟 (fēnzhōng - phút), 分手 (chia tay), 分开 (tách ra), 十分 (vô cùng)",
+      "strokes": 4
+    },
+    {
+      "char": "公",
+      "pinyin": "gōng",
+      "hv": "Công",
+      "m": "Công cộng, công bằng, ông nội",
+      "type": "Hội ý",
+      "rad": "八",
+      "parts": "八 (Bát: chia đều ra) + 厶 (Khứ: sự riêng tư ích kỷ)",
+      "story": "Chia đều của cải (八) mà không giữ lại mảy may tư lợi cho riêng mình (厶), đó là sự CÔNG BẰNG, CÔNG CỘNG (公 gōng).",
+      "ex": "公共汽车 (gōnggòng qìchē - xe buýt), 公园 (gōngyuán - công viên), 公司 (công ty)",
+      "strokes": 4
+    },
+    {
+      "char": "同",
+      "pinyin": "tóng",
+      "hv": "Đồng",
+      "m": "Cùng nhau, giống nhau, đồng lòng",
+      "type": "Hội ý",
+      "rad": "口",
+      "parts": "冂 (nhà lớn) + 一 (một lòng) + 口 (miệng)",
+      "story": "Mọi người cùng ở chung trong một nhà (冂) cùng cất một tiếng nói (口) đồng lòng nhất trí -> ĐỒNG LÒNG, GIỐNG NHAU (同 tóng).",
+      "ex": "同学 (tóngxué - bạn cùng lớp), 同事 (đồng nghiệp), 同意 (đồng ý)",
+      "strokes": 6
+    },
+    {
+      "char": "名",
+      "pinyin": "míng",
+      "hv": "Danh",
+      "m": "Tên gọi, danh tiếng, danh mục",
+      "type": "Hội ý",
+      "rad": "口",
+      "parts": "夕 (Tịch: đêm tối) + 口 (Khẩu: cái miệng)",
+      "story": "Trong bóng đêm tối mịt (夕 xī) không nhìn rõ mặt nhau, bắt buộc phải cất miệng (口 kǒu) gọi TÊN NHAU (名 míng) để nhận diện.",
+      "ex": "名字 (míngzi - tên), 著名 (zhùmíng - nổi tiếng), 报名 (bàomíng - đăng ký)",
+      "strokes": 6
+    },
+    {
+      "char": "卡",
+      "pinyin": "kǎ",
+      "hv": "Khạp",
+      "m": "Thẻ, bị kẹt",
+      "type": "Hội ý",
+      "rad": "卜",
+      "parts": "上 + 下",
+      "story": "Lên không được, xuống không xong, mắc kẹt ở giữa.",
+      "ex": "银行卡 (thẻ ngân hàng), 卡车 (xe tải)",
+      "strokes": 5
+    },
+    {
+      "char": "坐",
+      "pinyin": "zuò",
+      "hv": "Tọa",
+      "m": "Ngồi, đi xe/máy bay, chỗ ngồi",
+      "type": "Hội ý",
+      "rad": "土",
+      "parts": "人 + 人 (Hai người) + 土 (Thổ: mặt đất)",
+      "story": "Hai người (人人) ngồi đối diện nhau trên nền đất (土 tǔ) hàn huyên tâm sự -> NGỒI (坐 zuò).",
+      "ex": "请坐 (qǐngzuò - mời ngồi), 坐车 (zuòchē - đi xe), 坐飞机 (đi máy bay)",
+      "strokes": 7
+    },
+    {
+      "char": "块",
+      "pinyin": "kuài",
+      "hv": "Khối",
+      "m": "Đồng (tiền), miếng, tảng, cục",
+      "type": "Hình thanh & Hội ý",
+      "rad": "土",
+      "parts": "土 (Thổ: đất) + 夬 (Quái: bẻ đôi)",
+      "story": "Miếng đất (土 tǔ) được cắt gọt bẻ đôi thành từng KHỐI / MIẾNG (块 kuài), sau dùng làm đơn vị đếm tiền tệ.",
+      "ex": "一块钱 (yí kuài qián - một đồng tệ), 一块儿 (yíkuàir - cùng nhau), 冰块 (băng đá)",
+      "strokes": 7
+    },
+    {
+      "char": "城",
+      "pinyin": "chéng",
+      "hv": "Thành",
+      "m": "Thành phố, thành trì, bức tường thành",
+      "type": "Hình thanh & Hội ý",
+      "rad": "土",
+      "parts": "土 (Thổ: đất đai) + 成 (Thành: hoàn thành, vững vàng)",
+      "story": "Đất đai (土) đắp thành lũy cao kiên cố bảo vệ sự an toàn và thành tựu (成) của cư dân -> THÀNH PHỐ, THÀNH LŨY (城 chéng).",
+      "ex": "城市 (chéngshì - thành phố), 长城 (Chángchéng - Vạn Lý Trường Thành), 城堡 (lâu đài)",
+      "strokes": 9
+    },
+    {
+      "char": "买",
+      "pinyin": "mǎi",
+      "hv": "Mãi",
+      "m": "Mua vào, mua sắm",
+      "type": "Hội ý",
+      "rad": "乙",
+      "parts": "乛 (lưới gom đồ) + 头 (của cải mang về)",
+      "story": "Bỏ tiền của ra để thu nhận đồ đạc về nhà mình chính là MUA (买 mǎi).",
+      "ex": "买菜 (mǎicài - mua rau), 买单 (mǎidān - thanh toán), 买卖 (mua bán)",
+      "strokes": 6
+    },
+    {
+      "char": "卖",
+      "pinyin": "mài",
+      "hv": "Mại",
+      "m": "Bán ra, bán hàng",
+      "type": "Hội ý",
+      "rad": "十",
+      "parts": "十 (Thập: đưa ra ngoài) + 买 (Mãi: mua vào)",
+      "story": "Thêm một dấu thập (十) bên trên chữ Mua (买), biểu thị việc xuất hàng ra ngoài chợ để BÁN (卖 mài).",
+      "ex": "卖东西 (mài dōngxi - bán đồ), 外卖 (wàimài - đồ ăn giao tận nơi), 出卖 (bán đứng)",
+      "strokes": 8
+    },
+    {
+      "char": "话",
+      "pinyin": "huà",
+      "hv": "Thoại",
+      "m": "Lời nói, tiếng, lời thoại",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 舌 (Thiệt: chiếc lưỡi)",
+      "story": "Chiếc lưỡi (舌 shé) uốn lượn phát ra lời nói (讠 yán) tạo thành LỜI THOẠI, TIẾNG NÓI (话 huà).",
+      "ex": "说话 (shuōhuà - nói chuyện), 电话 (diànhuà - điện thoại), 汉语 (tiếng Hán)",
+      "strokes": 8
+    },
+    {
+      "char": "语",
+      "pinyin": "yǔ",
+      "hv": "Ngữ",
+      "m": "Ngôn ngữ, tiếng, ngạn ngữ",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 五 (Ngũ: số năm) + 口 (Khẩu: miệng)",
+      "story": "Lời nói (讠 yán) của năm (五 wǔ) miệng (口 kǒu) người cùng hòa quyện tạo thành NGÔN NGỮ (语 yǔ).",
+      "ex": "英语 (Yīngyǔ - tiếng Anh), 汉语 (Hànyǔ - tiếng Hán), 语法 (ngữ pháp)",
+      "strokes": 9
+    },
+    {
+      "char": "读",
+      "pinyin": "dú",
+      "hv": "Độc",
+      "m": "Đọc, đọc sách, học tập",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 卖 (Mại: rao bán)",
+      "story": "Mở miệng phát ra lời nói (讠 yán) đều đặn như người bán hàng rao to từng chữ trên trang sách -> ĐỌC (读 dú).",
+      "ex": "读书 (dúshū - đọc sách/đi học), 朗读 (lǎngdú - đọc to), 读者 (độc giả)",
+      "strokes": 10
+    },
+    {
+      "char": "写",
+      "pinyin": "xiě",
+      "hv": "Tả",
+      "m": "Viết, miêu tả, viết lách",
+      "type": "Hội ý",
+      "rad": "冖",
+      "parts": "冖 (Mịch: chiếc mũ che) + 与 (Dữ: cho đi)",
+      "story": "Cúi đầu dưới mái che nắn nót từng nét mực gửi gắm tâm tư trao cho đời -> VIẾT (写 xiě).",
+      "ex": "写字 (xiězì - viết chữ), 写作 (xiězuò - sáng tác), 写信 (viết thư)",
+      "strokes": 5
+    },
+    {
+      "char": "说",
+      "pinyin": "shuō",
+      "hv": "Thuyết",
+      "m": "Nói, giải thích, thuyết phục",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 兑 (Đoái: nụ cười hân hoan)",
+      "story": "Cất lời nói (讠 yán) với nụ cười hân hoan rạng rỡ (兑 duì) để giải thích thuyết phục lòng người -> NÓI (说 shuō).",
+      "ex": "说话 (shuōhuà - nói chuyện), 说明 (shuōmíng - thuyết minh/giải thích), 小说 (tiểu thuyết)",
+      "strokes": 9
+    },
+    {
+      "char": "谢",
+      "pinyin": "xiè",
+      "hv": "Tạ",
+      "m": "Cảm ơn, tạ ơn, tàn úa",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 身 (Thân: thân mình) + 寸 (Thốn: tấc lòng)",
+      "story": "Cúi gập thân mình (身 shēn), từ tận đáy tấc lòng (寸 cùn) cất lời nói (讠 yán) tri ân -> CẢM ƠN (谢 xiè).",
+      "ex": "谢谢 (xièxie - cảm ơn), 感谢 (gǎnxiè - cảm tạ), 谢绝 (từ chối khéo)",
+      "strokes": 12
+    },
+    {
+      "char": "请",
+      "pinyin": "qǐng",
+      "hv": "Thỉnh",
+      "m": "Xin mời, xin vui lòng, mời mọc",
+      "type": "Hình thanh & Hội ý",
+      "rad": "讠",
+      "parts": "讠 (Ngôn: lời nói) + 青 (Thanh: trong sáng lịch thiệp)",
+      "story": "Nói ra những lời lẽ (讠 yán) lịch thiệp nhã nhặn trong trẻo (青 qīng) để đón tiếp khách quý -> XIN MỜI (请 qǐng).",
+      "ex": "请坐 (mời ngồi), 请问 (xin hỏi), 请客 (mời ăn cơm/chiêu đãi)",
+      "strokes": 10
+    },
+    {
+      "char": "冷",
+      "pinyin": "lěng",
+      "hv": "Lãnh",
+      "m": "Lạnh lẽo, buốt giá, nguội lạnh",
+      "type": "Hình thanh & Hội ý",
+      "rad": "冫",
+      "parts": "冫 (Băng: nước đá) + 令 (Lệnh: sắc lệnh)",
+      "story": "Trời giáng sắc lệnh (令 lìng) đưa những tảng băng tuyết (冫 bīng) rơi xuống làm vạn vật buốt LẠNH (冷 lěng).",
+      "ex": "天气冷 (trời lạnh), 冷水 (nước lạnh), 冷静 (bình tĩnh)",
+      "strokes": 7
+    },
+    {
+      "char": "热",
+      "pinyin": "rè",
+      "hv": "Nhiệt",
+      "m": "Nóng bức, nhiệt tình, sốt sắng",
+      "type": "Hội ý",
+      "rad": "灬",
+      "parts": "执 (Chấp: nắm giữ đồ vật) + 灬 (Hỏa: bốn đốm lửa bốc)",
+      "story": "Đất nung và đồ vật hơ trên ngọn lửa hồng (灬 huǒ) tỏa ra hơi NÓNG (热 rè) hừng hực.",
+      "ex": "热天 (ngày nóng), 热情 (nhiệt tình), 热水 (nước nóng)",
+      "strokes": 10
+    },
+    {
+      "char": "雨",
+      "pinyin": "yǔ",
+      "hv": "Vũ",
+      "m": "Mưa, cơn mưa",
+      "type": "Tượng hình",
+      "rad": "雨",
+      "parts": "一 (Trời) + 冂 (Mây giông bao phủ) + 丨 (Trục rơi) + 丶丶丶丶 (Bốn hạt mưa)",
+      "story": "Từ trên vòm trời (一) mây đen giăng kín (冂), những hạt nước mưa (丶丶丶丶) ào ào rơi xuống trần gian -> MƯA (雨 yǔ).",
+      "ex": "下雨 (xiàyǔ - trời mưa), 雨伞 (yǔsǎn - chiếc ô dù), 大雨 (mưa to)",
+      "strokes": 8
+    },
+    {
+      "char": "雪",
+      "pinyin": "xuě",
+      "hv": "Tuyết",
+      "m": "Tuyết rơi, bông tuyết, trong trắng",
+      "type": "Hội ý",
+      "rad": "雨",
+      "parts": "雨 (Vũ: mưa gió) + 彐 (Kê: bàn tay quét tuyết)",
+      "story": "Mưa lạnh từ trời rơi xuống kết tinh thành tuyết trắng phủ dày, bàn tay (彐) cầm chổi quét dọn -> TUYẾT (雪 xuě).",
+      "ex": "下雪 (xiàxuě - tuyết rơi), 雪人 (người tuyết), 滑雪 (trượt tuyết)",
+      "strokes": 11
+    },
+    {
+      "char": "风",
+      "pinyin": "fēng",
+      "hv": "Phong",
+      "m": "Gió, phong cách, phong cảnh",
+      "type": "Hội ý & Tượng hình",
+      "rad": "风",
+      "parts": "几 (Gió thổi căng buồm) + 乂 (Gió chuyển hướng)",
+      "story": "Cánh buồm đón luồng không khí cuộn xoáy di chuyển vù vù thổi bay lá cây -> GIÓ (风 fēng).",
+      "ex": "大风 (dàfēng - gió to), 风景 (fēngjǐng - phong cảnh), 风格 (phong cách)",
+      "strokes": 4
+    },
+    {
+      "char": "海",
+      "pinyin": "hǎi",
+      "hv": "Hải",
+      "m": "Biển cả, đại dương, bao la",
+      "type": "Hình thanh & Hội ý",
+      "rad": "氵",
+      "parts": "氵 (Thủy: nước) + 每 (Mỗi: mỗi ngày) / 母 (Mẹ hiền)",
+      "story": "Biển cả như người mẹ hiền (母) bao la, mỗi ngày (每 měi) đều dang tay đón nhận hàng trăm vạn dòng nước (氵 shuǐ) đổ về -> BIỂN CẢ (海 hǎi).",
+      "ex": "大海 (dàhǎi - biển lớn), 海边 (hǎibiān - bờ biển), 海鲜 (hǎixiān - hải sản)",
+      "strokes": 10
+    },
+    {
+      "char": "药",
+      "pinyin": "yào",
+      "hv": "Dược",
+      "m": "Thuốc men, viên thuốc, chữa trị",
+      "type": "Hình thanh & Hội ý",
+      "rad": "艹",
+      "parts": "艹 (Thảo: cây cỏ lá thuốc) + 约 (Ước: ước lượng / Nhạc: tiếng nhạc thư thái)",
+      "story": "Các vị thảo dược cây cỏ (艹 cǎo) phối ngũ ước lượng liều lượng tạo thành thang thuốc nhiệm màu đem lại niềm vui (乐 yuè) cho người bệnh -> THUỐC (药 yào).",
+      "ex": "吃药 (chīyào - uống thuốc), 药店 (yàodiàn - hiệu thuốc), 中药 (thuốc bắc)",
+      "strokes": 9
+    },
+    {
+      "char": "病",
+      "pinyin": "bìng",
+      "hv": "Bệnh",
+      "m": "Bị bệnh, đau ốm, căn bệnh",
+      "type": "Hình thanh & Hội ý",
+      "rad": "疒",
+      "parts": "疒 (Nạch: chiếc giường người ốm nằm) + 丙 (Bính: lửa nóng sốt bừng bừng)",
+      "story": "Người nằm liệt trên giường bệnh (疒) trán nóng bừng bừng như lửa đốt (丙 bǐng) -> BỊ BỆNH, ỐM ĐAU (病 bìng).",
+      "ex": "生病 (shēngbìng - bị bệnh), 医院 (yīyuàn - bệnh viện), 看病 (kànbìng - khám bệnh)",
+      "strokes": 10
+    },
+    {
+      "char": "医",
+      "pinyin": "yī",
+      "hv": "Y",
+      "m": "Y học, bác sĩ, thầy thuốc",
+      "type": "Hội ý",
+      "rad": "匚",
+      "parts": "匚 (Hộp đựng dụng cụ) + 矢 (Mũi tên phẫu thuật trị thương)",
+      "story": "Thầy thuốc mở hộp dụng cụ (匚 fāng) lấy mũi trâm và thuốc men (矢 shǐ) cứu chữa vết thương -> Y BÁC SĨ (医 yī).",
+      "ex": "医生 (yīshēng - bác sĩ), 医院 (bệnh viện), 中医 (đông y)",
+      "strokes": 7
+    },
+    {
+      "char": "车",
+      "pinyin": "chē",
+      "hv": "Xa",
+      "m": "Xe cộ, toa xe, bánh xe",
+      "type": "Tượng hình",
+      "rad": "车",
+      "parts": "Tượng hình cỗ xe hai bánh nhìn từ trên xuống",
+      "story": "Mô phỏng trục xe ngang, trục dọc và hai bánh xe lăn bánh bon bon chở người trên đường -> XE CỘ (车 chē).",
+      "ex": "车站 (chēzhàn - bến xe/ga), 开车 (kāichē - lái xe), 火车 (tàu hỏa), 自行车 (xe đạp)",
+      "strokes": 4
+    },
+    {
+      "char": "钱",
+      "pinyin": "qián",
+      "hv": "Tiền",
+      "m": "Tiền bạc, tiền tệ, của cải",
+      "type": "Hình thanh & Hội ý",
+      "rad": "钅",
+      "parts": "钅 (Kim: kim loại đồng vàng) + 戋 (Tàn: mũi giáo nhỏ bảo vệ của cải)",
+      "story": "Miếng kim loại (钅 jīn) quý giá được con người cầm binh khí bảo vệ cất giữ để trao đổi hàng hóa -> TIỀN BẠC (钱 qián).",
+      "ex": "钱包 (qiánbāo - ví tiền), 多少钱 (bao nhiêu tiền), 有钱 (giàu có)",
+      "strokes": 10
+    },
+    {
+      "char": "花",
+      "pinyin": "huā",
+      "hv": "Hoa",
+      "m": "Bông hoa, tiêu xài, hoa mắt",
+      "type": "Hình thanh & Hội ý",
+      "rad": "艹",
+      "parts": "艹 (Thảo: cây cỏ) + 化 (Hóa: biến hóa nở rộ)",
+      "story": "Cây cỏ (艹 cǎo) trải qua ngày tháng biến hóa (化 huà) kỳ diệu nở bung thành những BÔNG HOA (花 huā) rực rỡ ngát hương.",
+      "ex": "鲜花 (xiānhuā - hoa tươi), 花钱 (huāqián - tiêu tiền), 花园 (huāyuán - vườn hoa)",
+      "strokes": 7
+    },
+    {
+      "char": "茶",
+      "pinyin": "chá",
+      "hv": "Trà",
+      "m": "Lá chè, trà xanh, nước chè",
+      "type": "Hội ý",
+      "rad": "艹",
+      "parts": "艹 (Thảo: lá cây) + 人 (Nhân: con người) + 木 (Mộc: thân cây gỗ)",
+      "story": "Con người (人 rén) đứng giữa trời đất hái từng búp lá cây (艹) trên cây chè cổ thụ (木 mù) pha chén nước thơm đượm -> TRÀ (茶 chá).",
+      "ex": "喝茶 (hēchá - uống trà), 绿茶 (lǜchá - trà xanh), 茶馆 (quán trà)",
+      "strokes": 9
+    },
+    {
+      "char": "鸟",
+      "pinyin": "niǎo",
+      "hv": "Điểu",
+      "m": "Con chim, loài chim",
+      "type": "Tượng hình",
+      "rad": "鸟",
+      "parts": "Tượng hình chú chim đậu trên cành có mỏ, mắt và đuôi dài",
+      "story": "Hình vẽ chú chim có mỏ nhọn, mắt tròn lấp lánh (dấu chấm) và bộ lông đuôi dài óng ả đang cất tiếng hót véo von -> CHIM (鸟 niǎo).",
+      "ex": "小鸟 (xiǎoniǎo - chim non), 飞鸟 (chim bay), 鸟巢 (tổ chim)",
+      "strokes": 5
+    },
+    {
+      "char": "鱼",
+      "pinyin": "yú",
+      "hv": "Ngư",
+      "m": "Con cá, loài cá",
+      "type": "Tượng hình",
+      "rad": "鱼",
+      "parts": "Tượng hình đầu nhọn, thân có vảy và vây đuôi cá bơi lội",
+      "story": "Hình ảnh con cá đang bơi lội tung tăng trong làn nước, phần đầu nhọn rẽ sóng, thân có vảy và đuôi chèo lái -> CÁ (鱼 yú).",
+      "ex": "吃鱼 (chīyú - ăn cá), 钓鱼 (diàoyú - câu cá), 鱼肉 (thịt cá)",
+      "strokes": 8
+    },
+    {
+      "char": "狗",
+      "pinyin": "gǒu",
+      "hv": "Cẩu",
+      "m": "Con chó, loài chó",
+      "type": "Hình thanh & Hội ý",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: loài thú bốn chân) + 句 (Cú: con non cuộn tròn)",
+      "story": "Chú chó nhỏ (犭) nằm cuộn tròn (句) canh cổng trung thành bên chủ -> CON CHÓ (狗 gǒu).",
+      "ex": "小狗 (xiǎogǒu - chó con), 热狗 (règǒu - xúc xích hotdog), 猎狗 (chó săn)",
+      "strokes": 8
+    },
+    {
+      "char": "猫",
+      "pinyin": "māo",
+      "hv": "Miêu",
+      "m": "Con mèo, họ mèo",
+      "type": "Hình thanh & Hội ý",
+      "rad": "犭",
+      "parts": "犭 (Khuyển: thú nuôi) + 苗 (Miêu: mạ non rình bắt chuột)",
+      "story": "Loài thú nhỏ (犭) rón rén nấp sau ruộng mạ non (苗 miáo) kiên nhẫn rình bắt lũ chuột phá hoại mùa màng -> CON MÈO (猫 māo).",
+      "ex": "小猫 (xiǎomāo - mèo con), 熊猫 (xióngmāo - gấu trúc), 猫咪 (mèo cưng)",
+      "strokes": 11
+    },
+    {
+      "char": "马",
+      "pinyin": "mǎ",
+      "hv": "Mã",
+      "m": "Con ngựa, loài ngựa, họ Mã",
+      "type": "Tượng hình",
+      "rad": "马",
+      "parts": "Tượng hình đầu ngựa, chiếc bờm dài tung bay và bốn vó ngựa",
+      "story": "Mô phỏng hình ảnh chú ngựa chiến dũng mãnh, chiếc bờm dài bay trong gió và bốn vó ngựa phi nước đại nghìn dặm -> NGỰA (马 mǎ).",
+      "ex": "马上 (mǎshàng - ngay lập tức), 骑马 (qímǎ - cưỡi ngựa), 罗马 (La Mã)",
+      "strokes": 3
+    },
+    {
+      "char": "日",
+      "pinyin": "rì",
+      "hv": "Nhật",
+      "m": "Mặt trời, ngày",
+      "type": "Tượng hình",
+      "rad": "日",
+      "parts": "Vòng tròn có vết đen ở giữa tượng trưng cho vầng thái dương",
+      "story": "Mô phỏng hình ảnh mặt trời rực rỡ, dấu chấm ở giữa là vết đen mặt trời giúp phân biệt với hình tròn trống -> MẶT TRỜI, NGÀY (日 rì).",
+      "ex": "日子 (rìzi - ngày tháng), 日本 (Rìběn - Nhật Bản), 日记 (rìjì - nhật ký)",
+      "strokes": 4
+    },
+    {
+      "char": "月",
+      "pinyin": "yuè",
+      "hv": "Nguyệt",
+      "m": "Mặt trăng, tháng",
+      "type": "Tượng hình",
+      "rad": "月",
+      "parts": "Hình vẽ vầng trăng khuyết lưỡi liềm",
+      "story": "Vầng trăng khuyết lung linh soi sáng màn đêm, hai nét gạch bên trong biểu thị bóng tối trên bề mặt trăng -> MẶT TRĂNG, THÁNG (月 yuè).",
+      "ex": "月亮 (yuèliang - mặt trăng), 月份 (yuèfèn - tháng), 月光 (yuèguāng - ánh trăng)",
+      "strokes": 4
+    },
+    {
+      "char": "山",
+      "pinyin": "shān",
+      "hv": "Sơn",
+      "m": "Núi, ngọn núi",
+      "type": "Tượng hình",
+      "rad": "山",
+      "parts": "Ba ngọn núi nhấp nhô nối tiếp nhau",
+      "story": "Mô phỏng hình ảnh ba đỉnh núi sừng sững giữa đất trời, đỉnh ở giữa cao vút, hai đỉnh bên cạnh thoai thoải -> NÚI (山 shān).",
+      "ex": "爬山 (páshān - leo núi), 高山 (gāoshān - núi cao), 山水 (shānshuǐ - phong cảnh)",
+      "strokes": 3
+    },
+    {
+      "char": "水",
+      "pinyin": "shuǐ",
+      "hv": "Thủy",
+      "m": "Nước, sông nước, chất lỏng",
+      "type": "Tượng hình",
+      "rad": "水",
+      "parts": "Dòng nước chảy ở giữa và các giọt nước bắn ra hai bên",
+      "story": "Nét sổ móc ở giữa là dòng sông chính cuồn cuộn chảy, các nét chấm hai bên là bọt nước tung bay -> NƯỚC (水 shuǐ).",
+      "ex": "喝水 (hēshuǐ - uống nước), 水果 (shuǐguǒ - hoa quả), 开水 (kāishuǐ - nước sôi)",
+      "strokes": 4
+    },
+    {
+      "char": "火",
+      "pinyin": "huǒ",
+      "hv": "Hỏa",
+      "m": "Ngọn lửa, bốc hỏa, tức giận",
+      "type": "Tượng hình",
+      "rad": "火",
+      "parts": "Ngọn lửa bốc cháy và hai tia lửa bắn ra hai bên",
+      "story": "Mô phỏng đống củi bốc cháy hừng hực, ngọn lửa vươn cao ở giữa và hai tàn lửa (丶, 丿) bắn ra xung quanh -> LỬA (火 huǒ).",
+      "ex": "火车 (huǒchē - tàu hỏa), 着火 (zháohuǒ - bén lửa), 发火 (nổi giận)",
+      "strokes": 4
+    },
+    {
+      "char": "木",
+      "pinyin": "mù",
+      "hv": "Mộc",
+      "m": "Cây cối, gỗ, đồ gỗ",
+      "type": "Tượng hình",
+      "rad": "木",
+      "parts": "Thân cây ở giữa, cành lá tỏa lên trên, rễ cây đâm xuống đất",
+      "story": "Nét ngang là cành cây, nét sổ là thân cây, hai nét xiên bên dưới là chùm rễ cây cắm sâu vào lòng đất -> CÂY GỖ (木 mù).",
+      "ex": "树木 (shùmù - cây cối), 木头 (mùtou - khúc gỗ), 木星 (sao Mộc)",
+      "strokes": 4
+    },
+    {
+      "char": "土",
+      "pinyin": "tǔ",
+      "hv": "Thổ",
+      "m": "Đất, đất đai, thổ nhưỡng",
+      "type": "Tượng hình & Chỉ sự",
+      "rad": "土",
+      "parts": "Mầm cây nhô lên trên mặt đất",
+      "story": "Nét ngang bên dưới là mặt đất bao la, nét sổ và gạch ngang bên trên là mầm cây đang trồi lên khỏi lòng đất mẹ -> ĐẤT ĐAI (土 tǔ).",
+      "ex": "土地 (tǔdì - đất đai), 土豆 (tǔdòu - khoai tây), 本土 (bản thổ)",
+      "strokes": 3
+    },
+    {
+      "char": "田",
+      "pinyin": "tián",
+      "hv": "Điền",
+      "m": "Ruộng, đồng ruộng, thửa đất",
+      "type": "Tượng hình",
+      "rad": "田",
+      "parts": "Khu đất vuông vức được bờ ruộng chia làm 4 ô",
+      "story": "Hình vẽ một mảnh ruộng lớn được chia thành bốn ô vuông nhỏ nhờ các con bờ đắp ngăn nắp -> ĐỒNG RUỘNG (田 tián).",
+      "ex": "田地 (tiándì - ruộng đất), 农田 (nóngtián - ruộng đồng), 油田 (mỏ dầu)",
+      "strokes": 5
+    },
+    {
+      "char": "力",
+      "pinyin": "lì",
+      "hv": "Lực",
+      "m": "Sức lực, sức mạnh, năng lực",
+      "type": "Tượng hình",
+      "rad": "力",
+      "parts": "Cánh tay gân guốc cơ bắp cuồn cuộn đang gồng lên",
+      "story": "Hình vẽ cánh tay người đàn ông đang dốc hết cơ bắp gân cốt để cày cuốc nâng vật nặng -> SỨC LỰC, SỨC MẠNH (力 lì).",
+      "ex": "力量 (lìliang - sức mạnh), 努力 (nǔlì - nỗ lực), 动力 (động lực)",
+      "strokes": 2
+    },
+    {
+      "char": "门",
+      "pinyin": "mén",
+      "hv": "Môn",
+      "m": "Cửa, cổng, môn học",
+      "type": "Tượng hình",
+      "rad": "门",
+      "parts": "Khung cánh cửa hai cánh khép mở",
+      "story": "Chữ phồn thể 門 vẽ hai cánh cửa lớn có then cài, chữ giản thể 门 giản lược lại thành khung cửa và cánh cửa -> CÁNH CỬA (门 mén).",
+      "ex": "门口 (ménkǒu - cổng/cửa), 开门 (kāimén - mở cửa), 门票 (vé vào cửa)",
+      "strokes": 3
+    },
+    {
+      "char": "人",
+      "pinyin": "rén",
+      "hv": "Nhân",
+      "m": "Người, con người, nhân loại",
+      "type": "Tượng hình",
+      "rad": "人",
+      "parts": "Hình người đang sải hai chân bước đi",
+      "story": "Mô phỏng dáng đứng của con người đang sải hai bước chân hiên ngang tiến về phía trước -> CON NGƯỜI (人 rén).",
+      "ex": "人们 (rénmen - mọi người), 人口 (rénkǒu - dân số), 好人 (người tốt)",
+      "strokes": 2
+    },
+    {
+      "char": "女",
+      "pinyin": "nǚ",
+      "hv": "Nữ",
+      "m": "Phụ nữ, con gái, phái đẹp",
+      "type": "Tượng hình",
+      "rad": "女",
+      "parts": "Người phụ nữ ngồi khép nép đoan trang chắp tay",
+      "story": "Hình ảnh người phụ nữ thời xưa ngồi duyên dáng, hai tay chắp phía trước đầy đoan trang và dịu dàng -> PHỤ NỮ (女 nǚ).",
+      "ex": "女人 (nǚrén - phụ nữ), 女儿 (nǚ'ér - con gái), 女生 (nữ sinh)",
+      "strokes": 3
+    },
+    {
+      "char": "子",
+      "pinyin": "zǐ",
+      "hv": "Tử",
+      "m": "Con cái, đứa trẻ, người quân tử",
+      "type": "Tượng hình",
+      "rad": "子",
+      "parts": "Đứa trẻ sơ sinh quấn tã vung hai tay chào đời",
+      "story": "Nét ngang là hai cánh tay dang rộng mừng vui, nét cong móc là phần thân quấn tã của đứa trẻ mới sinh -> CON TRẺ (子 zǐ).",
+      "ex": "儿子 (érzi - con trai), 孩子 (háizi - trẻ con), 本子 (cuốn sổ)",
+      "strokes": 3
+    },
+    {
+      "char": "友",
+      "pinyin": "yǒu",
+      "hv": "Hữu",
+      "m": "Bạn bè, thân thiết, hữu nghị",
+      "type": "Hội ý",
+      "rad": "又",
+      "parts": "又 (Hựu: bàn tay) + 又 (bàn tay nắm chặt)",
+      "story": "Hai bàn tay của hai người bạn bắt chặt lấy nhau cùng nhìn về một hướng -> BẠN BÈ, HỮU NGHỊ (友 yǒu).",
+      "ex": "朋友 (péngyou - bạn bè), 友好 (yǒuhǎo - hữu nghị), 网友 (bạn qua mạng)",
+      "strokes": 4
+    },
+    {
+      "char": "朋",
+      "pinyin": "péng",
+      "hv": "Bằng",
+      "m": "Bạn bè, bè bạn, tụ họp",
+      "type": "Hội ý & Tượng hình",
+      "rad": "月",
+      "parts": "月 + 月 (Hai chuỗi ngọc vỏ sò sánh đôi)",
+      "story": "Thời cổ dùng vỏ sò xâu thành chuỗi làm tiền tệ, hai chuỗi vỏ sò xâu song song sánh bước bên nhau như đôi bạn thân thiết -> BẠN HỮU (朋 péng).",
+      "ex": "朋友 (péngyou - bạn bè), 亲朋 (họ hàng bạn hữu)",
+      "strokes": 8
+    },
+    {
+      "char": "心",
+      "pinyin": "xīn",
+      "hv": "Tâm",
+      "m": "Trái tim, tấm lòng, tâm trí",
+      "type": "Tượng hình",
+      "rad": "心",
+      "parts": "Hình vẽ quả tim với bốn ngăn mạch máu",
+      "story": "Mô phỏng quả tim của con người với các van tim và giọt máu hồng đập nhịp đập cảm xúc -> TRÁI TIM, TẤM LÒNG (心 xīn).",
+      "ex": "小心 (xiǎoxīn - cẩn thận), 开心 (kāixīn - vui vẻ), 放心 (fàngxīn - yên tâm)",
+      "strokes": 4
+    },
+    {
+      "char": "爱",
+      "pinyin": "ài",
+      "hv": "Ái",
+      "m": "Yêu thương, tình yêu, yêu thích",
+      "type": "Hội ý",
+      "rad": "爫",
+      "parts": "爫 (bàn tay vuốt ve) + 冖 (mái che bảo bọc) + 友 (bạn bè) / 心 (trái tim)",
+      "story": "Dang rộng bàn tay (爫) che chở (冖) cho người mình thương yêu bằng cả tấm lòng chân thành (心) như người tri kỷ (友) -> TÌNH YÊU (爱 ài).",
+      "ex": "爱情 (àiqíng - tình yêu), 爱好 (àihào - sở thích), 可爱 (kě'ài - đáng yêu)",
+      "strokes": 10
+    },
+    {
+      "char": "情",
+      "pinyin": "qíng",
+      "hv": "Tình",
+      "m": "Tình cảm, tâm tình, tình hình",
+      "type": "Hình thanh & Hội ý",
+      "rad": "忄",
+      "parts": "忄 (Tâm: trái tim) + 青 (Thanh: trong trẻo, chân thật)",
+      "story": "Những rung động trong sáng, thuần khiết (青 qīng) xuất phát từ tận sâu đáy lòng (忄 xīn) chính là TÌNH CẢM (情 qíng).",
+      "ex": "心情 (xīnqíng - tâm trạng), 感情 (gǎnqíng - tình cảm), 事情 (shìqing - sự việc)",
+      "strokes": 11
+    },
+    {
+      "char": "感",
+      "pinyin": "gǎn",
+      "hv": "Cảm",
+      "m": "Cảm giác, cảm động, biết ơn",
+      "type": "Hội ý & Hình thanh",
+      "rad": "心",
+      "parts": "咸 (Hàm: chạm tới, tất cả) + 心 (Tâm: trái tim)",
+      "story": "Mọi xúc cảm chạm tới (咸 xián) và làm rung động trái tim (心 xīn) tạo nên CẢM XÚC, LÒNG BIẾT ƠN (感 gǎn).",
+      "ex": "感动 (gǎndòng - cảm động), 感谢 (gǎnxiè - cảm ơn), 感觉 (gǎnjué - cảm giác)",
+      "strokes": 13
+    },
+    {
+      "char": "吃",
+      "pinyin": "chī",
+      "hv": "Ngật",
+      "m": "Ăn, thưởng thức đồ ăn",
+      "type": "Hội ý & Hình thanh",
+      "rad": "口",
+      "parts": "口 (Khẩu: cái miệng) + 乞 (Khất: xin cầu đồ ăn)",
+      "story": "Mở to chiếc miệng (口 kǒu) đón nhận thức ăn cầu xin được (乞 qǐ) bỏ vào bụng thưởng thức -> ĂN (吃 chī).",
+      "ex": "吃饭 (chīfàn - ăn cơm), 好吃 (ngon), 小吃 (món ăn vặt)",
+      "strokes": 6
+    },
+    {
+      "char": "喝",
+      "pinyin": "hē",
+      "hv": "Hát",
+      "m": "Uống nước, uống rượu, uống trà",
+      "type": "Hình thanh & Hội ý",
+      "rad": "口",
+      "parts": "口 (Khẩu: cái miệng) + 曷 (Hạt: há họng thở dốc vì khát)",
+      "story": "Miệng (口 kǒu) đang khô khát há hốc cất tiếng gọi chén nước mát lành để UỐNG (喝 hē).",
+      "ex": "喝茶 (hēchá - uống trà), 喝水 (uống nước), 喝酒 (hējiǔ - uống rượu)",
+      "strokes": 12
+    },
+    {
+      "char": "听",
+      "pinyin": "tīng",
+      "hv": "Thính",
+      "m": "Nghe, lắng nghe, tuân theo",
+      "type": "Hội ý & Hình thanh",
+      "rad": "口",
+      "parts": "口 (Khẩu: lời nói) + 斤 (Cân: chiếc rìu / cân nhắc)",
+      "story": "Mỗi lời nói cất ra từ miệng (口 kǒu) đều được tai đón nhận và cân nhắc (斤 jīn) suy ngẫm kỹ lưỡng -> LẮNG NGHE (听 tīng).",
+      "ex": "听说 (tīngshuō - nghe nói), 听力 (tīnglì - kỹ năng nghe), 好听 (hay)",
+      "strokes": 7
+    },
+    {
+      "char": "见",
+      "pinyin": "jiàn",
+      "hv": "Kiến",
+      "m": "Thấy, nhìn thấy, gặp gỡ",
+      "type": "Hội ý",
+      "rad": "见",
+      "parts": "目 (Mắt) trên chân người (儿)",
+      "story": "Một người (儿) mở to đôi mắt (目 mù) chăm chú phóng tầm nhìn để NHÌN THẤY, GẶP GỠ (见 jiàn).",
+      "ex": "看见 (kànjiàn - nhìn thấy), 再见 (zàijiàn - tạm biệt), 见面 (gặp mặt)",
+      "strokes": 4
+    },
+    {
+      "char": "会",
+      "pinyin": "huì",
+      "hv": "Hội",
+      "m": "Biết (qua học tập), cuộc họp, hội ngộ",
+      "type": "Hội ý",
+      "rad": "人",
+      "parts": "人 (nhiều người tụ họp) + 云 (nói chuyện, mây tụ)",
+      "story": "Mọi người (人 rén) tụ họp lại cùng bàn bạc trao đổi (云 yún) tạo thành CUỘC HỌP, qua trao đổi mà BIẾT (会 huì).",
+      "ex": "开会 (kāihuì - họp), 学会 (học được), 会议 (hội nghị)",
+      "strokes": 6
+    },
+    {
+      "char": "能",
+      "pinyin": "néng",
+      "hv": "Năng",
+      "m": "Có thể (năng lực, điều kiện), tài năng",
+      "type": "Tượng hình",
+      "rad": "月",
+      "parts": "Mô phỏng hình chú gấu dũng mãnh, đầy sức lực và móng vuốt",
+      "story": "Hình vẽ chú gấu to lớn có đầu, thân mình vạm vỡ và đôi bàn chân dũng mãnh, biểu thị NĂNG LỰC to lớn CÓ THỂ làm được mọi việc (能 néng).",
+      "ex": "能够 (nénggòu - có thể), 能力 (nénglì - năng lực), 经常能 (thường có thể)",
+      "strokes": 10
+    },
+    {
+      "char": "给",
+      "pinyin": "gěi",
+      "hv": "Cấp",
+      "m": "Cho, tặng, đưa cho, cung cấp",
+      "type": "Hình thanh & Hội ý",
+      "rad": "纟",
+      "parts": "纟 (Mịch: sợi tơ buộc quà) + 合 (Hợp: trao trọn vừa vặn)",
+      "story": "Dùng sợi tơ (纟) buộc món quà vừa vặn (合 hé) trao tận tay cho đối phương -> CHO, ĐƯA CHO (给 gěi).",
+      "ex": "送给 (sònggěi - tặng cho), 递给 (trao cho), 供给 (gōngjǐ - cung cấp)",
+      "strokes": 9
+    },
+    {
+      "char": "走",
+      "pinyin": "zǒu",
+      "hv": "Tẩu",
+      "m": "Đi bộ, rời đi, chạy",
+      "type": "Hội ý",
+      "rad": "走",
+      "parts": "土 (đất) + 止 (bước chân)",
+      "story": "Bàn chân (止 zhǐ) liên tục vung bước in dấu trên mặt đất (土 tǔ) -> ĐI BỘ, RỜI ĐI (走 zǒu).",
+      "ex": "走路 (zǒulù - đi bộ), 走开 (zǒukāi - tránh ra), 逃走 (chạy trốn)",
+      "strokes": 7
+    },
+    {
+      "char": "跑",
+      "pinyin": "pǎo",
+      "hv": "Bào",
+      "m": "Chạy, chạy bộ, chạy trốn",
+      "type": "Hình thanh & Hội ý",
+      "rad": "足",
+      "parts": "足 (Túc: đôi bàn chân) + 包 (Bao: cuộn tròn bung nhanh)",
+      "story": "Đôi bàn chân (足 zú) dồn hết sức guồng nhanh như lốc cuộn (包 bāo) trên đường đua -> CHẠY (跑 pǎo).",
+      "ex": "跑步 (pǎobù - chạy bộ), 赛跑 (chạy thi), 逃跑 (bỏ chạy)",
+      "strokes": 12
+    },
+    {
+      "char": "开",
+      "pinyin": "kāi",
+      "hv": "Khai",
+      "m": "Mở ra, bắt đầu, lái xe, nở hoa",
+      "type": "Hội ý",
+      "rad": "廾",
+      "parts": "Hai cánh cổng lớn có chiếc then ngang rút ra",
+      "story": "Hai bàn tay nhấc chiếc then cài ngang cửa kéo sang hai bên để MỞ CỔNG (开 kāi).",
+      "ex": "开门 (kāimén - mở cửa), 开车 (kāichē - lái xe), 开始 (kāishǐ - bắt đầu)",
+      "strokes": 4
+    },
+    {
+      "char": "关",
+      "pinyin": "guān",
+      "hv": "Quan",
+      "m": "Đóng lại, tắt (đèn), cửa ải, liên quan",
+      "type": "Hội ý",
+      "rad": "丷",
+      "parts": "Hai cánh cửa khép lại có chốt cài",
+      "story": "Hai cánh cửa khép chặt lại có chiếc then cài ngang bảo vệ cửa ải an toàn -> ĐÓNG LẠI (关 guān).",
+      "ex": "关门 (guānmén - đóng cửa), 关灯 (guāndēng - tắt đèn), 关系 (guānxì - quan hệ)",
+      "strokes": 6
+    },
+    {
+      "char": "上",
+      "pinyin": "shàng",
+      "hv": "Thượng",
+      "m": "Ở trên, lên trên, trước",
+      "type": "Chỉ sự",
+      "rad": "一",
+      "parts": "Vạch ngang làm chuẩn mốc, nét dựng đứng nhô lên phía trên",
+      "story": "Lấy một đường ngang làm chuẩn mốc, dấu gạch đứng nhô lên phía trên đường chuẩn ấy để chỉ phương hướng PHÍA TRÊN, ĐI LÊN (上 shàng).",
+      "ex": "上班 (shàngbān - đi làm), 上网 (shàngwǎng - lướt web), 上面 (phía trên)",
+      "strokes": 3
+    },
+    {
+      "char": "下",
+      "pinyin": "xià",
+      "hv": "Hạ",
+      "m": "Ở dưới, xuống dưới, sau",
+      "type": "Chỉ sự",
+      "rad": "一",
+      "parts": "Vạch ngang làm chuẩn mốc, nét sổ buông thõng xuống dưới",
+      "story": "Lấy một đường ngang làm chuẩn mốc, dấu gạch sổ buông cắm xuống bên dưới đường chuẩn ấy để chỉ phương hướng PHÍA DƯỚI, ĐI XUỐNG (下 xià).",
+      "ex": "下班 (xiàbān - tan làm), 下课 (xiàkè - tan học), 下雨 (xiàyǔ - trời mưa)",
+      "strokes": 3
+    },
+    {
+      "char": "中",
+      "pinyin": "zhōng",
+      "hv": "Trung",
+      "m": "Ở giữa, trung tâm, trúng đích",
+      "type": "Chỉ sự",
+      "rad": "丨",
+      "parts": "Tấm bia hình chữ nhật có mũi tên cắm trúng chính giữa",
+      "story": "Hình vẽ một mũi tên (丨) bắn xuyên qua hồng tâm tấm bia hình vuông (口) cắm trúng CHÍNH GIỮA (中 zhōng).",
+      "ex": "中国 (Zhōngguó - Trung Quốc), 中文 (tiếng Trung), 中午 (buổi trưa)",
+      "strokes": 4
+    },
+    {
+      "char": "大",
+      "pinyin": "dà",
+      "hv": "Đại",
+      "m": "To lớn, rộng lớn, đại nhân",
+      "type": "Tượng hình",
+      "rad": "大",
+      "parts": "Người dang rộng hai tay hai chân hiên ngang",
+      "story": "Hình vẽ một người đàn ông dũng cảm dang rộng hai cánh tay và hai chân hết cỡ để biểu thị sự TO LỚN, VĨ ĐẠI (大 dà).",
+      "ex": "大学 (dàxué - đại học), 大人 (người lớn), 大家 (mọi người)",
+      "strokes": 3
+    },
+    {
+      "char": "小",
+      "pinyin": "xiǎo",
+      "hv": "Tiểu",
+      "m": "Nhỏ bé, bé nhỏ, ít tuổi",
+      "type": "Chỉ sự",
+      "rad": "小",
+      "parts": "Ba giọt nước / hạt cát nhỏ tách ra hai bên",
+      "story": "Nét sổ ở giữa bị hai nét phẩy nhỏ hai bên phân chia rẽ nhỏ ra, biểu thị sự NHỎ BÉ, ÍT ỎI (小 xiǎo).",
+      "ex": "小时 (xiǎoshí - tiếng/giờ), 小孩 (trẻ nhỏ), 小心 (cẩn thận)",
+      "strokes": 3
+    },
+    {
+      "char": "多",
+      "pinyin": "duō",
+      "hv": "Đa",
+      "m": "Nhiều, bao nhiêu, hơn",
+      "type": "Hội ý",
+      "rad": "夕",
+      "parts": "夕 (Tịch: vầng trăng) + 夕 (vầng trăng chồng lên)",
+      "story": "Nhiều đêm trăng (夕 xī) trôi qua kế tiếp nhau, hai vầng trăng xếp chồng biểu thị số lượng NHIỀU (多 duō).",
+      "ex": "多少 (duōshao - bao nhiêu), 很多 (hěnduō - rất nhiều), 多谢 (cảm ơn nhiều)",
+      "strokes": 6
+    },
+    {
+      "char": "少",
+      "pinyin": "shǎo",
+      "hv": "Thiểu",
+      "m": "Ít ỏi, thiếu thốn, thanh thiếu niên",
+      "type": "Chỉ sự",
+      "rad": "小",
+      "parts": "小 (nhỏ) + nét phẩy gạt bớt",
+      "story": "Vốn đã nhỏ bé (小 xiǎo) lại có thêm nét phẩy gạt phăng bớt đi một phần nữa, biểu thị sự ÍT ỎI (少 shǎo).",
+      "ex": "很少 (hěnshǎo - rất ít), 减少 (jiǎnshǎo - giảm bớt), 少年 (thiếu niên)",
+      "strokes": 4
+    },
+    {
+      "char": "高",
+      "pinyin": "gāo",
+      "hv": "Cao",
+      "m": "Cao ráo, chiều cao, cao cấp",
+      "type": "Tượng hình",
+      "rad": "高",
+      "parts": "Tòa lâu đài / tháp canh nhiều tầng có mái che và cửa sổ",
+      "story": "Mô phỏng ngọn tháp canh cao vút có nóc mái nhọn, đài quan sát ở giữa và cổng thành cao ráo bên dưới -> CHIỀU CAO, CAO (高 gāo).",
+      "ex": "高兴 (gāoxìng - vui vẻ), 高度 (gāodù - độ cao), 高级 (cao cấp)",
+      "strokes": 10
+    },
+    {
+      "char": "长",
+      "pinyin": "cháng",
+      "hv": "Trường / Trưởng",
+      "m": "Dài lâu, chiều dài / Lớn lên, trưởng thành",
+      "type": "Tượng hình",
+      "rad": "长",
+      "parts": "Cụ già râu tóc dài chống gậy",
+      "story": "Hình vẽ người già sống lâu năm tóc dài buông xõa bay trong gió -> DÀI LÂU (cháng 长) và TRƯỞNG THÀNH (zhǎng 长).",
+      "ex": "很长 (hěncháng - rất dài), 长大 (zhǎngdà - lớn lên), 校长 (hiệu trưởng)",
+      "strokes": 4
+    },
+    {
+      "char": "道",
+      "pinyin": "dào",
+      "hv": "Đạo",
+      "m": "Con đường, đạo lý, biết, nói",
+      "type": "Hội ý",
+      "rad": "辶",
+      "parts": "辶 (bước chân đi trên đường) + 首 (Thủ: cái đầu, tư tưởng)",
+      "story": "Dùng cái đầu (首 shǒu) trí tuệ soi đường dẫn lối cho bước chân (辶) vững bước, ấy là CON ĐƯỜNG, ĐẠO LÝ (道 dào).",
+      "ex": "知道 (zhīdào - biết), 道理 (dàolǐ - đạo lý), 道路 (con đường)",
+      "strokes": 12
+    },
+    {
+      "char": "路",
+      "pinyin": "lù",
+      "hv": "Lộ",
+      "m": "Đường sá, tuyến đường, lộ trình",
+      "type": "Hình thanh & Hội ý",
+      "rad": "足",
+      "parts": "足 (Túc: bước chân) + 各 (Các: từng người qua lại)",
+      "story": "Nơi bước chân (足 zú) của mỗi người (各 gè) cùng giẫm bước qua lại dập dìu tạo thành CON ĐƯỜNG (路 lù).",
+      "ex": "马路 (mǎlù - đường phố), 路线 (lùxiàn - tuyến đường), 迷路 (lạc đường)",
+      "strokes": 13
+    }
+  ]
 }

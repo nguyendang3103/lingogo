@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-0855';
+const APP_BUILD_ID = '20261114-0925';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1920,14 +1920,60 @@ function hvMean(code, c) {
 }
 const hvParts = (code, w) => [...plain(w)].filter((c) => /[㐀-鿿]/.test(c)).map((c) => ({ c, hv: hvOf(code, c), m: hvMean(code, c) }));
 const hvWord = (code, w) => { const p = hvParts(code, w); return p.length && p.every((x) => x.hv) ? p.map((x) => x.hv).join(' ') : ''; };
+function hvChietTu(code, c) {
+  if (code === 'zh') {
+    const e = DATA.zh && DATA.zh.chars && DATA.zh.chars[c];
+    return e && (e.story || e.parts) ? e : null;
+  }
+  return null;
+}
 function hvBlock(code, v) {
   const p = hvParts(code, v.w); if (!p.some((x) => x.hv)) return null;
   const first = (m) => m.split(/[,;/]/)[0].trim();
   const glue = p.length > 1 && p.every((x) => x.m) ? p.map((x) => first(x.m)).join(' + ') : '';
   const rows = p.length > 1 || p.some((x) => x.m);
-  return h('div', { class: 'hv' }, h('span', { class: 'label' }, 'Hán Việt'), !rows && h('b', { class: 'hvw' }, p.map((x) => x.hv || '—').join(' ')),
-    rows && h('div', { class: 'hvrows' }, p.map((x) => h('div', { class: 'hvrow' }, h('span', { class: 'hvc', lang: LANGS[code].lang }, x.c), h('b', {}, x.hv || '—'), x.m && h('span', { class: 'muted' }, ' · ' + x.m)))),
-    glue && h('p', { class: 'small hvglue' }, 'Ghép nghĩa: ', h('b', {}, glue)));
+  const chietTuItems = (code === 'zh')
+    ? p.map((x) => ({ c: x.c, hv: x.hv, ct: hvChietTu(code, x.c) })).filter((x) => x.ct)
+    : [];
+  return h('div', { class: 'hv' },
+    h('span', { class: 'label' }, 'Hán Việt'),
+    !rows && h('b', { class: 'hvw' }, p.map((x) => x.hv || '—').join(' ')),
+    rows && h('div', { class: 'hvrows' }, p.map((x) => h('div', { class: 'hvrow' },
+      h('span', { class: 'hvc', lang: LANGS[code].lang }, x.c),
+      h('b', {}, x.hv || '—'),
+      x.m && h('span', { class: 'muted' }, ' · ' + x.m)
+    ))),
+    glue && h('p', { class: 'small hvglue' }, 'Ghép nghĩa: ', h('b', {}, glue)),
+    chietTuItems.length ? h('div', {
+      class: 'panel stack',
+      style: {
+        marginTop: '8px',
+        padding: '8px 10px',
+        background: 'rgba(15, 82, 87, 0.06)',
+        borderLeft: '3px solid var(--teal)',
+        borderRadius: '6px',
+        gap: '4px'
+      }
+    },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '4px' } },
+        h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: 700, fontSize: '.75rem' } }, '🧩 Chiết tự & Mẹo nhớ chữ Hán:'),
+        h('span', { class: 'small muted', style: { fontSize: '.7rem' } }, 'Lục thư & Chiết tự')
+      ),
+      ...chietTuItems.map((item) => h('div', { class: 'stack', style: { gap: '2px', fontSize: '.84rem' } },
+        h('div', { class: 'row wrap', style: { alignItems: 'center', gap: '6px' } },
+          h('b', { style: { color: 'var(--ink)' } }, item.c + ' (' + item.hv + '):'),
+          item.ct.parts ? h('span', { class: 'chip small', style: { background: 'var(--surface)', fontWeight: 600, fontSize: '.72rem' } }, item.ct.parts) : null,
+          item.ct.type ? h('span', { class: 'chip good small', style: { fontSize: '.68rem', padding: '1px 6px' } }, item.ct.type) : null,
+          h('button', {
+            class: 'chip ghost small',
+            style: { cursor: 'pointer', fontSize: '.7rem', padding: '1px 6px', color: 'var(--teal)' },
+            onclick: (e) => { e.stopPropagation(); charView('zh', item.c, [item.c]); }
+          }, '✍️ Viết chữ ' + item.c)
+        ),
+        item.ct.story ? h('p', { class: 'small', style: { margin: '1px 0 0 0', lineHeight: 1.35, color: 'var(--ink)' } }, '💡 ' + item.ct.story) : null
+      ))
+    ) : null
+  );
 }
 const CONTR = { "i'd": 'i would', "i'm": 'i am', "it's": 'it is', "that's": 'that is', "can't": 'cannot', "don't": 'do not', "here's": 'here is', "what's": 'what is', "you're": 'you are', "i'll": 'i will', "we'll": 'we will', "let's": 'let us', "we're": 'we are', "doesn't": 'does not', "isn't": 'is not', "won't": 'will not', "i've": 'i have', "we've": 'we have' };
 function normEn(s) {
@@ -10939,6 +10985,8 @@ function charView(code, c, list) {
       i.hv && h('p', {}, 'Hán Việt: ', h('b', {}, i.hv)),
       strokeInfoRow,
       i.m && h('p', { class: 'muted' }, i.m),
+      i.parts && h('p', { class: 'small', style: { color: 'var(--teal)', fontWeight: 600, margin: '2px 0' } }, '🧩 Chiết tự: ' + i.parts),
+      i.story && h('p', { class: 'small', style: { background: 'var(--sunk)', padding: '6px 8px', borderRadius: '6px', margin: '4px 0', lineHeight: 1.4 } }, '💡 Mẹo nhớ: ' + i.story),
       i.say && h('p', { class: 'small muted' }, 'Loa phát từ ', h('span', { lang: 'zh-Hans' }, i.say), ' để đọc đúng âm.'),
       v && h('p', { class: 'small' }, h('span', { lang: 'zh-Hans' }, v.w), ' ', h('span', { class: 'read' }, v.r), ' · ', v.m)
     ];
@@ -12679,7 +12727,8 @@ function knowledgeTabView() {
       ]
     : [
         { k: 'gram', label: '📖 Ngữ pháp HSK' },
-        { k: 'chars', label: '🈴 Chữ Hán & Bộ thủ' }
+        { k: 'chiet_tu', label: '🧩 Chiết tự & Mẹo nhớ chữ' },
+        { k: 'chars', label: '🈴 Bộ thủ & Bút thuận' }
       ];
 
   if (!subtabs.some((st) => st.k === KNOWLEDGE_TAB)) {
@@ -12698,7 +12747,7 @@ function knowledgeTabView() {
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
       isJa
         ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
-        : 'Tổng hợp ngữ pháp HSK 1–6, 214 bộ thủ Khang Hy và quy tắc bút thuận viết chữ Hán.'
+        : 'Tổng hợp ngữ pháp HSK 1–6, chiết tự & mẹo nhớ chữ Hán theo Lục thư, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
     )
   );
 
@@ -12711,6 +12760,7 @@ function knowledgeTabView() {
 
   let body = null;
   if (KNOWLEDGE_TAB === 'gram') body = renderKnowledgeGrammar(code);
+  else if (KNOWLEDGE_TAB === 'chiet_tu') body = renderKnowledgeChietTu(code);
   else if (KNOWLEDGE_TAB === 'chars') body = renderKnowledgeChars(code);
   else if (KNOWLEDGE_TAB === 'kana') body = renderKnowledgeKana(code);
 
@@ -12804,6 +12854,193 @@ function renderKnowledgeGrammar(code) {
         (x.topics && x.topics.length ? h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong: ' + x.topics.map((t) => t.sub || t.title).join(' · ')) : null)
       )
     ))
+  );
+}
+
+// Kho Chiết tự & Mẹo nhớ chữ Hán qua Lục thư (Fun with Chinese Characters & Chiết tự chữ Hán)
+let CHIET_TU_SEARCH = '';
+let CHIET_TU_FILTER_TYPE = 'all';
+
+function renderKnowledgeChietTu(code) {
+  const items = (DATA.zh && DATA.zh.chiet_tu) || [];
+  const q = CHIET_TU_SEARCH.trim().toLowerCase();
+  const fType = CHIET_TU_FILTER_TYPE;
+
+  const filtered = items.filter((x) => {
+    if (fType !== 'all' && (!x.type || !x.type.includes(fType))) return false;
+    if (!q) return true;
+    return (x.char && x.char.includes(q)) ||
+           (x.pinyin && x.pinyin.toLowerCase().includes(q)) ||
+           (x.hv && x.hv.toLowerCase().includes(q)) ||
+           (x.m && x.m.toLowerCase().includes(q)) ||
+           (x.parts && x.parts.toLowerCase().includes(q)) ||
+           (x.story && x.story.toLowerCase().includes(q)) ||
+           (x.rad && x.rad.includes(q)) ||
+           (x.ex && x.ex.toLowerCase().includes(q));
+  });
+
+  const types = [
+    { id: 'all', label: 'Tất cả (' + items.length + ')' },
+    { id: 'Hội ý', label: '🧩 Hội ý (' + items.filter(x => x.type && x.type.includes('Hội ý')).length + ')' },
+    { id: 'Tượng hình', label: '🖼️ Tượng hình (' + items.filter(x => x.type && x.type.includes('Tượng hình')).length + ')' },
+    { id: 'Hình thanh', label: '🔊 Hình thanh (' + items.filter(x => x.type && x.type.includes('Hình thanh')).length + ')' },
+    { id: 'Chỉ sự', label: '📍 Chỉ sự (' + items.filter(x => x.type && x.type.includes('Chỉ sự')).length + ')' }
+  ];
+
+  const guide = guideAccordionItem({
+    id: 'zh-chiet-tu-intro',
+    icon: '💡',
+    title: 'Nghệ thuật Chiết tự & Lục thư: Bí kíp nhớ chữ Hán không quên',
+    subtitle: 'Nắm chắc 6 phép tạo chữ cổ truyền để hiểu rõ cội nguồn, ý nghĩa và cấu trúc từng nét chữ',
+    tag: 'Sách cổ & Chiết tự',
+    defaultOpen: false,
+    content: [
+      h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '8px' } },
+        h('b', { style: { color: 'var(--teal)', fontSize: '.95rem' } }, '1. Chiết tự chữ Hán là gì?'),
+        h('p', { class: 'small', style: { margin: '4px 0 8px 0', lineHeight: 1.5 } },
+          'Chiết tự (拆字) nghĩa là bẻ tách chữ Hán ra thành từng bộ phận cấu thành để suy xét ý nghĩa, nguồn gốc và câu chuyện đằng sau chữ đó. Khi hiểu chữ Hán gồm những bộ phận nào ghép lại, bạn sẽ không còn phải nhớ từng nét đơn lẻ một cách máy móc.'
+        ),
+        h('b', { style: { color: 'var(--teal)', fontSize: '.95rem' } }, '2. Bốn phép tạo chữ Hán thông dụng nhất (Lục thư):'),
+        h('div', { class: 'stack', style: { gap: '6px', marginTop: '6px' } },
+          h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
+            h('b', { style: { color: 'var(--ink)' } }, '🖼️ Chữ Tượng hình (象形): '),
+            h('span', { class: 'small' }, 'Vẽ lại hình dáng của sự vật cụ thể ngoài đời thực. Ví dụ: 日 (mặt trời tròn), 月 (trăng khuyết), 山 (ba đỉnh núi nhấp nhô), 水 (dòng nước chảy), 木 (cây có rễ cành).')
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
+            h('b', { style: { color: 'var(--ink)' } }, '📍 Chữ Chỉ sự (指事): '),
+            h('span', { class: 'small' }, 'Dùng ký hiệu trừu tượng hoặc thêm nét trỏ vào hình vẽ để chỉ vị trí, ý niệm. Ví dụ: 上 (trên), 下 (dưới), 本 (gốc cây - nét gạch ở rễ chữ Mộc), 末 (ngọn cây - nét gạch ở ngọn).')
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
+            h('b', { style: { color: 'var(--ink)' } }, '🧩 Chữ Hội ý (会意): '),
+            h('span', { class: 'small' }, 'Ghép hai hoặc nhiều chữ/bộ có nghĩa lại với nhau để sinh ra một ý nghĩa mới hoàn toàn. Ví dụ: 田 (ruộng) + 力 (sức lực) = 男 (đàn ông); 日 (mặt trời) + 月 (mặt trăng) = 明 (sáng rực); 人 (người) + 木 (cây) = 休 (nghỉ ngơi).')
+          ),
+          h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
+            h('b', { style: { color: 'var(--ink)' } }, '🔊 Chữ Hình thanh (形声): '),
+            h('span', { class: 'small' }, 'Chiếm hơn 80% chữ Hán! Gồm 2 phần: Một phần biểu ý (thường là bộ thủ chỉ trường nghĩa) và một phần biểu âm (chỉ cách đọc gần đúng). Ví dụ: 晴 (qíng: trời nắng có bộ Nhật 日 biểu ý + Thanh 青 qīng biểu âm); 妈 (mā: bộ Nữ 女 biểu ý + Mã 马 mǎ biểu âm).')
+          )
+        )
+      )
+    ]
+  });
+
+  const searchBox = h('div', { class: 'row wrap', style: { gap: '8px', alignItems: 'center' } },
+    h('input', {
+      type: 'search',
+      placeholder: '🔍 Tìm theo chữ Hán, Pinyin, Hán Việt, cấu tạo bộ phận hoặc câu chuyện chiết tự...',
+      value: CHIET_TU_SEARCH,
+      style: { flex: '1 1 260px', minHeight: '40px', padding: '8px 12px' },
+      oninput: (e) => { CHIET_TU_SEARCH = e.target.value; knowledgeTabView(); }
+    })
+  );
+
+  const filterRow = h('div', { class: 'row wrap', style: { gap: '6px' } },
+    ...types.map((tp) => h('button', {
+      class: 'mini ' + (tp.id === fType ? 'primary' : 'ghost'),
+      'aria-pressed': String(tp.id === fType),
+      onclick: () => { CHIET_TU_FILTER_TYPE = tp.id; knowledgeTabView(); }
+    }, tp.label))
+  );
+
+  const cardsContainer = h('div', {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
+      gap: '12px',
+      marginTop: '8px'
+    }
+  },
+    filtered.length === 0
+      ? h('p', { class: 'center muted', style: { gridColumn: '1 / -1', padding: '24px 0' } }, 'Không tìm thấy chữ Hán nào phù hợp với từ khóa tìm kiếm.')
+      : filtered.map((c) => {
+          const typeColor = c.type && c.type.includes('Hội ý')
+            ? 'var(--teal)'
+            : (c.type && c.type.includes('Tượng hình') ? '#d97706' : (c.type && c.type.includes('Hình thanh') ? '#2563eb' : 'var(--muted)'));
+          return h('div', {
+            class: 'panel card stack',
+            style: {
+              background: 'var(--surface)',
+              borderRadius: '12px',
+              padding: '12px',
+              gap: '8px',
+              border: '1px solid var(--line)'
+            }
+          },
+            h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+              h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+                h('span', {
+                  lang: 'zh-Hans',
+                  style: {
+                    fontSize: '2.2rem',
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    color: 'var(--ink)'
+                  }
+                }, c.char),
+                h('div', { class: 'stack', style: { gap: '1px' } },
+                  h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, (c.hv || '').toUpperCase()),
+                  h('span', { class: 'small pinyin', style: { color: 'var(--teal)', fontWeight: 600 } }, c.pinyin)
+                )
+              ),
+              h('div', { class: 'row', style: { gap: '4px', alignItems: 'center' } },
+                spk('zh', c.char),
+                c.type ? h('span', { class: 'chip small', style: { fontSize: '.72rem', fontWeight: 600, color: typeColor } }, c.type) : null
+              )
+            ),
+            h('p', { style: { margin: '2px 0', fontWeight: 600, color: 'var(--ink)', fontSize: '.92rem' } }, 'Nghĩa: ' + c.m),
+            c.parts ? h('div', {
+              class: 'panel',
+              style: {
+                background: 'rgba(15, 82, 87, 0.05)',
+                padding: '6px 8px',
+                borderRadius: '8px',
+                fontSize: '.82rem'
+              }
+            },
+              h('b', { style: { color: 'var(--teal)' } }, '🧩 Chiết tự / Cấu tạo: '),
+              h('span', {}, c.parts)
+            ) : null,
+            c.story ? h('div', {
+              class: 'panel',
+              style: {
+                background: 'var(--sunk)',
+                padding: '8px 10px',
+                borderRadius: '8px',
+                fontSize: '.82rem',
+                lineHeight: 1.45
+              }
+            },
+              h('b', { style: { color: '#d97706' } }, '💡 Bí kíp nhớ: '),
+              h('span', {}, c.story)
+            ) : null,
+            c.ex ? h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem', lineHeight: 1.35 } },
+              h('b', { style: { color: 'var(--ink)' } }, '📚 Từ ghép: '),
+              c.ex
+            ) : null,
+            h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px', borderTop: '1px dashed var(--line)', paddingTop: '6px' } },
+              h('span', { class: 'small muted', style: { fontSize: '.72rem' } },
+                (c.rad ? 'Bộ thủ: ' + c.rad + ' · ' : '') + (c.strokes ? c.strokes + ' nét' : '')
+              ),
+              h('button', {
+                class: 'chip good small',
+                style: { cursor: 'pointer', fontSize: '.75rem', padding: '2px 8px' },
+                onclick: () => charView('zh', c.char, [c.char])
+              }, '✍️ Tập viết nét')
+            )
+          );
+        })
+  );
+
+  return h('div', { class: 'stack-lg' },
+    guide,
+    h('div', { class: 'panel card stack', style: { gap: '10px' } },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
+        h('h2', { style: { margin: 0 } }, '🧩 Kho Chiết tự & Mẹo nhớ chữ Hán'),
+        h('span', { class: 'chip good', style: { fontSize: '.78rem', fontWeight: 700 } }, filtered.length + '/' + items.length + ' chữ')
+      ),
+      searchBox,
+      filterRow,
+      cardsContainer
+    )
   );
 }
 

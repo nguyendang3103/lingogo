@@ -12,9 +12,18 @@ index-inline.html
 *.m4a
 source/audio-nghe-N5/
 *.zip
+*.pdf
+Chinese/data/chiet_tu_images/
+Chinese/data/extracted_pages/
 
 # System & OS junk
 .DS_Store
 Thumbs.db
 __pycache__/
 *.pyc
+build_chiet_tu_data.py
+expand_chiet_tu.py
+extract_all_chiet_tu.py
+extract_fun_entries.py
+extract_fun_sample.py
+extract_pdf_sample.py
