@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1025';
+const APP_BUILD_ID = '20261114-1035';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -998,6 +998,7 @@ const LANG_TOTAL_TOPICS = {"en":90,"zh":287,"ja":26};
 const LANG_TOTAL_LESSONS = {"en":569,"zh":1934,"ja":233};
 let PICK_TAB = 'progress'; // 'progress' | 'schedule' | 'roadmap'
 let STUDY_PACE = 'schedule'; // 'schedule' | 'daily1' | 'daily2'
+let ROADMAP_LANG = ''; // '' (mặc định dùng S.lang) | 'all' | 'en' | 'zh' | 'ja'
 
 function getLangProgress(code) {
   const metaObj = (TOPIC_META && TOPIC_META[code]) || {};
@@ -2527,7 +2528,7 @@ function renderProgressTabContent(t, sch) {
           h('button', {
             class: 'ghost mini',
             style: { flex: 1, whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px' },
-            onclick: () => { PICK_TAB = 'roadmap'; pickView(); }
+            onclick: () => { ROADMAP_LANG = c; PICK_TAB = 'roadmap'; pickView(); }
           }, 'Xem lộ trình 🚀')
         )
       );
@@ -2623,18 +2624,33 @@ function renderScheduleTabContent(t, sch) {
 }
 
 function renderRoadmapTabContent(t) {
+  const currentLang = ROADMAP_LANG || S.lang || 'en';
   const paces = [
-    { id: 'schedule', name: '📅 Lịch chuẩn', desc: 'Theo thời gian biểu (~1–3 bài/tuần)' },
-    { id: 'daily1', name: '⚡ 1 bài/ngày', desc: '7 bài/tuần cho tiếng tập trung' },
+    { id: 'schedule', name: '📅 Lịch chuẩn', desc: currentLang === 'en' ? 'T2, T4, T7 (3 bài/tuần)' : (currentLang === 'zh' ? 'T3, T6 (2 bài/tuần)' : (currentLang === 'ja' ? 'T5 (1 bài/tuần)' : '~1–3 bài/tuần')) },
+    { id: 'daily1', name: '⚡ 1 bài/ngày', desc: '7 bài/tuần · Đều đặn mỗi ngày' },
     { id: 'daily2', name: '🔥 2 bài/ngày', desc: '14 bài/tuần · Tăng tốc bứt phá' }
   ];
+
+  const langFilterPills = [
+    { id: S.lang, label: (LANGS[S.lang] ? LANGS[S.lang].label : 'Ngôn ngữ đang học') + ' (Đang học)' },
+    ...Object.entries(LANGS).filter(([c]) => c !== S.lang).map(([c, v]) => ({ id: c, label: v.label })),
+    { id: 'all', label: '🌐 Cả 3 ngôn ngữ' }
+  ];
+
+  const targetLangs = currentLang === 'all'
+    ? Object.entries(LANGS)
+    : Object.entries(LANGS).filter(([c]) => c === currentLang);
+
+  const headerSubtitle = currentLang === 'all'
+    ? 'Lộ trình cả 3 ngôn ngữ'
+    : ('Lộ trình ' + (LANGS[currentLang] ? LANGS[currentLang].label : ''));
 
   return [
     // Header & pace selector
     h('div', { class: 'panel stack', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '14px', padding: '14px', gap: '8px' } },
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
         h('b', { style: { fontSize: '.96rem' } }, '🚀 Chọn tốc độ học để dự báo ngày cán đích:'),
-        h('span', { class: 'small muted' }, 'Lộ trình 3 ngôn ngữ')
+        h('span', { class: 'chip small', style: { fontWeight: 700, fontSize: '.74rem' } }, headerSubtitle)
       ),
       h('div', { class: 'pace-selector' },
         paces.map(p => h('button', {
@@ -2647,14 +2663,29 @@ function renderRoadmapTabContent(t) {
       ),
       h('p', { class: 'small muted', style: { margin: '2px 0 0 0', fontSize: '.76rem' } },
         STUDY_PACE === 'schedule'
-          ? '💡 Lịch chuẩn: Tiếng Anh ~3 bài/tuần (T2, T4, T7); Tiếng Trung ~2 bài/tuần (T3, T6); Tiếng Nhật ~1 bài/tuần (T5).'
-          : STUDY_PACE === 'daily1'
-          ? '💡 Tốc độ 1 bài/ngày: Mỗi ngày hoàn thành trọn vẹn 1 bài cho ngôn ngữ trọng tâm.'
-          : '💡 Tốc độ 2 bài/ngày: Cường độ cao, hoàn thành 2 bài mỗi ngày giúp rút ngắn một nửa thời gian.'
+          ? (currentLang === 'en'
+              ? '💡 Lịch chuẩn Tiếng Anh: Học 3 buổi trọng tâm/tuần vào Thứ 2, Thứ 4 và Thứ 7.'
+              : (currentLang === 'zh'
+                ? '💡 Lịch chuẩn Tiếng Trung: Học 2 buổi trọng tâm/tuần vào Thứ 3 và Thứ 6.'
+                : (currentLang === 'ja'
+                  ? '💡 Lịch chuẩn Tiếng Nhật: Học 1 buổi trọng tâm/tuần vào Thứ 5.'
+                  : '💡 Lịch chuẩn: Tiếng Anh ~3 bài/tuần (T2, T4, T7); Tiếng Trung ~2 bài/tuần (T3, T6); Tiếng Nhật ~1 bài/tuần (T5).')))
+          : (STUDY_PACE === 'daily1'
+              ? '💡 Tốc độ 1 bài/ngày: Mỗi ngày hoàn thành trọn vẹn 1 bài cho ngôn ngữ trọng tâm.'
+              : '💡 Tốc độ 2 bài/ngày: Cường độ cao, hoàn thành 2 bài mỗi ngày giúp rút ngắn một nửa thời gian.')
       )
     ),
-    // 3 Language Roadmap Cards
-    h('div', { class: 'stack', style: { gap: '14px' } }, Object.entries(LANGS).map(([c, v]) => {
+    // Bộ lọc chuyển đổi ngôn ngữ (giúp người học xem đúng tiếng của mình, không bị rối mắt)
+    h('div', { class: 'row wrap', style: { gap: '6px', alignItems: 'center', margin: '2px 0 2px 0' } },
+      h('span', { class: 'small muted', style: { fontWeight: 600, fontSize: '.76rem' } }, 'Lộ trình:'),
+      ...langFilterPills.map(lp => h('button', {
+        class: 'mini ' + ((currentLang === lp.id || (!ROADMAP_LANG && lp.id === S.lang)) ? 'primary' : 'ghost'),
+        style: { fontSize: '.76rem', padding: '3px 10px', borderRadius: '8px' },
+        onclick: () => { ROADMAP_LANG = lp.id; pickView(); }
+      }, lp.label))
+    ),
+    // Language Roadmap Cards
+    h('div', { class: 'stack', style: { gap: '14px' } }, targetLangs.map(([c, v]) => {
       const p = getLangProgress(c);
       const estCur = calcFinishEstimate(p.curCatRemainingTopics, p.curCatRemainingLessons, STUDY_PACE, c);
       const estAll = calcFinishEstimate(p.remainingTopics, p.remainingLessons, STUDY_PACE, c);
@@ -3037,7 +3068,7 @@ function homeView() {
           cursor: 'pointer',
           margin: '4px 0'
         },
-        onclick: () => { PICK_TAB = 'roadmap'; go('pick'); }
+        onclick: () => { ROADMAP_LANG = S.lang; PICK_TAB = 'roadmap'; go('pick'); }
       },
         h('div', { style: { display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 } },
           h('span', { style: { fontSize: '1.2rem', flexShrink: 0 } }, '🚀'),
