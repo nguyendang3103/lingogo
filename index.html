@@ -947,7 +947,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261114-1140';
+const APP_BUILD_ID = '20261114-1156';
 const LANGS = {
   en: { label: 'English', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1444,43 +1444,43 @@ const WEEKLY_SCHEDULE = {
   1: { // Thứ Hai
     name: 'Thứ Hai', focus: 'en',
     title: '🇬🇧 Thứ Hai: Trọng tâm Tiếng Anh (Nghe + Nói)',
-    desc: 'Nghe hội thoại B2, Shadowing 30p & Phản xạ giao tiếp · Trung & Nhật ôn nhẹ tách giờ',
+    desc: 'Học 1 bài mới Tiếng Anh (Hội thoại B2 & Phản xạ) · Tiếng Trung & Nhật ôn nhẹ gói 10 từ',
     goals: { en: 2.0, zh: 0.5, ja: 0.5 }
   },
   2: { // Thứ Ba
     name: 'Thứ Ba', focus: 'zh',
     title: '🇨🇳 Thứ Ba: Trọng tâm Tiếng Trung (Đọc + Viết + Từ vựng)',
-    desc: 'Học bộ thủ, Chiết tự chữ Hán, từ vựng & ngữ pháp HSK · Anh & Nhật ôn nhẹ tách giờ',
+    desc: 'Học 1 bài mới Tiếng Trung (Bộ thủ, Chiết tự & HSK) · Tiếng Anh & Nhật ôn nhẹ gói 10 từ',
     goals: { zh: 2.0, en: 0.5, ja: 0.5 }
   },
   3: { // Thứ Tư
     name: 'Thứ Tư', focus: 'ja',
     title: '🇯🇵 Thứ Tư: Trọng tâm Tiếng Nhật (Giải trí + Nghe + Nhại giọng)',
-    desc: 'Nghe Anime/Nhạc/Truyện ngắn, Shadowing & Bộ thủ N5 · Tách biệt hoàn toàn với Tiếng Trung',
+    desc: 'Học 1 bài mới Tiếng Nhật N5 & Luyện nghe/nhại giọng · Tiếng Anh & Trung ôn nhẹ gói 10 từ',
     goals: { ja: 2.0, en: 0.5, zh: 0.5 }
   },
   4: { // Thứ Năm
     name: 'Thứ Năm', focus: 'en',
     title: '🇬🇧 Thứ Năm: Trọng tâm Tiếng Anh (Nghe + Nói)',
-    desc: 'Podcast, Luyện nói phỏng vấn & Giao tiếp thực tế · Trung & Nhật ôn nhẹ tách giờ',
+    desc: 'Học 1 bài mới Tiếng Anh (Podcast & Giao tiếp thực tế) · Tiếng Trung & Nhật ôn nhẹ gói 10 từ',
     goals: { en: 2.0, zh: 0.5, ja: 0.5 }
   },
   5: { // Thứ Sáu
     name: 'Thứ Sáu', focus: 'zh',
     title: '🇨🇳 Thứ Sáu: Trọng tâm Tiếng Trung (Đọc + Viết + Từ vựng)',
-    desc: 'Đọc hiểu, Luyện viết Hán tự, Quiz ngữ pháp HSK · Anh & Nhật ôn nhẹ tách giờ',
+    desc: 'Học 1 bài mới Tiếng Trung (Viết Hán tự & Ngữ pháp HSK) · Tiếng Anh & Nhật ôn nhẹ gói 10 từ',
     goals: { zh: 2.0, en: 0.5, ja: 0.5 }
   },
   6: { // Thứ Bảy
     name: 'Thứ Bảy', focus: 'ja',
     title: '🇯🇵 Thứ Bảy: Trọng tâm Tiếng Nhật (Giải trí + Nghe + Nhại giọng)',
-    desc: 'Nghe hội thoại N5, Nhại giọng nhân vật & Ôn Kanji · Tách biệt hoàn toàn với Tiếng Trung',
+    desc: 'Học 1 bài mới Tiếng Nhật N5 & Ôn Kanji · Tiếng Anh & Trung ôn nhẹ gói 10 từ',
     goals: { ja: 2.0, en: 0.5, zh: 0.5 }
   },
   0: { // Chủ Nhật
     name: 'Chủ Nhật', focus: 'all',
-    title: '🧘 Chủ Nhật: Tổng ôn SRS 3 ngôn ngữ hoặc Xả hơi',
-    desc: 'Quét các thẻ từ vựng dễ quên (cuốn chiếu 3–5 ngày) cả 3 tiếng · Không nhồi bài mới',
+    title: '🧘 Chủ Nhật: Tổng ôn nhẹ 3 ngôn ngữ hoặc Nghỉ ngơi',
+    desc: 'Không học bài mới · Ôn gói từ vựng dễ quên trong tuần của cả 3 tiếng',
     goals: { en: 1.0, zh: 1.0, ja: 1.0 }
   }
 };
@@ -2286,8 +2286,35 @@ function getDailyReviewQuota(code, d = todayN()) {
   return (sch.focus === code || sch.focus === 'all') ? 15 : 10;
 }
 
+// Đếm số từ đã thực sự ôn trong phiên SRS hôm nay (bao gồm cả thẻ có last === d và b >= 2)
+function getSessionReviewedToday(code, d = todayN()) {
+  const manual = (S.revDone && S.revDone[d + ':' + code]) || 0;
+  const prefix = code + ':';
+  let srsRev = 0;
+  Object.keys(S.srs || {}).forEach((k) => {
+    if (!k.startsWith(prefix)) return;
+    const rest = k.slice(prefix.length);
+    if (rest.startsWith('speak:') || rest.startsWith('gram:') || rest.startsWith('write:')) return;
+    const it = S.srs[k];
+    if (it && it.last === d && it.b >= 2) srsRev++;
+  });
+  return Math.max(manual, srsRev);
+}
+
+// Tổng số mục đã học & ôn trong ngày hôm nay (từ S.srs.last === d, S.revDone và XP hôm nay)
 function getReviewedToday(code, d = todayN()) {
-  return (S.revDone && S.revDone[d + ':' + code]) || 0;
+  const revSession = getSessionReviewedToday(code, d);
+  const prefix = code + ':';
+  let srsTouched = 0;
+  Object.keys(S.srs || {}).forEach((k) => {
+    if (!k.startsWith(prefix)) return;
+    const rest = k.slice(prefix.length);
+    if (rest.startsWith('speak:') || rest.startsWith('gram:') || rest.startsWith('write:')) return;
+    const it = S.srs[k];
+    if (it && it.last === d) srsTouched++;
+  });
+  const xpItems = Math.floor(xpOf(d, code) / XP_ITEM);
+  return Math.max(revSession, srsTouched, xpItems);
 }
 
 function markReviewedToday(code, d = todayN()) {
@@ -2319,7 +2346,7 @@ function srsDueItems(code, skillFilter = 'vocab') {
 const rawDueIn = (code) => srsDueItems(code, 'vocab').length;
 const dueIn = (code, d = todayN()) => {
   const raw = rawDueIn(code);
-  const remQuota = Math.max(0, getDailyReviewQuota(code, d) - getReviewedToday(code, d));
+  const remQuota = Math.max(0, getDailyReviewQuota(code, d) - getSessionReviewedToday(code, d));
   return Math.min(raw, remQuota);
 };
 
@@ -2518,8 +2545,21 @@ function approxRawDueCount(code, t0 = todayN()) {
 }
 function approxDueCount(code, t0 = todayN()) {
   const raw = approxRawDueCount(code, t0);
-  const remQuota = Math.max(0, getDailyReviewQuota(code, t0) - getReviewedToday(code, t0));
+  const remQuota = Math.max(0, getDailyReviewQuota(code, t0) - getSessionReviewedToday(code, t0));
   return Math.min(raw, remQuota);
+}
+function formatReviewBtnText(code, t0 = todayN(), shortName = '') {
+  const due = approxDueCount(code, t0);
+  const done = getReviewedToday(code, t0);
+  const namePart = shortName ? (' ' + shortName) : '';
+  if (due > 0) {
+    return done > 0
+      ? ('🔄 Ôn' + (namePart || ' tiếp') + ' (' + due + ' từ · Đã ôn ' + done + ')')
+      : ('🔄 Ôn' + (namePart || ' tập') + ' (' + due + ' từ)');
+  }
+  return done > 0
+    ? ('✓ Đã ôn' + namePart + ' (' + done + ' mục hôm nay)')
+    : ('🔄 Ôn' + (namePart || ' tập'));
 }
 async function goLangNextLesson(code) {
   if (!LANGS[code]) return;
@@ -2546,57 +2586,46 @@ function goLangReview(code) {
   go('review');
 }
 
-// Tạo 3 khung giờ cố định trong ngày (Sáng Anh - Chiều Trung - Tối Nhật) nhưng vai trò tự động xoay theo Thứ
+// Tạo kế hoạch học 3 ngôn ngữ cho từng Thứ (chỉ hiển thị học gì, không gắn ca sáng/trưa/tối)
 function getUnifiedDaySlots(dayIdx) {
   const sch = WEEKLY_SCHEDULE[dayIdx] || WEEKLY_SCHEDULE[0];
   const isSun = sch.focus === 'all';
-  const baseSlots = [
+  const baseItems = [
     {
       code: 'en',
-      icon: '🌅',
-      window: 'Ca Sáng (06:30)',
-      focusTime: '06:30 – 07:15 (30–45p)',
-      lightTime: '06:30 – 06:40 (5–10p)',
       langTitle: '🇬🇧 Tiếng Anh (Giao tiếp & B2)',
-      focusTask: 'Học 1 bài mới + Luyện Nghe/Nói phản xạ & Ôn gói 15 từ.',
-      lightTask: 'Không học bài mới · Chỉ ôn nhanh gói 10 từ SRS để giữ phản xạ buổi sáng.'
+      focusTask: 'Học 1 bài mới (Giao tiếp / B2) + Luyện Nghe/Nói phản xạ & Ôn gói 15 từ.',
+      lightTask: 'Không học bài mới · Ôn nhanh gói 10 từ SRS để giữ phản xạ.'
     },
     {
       code: 'zh',
-      icon: '☀️',
-      window: 'Ca Chiều (Sau bữa trưa)',
-      focusTime: '13:00 – 13:45 (30–45p)',
-      lightTime: '13:00 – 13:10 (5–10p)',
       langTitle: '🇨🇳 Tiếng Trung (Bộ thủ & HSK)',
-      focusTask: 'Học 1 bài mới (Bộ thủ/Chiết tự/Từ vựng) + Tập viết & Ôn gói 15 từ.',
-      lightTask: 'Không học bài mới · Chỉ ôn nhanh 10 từ/chữ Hán đã học (tách xa giờ Tiếng Nhật).'
+      focusTask: 'Học 1 bài mới (Bộ thủ, Chiết tự & HSK) + Tập viết chữ Hán & Ôn gói 15 từ.',
+      lightTask: 'Không học bài mới · Ôn nhanh gói 10 từ/chữ Hán đã học.'
     },
     {
       code: 'ja',
-      icon: '🌙',
-      window: 'Ca Tối (Trước khi ngủ)',
-      focusTime: '20:30 – 21:15 (30–45p)',
-      lightTime: '21:00 – 21:10 (5–10p)',
       langTitle: '🇯🇵 Tiếng Nhật (Giải trí & N5)',
-      focusTask: 'Học 1 bài mới N5 + Nghe Anime/Nhại giọng & Ôn gói 15 từ.',
-      lightTask: 'Không học bài mới · Ôn nhẹ 10 từ Kana/Kanji hoặc nghe nhạc/anime thư giãn.'
+      focusTask: 'Học 1 bài mới N5 + Nghe hội thoại / Nhại giọng & Ôn gói 15 từ.',
+      lightTask: 'Không học bài mới · Ôn nhẹ gói 10 từ Kana/Kanji đã học.'
     }
   ];
-  return baseSlots.map((s) => {
+  const items = baseItems.map((s) => {
     const isMain = !isSun && sch.focus === s.code;
     return {
       ...s,
       isMain,
       isSun,
-      timeLabel: isSun ? (s.window + ' · 10–15p') : (isMain ? s.focusTime : s.lightTime),
       roleBadge: isSun
         ? '🧘 Tổng ôn nhẹ (15 từ)'
-        : (isMain ? '🎯 CA CHÍNH HÔM NAY · Học 1 bài mới' : '⚡ Ca duy trì nhẹ · Chỉ ôn 10 từ'),
+        : (isMain ? '🎯 Trọng tâm · Học 1 bài mới' : '⚡ Duy trì · Chỉ ôn 10 từ'),
       taskDesc: isSun
         ? 'Không học bài mới · Ôn gói 15 từ dễ quên trong tuần hoặc giải trí nhẹ.'
         : (isMain ? s.focusTask : s.lightTask)
     };
   });
+  // Đưa ngôn ngữ trọng tâm của ngày đó lên đầu để nhìn rõ ngay hôm đó học gì
+  return items.sort((a, b) => (b.isMain ? 1 : 0) - (a.isMain ? 1 : 0));
 }
 
 function renderFocusQuickButtons(sch, t) {
@@ -2605,13 +2634,11 @@ function renderFocusQuickButtons(sch, t) {
       h('div', { class: 'row wrap', style: { gap: '8px' } },
         Object.entries(LANGS).map(([c, v]) => {
           const due = approxDueCount(c, t);
-          const done = getReviewedToday(c, t);
-          const quota = getDailyReviewQuota(c, t);
           return h('button', {
             class: due > 0 ? 'accent' : 'ghost',
             style: { flex: '1 1 130px', padding: '8px 10px', fontSize: '.82rem', fontWeight: 700 },
             onclick: () => goLangReview(c)
-          }, due > 0 ? ('🔄 Ôn ' + v.short + ' (' + due + ' từ)') : ('✓ Ôn ' + v.short + ' (' + done + '/' + quota + ')'));
+          }, formatReviewBtnText(c, t, v.short));
         })
       )
     );
@@ -2619,8 +2646,6 @@ function renderFocusQuickButtons(sch, t) {
   const c = sch.focus;
   const lang = LANGS[c];
   const due = approxDueCount(c, t);
-  const done = getReviewedToday(c, t);
-  const quota = getDailyReviewQuota(c, t);
   return h('div', { class: 'row wrap', style: { gap: '8px', marginTop: '8px' } },
     h('button', {
       class: 'primary',
@@ -2631,7 +2656,7 @@ function renderFocusQuickButtons(sch, t) {
       class: due > 0 ? 'accent' : 'ghost',
       style: { flex: '1 1 150px', padding: '10px 12px', fontSize: '.86rem', fontWeight: 700 },
       onclick: () => goLangReview(c)
-    }, due > 0 ? ('🔄 Ôn gói ' + lang.short + ' (' + due + ' từ)') : ('✓ Đã ôn ' + lang.short + ' (' + done + '/' + quota + ')')),
+    }, formatReviewBtnText(c, t, lang.short)),
     h('button', {
       class: 'ghost',
       style: { flex: '0 1 auto', padding: '10px 12px', fontSize: '.82rem' },
@@ -2647,16 +2672,17 @@ const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
 const SUBTITLE = { en: 'Tiếng Anh · Từ A1 đến C2', zh: 'Tiếng Trung · HSK 3.0 (Cấp 1–9)', ja: 'Tiếng Nhật · JLPT N5–N1' };
 function renderProgressTabContent(t, sch) {
   const isSunday = sch.focus === 'all';
-  const todaySlots = getUnifiedDaySlots(new Date().getDay());
+  const todayPlan = getUnifiedDaySlots(new Date().getDay());
   return [
     h('div', { class: 'panel stack', style: { padding: '14px 16px', background: 'rgba(15,82,87,.08)', border: '1px solid var(--teal)', borderRadius: '14px', gap: '8px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-        h('span', { class: 'chip accent', style: { fontSize: '.75rem', fontWeight: 700 } }, '📅 Lịch hợp nhất hôm nay · ' + sch.name),
-        h('span', { class: 'small muted', style: { fontWeight: 600 } }, isSunday ? '🧘 Nghỉ bài mới · Chỉ ôn nhẹ 3 tiếng' : ('🎯 Học 1 bài mới: ' + LANGS[sch.focus].label))
+        h('span', { class: 'chip accent', style: { fontSize: '.75rem', fontWeight: 700 } }, '📅 Hôm nay học gì? · ' + sch.name),
+        h('span', { class: 'small muted', style: { fontWeight: 600 } }, isSunday ? '🧘 Nghỉ bài mới · Ôn nhẹ 3 tiếng' : ('🎯 Trọng tâm: ' + LANGS[sch.focus].label))
       ),
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '6px' } },
-        todaySlots.map((s) => {
+        todayPlan.map((s) => {
           const sDue = approxDueCount(s.code, t);
+          const sDone = getReviewedToday(s.code, t);
           return h('div', {
             style: {
               padding: '8px 10px',
@@ -2669,14 +2695,15 @@ function renderProgressTabContent(t, sch) {
             }
           },
             h('div', { class: 'row between', style: { alignItems: 'center', gap: '4px' } },
-              h('b', { style: { fontSize: '.78rem', color: s.isMain ? 'var(--teal)' : 'var(--muted)' } }, s.icon + ' ' + s.window),
-              h('span', { class: 'chip' + (s.isMain ? ' accent' : ''), style: { fontSize: '.65rem', padding: '1px 5px' } }, s.isMain ? '🎯 Ca chính 35p' : '⚡ Duy trì 5p')
+              h('b', { style: { fontSize: '.84rem', color: s.isMain ? 'var(--teal)' : 'var(--ink)' } }, LANGS[s.code].label),
+              h('span', { class: 'chip' + (s.isMain ? ' accent' : ''), style: { fontSize: '.65rem', padding: '1px 5px' } }, s.isMain ? '🎯 Học bài mới' : '⚡ Ôn duy trì')
             ),
-            h('div', { style: { fontSize: '.82rem', fontWeight: 700 } }, LANGS[s.code].label),
-            h('div', { class: 'small muted', style: { fontSize: '.73rem', lineHeight: 1.35 } },
+            h('div', { class: 'small muted', style: { fontSize: '.74rem', lineHeight: 1.4 } },
               s.isMain
-                ? 'Học 1 bài mới + Ôn gói ' + (sDue || 15) + ' từ'
-                : (sDue > 0 ? ('Chỉ ôn nhanh gói ' + sDue + ' từ SRS') : '✓ Đã xong gói ôn hôm nay')
+                ? ('Học 1 bài mới' + (sDue > 0 ? ' + Ôn ' + sDue + ' từ' : (sDone > 0 ? ' · Đã ôn ' + sDone + ' mục' : '')))
+                : (sDue > 0
+                    ? ('Ôn nhanh ' + sDue + ' từ' + (sDone > 0 ? ' (Đã ôn ' + sDone + ')' : ''))
+                    : (sDone > 0 ? ('✓ Đã học/ôn ' + sDone + ' mục hôm nay') : 'Không học bài mới · Ôn nhẹ'))
             )
           );
         })
@@ -2684,7 +2711,7 @@ function renderProgressTabContent(t, sch) {
       renderFocusQuickButtons(sch, t),
       h('div', { class: 'row between wrap', style: { marginTop: '2px', alignItems: 'center' } },
         h('span', { class: 'small muted', style: { fontSize: '.74rem' } }, '💡 Mỗi buổi ôn được chia nhỏ 10–15 từ vừa sức, không dồn ép.'),
-        h('button', { class: 'ghost mini', style: { fontSize: '.76rem', padding: '3px 8px' }, onclick: () => { PICK_TAB = 'schedule'; pickView(); } }, 'Xem chi tiết lịch tuần & 3 ca/ngày →')
+        h('button', { class: 'ghost mini', style: { fontSize: '.76rem', padding: '3px 8px' }, onclick: () => { PICK_TAB = 'schedule'; pickView(); } }, 'Xem lịch học cả tuần →')
       )
     ),
     h('div', { class: 'stack', style: { gap: '12px' } }, Object.entries(LANGS).map(([c, v], i) => {
@@ -2715,8 +2742,8 @@ function renderProgressTabContent(t, sch) {
               h('div', { class: 'row wrap', style: { gap: '6px', alignItems: 'center' } },
                 h('b', { style: { fontSize: '1.05rem' } }, v.label),
                 isFocus
-                  ? h('span', { class: 'chip accent', style: { fontSize: '.7rem', padding: '2px 6px' } }, '🎯 Ca chính hôm nay (Học bài mới)')
-                  : h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '2px 6px' } }, '⚡ Ca duy trì (Ôn 10 từ)')
+                  ? h('span', { class: 'chip accent', style: { fontSize: '.7rem', padding: '2px 6px' } }, '🎯 Trọng tâm hôm nay (Học 1 bài mới)')
+                  : h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '2px 6px' } }, '⚡ Duy trì (Ôn 10 từ)')
               ),
               h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, SUBTITLE[c])
             )
@@ -2745,8 +2772,6 @@ function renderProgressTabContent(t, sch) {
         // Action buttons
         (() => {
           const cardDue = approxDueCount(c, t);
-          const doneToday = getReviewedToday(c, t);
-          const quota = getDailyReviewQuota(c, t);
           return h('div', { class: 'row wrap', style: { gap: '8px', marginTop: '4px' } },
             h('button', {
               class: isFocus ? 'primary' : 'ghost',
@@ -2757,7 +2782,7 @@ function renderProgressTabContent(t, sch) {
               class: cardDue > 0 ? 'accent' : 'ghost',
               style: { flex: '1 1 120px', whiteSpace: 'nowrap', fontSize: '.8rem', padding: '8px 10px', fontWeight: 700 },
               onclick: () => goLangReview(c)
-            }, cardDue > 0 ? ('🔄 Ôn gói ' + cardDue + ' từ') : ('✓ Đã ôn ' + doneToday + '/' + quota)),
+            }, formatReviewBtnText(c, t, '')),
             h('button', {
               class: 'ghost',
               style: { flex: '1 1 105px', whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px 10px' },
@@ -2784,22 +2809,22 @@ function renderScheduleTabContent(t, sch) {
   const shortDayNames = { 1: 'T2 (Anh)', 2: 'T3 (Trung)', 3: 'T4 (Nhật)', 4: 'T5 (Anh)', 5: 'T6 (Trung)', 6: 'T7 (Nhật)', 0: 'CN (Ôn)' };
 
   return [
-    // 1. Giải thích sự thống nhất giữa 3 Ca/ngày và Lịch xoay vòng tuần
+    // 1. Nguyên tắc lịch học xoay vòng 2-2-2-1
     h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', border: '1px solid var(--teal)', borderRadius: '14px', padding: '14px 16px', gap: '8px' } },
       h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
         h('span', { style: { fontSize: '1.2rem' } }, '🧭'),
-        h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Cơ chế Lịch Hợp Nhất: 1 Ca Chính Học Mới + 2 Ca Phụ Ôn Nhanh')
+        h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Nguyên tắc Lịch Học Xoay Vòng (1 Ngôn Ngữ Học Mới + 2 Ngôn Ngữ Ôn Nhẹ)')
       ),
       h('div', { class: 'stack', style: { gap: '5px', fontSize: '.82rem', lineHeight: 1.55, color: 'var(--muted)' } },
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Cố định 3 khung giờ (Sáng Anh · Chiều Trung · Tối Nhật): '), 'Giúp não tạo phản xạ cố định và tách xa Tiếng Trung (Chiều) với Tiếng Nhật (Tối), tuyệt đối không bị loạn chữ Hán – Kanji.'),
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Xoay vòng Ca Chính theo Thứ (2-2-2-1): '), 'Mỗi ngày chỉ có 1 ngôn ngữ đóng vai trò 🎯 Ca Chính (30–45p) để học 1 bài mới. 2 ngôn ngữ còn lại lùi về ⚡ Ca Duy trì (chỉ 5–10p ôn nhanh 10 từ, không học bài mới).'),
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Ôn tập chia gói nhỏ (10–15 từ/buổi): '), 'Hệ thống tự cắt kho từ vựng thành từng gói nhỏ 10–15 từ dễ quên nhất mỗi ngày, phần còn lại tự giãn sang hôm sau.')
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Mỗi ngày chỉ học bài mới của 1 ngôn ngữ: '), 'Xoay vòng T2 & T5 Tiếng Anh · T3 & T6 Tiếng Trung · T4 & T7 Tiếng Nhật · Chủ Nhật nghỉ bài mới.'),
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• 2 ngôn ngữ còn lại chỉ ôn duy trì: '), 'Không học bài mới, chỉ ôn nhanh gói 10 từ SRS để giữ phản xạ và chuỗi ngày học.'),
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Ôn tập chia gói nhỏ (10–15 từ/buổi): '), 'Hệ thống tự lọc 10–15 từ dễ quên nhất mỗi ngày, số từ còn lại tự bảo lưu sang hôm sau.')
       )
     ),
-    // 2. Bộ chọn Thứ trong tuần để xem 3 Ca Sáng - Chiều - Tối của ngày đó
+    // 2. Bộ chọn Thứ trong tuần để xem hôm đó học gì
     h('div', { class: 'panel stack', style: { background: 'var(--surface)', border: '2px solid var(--teal)', borderRadius: '16px', padding: '14px 16px', gap: '10px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-        h('b', { style: { fontSize: '.96rem' } }, '📅 Xem 3 Ca học trong ngày theo từng Thứ:'),
+        h('b', { style: { fontSize: '.96rem' } }, '📅 Chọn Thứ trong tuần để xem hôm đó học gì:'),
         h('span', { class: 'chip accent', style: { fontSize: '.74rem', fontWeight: 700 } },
           SCHED_PREVIEW_DAY === curDayIdx ? ('✨ Hôm nay · ' + previewSch.name) : ('Đang xem · ' + previewSch.name)
         )
@@ -2824,12 +2849,10 @@ function renderScheduleTabContent(t, sch) {
         h('b', { style: { fontSize: '.92rem', display: 'block' } }, previewSch.title),
         h('p', { class: 'small muted', style: { margin: '2px 0 0 0', fontSize: '.8rem' } }, previewSch.desc)
       ),
-      // 3 khung giờ Sáng - Chiều - Tối ứng với Thứ đang chọn
+      // Danh sách 3 ngôn ngữ & nhiệm vụ học ứng với Thứ đang chọn
       h('div', { class: 'stack', style: { gap: '8px' } },
         previewSlots.map((slot) => {
           const slotDue = approxDueCount(slot.code, t);
-          const doneToday = getReviewedToday(slot.code, t);
-          const quota = getDailyReviewQuota(slot.code, t);
           return h('div', {
             class: 'panel stack',
             style: {
@@ -2841,17 +2864,11 @@ function renderScheduleTabContent(t, sch) {
             }
           },
             h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-              h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
-                h('span', {}, slot.icon),
-                h('b', { style: { fontSize: '.9rem', color: slot.isMain ? 'var(--teal)' : 'var(--ink)' } }, slot.timeLabel)
-              ),
+              h('b', { style: { fontSize: '.92rem', color: slot.isMain ? 'var(--teal)' : 'var(--ink)' } }, slot.langTitle),
               h('span', { class: 'chip' + (slot.isMain ? ' accent' : ' small'), style: { fontSize: '.72rem', padding: '2px 8px', fontWeight: slot.isMain ? 700 : 500 } }, slot.roleBadge)
             ),
             h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
-              h('div', { style: { flex: '1 1 220px' } },
-                h('b', { style: { fontSize: '.9rem' } }, slot.langTitle),
-                h('p', { class: 'small muted', style: { margin: '2px 0 0 0', lineHeight: 1.45 } }, slot.taskDesc)
-              ),
+              h('p', { class: 'small muted', style: { flex: '1 1 220px', margin: 0, lineHeight: 1.45 } }, slot.taskDesc),
               h('div', { class: 'row wrap', style: { gap: '6px' } },
                 slot.isMain ? h('button', {
                   class: 'primary small',
@@ -2862,7 +2879,7 @@ function renderScheduleTabContent(t, sch) {
                   class: (slotDue > 0 ? 'accent' : 'ghost') + ' small',
                   style: { padding: '6px 10px', fontWeight: 700 },
                   onclick: () => goLangReview(slot.code)
-                }, slotDue > 0 ? ('🔄 Ôn gói ' + slotDue + ' từ') : ('✓ Đã ôn (' + doneToday + '/' + quota + ')')),
+                }, formatReviewBtnText(slot.code, t, '')),
                 !slot.isMain ? h('button', {
                   class: 'ghost small',
                   style: { padding: '6px 10px', fontSize: '.76rem' },
@@ -2874,26 +2891,26 @@ function renderScheduleTabContent(t, sch) {
         })
       )
     ),
-    // 3. Lộ trình phát triển 3 giai đoạn (đồng bộ hoàn toàn với cơ chế trên)
+    // 3. Lộ trình phát triển 3 giai đoạn
     h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '14px', padding: '14px', gap: '8px' } },
-      h('b', { style: { fontSize: '.95rem' } }, '🗺️ Cách tăng tốc theo 3 Giai đoạn trên cùng một Lịch Hợp Nhất'),
+      h('b', { style: { fontSize: '.95rem' } }, '🗺️ Trọng tâm kỹ năng theo 3 Giai đoạn'),
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '8px' } },
         h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '10px' } },
-          h('b', { style: { fontSize: '.84rem', color: 'var(--teal)' } }, '🌱 Giai đoạn 1 (Tháng 1–3): Làm quen nhịp'),
+          h('b', { style: { fontSize: '.84rem', color: 'var(--teal)' } }, '🌱 Giai đoạn 1 (Tháng 1–3): Nền tảng'),
           h('p', { class: 'small muted', style: { margin: '4px 0 0 0', fontSize: '.76rem', lineHeight: 1.5 } },
-            'Giữ đúng 1 Ca Chính học mới (30p) + 2 Ca Phụ ôn nhanh 10 từ (5p) vào 3 khung giờ Sáng Anh – Chiều Trung – Tối Nhật.'
+            'Xây dựng phản xạ Tiếng Anh giao tiếp, nắm vững Bộ thủ & 10 bài đầu của Tiếng Trung (HSK 1–2) và Tiếng Nhật (N5).'
           )
         ),
         h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '10px', padding: '10px' } },
-          h('b', { style: { fontSize: '.84rem', color: 'var(--amber)' } }, '⚡ Giai đoạn 2 (Tháng 4–6): Đẩy mạnh Nghe & Nói'),
+          h('b', { style: { fontSize: '.84rem', color: 'var(--amber)' } }, '⚡ Giai đoạn 2 (Tháng 4–6): Tăng tốc Nghe & Nói'),
           h('p', { class: 'small muted', style: { margin: '4px 0 0 0', fontSize: '.76rem', lineHeight: 1.5 } },
-            'Trong Ca Chính mỗi ngày, dành thêm 15–20p Shadowing (nhại giọng) và nghe hội thoại. Ca Phụ giữ nguyên ôn cuốn chiếu 10 từ dễ quên.'
+            'Đẩy mạnh kỹ năng nghe hội thoại, Shadowing (nhại giọng) và ôn cuốn chiếu gói 10–15 từ dễ quên.'
           )
         ),
         h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: '10px', padding: '10px' } },
-          h('b', { style: { fontSize: '.84rem', color: 'var(--ink)' } }, '🔄 Giai đoạn 3 (Tháng 6+): Phản xạ bền vững'),
+          h('b', { style: { fontSize: '.84rem', color: 'var(--ink)' } }, '🔄 Giai đoạn 3 (Tháng 6+): Duy trì bền vững'),
           h('p', { class: 'small muted', style: { margin: '4px 0 0 0', fontSize: '.76rem', lineHeight: 1.5 } },
-            'Duy trì nhịp 2-2-2-1 nhẹ nhàng lâu dài: T2 & T5 Anh · T3 & T6 Trung · T4 & T7 Nhật · CN tổng ôn nhẹ hoặc nghỉ ngơi.'
+            'Duy trì đều đặn lịch xoay vòng 2-2-2-1: T2 & T5 Anh · T3 & T6 Trung · T4 & T7 Nhật · CN tổng ôn nhẹ.'
           )
         )
       )
@@ -2942,12 +2959,12 @@ function renderRoadmapTabContent(t) {
       h('p', { class: 'small muted', style: { margin: '2px 0 0 0', fontSize: '.76rem' } },
         STUDY_PACE === 'schedule'
           ? (currentLang === 'en'
-              ? '💡 Lịch chuẩn Tiếng Anh (Thứ 2 & Thứ 5): Trọng tâm Nghe + Nói (B2/Giao tiếp) · Sáng sớm 06:30–07:15 mỗi ngày.'
+              ? '💡 Lịch chuẩn Tiếng Anh (Thứ 2 & Thứ 5): Học 2 bài mới/tuần (Nghe + Nói & Giao tiếp B2), các ngày khác ôn gói 10 từ.'
               : (currentLang === 'zh'
-                ? '💡 Lịch chuẩn Tiếng Trung (Thứ 3 & Thứ 6): Trọng tâm Đọc + Viết + Từ vựng HSK/Bộ thủ · Đầu giờ chiều (45–60p) tách biệt Tiếng Nhật.'
+                ? '💡 Lịch chuẩn Tiếng Trung (Thứ 3 & Thứ 6): Học 2 bài mới/tuần (Bộ thủ, Chiết tự & HSK), các ngày khác ôn gói 10 từ.'
                 : (currentLang === 'ja'
-                  ? '💡 Lịch chuẩn Tiếng Nhật (Thứ 4 & Thứ 7): Trọng tâm Giải trí + Nghe + Nhại giọng (Anime/N5) · Buổi tối trước khi ngủ (30–45p).'
-                  : '💡 Lịch xoay vòng 2-2-2-1: Anh (T2, T5) · Trung (T3, T6) · Nhật (T4, T7) · Chủ nhật tổng ôn SRS cả 3 tiếng hoặc xả hơi.')))
+                  ? '💡 Lịch chuẩn Tiếng Nhật (Thứ 4 & Thứ 7): Học 2 bài mới/tuần (Nghe hội thoại & N5), các ngày khác ôn gói 10 từ.'
+                  : '💡 Lịch xoay vòng 2-2-2-1: Anh (T2, T5) · Trung (T3, T6) · Nhật (T4, T7) · Chủ nhật tổng ôn nhẹ.')))
           : (STUDY_PACE === 'daily1'
               ? '💡 Tốc độ 1 bài/ngày: Mỗi ngày hoàn thành trọn vẹn 1 bài cho ngôn ngữ trọng tâm.'
               : '💡 Tốc độ 2 bài/ngày: Cường độ cao, hoàn thành 2 bài mỗi ngày giúp rút ngắn một nửa thời gian.')
@@ -3061,10 +3078,21 @@ function renderRoadmapTabContent(t) {
   ];
 }
 
+let PICK_SRS_PRELOADED = false;
 function pickView() {
   setTabs(false);
   const t = todayN();
   const sch = getDaySchedule(t);
+
+  if (!PICK_SRS_PRELOADED) {
+    PICK_SRS_PRELOADED = true;
+    const learnedLangs = Object.keys(LANGS).filter((c) => !DATA[c] && Object.keys(S.lessons || {}).some((k) => k.startsWith(c + ':')));
+    if (learnedLangs.length) {
+      Promise.all(learnedLangs.map((c) => loadLang(c).then(() => ensureSrsItems(c)).catch(() => {}))).then(() => {
+        if (VIEW === 'pick') pickView();
+      });
+    }
+  }
 
   const tabsBar = h('div', { class: 'pick-tabs', role: 'tablist' },
     [
@@ -3314,10 +3342,10 @@ function homeView() {
         h('div', { class: 'row between small', style: { alignItems: 'center' } },
           h('span', {},
             isFocus
-              ? h('span', { class: 'chip accent', style: { fontSize: '.72rem', marginRight: '6px' } }, '🎯 Ca chính hôm nay (Học 1 bài mới)')
+              ? h('span', { class: 'chip accent', style: { fontSize: '.72rem', marginRight: '6px' } }, '🎯 Trọng tâm hôm nay (Học 1 bài mới)')
               : sch.focus === 'all'
               ? h('span', { class: 'chip good', style: { fontSize: '.72rem', marginRight: '6px' } }, '🧘 Chủ Nhật: Tổng ôn nhẹ')
-              : h('span', { class: 'chip', style: { fontSize: '.72rem', marginRight: '6px' } }, '⚡ Ca duy trì (Không học bài mới · Ôn 10 từ)'),
+              : h('span', { class: 'chip', style: { fontSize: '.72rem', marginRight: '6px' } }, '⚡ Duy trì (Không học bài mới · Ôn 10 từ)'),
             h('span', {}, xp >= g ? 'Đã đạt mục tiêu hôm nay' : 'Còn ' + (g - xp) + ' XP để đạt mục tiêu')
           ),
           h('span', { class: 'muted' }, xp + '/' + g + ' XP · mỗi từ +5')
@@ -3328,8 +3356,10 @@ function homeView() {
           style: due > 0 ? {} : { padding: '6px 12px', fontSize: '.84rem', color: 'var(--muted)', margin: '4px 0' },
           onclick: () => { REVIEW_SKILL = 'vocab'; go('review'); }
         }, due > 0
-          ? ('🔄 Ôn gói hôm nay: Còn ' + due + '/' + quotaRev + ' từ vừa sức' + (rawVault > due ? ' (Kho chờ: ' + rawVault + ' từ)' : ''))
-          : ('✓ Đã hoàn thành gói ôn hôm nay (' + doneRev + '/' + quotaRev + ' từ)' + (rawVault > 0 ? ' · Bấm nếu muốn ôn thêm' : ''))),
+          ? ('🔄 Ôn tập hôm nay: Còn ' + due + ' từ' + (doneRev > 0 ? ' · Đã học/ôn ' + doneRev + ' mục' : '') + (rawVault > due ? ' (Kho chờ: ' + rawVault + ' từ)' : ''))
+          : (doneRev > 0
+              ? ('✓ Đã học/ôn hôm nay: ' + doneRev + ' mục' + (rawVault > 0 ? ' · Bấm nếu muốn ôn thêm' : ''))
+              : '🔄 Ôn tập từ mới (Chưa có từ đến hạn hôm nay)')),
         nx ? h('button', { class: (due ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) },
           h('span', {}, 'Học tiếp: ', h('b', {}, nx.t.sub || nx.t.title)))
           : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')
