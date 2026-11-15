@@ -977,7 +977,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261115-2105';
+const APP_BUILD_ID = '20261115-2215';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3822,7 +3822,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.77 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.78 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9463,8 +9463,7 @@ function itemCard(code, v, tip) {
     },
       h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px' } },
         h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-          h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:'),
-          v.exSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.12)', color: 'var(--teal)' } }, '📘 ' + v.exSrc) : null
+          h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:')
         ),
         listenBtns(code, v.ex)
       ),
@@ -10412,11 +10411,13 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
   if (pyBtn) pyBtn.onclick = () => { showPy = !showPy; syncVisibility(); };
   if (viBtn) viBtn.onclick = () => { showVi = !showVi; syncVisibility(); };
 
+  const cleanTitle = (title || 'Hội thoại đọc hiểu').replace(/\s*\(301\s*·\s*[^)]+\)/g, '').trim();
+  const cleanSrc = src && !String(src).includes('301') ? src : '';
   return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'rgba(15,23,42,.35)', border: '1px solid rgba(45,212,191,.22)' } },
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
       h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-        h('strong', { style: { fontSize: '.9rem' } }, title || 'Hội thoại đọc hiểu'),
-        src ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + src) : null
+        h('strong', { style: { fontSize: '.9rem' } }, cleanTitle),
+        cleanSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + cleanSrc) : null
       ),
       h('div', { class: 'row', style: { gap: '5px', flexWrap: 'wrap' } }, playAllBtn, pyBtn, viBtn)
     ),
@@ -10576,12 +10577,12 @@ function lessonView(t, i) {
       setTimeout(draw);
     } else if (ex.type === 'fill') {
       const { box, sels } = buildFillInputs(code, ex.fill, update);
+      const fillTitle = ex.fill.title ? ex.fill.title.replace(/\s*\(301\s*·\s*[^)]+\)/g, '').trim() : '';
       body = h('div', { class: 'stack' },
         h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-          h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? '✍️ Kỹ năng Viết · Điền từ vào email công việc' : '✍️ Đọc & Điền từ vào đoạn hội thoại'),
-          ex.fill.src ? h('span', { class: 'chip', style: { fontSize: '.7rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + ex.fill.src) : null
+          h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? '✍️ Kỹ năng Viết · Điền từ vào email công việc' : '✍️ Đọc & Điền từ vào đoạn hội thoại')
         ),
-        ex.fill.title ? h('p', { class: 'small muted', style: { margin: 0 } }, ex.fill.title) : null,
+        fillTitle ? h('p', { class: 'small muted', style: { margin: 0 } }, fillTitle) : null,
         h('div', { class: 'panel' }, box),
         ex.fill.trans && h('details', {}, h('summary', { class: 'small muted' }, 'Xem nghĩa'), h('p', { class: 'small muted' }, ex.fill.trans))
       );
@@ -10851,8 +10852,7 @@ function lessonView(t, i) {
       );
     } else if (ex.type === 'read' || ex.type === 'read301') {
       const sc = ex.sc;
-      const is301 = code === 'zh' && !!(sc.src && sc.src.includes('301'));
-      const readLabel = is301 ? '📖 Luyện đọc · Giáo trình 301' : (code === 'en' ? '📖 Luyện đọc · Hội thoại tiếng Anh' : (code === 'ja' ? '📖 Luyện đọc · Hội thoại tiếng Nhật' : '📖 Luyện đọc · Hội thoại tiếng Trung'));
+      const readLabel = code === 'en' ? '📖 Luyện đọc · Hội thoại tiếng Anh' : (code === 'ja' ? '📖 Luyện đọc · Hội thoại tiếng Nhật' : '📖 Luyện đọc · Hội thoại tiếng Trung');
       const hasPy = (sc.lines || []).some((ln) => ln && ln.r);
       const pyName = code === 'ja' ? 'Hiragana' : (code === 'en' ? 'Phiên âm' : 'Pinyin');
       const noteText = hasPy
@@ -10861,7 +10861,7 @@ function lessonView(t, i) {
       btn.textContent = 'Đã luyện đọc ➔'; ready = () => true;
       body = h('div', { class: 'stack', style: { gap: '10px' } },
         h('p', { class: 'label' }, readLabel),
-        renderDialogueCard(code, sc.title || (is301 ? 'Bài đọc hội thoại 301' : 'Hội thoại tình huống'), sc.src || (is301 ? '301 Đàm thoại' : ''), sc.lines || [], { defaultShowPy: true, defaultShowVi: false }),
+        renderDialogueCard(code, sc.title || 'Hội thoại tình huống', '', sc.lines || [], { defaultShowPy: true, defaultShowVi: false }),
         h('p', { class: 'small muted', style: { margin: 0 } }, noteText)
       );
     } else if (ex.type === 'gquiz') {
@@ -12326,7 +12326,7 @@ function renderSkillsFillPanel(code, t, fills, onRefresh = () => skillsView('rea
         ? { background: 'rgba(45,212,191,.18)', border: '1px solid var(--teal)', color: 'var(--teal)', fontWeight: 700, borderRadius: '999px', padding: '4px 10px' }
         : { border: '1px solid var(--line)', borderRadius: '999px', padding: '4px 10px' },
       onclick: () => { READ_FILL_IDX[t.id] = idx; onRefresh(); }
-    }, 'Bài ' + (idx + 1) + (f.src ? ' · ' + f.src.replace('301 · ', '') : '')))
+    }, 'Bài ' + (idx + 1)))
   ) : null;
 
   const fbEl = h('div', { class: 'stack', style: { gap: '8px' }, 'aria-live': 'polite' });
@@ -12351,15 +12351,15 @@ function renderSkillsFillPanel(code, t, fills, onRefresh = () => skillsView('rea
         h('strong', {}, ok === sels.length ? 'Chính xác tuyệt đối!' : 'Đúng ' + ok + '/' + sels.length + ' chỗ trống'),
         ok < sels.length ? h('p', { class: 'small', lang: LANGS[code].lang, style: { margin: '4px 0 0 0' } }, 'Đáp án: ' + sels.map((s) => s.dataset.ok).join(' · ')) : null
       ),
-      fillReveal(code, fillObj, (fillObj.src && !fillObj.audio) ? null : t.id)
+      fillReveal(code, fillObj, code === 'en' ? t.id : null)
     );
   };
 
+  const cleanFillTitle = (fillObj.title || 'Điền từ thích hợp vào đoạn hội thoại').replace(/\s*\(301\s*·\s*[^)]+\)/g, '').trim();
   return h('div', { class: 'stack', style: { gap: '10px' } },
     navPills,
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
-      h('span', { class: 'small', style: { fontWeight: 700 } }, fillObj.title || 'Điền từ thích hợp vào đoạn hội thoại'),
-      fillObj.src ? h('span', { class: 'chip', style: { fontSize: '.7rem', padding: '1px 8px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + fillObj.src) : null
+      h('span', { class: 'small', style: { fontWeight: 700 } }, cleanFillTitle)
     ),
     h('div', { class: 'panel' }, box),
     fillObj.trans ? h('details', {}, h('summary', { class: 'small muted' }, 'Xem nghĩa đoạn hội thoại'), h('p', { class: 'small muted', style: { marginTop: '6px', lineHeight: 1.5 } }, fillObj.trans)) : null,
@@ -12388,13 +12388,12 @@ function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
           ? { background: 'rgba(45,212,191,.18)', border: '1px solid var(--teal)', color: 'var(--teal)', fontWeight: 700, borderRadius: '999px', padding: '4px 10px' }
           : { border: '1px solid var(--line)', borderRadius: '999px', padding: '4px 10px' },
         onclick: () => { READ_DLG_IDX[t.id] = idx; onRefresh(); }
-      }, (idx + 1) + '. ' + (item.title || 'Hội thoại')))
+      }, (idx + 1) + '. ' + ((item.title || 'Hội thoại').replace(/\s*\(301\s*·\s*[^)]+\)/g, '').trim())))
     ) : null;
-    const has301Src = speaks.some((x) => x && x.src && x.src.includes('301'));
     out.push(h('div', { class: 'card stack', style: { gap: '10px' } },
-      h('p', { class: 'label', style: { margin: 0 } }, has301Src ? '💬 Hội thoại & Bài đọc giáo trình 301' : '💬 Hội thoại & Bài đọc'),
+      h('p', { class: 'label', style: { margin: 0 } }, '💬 Hội thoại & Bài đọc'),
       dlgTabs,
-      renderDialogueCard(code, sc.title, sc.src, sc.lines, { defaultShowPy: true, defaultShowVi: true })
+      renderDialogueCard(code, sc.title, '', sc.lines, { defaultShowPy: true, defaultShowVi: true })
     ));
   }
 
@@ -12437,8 +12436,7 @@ function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
         h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
           h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
             h('strong', { lang: LANGS[code].lang, style: { color: 'var(--teal)' } }, plain(v.w)),
-            h('span', { class: 'small muted' }, '— ' + v.m),
-            v.exSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.12)', color: 'var(--teal)' } }, '📘 ' + v.exSrc) : null
+            h('span', { class: 'small muted' }, '— ' + v.m)
           ),
           h('p', { lang: LANGS[code].lang, style: { margin: '2px 0 0 0', fontSize: '1.05rem', fontWeight: 600 } }, v.ex),
           v.exr ? h('p', { class: 'small read', style: { margin: 0, textAlign: 'left' } }, v.exr) : null,
@@ -12723,7 +12721,7 @@ function fillReveal(code, fill, tid) {
   const full = fill.text.replace(/\[\[(.+?)\]\]/g, (m, g) => g.split('|')[0]), lines = full.split('\n'), rl = (fill.r || '').split('\n');
   const spoken = code === 'zh' ? full.replace(/^[^\n：:]{1,8}[：:]\s*/gm, '') : full.replace(/^[AB][：:]\s*/gm, '');
   const fld = langFolder(code);
-  let mailSrc = fill.audio || (tid && !fill.src ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
+  let mailSrc = fill.audio || (code === 'en' && tid && !fill.src ? 'audio/mail/' + code + '-' + tid + '.mp3' : null);
   if (mailSrc && mailSrc.startsWith('audio/')) {
     mailSrc = fld + '/' + mailSrc;
   }
@@ -14442,7 +14440,7 @@ function knowledgeTabView() {
       ]
     : [
         { k: 'gram', label: '📖 Ngữ pháp HSK' },
-        { k: 'read301', label: '💬 Hội thoại & Đọc 301' },
+        { k: 'read301', label: '💬 Hội thoại & Đọc hiểu' },
         { k: 'chiet_tu', label: '🧩 Chiết tự & Mẹo nhớ chữ' },
         { k: 'chars', label: '🈴 Bộ thủ & Bút thuận' }
       ];
@@ -14459,11 +14457,11 @@ function knowledgeTabView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức, Ngữ pháp & Đọc 301'),
+    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức, Ngữ pháp & Đọc hiểu'),
     h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
       isJa
         ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
-        : 'Tổng hợp ngữ pháp HSK 1–9, hội thoại đọc hiểu 301, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
+        : 'Tổng hợp ngữ pháp HSK 1–9, hội thoại đọc hiểu, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
     )
   );
 

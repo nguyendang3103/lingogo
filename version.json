@@ -1,5 +1,5 @@
 {
-  "version": "3.77",
-  "build": "20261115-2105",
-  "message": "Chuẩn hóa tên hiển thị cấp độ Tiếng Anh: B1 là Trung cấp 1, B2 là Trung cấp 2"
+  "version": "3.78",
+  "build": "20261115-2215",
+  "message": "Xoá toàn bộ chú thích (301 · Bài ...) và nhãn giáo trình 301 gây nhầm lẫn thứ tự bài học (#13)"
 }
