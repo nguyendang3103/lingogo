@@ -1,5 +1,5 @@
 {
-  "version": "3.72",
-  "build": "20261115-1415",
-  "message": "Sửa đọc cả đoạn chỉ giữ 1 nút loa cho hội thoại (#10) và ẩn hiragana dòng đầu khi luyện nói tiếng Nhật (#11)"
+  "version": "3.73",
+  "build": "20261115-1430",
+  "message": "Sửa nhãn luyện đọc hội thoại tiếng Anh/Nhật không hiển thị nhầm Giáo trình 301 & ẩn nút Pinyin khi không có phiên âm (#12)"
 }

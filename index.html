@@ -977,7 +977,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261115-1415';
+const APP_BUILD_ID = '20261115-1430';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3813,7 +3813,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.72 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.73 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -10147,18 +10147,7 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
   let showPy = opts.defaultShowPy !== false;
   let showVi = !!opts.defaultShowVi;
   const pyNodes = [], viNodes = [], rowEls = [];
-  const pyBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showPy ? 'Ẩn Pinyin' : 'Hiện Pinyin');
-  const viBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa');
-  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', 'aria-label': 'Nghe cả đoạn hội thoại', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn, rowEls) }, '🔊 Nghe cả đoạn');
-  const syncVisibility = () => {
-    pyNodes.forEach((n) => { n.style.display = showPy ? 'block' : 'none'; });
-    viNodes.forEach((n) => { n.style.display = showVi ? 'block' : 'none'; });
-    pyBtn.textContent = showPy ? 'Ẩn Pinyin' : 'Hiện Pinyin';
-    viBtn.textContent = showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa';
-  };
-  pyBtn.onclick = () => { showPy = !showPy; syncVisibility(); };
-  viBtn.onclick = () => { showVi = !showVi; syncVisibility(); };
-
+  const pyLabel = code === 'ja' ? 'Hiragana' : (code === 'en' ? 'Phiên âm' : 'Pinyin');
   const rows = (lines || []).map((ln) => {
     const pyEl = ln.r ? h('p', { class: 'small read', style: { margin: '2px 0 0 0', textAlign: 'left', color: 'var(--teal)', display: showPy ? 'block' : 'none' } }, ln.r) : null;
     const viEl = ln.m ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left', display: showVi ? 'block' : 'none' } }, ln.m) : null;
@@ -10177,6 +10166,18 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
     rowEls.push(rowEl);
     return rowEl;
   });
+
+  const pyBtn = pyNodes.length ? h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showPy ? ('Ẩn ' + pyLabel) : ('Hiện ' + pyLabel)) : null;
+  const viBtn = viNodes.length ? h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa') : null;
+  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', 'aria-label': 'Nghe cả đoạn hội thoại', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn, rowEls) }, '🔊 Nghe cả đoạn');
+  const syncVisibility = () => {
+    pyNodes.forEach((n) => { n.style.display = showPy ? 'block' : 'none'; });
+    viNodes.forEach((n) => { n.style.display = showVi ? 'block' : 'none'; });
+    if (pyBtn) pyBtn.textContent = showPy ? ('Ẩn ' + pyLabel) : ('Hiện ' + pyLabel);
+    if (viBtn) viBtn.textContent = showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa';
+  };
+  if (pyBtn) pyBtn.onclick = () => { showPy = !showPy; syncVisibility(); };
+  if (viBtn) viBtn.onclick = () => { showVi = !showVi; syncVisibility(); };
 
   return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'rgba(15,23,42,.35)', border: '1px solid rgba(45,212,191,.22)' } },
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
@@ -10604,11 +10605,18 @@ function lessonView(t, i) {
       );
     } else if (ex.type === 'read301') {
       const sc = ex.sc;
+      const is301 = code === 'zh' && !!(sc.src && sc.src.includes('301'));
+      const readLabel = is301 ? '📖 Luyện đọc · Giáo trình 301' : (code === 'en' ? '📖 Luyện đọc · Hội thoại tiếng Anh' : (code === 'ja' ? '📖 Luyện đọc · Hội thoại tiếng Nhật' : '📖 Luyện đọc · Hội thoại tiếng Trung'));
+      const hasPy = (sc.lines || []).some((ln) => ln && ln.r);
+      const pyName = code === 'ja' ? 'Hiragana' : (code === 'en' ? 'Phiên âm' : 'Pinyin');
+      const noteText = hasPy
+        ? ('Bấm 🔊 Nghe cả đoạn để nghe toàn bài rồi đọc to theo luyện ngữ điệu. Có thể bấm “Ẩn ' + pyName + '” để tự đọc mặt chữ.')
+        : 'Bấm 🔊 Nghe cả đoạn để nghe toàn hội thoại rồi đọc to theo luyện ngữ điệu.';
       btn.textContent = 'Đã luyện đọc ➔'; ready = () => true;
       body = h('div', { class: 'stack', style: { gap: '10px' } },
-        h('p', { class: 'label' }, '📖 Luyện đọc · Giáo trình 301'),
-        renderDialogueCard(code, sc.title || 'Bài đọc hội thoại 301', sc.src || '301 Đàm thoại', sc.lines || [], { defaultShowPy: true, defaultShowVi: false }),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm 🔊 Nghe cả đoạn để nghe toàn bài rồi đọc to theo luyện ngữ điệu. Có thể bấm “Ẩn Pinyin” để tự đọc mặt chữ.')
+        h('p', { class: 'label' }, readLabel),
+        renderDialogueCard(code, sc.title || (is301 ? 'Bài đọc hội thoại 301' : 'Hội thoại tình huống'), sc.src || (is301 ? '301 Đàm thoại' : ''), sc.lines || [], { defaultShowPy: true, defaultShowVi: false }),
+        h('p', { class: 'small muted', style: { margin: 0 } }, noteText)
       );
     } else if (ex.type === 'gquiz') {
       const q = ex.q, langAttr = LANGS[code].lang;
