@@ -7,6 +7,7 @@ index-inline.html
 *.mp3
 !audio/mail/*.mp3
 !English/audio/mail/*.mp3
+!English/audio/listen/*.mp3
 !Chinese/audio/hskk/*.mp3
 !English/audio/ielts/*.mp3
 *.wav

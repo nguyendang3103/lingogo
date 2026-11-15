@@ -977,7 +977,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261115-1730';
+const APP_BUILD_ID = '20261115-1945';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1721,6 +1721,14 @@ let SAY_SEQ = 0;
 let TTS_TIMER = null;
 let ACTIVE_AUD_TIMER = null;
 let ACTIVE_SAY_DONE = null;
+let ACTIVE_DLG_AUDIO = null;
+
+function stopActiveDlgAudio() {
+  if (ACTIVE_DLG_AUDIO) {
+    try { if (typeof ACTIVE_DLG_AUDIO.pause === 'function') ACTIVE_DLG_AUDIO.pause(); } catch (e) {}
+    ACTIVE_DLG_AUDIO = null;
+  }
+}
 
 function finishSayDone(completed = false) {
   if (ACTIVE_AUD_TIMER) { clearTimeout(ACTIVE_AUD_TIMER); ACTIVE_AUD_TIMER = null; }
@@ -1733,6 +1741,7 @@ function finishSayDone(completed = false) {
 
 function stopSay() {
   SAY_SEQ++;
+  stopActiveDlgAudio();
   if (TTS_TIMER) { clearTimeout(TTS_TIMER); TTS_TIMER = null; }
   ACTIVE_UTT = null;
   try { AUD.pause(); } catch (e) {}
@@ -1749,7 +1758,7 @@ AUD.onloadedmetadata = () => {
   if (ACTIVE_SAY_DONE && isFinite(AUD.duration) && AUD.duration > 0) {
     const seqSnap = SAY_SEQ;
     if (ACTIVE_AUD_TIMER) clearTimeout(ACTIVE_AUD_TIMER);
-    const ms = Math.max(2500, Math.min(45000, Math.ceil((AUD.duration / (AUD.playbackRate || 1)) * 1000) + 1500));
+    const ms = Math.max(2500, Math.min(120000, Math.ceil((AUD.duration / (AUD.playbackRate || 1)) * 1000) + 1500));
     ACTIVE_AUD_TIMER = setTimeout(() => { if (seqSnap === SAY_SEQ) finishSayDone(true); }, ms);
   }
 };
@@ -1953,7 +1962,7 @@ function playAudSrc(src, slow, onFail, seq) {
       if (onFail) onFail();
       else finishSayDone(false);
     };
-    ACTIVE_AUD_TIMER = setTimeout(() => { if (seq === SAY_SEQ) finishSayDone(true); }, 25000);
+    ACTIVE_AUD_TIMER = setTimeout(() => { if (seq === SAY_SEQ) finishSayDone(true); }, 110000);
   }
   try {
     const p = AUD.play();
@@ -3813,7 +3822,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.75 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.76 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9529,6 +9538,208 @@ function quizFeedback(code, ex, r) {
     ) : null
   );
 }
+function resolveTrackAudioSrc(code, track) {
+  if (!track || !track.audio) return null;
+  if (track.audio.startsWith('audio/')) return langFolder(code) + '/' + track.audio;
+  return track.audio;
+}
+function renderListenTranscriptBox(code, track, initiallyVisible = false) {
+  const speakers = track.speakers || { A: 'Speaker A', B: 'Speaker B' };
+  return h('div', {
+    class: 'panel stack listen-script-box',
+    style: {
+      display: initiallyVisible ? 'flex' : 'none',
+      background: 'var(--surface)',
+      fontSize: '.9rem',
+      lineHeight: 1.5,
+      gap: '8px',
+      padding: '12px',
+      borderRadius: '10px',
+      border: '1px solid var(--line)',
+      textAlign: 'left',
+      marginTop: '6px'
+    }
+  },
+    h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+      h('span', { class: 'chip', style: { fontSize: '.74rem', borderColor: 'var(--teal)', color: 'var(--teal)' } }, 'A: ' + (speakers.A || 'Speaker A')),
+      h('span', { class: 'chip', style: { fontSize: '.74rem', borderColor: 'var(--amber)', color: 'var(--amber)' } }, 'B: ' + (speakers.B || 'Speaker B'))
+    ),
+    ...(track.lines || []).map((ln) => {
+      const isA = ln.s === 'A';
+      return h('div', { class: 'stack', style: { gap: '2px', paddingBottom: '6px', borderBottom: '1px dashed var(--line)' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'flex-start' } },
+          h('span', {
+            class: 'chip',
+            style: {
+              fontSize: '.7rem', padding: '1px 6px', flexShrink: 0, marginTop: '2px',
+              background: isA ? 'rgba(13,148,136,.12)' : 'rgba(217,119,6,.12)',
+              color: isA ? 'var(--teal)' : 'var(--amber)',
+              borderColor: isA ? 'var(--teal)' : 'var(--amber)'
+            }
+          }, ln.s + ': ' + (speakers[ln.s] || ln.s)),
+          h('span', { lang: LANGS[code].lang, style: { fontWeight: 500 } }, ln.t)
+        ),
+        ln.m ? h('span', { class: 'small muted', style: { paddingLeft: '4px' } }, ln.m) : null
+      );
+    })
+  );
+}
+function buildListenDialoguePanel(code, track, opts = {}) {
+  const audioSrc = resolveTrackAudioSrc(code, track);
+  let rate = 1.0;
+  let audioFailed = false;
+  let showScript = !!opts.defaultShowScript;
+  const fallbackText = (track.lines || []).map((ln) => ln.t).join('. ');
+
+  const statusText = h('span', { class: 'small muted' }, 'Bấm ▶ để nghe đoạn hội thoại');
+  const audioPlayer = h('audio', {
+    controls: 'controls',
+    preload: 'metadata',
+    src: audioSrc || '',
+    style: { width: '100%', height: '38px', marginTop: '4px' }
+  });
+
+  const playFallback = () => { if (fallbackText) say(code, fallbackText, rate < 0.95); };
+  const playBtn = h('button', {
+    class: 'primary',
+    style: { flex: '1 1 180px' },
+    onclick: () => {
+      if (audioFailed || !audioSrc) {
+        stopSay();
+        playFallback();
+        return;
+      }
+      if (!audioPlayer.paused && typeof audioPlayer.pause === 'function') {
+        audioPlayer.pause();
+        return;
+      }
+      stopSay();
+      ACTIVE_DLG_AUDIO = audioPlayer;
+      audioPlayer.playbackRate = rate;
+      if (typeof audioPlayer.play === 'function') {
+        const p = audioPlayer.play();
+        if (p && typeof p.catch === 'function') p.catch(playFallback);
+      } else {
+        playFallback();
+      }
+    }
+  }, '▶ Nghe đoạn hội thoại');
+
+  if (typeof audioPlayer.addEventListener === 'function') {
+    audioPlayer.addEventListener('play', () => {
+      if (ACTIVE_DLG_AUDIO && ACTIVE_DLG_AUDIO !== audioPlayer && typeof ACTIVE_DLG_AUDIO.pause === 'function') {
+        try { ACTIVE_DLG_AUDIO.pause(); } catch (e) {}
+      }
+      ACTIVE_DLG_AUDIO = audioPlayer;
+      playBtn.textContent = '⏸ Tạm dừng';
+      statusText.textContent = 'Đang phát hội thoại ' + (track.level || 'B1+') + '…';
+    });
+    audioPlayer.addEventListener('pause', () => {
+      playBtn.textContent = audioFailed ? '▶ Nghe bằng giọng dự phòng' : '▶ Nghe đoạn hội thoại';
+      if (audioPlayer.currentTime > 0 && !audioPlayer.ended) statusText.textContent = 'Đã tạm dừng';
+    });
+    audioPlayer.addEventListener('ended', () => {
+      if (ACTIVE_DLG_AUDIO === audioPlayer) ACTIVE_DLG_AUDIO = null;
+      playBtn.textContent = '▶ Nghe đoạn hội thoại';
+      statusText.textContent = 'Đã phát hết hội thoại ✓';
+    });
+    audioPlayer.addEventListener('error', () => {
+      audioFailed = true;
+      playBtn.textContent = '▶ Nghe bằng giọng dự phòng';
+      statusText.textContent = 'Không tải được MP3 · Dùng giọng đọc dự phòng';
+    });
+  }
+
+  const replayBtn = h('button', {
+    class: 'ghost mini',
+    onclick: () => {
+      stopSay();
+      if (audioFailed || !audioSrc) {
+        playFallback();
+        return;
+      }
+      ACTIVE_DLG_AUDIO = audioPlayer;
+      try { audioPlayer.currentTime = 0; } catch (e) {}
+      audioPlayer.playbackRate = rate;
+      if (typeof audioPlayer.play === 'function') {
+        const p = audioPlayer.play();
+        if (p && typeof p.catch === 'function') p.catch(playFallback);
+      } else {
+        playFallback();
+      }
+    }
+  }, '⏪ Nghe lại');
+
+  const speedRates = [0.85, 1.0, 1.15];
+  const speedBtn = h('button', {
+    class: 'ghost mini',
+    onclick: () => {
+      const idx = speedRates.indexOf(rate);
+      rate = speedRates[(idx + 1) % speedRates.length];
+      audioPlayer.playbackRate = rate;
+      speedBtn.textContent = 'Tốc độ: ' + rate + 'x';
+    }
+  }, 'Tốc độ: 1x');
+
+  let transcriptToggle = null;
+  let transcriptBox = null;
+  if (opts.allowScriptToggle) {
+    transcriptBox = renderListenTranscriptBox(code, track, showScript);
+    transcriptToggle = h('button', {
+      class: 'ghost mini',
+      onclick: () => {
+        showScript = !showScript;
+        transcriptBox.style.display = showScript ? 'flex' : 'none';
+        transcriptToggle.textContent = showScript ? '🙈 Ẩn lời thoại & bản dịch' : '👁️ Hiện lời thoại & bản dịch';
+      }
+    }, showScript ? '🙈 Ẩn lời thoại & bản dịch' : '👁️ Hiện lời thoại & bản dịch');
+  }
+
+  const speakers = track.speakers || {};
+  return h('div', { class: 'panel stack listen-dlg-panel', style: { gap: '8px', padding: opts.compact ? '12px' : '14px', borderRadius: '12px', background: 'var(--surface)' } },
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+      h('div', { class: 'stack', style: { gap: '2px', minWidth: 0, flex: 1 } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+          h('span', { class: 'chip good', style: { fontSize: '.7rem', padding: '2px 7px' } }, '🎧 ' + (track.level || 'B1+') + ' · Hội thoại dài'),
+          track.lines ? h('span', { class: 'small muted' }, track.lines.length + ' lượt nói') : null
+        ),
+        h('b', { style: { fontSize: '.98rem' } }, track.title || 'Hội thoại thực tế'),
+        track.sub ? h('span', { class: 'small muted' }, track.sub) : null
+      ),
+      (speakers.A || speakers.B) ? h('span', { class: 'small muted', style: { fontSize: '.76rem' } }, (speakers.A || 'A') + ' ↔ ' + (speakers.B || 'B')) : null
+    ),
+    h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', alignItems: 'center' } },
+      playBtn, replayBtn, speedBtn, transcriptToggle
+    ),
+    audioPlayer,
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+      statusText,
+      !opts.allowScriptToggle ? h('span', { class: 'small muted', style: { fontSize: '.76rem' } }, '🔒 Lời thoại mở sau khi kiểm tra đáp án') : null
+    ),
+    transcriptBox
+  );
+}
+function listenDlgFeedback(code, ex, r) {
+  const correctOpt = ((ex.q && ex.q.o) || [])[ex.q ? ex.q.a : 0] || '';
+  let showScript = false;
+  const scriptBox = ex.track ? renderListenTranscriptBox(code, ex.track, false) : null;
+  const toggleBtn = ex.track ? h('button', {
+    class: 'ghost mini',
+    style: { alignSelf: 'flex-start', marginTop: '4px' },
+    onclick: () => {
+      showScript = !showScript;
+      scriptBox.style.display = showScript ? 'flex' : 'none';
+      toggleBtn.textContent = showScript ? '🔼 Ẩn lời thoại hội thoại' : '📄 Xem lời thoại & bản dịch để đối chiếu';
+    }
+  }, '📄 Xem lời thoại & bản dịch để đối chiếu') : null;
+
+  return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
+    h('p', { class: 'big', lang: 'en', style: { fontSize: '1.08rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, correctOpt),
+    r.note ? h('p', { class: 'small', style: { margin: '2px 0 0 0', textAlign: 'left', lineHeight: 1.45 } }, r.note) : null,
+    toggleBtn,
+    scriptBox
+  );
+}
 
 
 // Kéo thả và đổi vị trí từ khi sắp xếp câu
@@ -9890,8 +10101,21 @@ function buildSteps(t, i) {
     }
 
     // 2. KỸ NĂNG NGHE (Listening)
-    // Nghe và chọn từ vừa nghe thấy
-    sample(l.words, Math.min(2, l.words.length)).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    // Với Tiếng Anh từ B1 trở lên có hội thoại dài: luyện nghe hội thoại & trả lời câu hỏi chọn đáp án
+    const longTracks = (code === 'en' && Array.isArray(t.listening) && t.listening.length) ? t.listening : null;
+    if (longTracks) {
+      const track = longTracks[i % longTracks.length];
+      const qs = Array.isArray(track.questions) ? track.questions : [];
+      const qCount = Math.min(2, qs.length);
+      const startQ = Math.floor(i / longTracks.length) * 2;
+      for (let qi = 0; qi < qCount; qi++) {
+        const q = qs[(startQ + qi) % qs.length];
+        if (q) steps.push({ type: 'listen_dlg', track, q, partIdx: qi + 1, partTotal: qCount });
+      }
+    } else {
+      // Nghe và chọn từ vừa nghe thấy (A1/A2 hoặc ZH/JA)
+      sample(l.words, Math.min(2, l.words.length)).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    }
     sample(l.words, Math.min(2, l.words.length)).forEach((v) => steps.push({ type: 'reverse', v, opts: opt(v, 'w') }));
 
     // 3. KỸ NĂNG NÓI (Speaking) - Micro AI chấm phát âm câu giao tiếp
@@ -10044,7 +10268,16 @@ function buildSteps(t, i) {
     // kind === 'review': Tổng ôn đầy đủ 4 kỹ năng
     const weak = topicWords.slice().sort((a, b) => ((S.srs[sid(code, a.id)] || { b: 0 }).b - (S.srs[sid(code, b.id)] || { b: 0 }).b));
     weak.slice(0, 6).forEach((v, n) => steps.push(n % 2 ? { type: 'reverse', v, opts: opt(v, 'w') } : { type: 'meaning', v, opts: opt(v, 'm') }));
-    sample(topicWords, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    const longTracksRev = (code === 'en' && Array.isArray(t.listening) && t.listening.length) ? t.listening : null;
+    if (longTracksRev) {
+      longTracksRev.forEach((track) => {
+        const qs = Array.isArray(track.questions) ? track.questions : [];
+        const q = qs[qs.length - 1] || qs[0];
+        if (q) steps.push({ type: 'listen_dlg', track, q });
+      });
+    } else {
+      sample(topicWords, 2).forEach((v) => steps.push({ type: 'listen', v, opts: opt(v, 'w') }));
+    }
     
     // Luyện nói trong review
     const spCandidate = topicWords.find((v) => v.ex) || topicWords[0];
@@ -10214,7 +10447,7 @@ function lessonView(t, i) {
   let done = 0;
   if (LANGS[code] && LANGS[code].cjk) loadStrokes(code);
   preloadTopicAudio(code, t);
-  const exit = () => { setFeedbackContext(null); go('home'); };
+  const exit = () => { stopSay(); setFeedbackContext(null); go('home'); };
 
   function step() {
     stopSay();
@@ -10267,6 +10500,19 @@ function lessonView(t, i) {
       c.setCorrect(ex.k);
       body = h('div', { class: 'stack' }, h('p', { class: 'label' }, 'Kanji này đọc Hán Việt là gì?'), h('div', { class: 'big', lang: 'ja' }, ex.k.k), c.el);
       gradeFn = () => ({ correct: c.sel() === ex.k, expected: ex.k.hv + ' · on: ' + ex.k.on + ' · kun: ' + ex.k.kun });
+    } else if (ex.type === 'listen_dlg') {
+      const qOpts = ex.q.o || [];
+      const opts = shuffle(qOpts.map((o, k) => ({ o, k })));
+      const c = choose(opts, (x) => h('span', { lang: LANGS[code].lang }, x.o));
+      c.setCorrect(opts.find((x) => x.k === ex.q.a));
+      const lblPart = ex.partTotal > 1 ? (' · Câu ' + ex.partIdx + '/' + ex.partTotal) : '';
+      body = h('div', { class: 'stack' },
+        h('p', { class: 'label' }, '🎧 Kỹ năng Nghe · Hội thoại dài (' + ((ex.track && ex.track.level) || 'B1+') + ')' + lblPart),
+        buildListenDialoguePanel(code, ex.track, { compact: true, allowScriptToggle: false }),
+        h('p', { class: 'q' }, ex.q.q),
+        c.el
+      );
+      gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: (ex.q.o || [])[ex.q.a], note: ex.q.why || '' });
     } else if (ex.type === 'quiz') {
       const qOpts = ex.q.o || ex.q.opts || [];
       const opts = shuffle(qOpts.map((o, k) => ({ o, k, r: (ex.q.r && ex.q.r[k]) || '' })));
@@ -10689,10 +10935,11 @@ function lessonView(t, i) {
         h('strong', {}, r.self ? 'Tốt lắm!' : r.correct ? 'Chính xác!' : 'Chưa đúng'),
         r.align && h('div', { class: 'words', lang: LANGS[code].lang }, r.align.units.map((w, k) => h('span', { class: r.align.hit[k] ? 'hit' : 'miss' }, w))),
         r.score != null && h('p', { class: 'small' }, 'Máy nghe đúng ' + r.score + '%' + (r.correct ? '.' : '. Chỗ gạch đỏ là chỗ cần nói rõ hơn.')),
-        !r.correct && !r.align && r.expected && ex.type !== 'order' && ex.type !== 'quiz' && ex.type !== 'gquiz' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
-        r.note && ex.type !== 'quiz' && h('p', { class: 'small' }, r.note),
+        !r.correct && !r.align && r.expected && ex.type !== 'order' && ex.type !== 'quiz' && ex.type !== 'gquiz' && ex.type !== 'listen_dlg' && h('p', { lang: LANGS[code].lang }, 'Đáp án: ' + r.expected),
+        r.note && ex.type !== 'quiz' && ex.type !== 'listen_dlg' && h('p', { class: 'small' }, r.note),
         ex.type === 'order' ? orderFeedback(code, ex, r) : null,
         ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
+        ex.type === 'listen_dlg' ? listenDlgFeedback(code, ex, r) : null,
         ex.type === 'gquiz' ? grammarQuizFeedback(code, ex, r) : null,
         (['listen', 'reverse'].includes(ex.type) || (!r.correct && ex.type === 'meaning')) && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
           ex.type === 'meaning' && !r.correct ? h('p', { lang: LANGS[code].lang, style: { margin: 0, fontWeight: 600 } }, plain(ex.v.w) + ' — ' + ex.v.m) : null,
@@ -10731,7 +10978,7 @@ function lessonView(t, i) {
       });
     }
     // XP: mỗi từ / kanji / câu / tình huống làm đúng ngay lần đầu = 5 XP; điền từ: 5 XP mỗi chỗ đúng
-    const keyOf = (e) => e.v ? 'v' + e.v.id : e.k ? 'k' + e.k.id : e.type === 'gquiz' ? ('gq' + (e.q && e.q.p ? e.q.p.gid : '') + ':' + (e.q ? (e.q.type || '') + ':' + (e.n ?? '') : '')) : (e.type === 'read' || e.type === 'read301') ? ('rd:' + ((e.sc && (e.sc.id || e.sc.title)) || e.n)) : e.type === 'quiz' ? ('qz' + (e.q ? (e.q.id || e.q.q) : '')) : e.type === 'write' ? 'w' + e.ch : 's' + (e.text || '');
+    const keyOf = (e) => e.v ? 'v' + e.v.id : e.k ? 'k' + e.k.id : e.type === 'gquiz' ? ('gq' + (e.q && e.q.p ? e.q.p.gid : '') + ':' + (e.q ? (e.q.type || '') + ':' + (e.n ?? '') : '')) : (e.type === 'read' || e.type === 'read301') ? ('rd:' + ((e.sc && (e.sc.id || e.sc.title)) || e.n)) : e.type === 'listen_dlg' ? ('ld:' + ((e.q && (e.q.id || e.q.q)) || e.n)) : e.type === 'quiz' ? ('qz' + (e.q ? (e.q.id || e.q.q) : '')) : e.type === 'write' ? 'w' + e.ch : 's' + (e.text || '');
     const won = new Set(); let fillXp = 0;
     all.forEach((r) => { if (r.ex.type === 'fill') fillXp += XP_ITEM * (r.ok || 0); else if (r.correct && !(r.ex.type === 'write' && r.self)) won.add(keyOf(r.ex)); });
     let xp = XP_ITEM * won.size + fillXp; if (repeat) xp = Math.ceil(xp / 2);
@@ -10806,7 +11053,7 @@ function lessonView(t, i) {
       ...t.lessons[i].words.map((v) => h('button', { class: 'lesson', onclick: () => say(code, v.w) },
         h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small' + (code === 'en' ? ' ipa' : ' muted'), style: code === 'en' ? { color: 'var(--teal)', fontWeight: 600, display: 'inline-block', marginLeft: '6px' } : null }, v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
         h('span', { class: 'spk', 'aria-hidden': 'true' }, icon(ICON.speaker))))),
-    t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Điền từ vào email, rồi sắp xếp câu ví dụ.' : 'Điền từ vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind]),
+    t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: (t.lang === 'en' && Array.isArray(t.listening) && t.listening.length) ? 'Ôn lại những từ còn yếu của cả chủ đề, nghe hội thoại dài chọn đáp án và tình huống thực tế.' : 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Điền từ vào email, rồi sắp xếp câu ví dụ.' : 'Điền từ vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind]),
     h('div', { class: 'dock stack', style: { gap: '8px' } },
       h('button', { class: 'primary block', onclick: step }, isDone ? ('Học lại bài này · ' + steps.filter((s) => s.type !== 'intro').length + ' câu') : ('Bắt đầu · ' + steps.filter((s) => s.type !== 'intro').length + ' câu')),
       isDone && h('button', {
@@ -11427,7 +11674,7 @@ function reviewView(forceExtra = false) {
   show();
 }
 // ===== Luyện nói =====
-const LISTEN_TOPIC = {}, SPEAK_TOPIC = {}, READ_TOPIC = {}, WRITE_TOPIC = {};
+const LISTEN_TOPIC = {}, LISTEN_DLG_IDX = {}, SPEAK_TOPIC = {}, READ_TOPIC = {}, WRITE_TOPIC = {};
 function topicPicker(code, store, onChange) {
   const d = DATA[code]; const nx = nextLesson(d);
   if (!store[code]) store[code] = (nx ? nx.t : d.topics[0]).id;
@@ -11664,10 +11911,80 @@ function renderWriteSkills(code, d) {
   ].filter(Boolean);
 }
 
-// ===== Luyện Nghe (Chỉ chứa nội dung bài học, không có IELTS/tips) =====
+// ===== Luyện Nghe (Hội thoại dài B1-C2 + Luyện nghe phản xạ câu bài học) =====
+function renderLongListenSkillsSection(code, t) {
+  if (code !== 'en' || !Array.isArray(t.listening) || !t.listening.length) return null;
+  const tracks = t.listening;
+  const activeIdx = Math.min(tracks.length - 1, Math.max(0, LISTEN_DLG_IDX[t.id] || 0));
+  const track = tracks[activeIdx];
+  const qs = Array.isArray(track.questions) ? track.questions : [];
+  let answeredCount = 0;
+  let correctCount = 0;
+  const scoreBadge = h('span', { class: 'chip', style: { fontSize: '.76rem' } }, 'Chưa trả lời: 0/' + qs.length);
+
+  const qCards = qs.map((q, qi) => {
+    let locked = false;
+    const opts = shuffle((q.o || []).map((o, k) => ({ o, k })));
+    const fbEl = h('div', { style: { display: 'none', marginTop: '6px' } });
+    let optBtns = [];
+    const optList = h('div', { class: 'options' },
+      ...(optBtns = opts.map((item, oi) => h('button', {
+        onclick: () => {
+          if (locked) return;
+          locked = true;
+          const ok = item.k === q.a;
+          optBtns.forEach((b, bj) => {
+            b.disabled = true;
+            if (opts[bj].k === q.a) b.classList.add('right');
+            else if (bj === oi && !ok) b.classList.add('wrong');
+          });
+          answeredCount++;
+          if (ok) correctCount++;
+          if (q.id) srsRate(sid(code, q.id), ok);
+          scoreBadge.textContent = 'Điểm: ' + correctCount + '/' + qs.length + (answeredCount === qs.length ? ' ✓' : '');
+          scoreBadge.className = answeredCount === qs.length && correctCount === qs.length ? 'chip good' : 'chip';
+          fbEl.style.display = 'block';
+          fbEl.replaceChildren(h('div', { class: 'feedback ' + (ok ? 'ok' : 'no'), style: { marginTop: 0 } },
+            h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng'),
+            q.why ? h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, q.why) : null
+          ));
+        }
+      }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, String.fromCharCode(65 + oi)), h('span', { class: 'grow', lang: 'en' }, item.o))))
+    );
+    return h('div', { class: 'panel stack listen-skill-q', style: { gap: '8px', padding: '12px 14px', borderRadius: '12px' } },
+      h('p', { class: 'q', style: { margin: 0, fontSize: '.98rem' } }, 'Câu ' + (qi + 1) + ': ' + q.q),
+      optList,
+      fbEl
+    );
+  });
+
+  return h('div', { class: 'panel card stack listen-skill-section', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px', border: '1px solid var(--line)' } },
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+      h('div', { class: 'stack', style: { gap: '2px' } },
+        h('b', { style: { fontSize: '1.02rem', color: 'var(--teal)' } }, '🎧 Luyện nghe Hội thoại dài · Hiểu sâu (' + (t.level || 'B1+') + ')'),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghe toàn bộ đoạn hội thoại tốc độ tự nhiên và trả lời câu hỏi chọn đáp án A–D (lời thoại ẩn sẵn để rèn nghe).')
+      ),
+      scoreBadge
+    ),
+    tracks.length > 1 ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+      tracks.map((tr, ti) => h('button', {
+        class: ti === activeIdx ? 'primary mini' : 'ghost mini',
+        onclick: () => { LISTEN_DLG_IDX[t.id] = ti; stopSay(); skillsView('listen'); }
+      }, 'Hội thoại ' + (ti + 1) + ': ' + (tr.title || ('Bài ' + (ti + 1)))))
+    ) : null,
+    buildListenDialoguePanel(code, track, { compact: false, allowScriptToggle: true, defaultShowScript: false }),
+    h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
+      h('b', { style: { fontSize: '.95rem' } }, '📝 Câu hỏi đọc hiểu nghe (' + qs.length + ' câu)'),
+      h('button', { class: 'ghost mini', onclick: () => { stopSay(); skillsView('listen'); } }, '↺ Làm lại bài nghe')
+    ),
+    ...qCards
+  );
+}
+
 function renderListenSkills(code, d) {
-  const pick = topicPicker(code, LISTEN_TOPIC, () => skillsView('listen'));
+  const pick = topicPicker(code, LISTEN_TOPIC, () => { stopSay(); skillsView('listen'); });
   const t = d.topics.find((x) => x.id === LISTEN_TOPIC[code]) || d.topics[0];
+  const longListenBlock = renderLongListenSkillsSection(code, t);
   const vocabsWithEx = (t.vocab || []).filter((v) => v.ex);
   
   let isPlayingAll = false;
@@ -11729,9 +12046,10 @@ function renderListenSkills(code, d) {
   return [
     h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
+      longListenBlock,
       h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
         h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎧 Ôn tập kỹ năng Nghe'),
+          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎧 Ôn tập nghe câu mẫu'),
           toggleTextBtn
         ),
         h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện nghe phản xạ câu bài học: Tắm ngôn ngữ tự động phát liên tục hoặc ẩn chữ để luyện nghe chay.'),
