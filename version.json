@@ -1,5 +1,5 @@
 {
-  "version": "3.71",
-  "build": "20261115-0930",
-  "message": "Tinh gọn nội dung Tiếng Anh Thương mại B2 còn 10 chủ đề cốt lõi (40 tiết)"
+  "version": "3.72",
+  "build": "20261115-1415",
+  "message": "Sửa đọc cả đoạn chỉ giữ 1 nút loa cho hội thoại (#10) và ẩn hiragana dòng đầu khi luyện nói tiếng Nhật (#11)"
 }

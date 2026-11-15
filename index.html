@@ -977,7 +977,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261115-0930';
+const APP_BUILD_ID = '20261115-1415';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1719,9 +1719,38 @@ let AUD_UNLOCKED = false;
 let ACTIVE_UTT = null;
 let SAY_SEQ = 0;
 let TTS_TIMER = null;
+let ACTIVE_AUD_TIMER = null;
+let ACTIVE_SAY_DONE = null;
+
+function finishSayDone(completed = false) {
+  if (ACTIVE_AUD_TIMER) { clearTimeout(ACTIVE_AUD_TIMER); ACTIVE_AUD_TIMER = null; }
+  AUD.onended = null;
+  AUD.onerror = null;
+  const fn = ACTIVE_SAY_DONE;
+  ACTIVE_SAY_DONE = null;
+  if (fn) fn(completed);
+}
+
+function stopSay() {
+  SAY_SEQ++;
+  if (TTS_TIMER) { clearTimeout(TTS_TIMER); TTS_TIMER = null; }
+  ACTIVE_UTT = null;
+  try { AUD.pause(); } catch (e) {}
+  if ('speechSynthesis' in window && (speechSynthesis.speaking || speechSynthesis.pending)) {
+    try { speechSynthesis.cancel(); } catch (e) {}
+  }
+  finishSayDone(false);
+}
+
 AUD.onloadedmetadata = () => {
   if (AUD.defaultPlaybackRate && AUD.defaultPlaybackRate !== 1) {
     try { AUD.playbackRate = AUD.defaultPlaybackRate; } catch (e) {}
+  }
+  if (ACTIVE_SAY_DONE && isFinite(AUD.duration) && AUD.duration > 0) {
+    const seqSnap = SAY_SEQ;
+    if (ACTIVE_AUD_TIMER) clearTimeout(ACTIVE_AUD_TIMER);
+    const ms = Math.max(2500, Math.min(45000, Math.ceil((AUD.duration / (AUD.playbackRate || 1)) * 1000) + 1500));
+    ACTIVE_AUD_TIMER = setTimeout(() => { if (seqSnap === SAY_SEQ) finishSayDone(true); }, ms);
   }
 };
 let voices = [];
@@ -1784,7 +1813,10 @@ function preloadTopicAudio(code, t) {
   };
   (t.vocab || []).forEach((v) => { enqueue(v.w); if (v.ex) enqueue(v.ex); });
   (t.speak || []).forEach((sc) => (sc.lines || []).forEach((ln) => enqueue(ln.t || ln.text)));
-  (t.quiz || []).forEach((q) => (q.o || q.opts || []).forEach(enqueue));
+  (t.quiz || []).forEach((q) => {
+    (q.o || q.opts || []).forEach(enqueue);
+    (q.dialogue || []).forEach((ln) => enqueue(ln.t || ln.text));
+  });
 }
 function bundleOf(code, text) {
   const d = DATA[code]; if (!d || !d.audio || !text) return null;
@@ -1835,7 +1867,11 @@ function pickVoice(code, targetLang) {
   return best;
 }
 function speakUtterance(code, text, slow, useVoice = true, retried = false) {
-  if (!('speechSynthesis' in window)) { toast('Thiết bị này chưa hỗ trợ đọc to.'); return; }
+  if (!('speechSynthesis' in window)) {
+    toast('Thiết bị này chưa hỗ trợ đọc to.');
+    finishSayDone(false);
+    return;
+  }
   const seq = SAY_SEQ;
   const u = new SpeechSynthesisUtterance(text);
   const targetLang = LANGS[code].tts;
@@ -1855,20 +1891,30 @@ function speakUtterance(code, text, slow, useVoice = true, retried = false) {
 
   let started = false;
   u.onstart = () => { started = true; };
-  u.onend = () => { if (ACTIVE_UTT === u) ACTIVE_UTT = null; };
+  u.onend = () => {
+    if (ACTIVE_UTT === u) ACTIVE_UTT = null;
+    if (seq === SAY_SEQ) finishSayDone(true);
+  };
   u.onerror = (ev) => {
     if (ACTIVE_UTT === u) ACTIVE_UTT = null;
     const err = ev && ev.error;
     if (!retried && useVoice && err !== 'canceled' && err !== 'interrupted' && seq === SAY_SEQ) {
       speakUtterance(code, text, slow, false, true);
+    } else if (seq === SAY_SEQ) {
+      finishSayDone(false);
     }
   };
 
   if (TTS_TIMER) { clearTimeout(TTS_TIMER); TTS_TIMER = null; }
+  if (ACTIVE_AUD_TIMER) { clearTimeout(ACTIVE_AUD_TIMER); ACTIVE_AUD_TIMER = null; }
   const needCancel = !!(speechSynthesis.speaking || speechSynthesis.pending);
   const runSpeak = () => {
     if (seq !== SAY_SEQ) return;
     try { if (speechSynthesis.paused && speechSynthesis.resume) speechSynthesis.resume(); } catch (e) {}
+    if (ACTIVE_SAY_DONE) {
+      const maxMs = Math.max(6000, Math.min(30000, String(text).length * 450 + 2500));
+      ACTIVE_AUD_TIMER = setTimeout(() => { if (seq === SAY_SEQ) finishSayDone(true); }, maxMs);
+    }
     speechSynthesis.speak(u);
     if (!retried && useVoice) {
       TTS_TIMER = setTimeout(() => {
@@ -1889,30 +1935,51 @@ function tts(code, text, slow) {
   speakUtterance(code, text, slow, true, false);
 }
 function playAudSrc(src, slow, onFail, seq) {
+  AUD.onended = null;
+  AUD.onerror = null;
+  if (ACTIVE_AUD_TIMER) { clearTimeout(ACTIVE_AUD_TIMER); ACTIVE_AUD_TIMER = null; }
   AUD.muted = false;
   AUD.defaultPlaybackRate = slow ? 0.7 : 1;
   AUD.playbackRate = slow ? 0.7 : 1;
   if (AUD.src === src) { try { AUD.currentTime = 0; } catch (e) {} }
   else AUD.src = src;
   AUD_UNLOCKED = true;
+  if (ACTIVE_SAY_DONE) {
+    AUD.onended = () => { if (seq === SAY_SEQ) finishSayDone(true); };
+    AUD.onerror = () => {
+      if (seq !== SAY_SEQ) return;
+      AUD.onended = null;
+      AUD.onerror = null;
+      if (onFail) onFail();
+      else finishSayDone(false);
+    };
+    ACTIVE_AUD_TIMER = setTimeout(() => { if (seq === SAY_SEQ) finishSayDone(true); }, 25000);
+  }
   try {
     const p = AUD.play();
     if (p && typeof p.catch === 'function') {
       return p.catch((e) => {
         if (seq !== SAY_SEQ || (e && e.name === 'AbortError')) return;
         if (onFail) onFail();
+        else finishSayDone(false);
       });
     }
   } catch (e) {
-    if (seq === SAY_SEQ && onFail) onFail();
+    if (seq === SAY_SEQ) {
+      if (onFail) onFail();
+      else finishSayDone(false);
+    }
   }
 }
-function say(code, text, slow) {
-  if (!text) return;
+function say(code, text, slow, onDone) {
+  if (!text) { if (onDone) onDone(false); return; }
   text = plain(text);
+  if (!text) { if (onDone) onDone(false); return; }
   const mySeq = ++SAY_SEQ;
   if (TTS_TIMER) { clearTimeout(TTS_TIMER); TTS_TIMER = null; }
   try { AUD.pause(); } catch (e) {}
+  finishSayDone(false);
+  if (onDone) ACTIVE_SAY_DONE = onDone;
 
   const clip = clipForSync(code, text);
   if (clip.status === 'hit') {
@@ -1939,7 +2006,12 @@ function say(code, text, slow) {
     } else {
       tts(code, text, slow);
     }
+  }).catch(() => {
+    if (mySeq === SAY_SEQ) finishSayDone(false);
   });
+}
+function sayWait(code, text, slow) {
+  return new Promise((resolve) => say(code, text, slow, resolve));
 }
 
 // ===== Nhận dạng giọng nói (Độ nhạy cao & Chống lỗi Aborted) =====
@@ -2619,6 +2691,11 @@ function resolveJaReading(t, ex) {
   }
   return '';
 }
+function speakHeadline(code, text, raw, readingLine) {
+  const txt = plain(text);
+  const hideRuby = code === 'ja' && !!(readingLine && readingLine !== txt);
+  return (raw && !hideRuby) ? ruby(raw) : txt;
+}
 const app = document.getElementById('app');
 function mount(...nodes) { app.replaceChildren(...nodes.flat(9).filter((n) => n != null && n !== false)); window.scrollTo(0, 0); }
 let tt;
@@ -2747,6 +2824,7 @@ function setTabs(show) {
   }));
 }
 function go(k) {
+  stopSay();
   if (k === 'skills') {
     VIEW = 'skills';
   } else if (k === 'speak' || k === 'write' || k === 'listen' || k === 'read') {
@@ -3735,7 +3813,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.71 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.72 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -10023,27 +10101,44 @@ function resolveQuizDialogue(t, q) {
   return null;
 }
 
-async function playLinesSeq(code, lines, btn) {
+async function playLinesSeq(code, lines, btn, rowEls = []) {
   if (btn.dataset.playing === '1') {
     btn.dataset.playing = '0';
     btn.dataset.seq = String((+btn.dataset.seq || 0) + 1);
-    if (window.speechSynthesis) try { window.speechSynthesis.cancel(); } catch {}
-    btn.textContent = '🔊 Nghe cả bài';
+    stopSay();
+    rowEls.forEach((r) => { if (r) r.style.background = ''; });
+    btn.textContent = '🔊 Nghe cả đoạn';
     return;
   }
+  const playable = (lines || []).map((ln, idx) => ({ ln, idx })).filter((x) => x.ln && x.ln.t);
+  if (!playable.length) return;
+
+  if (clipForSync(code, playable[0].ln.t).status !== 'hit') unlockIosAudio();
+  const seenBundles = new Set();
+  playable.forEach(({ ln }) => {
+    const b = bundleOf(code, ln.t);
+    if (b && !seenBundles.has(b.file)) { seenBundles.add(b.file); loadBundle(b.file); }
+  });
+
   const mySeq = String((+btn.dataset.seq || 0) + 1);
   btn.dataset.seq = mySeq;
   btn.dataset.playing = '1';
-  btn.textContent = '⏹️ Dừng';
+  const clearHi = () => rowEls.forEach((r) => { if (r) r.style.background = ''; });
   try {
-    for (const ln of lines) {
-      if (!btn.isConnected || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
-      if (ln && ln.t) await say(code, ln.t);
+    for (let k = 0; k < playable.length; k++) {
+      const { ln, idx } = playable[k];
+      if (btn.isConnected === false || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
+      clearHi();
+      if (rowEls[idx]) rowEls[idx].style.background = 'rgba(45,212,191,.10)';
+      btn.textContent = '⏹️ Dừng (' + (k + 1) + '/' + playable.length + ')';
+      const ok = await sayWait(code, ln.t, false);
+      if (!ok || btn.isConnected === false || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
     }
   } finally {
+    clearHi();
     if (btn.dataset.seq === mySeq) {
       btn.dataset.playing = '0';
-      btn.textContent = '🔊 Nghe cả bài';
+      btn.textContent = '🔊 Nghe cả đoạn';
     }
   }
 }
@@ -10051,10 +10146,10 @@ async function playLinesSeq(code, lines, btn) {
 function renderDialogueCard(code, title, src, lines, opts = {}) {
   let showPy = opts.defaultShowPy !== false;
   let showVi = !!opts.defaultShowVi;
-  const pyNodes = [], viNodes = [];
+  const pyNodes = [], viNodes = [], rowEls = [];
   const pyBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showPy ? 'Ẩn Pinyin' : 'Hiện Pinyin');
   const viBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa');
-  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn) }, '🔊 Nghe cả bài');
+  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', 'aria-label': 'Nghe cả đoạn hội thoại', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn, rowEls) }, '🔊 Nghe cả đoạn');
   const syncVisibility = () => {
     pyNodes.forEach((n) => { n.style.display = showPy ? 'block' : 'none'; });
     viNodes.forEach((n) => { n.style.display = showVi ? 'block' : 'none'; });
@@ -10069,7 +10164,7 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
     const viEl = ln.m ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left', display: showVi ? 'block' : 'none' } }, ln.m) : null;
     if (pyEl) pyNodes.push(pyEl);
     if (viEl) viNodes.push(viEl);
-    return h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px', padding: '6px 0', borderBottom: '1px dashed rgba(148,163,184,.18)' } },
+    const rowEl = h('div', { style: { padding: '6px 4px', borderRadius: '8px', borderBottom: '1px dashed rgba(148,163,184,.18)' } },
       h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
         h('div', { style: { display: 'flex', gap: '6px', alignItems: 'baseline', flexWrap: 'wrap' } },
           ln.s ? h('span', { class: 'small', style: { fontWeight: 700, color: 'var(--teal)', flexShrink: 0 } }, ln.s + ':') : null,
@@ -10077,9 +10172,10 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
         ),
         pyEl,
         viEl
-      ),
-      spk(code, ln.t, { mini: true })
+      )
     );
+    rowEls.push(rowEl);
+    return rowEl;
   });
 
   return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'rgba(15,23,42,.35)', border: '1px solid rgba(45,212,191,.22)' } },
@@ -10120,6 +10216,7 @@ function lessonView(t, i) {
   const exit = () => { setFeedbackContext(null); go('home'); };
 
   function step() {
+    stopSay();
     const ex = queue.shift();
     if (!ex) return finish();
     if (CURRENT_CTX) {
@@ -10401,7 +10498,7 @@ function lessonView(t, i) {
       const readingLine = code === 'ja' ? resolveJaReading(t, ex) : (ex.r || '');
       const status = h('div', { class: 'stack center', 'aria-live': 'polite' });
       const speakResult = h('div', { class: 'stack center', style: { gap: '4px' } });
-      const wordsBox = h('div', { class: 'words', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, ex.raw ? ruby(ex.raw) : plain(ex.text));
+      const wordsBox = h('div', { class: 'words', lang: LANGS[code].lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, speakHeadline(code, ex.text, ex.raw, readingLine));
       let selfMode = micBlocked;
       let attempts = 0;
       let bestScore = 0;
@@ -10511,7 +10608,7 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack', style: { gap: '10px' } },
         h('p', { class: 'label' }, '📖 Luyện đọc · Giáo trình 301'),
         renderDialogueCard(code, sc.title || 'Bài đọc hội thoại 301', sc.src || '301 Đàm thoại', sc.lines || [], { defaultShowPy: true, defaultShowVi: false }),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm 🔊 Nghe cả bài hoặc từng câu rồi đọc to theo để luyện ngữ điệu. Có thể bấm “Ẩn Pinyin” để tự đọc mặt chữ.')
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm 🔊 Nghe cả đoạn để nghe toàn bài rồi đọc to theo luyện ngữ điệu. Có thể bấm “Ẩn Pinyin” để tự đọc mặt chữ.')
       );
     } else if (ex.type === 'gquiz') {
       const q = ex.q, langAttr = LANGS[code].lang;
@@ -10977,7 +11074,8 @@ function reviewView(forceExtra = false) {
     if (item.skill === 'speak') {
       const it = (item.it && item.it.it) || item.it || {};
       const targetText = it.text || item.id;
-      const wordsBox = h('div', { class: 'words', lang: L().lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, it.raw ? ruby(it.raw) : plain(targetText));
+      const readingLine = code === 'ja' ? resolveJaReading(null, { ...it, text: targetText }) : (it.r || '');
+      const wordsBox = h('div', { class: 'words', lang: L().lang, style: { fontSize: code === 'en' ? '1.4rem' : '1.8rem', justifyContent: 'center' } }, speakHeadline(code, targetText, it.raw, readingLine));
       const resultBox = h('div', { class: 'stack center', style: { gap: '4px', minHeight: '40px' } });
       const verdict = h('div', { 'aria-live': 'assertive' });
       let wrongFlag = false;
@@ -11020,7 +11118,6 @@ function reviewView(forceExtra = false) {
         finishSpeak(selfGrade >= 3 ? 3 : 1, selfGrade >= 3, 'Tự đánh giá');
       }, [['Chưa tốt', 1], ['Tạm ổn', 2], ['Nói tốt', 3]]);
 
-      const readingLine = it.r || (code === 'ja' && it.raw ? jaHiraganaFromRaw(it.raw) : '');
       return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
         topDock,
         h('div', { class: 'panel card stack center', style: { gap: '10px' } },
@@ -11374,9 +11471,9 @@ function renderSpeakSkills(code, d) {
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
       if (it.kind === 'coach') return h('button', { class: 'sentence', onclick: () => coachView(t, it.c) }, h('span', { class: 'meta' }, h('b', { lang: 'en', style: { display: 'block' } }, it.c.q), it.c.vi && h('span', { class: 'small muted' }, it.c.vi)), h('span', { class: 'chip' }, 'Coach'));
       const best = S.spoken[sid(code, plain(it.text))];
-      const itemRead = it.r || (code === 'ja' && it.raw ? jaHiraganaFromRaw(it.raw) : '');
+      const itemRead = code === 'ja' ? resolveJaReading(t, it) : (it.r || '');
       return h('button', { class: 'sentence', onclick: () => speakOne(t, it, items) },
-        h('span', { class: 'meta' }, h('span', { lang: L().lang, style: { display: 'block', fontWeight: 600 } }, it.raw ? ruby(it.raw) : plain(it.text)), itemRead && itemRead !== it.text && h('span', { class: 'small read', lang: L().lang, style: { display: 'block', textAlign: 'left' } }, itemRead), it.m && h('span', { class: 'small muted' }, it.m)),
+        h('span', { class: 'meta' }, h('span', { lang: L().lang, style: { display: 'block', fontWeight: 600 } }, speakHeadline(code, it.text, it.raw, itemRead)), itemRead && itemRead !== plain(it.text) && h('span', { class: 'small read', lang: L().lang, style: { display: 'block', textAlign: 'left' } }, itemRead), it.m && h('span', { class: 'small muted' }, it.m)),
         h('span', { class: 'chip' + (best >= 80 ? ' good' : '') }, best != null ? best + '%' : 'Chưa nói'));
     })))
   ];
@@ -11413,7 +11510,8 @@ function micControl(code, onResult, onSelf, selfLabels) {
 }
 function speakOne(t, it, all) {
   const code = t.lang, lines = all.filter((x) => x.kind === 'line'), idx = lines.indexOf(it), next = lines[idx + 1];
-  const words = h('div', { class: 'words', lang: L().lang }, it.raw ? ruby(it.raw) : plain(it.text));
+  const readingLine = code === 'ja' ? resolveJaReading(t, it) : (it.r || '');
+  const words = h('div', { class: 'words', lang: L().lang }, speakHeadline(code, it.text, it.raw, readingLine));
   const result = h('div', { class: 'stack', 'aria-live': 'polite' });
   const k = sid(code, plain(it.text));
   let attempts = 0;
@@ -11468,7 +11566,6 @@ function speakOne(t, it, all) {
     );
   }, [['Còn vấp', 40], ['Khá ổn', 70], ['Trôi chảy', 90]]);
 
-  const readingLine = it.r || (code === 'ja' && it.raw ? jaHiraganaFromRaw(it.raw) : '');
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: speakView }, 'Danh sách câu'), h('span', { class: 'muted small' }, (idx + 1) + '/' + lines.length)),
     h('div', { class: 'panel stack center' }, h('p', { class: 'label' }, it.group), words, readingLine && readingLine !== it.text && h('p', { class: 'read', lang: L().lang }, readingLine), it.m && h('p', { class: 'muted' }, it.m), listenBtns(code, it.text)),
