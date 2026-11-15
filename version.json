@@ -1,5 +1,5 @@
 {
-  "version": "3.73",
-  "build": "20261115-1430",
-  "message": "Sửa nhãn luyện đọc hội thoại tiếng Anh/Nhật không hiển thị nhầm Giáo trình 301 & ẩn nút Pinyin khi không có phiên âm (#12)"
+  "version": "3.74",
+  "build": "20261115-1550",
+  "message": "Loại bỏ hoàn toàn read301/301 khỏi khóa tiếng Anh & Nhật, tự động bỏ qua cache Safari khi có bản build mới (v3.74)"
 }
