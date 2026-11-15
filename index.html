@@ -1000,7 +1000,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-0015';
+const APP_BUILD_ID = '20261116-0100';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1840,15 +1840,41 @@ function preloadTopicAudio(code, t) {
   if (!t || !DATA[code] || !DATA[code].audio) return;
   const seen = new Set();
   const enqueue = (txt) => {
-    const b = bundleOf(code, txt);
+    const clean = plain(txt);
+    if (!clean) return;
+    const b = bundleOf(code, clean);
     if (b && !seen.has(b.file)) { seen.add(b.file); loadBundle(b.file); }
   };
   (t.vocab || []).forEach((v) => { enqueue(v.w); if (v.ex) enqueue(v.ex); });
   (t.speak || []).forEach((sc) => (sc.lines || []).forEach((ln) => enqueue(ln.t || ln.text)));
+  (t.coach || []).forEach((c) => {
+    if (c.q) enqueue(c.q);
+    if (c.sa) enqueue(c.sa);
+    (c.ss || []).forEach(enqueue);
+  });
   (t.quiz || []).forEach((q) => {
+    if (q.q) enqueue(q.q);
     (q.o || q.opts || []).forEach(enqueue);
     (q.dialogue || []).forEach((ln) => enqueue(ln.t || ln.text));
   });
+}
+function preloadTextsAudio(code, texts) {
+  if (!DATA[code] || !DATA[code].audio || !texts || !texts.length) return;
+  const seen = new Set();
+  for (let i = 0; i < texts.length; i++) {
+    const clean = plain(texts[i]);
+    if (!clean) continue;
+    const b = bundleOf(code, clean);
+    if (b && !seen.has(b.file)) { seen.add(b.file); loadBundle(b.file); }
+  }
+}
+function preloadGrammarAudio(code, pts) {
+  const texts = [];
+  (pts || []).forEach((x) => {
+    const g = x && (x.g || x);
+    (g && g.ex || []).forEach((e) => { if (e && e[0]) texts.push(e[0]); });
+  });
+  preloadTextsAudio(code, texts);
 }
 function bundleOf(code, text) {
   const d = DATA[code]; if (!d || !d.audio || !text) return null;
@@ -1976,15 +2002,19 @@ function playAudSrc(src, slow, onFail, seq) {
   if (AUD.src === src) { try { AUD.currentTime = 0; } catch (e) {} }
   else AUD.src = src;
   AUD_UNLOCKED = true;
+  let handledFail = false;
+  const handleFail = () => {
+    if (handledFail || seq !== SAY_SEQ) return;
+    handledFail = true;
+    AUD.onended = null;
+    AUD.onerror = null;
+    if (ACTIVE_AUD_TIMER) { clearTimeout(ACTIVE_AUD_TIMER); ACTIVE_AUD_TIMER = null; }
+    if (onFail) onFail();
+    else finishSayDone(false);
+  };
+  AUD.onerror = handleFail;
   if (ACTIVE_SAY_DONE) {
     AUD.onended = () => { if (seq === SAY_SEQ) finishSayDone(true); };
-    AUD.onerror = () => {
-      if (seq !== SAY_SEQ) return;
-      AUD.onended = null;
-      AUD.onerror = null;
-      if (onFail) onFail();
-      else finishSayDone(false);
-    };
     ACTIVE_AUD_TIMER = setTimeout(() => { if (seq === SAY_SEQ) finishSayDone(true); }, 110000);
   }
   try {
@@ -1992,15 +2022,11 @@ function playAudSrc(src, slow, onFail, seq) {
     if (p && typeof p.catch === 'function') {
       return p.catch((e) => {
         if (seq !== SAY_SEQ || (e && e.name === 'AbortError')) return;
-        if (onFail) onFail();
-        else finishSayDone(false);
+        handleFail();
       });
     }
   } catch (e) {
-    if (seq === SAY_SEQ) {
-      if (onFail) onFail();
-      else finishSayDone(false);
-    }
+    handleFail();
   }
 }
 function say(code, text, slow, onDone) {
@@ -2039,11 +2065,16 @@ function say(code, text, slow, onDone) {
       tts(code, text, slow);
     }
   }).catch(() => {
-    if (mySeq === SAY_SEQ) finishSayDone(false);
+    if (mySeq === SAY_SEQ) tts(code, text, slow);
   });
 }
 function sayWait(code, text, slow) {
   return new Promise((resolve) => say(code, text, slow, resolve));
+}
+function sayAfter(code, text, ms = 300) {
+  if (!text) return;
+  const seq = SAY_SEQ;
+  setTimeout(() => { if (seq === SAY_SEQ) say(code, text); }, ms);
 }
 
 // ===== Nhận dạng giọng nói (Độ nhạy cao & Chống lỗi Aborted) =====
@@ -2753,25 +2784,40 @@ function setFeedbackContext(ctx) { CURRENT_CTX = ctx; }
 function getFeedbackContext() { return CURRENT_CTX || {}; }
 // Nút loa: phát âm; slow = phát chậm (biểu tượng con rùa như app cũ)
 function playAudio(src, slow = false) {
-  ++SAY_SEQ;
+  const mySeq = ++SAY_SEQ;
+  stopActiveDlgAudio();
   if (TTS_TIMER) { clearTimeout(TTS_TIMER); TTS_TIMER = null; }
-  AUD.pause();
+  try { AUD.pause(); } catch (e) {}
+  finishSayDone(false);
   if ('speechSynthesis' in window && (speechSynthesis.speaking || speechSynthesis.pending)) speechSynthesis.cancel();
   AUD.muted = false;
   AUD.defaultPlaybackRate = slow ? 0.75 : 1.0;
   AUD.playbackRate = slow ? 0.75 : 1.0;
-  AUD.src = src;
+  if (AUD.getAttribute('src') === src && !AUD.error && AUD.readyState >= 2) {
+    try { AUD.currentTime = 0; } catch (e) {}
+  } else {
+    AUD.src = src;
+  }
   AUD_UNLOCKED = true;
+  let hadErr = false;
+  AUD.onerror = () => {
+    if (mySeq !== SAY_SEQ) return;
+    hadErr = true;
+    AUD.onerror = null;
+  };
   try {
     const p = AUD.play();
     if (p && typeof p.then === 'function') {
-      return p.then(() => true, (e) => {
-        if (e && e.name === 'AbortError') return true;
+      return p.then(() => {
+        if (mySeq === SAY_SEQ) AUD.onerror = null;
+        return mySeq !== SAY_SEQ || (!hadErr && !AUD.error);
+      }, (e) => {
+        if (mySeq !== SAY_SEQ || (e && e.name === 'AbortError')) return true;
         console.warn('Lỗi phát file audio:', src, e);
         return false;
       });
     }
-    return Promise.resolve(true);
+    return Promise.resolve(!hadErr && !AUD.error);
   } catch (e) {
     console.warn('Lỗi phát file audio:', src, e);
     return Promise.resolve(false);
@@ -2787,7 +2833,8 @@ function spk(code, text, opts = {}) {
     onclick: (e) => {
       e.stopPropagation();
       if (src) {
-        playAudio(src, slow).then((ok) => { if (!ok) say(code, text, slow); });
+        const snapSeq = SAY_SEQ + 1;
+        playAudio(src, slow).then((ok) => { if (!ok && SAY_SEQ === snapSeq) say(code, text, slow); });
         return;
       }
       say(code, text, slow);
@@ -3845,7 +3892,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.82 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.83 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -10365,13 +10412,13 @@ async function playLinesSeq(code, lines, btn, rowEls = []) {
     btn.textContent = '🔊 Nghe cả đoạn';
     return;
   }
-  const playable = (lines || []).map((ln, idx) => ({ ln, idx })).filter((x) => x.ln && x.ln.t);
+  const playable = (lines || []).map((ln, idx) => ({ ln, idx, txt: (ln && (ln.t || ln.text)) || '' })).filter((x) => x.txt);
   if (!playable.length) return;
 
-  if (clipForSync(code, playable[0].ln.t).status !== 'hit') unlockIosAudio();
+  if (clipForSync(code, playable[0].txt).status !== 'hit') unlockIosAudio();
   const seenBundles = new Set();
-  playable.forEach(({ ln }) => {
-    const b = bundleOf(code, ln.t);
+  playable.forEach(({ txt }) => {
+    const b = bundleOf(code, plain(txt));
     if (b && !seenBundles.has(b.file)) { seenBundles.add(b.file); loadBundle(b.file); }
   });
 
@@ -10381,12 +10428,12 @@ async function playLinesSeq(code, lines, btn, rowEls = []) {
   const clearHi = () => rowEls.forEach((r) => { if (r) r.style.background = ''; });
   try {
     for (let k = 0; k < playable.length; k++) {
-      const { ln, idx } = playable[k];
+      const { txt, idx } = playable[k];
       if (btn.isConnected === false || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
       clearHi();
       if (rowEls[idx]) rowEls[idx].style.background = 'rgba(45,212,191,.10)';
       btn.textContent = '⏹️ Dừng (' + (k + 1) + '/' + playable.length + ')';
-      const ok = await sayWait(code, ln.t, false);
+      const ok = await sayWait(code, txt, false);
       if (!ok || btn.isConnected === false || btn.dataset.seq !== mySeq || btn.dataset.playing !== '1') break;
     }
   } finally {
@@ -10404,19 +10451,21 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
   const pyNodes = [], viNodes = [], rowEls = [];
   const pyLabel = code === 'ja' ? 'Hiragana' : (code === 'en' ? 'Phiên âm' : 'Pinyin');
   const rows = (lines || []).map((ln) => {
+    const lnTxt = ln.t || ln.text || '';
     const pyEl = ln.r ? h('p', { class: 'small read', style: { margin: '2px 0 0 0', textAlign: 'left', color: 'var(--teal)', display: showPy ? 'block' : 'none' } }, ln.r) : null;
     const viEl = ln.m ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0', textAlign: 'left', display: showVi ? 'block' : 'none' } }, ln.m) : null;
     if (pyEl) pyNodes.push(pyEl);
     if (viEl) viNodes.push(viEl);
-    const rowEl = h('div', { style: { padding: '6px 4px', borderRadius: '8px', borderBottom: '1px dashed rgba(148,163,184,.18)' } },
+    const rowEl = h('div', { style: { padding: '6px 4px', borderRadius: '8px', borderBottom: '1px dashed rgba(148,163,184,.18)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' } },
       h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
         h('div', { style: { display: 'flex', gap: '6px', alignItems: 'baseline', flexWrap: 'wrap' } },
           ln.s ? h('span', { class: 'small', style: { fontWeight: 700, color: 'var(--teal)', flexShrink: 0 } }, ln.s + ':') : null,
-          h('span', { lang: LANGS[code].lang, style: { fontSize: opts.compact ? '1.05rem' : '1.14rem', fontWeight: 600, lineHeight: 1.45 } }, ln.t)
+          h('span', { lang: LANGS[code].lang, style: { fontSize: opts.compact ? '1.05rem' : '1.14rem', fontWeight: 600, lineHeight: 1.45 } }, lnTxt)
         ),
         pyEl,
         viEl
-      )
+      ),
+      lnTxt ? spk(code, lnTxt) : null
     );
     rowEls.push(rowEl);
     return rowEl;
@@ -10677,6 +10726,7 @@ function lessonView(t, i) {
   let done = 0;
   if (LANGS[code] && LANGS[code].cjk) loadStrokes(code);
   preloadTopicAudio(code, t);
+  if (t.gram && t.gram.length && DATA[code] && DATA[code].grammar) preloadGrammarAudio(code, t.gram.map((gid) => DATA[code].grammar[gid]).filter(Boolean));
   const exit = () => { stopSay(); setFeedbackContext(null); go('home'); };
 
   function step() {
@@ -10703,7 +10753,7 @@ function lessonView(t, i) {
 
     if (ex.type === 'intro') {
       body = itemCard(code, ex.v, ex.tip); btn.textContent = 'Tiếp tục'; ready = () => true;
-      setTimeout(() => say(code, ex.v.w), 300);
+      sayAfter(code, ex.v.w, 300);
     } else if (ex.type === 'meaning' || ex.type === 'listen' || ex.type === 'reverse') {
       const isMeaning = ex.type === 'meaning';
       const c = choose(ex.opts, (o) => isMeaning ? o.m : h('span', { lang: LANGS[code].lang }, plain(o.w), o.r && o.r !== o.w && code !== 'en' ? h('span', { class: 'small muted' }, '  ' + o.r) : ''));
@@ -10713,7 +10763,7 @@ function lessonView(t, i) {
         isMeaning ? h('div', { class: 'stack center', style: { gap: '6px' } }, wordBlock(code, ex.v, { hideMeaning: true }), listenBtns(code, ex.v.w)) : ex.type === 'listen' ? listenBtns(code, ex.v.w) : h('div', { class: 'stack center', style: { gap: '4px' } }, h('p', { class: 'q center' }, ex.v.m)),
         c.el);
       gradeFn = () => ({ correct: c.sel() === ex.v, expected: isMeaning ? ex.v.m : plain(ex.v.w) });
-      if (ex.type === 'listen' || isMeaning) setTimeout(() => say(code, ex.v.w), 300);
+      if (ex.type === 'listen' || isMeaning) sayAfter(code, ex.v.w, 300);
     } else if (ex.type === 'hvw') {
       const c = choose(ex.opts, (o) => o.hv);
       c.setCorrect(ex.correct);
@@ -10761,7 +10811,12 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, dlg ? '📖 Đọc hiểu hội thoại · Chọn đáp án đúng' : '📖 Kỹ năng Đọc hiểu · Tình huống thực tế'),
         dlg ? renderDialogueCard(code, dlg.title, dlg.src, dlg.lines, { defaultShowPy: true, defaultShowVi: false, compact: true }) : null,
-        h('p', { class: 'q' }, ex.q.q),
+        code === 'en' && ex.q.q
+          ? h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px' } },
+              h('p', { class: 'q', lang: 'en', style: { margin: 0, flex: 1, minWidth: 0 } }, ex.q.q),
+              spk(code, ex.q.q)
+            )
+          : h('p', { class: 'q' }, ex.q.q),
         c.el
       );
       gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: (ex.q.o || ex.q.opts || [])[ex.q.a], note: ex.q.why || ex.q.exp || '' });
@@ -11201,9 +11256,9 @@ function lessonView(t, i) {
         ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v)) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, (ex.fill.src && !ex.fill.audio) ? null : t.id) : '');
-      if (ex.type === 'order') setTimeout(() => say(code, ex.text), 250);
-      if (ex.type === 'quiz' && (code === 'en' || (code === 'zh' && /[\u4e00-\u9fff]/.test(((ex.q.o || ex.q.opts || [])[ex.q.a]) || '')))) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) setTimeout(() => say(code, optTarget), 250); }
-      if (ex.type === 'gquiz' && ex.q && ex.q.e && ex.q.e[0]) setTimeout(() => say(code, ex.q.e[0]), 250);
+      if (ex.type === 'order') sayAfter(code, ex.text, 250);
+      if (ex.type === 'quiz' && (code === 'en' || (code === 'zh' && /[\u4e00-\u9fff]/.test(((ex.q.o || ex.q.opts || [])[ex.q.a]) || '')))) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) sayAfter(code, optTarget, 250); }
+      if (ex.type === 'gquiz' && ex.q && ex.q.e && ex.q.e[0]) sayAfter(code, ex.q.e[0], 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp theo ➔'; btn.onclick = step; btn.focus();
     }
     btn.addEventListener('click', submit);
@@ -11409,9 +11464,19 @@ function reviewView(forceExtra = false) {
     ? Math.min(REVIEW_BATCH_SIZE, totalVaultDue)
     : Math.min(REVIEW_BATCH_SIZE, remDailyQuota, totalVaultDue);
   const queue = allDueItems.slice(0, Math.max(1, targetSessionSize));
+  preloadTextsAudio(code, queue.flatMap((it) => {
+    const x = it && it.it;
+    if (!x) return [];
+    const arr = [];
+    if (x.v) { arr.push(x.v.w); if (x.v.ex) arr.push(x.v.ex); }
+    if (x.k && x.k.ex && x.k.ex[0]) arr.push(x.k.ex[0][0]);
+    if (x.g && x.g.ex) x.g.ex.forEach((e) => { if (e && e[0]) arr.push(e[0]); });
+    return arr;
+  }));
   let count = 0;
 
   const show = () => {
+    stopSay();
     window.scrollTo(0, 0);
     const item = queue[0];
     if (!item) {
@@ -11876,7 +11941,7 @@ function reviewView(forceExtra = false) {
           ),
           renderGrammarExplainPanel(g, q, langAttr)
         );
-        setTimeout(() => { if (q.e && q.e[0]) say(code, q.e[0]); }, 250);
+        if (q.e && q.e[0]) sayAfter(code, q.e[0], 250);
       };
 
       let body;
@@ -11946,7 +12011,7 @@ function topicPicker(code, store, onChange) {
 }
 function speakItems(code, t) {
   const out = [];
-  t.speak.forEach((sc) => sc.lines.forEach((ln) => out.push({ kind: 'line', text: ln.t, r: ln.r, m: ln.m, group: sc.title })));
+  t.speak.forEach((sc) => sc.lines.forEach((ln) => { const txt = ln.t || ln.text || ''; if (txt) out.push({ kind: 'line', text: txt, r: ln.r, m: ln.m, group: sc.title }); }));
   if (code === 'ja') (t.sents || []).forEach((s) => out.push({ kind: 'line', text: s.chunks.join(''), raw: s.raw, r: s.r, m: s.m || s.trans || '', group: 'Câu mẫu trong bài' }));
   t.vocab.filter((v) => v.ex).forEach((v) => out.push({ kind: 'line', text: v.ex, r: v.exr, m: v.exm, group: 'Câu ví dụ từ vựng' }));
   if (code === 'ja') t.vocab.slice(0, 30).forEach((v) => out.push({ kind: 'line', text: v.w, r: v.r, m: v.m, group: 'Từ vựng' }));
@@ -12082,7 +12147,10 @@ function coachView(t, c) {
   const phrases = h('div', { class: 'phrases' }, c.ph.map((p) => h('span', { lang: 'en' }, p)));
   const result = h('div', { class: 'stack', 'aria-live': 'polite' });
   const sample = h('div', { class: 'panel stack', hidden: true }, h('p', { class: 'label' }, 'Câu trả lời mẫu'), h('p', { lang: 'en' }, c.sa), listenBtns('en', c.sa),
-    ...(c.ss || []).map((s) => h('p', { class: 'small', lang: 'en' }, s)));
+    ...(c.ss || []).map((s) => h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px' } },
+      h('p', { class: 'small', lang: 'en', style: { margin: 0, flex: 1, minWidth: 0 } }, s),
+      spk('en', s)
+    )));
   let attempts = 0;
   const ctrl = micControl('en', (said) => {
     attempts++;
@@ -12236,48 +12304,61 @@ function renderLongListenSkillsSection(code, t) {
 function renderListenSkills(code, d) {
   const pick = topicPicker(code, LISTEN_TOPIC, () => { stopSay(); skillsView('listen'); });
   const t = d.topics.find((x) => x.id === LISTEN_TOPIC[code]) || d.topics[0];
+  preloadTopicAudio(code, t);
   const longListenBlock = renderLongListenSkillsSection(code, t);
   const vocabsWithEx = (t.vocab || []).filter((v) => v.ex);
-  
+
   let isPlayingAll = false;
-  let playIndex = 0;
+  let playSeq = 0;
   let playTimeout = null;
+  const resetPlayAllBtn = () => {
+    playAllBtn.textContent = '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)';
+    playAllBtn.classList.remove('accent');
+    playAllBtn.classList.add('primary');
+  };
 
   const playAllBtn = h('button', {
     class: 'primary block',
     style: { margin: '4px 0 8px 0', fontSize: '.95rem', fontWeight: 600, padding: '10px 14px', borderRadius: '12px' },
-    onclick: () => {
+    onclick: async () => {
       if (isPlayingAll) {
         isPlayingAll = false;
-        if (playTimeout) clearTimeout(playTimeout);
-        playAllBtn.textContent = '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)';
-        playAllBtn.classList.remove('accent');
-        playAllBtn.classList.add('primary');
+        playSeq++;
+        if (playTimeout) { clearTimeout(playTimeout); playTimeout = null; }
+        stopSay();
+        resetPlayAllBtn();
         return;
       }
       if (!vocabsWithEx.length) { toast('Chủ đề này chưa có câu ví dụ.'); return; }
+      const mySeq = ++playSeq;
       isPlayingAll = true;
-      playIndex = 0;
       playAllBtn.classList.remove('primary');
       playAllBtn.classList.add('accent');
+      preloadTopicAudio(code, t);
+      if (clipForSync(code, plain(vocabsWithEx[0].ex)).status !== 'hit') unlockIosAudio();
 
-      function playNext() {
-        if (!isPlayingAll) return;
-        if (playIndex >= vocabsWithEx.length) {
-          isPlayingAll = false;
-          playAllBtn.textContent = '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)';
-          playAllBtn.classList.remove('accent');
-          playAllBtn.classList.add('primary');
-          toast('Đã phát xong toàn bộ câu trong chủ đề!');
-          return;
+      try {
+        for (let idx = 0; idx < vocabsWithEx.length; idx++) {
+          if (!isPlayingAll || playSeq !== mySeq || playAllBtn.isConnected === false) break;
+          const v = vocabsWithEx[idx];
+          playAllBtn.textContent = '⏹ Đang phát câu ' + (idx + 1) + '/' + vocabsWithEx.length + ' (Bấm để dừng)';
+          const ok = await sayWait(code, v.ex, false);
+          if (!ok || !isPlayingAll || playSeq !== mySeq || playAllBtn.isConnected === false) break;
+          if (idx < vocabsWithEx.length - 1) {
+            await new Promise((r) => { playTimeout = setTimeout(r, 400); });
+            playTimeout = null;
+          }
         }
-        const v = vocabsWithEx[playIndex];
-        playAllBtn.textContent = '⏹ Đang phát câu ' + (playIndex + 1) + '/' + vocabsWithEx.length + ' (Bấm để dừng)';
-        say(code, v.ex);
-        playIndex++;
-        playTimeout = setTimeout(playNext, 3800);
+        if (isPlayingAll && playSeq === mySeq && playAllBtn.isConnected !== false) {
+          toast('Đã phát xong toàn bộ câu trong chủ đề!');
+        }
+      } finally {
+        if (playSeq === mySeq) {
+          isPlayingAll = false;
+          if (playTimeout) { clearTimeout(playTimeout); playTimeout = null; }
+          resetPlayAllBtn();
+        }
       }
-      playNext();
     }
   }, '🔊 Tắm ngôn ngữ · Phát toàn bộ câu bài này (' + vocabsWithEx.length + ' câu)');
 
@@ -12352,8 +12433,9 @@ function renderListenSkills(code, d) {
 
 // ===== Luyện Đọc (Chỉ chứa nội dung bài học, không có IELTS/tips) =====
 function renderReadSkills(code, d) {
-  const pick = topicPicker(code, READ_TOPIC, () => skillsView('read'));
+  const pick = topicPicker(code, READ_TOPIC, () => { stopSay(); skillsView('read'); });
   const t = d.topics.find((x) => x.id === READ_TOPIC[code]) || d.topics[0];
+  preloadTopicAudio(code, t);
   const quizzes = t.quiz || [];
   const vocabsWithEx = (t.vocab || []).filter((v) => v.ex);
   const dialogues = getTopicDialogues(code, t);
@@ -12362,21 +12444,35 @@ function renderReadSkills(code, d) {
   // Khung Đọc Hiểu Đoạn Hội Thoại / Email Bài Học
   let readingDialogueEl = null;
   if (curDialogue && curDialogue.lines.length) {
-    const fullText = curDialogue.lines.map((ln) => ln.name + ': ' + ln.text).join('\n');
+    const rowEls = [];
+    const playAllBtn = h('button', {
+      type: 'button',
+      class: 'ghost mini',
+      'aria-label': 'Nghe cả đoạn hội thoại',
+      style: { padding: '3px 10px', fontSize: '.78rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)', flexShrink: 0 },
+      onclick: () => playLinesSeq(code, curDialogue.lines, playAllBtn, rowEls)
+    }, '🔊 Nghe cả đoạn');
     readingDialogueEl = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px' } },
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
-        h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, '📖 Bài đọc hội thoại: ' + curDialogue.title),
-        spk(code, fullText)
+      h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+        h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)', flex: 1, minWidth: 0 } }, '📖 Bài đọc hội thoại: ' + curDialogue.title),
+        playAllBtn
       ),
       h('div', { class: 'stack', style: { gap: '8px', background: 'var(--sunk)', padding: '12px', borderRadius: '10px' } },
-        ...curDialogue.lines.map((ln) => h('div', { class: 'stack', style: { gap: '2px' } },
-          h('div', { class: 'row', style: { gap: '6px', alignItems: 'baseline' } },
-            h('b', { style: { color: ln.speaker === 'A' ? 'var(--teal)' : '#b45309', fontSize: '.88rem' } }, ln.name + ':'),
-            h('span', { lang: LANGS[code].lang, style: { fontSize: '1rem', fontWeight: 600 } }, ln.raw ? ruby(ln.raw) : plain(ln.text))
-          ),
-          ln.r ? h('span', { class: code === 'en' ? 'ipa small' : 'read small', style: { color: 'var(--muted)', marginLeft: '14px' } }, ln.r) : null,
-          ln.m ? h('span', { class: 'small muted', style: { marginLeft: '14px' } }, ln.m) : null
-        ))
+        ...curDialogue.lines.map((ln) => {
+          const rowEl = h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px', padding: '4px', borderRadius: '8px' } },
+            h('div', { class: 'stack', style: { gap: '2px', flex: 1, minWidth: 0 } },
+              h('div', { class: 'row', style: { gap: '6px', alignItems: 'baseline', flexWrap: 'wrap' } },
+                h('b', { style: { color: ln.speaker === 'A' ? 'var(--teal)' : '#b45309', fontSize: '.88rem' } }, ln.name + ':'),
+                h('span', { lang: LANGS[code].lang, style: { fontSize: '1rem', fontWeight: 600 } }, ln.raw ? ruby(ln.raw) : plain(ln.text))
+              ),
+              ln.r ? h('span', { class: code === 'en' ? 'ipa small' : 'read small', style: { color: 'var(--muted)', marginLeft: '14px' } }, ln.r) : null,
+              ln.m ? h('span', { class: 'small muted', style: { marginLeft: '14px' } }, ln.m) : null
+            ),
+            ln.text ? spk(code, ln.text) : null
+          );
+          rowEls.push(rowEl);
+          return rowEl;
+        })
       ),
       h('details', {},
         h('summary', { class: 'small muted', style: { cursor: 'pointer', fontWeight: 600 } }, 'Xem tóm tắt bản dịch toàn bài'),
@@ -12443,7 +12539,7 @@ function renderReadSkills(code, d) {
           h('span', { class: 'chip accent', style: { fontSize: '.72rem', alignSelf: 'flex-start' } }, 'Câu hỏi #' + (qIdx + 1)),
           h('p', { lang: LANGS[code].lang, style: { fontWeight: 600, fontSize: '.98rem', margin: '2px 0', lineHeight: 1.45 } }, q.q)
         ),
-        spk(code, q.q)
+        code === 'en' ? spk(code, q.q) : null
       ),
       h('div', { class: 'stack', style: { gap: '2px' } }, ...optBtns),
       fbBox
@@ -12719,6 +12815,7 @@ function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
 }
 
 function skillsView(tab) {
+  stopSay();
   if (tab) SKILL_TAB = tab;
   VIEW = 'skills';
   setTabs(true);
@@ -12735,6 +12832,7 @@ function skillsView(tab) {
     WRITE_TOPIC[code]
   );
   const t = d.topics.find((x) => x.id === curTopicId) || d.topics[0];
+  preloadTopicAudio(code, t);
 
   const skillTabsDef = [
     ['listen', '🎧 Nghe'],
@@ -13075,6 +13173,7 @@ function grammarView(t, backTo) {
   const code = t.lang, d = DATA[code], langAttr = LANGS[code].lang;
   const back = h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: () => go(backTo || 'home') }, backTo === 'grammar' ? '← Về tab Ngữ pháp' : '← Về trang Học'), h('span', { class: 'grow' }), feedbackBtn({ mode: 'grammar', topicId: t.id, topicTitle: t.sub || t.title }));
   const topicGids = t.gram || [];
+  preloadGrammarAudio(code, topicGids.map((gid) => d.grammar && d.grammar[gid]).filter(Boolean));
   return mount(h('div', { class: 'stack-lg' }, back,
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
       h('h1', { style: { margin: 0 } }, 'Ngữ pháp · ' + (t.sub || t.title)),
@@ -14023,9 +14122,11 @@ function gqBuild(levelKey, onlyWrong, code = S.lang) {
 function grammarQuizView(levelKey, onlyWrong, customOpts) {
   const code = S.lang, langAttr = LANGS[code].lang;
   const qs = customOpts && customOpts.qs ? customOpts.qs : gqBuild(levelKey, onlyWrong, code);
+  preloadTextsAudio(code, qs.map((q) => q && q.e && q.e[0]).filter(Boolean));
   const st = gqStore(), allPts = grammarPoints(code);
   const title = (customOpts && customOpts.title) || ('Quiz ngữ pháp · ' + (levelKey === 'all' ? 'Tất cả cấp' : levelKey));
-  const onBack = (customOpts && customOpts.onBack) || (() => go('grammar'));
+  const backFn = (customOpts && customOpts.onBack) || (() => go('grammar'));
+  const onBack = () => { stopSay(); backFn(); };
   const backLabel = customOpts && customOpts.onBack ? '← Quay lại' : '← Ngữ pháp';
   const head = () => h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: onBack }, backLabel), h('span', { class: 'grow' }));
   if (!qs.length) return mount(h('div', { class: 'stack-lg' }, head(), h('h1', {}, title), h('p', { class: 'note' }, 'Chưa có câu hỏi phù hợp.'), h('button', { class: 'primary block', onclick: onBack }, 'Quay lại')));
@@ -14046,6 +14147,7 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
       h('button', { class: 'block', onclick: onBack }, customOpts && customOpts.onBack ? 'Quay lại' : 'Về tab Ngữ pháp')));
   };
   const show = () => {
+    stopSay();
     const q = qs[i], g = q.p.g;
     let done = false;
     const fb = h('div', { 'aria-live': 'polite' });
@@ -14079,7 +14181,7 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
         ),
         renderGrammarExplainPanel(g, q, langAttr)
       );
-      setTimeout(() => { if (q.e && q.e[0]) say(code, q.e[0]); }, 250);
+      if (q.e && q.e[0]) sayAfter(code, q.e[0], 250);
     };
     let body;
     if (q.type === 'cloze' || q.type === 'mcq') {
@@ -14517,7 +14619,7 @@ function renderEnglishKnowledgeView() {
       class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
       role: 'tab',
       'aria-selected': String(KNOWLEDGE_TAB === st.k),
-      onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
+      onclick: () => { stopSay(); KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
     }, st.label))
   );
 
@@ -14783,7 +14885,7 @@ function knowledgeTabView() {
       class: 'skill-tab-btn' + (KNOWLEDGE_TAB === st.k ? ' active' : ''),
       role: 'tab',
       'aria-selected': String(KNOWLEDGE_TAB === st.k),
-      onclick: () => { KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
+      onclick: () => { stopSay(); KNOWLEDGE_TAB = st.k; knowledgeTabView(); }
     }, st.label))
   );
 
@@ -14802,6 +14904,7 @@ function renderKnowledgeGrammar(code) {
   const langAttr = LANGS[code].lang;
   const lvs = GRAM_LEVELS[code] || [];
   const pts = grammarPoints(code);
+  preloadGrammarAudio(code, pts);
   const st = gqStore();
   const sel = GQ[code] || 'all';
   const qText = (GQ_SEARCH[code] || '').trim().toLowerCase();
