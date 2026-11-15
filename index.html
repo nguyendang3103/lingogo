@@ -671,10 +671,19 @@ body { overflow-x: hidden; }
   box-shadow: 0 2px 8px rgba(15, 82, 87, 0.28);
 }
 @media (max-width: 480px) {
+  .pick-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+  }
   .pick-tab-btn {
-    font-size: .76rem;
-    padding: 8px 2px;
-    gap: 3px;
+    min-width: 0;
+    min-height: 42px;
+    font-size: .74rem;
+    line-height: 1.25;
+    padding: 7px 4px;
+    gap: 4px;
+    white-space: normal;
   }
 }
 .mini-week-box {
@@ -1000,7 +1009,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-0100';
+const APP_BUILD_ID = '20261116-0115';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3579,7 +3588,7 @@ function pickView() {
 
   const tabsBar = h('div', { class: 'pick-tabs', role: 'tablist' },
     [
-      ['progress', '📊 Tiến độ 3 tiếng'],
+      ['progress', '📊 Tiến độ ngôn ngữ'],
       ['schedule', '📅 Thời gian biểu'],
       ['roadmap', '🚀 Lộ trình & Cán đích']
     ].map(([id, label]) => h('button', {
@@ -3892,7 +3901,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.83 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.84 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
