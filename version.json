@@ -1,5 +1,5 @@
 {
-  "version": "3.74",
-  "build": "20261115-1550",
-  "message": "Loại bỏ hoàn toàn read301/301 khỏi khóa tiếng Anh & Nhật, tự động bỏ qua cache Safari khi có bản build mới (v3.74)"
+  "version": "3.75",
+  "build": "20261115-1730",
+  "message": "Mở rộng Tiếng Anh Thương mại (15 bài): gom Xuất nhập khẩu thành 1 bài và thêm tiếp khách, chốt đơn hàng, quy chuẩn & sự cố bao bì, cập nhật & deal xử lý issues (v3.75)"
 }
