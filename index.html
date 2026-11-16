@@ -1009,7 +1009,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-0200';
+const APP_BUILD_ID = '20261116-0915';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2326,50 +2326,69 @@ function hvChietTu(code, c) {
   }
   return null;
 }
-function hvBlock(code, v) {
+function hvBlock(code, v, opts = {}) {
   const p = hvParts(code, v.w); if (!p.some((x) => x.hv)) return null;
   const first = (m) => m.split(/[,;/]/)[0].trim();
-  const glue = p.length > 1 && p.every((x) => x.m) ? p.map((x) => first(x.m)).join(' + ') : '';
-  const rows = p.length > 1 || p.some((x) => x.m);
+  if (opts.compact) {
+    return h('div', { class: 'hv', style: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '6px', padding: '6px 10px' } },
+      h('span', { class: 'label', style: { margin: 0 } }, 'Hán Việt:'),
+      ...p.map((x, idx) => h('span', { class: 'small' },
+        idx > 0 ? ' · ' : '',
+        h('b', { style: { color: 'var(--teal)' } }, x.hv || '—'),
+        x.m ? h('span', { class: 'muted' }, ' (' + first(x.m) + ')') : null
+      ))
+    );
+  }
   const chietTuItems = (code === 'zh')
     ? p.map((x) => ({ c: x.c, hv: x.hv, ct: hvChietTu(code, x.c) })).filter((x) => x.ct)
     : [];
-  return h('div', { class: 'hv' },
-    h('span', { class: 'label' }, 'Hán Việt'),
-    !rows && h('b', { class: 'hvw' }, p.map((x) => x.hv || '—').join(' ')),
-    rows && h('div', { class: 'hvrows' }, p.map((x) => h('div', { class: 'hvrow' },
-      h('span', { class: 'hvc', lang: LANGS[code].lang }, x.c),
-      h('b', {}, x.hv || '—'),
-      x.m && h('span', { class: 'muted' }, ' · ' + x.m)
-    ))),
-    glue && h('p', { class: 'small hvglue' }, 'Ghép nghĩa: ', h('b', {}, glue)),
+  const singleSameMeaning = p.length === 1 && p[0].m && v.m && first(p[0].m).toLowerCase() === first(v.m).toLowerCase();
+  return h('div', { class: 'hv', style: { width: '100%', alignItems: 'stretch', textAlign: 'left', gap: '6px', padding: '10px 12px' } },
+    p.length === 1
+      ? h('div', { class: 'row between wrap', style: { gap: '6px', alignItems: 'center' } },
+          h('div', { class: 'row wrap', style: { gap: '6px', alignItems: 'baseline' } },
+            h('span', { class: 'label', style: { margin: 0 } }, 'Hán Việt:'),
+            h('b', { class: 'hvw', style: { fontSize: '1.05rem' } }, p[0].hv || '—'),
+            p[0].m && !singleSameMeaning ? h('span', { class: 'small muted' }, '· ' + first(p[0].m)) : null
+          ),
+          chietTuItems.length === 1 ? h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+            chietTuItems[0].ct.type ? h('span', { class: 'chip good', style: { fontSize: '.68rem', padding: '1px 6px' } }, chietTuItems[0].ct.type) : null,
+            h('button', {
+              class: 'chip ghost',
+              style: { cursor: 'pointer', fontSize: '.72rem', padding: '2px 8px', minHeight: '26px', color: 'var(--teal)', border: '1px solid var(--line)' },
+              onclick: (e) => { e.stopPropagation(); charView('zh', chietTuItems[0].c, [chietTuItems[0].c]); }
+            }, '✍️ Viết ' + chietTuItems[0].c)
+          ) : null
+        )
+      : h('div', { class: 'stack', style: { gap: '4px' } },
+          h('span', { class: 'label', style: { margin: 0 } }, 'Hán Việt'),
+          h('div', { class: 'hvrows', style: { maxWidth: '100%' } }, p.map((x) => h('div', { class: 'hvrow' },
+            h('span', { class: 'hvc', lang: LANGS[code].lang }, x.c),
+            h('b', { style: { color: 'var(--teal)' } }, x.hv || '—'),
+            x.m && h('span', { class: 'muted' }, ' · ' + first(x.m))
+          )))
+        ),
     chietTuItems.length ? h('div', {
-      class: 'panel stack',
+      class: 'stack',
       style: {
-        marginTop: '8px',
-        padding: '8px 10px',
-        background: 'rgba(15, 82, 87, 0.06)',
-        borderLeft: '3px solid var(--teal)',
-        borderRadius: '6px',
-        gap: '4px'
+        borderTop: '1px dashed var(--line)',
+        paddingTop: '6px',
+        gap: '4px',
+        fontSize: '.84rem'
       }
     },
-      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '4px' } },
-        h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: 700, fontSize: '.75rem' } }, '🧩 Chiết tự & Mẹo nhớ chữ Hán:'),
-        h('span', { class: 'small muted', style: { fontSize: '.7rem' } }, 'Lục thư & Chiết tự')
-      ),
-      ...chietTuItems.map((item) => h('div', { class: 'stack', style: { gap: '2px', fontSize: '.84rem' } },
-        h('div', { class: 'row wrap', style: { alignItems: 'center', gap: '6px' } },
-          h('b', { style: { color: 'var(--ink)' } }, item.c + ' (' + item.hv + '):'),
-          item.ct.parts ? h('span', { class: 'chip small', style: { background: 'var(--surface)', fontWeight: 600, fontSize: '.72rem' } }, item.ct.parts) : null,
-          item.ct.type ? h('span', { class: 'chip good small', style: { fontSize: '.68rem', padding: '1px 6px' } }, item.ct.type) : null,
-          h('button', {
-            class: 'chip ghost small',
-            style: { cursor: 'pointer', fontSize: '.7rem', padding: '1px 6px', color: 'var(--teal)' },
+      ...chietTuItems.map((item) => h('div', { class: 'stack', style: { gap: '2px' } },
+        (item.ct.parts || p.length > 1) ? h('div', { class: 'row wrap', style: { alignItems: 'center', gap: '6px' } },
+          p.length > 1 ? h('b', { style: { color: 'var(--ink)' } }, item.c + ':') : null,
+          item.ct.parts ? h('span', { class: 'small', style: { fontWeight: 600, color: 'var(--teal)' } }, '🧩 ' + item.ct.parts) : null,
+          p.length > 1 && item.ct.type ? h('span', { class: 'chip good', style: { fontSize: '.68rem', padding: '1px 6px' } }, item.ct.type) : null,
+          p.length > 1 ? h('button', {
+            class: 'chip ghost',
+            style: { cursor: 'pointer', fontSize: '.7rem', padding: '1px 6px', minHeight: '24px', color: 'var(--teal)', border: '1px solid var(--line)' },
             onclick: (e) => { e.stopPropagation(); charView('zh', item.c, [item.c]); }
-          }, '✍️ Viết chữ ' + item.c)
-        ),
-        item.ct.story ? h('p', { class: 'small', style: { margin: '1px 0 0 0', lineHeight: 1.35, color: 'var(--ink)' } }, '💡 ' + item.ct.story) : null
+          }, '✍️ Viết ' + item.c) : null
+        ) : null,
+        item.ct.story ? h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.38, color: 'var(--ink)' } }, '💡 ' + item.ct.story) : null
       ))
     ) : null
   );
@@ -3754,10 +3773,7 @@ function homeView() {
   }
 
   const curCatObj = langCats ? (langCats.find((c) => c.id === curCat) || langCats[0]) : null;
-  const catBar = langCats ? h('div', { class: 'subjects-box stack', style: { gap: '6px', margin: '8px 0 4px 0' } },
-    h('div', { class: 'row between', style: { alignItems: 'center' } },
-      h('span', { class: 'label', style: { margin: 0, fontWeight: 700 } }, 'Chủ đề học'),
-      h('span', { class: 'small muted' }, curCatObj.count + ' · Level ' + curCatObj.level)),
+  const catBar = langCats ? h('div', { class: 'subjects-box stack', style: { gap: '6px', margin: '4px 0' } },
     h('button', {
       class: 'subjects-trigger' + (subjectsOpen ? ' open' : ''),
       'aria-expanded': String(subjectsOpen),
@@ -3772,7 +3788,10 @@ function homeView() {
         h('span', { class: 'subjects-name' }, curCatObj.icon + ' ' + curCatObj.name),
         h('span', { class: 'chip level ' + curCatObj.level.split('–')[0].toLowerCase().replace(/\s+/g, '') }, curCatObj.level)
       ),
-      h('span', { class: 'subjects-arrow' }, subjectsOpen ? '▲' : '▼')
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flex: 'none' } },
+        h('span', { class: 'small muted' }, curCatObj.count),
+        h('span', { class: 'subjects-arrow' }, subjectsOpen ? '▲' : '▼')
+      )
     ),
     subjectsOpen && h('div', { class: 'subjects-dropdown stack', role: 'listbox' },
       ...langCats.map((c) => {
@@ -3814,16 +3833,8 @@ function homeView() {
     h('div', { class: 'row between', style: { alignItems: 'center' } },
       h('h1', { style: { margin: 0 } }, 'Chào ' + S.name + '!'),
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
-        langCats && h('button', {
-          class: 'langchip',
-          title: 'Chọn chủ đề học',
-          onclick: () => {
-            subjectsOpen = !subjectsOpen;
-            homeView();
-            const el = document.querySelector('.subjects-box');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }
-        }, h('span', {}, curCatObj.icon + ' ' + curCatObj.short), h('span', { class: 'caret' }, subjectsOpen ? '▲' : '▼')),
+        feedbackBtn(),
+        syncButton(),
         langSwitch()
       )
     ),
@@ -3839,16 +3850,16 @@ function homeView() {
       const quotaRev = getDailyReviewQuota(S.lang, todayN());
       const rawVault = rawDueIn(S.lang);
       return h('div', { class: 'panel stack' },
-        h('div', { class: 'row between small', style: { alignItems: 'center' } },
+        h('div', { class: 'row between small', style: { alignItems: 'center', gap: '6px' } },
           h('span', {},
             isFocus
-              ? h('span', { class: 'chip accent', style: { fontSize: '.72rem', marginRight: '6px' } }, '🎯 Trọng tâm hôm nay (Học 1 bài mới)')
+              ? h('span', { class: 'chip accent', style: { fontSize: '.72rem', marginRight: '6px' } }, '🎯 Trọng tâm')
               : sch.focus === 'all'
-              ? h('span', { class: 'chip good', style: { fontSize: '.72rem', marginRight: '6px' } }, '🧘 Chủ Nhật: Tổng ôn nhẹ')
-              : h('span', { class: 'chip', style: { fontSize: '.72rem', marginRight: '6px' } }, '⚡ Duy trì (Không học bài mới · Ôn 10 từ)'),
-            h('span', {}, xp >= g ? 'Đã đạt mục tiêu hôm nay' : 'Còn ' + (g - xp) + ' XP để đạt mục tiêu')
+              ? h('span', { class: 'chip good', style: { fontSize: '.72rem', marginRight: '6px' } }, '🧘 Chủ Nhật')
+              : h('span', { class: 'chip', style: { fontSize: '.72rem', marginRight: '6px' } }, '⚡ Duy trì'),
+            h('span', {}, xp >= g ? 'Đã đạt mục tiêu hôm nay' : 'Mục tiêu hôm nay')
           ),
-          h('span', { class: 'muted' }, xp + '/' + g + ' XP · mỗi từ +5')
+          h('span', { class: 'muted' }, xp + '/' + g + ' XP')
         ),
         h('div', { class: 'bar', role: 'progressbar', 'aria-label': 'Mục tiêu hôm nay', 'aria-valuenow': xp, 'aria-valuemax': g }, gf),
         h('button', {
@@ -3865,9 +3876,6 @@ function homeView() {
           : h('p', { class: 'muted center' }, curCat !== 'all' ? 'Bạn đã học hết các bài trong chủ đề này. Hãy chọn chủ đề khác hoặc ôn tập.' : 'Bạn đã học hết lộ trình. Hãy ôn tập và luyện nói để nhớ lâu.')
       );
     })(),
-    h('div', { class: 'row', style: { justifyContent: 'flex-end', gap: '8px', alignItems: 'center' } },
-      feedbackBtn(),
-      syncButton()),
     (() => {
       const p = getLangProgress(S.lang);
       const estCur = calcFinishEstimate(p.curCatRemainingTopics, p.curCatRemainingLessons, STUDY_PACE, S.lang);
@@ -3908,7 +3916,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.85 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.86 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9465,8 +9473,7 @@ function wordBlock(code, v, opts = {}) {
   return h('div', { class: 'stack center', style: { gap: '6px' } },
     h('div', { class: 'big', lang: LANGS[code].lang }, plain(v.w)),
     v.r && (code === 'en' ? h('div', { class: 'ipa' }, v.r) : (v.r !== v.w && h('div', { class: 'read', lang: code === 'ja' ? 'ja' : null }, v.r))),
-    code !== 'en' && !opts.hideMeaning && !opts.hideHv && hvBlock(code, v),
-    !opts.hideMeaning && h('p', {}, h('b', {}, v.m), v.d && code === 'en' && h('span', { class: 'small muted', style: { display: 'block' } }, v.d)));
+    !opts.hideMeaning && h('p', { style: { fontSize: '1.18rem', margin: '2px 0' } }, h('b', {}, v.m), v.d && code === 'en' && h('span', { class: 'small muted', style: { display: 'block', fontWeight: 400, marginTop: '2px' } }, v.d)));
 }
 function renderHighlightedEx(text, word, langAttr) {
   if (!text) return null;
@@ -9530,46 +9537,43 @@ function grammarTipForWord(code, v) {
 }
 
 function itemCard(code, v, tip) {
-  const gTip = grammarTipForWord(code, v);
   return h('div', { class: 'panel stack center' },
     h('p', { class: 'label' }, 'Từ mới · nghe và đọc to theo'),
     wordBlock(code, v),
     listenBtns(code, v.w),
-    tip && code !== 'en' && hvParts(code, v.w).some((x) => x.hv) && h('p', { class: 'small muted' }, 'Mẹo: gắn nghĩa với âm Hán Việt (từ gốc Hán trong tiếng Việt) trước, rồi mới học cách đọc.'),
+    code !== 'en' && hvBlock(code, v),
     v.ex && h('div', {
       class: 'panel stack',
       style: {
-        marginTop: '12px',
+        marginTop: '8px',
         padding: '12px 14px',
         background: 'rgba(15,82,87,.07)',
         border: '1px solid var(--line)',
         borderRadius: '12px',
-        gap: '6px',
+        gap: '4px',
         width: '100%',
         boxSizing: 'border-box',
         textAlign: 'left'
       }
     },
-      h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px' } },
-        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-          h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu & Ngữ pháp:')
+      h('div', { class: 'row between', style: { alignItems: 'center', gap: '10px' } },
+        h('div', { class: 'stack', style: { gap: '3px', flex: 1, minWidth: 0 } },
+          h('p', {
+            lang: LANGS[code].lang,
+            style: { fontSize: '1.12rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
+          }, renderHighlightedEx(v.ex, v.w, LANGS[code].lang)),
+          v.exr && h('p', {
+            class: code === 'en' ? 'ipa' : 'read',
+            lang: code === 'ja' ? 'ja' : null,
+            style: { margin: 0, fontSize: '.96rem', color: 'var(--teal)', fontWeight: 500, textAlign: 'left' }
+          }, v.exr),
+          v.exm && h('p', {
+            class: 'small muted',
+            style: { margin: 0, fontSize: '.92rem', lineHeight: 1.4 }
+          }, v.exm)
         ),
         listenBtns(code, v.ex)
-      ),
-      h('p', {
-        lang: LANGS[code].lang,
-        style: { fontSize: '1.15rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
-      }, renderHighlightedEx(v.ex, v.w, LANGS[code].lang)),
-      v.exr && h('p', {
-        class: code === 'en' ? 'ipa' : 'read',
-        lang: code === 'ja' ? 'ja' : null,
-        style: { margin: 0, fontSize: '1rem', color: 'var(--teal)', fontWeight: 500 }
-      }, v.exr),
-      v.exm && h('p', {
-        class: 'small muted',
-        style: { margin: 0, fontSize: '.95rem', lineHeight: 1.4 }
-      }, v.exm),
-      gTip
+      )
     )
   );
 }
@@ -11102,17 +11106,16 @@ function lessonView(t, i) {
         const isLower = attempts > 1 && score < bestScore;
 
         speakResult.replaceChildren(
-          h('div', { class: 'score', style: { color: score >= 80 ? 'var(--good)' : 'var(--ink)', fontSize: '2rem' } }, score + '%'),
-          isImproved
-            ? h('p', { class: 'center small', style: { color: 'var(--good)', fontWeight: 600 } }, '🎉 Điểm tăng: ' + prevBest + '% ➔ ' + score + '% (+' + (score - prevBest) + '%)!')
-            : isLower
-            ? h('p', { class: 'center small muted' }, 'Lần này: ' + score + '% · Điểm cao nhất: ' + bestScore + '% (giữ nguyên)')
-            : h('p', { class: 'center small muted' }, bestScore > 0 ? 'Điểm cao nhất: ' + bestScore + '%' : ''),
-          said ? h('p', { class: 'center small muted', lang: LANGS[code].lang }, 'Máy nghe được: “' + said + '”') : '',
-          h('p', { class: 'center small' }, score >= 80
-            ? 'Rất tốt! Bạn có thể bấm Tiếp tục để qua câu, hoặc bấm Micro nói lại để nâng % cao hơn.'
-            : 'Chữ gạch đỏ là chữ máy chưa nghe rõ. Bạn hãy bấm Micro nói lại để cải thiện % điểm nhé!'),
-          h('p', { class: 'center small muted', style: { fontSize: '.8rem' } }, 'Đã thử ' + attempts + ' lần · Bấm Micro để nói lại không giới hạn')
+          h('div', { class: 'row center wrap', style: { gap: '8px', alignItems: 'baseline' } },
+            h('span', { class: 'score', style: { color: score >= 80 ? 'var(--good)' : 'var(--ink)', fontSize: '2rem', lineHeight: 1 } }, score + '%'),
+            isImproved
+              ? h('span', { class: 'small', style: { color: 'var(--good)', fontWeight: 600 } }, '· 🎉 Tăng +' + (score - prevBest) + '%')
+              : isLower
+              ? h('span', { class: 'small muted' }, '· Cao nhất: ' + bestScore + '%')
+              : (attempts > 1 ? h('span', { class: 'small muted' }, '· Lần ' + attempts) : null)
+          ),
+          said ? h('p', { class: 'center small muted', lang: LANGS[code].lang }, 'Máy nghe: “' + said + '”') : null,
+          score < 80 ? h('p', { class: 'center small muted' }, 'Bấm Micro nói lại để cải thiện các từ gạch đỏ.') : null
         );
 
         resp = { said: lastSaid, align: bestAlign, score: bestScore, attempts };
@@ -11276,7 +11279,7 @@ function lessonView(t, i) {
           h('p', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null, style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
           h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
         ) : null,
-        ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v)) : null
+        ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v, { compact: true })) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, (ex.fill.src && !ex.fill.audio) ? null : t.id) : '');
       if (ex.type === 'order') sayAfter(code, ex.text, 250);
@@ -11548,7 +11551,6 @@ function reviewView(forceExtra = false) {
       if (it.v) {
         const v = it.v; sayText = v.w;
         front = h('div', { class: 'big', lang: L().lang }, plain(v.w));
-        const gTip = grammarTipForWord(code, v);
         back = h('div', { class: 'stack', hidden: true, style: { gap: '8px', marginTop: '8px' } },
           v.r && (v.r !== v.w ? h('div', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null }, v.r) : null),
           h('p', { style: { fontSize: '1.25rem', fontWeight: 700, margin: '2px 0' } }, v.m),
@@ -11561,29 +11563,29 @@ function reviewView(forceExtra = false) {
               border: '1px solid var(--line)',
               borderRadius: '12px',
               padding: '12px 14px',
-              gap: '6px',
+              gap: '4px',
               marginTop: '6px',
               textAlign: 'left'
             }
           },
-            h('div', { class: 'row between', style: { alignItems: 'center' } },
-              h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)', fontWeight: '700', fontSize: '.8rem' } }, '📝 Ví dụ đặt câu kết hợp ngữ pháp:'),
+            h('div', { class: 'row between', style: { alignItems: 'center', gap: '10px' } },
+              h('div', { class: 'stack', style: { gap: '3px', flex: 1, minWidth: 0 } },
+                h('p', {
+                  lang: L().lang,
+                  style: { fontSize: '1.12rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
+                }, renderHighlightedEx(v.ex, v.w, L().lang)),
+                v.exr && h('p', {
+                  class: code === 'en' ? 'ipa' : 'read',
+                  lang: code === 'ja' ? 'ja' : null,
+                  style: { margin: 0, fontSize: '.96rem', color: 'var(--teal)', fontWeight: 500, textAlign: 'left' }
+                }, v.exr),
+                v.exm && h('p', {
+                  class: 'small muted',
+                  style: { margin: 0, fontSize: '.92rem', lineHeight: 1.4 }
+                }, v.exm)
+              ),
               listenBtns(code, v.ex)
-            ),
-            h('p', {
-              lang: L().lang,
-              style: { fontSize: '1.15rem', fontWeight: 600, margin: 0, lineHeight: 1.45 }
-            }, renderHighlightedEx(v.ex, v.w, L().lang)),
-            v.exr && h('p', {
-              class: code === 'en' ? 'ipa' : 'read',
-              lang: code === 'ja' ? 'ja' : null,
-              style: { margin: 0, fontSize: '1rem', color: 'var(--teal)', fontWeight: 500 }
-            }, v.exr),
-            v.exm && h('p', {
-              class: 'small muted',
-              style: { margin: 0, fontSize: '.95rem', lineHeight: 1.4 }
-            }, v.exm),
-            gTip
+            )
           )
         );
       } else {
