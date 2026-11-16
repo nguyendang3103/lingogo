@@ -107,7 +107,7 @@ select { width: 100%; }
 .langcard .glyph svg { display: block; width: 100%; height: 100%; }
 .langcard .name { font-size: 1.2rem; font-weight: 700; }
 .langcard .bar { grid-column: 2; }
-.langchip { min-height: 40px; padding: 6px 12px; border-radius: 99px; font-weight: 600; gap: 6px; }
+.langchip { min-height: 40px; padding: 6px 12px; border-radius: 99px; font-weight: 600; gap: 6px; white-space: nowrap; flex-shrink: 0; }
 .langchip .caret { font-size: .75rem; color: var(--muted); }
 .langs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--sunk); padding: 4px; border-radius: 14px; }
 .langs button { border: none; background: transparent; min-height: 42px; font-weight: 600; color: var(--muted); border-radius: 10px; padding: 6px; }
@@ -1009,7 +1009,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-0115';
+const APP_BUILD_ID = '20261116-0200';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1865,6 +1865,13 @@ function preloadTopicAudio(code, t) {
     if (q.q) enqueue(q.q);
     (q.o || q.opts || []).forEach(enqueue);
     (q.dialogue || []).forEach((ln) => enqueue(ln.t || ln.text));
+  });
+  (t.listening || []).forEach((tr) => {
+    (tr.lines || []).forEach((ln) => enqueue(ln.t || ln.text));
+    (tr.questions || []).forEach((q) => {
+      if (q.q) enqueue(q.q);
+      (q.o || q.opts || []).forEach(enqueue);
+    });
   });
 }
 function preloadTextsAudio(code, texts) {
@@ -3227,18 +3234,6 @@ function renderScheduleTabContent(t, sch) {
   const shortDayNames = { 1: 'T2 (Anh)', 2: 'T3 (Trung)', 3: 'T4 (Nhật)', 4: 'T5 (Anh)', 5: 'T6 (Trung)', 6: 'T7 (Nhật)', 0: 'CN (Ôn)' };
 
   return [
-    // 1. Nguyên tắc lịch học xoay vòng 2-2-2-1
-    h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', border: '1px solid var(--teal)', borderRadius: '14px', padding: '14px 16px', gap: '8px' } },
-      h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
-        h('span', { style: { fontSize: '1.2rem' } }, '🧭'),
-        h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Nguyên tắc Lịch Học Xoay Vòng (1 Ngôn Ngữ Học Mới + 2 Ngôn Ngữ Ôn Nhẹ)')
-      ),
-      h('div', { class: 'stack', style: { gap: '5px', fontSize: '.82rem', lineHeight: 1.55, color: 'var(--muted)' } },
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Mỗi ngày chỉ học bài mới của 1 ngôn ngữ: '), 'Xoay vòng T2 & T5 Tiếng Anh · T3 & T6 Tiếng Trung · T4 & T7 Tiếng Nhật · Chủ Nhật nghỉ bài mới.'),
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• 2 ngôn ngữ còn lại chỉ ôn duy trì: '), 'Không học bài mới, chỉ ôn nhanh gói 10 từ SRS để giữ phản xạ và chuỗi ngày học.'),
-        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Ôn tập chia gói nhỏ (10–15 từ/buổi): '), 'Hệ thống tự lọc 10–15 từ dễ quên nhất mỗi ngày, số từ còn lại tự bảo lưu sang hôm sau.')
-      )
-    ),
     // 2. Bộ chọn Thứ trong tuần để xem hôm đó học gì
     h('div', { class: 'panel stack', style: { background: 'var(--surface)', border: '2px solid var(--teal)', borderRadius: '16px', padding: '14px 16px', gap: '10px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
@@ -3307,6 +3302,18 @@ function renderScheduleTabContent(t, sch) {
             )
           );
         })
+      )
+    ),
+    // 1. Nguyên tắc lịch học xoay vòng 2-2-2-1
+    h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', border: '1px solid var(--teal)', borderRadius: '14px', padding: '14px 16px', gap: '8px' } },
+      h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
+        h('span', { style: { fontSize: '1.2rem' } }, '🧭'),
+        h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Nguyên tắc Lịch Học Xoay Vòng (1 Ngôn Ngữ Học Mới + 2 Ngôn Ngữ Ôn Nhẹ)')
+      ),
+      h('div', { class: 'stack', style: { gap: '5px', fontSize: '.82rem', lineHeight: 1.55, color: 'var(--muted)' } },
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Mỗi ngày chỉ học bài mới của 1 ngôn ngữ: '), 'Xoay vòng T2 & T5 Tiếng Anh · T3 & T6 Tiếng Trung · T4 & T7 Tiếng Nhật · Chủ Nhật nghỉ bài mới.'),
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• 2 ngôn ngữ còn lại chỉ ôn duy trì: '), 'Không học bài mới, chỉ ôn nhanh gói 10 từ SRS để giữ phản xạ và chuỗi ngày học.'),
+        h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Ôn tập chia gói nhỏ (10–15 từ/buổi): '), 'Hệ thống tự lọc 10–15 từ dễ quên nhất mỗi ngày, số từ còn lại tự bảo lưu sang hôm sau.')
       )
     ),
     // 3. Lộ trình phát triển 3 giai đoạn
@@ -3901,7 +3908,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.84 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.85 · Cập nhật 15/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -8546,7 +8553,6 @@ function ieltsTabView() {
         langSwitch()
       )
     ),
-    h('p', { class: 'small muted', style: { marginTop: '-4px' } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết'),
     h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect),
     h('div', { class: 'ielts-info-banner' },
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
@@ -8591,7 +8597,12 @@ function ieltsTabView() {
   else if (IELTS_ACTIVE_SKILL === 'read') contentEl = renderIeltsReading(t, data);
   else contentEl = renderIeltsWriting(t, data);
 
-  mount(h('div', { class: 'stack-lg', style: { paddingBottom: '70px' } }, head, skillTabs, contentEl));
+  mount(h('div', { class: 'stack-lg', style: { paddingBottom: '70px' } },
+    head,
+    skillTabs,
+    contentEl,
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Kho đề thi thực tế IELTS 2022–2026 (ieltsonlinetests.com) · 🎧 Nghe ➔ 🎙️ Nói ➔ 📖 Đọc ➔ ✍️ Viết')
+  ));
 }
 
 // 1. Giao diện IELTS Listening
@@ -8748,13 +8759,6 @@ function renderIeltsListening(t, data) {
         h('b', {}, '🎧 IELTS Listening · Bài nghe thực tế'),
         statusText
       ),
-      h('p', { class: 'small muted' }, 'Lắng nghe đoạn hội thoại hoặc độc thoại chuẩn bản xứ, sau đó hoàn thành các câu hỏi bên dưới.'),
-      ieltsTipBox('Tip: Chiến lược & Bẫy nghe (Listening)', [
-        'Dự đoán loại từ (danh từ số ít/nhiều, tên riêng, con số) trong 30–45s trước khi nghe.',
-        'Cảnh giác bẫy Distractor: Người nói thường đưa thông tin rồi sửa lại (Actually, Sorry, However, I thought so at first but...).',
-        'Tuân thủ tuyệt đối giới hạn số từ và chính tả (Spelling, số nhiều -s/-es).',
-        'Bỏ qua ngay khi bị lỡ (Move on): Không dừng lại suy nghĩ tránh mất điểm 3–4 câu kế tiếp.'
-      ], 'listening'),
       h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '10px 12px', gap: '6px' } },
         h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
           h('b', { style: { color: 'var(--teal)', fontSize: '.88rem' } }, '🎧 Đĩa Audio Đề Thi IELTS (MP3): ' + (ls.title || 'Section 1')),
@@ -8782,7 +8786,14 @@ function renderIeltsListening(t, data) {
       h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } }, fillInput, h('span', { class: 'small muted' }, ls.fill.hint))
     ),
     submitBtn,
-    feedbackArea
+    feedbackArea,
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Lắng nghe đoạn hội thoại hoặc độc thoại chuẩn bản xứ, sau đó hoàn thành các câu hỏi bên trên.'),
+    ieltsTipBox('Tip: Chiến lược & Bẫy nghe (Listening)', [
+      'Dự đoán loại từ (danh từ số ít/nhiều, tên riêng, con số) trong 30–45s trước khi nghe.',
+      'Cảnh giác bẫy Distractor: Người nói thường đưa thông tin rồi sửa lại (Actually, Sorry, However, I thought so at first but...).',
+      'Tuân thủ tuyệt đối giới hạn số từ và chính tả (Spelling, số nhiều -s/-es).',
+      'Bỏ qua ngay khi bị lỡ (Move on): Không dừng lại suy nghĩ tránh mất điểm 3–4 câu kế tiếp.'
+    ], 'listening')
   );
 }
 
@@ -8941,12 +8952,6 @@ function renderIeltsSpeaking(t, data) {
       container.replaceChildren(
         h('div', { class: 'panel stack' },
           h('b', {}, 'Part 1: Personal Interview (Phỏng vấn cá nhân)'),
-          ieltsTipBox('Tip: Phòng thi Speaking Part 1', [
-            'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
-            'Tránh trả lời cộc lốc: Áp dụng công thức P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result).',
-            'Tránh nhồi nhét idioms sáo rỗng ("rain cats and dogs"), dùng Collocations tự nhiên.'
-          ], 'speaking'),
-          h('p', { class: 'small muted' }, 'Giám khảo sẽ hỏi bạn 2–3 câu hỏi quen thuộc về cuộc sống và thói quen hàng ngày. Bấm Micro để luyện nói từng câu hoặc xem câu trả lời mẫu Band 8.0+.'),
           ...spk.part1.map((p, idx) => {
             let showModel = false;
             const modelBox = h('div', { class: 'panel', style: { display: 'none', background: 'rgba(15, 82, 87, 0.06)' } },
@@ -8970,12 +8975,18 @@ function renderIeltsSpeaking(t, data) {
               h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', marginTop: '4px' } }, toggleModelBtn),
               modelBox
             );
-          })
+          }),
+          h('p', { class: 'small muted', style: { margin: '6px 0 0 0' } }, 'Giám khảo sẽ hỏi bạn 2–3 câu hỏi quen thuộc về cuộc sống và thói quen hàng ngày. Bấm Micro để luyện nói từng câu hoặc xem câu trả lời mẫu Band 8.0+.')
         ),
         h('div', { class: 'ielts-action-col' },
           h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 85, '7.5'); toast('Đã lưu kết quả Part 1!'); } }, 'Hoàn thành Part 1 (+15 XP)'),
           h('button', { class: 'primary block grow', onclick: () => { partTab = 'p2'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 2 (Cue Card) ➔')
-        )
+        ),
+        ieltsTipBox('Tip: Phòng thi Speaking Part 1', [
+          'Không nghe rõ: "Could you please repeat the question?" (Hỏi lại lịch sự, không bị trừ điểm).',
+          'Tránh trả lời cộc lốc: Áp dụng công thức P-E-E-R (Point ➔ Explanation ➔ Example ➔ Result).',
+          'Tránh nhồi nhét idioms sáo rỗng ("rain cats and dogs"), dùng Collocations tự nhiên.'
+        ], 'speaking')
       );
     } else if (partTab === 'p2') {
       // Part 2: Cue Card
@@ -9044,11 +9055,6 @@ function renderIeltsSpeaking(t, data) {
             h('span', { class: 'small muted' }, 'Part 2 Long Turn')
           ),
           h('h3', { style: { margin: '6px 0' } }, spk.part2.title),
-          ieltsTipBox('Tip: Chuẩn bị 1 phút & nói 2 phút (Part 2 Long Turn)', [
-            'Lập dàn ý bám sát 4 câu hỏi gợi ý trên Cue Card (Who - When - Where - Why).',
-            'Xử lý khi bị "lệch tủ": Bình tĩnh kể chuyện chân thực tự nhiên thay vì cố nhớ bài mẫu.',
-            'Tránh filler rác (uhm, ah, like, you know): Tập thói quen tạm dừng im lặng 1 giây để thở và sắp xếp ý.'
-          ], 'speaking'),
           h('p', { class: 'small muted' }, 'You should say:'),
           h('ul', { style: { paddingLeft: '20px', lineHeight: 1.6 } }, ...spk.part2.prompts.map((pm) => h('li', {}, pm))),
           h('div', { class: 'ielts-timer-box' },
@@ -9068,19 +9074,18 @@ function renderIeltsSpeaking(t, data) {
         h('div', { class: 'ielts-action-col' },
           h('button', { class: 'accent block grow', onclick: () => { markIeltsDone(t, 'speak', 90, '8.0'); toast('Đã lưu kết quả Part 2!'); } }, 'Hoàn thành Part 2 (+15 XP)'),
           h('button', { class: 'primary block grow', onclick: () => { partTab = 'p3'; renderPart(); window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 'Sang Part 3 (Thảo luận) ➔')
-        )
+        ),
+        ieltsTipBox('Tip: Chuẩn bị 1 phút & nói 2 phút (Part 2 Long Turn)', [
+          'Lập dàn ý bám sát 4 câu hỏi gợi ý trên Cue Card (Who - When - Where - Why).',
+          'Xử lý khi bị "lệch tủ": Bình tĩnh kể chuyện chân thực tự nhiên thay vì cố nhớ bài mẫu.',
+          'Tránh filler rác (uhm, ah, like, you know): Tập thói quen tạm dừng im lặng 1 giây để thở và sắp xếp ý.'
+        ], 'speaking')
       );
     } else {
       // Part 3: Discussion
       container.replaceChildren(
         h('div', { class: 'panel stack' },
           h('b', {}, 'Part 3: Two-way Discussion (Thảo luận phản biện sâu)'),
-          ieltsTipBox('Tip: Chiến lược phản biện Speaking Part 3', [
-            'Cần thời gian suy nghĩ: Dùng filler học thuật "That’s a thought-provoking question, let me consider that for a moment..."',
-            'Tránh connectives overload: Đừng bắt đầu mọi câu bằng Furthermore/Moreover, hãy dùng Also, On top of that, In fact.',
-            'Chưa có trải nghiệm: "To be fair, I don’t have much firsthand experience with this, but from what I’ve observed..."'
-          ], 'speaking'),
-          h('p', { class: 'small muted' }, 'Giám khảo sẽ mở rộng câu hỏi mang tính xã hội và tư duy phản biện. Đòi hỏi bạn dùng từ vựng nâng cao và cấu trúc lập luận nhiều chiều.'),
           ...spk.part3.map((p, idx) => {
             const p3RecBox = createIeltsSpeechRecorder(p.q, p.sa);
             return h('div', { class: 'stack', style: { padding: '10px 0', borderBottom: '1px solid var(--line)' } },
@@ -9093,7 +9098,8 @@ function renderIeltsSpeaking(t, data) {
                 listenBtns('en', p.sa)
               )
             );
-          })
+          }),
+          h('p', { class: 'small muted', style: { margin: '6px 0 0 0' } }, 'Giám khảo sẽ mở rộng câu hỏi mang tính xã hội và tư duy phản biện. Đòi hỏi bạn dùng từ vựng nâng cao và cấu trúc lập luận nhiều chiều.')
         ),
         h('div', { class: 'stack', style: { gap: '8px' } },
           h('button', { class: 'accent block', onclick: () => markIeltsDone(t, 'speak', 95, '8.5') }, 'Hoàn thành bài luyện Nói (+15 XP · Band 8.5)'),
@@ -9106,7 +9112,12 @@ function renderIeltsSpeaking(t, data) {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }
           }, 'Chuyển sang kỹ năng kế tiếp: Đọc (Reading) ➔')
-        )
+        ),
+        ieltsTipBox('Tip: Chiến lược phản biện Speaking Part 3', [
+          'Cần thời gian suy nghĩ: Dùng filler học thuật "That’s a thought-provoking question, let me consider that for a moment..."',
+          'Tránh connectives overload: Đừng bắt đầu mọi câu bằng Furthermore/Moreover, hãy dùng Also, On top of that, In fact.',
+          'Chưa có trải nghiệm: "To be fair, I don’t have much firsthand experience with this, but from what I’ve observed..."'
+        ], 'speaking')
       );
     }
   }
@@ -9202,14 +9213,8 @@ function renderIeltsReading(t, data) {
 
   return h('div', { class: 'stack-lg' },
     h('div', { class: 'panel stack' },
-      h('div', { class: 'row between' },
-        h('b', {}, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
-      ieltsTipBox('Tip: Chiến lược Đọc hiệu quả', [
-        'Đọc tổng quan 1–2 phút nắm cấu trúc trước khi trả lời câu hỏi.',
-        'Skimming tốc độ: Đọc lướt tiêu đề, Topic sentence đầu đoạn và câu kết luận.',
-        'Scanning chính xác: Dùng mắt quét từ khóa khó thay thế (tên riêng, số liệu, năm) không đọc chi tiết.',
-        'Bẫy hạn định tuyệt đối: Cực kỳ cẩn trọng với always, never, all, completely, solely trong True/False/Not Given.'
-      ], 'reading'),
+      h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+        h('b', { style: { flex: '1 1 200px', minWidth: 0 } }, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
         h('span', { class: 'chip level' }, data.band)
       ),
       passageBox
@@ -9220,7 +9225,13 @@ function renderIeltsReading(t, data) {
       ...tfngContainers.map((c) => c.el)
     ),
     submitBtn,
-    feedbackArea
+    feedbackArea,
+    ieltsTipBox('Tip: Chiến lược Đọc hiệu quả', [
+      'Đọc tổng quan 1–2 phút nắm cấu trúc trước khi trả lời câu hỏi.',
+      'Skimming tốc độ: Đọc lướt tiêu đề, Topic sentence đầu đoạn và câu kết luận.',
+      'Scanning chính xác: Dùng mắt quét từ khóa khó thay thế (tên riêng, số liệu, năm) không đọc chi tiết.',
+      'Bẫy hạn định tuyệt đối: Cực kỳ cẩn trọng với always, never, all, completely, solely trong True/False/Not Given.'
+    ], 'reading')
   );
 }
 
@@ -9298,27 +9309,13 @@ function renderIeltsWriting(t, data) {
         ),
         h('p', { style: { fontWeight: 600, whiteSpace: 'pre-wrap' } }, targetObj.prompt)
       ),
-      isT2 ? h('div', { class: 'panel stack' },
-        h('b', {}, 'Dàn ý 4 đoạn chuẩn thi IELTS (Essay Structure)'),
-        ...wr.task2.outline.map((o) => h('div', { class: 'stack', style: { gap: '2px' } },
-          h('span', { style: { fontWeight: 600, color: 'var(--teal)' } }, o.part),
-          h('span', { class: 'small muted' }, o.guide)
-        ))
-      ) : null,
       h('div', { class: 'panel stack' },
         h('div', { class: 'row between', style: { alignItems: 'center' } },
           h('b', {}, 'Khu vực viết bài'),
           wordCountBadge
         ),
-        h('p', { class: 'small muted' }, 'Chèn nhanh liên từ học thuật Band 7.5+:'),
-        ieltsTipBox('Tip: Chiến lược Writing Task 1 & Task 2', [
-          'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
-          'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
-          'Quy tắc 3: Dùng cặp dấu phẩy bao quanh mệnh đề quan hệ không xác định.',
-          'Quy tắc 4: Tránh lỗi Comma Splice (ghép 2 câu độc lập chỉ bằng dấu phẩy).',
-          'Task 2 Causes & Solutions: Mở bài 2 câu ➔ Thân bài 1 Nguyên nhân ➔ Thân bài 2 Giải pháp ➔ Kết bài 1–2 câu.'
-        ], 'writing'),
-        h('p', { class: 'small muted', style: { marginTop: '6px', marginBottom: '2px' } }, 'Liên từ nối câu Band 7.5+: '),
+        textarea,
+        h('p', { class: 'small muted', style: { marginTop: '4px', marginBottom: '2px' } }, 'Chèn nhanh liên từ học thuật Band 7.5+:'),
         h('div', { class: 'ielts-linking-bank' }, ...linkingChips),
         h('p', { class: 'small muted', style: { marginTop: '6px', marginBottom: '2px' } }, 'Từ vựng Nguyên nhân (Causes): '),
         h('div', { class: 'ielts-linking-bank' }, ...IELTS_TIPS_DATA.writing.causesSolutions.vocabCauses.map(w => h('button', {
@@ -9342,7 +9339,6 @@ function renderIeltsWriting(t, data) {
             updateWordCount();
           }
         }, '+ ' + w))),
-        textarea,
         h('div', { class: 'row', style: { marginTop: '6px' } }, toggleModelBtn),
         modelBox
       ),
@@ -9363,7 +9359,21 @@ function renderIeltsWriting(t, data) {
             showIeltsSummaryModal(t);
           }
         }, '🏆 Hoàn thành trọn bộ 4 Kỹ năng! Xem Bảng điểm Tổng kết (Overall Band) ➔')
-      )
+      ),
+      isT2 ? h('div', { class: 'panel stack' },
+        h('b', {}, 'Dàn ý 4 đoạn chuẩn thi IELTS (Essay Structure)'),
+        ...wr.task2.outline.map((o) => h('div', { class: 'stack', style: { gap: '2px' } },
+          h('span', { style: { fontWeight: 600, color: 'var(--teal)' } }, o.part),
+          h('span', { class: 'small muted' }, o.guide)
+        ))
+      ) : null,
+      ieltsTipBox('Tip: Chiến lược Writing Task 1 & Task 2', [
+        'Quy tắc 1: Đặt dấu phẩy trước liên từ FANBOYS khi nối 2 mệnh đề độc lập có S + V.',
+        'Quy tắc 2: Đặt dấu phẩy sau mệnh đề trạng ngữ / cụm mở đầu (Although..., Consequently,...).',
+        'Quy tắc 3: Dùng cặp dấu phẩy bao quanh mệnh đề quan hệ không xác định.',
+        'Quy tắc 4: Tránh lỗi Comma Splice (ghép 2 câu độc lập chỉ bằng dấu phẩy).',
+        'Task 2 Causes & Solutions: Mở bài 2 câu ➔ Thân bài 1 Nguyên nhân ➔ Thân bài 2 Giải pháp ➔ Kết bài 1–2 câu.'
+      ], 'writing')
     );
   }
 
@@ -9775,16 +9785,14 @@ function buildListenDialoguePanel(code, track, opts = {}) {
 
   const speakers = track.speakers || {};
   return h('div', { class: 'panel stack listen-dlg-panel', style: { gap: '8px', padding: opts.compact ? '12px' : '14px', borderRadius: '12px', background: 'var(--surface)' } },
-    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
-      h('div', { class: 'stack', style: { gap: '2px', minWidth: 0, flex: 1 } },
-        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-          h('span', { class: 'chip good', style: { fontSize: '.7rem', padding: '2px 7px' } }, '🎧 ' + (track.level || 'B1+') + ' · Hội thoại dài'),
-          track.lines ? h('span', { class: 'small muted' }, track.lines.length + ' lượt nói') : null
-        ),
-        h('b', { style: { fontSize: '.98rem' } }, track.title || 'Hội thoại thực tế'),
-        track.sub ? h('span', { class: 'small muted' }, track.sub) : null
+    h('div', { class: 'stack', style: { gap: '4px', minWidth: 0 } },
+      h('div', { class: 'row between wrap', style: { gap: '6px', alignItems: 'center' } },
+        h('span', { class: 'chip good', style: { fontSize: '.7rem', padding: '2px 7px' } }, '🎧 ' + (track.level || 'B1+') + ' · Hội thoại dài'),
+        track.lines ? h('span', { class: 'small muted' }, track.lines.length + ' lượt nói') : null
       ),
-      (speakers.A || speakers.B) ? h('span', { class: 'small muted', style: { fontSize: '.76rem' } }, (speakers.A || 'A') + ' ↔ ' + (speakers.B || 'B')) : null
+      h('b', { style: { fontSize: '.98rem', lineHeight: 1.35 } }, track.title || 'Hội thoại thực tế'),
+      track.sub ? h('span', { class: 'small muted', style: { lineHeight: 1.4 } }, track.sub) : null,
+      (speakers.A || speakers.B) ? h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, '👥 ' + (speakers.A || 'A') + ' ↔ ' + (speakers.B || 'B')) : null
     ),
     h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', alignItems: 'center' } },
       playBtn, replayBtn, speedBtn, transcriptToggle
@@ -9814,6 +9822,7 @@ function listenDlgFeedback(code, ex, r) {
   return h('div', { class: 'quiz-reveal stack', style: { gap: '6px', marginTop: '6px' } },
     h('p', { class: 'big', lang: 'en', style: { fontSize: '1.08rem', margin: 0, fontWeight: 600, textAlign: 'left' } }, correctOpt),
     r.note ? h('p', { class: 'small', style: { margin: '2px 0 0 0', textAlign: 'left', lineHeight: 1.45 } }, r.note) : null,
+    code === 'en' && correctOpt ? h('div', { class: 'listen', style: { justifyContent: 'flex-start', marginTop: '4px' } }, listenBtns(code, correctOpt)) : null,
     toggleBtn,
     scriptBox
   );
@@ -10798,7 +10807,12 @@ function lessonView(t, i) {
       body = h('div', { class: 'stack' },
         h('p', { class: 'label' }, '🎧 Kỹ năng Nghe · Hội thoại dài (' + ((ex.track && ex.track.level) || 'B1+') + ')' + lblPart),
         buildListenDialoguePanel(code, ex.track, { compact: true, allowScriptToggle: false }),
-        h('p', { class: 'q' }, ex.q.q),
+        code === 'en' && ex.q.q
+          ? h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px' } },
+              h('p', { class: 'q', lang: 'en', style: { margin: 0, flex: '1 1 200px', minWidth: 0 } }, ex.q.q),
+              spk(code, ex.q.q)
+            )
+          : h('p', { class: 'q' }, ex.q.q),
         c.el
       );
       gradeFn = () => ({ correct: c.sel().k === ex.q.a, expected: (ex.q.o || [])[ex.q.a], note: ex.q.why || '' });
@@ -11369,7 +11383,6 @@ function lessonView(t, i) {
       ...t.lessons[i].words.map((v) => h('button', { class: 'lesson', onclick: () => say(code, v.w) },
         h('span', { class: 'meta' }, h('b', { lang: LANGS[code].lang }, plain(v.w)), v.r && v.r !== v.w ? h('span', { class: 'small' + (code === 'en' ? ' ipa' : ' muted'), style: code === 'en' ? { color: 'var(--teal)', fontWeight: 600, display: 'inline-block', marginLeft: '6px' } : null }, v.r) : '', h('span', { class: 'small muted', style: { display: 'block' } }, v.m)),
         h('span', { class: 'spk', 'aria-hidden': 'true' }, icon(ICON.speaker))))),
-    t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: (t.lang === 'en' && Array.isArray(t.listening) && t.listening.length) ? 'Ôn lại những từ còn yếu của cả chủ đề, nghe hội thoại dài chọn đáp án và tình huống thực tế.' : 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Phần 1 chọn từ, Phần 2 tự điền lại vào email, rồi sắp xếp câu ví dụ.' : 'Phần 1 chọn từ, Phần 2 tự điền lại vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind]),
     h('div', { class: 'dock stack', style: { gap: '8px' } },
       h('button', { class: 'primary block', onclick: step }, isDone ? ('Học lại bài này · ' + steps.filter((s) => s.type !== 'intro').length + ' câu') : ('Bắt đầu · ' + steps.filter((s) => s.type !== 'intro').length + ' câu')),
       isDone && h('button', {
@@ -11382,7 +11395,8 @@ function lessonView(t, i) {
           }
         }
       }, 'Xóa tiến độ bài này')
-    )));
+    ),
+    t.lessons[i].kind !== 'learn' && h('p', { class: 'muted' }, ({ review: (t.lang === 'en' && Array.isArray(t.listening) && t.listening.length) ? 'Ôn lại những từ còn yếu của cả chủ đề, nghe hội thoại dài chọn đáp án và tình huống thực tế.' : 'Ôn lại những từ còn yếu của cả chủ đề, nghe chọn từ, kanji và tình huống.', quiz: 'Chọn cách nói đúng trong các tình huống thực tế.', fill: t.lang === 'en' ? 'Phần 1 chọn từ, Phần 2 tự điền lại vào email, rồi sắp xếp câu ví dụ.' : 'Phần 1 chọn từ, Phần 2 tự điền lại vào đoạn hội thoại, rồi sắp xếp câu ví dụ.', speak: 'Nghe và nói lại các câu trong chủ đề.', kanji: 'Học kanji mới: nghĩa Hán Việt, cách đọc, rồi tập viết từng chữ.' })[t.lessons[i].kind])));
 }
 
 // ===== Ôn tập theo phương pháp Spaced Repetition (Lặp lại ngắt quãng) =====
@@ -11405,20 +11419,25 @@ function reviewView(forceExtra = false) {
     [15, '🔥 15 từ (~6p · Chuyên sâu)']
   ];
 
-  const head = (isReviewing = false) => {
+  const head = (isReviewing = false) => h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px' } },
+    h('button', { class: 'ghost mini', style: { whiteSpace: 'nowrap', flexShrink: 0, padding: '6px 8px', fontSize: '.84rem' }, onclick: () => go('home') }, '← Về trang Học'),
+    isReviewing ? h('span', { class: 'label', style: { margin: 0, whiteSpace: 'nowrap' } }, 'Ôn tập SRS') : null,
+    h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexShrink: 0 } },
+      feedbackBtn({ mode: 'review_vocab' }),
+      langSwitch()
+    )
+  );
+
+  const reviewFooter = () => {
     const curDone = getReviewedToday(code, t0);
     const curVault = srsDueItems(code, 'vocab').length;
-    const title = 'Ôn tập theo gói nhỏ vừa sức (SRS)';
-    const subtitle = 'Hệ thống tự lọc 10–15 từ dễ quên nhất cho mỗi buổi. Kho từ còn lại được tự động bảo lưu sang ngày tiếp theo.';
-    const backBtn = h('button', { class: 'ghost mini', onclick: () => go('home') }, '← Về trang Học');
-    const quotaBadge = h('span', { class: 'chip ' + (curDone >= dailyQuota ? 'good' : 'accent'), style: { fontSize: '.78rem', fontWeight: 700 } },
+    const quotaBadge = h('span', { class: 'chip ' + (curDone >= dailyQuota ? 'good' : 'accent'), style: { fontSize: '.76rem', fontWeight: 700 } },
       '🎯 Định mức hôm nay: ' + curDone + '/' + dailyQuota + ' từ'
     );
     const vaultBadge = h('span', { class: 'chip', style: { fontSize: '.76rem' } },
       '📦 Kho chờ luân phiên: ' + curVault + ' từ'
     );
-
-    const sizeSelector = h('div', { class: 'row wrap', style: { gap: '6px', marginTop: '4px' } },
+    const sizeSelector = h('div', { class: 'row wrap', style: { gap: '6px', marginTop: '2px' } },
       batchSizes.map(([sz, label]) =>
         h('button', {
           class: (REVIEW_BATCH_SIZE === sz ? 'primary' : 'ghost') + ' mini',
@@ -11427,27 +11446,17 @@ function reviewView(forceExtra = false) {
         }, label)
       )
     );
-
-    return h('div', { class: 'stack', style: { gap: '10px' } },
-      h('div', { class: 'row between', style: { alignItems: 'center' } },
-        backBtn,
-        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-          feedbackBtn({ mode: 'review_vocab' }),
-          langSwitch()
-        )
-      ),
-      h('div', { class: 'stack', style: { gap: '4px' } },
-        h('h1', { style: { margin: 0, fontSize: '1.35rem' } }, title),
-        h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.45 } }, subtitle),
-        h('div', { class: 'row wrap', style: { marginTop: '4px', gap: '6px' } }, quotaBadge, vaultBadge),
-        sizeSelector
-      )
+    return h('div', { class: 'panel stack review-footer', style: { gap: '8px', padding: '14px', borderRadius: '14px' } },
+      h('b', { style: { fontSize: '1.02rem', color: 'var(--teal)' } }, 'Ôn tập theo gói nhỏ vừa sức (SRS)'),
+      h('p', { class: 'small muted', style: { margin: 0, lineHeight: 1.45 } }, 'Hệ thống tự lọc 10–15 từ dễ quên nhất cho mỗi buổi. Kho từ còn lại được tự động bảo lưu sang ngày tiếp theo.'),
+      h('div', { class: 'row wrap', style: { gap: '6px' } }, quotaBadge, vaultBadge),
+      sizeSelector
     );
   };
 
   // Nếu đã đạt định mức ngày mà chưa bấm forceExtra, hiển thị màn hình hoàn thành định mức
   if (totalVaultDue === 0 || (remDailyQuota === 0 && !forceExtra)) {
-    mount(h('div', { class: 'stack-lg' }, head(),
+    mount(h('div', { class: 'stack-lg', style: { gap: '12px' } }, head(),
       h('div', { class: 'panel stack center', style: { padding: '24px', borderRadius: '16px', gap: '10px' } },
         h('h2', {}, totalVaultDue === 0 ? '🎉 Đã ôn sạch kho từ đến hạn!' : '🎉 Đã hoàn thành định mức ôn hôm nay!'),
         h('p', { class: 'muted center', style: { margin: 0, lineHeight: 1.5 } },
@@ -11464,7 +11473,8 @@ function reviewView(forceExtra = false) {
           h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
           h('button', { class: 'ghost', onclick: () => go('pick') }, 'Về Màn hình chính')
         )
-      )
+      ),
+      reviewFooter()
     ));
     return;
   }
@@ -11493,7 +11503,7 @@ function reviewView(forceExtra = false) {
       const afterDone = getReviewedToday(code, t0);
       const afterVault = srsDueItems(code, 'vocab').length;
       const quotaLeft = Math.max(0, dailyQuota - afterDone);
-      mount(h('div', { class: 'stack-lg' }, head(),
+      mount(h('div', { class: 'stack-lg', style: { gap: '12px' } }, head(),
         h('div', { class: 'panel stack center', style: { padding: '24px', borderRadius: '16px', gap: '10px' } },
           h('h2', {}, '🎉 Hoàn thành gói ôn ' + count + ' từ!'),
           h('p', { class: 'muted center', style: { margin: 0, lineHeight: 1.5 } },
@@ -11509,9 +11519,10 @@ function reviewView(forceExtra = false) {
             : ('🔄 Ôn thêm 1 gói ' + Math.min(REVIEW_BATCH_SIZE, afterVault) + ' từ nữa (Tự chọn)')) : null,
           h('div', { class: 'row center wrap', style: { gap: '8px', marginTop: '12px' } },
             h('button', { class: 'primary', onclick: () => go('home') }, 'Về trang Học'),
-            h('button', { class: 'ghost', onclick: () => go('pick') }, 'Về Màn hình chính')
+          h('button', { class: 'ghost', onclick: () => go('pick') }, 'Về Màn hình chính')
           )
-        )
+        ),
+        reviewFooter()
       ));
       return;
     }
@@ -11636,18 +11647,19 @@ function reviewView(forceExtra = false) {
         }, h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'), ' · ' + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại ngay hôm nay')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        contTop.focus();
+        contTop.focus({ preventScroll: true });
       } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, j + 1), h('span', { class: 'grow' }, o)));
 
-      return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
+      return mount(h('div', { class: 'stack-lg', style: { gap: '10px' } }, head(true), topBar,
         topDock,
-        h('div', { class: 'panel card' },
+        h('div', { class: 'panel card', style: { minHeight: '148px', padding: '14px', gap: '8px' } },
           h('p', { class: 'small muted' }, it.v ? 'Chọn nghĩa đúng' : 'Chọn âm Hán Việt đúng'),
           front,
           h('div', { class: 'listen' }, spk(code, sayText, { cls: 'big' })),
           back
         ),
-        h('div', { class: 'options' }, bs)
+        h('div', { class: 'options' }, bs),
+        reviewFooter()
       ));
     }
 
@@ -11682,7 +11694,7 @@ function reviewView(forceExtra = false) {
         }, h('strong', {}, ok ? 'Đạt yêu cầu!' : 'Chưa đạt.'), ' · ' + (scoreText ? scoreText + ' · ' : '') + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại sớm')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        contTop.focus();
+        contTop.focus({ preventScroll: true });
       };
 
       const ctrl = micControl(code, (said) => {
@@ -11699,17 +11711,18 @@ function reviewView(forceExtra = false) {
         finishSpeak(selfGrade >= 3 ? 3 : 1, selfGrade >= 3, 'Tự đánh giá');
       }, [['Chưa tốt', 1], ['Tạm ổn', 2], ['Nói tốt', 3]]);
 
-      return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
+      return mount(h('div', { class: 'stack-lg', style: { gap: '10px' } }, head(true), topBar,
         topDock,
         h('div', { class: 'panel card stack center', style: { gap: '10px' } },
-          h('p', { class: 'small muted' }, 'Bấm Micro và nói lại câu này theo phương pháp lặp lại ngắt quãng:'),
           wordsBox,
           readingLine && readingLine !== targetText ? h('p', { class: code === 'en' ? 'ipa' : 'read', lang: L().lang, style: { margin: 0, textAlign: 'center' } }, readingLine) : null,
           it.m ? h('p', { class: 'small muted center', style: { fontSize: '1.05rem', margin: 0 } }, it.m) : null,
           h('div', { class: 'listen', style: { justifyContent: 'center' } }, spk(code, targetText, { cls: 'big' })),
           ctrl,
-          resultBox
-        )
+          resultBox,
+          h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm Micro và nói lại câu này theo phương pháp lặp lại ngắt quãng.')
+        ),
+        reviewFooter()
       ));
     }
 
@@ -11747,7 +11760,7 @@ function reviewView(forceExtra = false) {
         }, h('strong', {}, ok ? 'Đạt nét chữ!' : 'Chưa đạt.'), ' · ' + (note ? note + ' · ' : '') + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : 'Ôn lại sớm')));
         wrongFlag = !ok;
         topDock.hidden = false;
-        contTop.focus();
+        contTop.focus({ preventScroll: true });
       };
 
       const toggleOutlineBtn = h('button', {
@@ -11831,10 +11844,9 @@ function reviewView(forceExtra = false) {
           ))
         : null;
 
-      return mount(h('div', { class: 'stack-lg' }, head(true), topBar,
+      return mount(h('div', { class: 'stack-lg', style: { gap: '10px' } }, head(true), topBar,
         topDock,
         h('div', { class: 'panel card stack center', style: { gap: '10px' } },
-          h('p', { class: 'small muted' }, 'Tập viết chữ theo phương pháp lặp lại ngắt quãng:'),
           h('div', { class: 'row center', style: { gap: '8px', alignItems: 'center' } },
             h('span', { class: 'chip good', lang: LANGS[code].lang, style: { fontSize: '1.2rem', padding: '4px 14px' } }, c),
             hint ? h('b', {}, hint) : null,
@@ -11850,8 +11862,10 @@ function reviewView(forceExtra = false) {
           h('div', { class: 'row center', style: { gap: '8px' } },
             h('button', { class: 'ghost mini', onclick: () => finishWrite(3, true, 'Đã viết xong') }, 'Đã viết trên giấy (Đạt)'),
             h('button', { class: 'ghost mini', onclick: () => finishWrite(1, false, 'Chưa nhớ nét') }, 'Chưa nhớ nét (Ôn lại)')
-          )
-        )
+          ),
+          h('p', { class: 'small muted', style: { margin: 0 } }, 'Tập viết chữ theo phương pháp lặp lại ngắt quãng')
+        ),
+        reviewFooter()
       ));
     }
 
@@ -11938,7 +11952,7 @@ function reviewView(forceExtra = false) {
           style: { margin: 0, padding: '8px 12px', textAlign: 'center', borderRadius: '10px' }
         }, h('strong', {}, ok ? 'Chính xác!' : 'Chưa đúng.'), ' · ' + (ok ? 'Ôn lại sau ' + ivText(S.srs[k]) : ('Đáp án: ' + (q.type === 'order' ? q.e[0] : q.answer) + ' · Ôn lại sớm'))));
         topDock.hidden = false;
-        contTop.focus();
+        contTop.focus({ preventScroll: true });
 
         fb.replaceChildren(
           q.e && q.e[0] && h('div', { class: 'panel gram', style: { gap: '8px' } },
@@ -11993,7 +12007,7 @@ function reviewView(forceExtra = false) {
         );
       }
 
-      return mount(h('div', { class: 'stack-lg' }, head(true), topBar, topDock, body, fb));
+      return mount(h('div', { class: 'stack-lg', style: { gap: '10px' } }, head(true), topBar, topDock, body, fb, reviewFooter()));
     }
   };
 
@@ -12035,20 +12049,12 @@ function renderSpeakSkills(code, d) {
   return [
     h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
-      h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎙️ Ôn tập kỹ năng Nói'),
-          dueSpk > 0 ? h('span', { class: 'chip accent' }, dueSpk + ' câu cần ôn') : h('span', { class: 'chip good' }, 'Đã ôn hết ✓')
-        ),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện phát âm từng câu bằng Micro AI chấm điểm độ chính xác % và ôn lại theo chu kỳ riêng của kỹ năng Nói.'),
-        dueSpk > 0 ? h('button', {
-          class: 'accent block',
-          style: { fontWeight: 700, padding: '10px 14px', borderRadius: '10px' },
-          onclick: () => { REVIEW_SKILL = 'speak'; go('review'); }
-        }, '🎙️ Bắt đầu ôn tập các câu nói đến hạn (' + dueSpk + ' câu)') : null
-      )
+      dueSpk > 0 ? h('button', {
+        class: 'accent block',
+        style: { fontWeight: 700, padding: '10px 14px', borderRadius: '10px' },
+        onclick: () => { REVIEW_SKILL = 'speak'; go('review'); }
+      }, '🎙️ Bắt đầu ôn tập các câu nói đến hạn (' + dueSpk + ' câu)') : null
     ),
-    !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
     ...groups.map((g) => h('div', { class: 'stack' }, h('h3', {}, g), ...items.filter((x) => x.group === g).map((it) => {
       if (it.kind === 'coach') return h('button', { class: 'sentence', onclick: () => coachView(t, it.c) }, h('span', { class: 'meta' }, h('b', { lang: 'en', style: { display: 'block' } }, it.c.q), it.c.vi && h('span', { class: 'small muted' }, it.c.vi)), h('span', { class: 'chip' }, 'Coach'));
       const best = S.spoken[sid(code, plain(it.text))];
@@ -12056,7 +12062,15 @@ function renderSpeakSkills(code, d) {
       return h('button', { class: 'sentence', onclick: () => speakOne(t, it, items) },
         h('span', { class: 'meta' }, h('span', { lang: L().lang, style: { display: 'block', fontWeight: 600 } }, speakHeadline(code, it.text, it.raw, itemRead)), itemRead && itemRead !== plain(it.text) && h('span', { class: 'small read', lang: L().lang, style: { display: 'block', textAlign: 'left' } }, itemRead), it.m && h('span', { class: 'small muted' }, it.m)),
         h('span', { class: 'chip' + (best >= 80 ? ' good' : '') }, best != null ? best + '%' : 'Chưa nói'));
-    })))
+    }))),
+    !Rec && h('p', { class: 'note' }, 'Trình duyệt này chưa hỗ trợ nhận dạng giọng nói. Hãy mở bằng Google Chrome, Edge hoặc Safari để máy chấm giọng.'),
+    h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+      h('div', { class: 'row between', style: { alignItems: 'center' } },
+        h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎙️ Ôn tập kỹ năng Nói'),
+        dueSpk > 0 ? h('span', { class: 'chip accent' }, dueSpk + ' câu cần ôn') : h('span', { class: 'chip good' }, 'Đã ôn hết ✓')
+      ),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện phát âm từng câu bằng Micro AI chấm điểm độ chính xác % và ôn lại theo chu kỳ riêng của kỹ năng Nói.')
+    )
   ];
 }
 function micControl(code, onResult, onSelf, selfLabels) {
@@ -12186,29 +12200,32 @@ function renderWriteSkills(code, d) {
   const dueWr = code !== 'en' ? srsDueItems(code, 'write').length : 0;
   const fillData = (t && t.fill) || null;
 
+  const dueWrBtn = dueWr > 0 ? h('button', {
+    class: 'accent block',
+    style: { fontWeight: 700, padding: '8px 12px', borderRadius: '10px' },
+    onclick: () => { REVIEW_SKILL = 'write'; go('review'); }
+  }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null;
+
   const writeHead = [
     h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
-      h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
-        h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '✍️ Ôn tập kỹ năng Viết'),
-        h('p', { class: 'small muted', style: { margin: 0 } },
-          code === 'en'
-            ? 'Luyện viết email & hội thoại 2 bước: Phần 1 chọn từ đúng ngữ cảnh, sau đó Phần 2 tự điền lại vào văn bản và chấm điểm tự động.'
-            : 'Luyện viết hội thoại 2 bước (chọn từ rồi tự điền) theo ngữ cảnh bài học và tập viết từng nét chữ Hán / Kanji theo chuẩn bút thuận.'
-        ),
-        dueWr > 0 ? h('button', {
-          class: 'accent block',
-          style: { margin: '4px 0 0 0', fontWeight: 700, padding: '8px 12px', borderRadius: '10px' },
-          onclick: () => { REVIEW_SKILL = 'write'; go('review'); }
-        }, '✍️ Ôn tập ngắt quãng: Có ' + dueWr + ' chữ cần ôn hôm nay') : null
-      )
+      dueWrBtn
     )
   ];
+
+  const writeFoot = h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+    h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '✍️ Ôn tập kỹ năng Viết'),
+    h('p', { class: 'small muted', style: { margin: 0 } },
+      code === 'en'
+        ? 'Luyện viết email & hội thoại 2 bước: Phần 1 chọn từ đúng ngữ cảnh, sau đó Phần 2 tự điền lại vào văn bản và chấm điểm tự động.'
+        : 'Luyện viết hội thoại 2 bước (chọn từ rồi tự điền) theo ngữ cảnh bài học và tập viết từng nét chữ Hán / Kanji theo chuẩn bút thuận.'
+    )
+  );
 
   const fillEl = fillData ? fillBlock({ ...t, fill: fillData }) : null;
 
   if (code === 'en') {
-    return [...writeHead, fillEl].filter(Boolean);
+    return [...writeHead, fillEl, writeFoot].filter(Boolean);
   }
 
   // Tiếng Trung & Tiếng Nhật: Vừa có điền từ vào hội thoại, vừa có luyện viết chữ Hán / Kanji theo nét
@@ -12226,7 +12243,6 @@ function renderWriteSkills(code, d) {
         h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, code === 'zh' ? '🈴 Luyện viết chữ Hán trong bài' : '🈴 Luyện viết Kanji trong bài'),
         h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, list.length + ' chữ')
       ),
-      h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm vào chữ bất kỳ để mở bảng vẽ canvas và viết từng nét:'),
       list.length ? grid(list) : h('p', { class: 'muted' }, 'Bài này không có chữ Hán.'),
       code === 'ja' && h('div', { class: 'stack', style: { gap: '6px', marginTop: '8px' } },
         h('h4', { style: { margin: 0 } }, 'Hiragana'),
@@ -12235,8 +12251,10 @@ function renderWriteSkills(code, d) {
       code === 'ja' && h('div', { class: 'stack', style: { gap: '6px', marginTop: '8px' } },
         h('h4', { style: { margin: 0 } }, 'Katakana'),
         grid(KANA.kata, 'kana')
-      )
-    )
+      ),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm vào chữ bất kỳ để mở bảng vẽ canvas và viết từng nét.')
+    ),
+    writeFoot
   ].filter(Boolean);
 }
 
@@ -12281,7 +12299,12 @@ function renderLongListenSkillsSection(code, t) {
       }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, String.fromCharCode(65 + oi)), h('span', { class: 'grow', lang: 'en' }, item.o))))
     );
     return h('div', { class: 'panel stack listen-skill-q', style: { gap: '8px', padding: '12px 14px', borderRadius: '12px' } },
-      h('p', { class: 'q', style: { margin: 0, fontSize: '.98rem' } }, 'Câu ' + (qi + 1) + ': ' + q.q),
+      q.q
+        ? h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '8px' } },
+            h('p', { class: 'q', lang: code === 'en' ? 'en' : LANGS[code].lang, style: { margin: 0, fontSize: '.98rem', flex: '1 1 200px', minWidth: 0 } }, 'Câu ' + (qi + 1) + ': ' + q.q),
+            spk(code, q.q)
+          )
+        : null,
       optList,
       fbEl
     );
@@ -12289,10 +12312,7 @@ function renderLongListenSkillsSection(code, t) {
 
   return h('div', { class: 'panel card stack listen-skill-section', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px', border: '1px solid var(--line)' } },
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
-      h('div', { class: 'stack', style: { gap: '2px' } },
-        h('b', { style: { fontSize: '1.02rem', color: 'var(--teal)' } }, '🎧 Luyện nghe Hội thoại dài · Hiểu sâu (' + (t.level || 'B1+') + ')'),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghe toàn bộ đoạn hội thoại tốc độ tự nhiên và trả lời câu hỏi chọn đáp án A–D (lời thoại ẩn sẵn để rèn nghe).')
-      ),
+      h('b', { style: { fontSize: '1.02rem', color: 'var(--teal)', flex: '1 1 200px', minWidth: 0 } }, '🎧 Luyện nghe Hội thoại dài · Hiểu sâu (' + (t.level || 'B1+') + ')'),
       scoreBadge
     ),
     tracks.length > 1 ? h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
@@ -12306,7 +12326,8 @@ function renderLongListenSkillsSection(code, t) {
       h('b', { style: { fontSize: '.95rem' } }, '📝 Câu hỏi đọc hiểu nghe (' + qs.length + ' câu)'),
       h('button', { class: 'ghost mini', onclick: () => { stopSay(); skillsView('listen'); } }, '↺ Làm lại bài nghe')
     ),
-    ...qCards
+    ...qCards,
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghe toàn bộ đoạn hội thoại tốc độ tự nhiên và trả lời câu hỏi chọn đáp án A–D (lời thoại ẩn sẵn để rèn nghe).')
   );
 }
 
@@ -12328,7 +12349,7 @@ function renderListenSkills(code, d) {
 
   const playAllBtn = h('button', {
     class: 'primary block',
-    style: { margin: '4px 0 8px 0', fontSize: '.95rem', fontWeight: 600, padding: '10px 14px', borderRadius: '12px' },
+    style: { margin: 0, fontSize: '.95rem', fontWeight: 600, padding: '10px 14px', borderRadius: '12px' },
     onclick: async () => {
       if (isPlayingAll) {
         isPlayingAll = false;
@@ -12374,7 +12395,7 @@ function renderListenSkills(code, d) {
   let hideEnglish = false;
   const toggleTextBtn = h('button', {
     class: 'ghost mini',
-    style: { fontSize: '.8rem', padding: '6px 12px' },
+    style: { fontSize: '.8rem', padding: '6px 12px', flexShrink: 0 },
     onclick: () => {
       hideEnglish = !hideEnglish;
       toggleTextBtn.textContent = hideEnglish ? '👁️ Hiện chữ tiếng Anh' : '🙈 Ẩn chữ (Nghe chay)';
@@ -12388,18 +12409,14 @@ function renderListenSkills(code, d) {
   return [
     h('div', { class: 'stack', style: { gap: '8px' } },
       pick,
-      longListenBlock,
-      h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎧 Ôn tập nghe câu mẫu'),
-          toggleTextBtn
-        ),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện nghe phản xạ câu bài học: Tắm ngôn ngữ tự động phát liên tục hoặc ẩn chữ để luyện nghe chay.'),
-        playAllBtn
-      )
+      playAllBtn,
+      longListenBlock
     ),
     h('div', { class: 'stack', style: { gap: '10px' } },
-      h('h3', { style: { margin: '6px 0 0 0' } }, '🎧 Các câu luyện nghe trong bài học'),
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px', marginTop: '4px' } },
+        h('h3', { style: { margin: 0, flex: '1 1 180px', minWidth: 0 } }, '🎧 Các câu luyện nghe trong bài học'),
+        toggleTextBtn
+      ),
       ...vocabsWithEx.map((v, idx) => {
         return h('div', { class: 'panel', style: { padding: '12px 14px', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '6px' } },
           h('div', { class: 'row between', style: { alignItems: 'flex-start', gap: '10px' } },
@@ -12436,6 +12453,10 @@ function renderListenSkills(code, d) {
           )
         ))
       )
+    ),
+    h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+      h('b', { style: { fontSize: '1rem', color: 'var(--teal)' } }, '🎧 Ôn tập nghe câu mẫu'),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Luyện nghe phản xạ câu bài học: Tắm ngôn ngữ tự động phát liên tục hoặc ẩn chữ để luyện nghe chay.')
     )
   ];
 }
@@ -12463,7 +12484,7 @@ function renderReadSkills(code, d) {
     }, '🔊 Nghe cả đoạn');
     readingDialogueEl = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px' } },
       h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
-        h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)', flex: 1, minWidth: 0 } }, '📖 Bài đọc hội thoại: ' + curDialogue.title),
+        h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)', flex: '1 1 200px', minWidth: 0 } }, '📖 Bài đọc hội thoại: ' + curDialogue.title),
         playAllBtn
       ),
       h('div', { class: 'stack', style: { gap: '8px', background: 'var(--sunk)', padding: '12px', borderRadius: '10px' } },
@@ -12556,13 +12577,7 @@ function renderReadSkills(code, d) {
   });
 
   return [
-    h('div', { class: 'stack', style: { gap: '8px' } },
-      pick,
-      h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
-        h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, '📖 Ôn tập kỹ năng Đọc'),
-        h('p', { class: 'small muted', style: { margin: 0 } }, 'Đọc hiểu đoạn hội thoại tình huống bài học kèm audio và làm bài trắc nghiệm kiểm tra độ hiểu có giải thích chi tiết.')
-      )
-    ),
+    pick,
     readingDialogueEl,
     quizEls.length > 0 ? h('div', { class: 'stack', style: { gap: '10px' } },
       h('h3', { style: { margin: '6px 0 0 0' } }, '🎯 Trắc nghiệm kiểm tra độ hiểu bài đọc'),
@@ -12579,7 +12594,11 @@ function renderReadSkills(code, d) {
         v.exr ? h('p', { class: code === 'en' ? 'ipa small' : 'read small', style: { margin: 0, color: 'var(--teal)' } }, v.exr) : null,
         v.exm ? h('p', { class: 'small muted', style: { margin: 0 } }, v.exm) : null
       ))
-    ) : null
+    ) : null,
+    h('div', { class: 'panel card stack', style: { gap: '6px', background: 'var(--surface)', borderRadius: '12px', padding: '12px 14px' } },
+      h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, '📖 Ôn tập kỹ năng Đọc'),
+      h('p', { class: 'small muted', style: { margin: 0 } }, 'Đọc hiểu đoạn hội thoại tình huống bài học kèm audio và làm bài trắc nghiệm kiểm tra độ hiểu có giải thích chi tiết.')
+    )
   ];
 }
 
@@ -14617,10 +14636,10 @@ function renderEnglishKnowledgeView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, 'Kiến thức & Ngữ pháp Tiếng Anh'),
-    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      'Hệ thống ngữ pháp chuẩn khung CEFR (A1–C1), phương pháp Deep Reading phân tích sâu và cẩm nang mẹo học phản xạ.'
-    )
+    h('h1', { style: { margin: 0 } }, 'Kiến thức & Ngữ pháp Tiếng Anh')
+  );
+  const introDesc = h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+    'Hệ thống ngữ pháp chuẩn khung CEFR (A1–C1), phương pháp Deep Reading phân tích sâu và cẩm nang mẹo học phản xạ.'
   );
 
   const navSub = h('div', { class: 'skill-tabs knowledge-tabs', role: 'tablist', style: { margin: '6px 0 12px 0' } },
@@ -14846,7 +14865,7 @@ function renderEnglishKnowledgeView() {
     body = h('div', { class: 'stack', style: { gap: '10px' } }, toolbar, ...guides);
   }
 
-  mount(h('div', { class: 'stack-lg' }, header, navSub, body));
+  mount(h('div', { class: 'stack-lg' }, header, navSub, body, introDesc));
 }
 
 function knowledgeTabView() {
@@ -14881,12 +14900,12 @@ function knowledgeTabView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức, Ngữ pháp & Đọc hiểu'),
-    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      isJa
-        ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
-        : 'Tổng hợp ngữ pháp HSK 1–9, hội thoại đọc hiểu, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
-    )
+    h('h1', { style: { margin: 0 } }, isJa ? 'Kiến thức & Ngữ pháp JLPT' : 'Kiến thức, Ngữ pháp & Đọc hiểu')
+  );
+  const introDesc = h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
+    isJa
+      ? 'Tổng hợp ngữ pháp chuẩn JLPT N5–N1, tra cứu Kanji theo nét và bảng chữ cái Kana.'
+      : 'Tổng hợp ngữ pháp HSK 1–9, hội thoại đọc hiểu, chiết tự chữ Hán, 214 bộ thủ Khang Hy và quy tắc bút thuận.'
   );
 
   const navSub = h('div', { class: 'skill-tabs knowledge-tabs' + (subtabs.length === 3 ? ' cols-3' : ''), role: 'tablist', style: { margin: '6px 0 12px 0' } },
@@ -14905,7 +14924,7 @@ function knowledgeTabView() {
   else if (KNOWLEDGE_TAB === 'chars') body = renderKnowledgeChars(code);
   else if (KNOWLEDGE_TAB === 'kana') body = renderKnowledgeKana(code);
 
-  mount(h('div', { class: 'stack-lg' }, header, navSub, body));
+  mount(h('div', { class: 'stack-lg' }, header, navSub, body, introDesc));
 }
 
 function renderKnowledgeGrammar(code) {
@@ -14968,14 +14987,13 @@ function renderKnowledgeGrammar(code) {
       chip('all', 'Tất cả (' + pts.length + ')'),
       ...lvs.filter((lv) => count(lv)).map((lv) => chip(lv, (code === 'en' ? lv : (isJa ? lv : (ZH_LV_BOOK[lv] || lv.replace('HSK ', '')))) + ' (' + count(lv) + ')'))
     ),
-    code === 'zh' ? h('p', { class: 'small muted', style: { margin: '0' } }, '📚 Tổng hợp Ngữ pháp HSK 1–4 (Quyển 1–4) · Các điểm ngữ pháp & bài tập đều được lồng trực tiếp vào bài học.') : null,
     code !== 'en' ? h('div', { class: 'panel stack', style: { background: 'var(--surface)', borderRadius: '12px', padding: '14px' } },
       h('h2', { style: { margin: 0, fontSize: '1.05rem' } }, '🎯 Luyện Quiz Ngữ Pháp'),
-      h('p', { class: 'small muted', style: { margin: '4px 0 8px 0' } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : '')),
-      h('div', { class: 'row', style: { gap: '8px' } },
+      h('div', { class: 'row', style: { gap: '8px', margin: '4px 0' } },
         h('button', { class: 'primary grow', onclick: () => grammarQuizView(sel, false) }, 'Làm quiz · ' + (sel === 'all' ? 'Tất cả cấp' : sel)),
         nWrong > 0 ? h('button', { class: 'accent', onclick: () => grammarQuizView(sel, true) }, 'Ôn ' + nWrong + ' điểm hay sai') : null
-      )
+      ),
+      h('p', { class: 'small muted', style: { margin: 0 } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : ''))
     ) : null,
     h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
       h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm ngữ pháp') : (shown.length + ' điểm ngữ pháp')),
@@ -15001,7 +15019,8 @@ function renderKnowledgeGrammar(code) {
         (x.g.quiz && x.g.quiz.length ? h('p', { class: 'small', style: { color: 'var(--teal)', fontWeight: 600, margin: '6px 0 2px 0' } }, '✍️ ' + x.g.quiz.length + ' câu bài tập ngữ pháp (lồng trong bài học & Luyện Quiz)') : null),
         (x.topics && x.topics.length ? h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong: ' + x.topics.map((t) => t.sub || t.title).join(' · ')) : null)
       )
-    ))
+    )),
+    code === 'zh' ? h('p', { class: 'small muted', style: { margin: '0' } }, '📚 Tổng hợp Ngữ pháp HSK 1–4 (Quyển 1–4) · Các điểm ngữ pháp & bài tập đều được lồng trực tiếp vào bài học.') : null
   );
 }
 
@@ -15179,7 +15198,6 @@ function renderKnowledgeChietTu(code) {
   );
 
   return h('div', { class: 'stack-lg' },
-    guide,
     h('div', { class: 'panel card stack', style: { gap: '10px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
         h('h2', { style: { margin: 0 } }, '🧩 Kho Chiết tự & Mẹo nhớ chữ Hán'),
@@ -15188,7 +15206,8 @@ function renderKnowledgeChietTu(code) {
       searchBox,
       filterRow,
       cardsContainer
-    )
+    ),
+    guide
   );
 }
 
@@ -15276,26 +15295,6 @@ function renderKnowledgeChars(code) {
     const filteredRad = radicals.filter((x) => !q || x.r.includes(q) || x.p.includes(q) || x.m.toLowerCase().includes(q));
 
     return h('div', { class: 'stack-lg' },
-      guideAccordionItem({
-        id: 'zh-stroke-rules',
-        icon: '✍️',
-        title: '7 Quy tắc bút thuận viết chữ Hán',
-        subtitle: 'Quy tắc vàng giúp nhớ mặt chữ nhanh gấp 3 lần và viết chữ chuẩn phong cách',
-        tag: '7 quy tắc',
-        defaultOpen: false,
-        content: rules.map((ru) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
-          h('div', { class: 'row between', style: { alignItems: 'center' } },
-            h('b', { style: { color: 'var(--teal)' } }, ru.title),
-            h('button', {
-              class: 'chip good',
-              style: { cursor: 'pointer', fontSize: '1rem', padding: '2px 10px' },
-              onclick: () => charView('zh', ru.ex, [ru.ex])
-            }, ru.ex + ' (' + ru.pinyin + ') ➔ Tập viết')
-          ),
-          h('p', { class: 'small', style: { margin: '4px 0 2px 0' } }, ru.desc),
-          h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa Hán Việt: ' + ru.hv)
-        ))
-      }),
       h('div', { class: 'panel card stack', style: { gap: '10px' } },
         h('div', { class: 'row between', style: { alignItems: 'center' } },
           h('h2', { style: { margin: 0 } }, '🈴 Bộ thủ thường gặp nhất'),
@@ -15320,7 +15319,27 @@ function renderKnowledgeChars(code) {
             h('span', { class: 'chip', style: { fontSize: '.65rem', padding: '1px 6px', marginTop: '2px' } }, x.s + ' nét')
           ))
         )
-      )
+      ),
+      guideAccordionItem({
+        id: 'zh-stroke-rules',
+        icon: '✍️',
+        title: '7 Quy tắc bút thuận viết chữ Hán',
+        subtitle: 'Quy tắc vàng giúp nhớ mặt chữ nhanh gấp 3 lần và viết chữ chuẩn phong cách',
+        tag: '7 quy tắc',
+        defaultOpen: false,
+        content: rules.map((ru) => h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '10px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center' } },
+            h('b', { style: { color: 'var(--teal)' } }, ru.title),
+            h('button', {
+              class: 'chip good',
+              style: { cursor: 'pointer', fontSize: '1rem', padding: '2px 10px' },
+              onclick: () => charView('zh', ru.ex, [ru.ex])
+            }, ru.ex + ' (' + ru.pinyin + ') ➔ Tập viết')
+          ),
+          h('p', { class: 'small', style: { margin: '4px 0 2px 0' } }, ru.desc),
+          h('p', { class: 'small muted', style: { margin: 0 } }, 'Ý nghĩa Hán Việt: ' + ru.hv)
+        ))
+      })
     );
   }
 
@@ -15343,7 +15362,6 @@ function renderKnowledgeChars(code) {
       h('h2', { style: { margin: 0 } }, '🈴 Danh mục Kanji JLPT'),
       h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, filtered.length + '/' + allKanji.length + ' chữ')
     ),
-    h('p', { class: 'small muted', style: { margin: 0 } }, 'Tra cứu âm Hán Việt, âm On (Onyomi), âm Kun (Kunyomi) và bấm chữ để tập viết từng nét:'),
     h('input', {
       type: 'search',
       placeholder: '🔍 Tìm Kanji theo chữ, âm Hán Việt, On, Kun...',
@@ -15370,7 +15388,8 @@ function renderKnowledgeChars(code) {
           ...(k.ex || []).slice(0, 2).map((e) => h('p', { class: 'small muted', lang: 'ja', style: { margin: 0 } }, ruby(e[0]), ' · ' + e[1]))
         )
       ))
-    )
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Tra cứu âm Hán Việt, âm On (Onyomi), âm Kun (Kunyomi) và bấm chữ để tập viết từng nét.')
   );
 }
 
@@ -15382,7 +15401,7 @@ function renderKnowledgeKana(code) {
     { r: 'ka', h: 'か', k: 'カ' }, { r: 'ki', h: 'き', k: 'キ' }, { r: 'ku', h: 'く', k: 'ク' }, { r: 'ke', h: 'け', k: 'ケ' }, { r: 'ko', h: 'こ', k: 'コ' },
     { r: 'sa', h: 'さ', k: 'サ' }, { r: 'shi', h: 'し', k: 'シ' }, { r: 'su', h: 'す', k: 'ス' }, { r: 'se', h: 'せ', k: 'セ' }, { r: 'so', h: 'そ', k: 'ソ' },
     { r: 'ta', h: 'た', k: 'タ' }, { r: 'chi', h: 'ち', k: 'チ' }, { r: 'tsu', h: 'つ', k: 'ツ' }, { r: 'te', h: 'て', k: 'テ' }, { r: 'to', h: 'と', k: 'ト' },
-    { r: 'na', h: 'na', k: 'ナ' }, { r: 'ni', h: 'に', k: 'ニ' }, { r: 'nu', h: 'ぬ', k: 'ヌ' }, { r: 'ne', h: 'ね', k: 'ネ' }, { r: 'no', h: 'の', k: 'ノ' },
+    { r: 'na', h: 'な', k: 'ナ' }, { r: 'ni', h: 'に', k: 'ニ' }, { r: 'nu', h: 'ぬ', k: 'ヌ' }, { r: 'ne', h: 'ね', k: 'ネ' }, { r: 'no', h: 'の', k: 'ノ' },
     { r: 'ha', h: 'は', k: 'ハ' }, { r: 'hi', h: 'ひ', k: 'ヒ' }, { r: 'fu', h: 'ふ', k: 'フ' }, { r: 'he', h: 'へ', k: 'ヘ' }, { r: 'ho', h: 'ほ', k: 'ホ' },
     { r: 'ma', h: 'ま', k: 'マ' }, { r: 'mi', h: 'み', k: 'ミ' }, { r: 'mu', h: 'む', k: 'ム' }, { r: 'me', h: 'め', k: 'メ' }, { r: 'mo', h: 'も', k: 'モ' },
     { r: 'ya', h: 'や', k: 'ヤ' }, { r: '', h: '', k: '' }, { r: 'yu', h: 'ゆ', k: 'ユ' }, { r: '', h: '', k: '' }, { r: 'yo', h: 'よ', k: 'ヨ' },
@@ -15405,7 +15424,6 @@ function renderKnowledgeKana(code) {
         }, 'Katakana (Chữ cứng)')
       )
     ),
-    h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm vào chữ bất kỳ để nghe audio phát âm chuẩn bản xứ ngay lập tức:'),
     h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' } },
       ...kanaData.map((item) => {
         if (!item.r) return h('div', { style: { height: '62px' } });
@@ -15419,7 +15437,8 @@ function renderKnowledgeKana(code) {
           h('span', { class: 'small muted', style: { fontSize: '.75rem' } }, item.r)
         );
       })
-    )
+    ),
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Bấm vào chữ bất kỳ để nghe audio phát âm chuẩn bản xứ ngay lập tức.')
   );
 }
 
@@ -16298,14 +16317,11 @@ function renderHskkExamView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, 'Luyện Thi HSKK Khẩu Ngữ'),
-    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      'Đề mẫu chính thức CTI/CLEC · Nghe thuật lại, Nhìn tranh kể chuyện & Nghị luận PEEL'
-    )
+    h('h1', { style: { margin: 0 } }, 'Luyện Thi HSKK Khẩu Ngữ')
   );
 
   // Chọn cấp độ HSKK 3 - 6
-  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 10px 0' } },
+  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 8px 0' } },
     ...levels.map((lv) => h('button', {
       class: 'mini' + (HSKK_LV === lv ? ' primary' : ' ghost'),
       style: { fontWeight: 700, minWidth: '72px' },
@@ -16313,7 +16329,34 @@ function renderHskkExamView() {
     }, HSKK_DATA[lv].shortName))
   );
 
-  // Thẻ Cấu trúc đề & Audio chính thức
+  // Trình phát Audio Đề mẫu chính thức đặt ngay đầu để tiện bấm nghe
+  const officialAudioCard = h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '12px', padding: '10px 12px', gap: '6px' } },
+    h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
+      h('b', { style: { color: 'var(--teal)', fontSize: '.9rem' } }, '🎧 Audio Đề Thi Chính Thức: ' + curData.audioName),
+      h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
+        curData.pdfUrl ? h('a', {
+          href: curData.pdfUrl,
+          target: '_blank',
+          class: 'chip accent small',
+          style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+        }, '📄 Xem Đề PDF Gốc') : null,
+        h('a', {
+          href: curData.audioUrl,
+          download: curData.audioName,
+          class: 'chip good small',
+          style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
+        }, '⬇️ Tải MP3 Gốc')
+      )
+    ),
+    h('audio', {
+      controls: 'controls',
+      preload: 'metadata',
+      src: curData.audioUrl,
+      style: { width: '100%', height: '38px', marginTop: '2px' }
+    })
+  );
+
+  // Thẻ Cấu trúc đề (chú thích đưa xuống dưới danh sách câu hỏi)
   const structureCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
     h('div', { class: 'row between', style: { alignItems: 'center' } },
       h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '📋 ' + curData.name),
@@ -16331,34 +16374,8 @@ function renderHskkExamView() {
         h('span', { class: 'small' }, part)
       ))
     ),
-    // Audio Player cho Đề mẫu chính thức
-    h('div', { class: 'panel stack', style: { background: 'rgba(15, 82, 87, 0.06)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '12px', gap: '6px' } },
-      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-        h('b', { style: { color: 'var(--teal)', fontSize: '.9rem' } }, '🎧 Đĩa Audio Đề Thi Chính Thức (MP3 Gốc CLEC): ' + curData.audioName),
-        h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
-          curData.pdfUrl ? h('a', {
-            href: curData.pdfUrl,
-            target: '_blank',
-            class: 'chip accent small',
-            style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
-          }, '📄 Xem Đề PDF Gốc') : null,
-          h('a', {
-            href: curData.audioUrl,
-            download: curData.audioName,
-            class: 'chip good small',
-            style: { textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }
-          }, '⬇️ Tải MP3 Gốc')
-        )
-      ),
-      h('audio', {
-        controls: 'controls',
-        preload: 'metadata',
-        src: curData.audioUrl,
-        style: { width: '100%', height: '38px', marginTop: '4px' }
-      }),
-      h('p', { class: 'small muted', style: { margin: 0, fontSize: '.75rem' } },
-        '💡 Bạn có thể nghe toàn bộ đĩa thi gốc ở trên, hoặc bấm thanh phát audio / nút loa 🔊 ở từng câu hỏi bên dưới để luyện nghe và nhại theo (Shadowing) từng câu cắt trực tiếp từ băng gốc.'
-      )
+    h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem' } },
+      '💡 Đề mẫu chính thức CTI/CLEC · Bạn có thể nghe toàn bộ đĩa thi gốc ở trên, hoặc bấm loa 🔊 ở từng câu hỏi để luyện nghe và nhại theo (Shadowing).'
     )
   );
 
@@ -16418,10 +16435,10 @@ function renderHskkExamView() {
     : curData.sections.filter((s) => s.partId === HSKK_FILTER_PART);
 
   const sectionElements = sectionsToRender.map((sec) => {
-    const secHeader = h('div', { class: 'stack', style: { gap: '2px', marginTop: '6px' } },
-      h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, sec.title),
-      h('p', { class: 'small muted', style: { margin: 0 } }, sec.guide)
+    const secHeader = h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px', marginTop: '6px' } },
+      h('h3', { style: { margin: 0, fontSize: '1.05rem', color: 'var(--teal)' } }, sec.title)
     );
+    const secGuideFooter = sec.guide ? h('p', { class: 'small muted', style: { margin: '2px 0 0 0' } }, sec.guide) : null;
 
     const itemCards = sec.items.map((it) => {
       const itemKey = curData.id + '-' + it.qId;
@@ -16632,16 +16649,17 @@ function renderHskkExamView() {
       return card;
     });
 
-    return h('div', { class: 'stack', style: { gap: '8px' } }, secHeader, ...itemCards);
+    return h('div', { class: 'stack', style: { gap: '8px' } }, secHeader, ...itemCards, secGuideFooter);
   });
 
   mount(h('div', { class: 'stack-lg' },
     header,
     lvSelector,
-    structureCard,
-    strategyCard,
+    officialAudioCard,
     filterTabs,
-    ...sectionElements
+    ...sectionElements,
+    structureCard,
+    strategyCard
   ));
 }
 
@@ -16671,18 +16689,30 @@ function examTabView() {
         langSwitch()
       )
     ),
-    h('h1', { style: { margin: 0 } }, 'Luyện Thi JLPT (N5–N1)'),
-    h('p', { class: 'muted small', style: { margin: '2px 0 0 0' } },
-      'Khung đề thi chuẩn JLPT Japan Foundation, thời gian thi, điểm liệt và bài thi mẫu.'
-    )
+    h('h1', { style: { margin: 0 } }, 'Luyện Thi JLPT (N5–N1)')
   );
 
-  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '6px 0 12px 0' } },
+  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 8px 0' } },
     ...levels.map((lv) => h('button', {
       class: 'mini' + (curLv === lv ? ' primary' : ' ghost'),
       style: { fontWeight: 700, minWidth: '60px' },
       onclick: () => { EXAM_LV[code] = lv; examTabView(); }
     }, lv))
+  );
+
+  const mockTestCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center' } },
+      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '🎯 Đề thi thử mô phỏng ' + curLv),
+      h('span', { class: 'chip accent', style: { fontSize: '.75rem' } }, 'Demo Test')
+    ),
+    h('button', {
+      class: 'primary block',
+      style: { fontWeight: 700, padding: '12px' },
+      onclick: () => startExamDemo(code, curLv)
+    }, '▶ Làm bài thi thử mẫu (' + curLv + ')'),
+    h('p', { class: 'small muted', style: { margin: 0 } },
+      'Làm bài kiểm tra mô phỏng câu hỏi trắc nghiệm đúng format thi thật với tính năng chấm điểm tự động.'
+    )
   );
 
   const structureCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
@@ -16701,27 +16731,15 @@ function examTabView() {
         h('span', { style: { color: 'var(--teal)' } }, '✔'),
         h('span', { class: 'small' }, part)
       ))
-    )
-  );
-
-  const mockTestCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
-    h('div', { class: 'row between', style: { alignItems: 'center' } },
-      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '🎯 Đề thi thử mô phỏng ' + curLv),
-      h('span', { class: 'chip accent', style: { fontSize: '.75rem' } }, 'Demo Test')
     ),
-    h('p', { class: 'small muted', style: { margin: 0 } },
-      'Làm bài kiểm tra mô phỏng câu hỏi trắc nghiệm đúng format thi thật với tính năng chấm điểm tự động.'
-    ),
-    h('button', {
-      class: 'primary block',
-      style: { fontWeight: 700, padding: '12px' },
-      onclick: () => startExamDemo(code, curLv)
-    }, '▶ Làm bài thi thử mẫu (' + curLv + ')'),
     h('div', { class: 'panel', style: { background: 'rgba(14, 116, 144, .08)', border: '1px dashed var(--teal)', borderRadius: '10px', padding: '12px' } },
       h('b', { style: { color: 'var(--teal)' } }, '📌 Kho đề thi chính thức:'),
       h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } },
         'Hệ thống đã thiết lập sẵn sàng phòng thi cho ' + (isZh ? 'HSK 1 đến HSK 6' : 'JLPT N5 đến N1') + '. Bạn có thể nạp các file đề thi thật (file đề PDF/JSON và file audio) vào kho dữ liệu để luyện thi bất cứ lúc nào!'
       )
+    ),
+    h('p', { class: 'muted small', style: { margin: 0 } },
+      'Khung đề thi chuẩn JLPT Japan Foundation, thời gian thi, điểm liệt và bài thi mẫu.'
     )
   );
 
@@ -16742,7 +16760,7 @@ function examTabView() {
     ))
   });
 
-  mount(h('div', { class: 'stack-lg' }, header, lvSelector, structureCard, mockTestCard, tipsCard));
+  mount(h('div', { class: 'stack-lg' }, header, lvSelector, mockTestCard, structureCard, tipsCard));
 }
 
 // Chế độ thi thử Demo cho HSK / JLPT
