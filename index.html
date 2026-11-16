@@ -1009,7 +1009,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-0915';
+const APP_BUILD_ID = '20261116-1015';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1042,22 +1042,22 @@ const CATEGORIES = {
     { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'HSK 1–9', count: '290 bài', desc: 'Toàn bộ 290 bài học theo khung tiêu chuẩn giáo trình HSK 3.0 từ Cấp 1 đến Cấp 9' }
   ],
   ja: [
-    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '8 bài', desc: 'Minna no Nihongo bài 1–7 & 101 chữ Hán Kanji N5' },
-    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '9 bài', desc: 'Minna no Nihongo bài 8–14, 12 thể động từ và Kanji N4' },
+    { id: 'n5', name: 'N5 · Sơ cấp 1', short: 'N5', icon: '🌱', level: 'N5', count: '15 bài', desc: 'Minna no Nihongo bài 1–25 (14 chủ đề) & 101 chữ Hán Kanji N5' },
+    { id: 'n4', name: 'N4 · Sơ cấp 2', short: 'N4', icon: '🌿', level: 'N4', count: '15 bài', desc: '12 thể động từ, Minna no Nihongo bài 26–50 (13 chủ đề) & Kanji N4' },
     { id: 'n3', name: 'N3 · Giao tiếp công sở', short: 'N3', icon: '🍃', level: 'N3', count: '3 bài', desc: 'Chuyên đề liên lạc văn phòng, đời sống và xử lý sự cố' },
     { id: 'n2', name: 'N2 · Đàm phán thương mại', short: 'N2', icon: '💼', level: 'N2', count: '3 bài', desc: 'Chuyên đề kính ngữ thương mại, hợp đồng và tác phong' },
     { id: 'n1', name: 'N1 · Kinh tế & Xã hội', short: 'N1', icon: '👑', level: 'N1', count: '3 bài', desc: 'Chuyên đề kinh tế vĩ mô, pháp chế và tư tưởng Nhật Bản' },
-    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '26 bài', desc: 'Giáo trình Sơ cấp Minna no Nihongo N5–N4 và các chuyên đề giao tiếp ứng dụng 26 bài học' }
+    { id: 'all', name: 'Tất cả các chủ đề', short: 'Tất cả', icon: '🌐', level: 'N5–N1', count: '39 bài', desc: 'Trọn bộ giáo trình Minna no Nihongo N5–N4 (bài 1–50), 12 thể động từ, Kanji và chuyên đề N3–N1' }
   ]
 };
 
 
 // ===== DỮ LIỆU ĐỊNH DANH BÀI HỌC, TIẾN ĐỘ & LỘ TRÌNH DỰ BÁO CÁN ĐÍCH =====
-const TOPIC_META = {"en":{"34":["a1",5],"118":["a1",8],"101":["a1",9],"102":["a1",7],"103":["a1",9],"188":["a1",7],"108":["a1",9],"109":["a1",9],"106":["a1",8],"107":["a1",8],"110":["a1",13],"116":["a1",8],"104":["a1",8],"105":["a1",9],"113":["a2",9],"114":["a2",7],"115":["a2",8],"38":["a2",5],"112":["a2",8],"35":["a2",5],"36":["a2",5],"37":["a2",5],"117":["a2",8],"111":["a2",13],"120":["a2",8],"119":["a2",7],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",7],"40":["a2",5],"126":["b1",7],"39":["b1",5],"42":["b1",5],"128":["b1",8],"129":["b1",8],"41":["b1",5],"44":["b1",5],"45":["b1",5],"43":["b1",5],"130":["b1",8],"131":["b1",8],"132":["b1",8],"133":["b1",8],"125":["b1",16],"127":["b1",8],"177":["b2",4],"2":["b2",4],"1":["b2",4],"182":["b2",4],"3":["b2",4],"4":["b2",4],"183":["b2",4],"7":["b2",4],"5":["b2",4],"184":["b2",4],"21":["b2",4],"185":["b2",4],"186":["b2",4],"26":["b2",4],"187":["b2",4],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3]},"zh":{"36":["hsk1",5],"1":["hsk1",7],"48":["hsk1",7],"3":["hsk1",6],"46":["hsk1",7],"2":["hsk1",7],"47":["hsk1",6],"58":["hsk1",7],"59":["hsk1",7],"60":["hsk1",7],"61":["hsk1",7],"49":["hsk2",8],"51":["hsk2",6],"50":["hsk2",6],"4":["hsk2",5],"5":["hsk2",6],"6":["hsk2",7],"7":["hsk2",5],"12":["hsk2",5],"13":["hsk2",5],"9":["hsk2",5],"62":["hsk2",8],"63":["hsk2",9],"64":["hsk2",9],"11":["hsk3",4],"14":["hsk3",7],"15":["hsk3",7],"37":["hsk3",5],"38":["hsk3",5],"39":["hsk3",6],"41":["hsk3",9],"44":["hsk3",6],"25":["hsk3",4],"26":["hsk3",4],"65":["hsk3",10],"66":["hsk3",7],"67":["hsk3",8],"68":["hsk3",9],"69":["hsk3",8],"70":["hsk3",8],"71":["hsk3",9],"72":["hsk3",7],"73":["hsk3",7],"74":["hsk3",7],"75":["hsk3",8],"76":["hsk3",8],"77":["hsk3",7],"42":["hsk4",8],"43":["hsk4",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",5],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"78":["hsk4",7],"79":["hsk4",7],"80":["hsk4",7],"81":["hsk4",7],"82":["hsk4",7],"83":["hsk4",7],"84":["hsk4",7],"85":["hsk4",7],"86":["hsk4",7],"87":["hsk4",7],"88":["hsk4",7],"89":["hsk4",7],"90":["hsk4",7],"91":["hsk4",7],"92":["hsk4",7],"93":["hsk4",7],"94":["hsk4",7],"95":["hsk4",7],"96":["hsk4",7],"97":["hsk4",7],"98":["hsk4",7],"99":["hsk4",7],"100":["hsk4",7],"101":["hsk4",7],"102":["hsk4",7],"103":["hsk4",7],"104":["hsk4",7],"105":["hsk4",7],"106":["hsk4",7],"107":["hsk4",7],"33":["hsk5",5],"20":["hsk5",5],"34":["hsk5",4],"35":["hsk5",4],"17":["hsk5",4],"21":["hsk5",7],"108":["hsk5",8],"109":["hsk5",8],"110":["hsk5",8],"111":["hsk5",8],"112":["hsk5",8],"113":["hsk5",8],"114":["hsk5",8],"115":["hsk5",8],"116":["hsk5",8],"117":["hsk5",8],"118":["hsk5",8],"119":["hsk5",8],"120":["hsk5",8],"121":["hsk5",8],"122":["hsk5",8],"123":["hsk5",7],"124":["hsk5",7],"125":["hsk5",7],"126":["hsk5",7],"127":["hsk5",7],"128":["hsk5",7],"129":["hsk5",7],"130":["hsk5",7],"131":["hsk5",7],"132":["hsk5",7],"133":["hsk5",7],"134":["hsk5",7],"135":["hsk5",7],"136":["hsk5",7],"137":["hsk5",7],"138":["hsk5",7],"139":["hsk5",7],"140":["hsk5",7],"141":["hsk5",7],"142":["hsk5",7],"143":["hsk5",7],"144":["hsk5",7],"145":["hsk5",7],"146":["hsk5",7],"147":["hsk5",7],"148":["hsk5",7],"149":["hsk5",7],"150":["hsk5",7],"151":["hsk5",7],"152":["hsk5",7],"153":["hsk5",7],"154":["hsk5",7],"155":["hsk5",7],"156":["hsk5",7],"157":["hsk5",7],"22":["hsk6",4],"18":["hsk6",4],"19":["hsk6",7],"23":["hsk6",4],"158":["hsk6",8],"159":["hsk6",8],"160":["hsk6",8],"161":["hsk6",8],"162":["hsk6",8],"163":["hsk6",8],"164":["hsk6",8],"165":["hsk6",8],"166":["hsk6",8],"167":["hsk6",8],"168":["hsk6",8],"169":["hsk6",8],"170":["hsk6",8],"171":["hsk6",8],"172":["hsk6",8],"173":["hsk6",8],"174":["hsk6",8],"175":["hsk6",7],"176":["hsk6",7],"177":["hsk6",7],"178":["hsk6",7],"179":["hsk6",7],"180":["hsk6",7],"181":["hsk6",7],"182":["hsk6",7],"183":["hsk6",7],"184":["hsk6",7],"185":["hsk6",7],"186":["hsk6",7],"187":["hsk6",7],"188":["hsk6",7],"189":["hsk6",7],"190":["hsk6",7],"191":["hsk6",7],"192":["hsk6",7],"193":["hsk6",7],"194":["hsk6",7],"195":["hsk6",7],"196":["hsk6",7],"197":["hsk6",7],"198":["hsk6",7],"199":["hsk6",7],"200":["hsk6",7],"201":["hsk6",7],"202":["hsk6",7],"203":["hsk6",7],"204":["hsk6",7],"205":["hsk6",7],"206":["hsk6",7],"207":["hsk6",7],"208":["hsk6",7],"209":["hsk6",7],"52":["hsk7",4],"53":["hsk7",4],"210":["hsk7",7],"211":["hsk7",7],"212":["hsk7",7],"213":["hsk7",7],"214":["hsk7",7],"215":["hsk7",7],"216":["hsk7",7],"217":["hsk7",7],"218":["hsk7",7],"219":["hsk7",7],"220":["hsk7",7],"221":["hsk7",7],"222":["hsk7",7],"223":["hsk7",7],"224":["hsk7",7],"225":["hsk7",7],"226":["hsk7",7],"227":["hsk7",7],"228":["hsk7",7],"229":["hsk7",7],"230":["hsk7",7],"231":["hsk7",7],"232":["hsk7",7],"233":["hsk7",7],"234":["hsk7",7],"235":["hsk7",7],"236":["hsk7",7],"237":["hsk7",7],"54":["hsk8",4],"55":["hsk8",4],"238":["hsk8",7],"239":["hsk8",7],"240":["hsk8",7],"241":["hsk8",7],"242":["hsk8",7],"243":["hsk8",7],"244":["hsk8",7],"245":["hsk8",7],"246":["hsk8",7],"247":["hsk8",7],"248":["hsk8",7],"249":["hsk8",7],"250":["hsk8",7],"251":["hsk8",7],"252":["hsk8",7],"253":["hsk8",7],"254":["hsk8",7],"255":["hsk8",7],"256":["hsk8",7],"257":["hsk8",7],"258":["hsk8",7],"259":["hsk8",7],"260":["hsk8",7],"261":["hsk8",7],"262":["hsk8",7],"263":["hsk8",7],"264":["hsk8",7],"265":["hsk8",7],"56":["hsk9",4],"57":["hsk9",4],"266":["hsk9",7],"267":["hsk9",7],"268":["hsk9",7],"269":["hsk9",7],"270":["hsk9",7],"271":["hsk9",7],"272":["hsk9",7],"273":["hsk9",7],"274":["hsk9",7],"275":["hsk9",7],"276":["hsk9",7],"277":["hsk9",7],"278":["hsk9",7],"279":["hsk9",7],"280":["hsk9",7],"281":["hsk9",7],"282":["hsk9",7],"283":["hsk9",7],"284":["hsk9",7],"285":["hsk9",7],"286":["hsk9",7],"287":["hsk9",7],"288":["hsk9",7],"289":["hsk9",7],"290":["hsk9",7],"291":["hsk9",7],"292":["hsk9",7],"301":["hsk2",4],"302":["hsk2",4],"303":["hsk3",4],"293":["hsk9",7]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n4",18],"9":["n4",11],"10":["n4",7],"11":["n4",9],"12":["n4",13],"13":["n4",11],"14":["n4",10],"15":["n5",27],"16":["n4",6],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3],"26":["n4",9]}};
-const CAT_TOTAL_TOPICS = {"en":{"a1":14,"a2":17,"b1":15,"b2":15,"c1":5,"c2":5},"zh":{"hsk1":11,"hsk2":15,"hsk3":24,"hsk4":38,"hsk5":56,"hsk6":56,"hsk7":30,"hsk8":30,"hsk9":30},"ja":{"n5":8,"n4":9,"n3":3,"n2":3,"n1":3}};
-const CAT_TOTAL_LESSONS = {"en":{"a1":117,"a2":124,"b1":109,"b2":60,"c1":17,"c2":15},"zh":{"hsk1":73,"hsk2":84,"hsk3":160,"hsk4":247,"hsk5":394,"hsk6":400,"hsk7":204,"hsk8":204,"hsk9":204},"ja":{"n5":112,"n4":94,"n3":9,"n2":9,"n1":9}};
-const LANG_TOTAL_TOPICS = {"en":71,"zh":290,"ja":26};
-const LANG_TOTAL_LESSONS = {"en":442,"zh":1982,"ja":233};
+const TOPIC_META = {"en":{"34":["a1",5],"118":["a1",8],"101":["a1",9],"102":["a1",7],"103":["a1",9],"188":["a1",7],"108":["a1",9],"109":["a1",9],"106":["a1",8],"107":["a1",8],"110":["a1",13],"116":["a1",8],"104":["a1",8],"105":["a1",9],"113":["a2",9],"114":["a2",7],"115":["a2",8],"38":["a2",5],"112":["a2",8],"35":["a2",5],"36":["a2",5],"37":["a2",5],"117":["a2",8],"111":["a2",13],"120":["a2",8],"119":["a2",7],"121":["a2",8],"122":["a2",8],"123":["a2",8],"124":["a2",7],"40":["a2",5],"126":["b1",7],"39":["b1",5],"42":["b1",5],"128":["b1",8],"129":["b1",8],"41":["b1",5],"44":["b1",5],"45":["b1",5],"43":["b1",5],"130":["b1",8],"131":["b1",8],"132":["b1",8],"133":["b1",8],"125":["b1",16],"127":["b1",8],"177":["b2",4],"2":["b2",4],"1":["b2",4],"182":["b2",4],"3":["b2",4],"4":["b2",4],"183":["b2",4],"7":["b2",4],"5":["b2",4],"184":["b2",4],"21":["b2",4],"185":["b2",4],"186":["b2",4],"26":["b2",4],"187":["b2",4],"151":["c1",4],"152":["c1",4],"153":["c1",3],"154":["c1",3],"155":["c1",3],"156":["c2",3],"157":["c2",3],"158":["c2",3],"159":["c2",3],"160":["c2",3]},"zh":{"36":["hsk1",5],"1":["hsk1",7],"48":["hsk1",7],"3":["hsk1",6],"46":["hsk1",7],"2":["hsk1",7],"47":["hsk1",6],"58":["hsk1",7],"59":["hsk1",7],"60":["hsk1",7],"61":["hsk1",7],"49":["hsk2",8],"51":["hsk2",6],"50":["hsk2",6],"4":["hsk2",5],"5":["hsk2",6],"6":["hsk2",7],"7":["hsk2",5],"12":["hsk2",5],"13":["hsk2",5],"9":["hsk2",5],"62":["hsk2",8],"63":["hsk2",9],"64":["hsk2",9],"11":["hsk3",4],"14":["hsk3",7],"15":["hsk3",7],"37":["hsk3",5],"38":["hsk3",5],"39":["hsk3",6],"41":["hsk3",9],"44":["hsk3",6],"25":["hsk3",4],"26":["hsk3",4],"65":["hsk3",10],"66":["hsk3",7],"67":["hsk3",8],"68":["hsk3",9],"69":["hsk3",8],"70":["hsk3",8],"71":["hsk3",9],"72":["hsk3",7],"73":["hsk3",7],"74":["hsk3",7],"75":["hsk3",8],"76":["hsk3",8],"77":["hsk3",7],"42":["hsk4",8],"43":["hsk4",4],"27":["hsk4",4],"28":["hsk4",4],"29":["hsk4",5],"30":["hsk4",4],"31":["hsk4",4],"32":["hsk4",4],"78":["hsk4",7],"79":["hsk4",7],"80":["hsk4",7],"81":["hsk4",7],"82":["hsk4",7],"83":["hsk4",7],"84":["hsk4",7],"85":["hsk4",7],"86":["hsk4",7],"87":["hsk4",7],"88":["hsk4",7],"89":["hsk4",7],"90":["hsk4",7],"91":["hsk4",7],"92":["hsk4",7],"93":["hsk4",7],"94":["hsk4",7],"95":["hsk4",7],"96":["hsk4",7],"97":["hsk4",7],"98":["hsk4",7],"99":["hsk4",7],"100":["hsk4",7],"101":["hsk4",7],"102":["hsk4",7],"103":["hsk4",7],"104":["hsk4",7],"105":["hsk4",7],"106":["hsk4",7],"107":["hsk4",7],"33":["hsk5",5],"20":["hsk5",5],"34":["hsk5",4],"35":["hsk5",4],"17":["hsk5",4],"21":["hsk5",7],"108":["hsk5",8],"109":["hsk5",8],"110":["hsk5",8],"111":["hsk5",8],"112":["hsk5",8],"113":["hsk5",8],"114":["hsk5",8],"115":["hsk5",8],"116":["hsk5",8],"117":["hsk5",8],"118":["hsk5",8],"119":["hsk5",8],"120":["hsk5",8],"121":["hsk5",8],"122":["hsk5",8],"123":["hsk5",7],"124":["hsk5",7],"125":["hsk5",7],"126":["hsk5",7],"127":["hsk5",7],"128":["hsk5",7],"129":["hsk5",7],"130":["hsk5",7],"131":["hsk5",7],"132":["hsk5",7],"133":["hsk5",7],"134":["hsk5",7],"135":["hsk5",7],"136":["hsk5",7],"137":["hsk5",7],"138":["hsk5",7],"139":["hsk5",7],"140":["hsk5",7],"141":["hsk5",7],"142":["hsk5",7],"143":["hsk5",7],"144":["hsk5",7],"145":["hsk5",7],"146":["hsk5",7],"147":["hsk5",7],"148":["hsk5",7],"149":["hsk5",7],"150":["hsk5",7],"151":["hsk5",7],"152":["hsk5",7],"153":["hsk5",7],"154":["hsk5",7],"155":["hsk5",7],"156":["hsk5",7],"157":["hsk5",7],"22":["hsk6",4],"18":["hsk6",4],"19":["hsk6",7],"23":["hsk6",4],"158":["hsk6",8],"159":["hsk6",8],"160":["hsk6",8],"161":["hsk6",8],"162":["hsk6",8],"163":["hsk6",8],"164":["hsk6",8],"165":["hsk6",8],"166":["hsk6",8],"167":["hsk6",8],"168":["hsk6",8],"169":["hsk6",8],"170":["hsk6",8],"171":["hsk6",8],"172":["hsk6",8],"173":["hsk6",8],"174":["hsk6",8],"175":["hsk6",7],"176":["hsk6",7],"177":["hsk6",7],"178":["hsk6",7],"179":["hsk6",7],"180":["hsk6",7],"181":["hsk6",7],"182":["hsk6",7],"183":["hsk6",7],"184":["hsk6",7],"185":["hsk6",7],"186":["hsk6",7],"187":["hsk6",7],"188":["hsk6",7],"189":["hsk6",7],"190":["hsk6",7],"191":["hsk6",7],"192":["hsk6",7],"193":["hsk6",7],"194":["hsk6",7],"195":["hsk6",7],"196":["hsk6",7],"197":["hsk6",7],"198":["hsk6",7],"199":["hsk6",7],"200":["hsk6",7],"201":["hsk6",7],"202":["hsk6",7],"203":["hsk6",7],"204":["hsk6",7],"205":["hsk6",7],"206":["hsk6",7],"207":["hsk6",7],"208":["hsk6",7],"209":["hsk6",7],"52":["hsk7",4],"53":["hsk7",4],"210":["hsk7",7],"211":["hsk7",7],"212":["hsk7",7],"213":["hsk7",7],"214":["hsk7",7],"215":["hsk7",7],"216":["hsk7",7],"217":["hsk7",7],"218":["hsk7",7],"219":["hsk7",7],"220":["hsk7",7],"221":["hsk7",7],"222":["hsk7",7],"223":["hsk7",7],"224":["hsk7",7],"225":["hsk7",7],"226":["hsk7",7],"227":["hsk7",7],"228":["hsk7",7],"229":["hsk7",7],"230":["hsk7",7],"231":["hsk7",7],"232":["hsk7",7],"233":["hsk7",7],"234":["hsk7",7],"235":["hsk7",7],"236":["hsk7",7],"237":["hsk7",7],"54":["hsk8",4],"55":["hsk8",4],"238":["hsk8",7],"239":["hsk8",7],"240":["hsk8",7],"241":["hsk8",7],"242":["hsk8",7],"243":["hsk8",7],"244":["hsk8",7],"245":["hsk8",7],"246":["hsk8",7],"247":["hsk8",7],"248":["hsk8",7],"249":["hsk8",7],"250":["hsk8",7],"251":["hsk8",7],"252":["hsk8",7],"253":["hsk8",7],"254":["hsk8",7],"255":["hsk8",7],"256":["hsk8",7],"257":["hsk8",7],"258":["hsk8",7],"259":["hsk8",7],"260":["hsk8",7],"261":["hsk8",7],"262":["hsk8",7],"263":["hsk8",7],"264":["hsk8",7],"265":["hsk8",7],"56":["hsk9",4],"57":["hsk9",4],"266":["hsk9",7],"267":["hsk9",7],"268":["hsk9",7],"269":["hsk9",7],"270":["hsk9",7],"271":["hsk9",7],"272":["hsk9",7],"273":["hsk9",7],"274":["hsk9",7],"275":["hsk9",7],"276":["hsk9",7],"277":["hsk9",7],"278":["hsk9",7],"279":["hsk9",7],"280":["hsk9",7],"281":["hsk9",7],"282":["hsk9",7],"283":["hsk9",7],"284":["hsk9",7],"285":["hsk9",7],"286":["hsk9",7],"287":["hsk9",7],"288":["hsk9",7],"289":["hsk9",7],"290":["hsk9",7],"291":["hsk9",7],"292":["hsk9",7],"301":["hsk2",4],"302":["hsk2",4],"303":["hsk3",4],"293":["hsk9",7]},"ja":{"1":["n5",13],"2":["n5",12],"3":["n5",18],"4":["n5",8],"5":["n5",12],"6":["n5",12],"7":["n5",10],"8":["n5",18],"9":["n5",11],"10":["n5",7],"11":["n5",9],"12":["n5",13],"13":["n5",11],"14":["n5",10],"15":["n5",27],"16":["n4",6],"27":["n4",4],"28":["n4",4],"29":["n4",4],"30":["n4",4],"31":["n4",4],"32":["n4",4],"33":["n4",4],"34":["n4",4],"35":["n4",4],"36":["n4",4],"37":["n4",4],"38":["n4",4],"39":["n4",4],"26":["n4",9],"17":["n3",3],"18":["n3",3],"19":["n3",3],"20":["n2",3],"21":["n2",3],"22":["n2",3],"23":["n1",3],"24":["n1",3],"25":["n1",3]}};
+const CAT_TOTAL_TOPICS = {"en":{"a1":14,"a2":17,"b1":15,"b2":15,"c1":5,"c2":5},"zh":{"hsk1":11,"hsk2":15,"hsk3":24,"hsk4":38,"hsk5":56,"hsk6":56,"hsk7":30,"hsk8":30,"hsk9":30},"ja":{"n5":15,"n4":15,"n3":3,"n2":3,"n1":3}};
+const CAT_TOTAL_LESSONS = {"en":{"a1":117,"a2":124,"b1":109,"b2":60,"c1":17,"c2":15},"zh":{"hsk1":73,"hsk2":84,"hsk3":160,"hsk4":247,"hsk5":394,"hsk6":400,"hsk7":204,"hsk8":204,"hsk9":204},"ja":{"n5":191,"n4":67,"n3":9,"n2":9,"n1":9}};
+const LANG_TOTAL_TOPICS = {"en":71,"zh":290,"ja":39};
+const LANG_TOTAL_LESSONS = {"en":442,"zh":1982,"ja":285};
 let PICK_TAB = 'progress'; // 'progress' | 'schedule' | 'roadmap'
 let STUDY_PACE = 'schedule'; // 'schedule' | 'daily1' | 'daily2'
 let ROADMAP_LANG = ''; // '' (mặc định dùng S.lang) | 'all' | 'en' | 'zh' | 'ja'
@@ -3683,6 +3683,8 @@ function welcomeView() {
 
 // ===== Trang Học =====
 const openTopics = new Set();
+const openQuickQuizTopics = new Set();
+const INLINE_TOPIC_QUIZ = {};
 function feedbackBtn(customCtx) {
   return h('button', {
     class: 'feedback-btn',
@@ -3916,7 +3918,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.86 · Cập nhật 15/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.87 · Cập nhật 16/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9389,9 +9391,271 @@ function renderIeltsWriting(t, data) {
   return h('div', { class: 'stack-lg' }, taskTabs, container);
 }
 
+function buildTopicQuickQuestions(t) {
+  const code = t.lang || S.lang || 'en';
+  const d = DATA[code] || {};
+  const qs = [];
+  const usedKeys = new Set();
+
+  // 1. Câu hỏi ngữ pháp của chủ đề (nếu có)
+  if (t.gram && t.gram.length && d.grammar) {
+    for (const gid of shuffle(t.gram.slice())) {
+      if (qs.length >= 1) break;
+      const qStep = makeGrammarQuizStep(code, gid, ['mcq', 'cloze']);
+      if (qStep && qStep.q && qStep.q.opts && qStep.q.opts.length >= 2) {
+        const gq = qStep.q;
+        const why = gq.why || (gq.p && gq.p.g ? (gq.p.g.t + (gq.p.g.f ? ' · ' + gq.p.g.f : '')) : '');
+        qs.push({
+          tag: 'Ngữ pháp',
+          prompt: gq.prompt,
+          sub: gq.sub || '',
+          hint: gq.hint || '',
+          opts: gq.opts,
+          answer: gq.answer,
+          langPrompt: gq.type === 'cloze',
+          langOpts: gq.type === 'cloze',
+          speakText: (gq.e && gq.e[0]) || '',
+          why,
+          gid
+        });
+        usedKeys.add('g:' + gq.prompt);
+      }
+    }
+  }
+
+  // 2. Câu hỏi tình huống / đọc hiểu của chủ đề (ưu tiên câu độc lập)
+  if (Array.isArray(t.quiz) && t.quiz.length) {
+    const standalone = t.quiz.filter((qz) => qz && !qz.dialogue && qz.speakIdx == null);
+    const poolQ = standalone.length ? standalone : t.quiz;
+    const qz = shuffle(poolQ.slice())[0];
+    if (qz) {
+      const origOpts = qz.o || qz.opts || [];
+      const correctStr = origOpts[qz.a];
+      if (origOpts.length >= 2 && correctStr != null) {
+        qs.push({
+          tag: 'Tình huống',
+          prompt: qz.q,
+          opts: shuffle(origOpts.slice()),
+          answer: correctStr,
+          langOpts: true,
+          speakText: code === 'en' ? correctStr : '',
+          why: qz.why || qz.exp || ''
+        });
+      }
+    }
+  }
+
+  // 3. Bổ sung câu hỏi từ vựng hoặc Kanji cho đủ 3 câu kiểm tra nhanh
+  const topicWords = (t.vocab || []).filter((v) => v && v.w && v.m);
+  const allWords = (d.topics || []).flatMap((x) => x.vocab || []).filter((v) => v && v.w && v.m);
+  const wordPool = topicWords.length >= 6 ? topicWords : allWords;
+  for (const v of shuffle(topicWords.slice())) {
+    if (qs.length >= 3) break;
+    if (usedKeys.has('v:' + v.id)) continue;
+    const dist = sample(wordPool, 3, (x) => x.id === v.id || x.m === v.m);
+    if (dist.length < 3) continue;
+    usedKeys.add('v:' + v.id);
+    qs.push({
+      tag: 'Từ vựng',
+      wordMain: plain(v.w),
+      prompt: 'Chọn nghĩa đúng của từ sau:',
+      sub: (v.r && v.r !== v.w) ? v.r : '',
+      opts: shuffle([v.m, ...dist.map((x) => x.m)]),
+      answer: v.m,
+      langPrompt: false,
+      langOpts: false,
+      speakText: v.w,
+      word: v,
+      why: v.ex ? (plain(v.ex) + (v.exm ? ' — ' + v.exm : '')) : ''
+    });
+  }
+
+  const topicKanji = (t.kanji || []).filter((k) => k && k.k && k.hv);
+  if (qs.length < 3 && topicKanji.length) {
+    const kPool = topicKanji.length >= 4 ? topicKanji : (d.topics || []).flatMap((x) => x.kanji || []);
+    for (const k of shuffle(topicKanji.slice())) {
+      if (qs.length >= 3) break;
+      const dist = sample(kPool, 3, (x) => x.k === k.k || x.hv === k.hv);
+      if (dist.length < 3) continue;
+      qs.push({
+        tag: 'Kanji',
+        wordMain: k.k,
+        prompt: 'Chữ Kanji này đọc Hán Việt là gì?',
+        sub: [k.on ? ('On: ' + k.on) : '', k.kun ? ('Kun: ' + k.kun) : ''].filter(Boolean).join(' · '),
+        opts: shuffle([k.hv, ...dist.map((x) => x.hv)]),
+        answer: k.hv,
+        langPrompt: false,
+        langOpts: false,
+        speakText: k.k,
+        why: (k.ex && k.ex[0]) ? (plain(k.ex[0][0]) + ': ' + k.ex[0][1]) : ''
+      });
+    }
+  }
+
+  return qs;
+}
+
+function renderInlineTopicQuiz(t) {
+  const code = t.lang || S.lang || 'en';
+  const langAttr = LANGS[code].lang;
+  const ok = code + ':' + t.id;
+  if (!INLINE_TOPIC_QUIZ[ok] || !INLINE_TOPIC_QUIZ[ok].qs || !INLINE_TOPIC_QUIZ[ok].qs.length) {
+    INLINE_TOPIC_QUIZ[ok] = { qs: buildTopicQuickQuestions(t), idx: 0, score: 0, chosen: null };
+  }
+  const st = INLINE_TOPIC_QUIZ[ok];
+  const box = h('div', {
+    class: 'panel stack',
+    style: {
+      gap: '10px',
+      padding: '12px 14px',
+      borderRadius: '14px',
+      background: 'var(--sunk)',
+      border: '1.5px solid var(--teal)',
+      margin: '2px 0 4px 0'
+    }
+  });
+
+  const draw = () => {
+    if (!st.qs.length) {
+      box.replaceChildren(
+        h('div', { class: 'row between', style: { alignItems: 'center' } },
+          h('span', { class: 'small muted' }, 'Chủ đề này chưa có đủ câu hỏi nhanh.'),
+          h('button', { class: 'ghost mini', onclick: () => { openQuickQuizTopics.delete(ok); homeView(); } }, 'Đóng')
+        )
+      );
+      return;
+    }
+
+    if (st.idx >= st.qs.length) {
+      const pct = Math.round((st.score / st.qs.length) * 100);
+      box.replaceChildren(
+        h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px' } },
+          h('span', { class: 'label', style: { margin: 0, color: 'var(--teal)' } }, '⚡ Kết quả kiểm tra nhanh'),
+          h('span', { class: 'chip good' }, st.score + '/' + st.qs.length + ' (' + pct + '%)')
+        ),
+        h('p', { class: 'small', style: { margin: 0 } },
+          st.score === st.qs.length ? 'Tuyệt vời! Bạn nắm vững kiến thức trọng tâm của bài này.' : 'Khá tốt! Hãy đổi bộ câu hỏi mới hoặc vào bài học để luyện sâu hơn.'
+        ),
+        h('div', { class: 'row wrap', style: { gap: '8px' } },
+          h('button', {
+            class: 'primary mini',
+            onclick: () => {
+              INLINE_TOPIC_QUIZ[ok] = { qs: buildTopicQuickQuestions(t), idx: 0, score: 0, chosen: null };
+              st.qs = INLINE_TOPIC_QUIZ[ok].qs; st.idx = 0; st.score = 0; st.chosen = null;
+              draw();
+            }
+          }, '🔄 Đổi 3 câu khác'),
+          h('button', {
+            class: 'ghost mini',
+            onclick: () => { openQuickQuizTopics.delete(ok); homeView(); }
+          }, 'Thu gọn')
+        )
+      );
+      return;
+    }
+
+    const q = st.qs[st.idx];
+    const done = st.chosen !== null;
+    const isOk = done && st.chosen === q.answer;
+    const nextLabel = st.idx + 1 < st.qs.length ? 'Câu tiếp ➔' : 'Xem kết quả ➔';
+
+    box.replaceChildren(
+      h('div', { class: 'row between', style: { alignItems: 'center', gap: '6px', flexWrap: 'wrap' } },
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          h('span', { class: 'chip accent', style: { fontWeight: 700 } }, '⚡ ' + q.tag),
+          h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Câu ' + (st.idx + 1) + '/' + st.qs.length)
+        ),
+        h('div', { class: 'row', style: { gap: '4px', alignItems: 'center' } },
+          q.speakText ? spk(code, q.speakText) : null,
+          h('button', {
+            class: 'ghost mini',
+            style: { padding: '2px 8px', minHeight: '30px', fontSize: '.78rem' },
+            onclick: () => { openQuickQuizTopics.delete(ok); homeView(); }
+          }, '✕')
+        )
+      ),
+      h('p', { class: 'small', style: { margin: 0, fontWeight: 600, fontSize: '.96rem', lineHeight: 1.4 }, lang: q.langPrompt ? langAttr : null }, q.prompt),
+      q.wordMain ? h('div', { class: 'row wrap', style: { gap: '8px', alignItems: 'baseline' } },
+        h('span', { style: { fontSize: '1.35rem', fontWeight: 700, color: 'var(--ink)' }, lang: langAttr }, q.wordMain),
+        q.sub ? h('span', { class: 'small read', style: { textAlign: 'left', margin: 0 }, lang: code === 'ja' ? 'ja' : null }, q.sub) : null
+      ) : (q.sub ? h('p', { class: 'small muted', style: { margin: 0 }, lang: code === 'en' ? 'en' : langAttr }, q.sub) : null),
+      q.hint ? h('p', { class: 'small muted', style: { margin: 0 } }, 'Nghĩa: ' + q.hint) : null,
+      h('div', { class: 'options', style: { gap: '6px' } },
+        ...q.opts.map((opt, idxOpt) => {
+          let cls = '';
+          if (done) {
+            if (opt === q.answer) cls = 'right';
+            else if (opt === st.chosen) cls = 'wrong';
+          }
+          return h('button', {
+            class: cls,
+            disabled: done,
+            style: { minHeight: '40px', padding: '8px 12px', fontSize: '.92rem', borderRadius: '10px', background: done ? undefined : 'var(--surface)' },
+            onclick: () => {
+              if (done) return;
+              st.chosen = opt;
+              const hit = opt === q.answer;
+              if (hit) {
+                st.score++;
+                addXp(2, code);
+              }
+              if (q.gid) srsRate(code + ':gram:' + q.gid, hit);
+              else if (q.word && q.word.id) srsRate(sid(code, q.word.id), hit);
+              if (q.speakText) sayAfter(code, q.speakText, 180);
+              draw();
+            }
+          }, h('span', { class: 'kbd' }, idxOpt + 1), h('span', { class: 'grow', lang: q.langOpts ? langAttr : null }, opt));
+        })
+      ),
+      done ? h('div', { class: 'feedback ' + (isOk ? 'ok' : 'no'), style: { padding: '10px 12px', gap: '4px' } },
+        h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+          h('strong', {}, isOk ? '✓ Chính xác! +2 XP' : '✗ Chưa đúng · Đáp án: ' + q.answer),
+          h('button', {
+            class: 'primary mini',
+            onclick: () => { st.idx++; st.chosen = null; draw(); }
+          }, nextLabel)
+        ),
+        q.why ? h('p', { class: 'small', style: { margin: 0, lineHeight: 1.4 } }, '💡 ' + q.why) : null
+      ) : null
+    );
+  };
+
+  draw();
+  return box;
+}
+
 function topicCard(t, nx, num) {
   const ok = t.lang + ':' + t.id, done = t.lessons.filter((l, i) => lessonDone(t, i)).length, open = openTopics.has(ok), isCur = nx && nx.t === t;
+  const d = DATA[t.lang];
+  const hasGram = !!(t.gram && t.gram.length && d && d.grammar);
+  const hasQuickQuiz = !!((t.vocab && t.vocab.length) || (t.kanji && t.kanji.length) || (t.quiz && t.quiz.length) || hasGram);
+  const quickOpen = openQuickQuizTopics.has(ok);
   const body = open && h('div', { class: 'body' },
+    (hasGram || hasQuickQuiz) && h('div', { class: 'extras', style: { gap: '6px', marginBottom: '2px' } },
+      hasGram && h('button', {
+        class: 'ghost mini',
+        style: { border: '1px solid var(--line)', background: 'var(--sunk)', fontSize: '.82rem', padding: '5px 10px' },
+        onclick: () => grammarView(t, 'home')
+      }, '📖 Ngữ pháp (' + t.gram.length + ')'),
+      hasQuickQuiz && h('button', {
+        class: quickOpen ? 'primary mini' : 'ghost mini',
+        style: quickOpen ? { fontSize: '.82rem', padding: '5px 10px' } : { border: '1px solid rgba(15,82,87,.35)', background: 'rgba(15,82,87,.07)', fontSize: '.82rem', padding: '5px 10px', fontWeight: 600 },
+        onclick: () => {
+          if (quickOpen) openQuickQuizTopics.delete(ok);
+          else {
+            openQuickQuizTopics.add(ok);
+            delete INLINE_TOPIC_QUIZ[ok];
+          }
+          homeView();
+        }
+      }, quickOpen ? '✕ Thu gọn bài tập' : '⚡ Bài tập kiểm tra nhanh'),
+      hasGram && h('button', {
+        class: 'ghost mini',
+        style: { border: '1px solid var(--line)', background: 'var(--surface)', fontSize: '.82rem', padding: '5px 10px' },
+        onclick: () => grammarTopicQuiz(t, 'home')
+      }, '📝 Quiz 10 câu')
+    ),
+    quickOpen && renderInlineTopicQuiz(t),
     ...t.lessons.map((l, i) => {
       const dn = lessonDone(t, i), unlocked = dn || i === 0 || lessonDone(t, i - 1) || true;
       const lessonBtn = h('button', {
@@ -10159,39 +10423,46 @@ function buildSteps(t, i) {
   const opt = (v, field) => shuffle([v, ...sample(topicWords.length >= 6 ? topicWords : allWords, 3, (x) => x.id === v.id || x[field] === v[field])]);
 
   if (l.kind === 'learn') {
-    // 1. TỪ VỰNG MỚI (Vocabulary)
-    l.words.forEach((v, n0) => steps.push({ type: 'intro', v, tip: n0 === 0 }));
+    // 1. TỪ VỰNG MỚI & KIỂM TRA NGAY THEO TỪNG CỤM 3 TỪ (Micro-batch vừa học vừa kiểm tra)
+    const BATCH = 3;
+    const hvwPool = code !== 'en' ? [...new Set(allWords.flatMap((w) => hvParts(code, w.w)).map((x) => x.hv).filter(Boolean))] : [];
+    let hvwAdded = 0;
+    for (let bStart = 0; bStart < l.words.length; bStart += BATCH) {
+      const batch = l.words.slice(bStart, bStart + BATCH);
+      batch.forEach((v, n0) => steps.push({ type: 'intro', v, tip: bStart === 0 && n0 === 0 }));
+      shuffle(batch).forEach((v) => steps.push({ type: 'meaning', v, opts: opt(v, 'm') }));
+      if (code !== 'en' && hvwAdded < 2) {
+        const chars = [...new Map(batch.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
+        for (const x of sample(chars, 1)) {
+          const meanLower = (x.m || '').toLowerCase().normalize('NFC');
+          const meanWords = meanLower.split(/[\s,;/()]+/).filter(Boolean);
+          const dis = sample(hvwPool.filter((q) => {
+            if (q === x.hv) return false;
+            const qLower = q.toLowerCase().normalize('NFC');
+            if (meanWords.includes(qLower) || meanLower === qLower) return false;
+            return true;
+          }), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
+          if (dis.length === 3) {
+            steps.push({ type: 'hvw', v: x.v, c: x.c, m: x.m, correct, opts: shuffle([correct, ...dis]) });
+            hvwAdded++;
+          }
+        }
+      }
+    }
 
-    // Lồng thẻ ngữ pháp vào bài học sớm (tiếng Trung & Nhật)
+    // 2. NGỮ PHÁP BÀI HỌC + BÀI TẬP ÁP DỤNG NGAY SAU LÝ THUYẾT
     const learnIdx = t.lessons.slice(0, i).filter((x) => x.kind === 'learn').length;
     let currentGid = null;
+    let firstGramStep = null;
     if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
       currentGid = t.gram[learnIdx % t.gram.length];
       const g = d.grammar[currentGid];
       if (g) steps.push({ type: 'gintro', gid: currentGid, g });
+      firstGramStep = makeGrammarQuizStep(code, currentGid, ['mcq', 'cloze', 'order']);
+      if (firstGramStep) steps.push(firstGramStep);
     }
 
-    // Trắc nghiệm từ vựng: Chọn nghĩa đúng & Phản xạ từ
-    shuffle(l.words).forEach((v) => steps.push({ type: 'meaning', v, opts: opt(v, 'm') }));
-
-    // Hán Việt của từng chữ (với tiếng Trung & Nhật)
-    if (code !== 'en') {
-      const chars = [...new Map(l.words.flatMap((v) => hvParts(code, v.w).filter((x) => x.hv).map((x) => [x.c, { ...x, v }]))).values()];
-      const pool = [...new Set(allWords.flatMap((w) => hvParts(code, w.w)).map((x) => x.hv).filter(Boolean))];
-      sample(chars, 2).forEach((x) => {
-        const meanLower = (x.m || '').toLowerCase().normalize('NFC');
-        const meanWords = meanLower.split(/[\s,;/()]+/).filter(Boolean);
-        const dis = sample(pool.filter((q) => {
-          if (q === x.hv) return false;
-          const qLower = q.toLowerCase().normalize('NFC');
-          if (meanWords.includes(qLower) || meanLower === qLower) return false;
-          return true;
-        }), 3).map((hv) => ({ hv })), correct = { hv: x.hv };
-        if (dis.length === 3) steps.push({ type: 'hvw', v: x.v, c: x.c, m: x.m, correct, opts: shuffle([correct, ...dis]) });
-      });
-    }
-
-    // 2. KỸ NĂNG NGHE (Listening)
+    // 3. KỸ NĂNG NGHE (Listening) & PHẢN XẠ TỪ
     // Với Tiếng Anh từ B1 trở lên có hội thoại dài: luyện nghe hội thoại & trả lời câu hỏi chọn đáp án
     const longTracks = (code === 'en' && Array.isArray(t.listening) && t.listening.length) ? t.listening : null;
     if (longTracks) {
@@ -10286,11 +10557,11 @@ function buildSteps(t, i) {
       });
     }
 
-    // Bài tập ngữ pháp / điền từ (lồng 2 bài tập ngữ pháp khác dạng vào mỗi bài học)
+    // Bài tập ngữ pháp củng cố thêm điểm tiếp theo (khác dạng với câu ngay sau gintro)
     if ((code === 'zh' || code === 'ja') && t.gram && t.gram.length && d.grammar) {
       const g1 = currentGid || t.gram[learnIdx % t.gram.length];
-      const qStep1 = makeGrammarQuizStep(code, g1, ['mcq', 'cloze', 'order']);
-      if (qStep1) steps.push(qStep1);
+      const qStep1 = firstGramStep || makeGrammarQuizStep(code, g1, ['mcq', 'cloze', 'order']);
+      if (!firstGramStep && qStep1) steps.push(qStep1);
       const g2 = t.gram.length > 1 ? t.gram[(learnIdx + 1) % t.gram.length] : g1;
       const altTypes = qStep1 && qStep1.q && qStep1.q.type === 'mcq' ? ['cloze', 'order', 'mcq'] : ['mcq', 'order', 'cloze'];
       let qStep2 = makeGrammarQuizStep(code, g2, altTypes);
@@ -13127,7 +13398,7 @@ function fillReveal(code, fill, tid) {
       h('p', { class: 'label', style: { margin: 0 } }, code === 'en' ? 'Email hoàn chỉnh' : 'Đoạn hoàn chỉnh · nghe và đọc to'),
       mailSrc && h('span', { class: 'chip good', style: { fontSize: '.72rem', padding: '2px 8px' } }, badgeLabel)
     ),
-    ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && code === 'zh' && h('p', { class: 'small read', style: { textAlign: 'left' } }, rl[i]))),
+    ...lines.map((ln, i) => ln.trim() && h('div', {}, h('p', { lang: LANGS[code].lang }, ln), rl[i] && (code === 'zh' || code === 'ja') && h('p', { class: 'small read', style: { textAlign: 'left' }, lang: code === 'ja' ? 'ja' : null }, rl[i]))),
     h('div', { class: 'listen' }, spk(code, spoken, { cls: 'big', src: mailSrc }), spk(code, spoken, { slow: true, cls: 'big', src: mailSrc })));
 }
 function fillBlock(t) {
