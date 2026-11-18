@@ -1043,6 +1043,49 @@ summary.guide-summary::-webkit-details-marker { display: none; }
 summary.guide-summary { list-style: none; }
 details[open] > summary .guide-arrow { transform: rotate(180deg); }
 .guide-arrow { display: inline-block; transition: transform .2s ease; }
+/* Accordion danh mục tiêu đề gọn (Master-Detail) */
+details.acc-card, details.acc-group {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 0;
+}
+summary.acc-summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  user-select: none;
+  list-style: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: background .15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+summary.acc-summary:hover { background: var(--sunk); }
+summary.acc-summary::-webkit-details-marker { display: none; }
+summary.acc-summary .acc-main { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+summary.acc-summary .acc-title { font-size: .96rem; font-weight: 700; color: var(--ink); display: block; line-height: 1.3; }
+summary.acc-summary .acc-sub {
+  font-size: .8rem; color: var(--muted); margin: 2px 0 0; line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+summary.acc-summary .acc-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+details.acc-card[open] > summary .acc-arrow,
+details.acc-group[open] > summary .acc-arrow { transform: rotate(180deg); }
+.acc-arrow { display: inline-block; color: var(--teal); font-weight: 700; font-size: .92rem; transition: transform .2s ease; }
+.acc-body { padding: 12px 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 8px; }
+.acc-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.acc-toolbar > :first-child { min-width: 0; flex: 1; line-height: 1.3; }
+.acc-toggle-btn {
+  flex-shrink: 0; white-space: nowrap; min-height: 32px; padding: 5px 10px;
+  font-size: .82rem; font-weight: 600; border-radius: 10px;
+  background: var(--sunk); border: 1px solid var(--line); color: var(--teal);
+}
+.acc-toggle-btn:hover { background: var(--teal-soft); }
 </style>
 
 <div id="app"><p class="loading">Đang tải…</p></div>
@@ -1057,7 +1100,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261118-0200';
+const APP_BUILD_ID = '20261118-0300';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2825,6 +2868,54 @@ function searchInputHandlers(cls, setVal, rerender) {
   };
   return { oninput: (e) => { if (!e.isComposing) run(e); }, oncompositionend: run };
 }
+function lvChipClass(lv) {
+  return lv ? 'chip level ' + String(lv).toLowerCase().replace('+', '').replace(/\s+/g, '') : 'chip small';
+}
+// Khối Accordion chuẩn danh mục tiêu đề gọn (Icon + Tiêu đề + Subtitle 1 câu + Chip + ▾)
+function accordionItem({ iconEl, title, titleLang, subtitle, chips = [], body = [], defaultOpen = false, cls = 'acc-card', border, bg, onToggle }) {
+  const attrs = { class: cls };
+  if (defaultOpen) attrs.open = 'open';
+  const st = {};
+  if (border) st.border = border;
+  if (bg) st.background = bg;
+  if (Object.keys(st).length) attrs.style = st;
+  if (onToggle) attrs.ontoggle = (e) => { if (e.target === e.currentTarget) onToggle(e.currentTarget.open); };
+  const sum = h('summary', { class: 'acc-summary' },
+    h('div', { class: 'acc-main' },
+      iconEl ? (iconEl instanceof Node ? iconEl : h('span', { style: { fontSize: '1.25rem', flexShrink: 0, lineHeight: 1 } }, iconEl)) : null,
+      h('div', { style: { minWidth: 0, flex: 1 } },
+        h('span', { class: 'acc-title', lang: titleLang || null }, title),
+        subtitle ? h('p', { class: 'acc-sub' }, subtitle) : null
+      )
+    ),
+    h('div', { class: 'acc-right' },
+      ...chips.filter(Boolean),
+      h('span', { class: 'acc-arrow', 'aria-hidden': 'true' }, '▾')
+    )
+  );
+  const bodyEl = h('div', { class: 'acc-body' }, ...(Array.isArray(body) ? body : [body]));
+  return h('details', attrs, sum, bodyEl);
+}
+function makeToggleAllBtn(getContainer, selector, { groupSelector = null, labelOpen = '📖 Mở tất cả', labelClose = '📁 Thu gọn tất cả' } = {}) {
+  const btn = h('button', { type: 'button', class: 'acc-toggle-btn' }, labelOpen);
+  const sync = () => {
+    const root = typeof getContainer === 'function' ? getContainer() : getContainer;
+    if (!root) return;
+    const items = [...root.querySelectorAll(selector)];
+    btn.textContent = items.length && items.every((d) => d.open) ? labelClose : labelOpen;
+  };
+  btn.onclick = () => {
+    const root = typeof getContainer === 'function' ? getContainer() : getContainer;
+    if (!root) return;
+    const allSel = groupSelector ? (groupSelector + ', ' + selector) : selector;
+    const items = [...root.querySelectorAll(selector)];
+    const wantOpen = items.some((d) => !d.open);
+    root.querySelectorAll(allSel).forEach((d) => { d.open = wantOpen; });
+    btn.textContent = wantOpen ? labelClose : labelOpen;
+  };
+  queueMicrotask(sync);
+  return btn;
+}
 // Chữ có phiên âm dạng 漢{かん} → <ruby>
 function ruby(s) {
   const frag = document.createDocumentFragment(); const re = /([0-9０-９㐀-鿿々]+)\{([^}]+)\}/g; let last = 0, m;
@@ -3180,6 +3271,10 @@ function renderFocusQuickButtons(sch, t) {
 }
 
 let SCHED_PREVIEW_DAY = null;
+const openPickLangs = new Set();
+const closedPickLangs = new Set();
+const openPhases = new Set();
+const closedPhases = new Set();
 
 // ===== Chọn ngôn ngữ để học =====
 const GLYPH = { en: 'Aa', zh: '中', ja: 'あ' };
@@ -3228,89 +3323,88 @@ function renderProgressTabContent(t, sch) {
         h('button', { class: 'ghost mini', style: { fontSize: '.76rem', padding: '3px 8px' }, onclick: () => { PICK_TAB = 'schedule'; pickView(); } }, 'Xem lịch học cả tuần →')
       )
     ),
-    h('div', { class: 'stack', style: { gap: '12px' } }, Object.entries(LANGS).map(([c, v], i) => {
-      const g = goal(c, t);
-      const x = xpOf(t, c);
-      const isMet = x >= g;
-      const prog = getLangProgress(c);
-      const isFocus = sch.focus === c;
-      const isSelected = c === S.lang;
-      const st = streak(c);
-      const lng = longest(c);
+    (() => {
+      const langEntries = Object.entries(LANGS);
+      const wrap = h('div', { class: 'stack', style: { gap: '10px' } });
+      const cards = langEntries.map(([c, v]) => {
+        const g = goal(c, t);
+        const x = xpOf(t, c);
+        const isMet = x >= g;
+        const prog = getLangProgress(c);
+        const isFocus = sch.focus === c;
+        const isSelected = c === S.lang;
+        const st = streak(c);
+        const lng = longest(c);
+        const cardDue = approxDueCount(c, t);
+        const defOpen = langEntries.length === 1 || isFocus || (sch.focus === 'all' && isSelected);
+        const isOpen = openPickLangs.has(c) || (defOpen && !closedPickLangs.has(c));
 
-      return h('div', {
-        class: 'panel stack' + (isFocus ? ' focus-day' : ''),
-        style: {
-          padding: '16px',
-          border: isFocus ? '2px solid var(--teal)' : isSelected ? '1px solid var(--teal)' : '1px solid var(--line)',
-          borderRadius: '16px',
-          background: isFocus ? 'rgba(15,82,87,.04)' : 'var(--surface)',
-          gap: '10px'
-        }
-      },
-        // Top header
-        h('div', { class: 'row between', style: { alignItems: 'flex-start' } },
-          h('div', { class: 'row', style: { gap: '10px', alignItems: 'center' } },
-            h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.6rem', width: '38px', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', background: 'var(--sunk)', fontWeight: 800 } }, GLYPH[c]),
-            h('div', {},
-              h('div', { class: 'row wrap', style: { gap: '6px', alignItems: 'center' } },
-                h('b', { style: { fontSize: '1.05rem' } }, v.label),
-                isFocus
-                  ? h('span', { class: 'chip accent', style: { fontSize: '.7rem', padding: '2px 6px' } }, '🎯 Trọng tâm hôm nay (Học 1 bài mới)')
-                  : h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '2px 6px' } }, '⚡ Duy trì (Ôn 10 từ)')
+        return accordionItem({
+          cls: 'acc-card pick-lang-acc' + (isFocus ? ' focus-day' : ''),
+          border: isFocus ? '2px solid var(--teal)' : isSelected ? '1px solid var(--teal)' : null,
+          defaultOpen: isOpen,
+          onToggle: (on) => {
+            if (on) { openPickLangs.add(c); closedPickLangs.delete(c); }
+            else { openPickLangs.delete(c); closedPickLangs.add(c); }
+          },
+          iconEl: h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.35rem', width: '34px', height: '34px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', background: 'var(--sunk)', fontWeight: 800, flexShrink: 0 } }, GLYPH[c]),
+          title: v.label,
+          subtitle: x + '/' + g + ' XP · 🔥 ' + st + 'd · ' + prog.totalTopicsDone + '/' + prog.totalAllTopics + ' bài (' + prog.pct + '%)',
+          chips: [
+            isFocus ? h('span', { class: 'chip accent', style: { fontSize: '.68rem' } }, '🎯 Trọng tâm') : (langEntries.length > 1 ? h('span', { class: 'chip', style: { fontSize: '.68rem' } }, '⚡ Duy trì') : null),
+            h('span', { class: 'chip' + (isMet ? ' good' : ''), style: { fontSize: '.72rem', fontWeight: 600 } }, isMet ? '✓ Đạt' : 'Còn ' + (g - x) + ' XP')
+          ],
+          body: [
+            h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem' } }, SUBTITLE[c]),
+            h('div', { class: 'stats', style: { gridTemplateColumns: 'repeat(3, 1fr)', margin: 0 } },
+              h('div', { class: 'stat', style: { padding: '8px 4px' } },
+                h('b', { style: { fontSize: '.95rem' } }, x + '/' + g),
+                h('span', { style: { fontSize: '.72rem' } }, 'XP hôm nay')
               ),
-              h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, SUBTITLE[c])
+              h('div', { class: 'stat', style: { padding: '8px 4px' } },
+                h('b', { style: { fontSize: '.95rem' } }, '🔥 ' + st + ' ngày'),
+                h('span', { style: { fontSize: '.72rem' } }, 'Chuỗi học · Kỷ lục ' + lng + 'd')
+              ),
+              h('div', { class: 'stat', style: { padding: '8px 4px' } },
+                h('b', { style: { fontSize: '.95rem' } }, prog.totalTopicsDone + '/' + prog.totalAllTopics + ' bài'),
+                h('span', { style: { fontSize: '.72rem' } }, prog.pct + '% (' + prog.totalLessonsDone + ' tiết)')
+              )
+            ),
+            renderMiniWeekChart(c, t),
+            h('div', { class: 'row wrap', style: { gap: '8px', marginTop: '2px' } },
+              h('button', {
+                class: isFocus ? 'primary' : 'ghost',
+                style: { flex: '2 1 150px', padding: '10px 14px', fontSize: '.86rem', fontWeight: 700 },
+                onclick: () => goLangNextLesson(c)
+              }, isFocus ? ('📚 Học bài mới ' + v.short + ' →') : ('📚 Học bài ' + v.short + ' →')),
+              h('button', {
+                class: cardDue > 0 ? 'accent' : 'ghost',
+                style: { flex: '1 1 120px', whiteSpace: 'nowrap', fontSize: '.8rem', padding: '8px 10px', fontWeight: 700 },
+                onclick: () => goLangReview(c)
+              }, formatReviewBtnText(c, t, '')),
+              h('button', {
+                class: 'ghost',
+                style: { flex: '1 1 105px', whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px 10px' },
+                onclick: () => { ROADMAP_LANG = c; PICK_TAB = 'roadmap'; pickView(); }
+              }, 'Lộ trình 🚀'),
+              h('button', {
+                class: 'ghost',
+                style: { flex: '0 1 auto', whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px 10px' },
+                onclick: () => { S.lang = c; save(); go('home'); }
+              }, '📖 Chủ đề')
             )
-          ),
-          h('span', { class: 'chip' + (isMet ? ' good' : ''), style: { fontSize: '.76rem', fontWeight: 600 } },
-            isMet ? '✓ Đã đạt ' + x + '/' + g + ' XP' : 'Còn ' + (g - x) + ' XP'
-          )
-        ),
-        // Stats grid
-        h('div', { class: 'stats', style: { gridTemplateColumns: 'repeat(3, 1fr)', margin: '2px 0' } },
-          h('div', { class: 'stat', style: { padding: '8px 4px' } },
-            h('b', { style: { fontSize: '.95rem' } }, x + '/' + g),
-            h('span', { style: { fontSize: '.72rem' } }, 'XP hôm nay')
-          ),
-          h('div', { class: 'stat', style: { padding: '8px 4px' } },
-            h('b', { style: { fontSize: '.95rem' } }, '🔥 ' + st + ' ngày'),
-            h('span', { style: { fontSize: '.72rem' } }, 'Chuỗi học · Kỷ lục ' + lng + 'd')
-          ),
-          h('div', { class: 'stat', style: { padding: '8px 4px' } },
-            h('b', { style: { fontSize: '.95rem' } }, prog.totalTopicsDone + '/' + prog.totalAllTopics + ' bài'),
-            h('span', { style: { fontSize: '.72rem' } }, prog.pct + '% (' + prog.totalLessonsDone + ' tiết)')
-          )
-        ),
-        // Mini week chart
-        renderMiniWeekChart(c, t),
-        // Action buttons
-        (() => {
-          const cardDue = approxDueCount(c, t);
-          return h('div', { class: 'row wrap', style: { gap: '8px', marginTop: '4px' } },
-            h('button', {
-              class: isFocus ? 'primary' : 'ghost',
-              style: { flex: '2 1 150px', padding: '10px 14px', fontSize: '.86rem', fontWeight: 700 },
-              onclick: () => goLangNextLesson(c)
-            }, isFocus ? ('📚 Học bài mới ' + v.short + ' →') : ('📚 Học bài ' + v.short + ' →')),
-            h('button', {
-              class: cardDue > 0 ? 'accent' : 'ghost',
-              style: { flex: '1 1 120px', whiteSpace: 'nowrap', fontSize: '.8rem', padding: '8px 10px', fontWeight: 700 },
-              onclick: () => goLangReview(c)
-            }, formatReviewBtnText(c, t, '')),
-            h('button', {
-              class: 'ghost',
-              style: { flex: '1 1 105px', whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px 10px' },
-              onclick: () => { ROADMAP_LANG = c; PICK_TAB = 'roadmap'; pickView(); }
-            }, 'Lộ trình 🚀'),
-            h('button', {
-              class: 'ghost',
-              style: { flex: '0 1 auto', whiteSpace: 'nowrap', fontSize: '.78rem', padding: '8px 10px' },
-              onclick: () => { S.lang = c; save(); go('home'); }
-            }, '📖 Chủ đề')
-          );
-        })()
-      );
-    }))
+          ]
+        });
+      });
+      if (langEntries.length > 1) {
+        wrap.append(h('div', { class: 'acc-toolbar' },
+          h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Chi tiết từng ngôn ngữ (' + langEntries.length + ')'),
+          makeToggleAllBtn(() => wrap, 'details.pick-lang-acc')
+        ));
+      }
+      wrap.append(...cards);
+      return wrap;
+    })()
   ];
 }
 
@@ -3393,8 +3487,22 @@ function renderScheduleTabContent(t, sch) {
         })
       )
     ),
-    // 1. Nguyên tắc lịch học xoay vòng 2-2-2-1
-    h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', border: '1px solid var(--teal)', borderRadius: '14px', padding: '14px 16px', gap: '8px' } },
+    // 1. Nguyên tắc lịch học xoay vòng 2-2-2-1 (Thu gọn mặc định)
+    h('details', { class: 'panel guide-accordion-item', style: { padding: 0, borderRadius: '14px', overflow: 'hidden', background: 'var(--surface)', border: '1px solid var(--line)' } },
+      h('summary', { class: 'guide-summary', style: { cursor: 'pointer', padding: '12px 14px', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' } },
+        h('div', { class: 'row', style: { gap: '10px', alignItems: 'center', minWidth: 0, flex: 1 } },
+          h('span', { style: { fontSize: '1.25rem', flexShrink: 0 } }, '🧭'),
+          h('div', { style: { minWidth: 0, flex: 1 } },
+            h('b', { style: { fontSize: '.94rem', display: 'block', color: 'var(--ink)' } }, 'Nguyên tắc Lịch học & Chia gói ôn'),
+            h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, 'Cách phân bổ học bài mới và ôn SRS nhẹ nhàng')
+          )
+        ),
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexShrink: 0 } },
+          h('span', { class: 'chip small' }, 'Nguyên tắc'),
+          h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700 } }, '▾')
+        )
+      ),
+      h('div', { class: 'panel stack', style: { background: 'rgba(15,82,87,.06)', borderTop: '1px solid var(--line)', borderRadius: 0, padding: '12px 14px', gap: '8px' } },
       h('div', { class: 'row', style: { alignItems: 'center', gap: '6px' } },
         h('span', { style: { fontSize: '1.2rem' } }, '🧭'),
         h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, 'Nguyên tắc Lịch Học Xoay Vòng (1 Ngôn Ngữ Học Mới + 2 Ngôn Ngữ Ôn Nhẹ)')
@@ -3404,10 +3512,23 @@ function renderScheduleTabContent(t, sch) {
         h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• 2 ngôn ngữ còn lại chỉ ôn duy trì: '), 'Không học bài mới, chỉ ôn nhanh gói 10 từ SRS để giữ phản xạ và chuỗi ngày học.'),
         h('div', {}, h('b', { style: { color: 'var(--ink)' } }, '• Ôn tập chia gói nhỏ (10–15 từ/buổi): '), 'Hệ thống tự lọc 10–15 từ dễ quên nhất mỗi ngày, số từ còn lại tự bảo lưu sang hôm sau.')
       )
-    ),
-    // 3. Lộ trình phát triển 3 giai đoạn
-    h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '14px', padding: '14px', gap: '8px' } },
-      h('b', { style: { fontSize: '.95rem' } }, '🗺️ Trọng tâm kỹ năng theo 3 Giai đoạn'),
+    )),
+    // 3. Lộ trình phát triển 3 giai đoạn (Thu gọn mặc định)
+    h('details', { class: 'panel guide-accordion-item', style: { padding: 0, borderRadius: '14px', overflow: 'hidden', background: 'var(--surface)', border: '1px solid var(--line)' } },
+      h('summary', { class: 'guide-summary', style: { cursor: 'pointer', padding: '12px 14px', listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' } },
+        h('div', { class: 'row', style: { gap: '10px', alignItems: 'center', minWidth: 0, flex: 1 } },
+          h('span', { style: { fontSize: '1.25rem', flexShrink: 0 } }, '🗺️'),
+          h('div', { style: { minWidth: 0, flex: 1 } },
+            h('b', { style: { fontSize: '.94rem', display: 'block', color: 'var(--ink)' } }, 'Trọng tâm kỹ năng theo 3 Giai đoạn'),
+            h('span', { class: 'small muted', style: { fontSize: '.78rem' } }, 'Tháng 1–3 Nền tảng · Tháng 4–6 Tăng tốc · Tháng 6+ Duy trì')
+          )
+        ),
+        h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexShrink: 0 } },
+          h('span', { class: 'chip small' }, '3 giai đoạn'),
+          h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700 } }, '▾')
+        )
+      ),
+      h('div', { class: 'panel stack', style: { background: 'var(--sunk)', borderTop: '1px solid var(--line)', borderRadius: 0, padding: '12px 14px', gap: '8px' } },
       h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '8px' } },
         h('div', { class: 'panel', style: { background: 'var(--surface)', border: '1px solid var(--teal)', borderRadius: '10px', padding: '10px' } },
           h('b', { style: { fontSize: '.84rem', color: 'var(--teal)' } }, '🌱 Giai đoạn 1 (Tháng 1–3): Nền tảng'),
@@ -3428,7 +3549,7 @@ function renderScheduleTabContent(t, sch) {
           )
         )
       )
-    )
+    ))
   ];
 }
 
@@ -3494,35 +3615,21 @@ function renderRoadmapTabContent(t) {
       }, lp.label))
     ),
     // Language Roadmap Cards
-    h('div', { class: 'stack', style: { gap: '14px' } }, targetLangs.map(([c, v]) => {
+    (() => {
+      const wrap = h('div', { class: 'stack', style: { gap: '12px' } });
+      if (targetLangs.length > 1) {
+        wrap.append(h('div', { class: 'acc-toolbar' },
+          h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Chi tiết lộ trình (' + targetLangs.length + ' ngôn ngữ)'),
+          makeToggleAllBtn(() => wrap, 'details.road-acc')
+        ));
+      }
+      wrap.append(...targetLangs.map(([c, v]) => {
       const p = getLangProgress(c);
       const estCur = calcFinishEstimate(p.curCatRemainingTopics, p.curCatRemainingLessons, STUDY_PACE, c);
       const estAll = calcFinishEstimate(p.remainingTopics, p.remainingLessons, STUDY_PACE, c);
       const cats = (CATEGORIES[c] || []).filter(item => item.id !== 'all');
 
-      return h('div', {
-        class: 'panel stack',
-        style: {
-          padding: '16px',
-          borderRadius: '16px',
-          border: '1px solid var(--line)',
-          background: 'var(--surface)',
-          gap: '12px'
-        }
-      },
-        // Card top header
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
-          h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
-            h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.4rem', width: '34px', height: '34px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', background: 'var(--sunk)', fontWeight: 800 } }, GLYPH[c]),
-            h('div', {},
-              h('b', { style: { fontSize: '1.05rem' } }, v.label),
-              h('span', { class: 'small muted', style: { display: 'block', fontSize: '.76rem' } }, SUBTITLE[c])
-            )
-          ),
-          h('span', { class: 'chip' + (p.pct >= 100 ? ' good' : ''), style: { fontWeight: 700 } },
-            p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.pct + '%)'
-          )
-        ),
+      const cardSections = [
         // Entire Course Finish Estimate Box
         h('div', { class: 'panel', style: { padding: '10px 12px', background: 'var(--sunk)', border: '1px solid var(--line)', borderRadius: '12px' } },
           h('div', { class: 'row between', style: { alignItems: 'center', marginBottom: '4px' } },
@@ -3558,10 +3665,15 @@ function renderRoadmapTabContent(t) {
             h('span', {}, 'Còn lại ' + p.curCatRemainingTopics + ' bài để hoàn thành ' + (p.curCat.level || p.curCat.short))
           )
         ),
-        // Level Stepper
-        h('div', { class: 'stack', style: { gap: '6px' } },
-          h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Lộ trình các cấp độ:'),
-          h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px' } },
+        // Level Stepper (Thu gọn khi có nhiều cấp độ)
+        h(cats.length > 4 ? 'details' : 'div', cats.length > 4 ? { class: 'panel', style: { padding: '9px 11px', borderRadius: '10px', background: 'var(--sunk)', border: '1px solid var(--line)' } } : { class: 'stack', style: { gap: '6px' } },
+          cats.length > 4
+            ? h('summary', { style: { cursor: 'pointer', fontSize: '.82rem', fontWeight: 600, color: 'var(--teal)', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } },
+                h('span', {}, '📍 Chi tiết tiến độ ' + cats.length + ' cấp độ (' + cats.filter(cat => (p.catTopicDone[cat.id] || 0) >= (p.catTopicTotal[cat.id] || 0) && (p.catTopicTotal[cat.id] || 0) > 0).length + '/' + cats.length + ' xong)'),
+                h('span', { class: 'guide-arrow' }, '▾')
+              )
+            : h('span', { class: 'small muted', style: { fontWeight: 600 } }, 'Lộ trình các cấp độ:'),
+          h('div', { style: { display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: cats.length > 4 ? '8px' : 0 } },
             cats.map(cat => {
               const done = p.catTopicDone[cat.id] || 0;
               const tot = p.catTopicTotal[cat.id] || 0;
@@ -3587,8 +3699,31 @@ function renderRoadmapTabContent(t) {
           style: { padding: '9px 12px', fontSize: '.86rem', fontWeight: 600, marginTop: '2px' },
           onclick: () => { S.lang = c; save(); go('home'); }
         }, 'Học tiếp ' + v.label + ' →')
-      );
-    }))
+      ];
+      if (targetLangs.length === 1) {
+        return h('div', { class: 'panel stack', style: { padding: '16px', borderRadius: '16px', border: '1px solid var(--line)', background: 'var(--surface)', gap: '12px' } },
+          h('div', { class: 'row between', style: { alignItems: 'center' } },
+            h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+              h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.4rem', width: '34px', height: '34px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', background: 'var(--sunk)', fontWeight: 800 } }, GLYPH[c]),
+              h('div', {}, h('b', { style: { fontSize: '1.05rem' } }, v.label), h('span', { class: 'small muted', style: { display: 'block', fontSize: '.76rem' } }, SUBTITLE[c]))
+            ),
+            h('span', { class: 'chip' + (p.pct >= 100 ? ' good' : ''), style: { fontWeight: 700 } }, p.totalTopicsDone + '/' + p.totalAllTopics + ' bài (' + p.pct + '%)')
+          ),
+          ...cardSections
+        );
+      }
+      return accordionItem({
+        cls: 'acc-card road-acc',
+        defaultOpen: c === S.lang,
+        iconEl: h('span', { class: 'glyph', lang: v.lang, 'aria-hidden': 'true', style: { fontSize: '1.35rem', width: '34px', height: '34px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', background: 'var(--sunk)', fontWeight: 800, flexShrink: 0 } }, GLYPH[c]),
+        title: v.label,
+        subtitle: (p.curCat.level || p.curCat.short) + ' · Còn ' + p.remainingTopics + ' bài · ' + estAll.timeText,
+        chips: [h('span', { class: 'chip' + (p.pct >= 100 ? ' good' : ''), style: { fontWeight: 700 } }, p.totalTopicsDone + '/' + p.totalAllTopics + ' (' + p.pct + '%)')],
+        body: cardSections
+      });
+    }));
+      return wrap;
+    })()
   ];
 }
 
@@ -3985,10 +4120,47 @@ function homeView() {
       );
     })(),
     catBar,
-    ...phases.map((ph) => h('div', { class: 'stack' },
-      ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
-      ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.89 · Cập nhật 18/11/2026')));
+    (() => {
+      if (phases.length <= 1) {
+        return h('div', { class: 'stack' },
+          ...phases.map((ph) => h('div', { class: 'stack' },
+            ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
+            ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))));
+      }
+      const wrap = h('div', { class: 'stack', style: { gap: '10px' } });
+      wrap.append(h('div', { class: 'acc-toolbar' },
+        h('span', { class: 'small muted', style: { fontWeight: 600 } }, '📚 ' + phases.length + ' nhóm chuyên đề · ' + filteredTopics.length + ' bài'),
+        makeToggleAllBtn(() => wrap, 'details.phase-acc')
+      ));
+      phases.forEach((ph, phIdx) => {
+        const pTitle = ph.name ? cleanPhaseName(ph.name) : ('Nhóm ' + (phIdx + 1));
+        const pKey = S.lang + ':' + curCat + ':' + pTitle;
+        const doneTopics = ph.topics.filter((t) => t.lessons.every((_, i) => lessonDone(t, i))).length;
+        const hasNx = !!(nx && ph.topics.includes(nx.t));
+        const isComplete = doneTopics === ph.topics.length && ph.topics.length > 0;
+        const defOpen = hasNx || (!nx && phIdx === 0);
+        const isOpen = openPhases.has(pKey) || (defOpen && !closedPhases.has(pKey));
+        const subText = isComplete
+          ? '✓ Đã hoàn thành tất cả bài trong nhóm'
+          : (hasNx ? ('▶ Đang học: ' + (nx.t.sub || nx.t.title)) : ((ph.topics[0] && (ph.topics[0].sub || ph.topics[0].title)) + (ph.topics.length > 1 ? ' …' : '')));
+        wrap.append(accordionItem({
+          cls: 'acc-group phase-acc',
+          border: hasNx ? '1.5px solid var(--teal)' : null,
+          defaultOpen: isOpen,
+          onToggle: (on) => {
+            if (on) { openPhases.add(pKey); closedPhases.delete(pKey); }
+            else { openPhases.delete(pKey); closedPhases.add(pKey); }
+          },
+          iconEl: hasNx ? '🎯' : (isComplete ? '✅' : '📂'),
+          title: pTitle,
+          subtitle: subText,
+          chips: [h('span', { class: 'chip' + (isComplete ? ' good' : ''), style: { fontSize: '.74rem', fontWeight: 700 } }, doneTopics + '/' + ph.topics.length + ' bài')],
+          body: ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1))))
+        }));
+      });
+      return wrap;
+    })(),
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.90 · Cập nhật 18/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -13147,7 +13319,7 @@ function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
         type: 'button',
         class: 'ghost mini',
         style: mode === 'mcq'
-          ? { background: 'var(--teal)', color: '#052e2b', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
+          ? { background: 'var(--teal)', color: 'var(--teal-ink)', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
           : { border: '1px solid var(--line)', borderRadius: '10px', padding: '7px 12px' },
         onclick: () => { READ_MODE[t.id] = 'mcq'; onRefresh(); }
       }, '☑️ Trắc nghiệm đọc hiểu (' + quizzes.length + ')') : null,
@@ -13155,7 +13327,7 @@ function renderReadSkillsRich(code, d, onRefresh = () => skillsView('read')) {
         type: 'button',
         class: 'ghost mini',
         style: mode === 'fill'
-          ? { background: 'var(--teal)', color: '#052e2b', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
+          ? { background: 'var(--teal)', color: 'var(--teal-ink)', fontWeight: 700, borderRadius: '10px', padding: '7px 12px', border: '1px solid var(--teal)' }
           : { border: '1px solid var(--line)', borderRadius: '10px', padding: '7px 12px' },
         onclick: () => { READ_MODE[t.id] = 'fill'; onRefresh(); }
       }, '✍️ Điền từ vào hội thoại (' + fills.length + ')') : null
@@ -15017,8 +15189,7 @@ function renderEnglishKnowledgeView() {
       ),
       h('button', {
         id: 'toggle-guides-btn',
-        class: 'ghost mini',
-        style: { fontWeight: 600, color: 'var(--teal)' },
+        class: 'acc-toggle-btn',
         onclick: toggleAllGuides
       }, '📖 Mở tất cả')
     );
@@ -15294,6 +15465,14 @@ function renderKnowledgeGrammar(code) {
     return haystack.includes(qText);
   };
   const ZH_LV_BOOK = { 'HSK 1': '1 · Q1', 'HSK 2': '2 · Q2', 'HSK 3': '3 · Q3', 'HSK 4': '4 · Q4' };
+  const LV_DESC = {
+    A1: 'Cấu trúc nền tảng giao tiếp hàng ngày', A2: 'Mở rộng thì, so sánh và liên từ cơ bản',
+    B1: 'Câu phức, bị động và diễn đạt ý kiến', B2: 'Cấu trúc học thuật, thương mại & trang trọng', C1: 'Ngữ pháp nâng cao & sắc thái tinh tế',
+    'HSK 1': 'Quyển 1 · Mẫu câu chào hỏi, số đếm & sở hữu', 'HSK 2': 'Quyển 2 · Thì hoàn thành, bổ ngữ & so sánh',
+    'HSK 3': 'Quyển 3 · Câu chữ 把, 被 & bổ ngữ xu hướng', 'HSK 4': 'Quyển 4 · Liên từ logic & câu ghép trung cấp',
+    N5: 'Sơ cấp 1 · Trợ từ, chia động từ thể ます/て/ない', N4: 'Sơ cấp 2 · Thể điều kiện, bị động, sai khiến & kính ngữ',
+    N3: 'Trung cấp 1 · Biểu đạt nguyên nhân, suy đoán & văn nói', N2: 'Trung cấp 2 · Văn viết, ngữ khí trang trọng & báo chí', N1: 'Cao cấp · Cấu trúc cổ điển & văn phong học thuật'
+  };
 
   const shown = pts.filter((x) => (sel === 'all' || x.lv === sel) && matchQuery(x));
   const count = (lv) => pts.filter((x) => x.lv === lv).length;
@@ -15305,13 +15484,58 @@ function renderKnowledgeGrammar(code) {
     onclick: () => { GQ[code] = key; knowledgeTabView(); }
   }, label);
 
-  const toggleAll = () => {
-    const details = document.querySelectorAll('.stack-lg details.gram');
-    const anyClosed = [...details].some((d) => !d.open);
-    details.forEach((d) => { d.open = anyClosed; });
-    const btn = document.getElementById('toggle-gram-btn');
-    if (btn) btn.textContent = anyClosed ? 'Thu gọn tất cả' : 'Mở tất cả';
+  const renderGramItem = (x, autoOpen = false) => {
+    const subHint = x.g.f || x.g.zh || (x.g.notes && x.g.notes[0]) || (x.g.ex && x.g.ex[0] && x.g.ex[0][2]) || '';
+    const chips = [
+      x.lv ? h('span', { class: lvChipClass(x.lv) }, x.lv) : null,
+      x.g.book ? h('span', { class: 'chip', style: { fontSize: '.68rem' } }, x.g.book) : null
+    ];
+    return accordionItem({
+      cls: 'acc-card gram',
+      defaultOpen: autoOpen,
+      iconEl: '📖',
+      title: x.g.t,
+      subtitle: subHint,
+      chips,
+      body: h('div', { class: 'gram' },
+        x.g.zh && h('p', { lang: langAttr, class: 'muted', style: { fontWeight: 500, margin: 0 } }, x.g.zh),
+        x.g.f && h('p', { class: 'pat', lang: langAttr, style: { margin: 0 } }, x.g.f),
+        ...(x.g.notes || []).map((n) => h('p', { style: { margin: '2px 0' } }, n)),
+        renderGrammarWarn(x.g),
+        renderGrammarTable(x.g.table, langAttr),
+        ...x.g.ex.map((e) => h('div', { class: 'ex', style: { margin: '4px 0', padding: '8px', background: 'var(--sunk)', borderRadius: '8px' } },
+          h('p', { lang: langAttr, style: { margin: 0, fontWeight: 500 } }, e[0], ' ', spk(code, e[0])),
+          h('p', { class: 'small read', style: { textAlign: 'left', margin: '2px 0' } }, e[1]),
+          h('p', { class: 'small muted', style: { margin: 0 } }, e[2])
+        )),
+        (x.g.quiz && x.g.quiz.length ? h('p', { class: 'small', style: { color: 'var(--teal)', fontWeight: 600, margin: '4px 0 0' } }, '✍️ ' + x.g.quiz.length + ' câu bài tập ngữ pháp (lồng trong bài học & Luyện Quiz)') : null),
+        (x.topics && x.topics.length ? h('p', { class: 'small muted', style: { margin: '2px 0 0' } }, 'Gặp trong: ' + x.topics.map((t) => t.sub || t.title).join(' · ')) : null)
+      )
+    });
   };
+
+  const listWrap = h('div', { class: 'stack', style: { gap: '8px' } });
+  const activeLvs = lvs.filter((lv) => shown.some((x) => x.lv === lv));
+  const useGroups = sel === 'all' && !qText && activeLvs.length > 1;
+  if (shown.length === 0) {
+    listWrap.append(h('p', { class: 'note center' }, 'Không tìm thấy điểm ngữ pháp nào phù hợp với “' + qText + '”.'));
+  } else if (useGroups) {
+    activeLvs.forEach((lv) => {
+      const grpPts = shown.filter((x) => x.lv === lv);
+      listWrap.append(accordionItem({
+        cls: 'acc-group gram-lv-acc',
+        iconEl: '📘',
+        title: (code === 'zh' && ZH_LV_BOOK[lv] ? lv + ' · Quyển ' + lv.replace('HSK ', '') : (isJa ? 'JLPT ' + lv : 'Cấp độ ' + lv)),
+        subtitle: LV_DESC[lv] || ('Tổng hợp ' + grpPts.length + ' điểm ngữ pháp cấp ' + lv),
+        chips: [h('span', { class: lvChipClass(lv) }, grpPts.length + ' điểm')],
+        body: grpPts.map((x) => renderGramItem(x, false))
+      }));
+    });
+    const extraPts = shown.filter((x) => !activeLvs.includes(x.lv));
+    extraPts.forEach((x) => listWrap.append(renderGramItem(x, false)));
+  } else {
+    listWrap.append(...shown.map((x) => renderGramItem(x, !!qText && shown.length <= 2)));
+  }
 
   return h('div', { class: 'stack-lg', style: { gap: '12px' } },
     h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
@@ -15337,31 +15561,11 @@ function renderKnowledgeGrammar(code) {
       ),
       h('p', { class: 'small muted', style: { margin: 0 } }, '10 câu trắc nghiệm: điền từ đúng vào cấu trúc câu hoặc sắp xếp từ.' + (bestVal != null ? ' Điểm cao nhất: ' + bestVal + '/10.' : ''))
     ) : null,
-    h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px' } },
-      h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm ngữ pháp') : (shown.length + ' điểm ngữ pháp')),
-      shown.length > 0 && h('button', { id: 'toggle-gram-btn', class: 'ghost mini', onclick: toggleAll }, 'Mở tất cả')
+    h('div', { class: 'acc-toolbar', style: { marginTop: '2px' } },
+      h('span', { class: 'small muted' }, qText ? ('Tìm thấy ' + shown.length + '/' + pts.length + ' điểm') : (shown.length + ' điểm · Bấm tiêu đề để mở')),
+      shown.length > 0 ? makeToggleAllBtn(() => listWrap, 'details.gram', { groupSelector: 'details.gram-lv-acc' }) : null
     ),
-    shown.length === 0 ? h('p', { class: 'note center' }, 'Không tìm thấy điểm ngữ pháp nào phù hợp với “' + qText + '”.') : null,
-    ...shown.map((x) => h('details', { class: 'panel gram', style: { borderRadius: '12px' } },
-      h('summary', { style: { cursor: 'pointer', fontWeight: 600 } },
-        x.g.t, ' ', h('span', { class: 'chip good', style: { fontSize: '.7rem' } }, x.lv),
-        x.g.book && h('span', { class: 'chip', style: { fontSize: '.68rem', marginLeft: '4px' } }, x.g.book)
-      ),
-      h('div', { class: 'gram', style: { marginTop: '8px' } },
-        x.g.zh && h('p', { lang: langAttr, class: 'muted', style: { fontWeight: 500 } }, x.g.zh),
-        x.g.f && h('p', { class: 'pat', lang: langAttr }, x.g.f),
-        ...(x.g.notes || []).map((n) => h('p', { style: { margin: '4px 0' } }, n)),
-        renderGrammarWarn(x.g),
-        renderGrammarTable(x.g.table, langAttr),
-        ...x.g.ex.map((e) => h('div', { class: 'ex', style: { margin: '6px 0', padding: '8px', background: 'var(--sunk)', borderRadius: '8px' } },
-          h('p', { lang: langAttr, style: { margin: 0, fontWeight: 500 } }, e[0], ' ', spk(code, e[0])),
-          h('p', { class: 'small read', style: { textAlign: 'left', margin: '2px 0' } }, e[1]),
-          h('p', { class: 'small muted', style: { margin: 0 } }, e[2])
-        )),
-        (x.g.quiz && x.g.quiz.length ? h('p', { class: 'small', style: { color: 'var(--teal)', fontWeight: 600, margin: '6px 0 2px 0' } }, '✍️ ' + x.g.quiz.length + ' câu bài tập ngữ pháp (lồng trong bài học & Luyện Quiz)') : null),
-        (x.topics && x.topics.length ? h('p', { class: 'small muted', style: { marginTop: '6px' } }, 'Gặp trong: ' + x.topics.map((t) => t.sub || t.title).join(' · ')) : null)
-      )
-    )),
+    listWrap,
     code === 'zh' ? h('p', { class: 'small muted', style: { margin: '0' } }, '📚 Tổng hợp Ngữ pháp HSK 1–4 (Quyển 1–4) · Các điểm ngữ pháp & bài tập đều được lồng trực tiếp vào bài học.') : null
   );
 }
@@ -15407,17 +15611,17 @@ function renderKnowledgeChietTu(code) {
       h('div', { class: 'panel', style: { background: 'var(--sunk)', borderRadius: '10px', padding: '12px', gap: '8px' } },
         h('b', { style: { color: 'var(--teal)', fontSize: '.95rem' } }, '1. Chiết tự chữ Hán là gì?'),
         h('p', { class: 'small', style: { margin: '4px 0 8px 0', lineHeight: 1.5 } },
-          'Chiết tự (拆字) nghĩa là bẻ tách chữ Hán ra thành từng bộ phận cấu thành để suy xét ý nghĩa, nguồn gốc và câu chuyện đằng sau chữ đó. Khi hiểu chữ Hán gồm những bộ phận nào ghép lại, bạn sẽ không còn phải nhớ từng nét đơn lẻ một cách máy móc.'
+          'Chiết tự (拆字) nghĩa là bẻ tách chữ Hán ra thành từng bộ phận cấu thành để suy xét ý nghĩa, nguồn gốc hình ảnh và câu chuyện ẩn sau chữ đó.'
         ),
         h('b', { style: { color: 'var(--teal)', fontSize: '.95rem' } }, '2. Bốn phép tạo chữ Hán thông dụng nhất (Lục thư):'),
         h('div', { class: 'stack', style: { gap: '6px', marginTop: '6px' } },
           h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
             h('b', { style: { color: 'var(--ink)' } }, '🖼️ Chữ Tượng hình (象形): '),
-            h('span', { class: 'small' }, 'Vẽ lại hình dáng của sự vật cụ thể ngoài đời thực. Ví dụ: 日 (mặt trời tròn), 月 (trăng khuyết), 山 (ba đỉnh núi nhấp nhô), 水 (dòng nước chảy), 木 (cây có rễ cành).')
+            h('span', { class: 'small' }, 'Vẽ lại hình dáng của sự vật cụ thể ngoài đời thực. Ví dụ: 日 (mặt trời), 月 (trăng khuyết), 山 (3 đỉnh núi), 水 (dòng sông).')
           ),
           h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
             h('b', { style: { color: 'var(--ink)' } }, '📍 Chữ Chỉ sự (指事): '),
-            h('span', { class: 'small' }, 'Dùng ký hiệu trừu tượng hoặc thêm nét trỏ vào hình vẽ để chỉ vị trí, ý niệm. Ví dụ: 上 (trên), 下 (dưới), 本 (gốc cây - nét gạch ở rễ chữ Mộc), 末 (ngọn cây - nét gạch ở ngọn).')
+            h('span', { class: 'small' }, 'Dùng ký hiệu trừu tượng hoặc thêm nét trỏ vào hình vẽ để chỉ vị trí, khái niệm. Ví dụ: 上 (trên), 下 (dưới), 本 (gốc cây: thêm nét gạch dưới 木), 刃 (lưỡi dao: thêm dấu chấm trên 刀).')
           ),
           h('div', { class: 'panel', style: { background: 'var(--surface)', padding: '8px 10px', borderRadius: '8px' } },
             h('b', { style: { color: 'var(--ink)' } }, '🧩 Chữ Hội ý (会意): '),
@@ -15440,7 +15644,8 @@ function renderKnowledgeChietTu(code) {
       class: 'chiet-search-input',
       style: { flex: '1 1 260px', minHeight: '40px', padding: '8px 12px' },
       ...searchInputHandlers('chiet-search-input', (v) => { CHIET_TU_SEARCH = v; }, knowledgeTabView)
-    })
+    }),
+    CHIET_TU_SEARCH ? h('button', { class: 'ghost mini', onclick: () => { CHIET_TU_SEARCH = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
   );
 
   const filterRow = h('div', { class: 'row wrap', style: { gap: '6px' } },
@@ -15451,104 +15656,100 @@ function renderKnowledgeChietTu(code) {
     }, tp.label))
   );
 
-  const cardsContainer = h('div', {
-    style: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
-      gap: '12px',
-      marginTop: '8px'
-    }
-  },
-    filtered.length === 0
-      ? h('p', { class: 'center muted', style: { gridColumn: '1 / -1', padding: '24px 0' } }, 'Không tìm thấy chữ Hán nào phù hợp với từ khóa tìm kiếm.')
-      : filtered.map((c) => {
-          const typeColor = c.type && c.type.includes('Hội ý')
-            ? 'var(--teal)'
-            : (c.type && c.type.includes('Tượng hình') ? '#d97706' : (c.type && c.type.includes('Hình thanh') ? '#2563eb' : 'var(--muted)'));
-          return h('div', {
-            class: 'panel card stack',
-            style: {
-              background: 'var(--surface)',
-              borderRadius: '12px',
-              padding: '12px',
-              gap: '8px',
-              border: '1px solid var(--line)'
-            }
-          },
-            h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '6px' } },
-              h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
-                h('span', {
-                  lang: 'zh-Hans',
-                  style: {
-                    fontSize: '2.2rem',
-                    fontWeight: 700,
-                    lineHeight: 1,
-                    color: 'var(--ink)'
-                  }
-                }, c.char),
-                h('div', { class: 'stack', style: { gap: '1px' } },
-                  h('b', { style: { fontSize: '1rem', color: 'var(--ink)' } }, (c.hv || '').toUpperCase()),
-                  h('span', { class: 'small pinyin', style: { color: 'var(--teal)', fontWeight: 600 } }, c.pinyin)
-                )
-              ),
-              h('div', { class: 'row', style: { gap: '4px', alignItems: 'center' } },
-                spk('zh', c.char),
-                c.type ? h('span', { class: 'chip small', style: { fontSize: '.72rem', fontWeight: 600, color: typeColor } }, c.type) : null
-              )
-            ),
-            h('p', { style: { margin: '2px 0', fontWeight: 600, color: 'var(--ink)', fontSize: '.92rem' } }, 'Nghĩa: ' + c.m),
-            c.parts ? h('div', {
-              class: 'panel',
-              style: {
-                background: 'rgba(15, 82, 87, 0.05)',
-                padding: '6px 8px',
-                borderRadius: '8px',
-                fontSize: '.82rem'
-              }
-            },
-              h('b', { style: { color: 'var(--teal)' } }, '🧩 Chiết tự / Cấu tạo: '),
-              h('span', {}, c.parts)
-            ) : null,
-            c.story ? h('div', {
-              class: 'panel',
-              style: {
-                background: 'var(--sunk)',
-                padding: '8px 10px',
-                borderRadius: '8px',
-                fontSize: '.82rem',
-                lineHeight: 1.45
-              }
-            },
-              h('b', { style: { color: '#d97706' } }, '💡 Bí kíp nhớ: '),
-              h('span', {}, c.story)
-            ) : null,
-            c.ex ? h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem', lineHeight: 1.35 } },
-              h('b', { style: { color: 'var(--ink)' } }, '📚 Từ ghép: '),
-              c.ex
-            ) : null,
-            h('div', { class: 'row between', style: { alignItems: 'center', marginTop: '4px', borderTop: '1px dashed var(--line)', paddingTop: '6px' } },
-              h('span', { class: 'small muted', style: { fontSize: '.72rem' } },
-                (c.rad ? 'Bộ thủ: ' + c.rad + ' · ' : '') + (c.strokes ? c.strokes + ' nét' : '')
-              ),
-              h('button', {
-                class: 'chip good small',
-                style: { cursor: 'pointer', fontSize: '.75rem', padding: '2px 8px' },
-                onclick: () => charView('zh', c.char, [c.char])
-              }, '✍️ Tập viết nét')
-            )
-          );
-        })
-  );
+  const renderChietCard = (c, autoOpen = false) => accordionItem({
+    cls: 'acc-card chiet-acc',
+    defaultOpen: autoOpen,
+    iconEl: h('span', {
+      lang: 'zh-Hans',
+      style: { fontSize: '1.8rem', fontWeight: 700, lineHeight: 1, minWidth: '38px', textAlign: 'center', color: 'var(--ink)', flexShrink: 0 }
+    }, c.char),
+    title: (c.hv || '').toUpperCase() + (c.pinyin ? ' · ' + c.pinyin : ''),
+    subtitle: 'Nghĩa: ' + c.m,
+    chips: [c.type ? h('span', { class: 'chip small', style: { fontSize: '.7rem' } }, c.type) : null],
+    body: [
+      h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
+        h('div', { class: 'row', style: { alignItems: 'center', gap: '8px' } },
+          spk('zh', c.char),
+          h('span', { class: 'small', style: { fontWeight: 600 } }, 'Nghĩa: ' + c.m)
+        ),
+        h('button', {
+          class: 'chip good small',
+          style: { cursor: 'pointer', fontSize: '.76rem', padding: '3px 10px' },
+          onclick: () => charView('zh', c.char, [c.char])
+        }, '✍️ Tập viết nét')
+      ),
+      c.parts ? h('div', {
+        class: 'panel',
+        style: { background: 'rgba(15, 82, 87, 0.05)', padding: '7px 10px', borderRadius: '8px', fontSize: '.84rem' }
+      },
+        h('b', { style: { color: 'var(--teal)' } }, '🧩 Chiết tự / Cấu tạo: '),
+        h('span', {}, c.parts)
+      ) : null,
+      c.story ? h('div', {
+        class: 'panel',
+        style: { background: 'var(--sunk)', padding: '8px 10px', borderRadius: '8px', fontSize: '.84rem', lineHeight: 1.45 }
+      },
+        h('b', { style: { color: '#d97706' } }, '💡 Bí kíp nhớ: '),
+        h('span', {}, c.story)
+      ) : null,
+      c.ex ? h('p', { class: 'small muted', style: { margin: 0, fontSize: '.8rem', lineHeight: 1.35 } },
+        h('b', { style: { color: 'var(--ink)' } }, '📚 Từ ghép: '),
+        c.ex
+      ) : null,
+      (c.rad || c.strokes) ? h('p', { class: 'small muted', style: { margin: 0, fontSize: '.74rem' } },
+        (c.rad ? 'Bộ thủ: ' + c.rad : '') + (c.rad && c.strokes ? ' · ' : '') + (c.strokes ? c.strokes + ' nét' : '')
+      ) : null
+    ]
+  });
+
+  const listWrap = h('div', { class: 'stack', style: { gap: '8px', marginTop: '4px' } });
+  const GROUPS = [
+    { id: 'Tượng hình', icon: '🖼️', title: 'Chữ Tượng hình (象形)', desc: 'Vẽ trực tiếp hình dáng sự vật ngoài đời thực' },
+    { id: 'Chỉ sự', icon: '📍', title: 'Chữ Chỉ sự (指事)', desc: 'Dùng ký hiệu trỏ chỉ vị trí, số lượng & khái niệm' },
+    { id: 'Hình thanh', icon: '🔊', title: 'Chữ Hình thanh (形声)', desc: 'Một nửa biểu nghĩa (bộ thủ), một nửa gợi âm đọc' },
+    { id: 'Hội ý', icon: '🧩', title: 'Chữ Hội ý (会意)', desc: 'Ghép các bộ phận có nghĩa tạo thành ý nghĩa mới' }
+  ];
+
+  if (filtered.length === 0) {
+    listWrap.append(h('p', { class: 'center muted', style: { padding: '20px 0' } }, 'Không tìm thấy chữ Hán nào phù hợp với từ khóa “' + CHIET_TU_SEARCH + '”.'));
+  } else if (fType === 'all' && !q) {
+    const primaryOf = (x) => ((x.type || '').split('&')[0] || '').trim();
+    const used = new Set();
+    GROUPS.forEach((g) => {
+      const grpItems = filtered.filter((x) => {
+        if (used.has(x)) return false;
+        if (primaryOf(x) === g.id) { used.add(x); return true; }
+        return false;
+      });
+      if (!grpItems.length) return;
+      listWrap.append(accordionItem({
+        cls: 'acc-group chiet-grp-acc',
+        iconEl: g.icon,
+        title: g.title,
+        subtitle: g.desc + ' · Ví dụ: ' + grpItems.slice(0, 6).map(x => x.char).join(' '),
+        chips: [h('span', { class: 'chip good', style: { fontWeight: 700 } }, grpItems.length + ' chữ')],
+        body: grpItems.map((c) => renderChietCard(c, false))
+      }));
+    });
+    const leftover = filtered.filter((x) => !used.has(x));
+    leftover.forEach((c) => listWrap.append(renderChietCard(c, false)));
+  } else {
+    listWrap.append(...filtered.map((c) => renderChietCard(c, !!q && filtered.length <= 2)));
+  }
 
   return h('div', { class: 'stack-lg' },
-    h('div', { class: 'panel card stack', style: { gap: '10px' } },
+    h('div', { class: 'panel stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px' } },
       h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
         h('h2', { style: { margin: 0 } }, '🧩 Kho Chiết tự & Mẹo nhớ chữ Hán'),
         h('span', { class: 'chip good', style: { fontSize: '.78rem', fontWeight: 700 } }, filtered.length + '/' + items.length + ' chữ')
       ),
       searchBox,
       filterRow,
-      cardsContainer
+      filtered.length > 0 ? h('div', { class: 'acc-toolbar' },
+        h('span', { class: 'small muted' }, 'Bấm chữ hoặc nhóm để xem cấu tạo'),
+        makeToggleAllBtn(() => listWrap, 'details.chiet-acc', { groupSelector: 'details.chiet-grp-acc' })
+      ) : null,
+      listWrap
     ),
     guide
   );
@@ -15556,6 +15757,7 @@ function renderKnowledgeChietTu(code) {
 
 // 7 Quy tắc bút thuận viết chữ Hán và 214 Bộ thủ Khang Hy
 let CHARS_SEARCH = '';
+let KANJI_LV_FILTER = 'all';
 function renderKnowledgeChars(code) {
   if (code === 'zh') {
     const rules = [
@@ -15636,33 +15838,64 @@ function renderKnowledgeChars(code) {
 
     const q = CHARS_SEARCH.trim().toLowerCase();
     const filteredRad = radicals.filter((x) => !q || x.r.includes(q) || x.p.includes(q) || x.m.toLowerCase().includes(q));
+    const renderRadGrid = (arr) => h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(125px, 1fr))', gap: '8px' } },
+      ...arr.map((x) => h('div', {
+        class: 'panel stack center',
+        style: { background: 'var(--sunk)', borderRadius: '10px', padding: '8px', cursor: 'pointer' },
+        onclick: () => charView('zh', x.r, [x.r])
+      },
+        h('span', { style: { fontSize: '1.6rem', fontWeight: 700, color: 'var(--ink)' } }, x.r),
+        h('b', { style: { fontSize: '.85rem' } }, x.p),
+        h('p', { class: 'small muted center', style: { margin: 0, fontSize: '.75rem', lineHeight: 1.2 } }, x.m),
+        h('span', { class: 'chip', style: { fontSize: '.65rem', padding: '1px 6px', marginTop: '2px' } }, x.s + ' nét')
+      ))
+    );
 
-    return h('div', { class: 'stack-lg' },
-      h('div', { class: 'panel card stack', style: { gap: '10px' } },
-        h('div', { class: 'row between', style: { alignItems: 'center' } },
+    const strokeGroups = [
+      { id: 's12', icon: '✏️', title: 'Bộ thủ 1–2 nét', desc: 'Nhóm nét cơ bản & bộ mở đầu', filter: (x) => x.s <= 2 },
+      { id: 's3', icon: '✍️', title: 'Bộ thủ 3 nét', desc: 'Nhóm Khẩu, Thổ, Nữ, Tử, Sơn, Thủy…', filter: (x) => x.s === 3 },
+      { id: 's4p', icon: '🈴', title: 'Bộ thủ 4+ nét thông dụng', desc: 'Tâm, Thủ, Thủy, Hỏa, Mộc, Nhật, Nguyệt, Ngôn, Kim', filter: (x) => x.s >= 4 }
+    ];
+    const radBox = h('div', { class: 'stack', style: { gap: '8px' } });
+    if (q) {
+      radBox.append(filteredRad.length ? renderRadGrid(filteredRad) : h('p', { class: 'note center' }, 'Không tìm thấy bộ thủ phù hợp.'));
+    } else {
+      strokeGroups.forEach((sg) => {
+        const sub = filteredRad.filter(sg.filter);
+        if (!sub.length) return;
+        radBox.append(accordionItem({
+          cls: 'acc-card rad-acc',
+          iconEl: sg.icon,
+          title: sg.title,
+          subtitle: sg.desc + ' (' + sub.slice(0, 6).map(x => x.r).join(' ') + '…)',
+          chips: [h('span', { class: 'chip good', style: { fontWeight: 700 } }, sub.length + ' bộ')],
+          body: [renderRadGrid(sub)]
+        }));
+      });
+    }
+
+    const pageWrap = h('div', { class: 'stack-lg' },
+      h('div', { class: 'panel stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '14px', padding: '14px' } },
+        h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
           h('h2', { style: { margin: 0 } }, '🈴 Bộ thủ thường gặp nhất'),
           h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, filteredRad.length + ' bộ thủ')
         ),
-        h('input', {
-          type: 'search',
-          placeholder: '🔍 Tìm bộ thủ (nhập chữ Hán, Pinyin hoặc nghĩa tiếng Việt)...',
-          value: CHARS_SEARCH,
-          class: 'chars-search-input',
-          style: { minHeight: '40px', padding: '8px 12px' },
-          ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
-        }),
-        h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '8px' } },
-          ...filteredRad.map((x) => h('div', {
-            class: 'panel stack center',
-            style: { background: 'var(--sunk)', borderRadius: '10px', padding: '8px', cursor: 'pointer' },
-            onclick: () => charView('zh', x.r, [x.r])
-          },
-            h('span', { style: { fontSize: '1.6rem', fontWeight: 700, color: 'var(--ink)' } }, x.r),
-            h('b', { style: { fontSize: '.85rem' } }, x.p),
-            h('p', { class: 'small muted center', style: { margin: 0, fontSize: '.75rem', lineHeight: 1.2 } }, x.m),
-            h('span', { class: 'chip', style: { fontSize: '.65rem', padding: '1px 6px', marginTop: '2px' } }, x.s + ' nét')
-          ))
-        )
+        h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+          h('input', {
+            type: 'search',
+            placeholder: '🔍 Tìm bộ thủ (nhập chữ Hán, Pinyin hoặc nghĩa tiếng Việt)...',
+            value: CHARS_SEARCH,
+            class: 'chars-search-input',
+            style: { flex: 1, minHeight: '40px', padding: '8px 12px' },
+            ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
+          }),
+          CHARS_SEARCH ? h('button', { class: 'ghost mini', onclick: () => { CHARS_SEARCH = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
+        ),
+        !q ? h('div', { class: 'acc-toolbar' },
+          h('span', { class: 'small muted' }, 'Chọn số nét & bấm chữ tập viết'),
+          makeToggleAllBtn(() => pageWrap, 'details.rad-acc, details.guide-accordion-item')
+        ) : null,
+        radBox
       ),
       guideAccordionItem({
         id: 'zh-stroke-rules',
@@ -15685,6 +15918,7 @@ function renderKnowledgeChars(code) {
         ))
       })
     );
+    return pageWrap;
   }
 
   // Japanese Kanji Lookup
@@ -15699,42 +15933,96 @@ function renderKnowledgeChars(code) {
   });
 
   const q = CHARS_SEARCH.trim().toLowerCase();
-  const filtered = allKanji.filter((k) => !q || k.k.includes(q) || k.hv.toLowerCase().includes(q) || (k.on && k.on.toLowerCase().includes(q)) || (k.kun && k.kun.toLowerCase().includes(q)));
+  const lvs = [...new Set(allKanji.map((k) => k.lv))];
+  const byLv = KANJI_LV_FILTER === 'all' ? allKanji : allKanji.filter((k) => k.lv === KANJI_LV_FILTER);
+  const filtered = byLv.filter((k) => !q || k.k.includes(q) || k.hv.toLowerCase().includes(q) || (k.on && k.on.toLowerCase().includes(q)) || (k.kun && k.kun.toLowerCase().includes(q)));
+
+  const renderKanjiCard = (k, autoOpen = false) => {
+    const subParts = [k.on ? 'On: ' + k.on : null, k.kun ? 'Kun: ' + k.kun : null].filter(Boolean).join(' · ');
+    return accordionItem({
+      cls: 'acc-card kj-acc',
+      defaultOpen: autoOpen,
+      iconEl: h('span', {
+        lang: 'ja',
+        style: { fontSize: '1.65rem', fontWeight: 700, minWidth: '34px', textAlign: 'center', color: 'var(--teal)', lineHeight: 1, flexShrink: 0 }
+      }, k.k),
+      title: k.hv,
+      subtitle: subParts || ('Bài: ' + k.topicTitle),
+      chips: [h('span', { class: lvChipClass(k.lv) }, k.lv)],
+      body: [
+        h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
+          h('span', { class: 'small muted' }, 'Bài: ' + k.topicTitle),
+          h('button', {
+            class: 'chip good small',
+            style: { cursor: 'pointer', fontSize: '.78rem', padding: '3px 10px' },
+            onclick: () => { S.lang = 'ja'; charView('ja', k.k, allKanji.map((x) => x.k)); }
+          }, '✍️ Tập viết ' + k.k)
+        ),
+        k.on ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'On: ' + k.on) : null,
+        k.kun ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'Kun: ' + k.kun) : null,
+        ...(k.ex || []).slice(0, 3).map((e) => h('p', { class: 'small muted', lang: 'ja', style: { margin: 0 } }, ruby(e[0]), ' · ' + e[1]))
+      ]
+    });
+  };
+
+  const listWrap = h('div', { class: 'stack', style: { gap: '8px' } });
+  if (filtered.length === 0) {
+    listWrap.append(h('p', { class: 'note center' }, 'Không tìm thấy Kanji phù hợp với từ khóa “' + CHARS_SEARCH + '”.'));
+  } else if (!q) {
+    // Nhóm theo từng bài học để màn hình gọn ~16 tiêu đề thay vì 180 dòng cuộn dài
+    const topicGroups = [];
+    const mapG = new Map();
+    filtered.forEach((k) => {
+      if (!mapG.has(k.topicTitle)) {
+        const g = { title: k.topicTitle, lv: k.lv, items: [] };
+        mapG.set(k.topicTitle, g);
+        topicGroups.push(g);
+      }
+      mapG.get(k.topicTitle).items.push(k);
+    });
+    topicGroups.forEach((g) => {
+      listWrap.append(accordionItem({
+        cls: 'acc-group kj-grp-acc',
+        iconEl: '🈴',
+        title: g.title,
+        subtitle: g.items.map((x) => x.k).join(' · '),
+        chips: [
+          h('span', { class: lvChipClass(g.lv) }, g.lv),
+          h('span', { class: 'chip small', style: { fontWeight: 700 } }, g.items.length + ' chữ')
+        ],
+        body: g.items.map((k) => renderKanjiCard(k, false))
+      }));
+    });
+  } else {
+    listWrap.append(...filtered.map((k) => renderKanjiCard(k, filtered.length <= 2)));
+  }
 
   return h('div', { class: 'stack-lg' },
     h('div', { class: 'row between', style: { alignItems: 'center' } },
       h('h2', { style: { margin: 0 } }, '🈴 Danh mục Kanji JLPT'),
       h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, filtered.length + '/' + allKanji.length + ' chữ')
     ),
-    h('input', {
-      type: 'search',
-      placeholder: '🔍 Tìm Kanji theo chữ, âm Hán Việt, On, Kun...',
-      value: CHARS_SEARCH,
-      class: 'chars-search-input',
-      style: { minHeight: '40px', padding: '8px 12px' },
-      ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
-    }),
-    h('div', { class: 'stack', style: { gap: '8px' } },
-      ...filtered.map((k) => h('div', { class: 'panel kj', style: { borderRadius: '12px', background: 'var(--surface)' } },
-        h('button', {
-          class: 'k ghost',
-          lang: 'ja',
-          'aria-label': 'Tập viết ' + k.k,
-          onclick: () => { S.lang = 'ja'; charView('ja', k.k, allKanji.map((x) => x.k)); }
-        }, k.k),
-        h('div', { class: 'grow stack', style: { gap: '4px' } },
-          h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
-            h('b', { style: { fontSize: '1.05rem', color: 'var(--teal)' } }, k.hv),
-            h('span', { class: 'chip good', style: { fontSize: '.75rem' } }, k.lv),
-            h('span', { class: 'small muted' }, 'Bài: ' + k.topicTitle)
-          ),
-          k.on ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'On: ' + k.on) : null,
-          k.kun ? h('p', { class: 'small', lang: 'ja', style: { margin: 0 } }, 'Kun: ' + k.kun) : null,
-          ...(k.ex || []).slice(0, 2).map((e) => h('p', { class: 'small muted', lang: 'ja', style: { margin: 0 } }, ruby(e[0]), ' · ' + e[1]))
-        )
-      ))
+    h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
+      h('input', {
+        type: 'search',
+        placeholder: '🔍 Tìm Kanji theo chữ, âm Hán Việt, On, Kun...',
+        value: CHARS_SEARCH,
+        class: 'chars-search-input',
+        style: { flex: 1, minHeight: '40px', padding: '8px 12px' },
+        ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
+      }),
+      CHARS_SEARCH ? h('button', { class: 'ghost mini', onclick: () => { CHARS_SEARCH = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
     ),
-    h('p', { class: 'small muted', style: { margin: 0 } }, 'Tra cứu âm Hán Việt, âm On (Onyomi), âm Kun (Kunyomi) và bấm chữ để tập viết từng nét.')
+    lvs.length > 1 ? h('div', { class: 'row wrap', style: { gap: '6px' } },
+      h('button', { class: 'mini ' + (KANJI_LV_FILTER === 'all' ? 'primary' : 'ghost'), onclick: () => { KANJI_LV_FILTER = 'all'; knowledgeTabView(); } }, 'Tất cả (' + allKanji.length + ')'),
+      ...lvs.map((lv) => h('button', { class: 'mini ' + (KANJI_LV_FILTER === lv ? 'primary' : 'ghost'), onclick: () => { KANJI_LV_FILTER = lv; knowledgeTabView(); } }, lv + ' (' + allKanji.filter((x) => x.lv === lv).length + ')'))
+    ) : null,
+    filtered.length > 0 ? h('div', { class: 'acc-toolbar' },
+      h('span', { class: 'small muted' }, q ? ('Tìm thấy ' + filtered.length + ' chữ Hán') : 'Chọn bài học · Bấm chữ tập viết'),
+      makeToggleAllBtn(() => listWrap, 'details.kj-acc', { groupSelector: 'details.kj-grp-acc' })
+    ) : null,
+    listWrap,
+    h('p', { class: 'small muted', style: { margin: 0 } }, 'Tra cứu âm Hán Việt, âm On (Onyomi), âm Kun (Kunyomi) và tập viết từng nét.')
   );
 }
 
@@ -16701,28 +16989,32 @@ function renderHskkExamView() {
     })
   );
 
-  // Thẻ Cấu trúc đề (chú thích đưa xuống dưới danh sách câu hỏi)
-  const structureCard = h('div', { class: 'panel card stack', style: { gap: '10px', background: 'var(--surface)', borderRadius: '12px' } },
-    h('div', { class: 'row between', style: { alignItems: 'center' } },
-      h('h2', { style: { margin: 0, fontSize: '1.1rem' } }, '📋 ' + curData.name),
-      h('span', { class: 'chip good', style: { fontWeight: 700 } }, curData.totalTime)
-    ),
-    h('p', { class: 'small', style: { margin: 0 } }, curData.desc),
-    h('div', { class: 'row between', style: { flexWrap: 'wrap', gap: '8px', background: 'var(--sunk)', padding: '10px 14px', borderRadius: '10px' } },
-      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tổng số câu:'), h('b', {}, curData.totalQs + ' câu')),
-      h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tiêu chuẩn ĐẬU:'), h('b', { style: { color: 'var(--good)' } }, curData.passScore))
-    ),
-    h('div', { class: 'stack', style: { gap: '4px' } },
-      h('p', { class: 'label', style: { margin: 0 } }, 'Phân bổ các phần thi khẩu ngữ:'),
-      ...curData.partsSummary.map((part) => h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
-        h('span', { style: { color: 'var(--teal)' } }, '✔'),
-        h('span', { class: 'small' }, part)
-      ))
-    ),
-    h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem' } },
-      '💡 Đề mẫu chính thức CTI/CLEC · Bạn có thể nghe toàn bộ đĩa thi gốc ở trên, hoặc bấm loa 🔊 ở từng câu hỏi để luyện nghe và nhại theo (Shadowing).'
-    )
-  );
+  // Thẻ Cấu trúc đề (thu gọn thành Accordion gọn màn hình)
+  const structureCard = guideAccordionItem({
+    id: 'hskk-struct-' + curData.id,
+    icon: '📋',
+    title: 'Cấu trúc đề ' + curData.name,
+    subtitle: curData.totalQs + ' câu · ' + curData.totalTime + ' · ĐẬU ' + curData.passScore,
+    tag: curData.totalTime,
+    defaultOpen: false,
+    content: [
+      h('p', { class: 'small', style: { margin: 0 } }, curData.desc),
+      h('div', { class: 'row between', style: { flexWrap: 'wrap', gap: '8px', background: 'var(--sunk)', padding: '10px 14px', borderRadius: '10px' } },
+        h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tổng số câu:'), h('b', {}, curData.totalQs + ' câu')),
+        h('div', {}, h('p', { class: 'small muted', style: { margin: 0 } }, 'Tiêu chuẩn ĐẬU:'), h('b', { style: { color: 'var(--good)' } }, curData.passScore))
+      ),
+      h('div', { class: 'stack', style: { gap: '4px' } },
+        h('p', { class: 'label', style: { margin: 0 } }, 'Phân bổ các phần thi khẩu ngữ:'),
+        ...curData.partsSummary.map((part) => h('div', { class: 'row', style: { gap: '6px', alignItems: 'center' } },
+          h('span', { style: { color: 'var(--teal)' } }, '✔'),
+          h('span', { class: 'small' }, part)
+        ))
+      ),
+      h('p', { class: 'small muted', style: { margin: 0, fontSize: '.78rem' } },
+        '💡 Đề mẫu chính thức CTI/CLEC · Bạn có thể nghe toàn bộ đĩa thi gốc ở trên, hoặc bấm loa 🔊 ở từng câu hỏi để luyện nghe và nhại theo (Shadowing).'
+      )
+    ]
+  });
 
   // Thẻ Cẩm nang chiến lược làm bài thi Khẩu ngữ (Collapsible)
   const strategyCard = h('details', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px' } },
@@ -16787,10 +17079,22 @@ function renderHskkExamView() {
 
     const itemCards = sec.items.map((it) => {
       const itemKey = curData.id + '-' + it.qId;
-      const isExpanded = !!HSKK_EXPANDED_ITEMS[itemKey];
+      const wrapCardAcc = (bodyNodes, { iconEl = '🎙️', title, subtitle, chipText, secTitle }) => accordionItem({
+        cls: 'acc-card hskk-q-acc',
+        defaultOpen: !!HSKK_EXPANDED_ITEMS[itemKey],
+        onToggle: (on) => { HSKK_EXPANDED_ITEMS[itemKey] = on; },
+        iconEl,
+        title,
+        subtitle,
+        chips: [chipText ? h('span', { class: 'chip small' }, chipText) : null],
+        body: bodyNodes
+      });
 
       // Thẻ từng câu hỏi
-      const card = h('div', { class: 'panel card stack', style: { gap: '8px', background: 'var(--surface)', borderRadius: '12px', padding: '12px' } });
+      const card = {
+        nodes: [],
+        replaceChildren(...kids) { this.nodes = kids.filter(Boolean); }
+      };
 
       // 1. DẠNG NGHE NHẮC LẠI (HSKK 3)
       if (sec.partId === 'p1' && curData.id === 'hskk-3') {
@@ -16816,7 +17120,12 @@ function renderHskkExamView() {
           createHskkTimer(0, 10),
           createHskkSpeakingPractice(it, curData, it.text)
         );
-        return card;
+        return wrapCardAcc(card.nodes, {
+          iconEl: '🔁',
+          title: 'Câu ' + it.qId + ' · ' + it.text,
+          subtitle: 'Nghe nhắc lại · ' + it.trans,
+          chipText: '10s'
+        });
       }
 
       // 2. DẠNG NGHE THUẬT LẠI (HSKK 4, 5, 6)
@@ -16862,7 +17171,12 @@ function renderHskkExamView() {
             )
           )
         );
-        return card;
+        return wrapCardAcc(card.nodes, {
+          iconEl: '🎧',
+          title: 'Câu ' + it.qId + ' · ' + (it.title || 'Nghe thuật lại'),
+          subtitle: it.trans || it.listenScript,
+          chipText: speakTime + 's'
+        });
       }
 
       // 3. DẠNG NHÌN TRANH NÓI (Phần 2)
@@ -16948,7 +17262,12 @@ function renderHskkExamView() {
             )
           )
         );
-        return card;
+        return wrapCardAcc(card.nodes, {
+          iconEl: '🖼️',
+          title: 'Câu ' + it.qId + ' · ' + (it.title || it.scene || 'Nhìn tranh nói'),
+          subtitle: it.sceneFlow || it.trans || 'Quan sát tranh và kể thành câu chuyện hoàn chỉnh',
+          chipText: speakTime + 's'
+        });
       }
 
       // 4. DẠNG TRẢ LỜI CÂU HỎI MỞ / NGHỊ LUẬN (Phần 3)
@@ -16991,21 +17310,31 @@ function renderHskkExamView() {
           )
         )
       );
-      return card;
+      return wrapCardAcc(card.nodes, {
+        iconEl: '💬',
+        title: 'Câu ' + it.qId + ' · ' + it.prompt,
+        subtitle: it.trans || 'Trả lời câu hỏi nghị luận / quan điểm',
+        chipText: (speakTime / 60) + 'p'
+      });
     });
 
     return h('div', { class: 'stack', style: { gap: '8px' } }, secHeader, ...itemCards, secGuideFooter);
   });
 
-  mount(h('div', { class: 'stack-lg' },
+  const hskkWrap = h('div', { class: 'stack-lg' },
     header,
     lvSelector,
     officialAudioCard,
     filterTabs,
+    h('div', { class: 'acc-toolbar' },
+      h('span', { class: 'small muted' }, 'Chọn từng câu để mở đề & thu âm'),
+      makeToggleAllBtn(() => hskkWrap, 'details.hskk-q-acc')
+    ),
     ...sectionElements,
     structureCard,
     strategyCard
-  ));
+  );
+  mount(hskkWrap);
 }
 
 
@@ -17872,14 +18201,29 @@ function progressView() {
     h('div', { class: 'panel stack' }, h('h3', {}, 'XP ' + L().short + ' 7 ngày qua'),
       h('div', { class: 'week', role: 'img', 'aria-label': days.map((d) => wd[dayDate(d).getUTCDay()] + ': ' + xd(d) + ' XP').join(', ') },
         days.map((d) => h('div', { class: d === t ? 'today' : '' }, h('span', {}, xd(d) || ''), h('i', { style: { height: (xd(d) / max * 100) + '%' } }), h('span', {}, wd[dayDate(d).getUTCDay()]))))),
-    h('div', { class: 'stack' }, h('h2', {}, 'Thành tích'),
-      h('div', { class: 'badges' }, ACH.map(([code, title, desc]) => h('div', { class: 'badge' + (S.ach[code] ? '' : ' off') }, h('b', {}, title), h('p', { class: 'small muted' }, desc))))),
+    accordionItem({
+      cls: 'acc-card',
+      iconEl: '🏆',
+      title: 'Thành tích & Huy hiệu',
+      subtitle: 'Đã mở khóa ' + ACH.filter(([code]) => S.ach[code]).length + '/' + ACH.length + ' huy hiệu · Bấm để xem chi tiết',
+      chips: [h('span', { class: 'chip good' }, ACH.filter(([code]) => S.ach[code]).length + '/' + ACH.length)],
+      body: [h('div', { class: 'badges' }, ACH.map(([code, title, desc]) => h('div', { class: 'badge' + (S.ach[code] ? '' : ' off') }, h('b', {}, title), h('p', { class: 'small muted' }, desc))))]
+    }),
     themeSettingPanel(),
-    h('div', { class: 'panel stack' }, h('h3', {}, 'Cài đặt lộ trình thông minh'),
-      h('label', { class: 'row', style: { alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600 } }, smartSchedCheck, h('span', {}, 'Bật lộ trình học theo thứ trong tuần (chống loạn ngôn ngữ)')),
-      h('p', { class: 'small muted', style: { margin: 0 } }, 'Tự động tăng mục tiêu XP cho ngôn ngữ trọng tâm trong ngày và giảm nhẹ cho các ngôn ngữ duy trì (kèm nhắc nhở Spaced Repetition).'),
-      h('label', { for: 'goal', class: 'label', style: { marginTop: '8px' } }, 'Mức độ mục tiêu cơ bản'), goalSel, h('p', { class: 'small muted' }, 'Mỗi từ, kanji, câu hoặc tình huống làm đúng được 5 XP. Học lại bài cũ được nửa XP.'),
-      h('p', { class: 'small muted' }, 'Thêm vào màn hình chính trên iPhone: mở link bằng Safari, bấm Chia sẻ, chọn “Thêm vào MH chính”.')),
+    accordionItem({
+      cls: 'acc-card',
+      iconEl: '⚙️',
+      title: 'Cài đặt lộ trình thông minh & Mục tiêu',
+      subtitle: (S.smartSchedule !== false ? 'Đang bật theo thứ · ' : 'Đang tắt · ') + 'Mục tiêu cơ bản ' + (S.goal || 20) + ' XP/ngày',
+      chips: [h('span', { class: 'chip small' }, (S.goal || 20) + ' XP')],
+      body: [
+        h('label', { class: 'row', style: { alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600 } }, smartSchedCheck, h('span', {}, 'Bật lộ trình học theo thứ trong tuần (chống loạn ngôn ngữ)')),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Tự động tăng mục tiêu XP cho ngôn ngữ trọng tâm trong ngày và giảm nhẹ cho các ngôn ngữ duy trì (kèm nhắc nhở Spaced Repetition).'),
+        h('label', { for: 'goal', class: 'label', style: { marginTop: '4px' } }, 'Mức độ mục tiêu cơ bản'), goalSel,
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Mỗi từ, kanji, câu hoặc tình huống làm đúng được 5 XP. Học lại bài cũ được nửa XP.'),
+        h('p', { class: 'small muted', style: { margin: 0 } }, 'Thêm vào màn hình chính trên iPhone: mở link bằng Safari, bấm Chia sẻ, chọn “Thêm vào MH chính”.')
+      ]
+    }),
     h('div', { class: 'panel stack', style: { background: 'var(--sunk)', border: '1px solid var(--line)', gap: '10px' } },
       h('div', { class: 'row between', style: { alignItems: 'center' } },
         h('div', { class: 'row', style: { gap: '10px', alignItems: 'center' } },
@@ -17892,7 +18236,14 @@ function progressView() {
         h('button', { class: 'primary mini', onclick: () => showFeedbackModal() }, 'Góp ý ngay')
       )
     ),
-    transferPanel(),
+    accordionItem({
+      cls: 'acc-card',
+      iconEl: '💾',
+      title: 'Đồng bộ đám mây & Chuyển tiến độ',
+      subtitle: getGhConfig().token ? ('Đã kết nối GitHub Gist (@' + (getGhConfig().user || 'User') + ')') : 'Cấu hình GitHub Gist hoặc xuất/nhập mã tiến độ',
+      chips: [h('span', { class: getGhConfig().token ? 'chip good' : 'chip small' }, getGhConfig().token ? 'Đã kết nối' : 'Thủ công')],
+      body: [transferPanel()]
+    }),
     resetBtn));
 }
 

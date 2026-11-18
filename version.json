@@ -1,5 +1,5 @@
 {
-  "version": "3.89",
-  "build": "20261118-0200",
-  "message": "Thêm chế độ Sáng/Tối/Theo máy, sửa ô tìm kiếm mất con trỏ, nút nhịp học bị tràn và màu chế độ tối"
+  "version": "3.90",
+  "build": "20261118-0300",
+  "message": "Gom danh mục Accordion gọn màn hình cho Trang Học, Lộ trình, Ngữ pháp, Chiết tự, Kanji, Bộ thủ, HSKK và Tiến độ"
 }
