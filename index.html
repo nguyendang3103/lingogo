@@ -9,6 +9,26 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Lingogo">
 <title>Lingogo</title>
+<script>
+/* Giao diện Sáng / Tối / Theo máy — lưu riêng ở localStorage (không đồng bộ qua Gist). */
+(function () {
+  var mq = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+  window.applyTheme = function (pref) {
+    if (pref) { try { localStorage.setItem('lingogo-theme', pref); } catch (e) {} }
+    else { try { pref = localStorage.getItem('lingogo-theme'); } catch (e) {} }
+    pref = pref === 'light' || pref === 'dark' ? pref : 'auto';
+    var dark = pref === 'dark' || (pref === 'auto' && mq && mq.matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    document.documentElement.dataset.themePref = pref;
+    return pref;
+  };
+  applyTheme();
+  if (mq) {
+    var onChange = function () { if (document.documentElement.dataset.themePref === 'auto') applyTheme(); };
+    if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
+  }
+})();
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,6 +180,27 @@ select { width: 100%; }
 .chip.level.n3 { background: #f0f5ff; color: #1d39c4; border: 1px solid #adc6ff; }
 .chip.level.n2 { background: #f9f0ff; color: #722ed1; border: 1px solid #d3adf7; }
 .chip.level.n1 { background: #feffe6; color: #ad8b00; border: 1px solid #ffe58f; font-weight: 800; box-shadow: 0 0 4px rgba(250,219,20,.4); }
+/* Nhãn cấp độ ở chế độ tối: nền trong suốt, chữ sáng */
+:root[data-theme="dark"] .chip.level.a1 { background: rgba(114,211,155,.14); color: rgb(114,211,155); border-color: rgba(114,211,155,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.n5 { background: rgba(114,211,155,.14); color: rgb(114,211,155); border-color: rgba(114,211,155,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk1 { background: rgba(114,211,155,.14); color: rgb(114,211,155); border-color: rgba(114,211,155,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.a2 { background: rgba(105,177,255,.14); color: rgb(105,177,255); border-color: rgba(105,177,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.n4 { background: rgba(105,177,255,.14); color: rgb(105,177,255); border-color: rgba(105,177,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk2 { background: rgba(105,177,255,.14); color: rgb(105,177,255); border-color: rgba(105,177,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk3 { background: rgba(133,165,255,.14); color: rgb(133,165,255); border-color: rgba(133,165,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.n3 { background: rgba(133,165,255,.14); color: rgb(133,165,255); border-color: rgba(133,165,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.b1 { background: rgba(190,150,255,.14); color: rgb(190,150,255); border-color: rgba(190,150,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk4 { background: rgba(190,150,255,.14); color: rgb(190,150,255); border-color: rgba(190,150,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.n2 { background: rgba(190,150,255,.14); color: rgb(190,150,255); border-color: rgba(190,150,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.b2 { background: rgba(255,178,102,.14); color: rgb(255,178,102); border-color: rgba(255,178,102,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk5 { background: rgba(255,178,102,.14); color: rgb(255,178,102); border-color: rgba(255,178,102,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.c1 { background: rgba(255,128,120,.14); color: rgb(255,128,120); border-color: rgba(255,128,120,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk6 { background: rgba(255,128,120,.14); color: rgb(255,128,120); border-color: rgba(255,128,120,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk7 { background: rgba(170,150,255,.14); color: rgb(170,150,255); border-color: rgba(170,150,255,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk8 { background: rgba(255,133,192,.14); color: rgb(255,133,192); border-color: rgba(255,133,192,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.c2 { background: rgba(240,210,90,.14); color: rgb(240,210,90); border-color: rgba(240,210,90,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.hsk9 { background: rgba(240,210,90,.14); color: rgb(240,210,90); border-color: rgba(240,210,90,.35); box-shadow: none; }
+:root[data-theme="dark"] .chip.level.n1 { background: rgba(240,210,90,.14); color: rgb(240,210,90); border-color: rgba(240,210,90,.35); box-shadow: none; }
 .kbd { flex: none; display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; font: 600 .8rem/1 var(--font); color: var(--muted); background: var(--bg); font-variant-numeric: tabular-nums; }
 .options button { gap: 12px; }
 .options button[aria-pressed="true"] .kbd { border-color: var(--teal); color: var(--teal); }
@@ -172,7 +213,7 @@ select { width: 100%; }
 .cat-bar::-webkit-scrollbar { display: none; }
 .cat-pill { flex: none; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); font-size: .88rem; font-weight: 500; cursor: pointer; transition: all .15s ease; white-space: nowrap; line-height: 1.2; }
 .cat-pill:hover { border-color: var(--teal); color: var(--ink); }
-.cat-pill.active { background: var(--teal); color: #fff; border-color: var(--teal); font-weight: 600; box-shadow: 0 2px 6px rgba(0, 128, 128, 0.25); }
+.cat-pill.active { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); font-weight: 600; box-shadow: 0 2px 6px rgba(0, 128, 128, 0.25); }
 /* Nút Subjects & menu chọn chủ đề */
 .subjects-box { position: relative; width: 100%; }
 .subjects-trigger {
@@ -266,7 +307,7 @@ select { width: 100%; }
   height: 20px;
   border-radius: 99px;
   background: var(--teal);
-  color: #fff;
+  color: var(--teal-ink);
   font-size: .75rem;
   font-weight: 700;
   flex: none;
@@ -385,7 +426,7 @@ span.spk { width: 34px; height: 34px; min-height: 34px; }
 .kana .gap { visibility: hidden; }
 
 /* Flashcard */
-.card { min-height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
+.card:not(.stack):not(.guide-accordion-item) { min-height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 10px; text-align: center; }
 .grades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .grades button { flex-direction: column; gap: 0; padding: 8px 4px; font-size: .9rem; }
 .grades small { color: var(--muted); font-size: .72rem; }
@@ -417,7 +458,7 @@ svg { display: inline-block; vertical-align: middle; width: 20px; height: 20px; 
 .modal-mask { position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 99; display: flex; align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(2px); }
 .modal-box { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,.22); box-sizing: border-box; }
 .sync-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; min-height: 34px; padding: 0; border-radius: 50%; color: var(--teal); border: 1px solid var(--line); background: var(--surface); cursor: pointer; transition: background .15s, transform .2s ease; flex-shrink: 0; }
-.sync-btn .sync-dot { position: absolute; top: -1px; right: -1px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--card); }
+.sync-btn .sync-dot { position: absolute; top: -1px; right: -1px; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--surface); }
 .sync-btn .sync-dot.on { background: #10b981; }
 .sync-btn .sync-dot.off { background: #f59e0b; }
 .sync-btn:hover { background: var(--sunk); }
@@ -731,7 +772,7 @@ body { overflow-x: hidden; }
 .mini-bar-wrap {
   width: 100%;
   height: 32px;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--sunk);
   border-radius: 4px;
   display: flex;
   align-items: flex-end;
@@ -770,10 +811,16 @@ body { overflow-x: hidden; }
   cursor: pointer;
   transition: all .2s ease;
   text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.25;
 }
 .pace-btn.active {
   background: var(--teal);
-  color: #fff;
+  color: var(--teal-ink);
   border-color: var(--teal);
   box-shadow: 0 2px 6px rgba(15, 82, 87, 0.25);
 }
@@ -1010,7 +1057,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261118-0100';
+const APP_BUILD_ID = '20261118-0200';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2764,6 +2811,20 @@ function h(tag, attrs, ...kids) {
   for (const c of kids.flat(9)) if (c != null && c !== false) el.append(c instanceof Node ? c : document.createTextNode(String(c)));
   return el;
 }
+// Ô tìm kiếm vẽ lại cả tab mỗi lần gõ: giữ focus + vị trí con trỏ, và không cắt ngang khi đang gõ bằng bộ gõ (IME).
+function searchInputHandlers(cls, setVal, rerender) {
+  const run = (e) => {
+    const pos = e.target.selectionStart;
+    setVal(e.target.value);
+    rerender();
+    const el = document.querySelector('.' + cls);
+    if (el) {
+      el.focus({ preventScroll: true });
+      try { el.selectionStart = el.selectionEnd = pos == null ? el.value.length : pos; } catch (_) {}
+    }
+  };
+  return { oninput: (e) => { if (!e.isComposing) run(e); }, oncompositionend: run };
+}
 // Chữ có phiên âm dạng 漢{かん} → <ruby>
 function ruby(s) {
   const frag = document.createDocumentFragment(); const re = /([0-9０-９㐀-鿿々]+)\{([^}]+)\}/g; let last = 0, m;
@@ -3927,7 +3988,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.88 · Cập nhật 18/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.89 · Cập nhật 18/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -15260,12 +15321,7 @@ function renderKnowledgeGrammar(code) {
         style: { flex: 1, minHeight: '44px', padding: '10px 14px' },
         placeholder: code === 'en' ? '🔍 Tìm kiếm ngữ pháp A1–C1, công thức, ví dụ...' : (isJa ? '🔍 Tìm kiếm ngữ pháp N5–N1, từ khóa, ví dụ...' : '🔍 Tìm ngữ pháp HSK 1–9, Quyển 1–4, từ khóa...'),
         value: GQ_SEARCH[code] || '',
-        oninput: (e) => {
-          GQ_SEARCH[code] = e.target.value;
-          knowledgeTabView();
-          const el = document.querySelector('.gram-search-input');
-          if (el) { el.focus(); el.selectionStart = el.selectionEnd = el.value.length; }
-        }
+        ...searchInputHandlers('gram-search-input', (v) => { GQ_SEARCH[code] = v; }, knowledgeTabView)
       }),
       GQ_SEARCH[code] ? h('button', { class: 'ghost mini', onclick: () => { GQ_SEARCH[code] = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
     ),
@@ -15381,8 +15437,9 @@ function renderKnowledgeChietTu(code) {
       type: 'search',
       placeholder: '🔍 Tìm theo chữ Hán, Pinyin, Hán Việt, cấu tạo bộ phận hoặc câu chuyện chiết tự...',
       value: CHIET_TU_SEARCH,
+      class: 'chiet-search-input',
       style: { flex: '1 1 260px', minHeight: '40px', padding: '8px 12px' },
-      oninput: (e) => { CHIET_TU_SEARCH = e.target.value; knowledgeTabView(); }
+      ...searchInputHandlers('chiet-search-input', (v) => { CHIET_TU_SEARCH = v; }, knowledgeTabView)
     })
   );
 
@@ -15590,8 +15647,9 @@ function renderKnowledgeChars(code) {
           type: 'search',
           placeholder: '🔍 Tìm bộ thủ (nhập chữ Hán, Pinyin hoặc nghĩa tiếng Việt)...',
           value: CHARS_SEARCH,
+          class: 'chars-search-input',
           style: { minHeight: '40px', padding: '8px 12px' },
-          oninput: (e) => { CHARS_SEARCH = e.target.value; knowledgeTabView(); }
+          ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
         }),
         h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '8px' } },
           ...filteredRad.map((x) => h('div', {
@@ -15652,8 +15710,9 @@ function renderKnowledgeChars(code) {
       type: 'search',
       placeholder: '🔍 Tìm Kanji theo chữ, âm Hán Việt, On, Kun...',
       value: CHARS_SEARCH,
+      class: 'chars-search-input',
       style: { minHeight: '40px', padding: '8px 12px' },
-      oninput: (e) => { CHARS_SEARCH = e.target.value; knowledgeTabView(); }
+      ...searchInputHandlers('chars-search-input', (v) => { CHARS_SEARCH = v; }, knowledgeTabView)
     }),
     h('div', { class: 'stack', style: { gap: '8px' } },
       ...filtered.map((k) => h('div', { class: 'panel kj', style: { borderRadius: '12px', background: 'var(--surface)' } },
@@ -16825,13 +16884,13 @@ function renderHskkExamView() {
                 borderRadius: '12px',
                 boxShadow: '0 4px 16px rgba(0,0,0,0.25)',
                 objectFit: 'contain',
-                border: '1px solid rgba(255,255,255,0.12)'
+                border: '1px solid var(--line)'
               }
             })
           );
         } else if (it.imgUrls && it.imgUrls.length) {
           pictureArea = h('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', margin: '8px 0' } },
-            ...it.imgUrls.map((url, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center', background: 'rgba(0,0,0,0.15)', padding: '8px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.08)' } },
+            ...it.imgUrls.map((url, idx) => h('div', { class: 'stack', style: { gap: '4px', textAlign: 'center', background: 'var(--sunk)', padding: '8px', borderRadius: '10px', border: '1px solid var(--line)' } },
               h('img', {
                 src: url,
                 alt: 'Tranh ' + (idx + 1),
@@ -17752,6 +17811,22 @@ function transferPanel() {
     copyBtn, out, inp, mergeBtn);
 }
 
+// Chọn giao diện Sáng / Tối / Theo máy (lưu ở localStorage 'lingogo-theme', áp dụng ngay).
+function themeSettingPanel() {
+  const cur = (document.documentElement.dataset.themePref) || 'auto';
+  const opts = [['light', '☀️', 'Sáng'], ['dark', '🌙', 'Tối'], ['auto', '📱', 'Theo máy']];
+  const btns = opts.map(([v, ic, label]) => h('button', {
+    type: 'button', class: 'pace-btn' + (cur === v ? ' active' : ''), 'aria-pressed': cur === v ? 'true' : 'false', 'data-theme-opt': v,
+    onclick: () => {
+      window.applyTheme(v);
+      btns.forEach((b) => { const on = b.dataset.themeOpt === v; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    }
+  }, h('span', { style: { fontSize: '1.1rem' } }, ic), h('span', {}, label)));
+  return h('div', { class: 'panel stack', style: { gap: '6px' } },
+    h('h3', {}, 'Giao diện'),
+    h('div', { class: 'pace-selector', role: 'group', 'aria-label': 'Chọn giao diện', style: { margin: '4px 0 0' } }, btns),
+    h('p', { class: 'small muted', style: { margin: 0 } }, '“Theo máy” tự đổi Sáng/Tối theo cài đặt của điện thoại hoặc máy tính.'));
+}
 function progressView() {
   const t = todayN(), days = Array.from({ length: 7 }, (_, i) => t - 6 + i);
   const xd = (d) => xpOf(d, S.lang);
@@ -17799,6 +17874,7 @@ function progressView() {
         days.map((d) => h('div', { class: d === t ? 'today' : '' }, h('span', {}, xd(d) || ''), h('i', { style: { height: (xd(d) / max * 100) + '%' } }), h('span', {}, wd[dayDate(d).getUTCDay()]))))),
     h('div', { class: 'stack' }, h('h2', {}, 'Thành tích'),
       h('div', { class: 'badges' }, ACH.map(([code, title, desc]) => h('div', { class: 'badge' + (S.ach[code] ? '' : ' off') }, h('b', {}, title), h('p', { class: 'small muted' }, desc))))),
+    themeSettingPanel(),
     h('div', { class: 'panel stack' }, h('h3', {}, 'Cài đặt lộ trình thông minh'),
       h('label', { class: 'row', style: { alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600 } }, smartSchedCheck, h('span', {}, 'Bật lộ trình học theo thứ trong tuần (chống loạn ngôn ngữ)')),
       h('p', { class: 'small muted', style: { margin: 0 } }, 'Tự động tăng mục tiêu XP cho ngôn ngữ trọng tâm trong ngày và giảm nhẹ cho các ngôn ngữ duy trì (kèm nhắc nhở Spaced Repetition).'),

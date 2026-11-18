@@ -1,5 +1,5 @@
 {
-  "version": "3.88",
-  "build": "20261118-0100",
-  "message": "Sửa lỗi chọn đáp án ngữ pháp, hiển thị nghĩa tiếng Việt phần luyện nghe và bổ sung đủ audio tiếng Nhật bản xứ"
+  "version": "3.89",
+  "build": "20261118-0200",
+  "message": "Thêm chế độ Sáng/Tối/Theo máy, sửa ô tìm kiếm mất con trỏ, nút nhịp học bị tràn và màu chế độ tối"
 }
