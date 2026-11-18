@@ -280,8 +280,9 @@ select { width: 100%; }
 .options { display: grid; gap: 10px; }
 .options button { justify-content: flex-start; text-align: left; }
 .options button[aria-pressed="true"] { border: 2px solid var(--teal); background: var(--sunk); }
-.options button.right { background: var(--good-bg); border-color: var(--good); }
-.options button.wrong { background: var(--bad-bg); border-color: var(--bad); }
+.options button.right { background: var(--good-bg); border: 2px solid var(--good); }
+.options button.wrong { background: var(--bad-bg); border: 2px solid var(--bad); }
+.options button.right:disabled, .options button.wrong:disabled { opacity: 1; color: var(--ink); }
 .big { font-size: 2.2rem; font-weight: 700; text-align: center; line-height: 1.25; overflow-wrap: anywhere; }
 .big[lang="zh-Hans"], .big[lang="ja"] { font-size: 2.8rem; font-weight: 500; }
 .read { color: var(--teal); text-align: center; font-size: 1rem; }
@@ -1009,7 +1010,7 @@ details[open] > summary .guide-arrow { transform: rotate(180deg); }
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261116-1015';
+const APP_BUILD_ID = '20261118-0100';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -1856,6 +1857,14 @@ function preloadTopicAudio(code, t) {
   };
   (t.vocab || []).forEach((v) => { enqueue(v.w); if (v.ex) enqueue(v.ex); });
   (t.speak || []).forEach((sc) => (sc.lines || []).forEach((ln) => enqueue(ln.t || ln.text)));
+  (t.sents || []).forEach((s) => {
+    const tx = s && s.chunks ? s.chunks.join('') : (s && (s.text || s.w || s.t));
+    if (tx) enqueue(tx);
+  });
+  (t.kanji || []).forEach((k) => {
+    if (k && k.k) enqueue(k.k);
+    (k && k.ex || []).forEach((e) => enqueue(Array.isArray(e) ? e[0] : (e && e.w)));
+  });
   (t.coach || []).forEach((c) => {
     if (c.q) enqueue(c.q);
     if (c.sa) enqueue(c.sa);
@@ -3918,7 +3927,7 @@ function homeView() {
     ...phases.map((ph) => h('div', { class: 'stack' },
       ph.name && h('p', { class: 'label phase' }, cleanPhaseName(ph.name)),
       ...ph.topics.map((t) => topicCard(t, nx, curCat === 'all' ? t.pos : (t.catPos || (filteredTopics.indexOf(t) + 1)))))),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.87 · Cập nhật 16/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.88 · Cập nhật 18/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9604,7 +9613,7 @@ function renderInlineTopicQuiz(t) {
               if (q.speakText) sayAfter(code, q.speakText, 180);
               draw();
             }
-          }, h('span', { class: 'kbd' }, idxOpt + 1), h('span', { class: 'grow', lang: q.langOpts ? langAttr : null }, opt));
+          }, h('span', { class: 'kbd' }, idxOpt + 1), h('span', { class: 'grow', lang: (q.langOpts || /[\u4e00-\u9fff\u3040-\u30ff]/.test(opt)) ? langAttr : null }, opt));
         })
       ),
       done ? h('div', { class: 'feedback ' + (isOk ? 'ok' : 'no'), style: { padding: '10px 12px', gap: '4px' } },
@@ -11471,7 +11480,7 @@ function lessonView(t, i) {
     } else if (ex.type === 'gquiz') {
       const q = ex.q, langAttr = LANGS[code].lang;
       if (q.type === 'cloze' || q.type === 'mcq') {
-        const c = choose(q.opts, (o) => h('span', q.type === 'cloze' ? { lang: langAttr } : {}, o));
+        const c = choose(q.opts, (o) => h('span', (q.type === 'cloze' || /[\u4e00-\u9fff\u3040-\u30ff]/.test(o)) ? { lang: langAttr } : {}, o));
         c.setCorrect(q.answer);
         body = h('div', { class: 'stack' },
           ...renderGrammarMcqClozeHeader(q, langAttr, 'Ngữ pháp · '),
@@ -11545,16 +11554,20 @@ function lessonView(t, i) {
         ex.type === 'quiz' ? quizFeedback(code, ex, r) : null,
         ex.type === 'listen_dlg' ? listenDlgFeedback(code, ex, r) : null,
         ex.type === 'gquiz' ? grammarQuizFeedback(code, ex, r) : null,
-        (['listen', 'reverse'].includes(ex.type) || (!r.correct && ex.type === 'meaning')) && ex.v && ex.v.r ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
-          ex.type === 'meaning' && !r.correct ? h('p', { lang: LANGS[code].lang, style: { margin: 0, fontWeight: 600 } }, plain(ex.v.w) + ' — ' + ex.v.m) : null,
-          h('p', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null, style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r),
+        (['listen', 'reverse'].includes(ex.type) || (!r.correct && ex.type === 'meaning')) && ex.v ? h('div', { class: 'stack', style: { gap: '4px', marginTop: '4px' } },
+          ex.v.m ? h('p', { lang: LANGS[code].lang, style: { margin: 0, fontWeight: 600 } }, plain(ex.v.w) + ' — ' + ex.v.m) : null,
+          (ex.v.r && ex.v.r !== plain(ex.v.w)) ? h('p', { class: code === 'en' ? 'ipa' : 'read', lang: code === 'ja' ? 'ja' : null, style: { margin: 0, color: 'var(--teal)', fontWeight: 600, textAlign: 'left' } }, ex.v.r) : null,
+          ex.v.ex ? h('p', { class: 'small', style: { margin: '2px 0 0 0' } },
+            h('span', { lang: LANGS[code].lang }, plain(ex.v.ex)),
+            ex.v.exm ? h('span', { class: 'muted' }, ' — ' + ex.v.exm) : null
+          ) : null,
           h('div', { class: 'listen', style: { justifyContent: 'flex-start' } }, listenBtns(code, ex.v.w))
         ) : null,
         ex.v && ['meaning', 'listen', 'reverse'].includes(ex.type) && code !== 'en' ? h('div', { style: { marginTop: '8px' } }, hvBlock(code, ex.v, { compact: true })) : null
       ),
       ex.type === 'fill' ? fillReveal(code, ex.fill, (ex.fill.src && !ex.fill.audio) ? null : t.id) : '');
       if (ex.type === 'order') sayAfter(code, ex.text, 250);
-      if (ex.type === 'quiz' && (code === 'en' || (code === 'zh' && /[\u4e00-\u9fff]/.test(((ex.q.o || ex.q.opts || [])[ex.q.a]) || '')))) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) sayAfter(code, optTarget, 250); }
+      if (ex.type === 'quiz' && (code === 'en' || ((code === 'zh' || code === 'ja') && /[\u4e00-\u9fff\u3040-\u30ff]/.test(((ex.q.o || ex.q.opts || [])[ex.q.a]) || '')))) { const optTarget = (ex.q.o || ex.q.opts || [])[ex.q.a]; if (optTarget) sayAfter(code, optTarget, 250); }
       if (ex.type === 'gquiz' && ex.q && ex.q.e && ex.q.e[0]) sayAfter(code, ex.q.e[0], 250);
       btn.hidden = false; btn.disabled = false; btn.textContent = 'Tiếp theo ➔'; btn.onclick = step; btn.focus();
     }
@@ -12246,7 +12259,7 @@ function reviewView(forceExtra = false) {
           if (done) return;
           bs.forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.answer) b.classList.add('right'); else if (j === idx) b.classList.add('wrong'); });
           revealGrammar(o === q.answer);
-        } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, idx + 1), h('span', Object.assign({ class: 'grow' }, q.type === 'cloze' ? { lang: langAttr } : {}), o)));
+        } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, idx + 1), h('span', Object.assign({ class: 'grow' }, (q.type === 'cloze' || /[\u4e00-\u9fff\u3040-\u30ff]/.test(o)) ? { lang: langAttr } : {}), o)));
         body = h('div', { class: 'stack' },
           ...renderGrammarMcqClozeHeader(q, langAttr),
           h('div', { class: 'options' }, bs)
@@ -14378,7 +14391,7 @@ function gqMake(p, all, pool, forceTypes = null) {
         hint: qz.hint || '',
         answer: opts[qz.a],
         answerIdx: qz.a,
-        opts: opts.slice(),
+        opts: shuffle(opts.slice()),
         why: qz.why || ''
       };
     }
@@ -14490,7 +14503,7 @@ function grammarQuizView(levelKey, onlyWrong, customOpts) {
         if (done) return;
         bs.forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.answer) b.classList.add('right'); else if (j === k) b.classList.add('wrong'); });
         reveal(o === q.answer);
-      } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, k + 1), h('span', Object.assign({ class: 'grow' }, q.type === 'cloze' ? { lang: langAttr } : {}), o)));
+      } }, h('span', { class: 'kbd', 'aria-hidden': 'true' }, k + 1), h('span', Object.assign({ class: 'grow' }, (q.type === 'cloze' || /[\u4e00-\u9fff\u3040-\u30ff]/.test(o)) ? { lang: langAttr } : {}), o)));
       body = h('div', { class: 'stack' },
         ...renderGrammarMcqClozeHeader(q, langAttr),
         h('div', { class: 'options' }, bs));
