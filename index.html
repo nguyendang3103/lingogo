@@ -1160,7 +1160,7 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261119-0055';
+const APP_BUILD_ID = '20261119-0125';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -2676,6 +2676,7 @@ function nextLesson(d, cat) {
 }
 function lessonTitle(t, i) {
   const l = t.lessons[i];
+  if (l.kind === 'cat_exam') return 'Kiểm tra vượt cấp chuyên đề';
   if (l.kind === 'review') return 'Ôn tập cả chủ đề';
   if (l.kind === 'quiz') return 'Đọc hiểu tình huống' + (t.lessons.filter((x) => x.kind === 'quiz').length > 1 ? ' ' + (t.lessons.filter((x) => x.kind === 'quiz').indexOf(l) + 1) : '');
   if (l.kind === 'fill') return t.lang === 'en' ? 'Viết thực hành (Email)' : 'Viết thực hành (Hội thoại)';
@@ -4230,6 +4231,37 @@ function homeView() {
     })(),
     catBar,
     (() => {
+      if (curCat === 'all' || !filteredTopics.length) return null;
+      const catDoneTopics = filteredTopics.filter((t) => topicDone(t)).length;
+      if (catDoneTopics >= filteredTopics.length) return null;
+      return h('div', {
+        class: 'panel row between',
+        style: {
+          padding: '10px 14px',
+          background: 'rgba(180,83,9,.06)',
+          border: '1px solid rgba(180,83,9,.28)',
+          borderRadius: '12px',
+          alignItems: 'center',
+          gap: '10px',
+          flexWrap: 'wrap'
+        }
+      },
+        h('div', { style: { flex: '1 1 200px', minWidth: 0 } },
+          h('div', { style: { fontSize: '.88rem', fontWeight: 700, color: 'var(--amber)' } },
+            '🚀 Kiểm tra vượt cấp ' + (curCatObj.level || curCatObj.short) + ' (' + catDoneTopics + '/' + filteredTopics.length + ' chủ đề)'
+          ),
+          h('div', { class: 'small muted', style: { fontSize: '.76rem', marginTop: '2px' } },
+            'Làm bài tổng hợp đạt ≥ 80% để pass & hoàn thành 100% cả chuyên đề ' + curCatObj.name
+          )
+        ),
+        h('button', {
+          class: 'accent mini',
+          style: { whiteSpace: 'nowrap', padding: '7px 12px', fontSize: '.82rem', fontWeight: 700, flexShrink: 0 },
+          onclick: () => startCategoryExam(S.lang, curCatObj, filteredTopics)
+        }, 'Thi vượt cấp →')
+      );
+    })(),
+    (() => {
       if (phases.length <= 1) {
         return h('div', { class: 'stack' },
           ...phases.map((ph) => h('div', { class: 'stack' },
@@ -4269,7 +4301,7 @@ function homeView() {
       });
       return wrap;
     })(),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.98 · Cập nhật 19/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.99 · Cập nhật 19/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -11381,13 +11413,101 @@ function createTwoPartFill(code, fillObj, opts) {
   return api;
 }
 
-function lessonView(t, i) {
+function buildCategoryExamSteps(code, topics) {
+  const d = DATA[code];
+  const allWords = d ? d.topics.flatMap((x) => x.vocab || []) : [];
+  const opt = (v, key) => shuffle([v, ...sample(allWords, 3, (x) => x.id === v.id || x[key] === v[key])]);
+  const steps = [];
+
+  // 1. Sample up to 8 vocab items distributed evenly across topics
+  const pickedWords = [];
+  const usedIds = new Set();
+  for (const tp of shuffle(topics)) {
+    const cand = sample(tp.vocab || [], 1, (v) => usedIds.has(v.id))[0];
+    if (cand) { pickedWords.push(cand); usedIds.add(cand.id); }
+    if (pickedWords.length >= 8) break;
+  }
+  if (pickedWords.length < 8) {
+    const pool = topics.flatMap((tp) => tp.vocab || []);
+    pickedWords.push(...sample(pool, 8 - pickedWords.length, (v) => usedIds.has(v.id)));
+  }
+  pickedWords.forEach((v, idx) => {
+    const kinds = ['meaning', 'reverse', 'listen'];
+    const kind = kinds[idx % 3];
+    steps.push({ type: kind, v, opts: opt(v, kind === 'meaning' ? 'm' : 'w') });
+  });
+
+  // 2. Sample up to 2 listening dialogues (en)
+  if (code === 'en') {
+    const tracks = shuffle(topics.flatMap((tp) => (Array.isArray(tp.listening) ? tp.listening : [])));
+    tracks.slice(0, 2).forEach((track) => {
+      const qs = Array.isArray(track.questions) ? track.questions : [];
+      const q = qs[0];
+      if (q) steps.push({ type: 'listen_dlg', track, q });
+    });
+  }
+
+  // 3. Sample up to 5 topic quizzes distributed across topics
+  const pickedQuizzes = [];
+  const usedQ = new Set();
+  for (const tp of shuffle(topics)) {
+    const q = sample(tp.quiz || [], 1, (x) => usedQ.has(x.id || x.q))[0];
+    if (q) { pickedQuizzes.push(q); usedQ.add(q.id || q.q); }
+    if (pickedQuizzes.length >= 5) break;
+  }
+  if (pickedQuizzes.length < 5) {
+    const qPool = topics.flatMap((tp) => tp.quiz || []);
+    pickedQuizzes.push(...sample(qPool, 5 - pickedQuizzes.length, (x) => usedQ.has(x.id || x.q)));
+  }
+  pickedQuizzes.forEach((q) => steps.push({ type: 'quiz', q }));
+
+  // 4. Sample up to 2 grammar quizzes (zh/ja) or kanji (ja)
+  if ((code === 'zh' || code === 'ja') && d && d.grammar) {
+    const gids = [...new Set(topics.flatMap((tp) => tp.gram || []))];
+    sample(gids, Math.min(2, gids.length)).forEach((gid, idxG) => {
+      const qStep = makeGrammarQuizStep(code, gid, idxG % 2 === 0 ? ['mcq', 'cloze'] : ['cloze', 'mcq']);
+      if (qStep) steps.push(qStep);
+    });
+  }
+  const kanjis = topics.flatMap((tp) => tp.kanji || []);
+  if (kanjis.length) {
+    const allKanji = d ? d.topics.flatMap((x) => x.kanji || []) : kanjis;
+    sample(kanjis, Math.min(2, kanjis.length)).forEach((k) => {
+      steps.push({ type: 'kanji', k, opts: shuffle([k, ...sample(allKanji, 3, (x) => x.k === k.k)]) });
+    });
+  }
+
+  // 5. Sample up to 2 sentence ordering steps
+  const exWords = shuffle(pickedWords.filter((v) => v.ex && tokensOf(code, v.ex).length >= 3));
+  exWords.slice(0, 2).forEach((v) => {
+    steps.push({ type: 'order', text: v.ex, r: v.exr, trans: v.exm || ('Câu có từ “' + plain(v.w) + '” (' + v.m + ')'), tokens: tokensOf(code, v.ex), v });
+  });
+
+  return steps;
+}
+
+function startCategoryExam(code, catObj, topics) {
+  const steps = buildCategoryExamSteps(code, topics);
+  const synthTopic = {
+    id: 'cat-' + catObj.id,
+    lang: code,
+    title: 'Kiểm tra vượt cấp · ' + (catObj.level || catObj.short),
+    sub: catObj.name,
+    vocab: topics.flatMap((x) => x.vocab || []).slice(0, 12),
+    lessons: [{ kind: 'cat_exam', words: [] }]
+  };
+  lessonView(synthTopic, 0, { catExam: { catObj, topics, steps } });
+}
+
+function lessonView(t, i, opts = null) {
   VIEW = 'lesson'; setTabs(false);
+  const catExam = opts && opts.catExam;
   setFeedbackContext({ mode: 'lesson', topicId: t.id, topicTitle: t.sub || t.title, lessonIndex: i, lessonKind: t.lessons[i].kind, lessonTitle: lessonTitle(t, i) });
-  const code = t.lang || S.lang || 'en', steps = buildSteps(t, i), first = new Map(), retried = new Set(), queue = steps.map((s, n) => ({ ...s, n }));
+  const code = t.lang || S.lang || 'en', steps = catExam ? catExam.steps : buildSteps(t, i), first = new Map(), retried = new Set(), queue = steps.map((s, n) => ({ ...s, n }));
   let done = 0;
   if (LANGS[code] && LANGS[code].cjk) loadStrokes(code);
-  preloadTopicAudio(code, t);
+  if (catExam) catExam.topics.slice(0, 6).forEach((subT) => preloadTopicAudio(code, subT));
+  else preloadTopicAudio(code, t);
   if (t.gram && t.gram.length && DATA[code] && DATA[code].grammar) preloadGrammarAudio(code, t.gram.map((gid) => DATA[code].grammar[gid]).filter(Boolean));
   const exit = () => { stopSay(); setFeedbackContext(null); go('home'); };
 
@@ -11960,10 +12080,36 @@ function lessonView(t, i) {
     all.forEach((r) => { if (r.ex.type === 'fill') fillXp += XP_ITEM * (r.ok || 0); else if (r.correct && !(r.ex.type === 'write' && r.self)) won.add(keyOf(r.ex)); });
     let xp = XP_ITEM * won.size + fillXp; if (repeat) xp = Math.ceil(xp / 2);
     const isReviewLesson = t.lessons[i] && t.lessons[i].kind === 'review';
-    const wasTopicDone = topicDone(t);
+    const wasTopicDone = !catExam && topicDone(t);
     const passedShortcut = isReviewLesson && pct >= 80;
+    const passedCatExam = !!(catExam && pct >= 80);
     let filledCount = 0;
-    if (passedShortcut) {
+    let filledTopicCount = 0;
+    if (passedCatExam) {
+      catExam.topics.forEach((subT) => {
+        if (!topicDone(subT)) filledTopicCount++;
+        subT.lessons.forEach((_, j) => {
+          const lk = lkey(subT, j);
+          if (S.del && S.del[lk]) delete S.del[lk];
+          if (S.del && S.del['spk:' + lk]) delete S.del['spk:' + lk];
+          if (S.del && S.del['wrt:' + lk]) delete S.del['wrt:' + lk];
+          if (S.lessons[lk] == null) filledCount++;
+          S.lessons[lk] = Math.max(pct, typeof S.lessons[lk] === 'number' ? S.lessons[lk] : 0);
+        });
+        (subT.vocab || []).forEach((w) => {
+          const sKey = sid(code, w.id);
+          if (!S.srs[sKey]) srsRate(sKey, true);
+        });
+        (subT.kanji || []).forEach((kj) => {
+          const sKey = sid(code, kj.id);
+          if (!S.srs[sKey]) srsRate(sKey, true);
+        });
+        (subT.gram || []).forEach((gid) => {
+          const gKey = code + ':gram:' + gid;
+          if (!S.srs[gKey]) srsRate(gKey, true);
+        });
+      });
+    } else if (passedShortcut) {
       t.lessons.forEach((l, j) => {
         const lk = lkey(t, j);
         if (S.del && S.del[lk]) delete S.del[lk];
@@ -11984,7 +12130,7 @@ function lessonView(t, i) {
         const gKey = code + ':gram:' + gid;
         if (!S.srs[gKey]) srsRate(gKey, true);
       });
-    } else {
+    } else if (!catExam) {
       S.lessons[k] = Math.max(pct, typeof S.lessons[k] === 'number' ? S.lessons[k] : 0);
     }
     addXp(xp, code); checkAch();
@@ -11994,7 +12140,21 @@ function lessonView(t, i) {
     mount(h('div', { class: 'panel stack center', style: { marginTop: '24px' } },
       h('p', { class: 'label' }, t.sub || t.title),
       h('h1', {}, correct === total ? 'Không sai câu nào!' : 'Xong bài rồi!'),
-      h('p', {}, h('b', {}, correct + '/' + total + ' câu đúng (' + pct + '%)'), ' · +' + xp + ' XP' + (repeat ? ' (học lại: nửa XP)' : '')),
+      h('p', {}, h('b', {}, correct + '/' + total + ' câu đúng (' + pct + '%)'), ' · +' + xp + ' XP' + (repeat && !catExam ? ' (học lại: nửa XP)' : '')),
+      passedCatExam && h('div', {
+        class: 'feedback ok',
+        style: { width: '100%', textAlign: 'center', margin: '4px 0' }
+      },
+        h('strong', {}, '🏆 Đạt ' + pct + '% (≥ 80%) · Pass 100% chuyên đề ' + (catExam.catObj.level || catExam.catObj.short) + '!'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, 'Đã mở khóa & đánh dấu hoàn thành toàn bộ ' + catExam.topics.length + '/' + catExam.topics.length + ' chủ đề (' + filledTopicCount + ' chủ đề mới · ' + filledCount + ' bài học).')
+      ),
+      catExam && !passedCatExam && h('div', {
+        class: 'feedback',
+        style: { width: '100%', textAlign: 'center', margin: '4px 0', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', color: 'var(--ink)' }
+      },
+        h('strong', {}, '💡 Đạt ' + pct + '% — Cần từ 80% trở lên để pass cả chuyên đề ' + (catExam.catObj.level || catExam.catObj.short)),
+        h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } }, 'Bạn có thể thi lại ngay hoặc ôn từng chủ đề bên ngoài.')
+      ),
       passedShortcut && !wasTopicDone && h('div', {
         class: 'feedback ok',
         style: { width: '100%', textAlign: 'center', margin: '4px 0' }
@@ -12010,9 +12170,10 @@ function lessonView(t, i) {
         h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } }, 'Bạn có thể làm lại bài Ôn tập cả chủ đề này hoặc học từng bài nhỏ bên dưới.')
       ),
       h('p', {}, 'Hôm nay ' + LANGS[code].short + ': ' + xpOf(todayN(), code) + '/' + goal() + ' XP · chuỗi ' + streak(code) + ' ngày'),
-      nx && h('button', { class: 'primary block', onclick: () => lessonView(nx.t, nx.i) }, 'Học bài tiếp theo'),
+      catExam && !passedCatExam && h('button', { class: 'primary block', onclick: () => startCategoryExam(code, catExam.catObj, catExam.topics) }, '🔄 Thi lại vượt cấp chuyên đề'),
+      nx && h('button', { class: (catExam && !passedCatExam ? '' : 'primary ') + 'block', onclick: () => lessonView(nx.t, nx.i) }, 'Học bài tiếp theo'),
       h('button', { class: 'block', onclick: () => go('home') }, 'Về trang Học'),
-      repeat && h('button', {
+      repeat && !catExam && h('button', {
         class: 'ghost mini block',
         style: { color: 'var(--muted)', marginTop: '4px', fontSize: '.82rem' },
         onclick: () => {
@@ -12024,13 +12185,20 @@ function lessonView(t, i) {
       }, 'Xóa tiến độ bài này')));
   }
 
-  const isDone = lessonDone(t, i);
+  const isDone = !catExam && lessonDone(t, i);
   const oldScoreText = typeof S.lessons[lkey(t, i)] === 'number' ? ('Điểm cao nhất: ' + S.lessons[lkey(t, i)] + '%') : '';
-  const isShortcutEligible = t.lessons[i] && t.lessons[i].kind === 'review' && !topicDone(t);
+  const isShortcutEligible = !catExam && t.lessons[i] && t.lessons[i].kind === 'review' && !topicDone(t);
 
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('span', { class: 'muted small grow' }, t.sub || t.title), feedbackBtn()),
     h('h1', { lang: t.lessons[i].kind === 'learn' ? LANGS[code].lang : null }, lessonTitle(t, i)),
+    catExam && h('div', {
+      class: 'panel',
+      style: { padding: '10px 14px', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', borderRadius: '12px' }
+    },
+      h('strong', { style: { color: 'var(--amber)', fontSize: '.9rem' } }, '🚀 Kiểm tra vượt cấp chuyên đề ' + (catExam.catObj.level || catExam.catObj.short) + ' · ' + catExam.catObj.name),
+      h('p', { class: 'small', style: { margin: '3px 0 0 0' } }, 'Bài tổng hợp từ vựng, nghe hiểu và tình huống trên toàn bộ ' + catExam.topics.length + ' chủ đề. Đạt từ 80% trở lên sẽ pass 100% cả chuyên đề này.')
+    ),
     isShortcutEligible && h('div', {
       class: 'panel',
       style: { padding: '10px 14px', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', borderRadius: '12px' }

@@ -1,5 +1,5 @@
 {
-  "version": "3.98",
-  "build": "20261119-0055",
-  "message": "Ôn tập cả chủ đề đạt >= 80% tự động hoàn thành 100% toàn bộ bài học trong chủ đề (không tạo nút học tắt riêng)"
+  "version": "3.99",
+  "build": "20261119-0125",
+  "message": "Thêm nút Thi vượt cấp cho cả chuyên đề lớn (đạt >= 80% pass 100% toàn bộ chuyên đề)"
 }
