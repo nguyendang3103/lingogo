@@ -27430,8 +27430,1448 @@
       ]
     },
     {
+      "id": "189",
+      "category": "b2",
+      "level": "B2",
+      "phase": "B2 · Thương mại · Dịch vụ, Du lịch & Bảo hiểm",
+      "title": "Customer Service, SLA & Service Recovery",
+      "sub": "Ngành Dịch vụ: Quy trình CSKH, cam kết SLA & khôi phục niềm tin khách hàng",
+      "vocab": [
+        {
+          "id": "E189-0",
+          "w": "service-level agreement",
+          "r": "/ˈsɜːr.vɪs ˌlev.əl əˈɡriː.mənt/",
+          "m": "thỏa thuận cam kết mức độ dịch vụ (SLA)",
+          "d": "a formal contract specifying guaranteed response times, uptime, and service standards for clients",
+          "ex": "Our service-level agreement guarantees an initial support reply within two business hours.",
+          "exr": "",
+          "exm": "Thỏa thuận cam kết mức độ dịch vụ của chúng tôi đảm bảo phản hồi hỗ trợ ban đầu trong vòng hai giờ làm việc."
+        },
+        {
+          "id": "E189-1",
+          "w": "service recovery",
+          "r": "/ˈsɜːr.vɪs rɪˈkʌv.ɚ.i/",
+          "m": "quy trình khắc phục sự cố & khôi phục niềm tin khách hàng",
+          "d": "the coordinated steps a company takes to fix a service failure and rebuild customer goodwill",
+          "ex": "A thoughtful service recovery turned an angry guest into a loyal brand advocate.",
+          "exr": "",
+          "exm": "Một quy trình khôi phục dịch vụ chu đáo đã biến vị khách giận dữ thành người ủng hộ trung thành của thương hiệu."
+        },
+        {
+          "id": "E189-2",
+          "w": "escalation",
+          "r": "/ˌes.kəˈleɪ.ʃən/",
+          "m": "sự chuyển cấp xử lý lên tuyến trên hoặc quản lý",
+          "d": "routing an unresolved or urgent customer issue to a senior specialist or supervisor",
+          "ex": "If a billing dispute remains unresolved after 24 hours, immediate escalation to a team lead is mandatory.",
+          "exr": "",
+          "exm": "Nếu tranh chấp hóa đơn chưa được giải quyết sau 24 giờ, việc chuyển cấp ngay lên trưởng nhóm là bắt buộc."
+        },
+        {
+          "id": "E189-3",
+          "w": "customer retention",
+          "r": "/ˈkʌs.tə.mɚ rɪˈten.ʃən/",
+          "m": "giữ chân khách hàng sử dụng dịch vụ lâu dài",
+          "d": "the ability of a business to keep existing clients subscribed or returning over time",
+          "ex": "Improving post-sale support raised our annual customer retention from 78 percent to 91 percent.",
+          "exr": "",
+          "exm": "Việc cải thiện hỗ trợ sau bán hàng đã nâng tỷ lệ giữ chân khách hàng hằng năm từ 78% lên 91%."
+        },
+        {
+          "id": "E189-4",
+          "w": "churn rate",
+          "r": "/ˈtʃɜːrn reɪt/",
+          "m": "tỷ lệ khách hàng ngừng sử dụng / rời bỏ dịch vụ",
+          "d": "the percentage of subscribers or recurring clients who cancel their service within a given period",
+          "ex": "Slow response times during peak hours drove up our monthly churn rate last quarter.",
+          "exr": "",
+          "exm": "Thời gian phản hồi chậm vào giờ cao điểm đã đẩy tỷ lệ khách hàng rời bỏ dịch vụ hàng tháng tăng lên trong quý trước."
+        },
+        {
+          "id": "E189-5",
+          "w": "first-contact resolution",
+          "r": "/ˌfɜːrst ˈkɑːn.tækt ˌrez.əˈluː.ʃən/",
+          "m": "giải quyết triệt để ngay trong lần liên hệ đầu tiên",
+          "d": "solving a customer inquiry or complaint completely during the very first interaction without transfers",
+          "ex": "Empowering agents to approve small refunds boosted first-contact resolution across the help desk.",
+          "exr": "",
+          "exm": "Trao quyền cho nhân viên duyệt hoàn tiền mức nhỏ đã giúp tỷ lệ giải quyết ngay lần đầu ở bộ phận hỗ trợ tăng mạnh."
+        },
+        {
+          "id": "E189-6",
+          "w": "onboarding",
+          "r": "/ˈɑːn.bɔːr.dɪŋ/",
+          "m": "quy trình hướng dẫn khách hàng mới làm quen dịch vụ",
+          "d": "the structured orientation process that helps new clients set up and get value from a service smoothly",
+          "ex": "A guided thirty-day onboarding session reduces setup mistakes for enterprise clients.",
+          "exr": "",
+          "exm": "Buổi hướng dẫn làm quen dịch vụ có người kèm trong 30 ngày giúp giảm lỗi thiết lập cho khách hàng doanh nghiệp."
+        },
+        {
+          "id": "E189-7",
+          "w": "turnaround time",
+          "r": "/ˈtɜːrn.ə.raʊnd taɪm/",
+          "m": "thời gian hoàn tất xử lý một yêu cầu từ đầu đến cuối",
+          "d": "the total elapsed time from receiving a service request until final delivery of the solution",
+          "ex": "We cut our repair turnaround time in half by keeping spare parts in regional service hubs.",
+          "exr": "",
+          "exm": "Chúng tôi đã giảm một nửa thời gian hoàn tất sửa chữa nhờ dự trữ linh kiện tại các trạm dịch vụ khu vực."
+        },
+        {
+          "id": "E189-8",
+          "w": "proactive follow-up",
+          "r": "/ˌproʊˈæk.tɪv ˈfɑː.loʊ.ʌp/",
+          "m": "chủ động liên hệ hỏi thăm và theo dõi sau xử lý",
+          "d": "reaching out to a customer before they complain again to confirm the fix worked smoothly",
+          "ex": "A proactive follow-up call 48 hours after repair reassures clients that we stand behind our work.",
+          "exr": "",
+          "exm": "Cuộc gọi chủ động hỏi thăm lại sau 48 giờ sửa chữa giúp khách hàng yên tâm rằng chúng tôi luôn có trách nhiệm với dịch vụ."
+        },
+        {
+          "id": "E189-9",
+          "w": "complimentary gesture",
+          "r": "/ˌkɑːm.pləˈmen.tɚ.i ˈdʒes.tʃɚ/",
+          "m": "ưu đãi hoặc dịch vụ tặng kèm thể hiện thiện chí",
+          "d": "a free upgrade, voucher, or service credit offered voluntarily to apologize for an inconvenience",
+          "ex": "We waived the express delivery fee as a complimentary gesture after the initial technician delay.",
+          "exr": "",
+          "exm": "Chúng tôi đã miễn phí giao nhận hỏa tốc như một món quà thiện chí sau khi kỹ thuật viên đến trễ ban đầu."
+        },
+        {
+          "id": "E189-10",
+          "w": "ticket backlog",
+          "r": "/ˈtɪk.ɪt ˈbæk.lɑːɡ/",
+          "m": "lượng yêu cầu hỗ trợ tồn đọng chưa xử lý",
+          "d": "the accumulated queue of open customer support requests waiting to be resolved",
+          "ex": "Clearing the weekend ticket backlog required two extra shifts on Monday morning.",
+          "exr": "",
+          "exm": "Việc giải quyết hết lượng yêu cầu tồn đọng từ cuối tuần đòi hỏi thêm hai ca làm tăng cường vào sáng thứ Hai."
+        },
+        {
+          "id": "E189-11",
+          "w": "satisfaction score",
+          "r": "/ˌsæt.ɪsˈfæk.ʃən skɔːr/",
+          "m": "điểm đo lường mức độ hài lòng của khách hàng (CSAT)",
+          "d": "a numerical rating collected from post-service surveys measuring how pleased customers feel",
+          "ex": "Our hospitality desk aims to keep its monthly satisfaction score above 4.7 out of 5.",
+          "exr": "",
+          "exm": "Quầy chăm sóc khách hàng của chúng tôi đặt mục tiêu giữ điểm hài lòng hàng tháng trên mức 4,7 trên 5."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q189-0",
+          "q": "A premium corporate client calls upset because a server outage lasted three hours beyond your guaranteed SLA. Best first response?",
+          "o": [
+            "Explain that peak traffic is normal and ask them to reopen the ticket tomorrow",
+            "Acknowledge the SLA breach sincerely, share live technician status, and commit to an exact update time",
+            "Transfer them directly to Accounting without taking notes"
+          ],
+          "a": 1,
+          "why": "Nhận trách nhiệm rõ ràng khi vượt quá SLA, cập nhật trạng thái thực tế và chốt giờ phản hồi giúp hạ nhiệt căng thẳng ngay lập tức."
+        },
+        {
+          "id": "q189-1",
+          "q": "Which operational metric measures how many service issues are completely solved during the customer's first call or chat?",
+          "o": [
+            "First-contact resolution",
+            "Ticket backlog",
+            "Churn rate"
+          ],
+          "a": 0,
+          "why": "First-contact resolution đo tỷ lệ xử lý dứt điểm ngay lần liên hệ đầu mà không phải chuyển máy hay hẹn gọi lại nhiều vòng."
+        },
+        {
+          "id": "q189-2",
+          "q": "Why should senior support agents hold a guided onboarding call for new B2B service accounts?",
+          "o": [
+            "To increase the ticket backlog before quarter-end",
+            "To help clients configure workflows correctly early and reduce early churn rate",
+            "To delay activating billing privileges for two months"
+          ],
+          "a": 1,
+          "why": "Onboarding bài bản ngay từ đầu giúp khách sử dụng trơn tru, hạn chế lỗi phát sinh và giảm tỷ lệ rời bỏ sớm (churn rate)."
+        },
+        {
+          "id": "q189-3",
+          "q": "Your repair team accidentally delayed a client's installation by 24 hours. Which action counts as service recovery?",
+          "o": [
+            "Fixing the issue silently and hoping the client forgets the delay",
+            "Assigning a priority technician, apologizing candidly, offering a one-month credit, and calling 48 hours later",
+            "Blaming traffic rules in the public feedback portal"
+          ],
+          "a": 1,
+          "why": "Service recovery gồm 3 bước đủ tâm: xin lỗi minh bạch + ưu đãi thiện chí + chủ động kiểm tra lại (proactive follow-up)."
+        },
+        {
+          "id": "q189-4",
+          "q": "When should a front-line agent trigger an escalation to the operations supervisor?",
+          "o": [
+            "Whenever a case requires authority beyond front-line limits or approaches SLA breach",
+            "Every time a customer asks a routine FAQ question",
+            "Only after a client cancels their contract completely"
+          ],
+          "a": 0,
+          "why": "Chuyển cấp đúng lúc khi sắp chạm ngưỡng SLA hoặc vượt thẩm quyền giúp tránh sự cố kéo dài gây mất khách."
+        },
+        {
+          "id": "q189-5",
+          "q": "What is the healthiest way to evaluate whether a service recovery effort actually worked?",
+          "o": [
+            "Ignore all survey feedback below five stars",
+            "Run a proactive follow-up check and track post-ticket satisfaction score and customer retention",
+            "Close every open ticket immediately without calling back"
+          ],
+          "a": 1,
+          "why": "Theo dõi chủ động kết hợp chỉ số hài lòng (CSAT) và tỷ lệ giữ chân (retention) phản ánh thực chất hiệu quả khôi phục niềm tin."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s189-0",
+          "title": "De-escalate an SLA delay and initiate service recovery",
+          "lines": [
+            {
+              "t": "I completely understand your frustration, Mr. Tan—three hours past our agreed SLA is unacceptable, and we take full ownership.",
+              "r": "",
+              "m": "Tôi hoàn toàn hiểu sự bức xúc của anh Tân—trễ hơn 3 tiếng so với cam kết SLA là điều không thể chấp nhận, và bên em xin nhận trách nhiệm hoàn toàn."
+            },
+            {
+              "t": "I have escalated your ticket directly to our lead field engineer, who is already on route and will complete diagnostics before 2:00 PM.",
+              "r": "",
+              "m": "Em đã chuyển cấp yêu cầu lên kỹ sư trưởng hiện trường; anh ấy đang trên đường sang và sẽ kiểm tra khắc phục xong trước 14:00 chiều nay."
+            },
+            {
+              "t": "As a complimentary gesture, we are applying a full service credit for this billing cycle and will do a proactive follow-up call tomorrow morning.",
+              "r": "",
+              "m": "Như thiện chí đền bù, bên em sẽ miễn phí toàn bộ cước kỳ này và chủ động gọi kiểm tra lại vào sáng mai."
+            }
+          ]
+        },
+        {
+          "id": "s189-1",
+          "title": "Review help-desk metrics in a weekly operations briefing",
+          "lines": [
+            {
+              "t": "Last week we cleared the Monday ticket backlog by noon and lifted first-contact resolution to eighty-six percent.",
+              "r": "",
+              "m": "Tuần trước nhóm đã xử lý hết lượng yêu cầu tồn đọng sáng thứ Hai trước trưa và nâng tỷ lệ giải quyết ngay lần đầu lên 86%."
+            },
+            {
+              "t": "Even better, strengthening thirty-day client onboarding helped push our quarterly customer retention to a record ninety-two percent.",
+              "r": "",
+              "m": "Tốt hơn nữa, việc siết chặt quy trình hướng dẫn khách mới 30 ngày đã kéo tỷ lệ giữ chân khách hàng quý này đạt kỷ lục 92%."
+            },
+            {
+              "t": "For next month, let’s cut average turnaround time on priority tickets below four hours to keep our satisfaction score above 4.8.",
+              "r": "",
+              "m": "Tháng tới hãy rút thời gian xử lý trung bình các yêu cầu ưu tiên xuống dưới 4 giờ để giữ điểm hài lòng trên mức 4,8."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c189-0",
+          "q": "A long-term client threatens to cancel because your support desk missed the 2-hour SLA twice this month. How do you respond?",
+          "vi": "Một khách hàng lâu năm dọa hủy dịch vụ vì đội hỗ trợ trễ cam kết SLA 2 giờ đến hai lần trong tháng. Bạn phản hồi ra sao?",
+          "st": "We take full responsibility for + cause, so we are implementing + action & complimentary gesture.",
+          "ph": [
+            "service-level agreement",
+            "service recovery",
+            "complimentary gesture"
+          ],
+          "sa": "We sincerely apologize and take full responsibility for falling short of our two-hour service-level agreement twice this month. I have triggered a priority service recovery plan assigning a dedicated account lead to your account immediately, and as a complimentary gesture we are crediting fifty percent of this month's retainer while reviewing our staffing schedule to prevent repeats.",
+          "ss": [
+            "May I schedule a brief follow-up call on Friday to verify that response times feel noticeably faster?"
+          ],
+          "sc": "Preventing churn when a repeat B2B client escalates missed SLA deadlines."
+        },
+        {
+          "id": "c189-1",
+          "q": "Your team's churn rate rose from 3% to 6% among new accounts in the first 60 days. What fix do you propose?",
+          "vi": "Tỷ lệ rời bỏ ở nhóm khách mới trong 60 ngày đầu tăng từ 3% lên 6%. Bạn đề xuất giải pháp gì?",
+          "st": "To bring down our churn rate, we should redesign + onboarding & proactive follow-up.",
+          "ph": [
+            "churn rate",
+            "onboarding",
+            "proactive follow-up"
+          ],
+          "sa": "The spike in early churn rate shows new customers struggle during initial setup rather than with core service quality. I propose restructuring onboarding into two live checkpoints—day three and day fourteen—paired with a proactive follow-up check-in at day thirty before clients lose momentum.",
+          "ss": [
+            "Tracking retention at day sixty will show quickly whether these checkpoints pay off."
+          ],
+          "sc": "Diagnosing early service drop-off and proposing an operational retention fix."
+        },
+        {
+          "id": "c189-2",
+          "q": "How do you explain the value of empowering front-line agents to issue small fee waivers without manager approval?",
+          "vi": "Bạn giải thích thế nào về lợi ích của việc trao quyền cho nhân viên tuyến đầu tự duyệt miễn giảm phí nhỏ không cần chờ sếp?",
+          "st": "Granting front-line agents modest authority dramatically improves + metric + while reducing + backlog.",
+          "ph": [
+            "first-contact resolution",
+            "turnaround time",
+            "ticket backlog"
+          ],
+          "sa": "Empowering trained agents to approve minor credits up to twenty-five dollars eliminates unnecessary escalation queues. It cuts customer turnaround time from days to minutes, lifts first-contact resolution immediately, and prevents low-risk complaints from clogging our ticket backlog.",
+          "ss": [
+            "We can audit those credits monthly to keep governance clean and transparent."
+          ],
+          "sc": "Making a business case for customer service empowerment and faster resolution."
+        },
+        {
+          "id": "c189-3",
+          "q": "Wrap up a resolved service complaint call politely and confirm the client is satisfied before closing the ticket.",
+          "vi": "Kết thúc cuộc gọi sau khi đã xử lý xong khiếu nại và xác nhận sự hài lòng của khách trước khi đóng hồ sơ.",
+          "st": "Just to recap + resolution, we will complete + proactive follow-up + and appreciate your feedback.",
+          "ph": [
+            "proactive follow-up",
+            "customer retention",
+            "satisfaction score"
+          ],
+          "sa": "To recap, your replacement router has been activated and the service credit appears on next week's statement. I will do a proactive follow-up call on Thursday afternoon to make sure everything remains rock solid, and your honest rating on our quick survey helps us improve our satisfaction score and long-term customer retention.",
+          "ss": [
+            "Thank you again for giving us the chance to make this right today."
+          ],
+          "sc": "Closing a service recovery call smoothly while reinforcing trust."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Service Recovery Plan & Credit Confirmation – Ticket #SR-408\n\nDear Ms. Nguyen,\n\nThank you for your patience while we completed the [[escalation|escalating|escalates]] review of yesterday’s service disruption.\n\nAlthough our [[service-level agreement|agree service level|agreed service]] commits to resolving priority tickets within four hours, a staffing gap delayed turnaround by ninety minutes. We have cleared the remaining [[ticket backlog|tickets lagging|backlog ticket]] and assigned a dedicated supervisor to monitor your branch.\n\nAs a [[complimentary gesture|compliment gift|complimentary cost]], we are applying a full-week service credit to your next invoice and will call on Friday to confirm everything runs smoothly.\n\nWarm regards,\nLan Pham\nHead of Customer Operations",
+        "trans": "",
+        "audio": "audio/mail/en-189.mp3"
+      },
+      "gram": [],
+      "listening": [
+        {
+          "id": "L189-0",
+          "title": "De-escalating a Corporate SLA Breach & Service Recovery Review",
+          "sub": "Xử lý phàn nàn vi phạm cam kết SLA với khách hàng doanh nghiệp và đề xuất gói khôi phục dịch vụ",
+          "level": "B2",
+          "audio": "audio/listen/en-189-0.mp3",
+          "speakers": {
+            "A": "Hannah (Corporate Client)",
+            "B": "Nam (Service Operations Lead)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Nam, I asked for this call because our regional retail stores lost point-of-sale support for nearly five hours yesterday afternoon. Under our service-level agreement, priority outages require a live technician on site within two hours, not excuses by email.",
+              "m": "Anh Nam, tôi yêu cầu cuộc gọi này vì chuỗi cửa hàng bán lẻ khu vực của chúng tôi mất kết nối hệ thống thu ngân gần 5 tiếng chiều qua. Theo thỏa thuận SLA, sự cố ưu tiên phải có kỹ thuật viên mặt trực tiếp trong 2 giờ, chứ không phải thư xin lỗi."
+            },
+            {
+              "s": "B",
+              "t": "Hannah, you have every right to hold us to that commitment, and I apologize unreservedly. We audited the timestamp logs this morning: your alert waited in our Tier-1 queue for ninety-five minutes before automatic escalation kicked in, which directly caused the missed SLA window.",
+              "m": "Chị Hannah hoàn toàn có quyền yêu cầu chúng tôi giữ đúng cam kết đó, và tôi xin lỗi chân thành. Sáng nay tôi đã rà soát nhật ký thời gian: cảnh báo của bên chị bị nằm chờ ở hàng đợi cấp 1 suốt 95 phút trước khi hệ thống tự động chuyển cấp, trực tiếp dẫn đến việc lỡ mốc SLA."
+            },
+            {
+              "s": "A",
+              "t": "Five hours during peak evening checkout cost twelve stores significant revenue and left cashiers writing manual receipts. How can my leadership team trust that next month won’t bring another ticket backlog?",
+              "m": "Năm tiếng đúng giờ cao điểm buổi tối làm 12 cửa hàng thiệt hại doanh thu đáng kể và thu ngân phải ghi hóa đơn tay. Ban lãnh đạo bên tôi làm sao tin được tháng sau không lại kẹt đơn tồn như vậy?"
+            },
+            {
+              "s": "B",
+              "t": "Fair question—promises alone aren't enough. Starting today, any POS outage alert from your account bypasses Tier-1 triage and routes straight to our senior field supervisor within five minutes, cutting projected turnaround time in half.",
+              "m": "Câu hỏi rất xác đáng—lời hứa suông là chưa đủ. Bắt đầu từ hôm nay, mọi cảnh báo sập hệ thống bán hàng từ tài khoản bên chị sẽ bỏ qua bước phân loại cấp 1 và đẩy thẳng tới giám sát kỹ thuật cao cấp trong 5 phút, giúp giảm một nửa thời gian xử lý."
+            },
+            {
+              "s": "A",
+              "t": "Direct routing helps going forward, yet we still absorbed overtime labor costs yesterday. What service recovery measure is your company proposing for the disruption itself?",
+              "m": "Chuyển luồng trực tiếp giải quyết chuyện tương lai, nhưng hôm qua bên tôi vẫn mất thêm tiền tăng ca nhân viên. Bên anh đề xuất biện pháp khôi phục dịch vụ nào cho sự cố vừa rồi?"
+            },
+            {
+              "s": "B",
+              "t": "We are applying our contract SLA credit automatically plus an extra complimentary gesture equal to ten percent off next month's maintenance fee—totaling three thousand two hundred dollars—and I will personally conduct a proactive follow-up review every Friday for the next month.",
+              "m": "Chúng tôi tự động khấu trừ khoản phạt SLA theo hợp đồng cộng thêm ưu đãi thiện chí giảm thêm 10% phí bảo trì tháng tới—tổng cộng 3.200 đô la—và đích thân tôi sẽ chủ động gọi rà soát với chị mỗi thứ Sáu trong một tháng tới."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq189-0-0",
+              "q": "What root cause delayed the technician dispatch for Hannah's retail stores?",
+              "o": [
+                "The stores forgot to renew their annual maintenance contract on time.",
+                "The outage alert sat in the Tier-1 queue for 95 minutes before escalating.",
+                "All regional field engineers were on holiday during evening checkout hours.",
+                "The stores disconnected their backup power routers manually."
+              ],
+              "a": 1,
+              "why": "Nhật ký hệ thống cho thấy cảnh báo sự cố bị kẹt ở hàng đợi hỗ trợ cấp 1 suốt 95 phút trước khi được chuyển cấp lên tuyến trên."
+            },
+            {
+              "id": "lq189-0-1",
+              "q": "What permanent workflow fix did Nam put in place starting immediately?",
+              "o": [
+                "Outsourcing Tier-1 chat tickets to an external weekend call center",
+                "Bypassing Tier-1 triage so Hannah's POS alerts route straight to the senior field supervisor within 5 minutes",
+                "Extending the contracted SLA arrival limit from two hours to five hours",
+                "Issuing manual paper receipt books to all twelve stores"
+              ],
+              "a": 1,
+              "why": "Từ nay cảnh báo sập hệ thống POS của tài khoản Hannah sẽ đi thẳng tới giám sát kỹ thuật cao cấp trong 5 phút, bỏ qua khâu phân loại cấp 1."
+            },
+            {
+              "id": "lq189-0-2",
+              "q": "Which combination makes up Nam's $3,200 service recovery package?",
+              "o": [
+                "A free POS hardware replacement plus waived bank fees",
+                "The standard SLA penalty credit plus an extra 10% complimentary discount off next month's fee",
+                "Two free training workshops plus overtime cash paid directly to store cashiers",
+                "Cancellation without penalty plus 50% refund on setup equipment"
+              ],
+              "a": 1,
+              "why": "Gói đền bù 3.200 USD gồm khoản khấu trừ SLA chuẩn theo hợp đồng cộng thêm ưu đãi thiện chí giảm 10% phí bảo trì tháng sau."
+            }
+          ]
+        },
+        {
+          "id": "L189-1",
+          "title": "Cutting Churn Rate Through Onboarding & First-Contact Resolution",
+          "sub": "Họp đánh giá quý: Giảm tỷ lệ rời bỏ khách hàng nhờ cải thiện quy trình onboarding và xử lý ngay lần đầu",
+          "level": "B2",
+          "audio": "audio/listen/en-189-1.mp3",
+          "speakers": {
+            "A": "David (VP of Service)",
+            "B": "Linh (Customer Success Lead)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Linh, before our board meeting on Tuesday, walk me through the Q3 service retention report. Our annual churn rate dropped to four percent overall, yet something still looks bumpy in the small-business segment.",
+              "m": "Linh này, trước cuộc họp hội đồng quản trị thứ Ba, em tóm tắt giúp anh báo cáo giữ chân khách hàng quý 3 nhé. Tỷ lệ rời bỏ chung cả năm giảm còn 4%, nhưng phân khúc doanh nghiệp nhỏ vẫn có dấu hiệu bất ổn."
+            },
+            {
+              "s": "B",
+              "t": "Sharp catch, David. While enterprise customer retention hit ninety-five percent, sixteen percent of smaller clients canceled within forty-five days—usually before their team even finished configuring reporting dashboards during self-service onboarding.",
+              "m": "Anh nhìn rất tinh, anh David. Trong khi tỷ lệ giữ chân khách lớn đạt 95%, có đến 16% khách doanh nghiệp nhỏ hủy gói trong vòng 45 ngày—thường là trước khi đội của họ cài xong bảng báo cáo trong bước tự làm quen dịch vụ."
+            },
+            {
+              "s": "A",
+              "t": "So it wasn't price sensitivity at all—they simply never reached their first win with our platform. Have you tested anything with the August sign-ups to fix that drop-off?",
+              "m": "Vậy hoàn toàn không phải do nhạy cảm về giá—đơn giản là họ chưa kịp thấy hiệu quả đầu tiên trên nền tảng. Tháng Tám vừa rồi em đã thử giải pháp nào cho nhóm đăng ký mới chưa?"
+            },
+            {
+              "s": "B",
+              "t": "Yes, we piloted a twenty-minute live kickoff screen-share plus a day-ten proactive follow-up call for eighty new small-business accounts. Activation soared from fifty-four percent to eighty-nine percent, and their post-onboarding satisfaction score reached 4.8.",
+              "m": "Dạ rồi, nhóm đã thí điểm buổi hướng dẫn chia sẻ màn hình 20 phút lúc khởi tạo kèm cuộc gọi chủ động vào ngày thứ 10 cho 80 tài khoản mới. Tỷ lệ kích hoạt thực tế tăng vọt từ 54% lên 89%, còn điểm hài lòng sau onboarding đạt 4,8."
+            },
+            {
+              "s": "A",
+              "t": "That's huge—jumping from fifty-four to eighty-nine percent pays for agent hours several times over. Did helping clients properly up front also shrink support ticket volume afterwards?",
+              "m": "Quá ấn tượng—nhảy từ 54% lên 89% đủ bù gấp nhiều lần chi phí giờ công nhân viên. Việc kèm kỹ ngay từ đầu có giúp giảm bớt lượng phiếu yêu cầu hỗ trợ về sau không?"
+            },
+            {
+              "s": "B",
+              "t": "Dramatically—follow-up setup tickets fell by thirty-eight percent, which freed our help desk to raise first-contact resolution from seventy-four to eighty-seven percent without hiring extra headcount.",
+              "m": "Giảm rõ rệt anh ạ—lượng yêu cầu hỏi về cài đặt sau đó giảm 38%, giúp bộ phận hỗ trợ nâng tỷ lệ giải quyết ngay lần đầu từ 74% lên 87% mà không cần tuyển thêm nhân sự."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq189-1-0",
+              "q": "Why were 16% of new small-business accounts canceling within their first 45 days?",
+              "o": [
+                "Enterprise clients complained about unfair pricing tiers.",
+                "They struggled to complete dashboard setup during self-service onboarding before seeing value.",
+                "The help desk refused to offer live phone support to small businesses.",
+                "Payment gateways blocked regional credit cards in Q3."
+              ],
+              "a": 1,
+              "why": "Khách nhỏ hay hủy sớm trong 45 ngày đầu vì bị kẹt ở khâu tự thiết lập (self-service onboarding) nên chưa kịp trải nghiệm giá trị hệ thống."
+            },
+            {
+              "id": "lq189-1-1",
+              "q": "What happened to account activation during Linh's August onboarding pilot?",
+              "o": [
+                "It held steady at 74% while satisfaction stayed at 4.0.",
+                "It jumped from 54% to 89%, with a 4.8 satisfaction score.",
+                "It dropped temporarily due to shorter kickoff calls.",
+                "Only enterprise accounts joined the August pilot."
+              ],
+              "a": 1,
+              "why": "Nhờ buổi hướng dẫn 20 phút kèm cuộc gọi ngày thứ 10, tỷ lệ kích hoạt của 80 tài khoản thí điểm vọt từ 54% lên 89% và CSAT đạt 4,8."
+            },
+            {
+              "id": "lq189-1-2",
+              "q": "How did better onboarding affect the main support help desk?",
+              "o": [
+                "Setup tickets fell by 38%, allowing first-contact resolution to climb to 87% with the same staff.",
+                "It forced the company to add three weekend shifts.",
+                "Churn rate among enterprise clients rose temporarily to 6%.",
+                "First-contact resolution dropped slightly because calls ran longer."
+              ],
+              "a": 0,
+              "why": "Lượng phiếu hỏi về cài đặt giảm 38%, giải phóng nguồn lực để tỷ lệ giải quyết ngay lần đầu tăng lên 87% mà không cần tăng biên chế."
+            }
+          ]
+        }
+      ],
+      "catPos": 16,
+      "pos": 62
+    },
+    {
+      "id": "190",
+      "category": "b2",
+      "level": "B2",
+      "phase": "B2 · Thương mại · Dịch vụ, Du lịch & Bảo hiểm",
+      "title": "Tourism, Hospitality & Travel Operations",
+      "sub": "Ngành Du lịch & Khách sạn: Vận hành lữ hành, đặt phòng & xử lý phát sinh tour",
+      "vocab": [
+        {
+          "id": "E190-0",
+          "w": "occupancy rate",
+          "r": "/ˈɑːk.jə.pən.si reɪt/",
+          "m": "công suất lấp đầy phòng khách sạn / khu nghỉ dưỡng",
+          "d": "the percentage of available hotel rooms or guest beds occupied during a specific period",
+          "ex": "Our coastal resort reached an occupancy rate of 94 percent during the holiday week.",
+          "exr": "",
+          "exm": "Khu nghỉ dưỡng ven biển của chúng tôi đạt công suất lấp đầy phòng 94% trong tuần lễ nghỉ."
+        },
+        {
+          "id": "E190-1",
+          "w": "overbooking",
+          "r": "/ˌoʊ.vɚˈbʊk.ɪŋ/",
+          "m": "tình trạng nhận đặt chỗ vượt quá số phòng hoặc ghế thực có",
+          "d": "accepting more hotel or flight reservations than available capacity in anticipation of cancellations",
+          "ex": "Automated room inventory sync prevents double reservations and last-minute overbooking.",
+          "exr": "",
+          "exm": "Việc đồng bộ quỹ phòng tự động giúp ngăn ngừa đặt trùng chỗ và tình trạng vượt công suất vào phút chót."
+        },
+        {
+          "id": "E190-2",
+          "w": "concierge",
+          "r": "/ˌkɑːn.siˈerʒ/",
+          "m": "bộ phận hỗ trợ trải nghiệm khách hàng / lễ tân đặc biệt",
+          "d": "a specialized hotel staff member who arranges restaurant bookings, private tours, and VIP requests",
+          "ex": "The head concierge secured private museum tickets and airport transfers for the corporate group.",
+          "exr": "",
+          "exm": "Trưởng bộ phận hỗ trợ trải nghiệm đã thu xếp vé tham quan bảo tàng riêng và xe đón sân bay cho đoàn khách doanh nghiệp."
+        },
+        {
+          "id": "E190-3",
+          "w": "complimentary upgrade",
+          "r": "/ˌkɑːm.pləˈmen.tɚ.i ˈʌp.ɡreɪd/",
+          "m": "nâng hạng phòng hoặc dịch vụ miễn phí",
+          "d": "moving a guest to a higher room category or seat class at zero additional charge",
+          "ex": "Due to a maintenance delay in their original room, we offered a complimentary upgrade to an ocean-view suite.",
+          "exr": "",
+          "exm": "Do phòng đặt ban đầu gặp trục trặc bảo trì, chúng tôi đã nâng hạng miễn phí cho khách lên phòng Suite hướng biển."
+        },
+        {
+          "id": "E190-4",
+          "w": "peak-season surcharge",
+          "r": "/ˈpiːk ˌsiː.zən ˈsɜːr.tʃɑːrdʒ/",
+          "m": "phụ thu mùa cao điểm du lịch / dịp lễ Tết",
+          "d": "an extra seasonal fee added to base tour or room rates during highest travel demand",
+          "ex": "Please disclose any peak-season surcharge clearly on the quotation sheet before guests place a deposit.",
+          "exr": "",
+          "exm": "Vui lòng ghi rõ mọi khoản phụ thu mùa cao điểm trên bảng báo giá trước khi khách đặt cọc."
+        },
+        {
+          "id": "E190-5",
+          "w": "full board",
+          "r": "/ˌfʊl ˈbɔːrd/",
+          "m": "gói lưu trú bao gồm trọn cả ba bữa ăn (sáng, trưa, tối)",
+          "d": "a hospitality rate plan that includes accommodation plus breakfast, lunch, and dinner daily",
+          "ex": "Most incentive travel groups prefer full board packages so meals are covered in one invoice.",
+          "exr": "",
+          "exm": "Hầu hết các đoàn du lịch khen thưởng doanh nghiệp chuộng gói bao gồm đủ 3 bữa để gộp chi phí ăn uống vào một hóa đơn."
+        },
+        {
+          "id": "E190-6",
+          "w": "cancellation policy",
+          "r": "/ˌkæn.səˈleɪ.ʃən ˈpɑː.lə.si/",
+          "m": "chính sách hủy đặt chỗ & điều kiện hoàn tiền",
+          "d": "the official terms defining deadlines and refund penalties when a guest changes or cancels a booking",
+          "ex": "Under our flexible cancellation policy, groups can adjust room counts free of charge up to 14 days prior.",
+          "exr": "",
+          "exm": "Theo chính sách hủy linh hoạt của chúng tôi, đoàn khách có thể điều chỉnh số phòng miễn phí tối đa trước ngày nhận phòng 14 ngày."
+        },
+        {
+          "id": "E190-7",
+          "w": "tailor-made package",
+          "r": "/ˌteɪ.lɚ ˈmeɪd ˈpæk.ɪdʒ/",
+          "m": "gói tour du lịch thiết kế riêng theo nhu cầu khách",
+          "d": "a custom-built travel program designed around a specific group's pace, budget, and interests",
+          "ex": "We crafted a tailor-made package combining heritage walking tours with private culinary workshops.",
+          "exr": "",
+          "exm": "Chúng tôi đã xây dựng gói tour thiết kế riêng kết hợp đi bộ tham quan di sản và lớp trải nghiệm ẩm thực riêng tư."
+        },
+        {
+          "id": "E190-8",
+          "w": "transfer service",
+          "r": "/ˈtræns.fɜːr ˈsɜːr.vɪs/",
+          "m": "dịch vụ xe đưa đón sân bay hoặc trung chuyển giữa các điểm",
+          "d": "pre-arranged private or shuttle transportation between airports, ports, hotels, and venues",
+          "ex": "Round-trip airport transfer service is included in the retreat quote for all twenty delegates.",
+          "exr": "",
+          "exm": "Dịch vụ xe đưa đón sân bay hai chiều đã được bao gồm trong báo giá nghỉ dưỡng cho toàn bộ 20 đại biểu."
+        },
+        {
+          "id": "E190-9",
+          "w": "hospitality standard",
+          "r": "/ˌhɑː.spɪˈtæl.ə.ti ˈstæn.dɚd/",
+          "m": "tiêu chuẩn phục vụ ngành lưu trú và dịch vụ hiếu khách",
+          "d": "the benchmark level of warmth, cleanliness, speed, and attention expected by guests",
+          "ex": "Daily lobby inspections ensure every partner boutique property meets five-star hospitality standards.",
+          "exr": "",
+          "exm": "Công tác kiểm tra sảnh hàng ngày đảm bảo mọi khách sạn boutique đối tác đều đáp ứng chuẩn mực hiếu khách năm sao."
+        },
+        {
+          "id": "E190-10",
+          "w": "excursion",
+          "r": "/ɪkˈskɜːr.ʒən/",
+          "m": "chuyến tham quan trải nghiệm ngắn ngày ngoài điểm lưu trú",
+          "d": "a short organized day trip or guided activity departing from a resort, cruise, or main tour",
+          "ex": "Rain forced us to switch the afternoon bay excursion to an indoor heritage craft village visit.",
+          "exr": "",
+          "exm": "Trời mưa buộc chúng tôi phải chuyển chuyến tham quan vịnh buổi chiều sang ghé thăm làng nghề di sản trong nhà."
+        },
+        {
+          "id": "E190-11",
+          "w": "no-show fee",
+          "r": "/ˈnoʊ ʃoʊ fiː/",
+          "m": "phí phạt khi khách đã đặt chỗ nhưng không đến nhận phòng/dịch vụ",
+          "d": "a charge billed when a guest neither arrives for their reservation nor cancels within the allowed window",
+          "ex": "Waiving the no-show fee when a flight is canceled due to weather builds strong repeat business.",
+          "exr": "",
+          "exm": "Miễn phí phạt không đến nhận phòng khi chuyến bay bị hủy do thời tiết giúp xây dựng lượng khách quay lại rất tốt."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q190-0",
+          "q": "A hotel partner calls at 3:00 PM saying two Deluxe rooms suffered AC leaks and overbooking leaves no identical category free. Best action for the tour operator?",
+          "o": [
+            "Tell guests to look for another hotel on their own after arrival",
+            "Negotiate an immediate complimentary upgrade to suites at the partner hotel's expense and brief guests warmly",
+            "Charge guests extra for the upgrade while blaming the weather"
+          ],
+          "a": 1,
+          "why": "Yêu cầu khách sạn chịu chi phí nâng hạng miễn phí sang suite hoặc tương đương cao hơn là chuẩn xử lý overbooking bảo vệ trải nghiệm khách."
+        },
+        {
+          "id": "q190-1",
+          "q": "Which room-and-meal plan gives corporate retreat organizers breakfast, lunch, and dinner covered in one predictable rate?",
+          "o": [
+            "Full board",
+            "No-show fee",
+            "Transfer service"
+          ],
+          "a": 0,
+          "why": "Full board là gói trọn 3 bữa sáng-trưa-tối kèm phòng lưu trú, rất thuận tiện khi chốt ngân sách cho đoàn công ty."
+        },
+        {
+          "id": "q190-2",
+          "q": "Why must travel consultants highlight any peak-season surcharge and cancellation policy on the written proposal before deposit?",
+          "o": [
+            "To make quotes harder to read so fewer guests ask questions",
+            "To prevent surprise disputes over holiday supplements and refund cutoffs later",
+            "To guarantee a 100% occupancy rate during rainy months"
+          ],
+          "a": 1,
+          "why": "Minh bạch phụ thu cao điểm và mốc thời hạn hủy ngay từ báo giá giúp tránh tranh chấp hoàn tiền sau khi đã nhận cọc."
+        },
+        {
+          "id": "q190-3",
+          "q": "Heavy coastal fog cancels a morning boat excursion for 18 incentive guests. How should the tour manager maintain hospitality standards?",
+          "o": [
+            "Activate a vetted Plan B indoor excursion immediately and arrange timely group transfer service",
+            "Cancel the whole day's schedule and leave guests in the hotel lobby",
+            "Charge a no-show fee to the boat company and keep guests waiting on the pier"
+          ],
+          "a": 0,
+          "why": "Kích hoạt ngay phương án dự phòng trong nhà đã kiểm định kèm xe đưa đón kịp thời giúp giữ trọn trải nghiệm khi thời tiết xấu."
+        },
+        {
+          "id": "q190-4",
+          "q": "A corporate client requests a custom five-day wellness and culinary itinerary for executives with vegan dietary needs. What product is this?",
+          "o": [
+            "An airport shuttle ticket",
+            "A tailor-made package",
+            "A seasonal overbooking alert"
+          ],
+          "a": 1,
+          "why": "Tailor-made package là gói tour thiết kế may đo riêng theo nhu cầu ẩm thực, lịch trình và ngân sách của từng đoàn."
+        },
+        {
+          "id": "q190-5",
+          "q": "A guest's connecting international flight was delayed by airline technical trouble, causing them to miss check-in night one. Smart policy decision?",
+          "o": [
+            "Release the rest of their five-night booking and keep the full payment",
+            "Hold the remaining nights upon notice and waive the one-night no-show fee as goodwill",
+            "Double their room rate starting the next morning"
+          ],
+          "a": 1,
+          "why": "Giữ nguyên các đêm còn lại khi có thông báo chuyến bay trễ và linh hoạt miễn phí no-show đêm đầu giúp giữ uy tín dài lâu."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s190-0",
+          "title": "Resolve an unexpected hotel overbooking gracefully",
+          "lines": [
+            {
+              "t": "Welcome to Da Nang, Ms. Wilson. Because of an unexpected plumbing maintenance issue in one wing, your original Deluxe ocean room is temporarily offline.",
+              "r": "",
+              "m": "Chào mừng chị Wilson đến Đà Nẵng. Do sự cố bảo trì đường ống đột xuất ở một dãy phòng, phòng Deluxe hướng biển ban đầu tạm thời không sử dụng được."
+            },
+            {
+              "t": "To make sure your stay starts smoothly, we have arranged a complimentary upgrade to a Panorama Junior Suite at zero extra cost.",
+              "r": "",
+              "m": "Để kỳ nghỉ của chị khởi đầu suôn sẻ nhất, chúng em đã thu xếp nâng hạng miễn phí lên phòng Panorama Junior Suite không thu thêm bất kỳ phụ phí nào."
+            },
+            {
+              "t": "Our concierge has also placed chilled welcome fruit in the suite and confirmed your private airport return transfer service for Sunday.",
+              "r": "",
+              "m": "Bộ phận hỗ trợ trải nghiệm cũng đã chuẩn bị trái cây chào mừng tại phòng và xác nhận dịch vụ xe riêng đưa chị ra sân bay vào Chủ nhật."
+            }
+          ]
+        },
+        {
+          "id": "s190-1",
+          "title": "Present a corporate retreat quotation and booking terms",
+          "lines": [
+            {
+              "t": "Our tailor-made package includes four nights of full board accommodation, gala dinner setup, and two half-day cultural excursions.",
+              "r": "",
+              "m": "Gói thiết kế riêng bao gồm 4 đêm lưu trú ăn trọn 3 bữa, tổ chức tiệc tối gala và 2 chuyến tham quan văn hóa nửa ngày."
+            },
+            {
+              "t": "Because your dates fall right before a public holiday, please note the modest peak-season surcharge listed separately on line four.",
+              "r": "",
+              "m": "Do lịch đoàn sát kỳ nghỉ lễ, anh chị lưu ý giúp khoản phụ thu mùa cao điểm nhỏ được tách dòng rõ ở mục số bốn ạ."
+            },
+            {
+              "t": "Under our group cancellation policy, you can reduce up to fifteen percent of booked rooms penalty-free until three weeks before arrival.",
+              "r": "",
+              "m": "Theo chính sách hủy cho đoàn, bên mình được phép giảm tối đa 15% số phòng đã đặt không mất phí trước ngày nhận phòng ba tuần."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c190-0",
+          "q": "A VIP corporate guest arrives late and learns their room type was affected by overbooking. How do you protect hospitality standards?",
+          "vi": "Khách doanh nghiệp VIP đến muộn và biết loại phòng họ đặt bị ảnh hưởng bởi tình trạng overbooking. Bạn xử lý sao để giữ chuẩn phục vụ?",
+          "st": "First, apologize briefly without blaming staff, then present + complimentary upgrade & concierge perk.",
+          "ph": [
+            "overbooking",
+            "complimentary upgrade",
+            "concierge"
+          ],
+          "sa": "We apologize sincerely for the overbooking affecting your original king room tonight. Rather than keeping you waiting, we have already prepared a complimentary upgrade to our Corner Executive Suite with late checkout guaranteed, and our concierge can unpack priority bags or book dinner tonight.",
+          "ss": [
+            "Your comfort tonight is our top priority—shall I hand you the suite key right now?"
+          ],
+          "sc": "Handling check-in overbooking seamlessly so the guest feels valued."
+        },
+        {
+          "id": "c190-1",
+          "q": "A travel agency asks why your holiday quotation rose 18% compared to last month's off-peak quote.",
+          "vi": "Một đối tác lữ hành hỏi vì sao báo giá dịp lễ của bạn tăng 18% so với tháng trước thấp điểm. Bạn giải thích sao cho khéo?",
+          "st": "During high occupancy weeks, rates reflect + peak-season surcharge, while we keep + flexibility.",
+          "ph": [
+            "occupancy rate",
+            "peak-season surcharge",
+            "full board"
+          ],
+          "sa": "Last month's off-peak quote reflected a fifty-percent occupancy rate, whereas this holiday weekend exceeds ninety-two percent occupancy across the coast. The eighteen-percent difference covers the standard peak-season surcharge and dedicated banquet staffing, though we locked in full board dining at off-peak rates for your group.",
+          "ss": [
+            "If your group can shift arrival by just two days earlier, the holiday surcharge drops away completely."
+          ],
+          "sc": "Explaining seasonal pricing transparently while offering smart alternatives."
+        },
+        {
+          "id": "c190-2",
+          "q": "A sudden storm closes the mountain cable car an hour before a 30-guest excursion departs. What do you announce?",
+          "vi": "Bão bất ngờ làm cáp treo núi đóng cửa 1 giờ trước giờ khởi hành chuyến tham quan của 30 khách. Bạn thông báo với đoàn thế nào?",
+          "st": "For safety, the cable car is paused, so we immediately activated + alternative excursion + transfer service.",
+          "ph": [
+            "excursion",
+            "transfer service",
+            "hospitality standard"
+          ],
+          "sa": "Good morning everyone—high winds have temporarily closed the mountain cable car for safety, so rather than waiting at the station we have activated our backup cultural excursion to the imperial tea house with covered private transfer service departing in fifteen minutes, maintaining our full hospitality standards rain or shine.",
+          "ss": [
+            "We will also refund the cable-car ticket difference or apply it toward tonight's rooftop dinner."
+          ],
+          "sc": "Pivoting weather disruptions smoothly for an inbound tour group."
+        },
+        {
+          "id": "c190-3",
+          "q": "A corporate event planner wants clear terms before signing a contract for 25 executives. Summarize your booking protections.",
+          "vi": "Người phụ trách sự kiện công ty muốn nắm rõ điều khoản trước khi ký hợp đồng cho 25 lãnh đạo. Bạn tóm tắt quyền lợi và điều khoản bảo vệ ra sao?",
+          "st": "Your tailor-made package includes + clear cancellation policy + and flexible handling for delayed flights.",
+          "ph": [
+            "tailor-made package",
+            "cancellation policy",
+            "no-show fee"
+          ],
+          "sa": "Your tailor-made package locks in guaranteed adjacent rooms and private airport transfer service for all twenty-five executives. Our written cancellation policy allows free name swaps anytime and penalty-free room reductions up to twenty-one days out, plus we waive any no-show fee when verified flight delays occur.",
+          "ss": [
+            "Shall I send the final agreement over for digital signature today?"
+          ],
+          "sc": "Closing a B2B corporate hospitality contract with transparent terms."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Confirmed Proposal & Revised Terms – Pacific Tech Executive Retreat\n\nDear Mr. Miller,\n\nWe are delighted to share the updated [[tailor-made package|tailoring package|tailored packs]] for your twenty-four executives visiting Hoi An next month.\n\nYour rate covers four nights of [[full board|filled board|full broad]] dining, private airport transfer service, and two guided cultural excursions. Note that the modest [[peak-season surcharge|peak-time fee|surcharge season]] applies only to the final Saturday night.\n\nUnder our group [[cancellation policy|canceled policy|cancelable rule]], you may adjust guest names free of charge anytime and reduce up to four rooms up to 14 days before check-in.\n\nWarm regards,\nMinh Thu\nHospitality & MICE Director",
+        "trans": "",
+        "audio": "audio/mail/en-190.mp3"
+      },
+      "gram": [],
+      "listening": [
+        {
+          "id": "L190-0",
+          "title": "Handling Holiday Overbooking & Guest Upgrade Recovery",
+          "sub": "Điều phối đoàn khách khi khu nghỉ dưỡng hết phòng do overbooking và phương án nâng hạng bảo toàn uy tín",
+          "level": "B2",
+          "audio": "audio/listen/en-190-0.mp3",
+          "speakers": {
+            "A": "Chloe (Inbound Tour Manager)",
+            "B": "Tuan (Resort Front Office Director)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Tuan, I just got an urgent alert from your reservations desk saying three Deluxe Garden rooms for my Australian group arriving tomorrow might be walked to a sister property because of holiday overbooking.",
+              "m": "Anh Tuấn ơi, em vừa nhận được cảnh báo gấp từ bộ phận đặt phòng bên anh nói rằng 3 phòng Deluxe Garden của đoàn khách Úc đến ngày mai có thể phải chuyển sang khách sạn đối tác vì bị đặt vượt công suất dịp lễ."
+            },
+            {
+              "s": "B",
+              "t": "Wait—let me calm that down right away, Chloe. Our occupancy rate jumped to ninety-nine percent this week and two current guests extended unexpectedly for medical reasons, leaving us three Deluxe Garden rooms short tomorrow afternoon.",
+              "m": "Khoan—để anh trấn an em ngay nhé Chloe. Tuần này công suất phòng tăng lên 99% và có hai khách đang ở phải gia hạn đột xuất vì lý do sức khỏe, khiến ngày mai thiếu mất 3 phòng Deluxe Garden."
+            },
+            {
+              "s": "A",
+              "t": "Moving six elderly travelers from the rest of their twenty-person group to another street would ruin their family reunion and violate our signed hospitality standards. We cannot split the group.",
+              "m": "Chuyển 6 khách lớn tuổi tách khỏi đoàn 20 người sang chỗ khác nằm đường khác sẽ làm hỏng buổi sum họp gia đình và vi phạm tiêu chuẩn phục vụ đã ký. Bên em tuyệt đối không thể tách đoàn được."
+            },
+            {
+              "s": "B",
+              "t": "I completely agree—splitting a reunion group is our very last resort. Instead, I just blocked three Pool Villas that came off corporate hold this morning, and I am issuing a complimentary upgrade for those three rooms at zero cost to you.",
+              "m": "Anh hoàn toàn đồng ý—tách đoàn là lựa chọn bất đắc dĩ cuối cùng. Thay vào đó, anh vừa giữ được 3 căn Pool Villa mới hủy giữ chỗ công ty sáng nay và sẽ nâng hạng miễn phí cho cả 3 phòng đó không tính thêm một đồng nào."
+            },
+            {
+              "s": "A",
+              "t": "Pool Villas inside the same resort will actually thrill them—thank you, Tuan. Just confirm all six guests keep the exact full board dining access and private airport transfer service already paid on our voucher.",
+              "m": "Các căn Pool Villa ngay trong cùng resort chắc chắn sẽ làm họ rất thích—cảm ơn anh Tuấn. Nhờ anh xác nhận giúp 6 khách đó vẫn hưởng trọn gói ăn 3 bữa và dịch vụ xe đón sân bay riêng như chứng từ bên em đã thanh toán."
+            },
+            {
+              "s": "B",
+              "t": "Already coded into the reservation system, Chloe. I also briefed our head concierge to meet their minivan personally at the porch with cold towels so nobody even senses there was a room shuffle.",
+              "m": "Anh đã nhập mã chuẩn hết vào hệ thống rồi Chloe. Anh cũng dặn trưởng bộ phận hỗ trợ trải nghiệm đích thân ra đón xe ngay tại sảnh với khăn lạnh để đoàn không hề cảm thấy có sự xáo trộn phòng ốc nào."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq190-0-0",
+              "q": "Why was the resort suddenly three Deluxe Garden rooms short?",
+              "o": [
+                "Renovation contractors closed the entire garden wing without notice.",
+                "Occupancy reached 99% and two in-house guests extended unexpectedly for medical reasons.",
+                "The tour agency forgot to send rooming names before the cancellation deadline.",
+                "Three rooms were reserved twice due to a credit-card decline."
+              ],
+              "a": 1,
+              "why": "Công suất đạt 99% kèm hai khách đang lưu trú gia hạn bất ngờ vì lý do sức khỏe nên khu nghỉ dưỡng bị thiếu 3 phòng Deluxe Garden."
+            },
+            {
+              "id": "lq190-0-1",
+              "q": "Why did Chloe firmly reject moving three rooms to a sister property?",
+              "o": [
+                "The sister property lacked breakfast service.",
+                "Splitting six elderly travelers away from their 20-person family reunion would ruin the trip.",
+                "Australian visas prohibited staying at two different resorts.",
+                "She wanted cash reimbursement instead of rooms."
+              ],
+              "a": 1,
+              "why": "Tách 6 khách lớn tuổi ra khỏi đoàn sum họp gia đình 20 người sang chỗ ở khác sẽ phá hỏng trải nghiệm và vi phạm cam kết dịch vụ."
+            },
+            {
+              "id": "lq190-0-2",
+              "q": "How did Tuan solve the room shortage inside the same resort?",
+              "o": [
+                "By delaying check-in until 9:00 PM for all twenty guests",
+                "By providing a free complimentary upgrade to three Pool Villas plus personal concierge welcome",
+                "By asking guests to pay a holiday peak-season surcharge on arrival",
+                "By converting a conference hall into temporary suites"
+              ],
+              "a": 1,
+              "why": "Tuấn giữ 3 căn Pool Villa mới trống để nâng hạng miễn phí toàn phần và cho trưởng bộ phận concierge ra đón riêng ngay tại sảnh."
+            }
+          ]
+        },
+        {
+          "id": "L190-1",
+          "title": "Negotiating MICE Corporate Retreat Package & Cancellation Clauses",
+          "sub": "Đàm phán gói tour công ty (MICE), phụ thu mùa cao điểm & điều khoản hủy linh hoạt",
+          "level": "B2",
+          "audio": "audio/listen/en-190-1.mp3",
+          "speakers": {
+            "A": "Claire (Corporate Event Planner)",
+            "B": "Hung (Destination Agency Director)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Hung, our leadership board loved your tailor-made package for November in Phu Quoc, especially the coastal cycling excursion and private cooking class. Before signing for forty-five managers, Finance wants clarity on two items.",
+              "m": "Anh Hùng ơi, ban giám đốc bên em rất ưng gói thiết kế riêng cho tháng 11 ở Phú Quốc, đặc biệt là chặng đạp xe ven biển và lớp học nấu ăn riêng. Trước khi ký cho 45 quản lý, bộ phận Tài chính muốn làm rõ hai điểm."
+            },
+            {
+              "s": "B",
+              "t": "Of course, Claire—let's go through both line items transparently so Finance sees zero hidden surprises.",
+              "m": "Vâng sẵn sàng ngay chị Claire—mình rà soát minh bạch cả hai khoản để bộ phận Tài chính thấy không có chi phí ẩn nào nhé."
+            },
+            {
+              "s": "A",
+              "t": "First, the hotel quote includes a twelve-percent peak-season surcharge because our weekend borders a regional holiday. Can your agency absorb or soften that supplement if we confirm full board dining for all three days?",
+              "m": "Thứ nhất, báo giá khách sạn có phụ thu mùa cao điểm 12% vì cuối tuần đó giáp một kỳ nghỉ lễ khu vực. Bên anh có hỗ trợ giảm bớt phụ phí đó nếu bên em chốt trọn gói ăn 3 bữa cho cả 3 ngày không?"
+            },
+            {
+              "s": "B",
+              "t": "Yes—since guaranteeing forty-five guests on full board fills their main banquet outlet, the resort agreed yesterday to halve that peak-season surcharge down to six percent, and we are throwing in free airport VIP transfer service as well.",
+              "m": "Được luôn chị—vì cam kết 45 khách dùng trọn gói 3 bữa giúp lấp kín nhà hàng tiệc chính, hôm qua resort đồng ý giảm một nửa mức phụ thu cao điểm còn 6%, và bên em tặng kèm luôn dịch vụ xe VIP đón tiễn sân bay."
+            },
+            {
+              "s": "A",
+              "t": "Halving the surcharge plus free transfers clears budget approval immediately. Our second concern is visa or flight delays—what happens under your cancellation policy if three managers drop out last minute?",
+              "m": "Giảm nửa phụ thu kèm tặng xe đưa đón là bên tài chính duyệt ngân sách ngay. Băn khoăn thứ hai là chuyện trễ chuyến bay hoặc visa—chính sách hủy bên anh xử lý sao nếu sát ngày có 3 anh chị bị rớt lịch?"
+            },
+            {
+              "s": "B",
+              "t": "We built two safeguards into the contract: free room reductions up to twenty days before arrival, and within the final twenty days we allow free colleague substitutions plus waiving the no-show fee once you share an airline delay notice.",
+              "m": "Bên em đã lồng hai lớp bảo vệ vào hợp đồng: giảm số phòng miễn phí trước ngày đến tối đa 20 ngày, còn trong vòng 20 ngày cuối được đổi tên đồng nghiệp miễn phí kèm miễn phí phạt no-show ngay khi chị gửi thông báo trễ chuyến của hãng bay."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq190-1-0",
+              "q": "How did Hung manage to halve the hotel's 12% peak-season surcharge down to 6%?",
+              "o": [
+                "By shifting the corporate retreat back by three full months",
+                "Because guaranteeing 45 guests on full board dining filled the resort's main banquet restaurant",
+                "By removing the coastal cycling excursion and cooking class",
+                "By switching the group from single rooms to shared dormitories"
+              ],
+              "a": 1,
+              "why": "Nhờ cam kết 45 khách đặt gói trọn 3 bữa (full board) đảm bảo doanh thu nhà hàng tiệc, resort đồng ý giảm phụ thu cao điểm từ 12% xuống 6%."
+            },
+            {
+              "id": "lq190-1-1",
+              "q": "What extra perk did Hung include free of charge alongside the halved surcharge?",
+              "o": [
+                "Complimentary spa vouchers for every spouse",
+                "Free airport VIP transfer service",
+                "Free international airfare upgrades",
+                "Zero deposit required until after checkout"
+              ],
+              "a": 1,
+              "why": "Ngoài giảm một nửa phụ thu cao điểm, Hùng tặng kèm dịch vụ xe VIP đón tiễn sân bay miễn phí."
+            },
+            {
+              "id": "lq190-1-2",
+              "q": "What protection applies if a manager is delayed by an airline within the final 20 days?",
+              "o": [
+                "Full non-refundable forfeiture on both hotel and flight packages",
+                "Free colleague name swaps plus no-show fee waiver upon showing airline delay notice",
+                "Mandatory postponement of the entire 45-person event",
+                "A flat 50% fine deducted from the cycling excursion budget"
+              ],
+              "a": 1,
+              "why": "Trong 20 ngày cuối vẫn được đổi tên người thay thế miễn phí và miễn phạt no-show nếu có xác nhận trễ chuyến từ hãng hàng không."
+            }
+          ]
+        }
+      ],
+      "catPos": 17,
+      "pos": 63
+    },
+    {
+      "id": "191",
+      "category": "b2",
+      "level": "B2",
+      "phase": "B2 · Thương mại · Dịch vụ, Du lịch & Bảo hiểm",
+      "title": "Insurance Policies, Coverage & Claims Handling",
+      "sub": "Ngành Bảo hiểm: Hợp đồng, phạm vi bảo vệ, thẩm định rủi ro & giải quyết bồi thường",
+      "vocab": [
+        {
+          "id": "E191-0",
+          "w": "policyholder",
+          "r": "/ˈpɑː.lə.siˌhoʊl.dɚ/",
+          "m": "bên mua / chủ sở hữu hợp đồng bảo hiểm",
+          "d": "the person or company that owns an insurance contract and pays regular premiums for protection",
+          "ex": "Every policyholder receives a digital coverage summary explaining claim deadlines step by step.",
+          "exr": "",
+          "exm": "Mỗi chủ hợp đồng bảo hiểm đều nhận được bản tóm tắt quyền lợi điện tử hướng dẫn từng bước thời hạn nộp bồi thường."
+        },
+        {
+          "id": "E191-1",
+          "w": "premium",
+          "r": "/ˈpriː.mi.əm/",
+          "m": "phí bảo hiểm đóng định kỳ theo tháng hoặc năm",
+          "d": "the scheduled amount paid by the insured party to keep an insurance policy active",
+          "ex": "Installing sprinklers across the warehouse reduced the factory's annual fire insurance premium by 15 percent.",
+          "exr": "",
+          "exm": "Việc lắp đặt hệ thống phun nước chữa cháy khắp nhà kho đã giúp giảm 15% phí bảo hiểm cháy nổ hằng năm cho nhà máy."
+        },
+        {
+          "id": "E191-2",
+          "w": "deductible",
+          "r": "/dɪˈdʌk.tə.bəl/",
+          "m": "mức khấu trừ / mức miễn thường khách tự chi trả trước",
+          "d": "the fixed initial portion of a covered loss that the policyholder pays before insurance pays the rest",
+          "ex": "Choosing a higher deductible of one thousand dollars lowered our monthly corporate fleet premium.",
+          "exr": "",
+          "exm": "Việc chọn mức khấu trừ cao hơn là 1.000 đô la đã giúp giảm mức phí đóng hàng tháng cho đội xe công ty."
+        },
+        {
+          "id": "E191-3",
+          "w": "coverage",
+          "r": "/ˈkʌv.ɚ.ɪdʒ/",
+          "m": "phạm vi và hạn mức quyền lợi được bảo hiểm chi trả",
+          "d": "the scope of risks, events, and maximum financial protection provided under an insurance policy",
+          "ex": "Make sure our marine cargo coverage extends all the way from the factory gate to the buyer's warehouse.",
+          "exr": "",
+          "exm": "Hãy đảm bảo phạm vi bảo hiểm hàng hải của chúng ta bảo vệ xuyên suốt từ cổng nhà máy tới tận kho của người mua."
+        },
+        {
+          "id": "E191-4",
+          "w": "beneficiary",
+          "r": "/ˌben.əˈfɪʃ.i.er.i/",
+          "m": "người thụ hưởng quyền lợi chi trả bảo hiểm",
+          "d": "the designated person or organization legally entitled to receive an insurance payout",
+          "ex": "Agents should remind clients to review and update their beneficiary designations after major life changes.",
+          "exr": "",
+          "exm": "Tư vấn viên nên nhắc khách hàng rà soát và cập nhật thông tin người thụ hưởng sau những cột mốc quan trọng trong đời."
+        },
+        {
+          "id": "E191-5",
+          "w": "underwriting",
+          "r": "/ˈʌn.dɚˌraɪ.tɪŋ/",
+          "m": "quy trình thẩm định rủi ro trước khi cấp hợp đồng bảo hiểm",
+          "d": "the formal evaluation an insurer conducts to assess risk and determine final policy terms and pricing",
+          "ex": "Complete medical disclosure speeds up underwriting approval for group health insurance.",
+          "exr": "",
+          "exm": "Việc kê khai y tế đầy đủ giúp rút ngắn thời gian thẩm định phê duyệt hợp đồng bảo hiểm sức khỏe nhóm."
+        },
+        {
+          "id": "E191-6",
+          "w": "exclusion",
+          "r": "/ɪkˈskluː.ʒən/",
+          "m": "điều khoản loại trừ không thuộc phạm vi bồi thường",
+          "d": "a specific hazard, loss, or condition explicitly listed as not covered by the insurance policy",
+          "ex": "Walk every client through policy exclusions clearly so there are zero shocks when a claim arises.",
+          "exr": "",
+          "exm": "Hãy giải thích rõ từng điều khoản loại trừ cho khách để tránh hoàn toàn bất ngờ khi phát sinh yêu cầu bồi thường."
+        },
+        {
+          "id": "E191-7",
+          "w": "indemnity",
+          "r": "/ɪnˈdem.nə.ti/",
+          "m": "khoản bồi thường bù đắp thiệt hại thực tế theo hợp đồng",
+          "d": "financial compensation restoring the insured party to the financial position held just before a loss",
+          "ex": "Under the indemnity clause, payment matches verified repair invoices up to the insured limit.",
+          "exr": "",
+          "exm": "Theo điều khoản bồi thường thiệt hại thực tế, mức chi trả khớp với hóa đơn sửa chữa hợp lệ trong hạn mức bảo hiểm."
+        },
+        {
+          "id": "E191-8",
+          "w": "third-party liability",
+          "r": "/ˌθɜːrd ˈpɑːr.ti ˌlaɪ.əˈbɪl.ə.ti/",
+          "m": "trách nhiệm bồi thường thiệt hại gây ra cho bên thứ ba",
+          "d": "insurance protection covering injury or property damage caused accidentally by the insured to others",
+          "ex": "Event venues require organizers to hold two million dollars in third-party liability insurance.",
+          "exr": "",
+          "exm": "Các trung tâm tổ chức sự kiện yêu cầu đơn vị tổ chức phải có bảo hiểm trách nhiệm bên thứ ba mức hai triệu đô la."
+        },
+        {
+          "id": "E191-9",
+          "w": "claims adjuster",
+          "r": "/ˈkleɪmz əˌdʒʌs.tɚ/",
+          "m": "giám định viên / chuyên viên xét duyệt hồ sơ bồi thường",
+          "d": "an insurance specialist who investigates damages, reviews documents, and calculates payout amounts",
+          "ex": "The claims adjuster inspected the storm-damaged warehouse roof within twenty-four hours of our filing.",
+          "exr": "",
+          "exm": "Giám định viên bồi thường đã kiểm tra phần mái kho bị hư hại do bão trong vòng 24 giờ sau khi chúng tôi nộp hồ sơ."
+        },
+        {
+          "id": "E191-10",
+          "w": "sum insured",
+          "r": "/ˈsʌm ɪnˈʃʊrd/",
+          "m": "số tiền bảo hiểm tối đa / hạn mức chi trả cao nhất",
+          "d": "the maximum monetary payout limit specified on an insurance schedule for covered losses",
+          "ex": "If factory machinery doubles in value, remember to update the sum insured upon renewal.",
+          "exr": "",
+          "exm": "Nếu giá trị máy móc nhà xưởng tăng gấp đôi, hãy nhớ cập nhật lại số tiền bảo hiểm tối đa khi gia hạn hợp đồng."
+        },
+        {
+          "id": "E191-11",
+          "w": "waiting period",
+          "r": "/ˈweɪ.tɪŋ ˌpɪr.i.əd/",
+          "m": "thời gian chờ trước khi quyền lợi bảo hiểm bắt đầu có hiệu lực",
+          "d": "the initial window after policy activation during which certain benefits cannot yet be claimed",
+          "ex": "Dental benefits carry a thirty-day waiting period after the employee health policy starts.",
+          "exr": "",
+          "exm": "Quyền lợi nha khoa áp dụng thời gian chờ 30 ngày kể từ khi hợp đồng bảo hiểm sức khỏe nhân viên bắt đầu có hiệu lực."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q191-0",
+          "q": "A client's policy carries a $500 deductible and approved storm repair costs come to $3,200. How much does the insurer reimburse?",
+          "o": [
+            "$3,700",
+            "$2,700",
+            "$500"
+          ],
+          "a": 1,
+          "why": "Mức khấu trừ (deductible) 500 đô là phần chủ hợp đồng tự trả trước, nên công ty bảo hiểm chi trả 3.200 - 500 = 2.700 đô."
+        },
+        {
+          "id": "q191-1",
+          "q": "Before issuing a warehouse property policy, why does the insurer send an engineer to inspect fire sprinklers and wiring?",
+          "o": [
+            "For the underwriting risk assessment",
+            "To assign an accidental death beneficiary",
+            "To calculate employee dental waiting periods"
+          ],
+          "a": 0,
+          "why": "Đây là bước thẩm định rủi ro (underwriting) nhằm đánh giá nguy cơ cháy nổ thực tế để định mức phí và điều khoản bảo hiểm chính xác."
+        },
+        {
+          "id": "q191-2",
+          "q": "A hotel guest trips over an exhibition cable set up by an outside conference team and suffers injury. Which policy coverage responds?",
+          "o": [
+            "Marine cargo exclusion",
+            "Third-party liability coverage",
+            "Life policy beneficiary rider"
+          ],
+          "a": 1,
+          "why": "Third-party liability chi trả trách nhiệm bồi thường thiệt hại về thân thể hoặc tài sản gây ra cho bên thứ ba (khách/khách mời)."
+        },
+        {
+          "id": "q191-3",
+          "q": "Why should corporate risk managers review their property sum insured before every annual policy renewal?",
+          "o": [
+            "So the claims adjuster never asks for loss photos",
+            "Because underinsuring upgraded equipment caps indemnity below real replacement cost",
+            "To eliminate all policy exclusions automatically"
+          ],
+          "a": 1,
+          "why": "Nếu tài sản tăng giá hoặc mua thêm máy mới mà không tăng sum insured, mức bồi thường tối đa sẽ thấp hơn giá trị thiệt hại thực tế."
+        },
+        {
+          "id": "q191-4",
+          "q": "What is the most ethical and effective way for an insurance advisor to explain exclusions and waiting periods during onboarding?",
+          "o": [
+            "Bury them in fine print so customers sign faster",
+            "Walk through clear plain-language examples of what is and isn't covered before signing",
+            "Promise verbally that every expense is always 100% reimbursed"
+          ],
+          "a": 1,
+          "why": "Giải thích thẳng điều khoản loại trừ và thời gian chờ bằng ví dụ dễ hiểu trước khi ký giúp tránh khiếu nại oan và giữ uy tín lâu dài."
+        },
+        {
+          "id": "q191-5",
+          "q": "Which specialist visits a loss site, audits invoices, and calculates the final indemnity payout?",
+          "o": [
+            "The claims adjuster",
+            "The policyholder",
+            "The hotel concierge"
+          ],
+          "a": 0,
+          "why": "Claims adjuster (giám định viên bồi thường) chịu trách nhiệm khảo sát hiện trường, kiểm tra chứng từ và tính số tiền chi trả."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s191-0",
+          "title": "Walk a corporate client through deductibles and exclusions clearly",
+          "lines": [
+            {
+              "t": "Your commercial property policy provides a five-million-dollar sum insured covering fire, storm damage, and electrical surges.",
+              "r": "",
+              "m": "Hợp đồng bảo hiểm tài sản doanh nghiệp của anh có số tiền bảo hiểm 5 triệu đô, bảo vệ trước hỏa hoạn, bão lũ và sự cố chập điện."
+            },
+            {
+              "t": "Before indemnity pays out on any approved claim, your agreed deductible of two thousand five hundred dollars applies per incident.",
+              "r": "",
+              "m": "Trước khi chi trả bồi thường cho mỗi vụ việc được duyệt, mức khấu trừ đã thỏa thuận 2.500 đô la sẽ được áp dụng."
+            },
+            {
+              "t": "Also please note exclusion Clause 4b regarding gradual wear and tear—regular preventive roof maintenance keeps full coverage valid.",
+              "r": "",
+              "m": "Anh cũng lưu ý giúp điều khoản loại trừ 4b đối với hao mòn tự nhiên—việc bảo trì mái xưởng định kỳ sẽ giữ nguyên hiệu lực bảo hiểm toàn phần."
+            }
+          ]
+        },
+        {
+          "id": "s191-1",
+          "title": "Guide a policyholder through submitting a fast claim dossier",
+          "lines": [
+            {
+              "t": "I have opened Claim #INS-884 and assigned a senior claims adjuster to inspect your damaged cargo container tomorrow at nine.",
+              "r": "",
+              "m": "Tôi đã mở hồ sơ bồi thường #INS-884 và phân công giám định viên cao cấp đến kiểm tra container hàng hư hỏng vào 9 giờ sáng mai."
+            },
+            {
+              "t": "To speed up underwriting and final indemnity payout, please upload timestamped photos, the packing list, and initial repair quotes today.",
+              "r": "",
+              "m": "Để đẩy nhanh khâu thẩm định chứng từ và giải ngân bồi thường, anh vui lòng tải ảnh có ngày giờ, phiếu đóng gói và báo giá sửa chữa sơ bộ trong hôm nay."
+            },
+            {
+              "t": "Once those documents are verified, Finance transfers the settlement directly to your corporate account within five business days.",
+              "r": "",
+              "m": "Ngay khi hồ sơ được đối chiếu xong, bộ phận Tài chính sẽ chuyển tiền bồi thường thẳng vào tài khoản công ty trong vòng năm ngày làm việc."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c191-0",
+          "q": "A client asks how raising their deductible helps lower annual insurance costs—and what trade-off to watch out for.",
+          "vi": "Khách hỏi việc tăng mức khấu trừ giúp giảm phí bảo hiểm hằng năm ra sao và cần cân nhắc rủi ro gì. Bạn giải thích thế nào?",
+          "st": "Opting for a higher deductible reduces + premium + provided your cash reserve comfortably covers + trade-off.",
+          "ph": [
+            "deductible",
+            "premium",
+            "indemnity"
+          ],
+          "sa": "Choosing a higher deductible lowers your annual premium immediately because your company absorbs minor nuisance repairs itself rather than filing small claims. However, make sure your operating reserve can comfortably cover that deductible per event before indemnity reimbursement arrives.",
+          "ss": [
+            "Shall I compare quotes at the two-thousand and five-thousand deductible tiers side by side?"
+          ],
+          "sc": "Advising a business client objectively on deductible vs premium optimization."
+        },
+        {
+          "id": "c191-1",
+          "q": "Why did an insurance application take longer in underwriting, and how do you ask the client for missing medical or safety records?",
+          "vi": "Vì sao hồ sơ tham gia bảo hiểm mất nhiều thời gian hơn ở khâu thẩm định, và bạn yêu cầu bổ sung hồ sơ thế nào cho chuyên nghiệp?",
+          "st": "Our underwriting team reviewed + submission + and simply needs + document + to lock in coverage & waiting period.",
+          "ph": [
+            "underwriting",
+            "coverage",
+            "waiting period"
+          ],
+          "sa": "Thank you for sending your group health enrollment forms promptly. Our underwriting specialists reviewed the file and requested two missing lab reports to confirm full chronic-illness coverage without adding extra exclusion riders; once uploaded today, your standard thirty-day waiting period starts right on schedule.",
+          "ss": [
+            "Please reply securely using the encrypted portal link below by Thursday."
+          ],
+          "sc": "Communicating clearly during insurance underwriting without alarming the policyholder."
+        },
+        {
+          "id": "c191-2",
+          "q": "A policyholder is frustrated because their claim for basement flood damage was declined under an exclusion clause. Respond empathetically.",
+          "vi": "Chủ hợp đồng bức xúc vì yêu cầu bồi thường thiệt hại ngập tầng hầm bị từ chối theo điều khoản loại trừ. Bạn phản hồi thấu cảm và chuẩn mực thế nào?",
+          "st": "I know seeing a claim declined is frustrating; looking at Section 3, + exclusion + explains why.",
+          "ph": [
+            "policyholder",
+            "exclusion",
+            "claims adjuster"
+          ],
+          "sa": "I completely understand why receiving a partial decline after storm damage feels frustrating for a loyal policyholder. According to the claims adjuster's report under Exclusion 3d, ground-water seepage is outside standard fire-and-wind coverage, though the damaged electrical panels themselves qualify for partial reimbursement—and I can add flood endorsement protection ahead of next month's renewal.",
+          "ss": [
+            "Let’s walk through the approved portion first so we release that payout right away."
+          ],
+          "sc": "Delivering an insurance exclusion explanation with empathy and constructive next steps."
+        },
+        {
+          "id": "c191-3",
+          "q": "Remind an SME owner before contract renewal why reviewing sum insured, beneficiary details, and third-party liability matters.",
+          "vi": "Nhắc chủ doanh nghiệp vừa trước kỳ gia hạn hợp đồng về lý do nên rà soát lại số tiền bảo hiểm, người thụ hưởng và trách nhiệm bên thứ ba.",
+          "st": "Ahead of renewal, updating + sum insured, third-party liability, and beneficiary + prevents dangerous gaps.",
+          "ph": [
+            "sum insured",
+            "third-party liability",
+            "beneficiary"
+          ],
+          "sa": "With your policy coming up for renewal next month, I recommend spending ten minutes verifying three items: increasing the sum insured to reflect your two new CNC machines, lifting third-party liability to match your new retail landlord's lease terms, and confirming your corporate beneficiary schedule is up to date.",
+          "ss": [
+            "Keeping limits aligned with real growth ensures zero payout shortfalls later."
+          ],
+          "sc": "Conducting a proactive annual policy review prior to renewal."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Renewal Proposal & Claims Update – Policy #POL-7731\n\nDear Mr. Bao,\n\nThank you for submitting the inspection invoices for your delivery van. Our [[claims adjuster|adjuster claims|claims writer]] has approved an [[indemnity|indemnities|indemnified]] payout of USD 3,600 after subtracting your policy's USD 400 [[deductible|deduction|deducted]].\n\nLooking ahead to next month’s annual renewal, since you expanded warehouse inventory by 30 percent, we strongly advise updating your [[sum insured|insuring sum|insured cost]] and reviewing your third-party liability limit so coverage fully protects your business.\n\nWarm regards,\nKien Tran\nSenior Underwriting & Claims Advisor",
+        "trans": "",
+        "audio": "audio/mail/en-191.mp3"
+      },
+      "gram": [],
+      "listening": [
+        {
+          "id": "L191-0",
+          "title": "Resolving a Commercial Property Claim & Reviewing Exclusions",
+          "sub": "Thảo luận giữa giám định viên và chủ doanh nghiệp về hồ sơ bồi thường mái kho, mức khấu trừ và điều khoản loại trừ",
+          "level": "B2",
+          "audio": "audio/listen/en-191-0.mp3",
+          "speakers": {
+            "A": "Robert (Factory Owner)",
+            "B": "Mai (Senior Claims Adjuster)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Mai, thanks for visiting our packaging plant so quickly after Monday's typhoon. My contractors quoted twenty-eight thousand dollars to replace torn metal roof panels and dry out the soaked carton storage bay.",
+              "m": "Chào chị Mai, cảm ơn chị đã xuống thăm xưởng bao bì bên tôi nhanh như vậy sau cơn bão thứ Hai. Nhà thầu bên tôi báo giá 28.000 đô để thay các tấm tôn mái bị tốc và sấy khô khu lưu trữ thùng carton bị ướt."
+            },
+            {
+              "s": "B",
+              "t": "I reviewed the drone photos and timestamped storm log, Robert. Wind damage to the structural roof is clearly covered under Section Two of your commercial property coverage, and those repair quotes align cleanly with market rates.",
+              "m": "Tôi đã xem kỹ ảnh flycam và nhật ký thời tiết có mốc giờ rồi anh Robert. Thiệt hại kết cấu mái do gió bão chắc chắn thuộc phạm vi bảo hiểm tại Mục 2 hợp đồng tài sản doanh nghiệp, và báo giá sửa chữa này hoàn toàn sát với mặt bằng thị trường."
+            },
+            {
+              "s": "A",
+              "t": "Wait—so why did the preliminary worksheet only approve twenty-three thousand five hundred dollars instead of the full twenty-eight thousand?",
+              "m": "Khoan—vậy sao bảng tính sơ bộ chỉ duyệt mức 23.500 đô la thay vì đủ 28.000 đô vậy chị?"
+            },
+            {
+              "s": "B",
+              "t": "Two clear reasons appear in the breakdown: first, your agreed policy deductible of two thousand dollars applies to storm events. Second, twenty-five hundred dollars covered cardboard stock stored directly on the floor, which triggers a warehouse water exclusion unless pallets sit twelve centimeters off concrete.",
+              "m": "Trong bảng kê có hai lý do rõ ràng: thứ nhất, mức khấu trừ 2.000 đô theo hợp đồng được áp dụng cho sự cố bão. Thứ hai, khoản 2.500 đô cho lô bìa carton đặt trực tiếp dưới sàn chạm vào điều khoản loại trừ ngập nước nhà kho nếu không kê pallet cao ít nhất 12 phân."
+            },
+            {
+              "s": "A",
+              "t": "Ah, I recall signing that pallet clause during underwriting two years ago—fair enough, my team missed putting wooden skids under that corner stack. How quickly can indemnity funds reach our account so the roofers start Friday?",
+              "m": "À, tôi nhớ có ký cam kết điều khoản kê pallet đó lúc thẩm định hợp đồng hai năm trước—cũng sòng phẳng thôi, đội kho bên tôi sơ suất quên kê pallet góc đó. Tiền bồi thường giải ngân nhanh cỡ nào để thợ mái bắt đầu thi công thứ Sáu này?"
+            },
+            {
+              "s": "B",
+              "t": "As soon as you click approve on the twenty-three-thousand-five-hundred settlement voucher in the policyholder portal today, Finance transfers the full indemnity within seventy-two hours—before Friday afternoon.",
+              "m": "Ngay khi anh bấm xác nhận phiếu quyết toán 23.500 đô trên cổng thông tin chủ hợp đồng hôm nay, bộ phận Tài chính sẽ chuyển khoản đủ trong vòng 72 giờ—kịp trước chiều thứ Sáu ạ."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq191-0-0",
+              "q": "Why was $4,500 subtracted from Robert's $28,000 claim?",
+              "o": [
+                "The roof repair contractors inflated quotes above market prices.",
+                "$2,000 went to the policy deductible and $2,500 fell under an exclusion for stock stored directly on the floor.",
+                "The plant failed to pay its monthly fire insurance premium on time.",
+                "Typhoon roof damage had a 90-day waiting period remaining."
+              ],
+              "a": 1,
+              "why": "Gồm 2.000 đô tiền khấu trừ (deductible) cộng 2.500 đô tiền bìa carton để sát sàn không kê pallet cao 12cm nên rơi vào điều khoản loại trừ."
+            },
+            {
+              "id": "lq191-0-1",
+              "q": "How did Robert react to the floor-storage exclusion decision?",
+              "o": [
+                "He threatened to hire a lawyer immediately.",
+                "He acknowledged signing the pallet clause during underwriting two years earlier.",
+                "He claimed the floor stock belonged to an outside distributor.",
+                "He demanded the adjuster cancel the deductible."
+              ],
+              "a": 1,
+              "why": "Robert nhớ lại việc đã ký điều khoản kê pallet khi thẩm định 2 năm trước và thừa nhận nhân viên kho sơ suất bỏ quên góc hàng đó."
+            },
+            {
+              "id": "lq191-0-2",
+              "q": "When will the $23,500 indemnity payment arrive?",
+              "o": [
+                "In 30 business days after roof repairs pass municipal inspection",
+                "Within 72 hours after Robert approves the settlement voucher in the portal",
+                "Automatically deducted from next year's renewal premium",
+                "Split into twelve monthly installments starting next quarter"
+              ],
+              "a": 1,
+              "why": "Ngay sau khi chủ hợp đồng bấm duyệt trên cổng portal hôm nay, tiền sẽ được chuyển khoản trong 72 giờ (trước chiều thứ Sáu)."
+            }
+          ]
+        },
+        {
+          "id": "L191-1",
+          "title": "Annual Policy Renewal: Updating Sum Insured & Liability Limits",
+          "sub": "Tư vấn gia hạn hợp đồng bảo hiểm doanh nghiệp: Điều chỉnh hạn mức tài sản, trách nhiệm bên thứ ba & tối ưu phí",
+          "level": "B2",
+          "audio": "audio/listen/en-191-1.mp3",
+          "speakers": {
+            "A": "Tuan (Broker / Advisor)",
+            "B": "Ngoc (Operations Director)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Ngoc, your logistics company's commercial package comes up for renewal next month. Before locking in the same terms automatically, I spotted three growth changes that expose you to underinsurance right now.",
+              "m": "Chị Ngọc ơi, gói bảo hiểm doanh nghiệp của công ty vận tải bên chị sắp tới kỳ gia hạn tháng sau rồi. Trước khi gia hạn tự động theo mức cũ, em thấy ba thay đổi quy mô có thể khiến bên chị bị thiếu hạn mức bảo vệ lúc này."
+            },
+            {
+              "s": "B",
+              "t": "Thanks for flagging that proactively, Tuan—we definitely grew this year. What jumps out first in your audit?",
+              "m": "Cảm ơn em đã chủ động nhắc chị nhé Tuấn—năm nay bên chị đúng là mở rộng mạnh. Điểm đáng chú ý đầu tiên trong bản rà soát là gì em?"
+            },
+            {
+              "s": "A",
+              "t": "First, your warehouse added two automated cold-storage chillers worth four hundred thousand dollars, yet your property sum insured still caps at one million—leaving nearly thirty percent of assets unprotected.",
+              "m": "Thứ nhất, kho bên chị mới lắp thêm hai cụm làm lạnh tự động trị giá 400.000 đô, nhưng số tiền bảo hiểm tài sản tối đa vẫn giữ mốc 1 triệu đô—nghĩa là gần 30% giá trị tài sản đang đứng ngoài phạm vi bảo vệ."
+            },
+            {
+              "s": "B",
+              "t": "Good catch—we should definitely raise the sum insured to 1.4 million. Second concern: our new retail distribution hub lease demands higher third-party liability proof before opening day.",
+              "m": "Phát hiện quá chuẩn—chắc chắn phải nâng mức số tiền bảo hiểm lên 1,4 triệu đô. Vấn đề thứ hai chị lo là hợp đồng thuê trung tâm phân phối mới đòi chứng nhận bảo hiểm trách nhiệm bên thứ ba cao hơn trước ngày khai trương."
+            },
+            {
+              "s": "A",
+              "t": "We already priced raising third-party liability from one million to three million dollars, plus eliminating the sixty-day waiting period for new fleet hires on your group accident rider—adding just nine percent to total premium.",
+              "m": "Bên em đã tính sẵn phương án nâng bảo hiểm trách nhiệm bên thứ ba từ 1 triệu lên 3 triệu đô, đồng thời bỏ luôn thời gian chờ 60 ngày cho tài xế mới tuyển ở quyền lợi tai nạn nhóm—mức phí tổng chỉ tăng 9%."
+            },
+            {
+              "s": "B",
+              "t": "Nine percent extra for forty percent higher asset limits and triple liability coverage is great value—can we shave off part of that increase by nudging our deductible slightly?",
+              "m": "Tăng thêm 9% phí mà nâng được 40% hạn mức tài sản lại tăng gấp ba mức trách nhiệm bên thứ ba thì rất hợp lý—mình có thể giảm bớt phần phí tăng này bằng cách nhích nhẹ mức khấu trừ không em?"
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq191-1-0",
+              "q": "Why was Ngoc's warehouse currently underinsured before renewal?",
+              "o": [
+                "Her cold-storage insurance expired during the waiting period.",
+                "She added $400,000 in automated chillers while keeping the property sum insured capped at $1,000,000.",
+                "The broker mistakenly removed storm exclusions without telling Finance.",
+                "Warehouse drivers declined group health coverage."
+              ],
+              "a": 1,
+              "why": "Công ty lắp thêm hai hệ thống làm lạnh 400.000 đô nhưng hạn mức sum insured vẫn để 1 triệu đô nên gần 30% tài sản bị hụt bảo hiểm."
+            },
+            {
+              "id": "lq191-1-1",
+              "q": "Which combination did Tuan include for only a 9% increase in total premium?",
+              "o": [
+                "Triple third-party liability ($3M) plus waiving the 60-day waiting period on fleet accident coverage",
+                "Free solar roof installation plus zero deductible across all policies",
+                "Replacing property insurance with life beneficiary coverage",
+                "Retroactive payouts for unreported 2024 traffic fines"
+              ],
+              "a": 0,
+              "why": "Gói nâng cấp tăng gấp 3 mức trách nhiệm bên thứ ba (từ 1 lên 3 triệu đô) và bỏ thời gian chờ 60 ngày cho tài xế mới với mức tăng phí chỉ 9%."
+            },
+            {
+              "id": "lq191-1-2",
+              "q": "How did Ngoc propose offsetting part of the 9% premium increase?",
+              "o": [
+                "Dropping coverage for cold-storage chillers during winter",
+                "Slightly raising the policy deductible",
+                "Changing the corporate beneficiary designation",
+                "Canceling driver accident riders for new hires"
+              ],
+              "a": 1,
+              "why": "Chị Ngọc đề xuất tăng nhẹ mức khấu trừ (deductible) để tối ưu giảm bớt phần phí bảo hiểm tăng thêm."
+            }
+          ]
+        }
+      ],
+      "catPos": 18,
+      "pos": 64
+    },
+    {
       "id": "151",
-      "pos": 62,
+      "pos": 65,
       "catPos": 1,
       "category": "c1",
       "level": "C1",
@@ -27831,7 +29271,7 @@
     },
     {
       "id": "152",
-      "pos": 63,
+      "pos": 66,
       "catPos": 2,
       "category": "c1",
       "level": "C1",
@@ -28211,7 +29651,7 @@
     },
     {
       "id": "153",
-      "pos": 64,
+      "pos": 67,
       "catPos": 3,
       "category": "c1",
       "level": "C1",
@@ -28571,7 +30011,7 @@
     },
     {
       "id": "154",
-      "pos": 65,
+      "pos": 68,
       "catPos": 4,
       "category": "c1",
       "level": "C1",
@@ -28921,7 +30361,7 @@
     },
     {
       "id": "155",
-      "pos": 66,
+      "pos": 69,
       "catPos": 5,
       "category": "c1",
       "level": "C1",
@@ -29271,7 +30711,7 @@
     },
     {
       "id": "156",
-      "pos": 67,
+      "pos": 70,
       "catPos": 1,
       "category": "c2",
       "level": "C2",
@@ -29621,7 +31061,7 @@
     },
     {
       "id": "157",
-      "pos": 68,
+      "pos": 71,
       "catPos": 2,
       "category": "c2",
       "level": "C2",
@@ -29961,7 +31401,7 @@
     },
     {
       "id": "158",
-      "pos": 69,
+      "pos": 72,
       "catPos": 3,
       "category": "c2",
       "level": "C2",
@@ -30301,7 +31741,7 @@
     },
     {
       "id": "159",
-      "pos": 70,
+      "pos": 73,
       "catPos": 4,
       "category": "c2",
       "level": "C2",
@@ -30631,7 +32071,7 @@
     },
     {
       "id": "160",
-      "pos": 71,
+      "pos": 74,
       "catPos": 5,
       "category": "c2",
       "level": "C2",
@@ -64562,6 +66002,1298 @@
     "Denying any presence of peanut trace inside Lot 4B": [
       160,
       "f9f18390c609"
+    ],
+    "service-level agreement": [
+      189,
+      "57b043c4dbb9"
+    ],
+    "Our service-level agreement guarantees an initial support reply within two business hours.": [
+      189,
+      "60b2deea8abd"
+    ],
+    "service recovery": [
+      189,
+      "c5f0fa8725fa"
+    ],
+    "A thoughtful service recovery turned an angry guest into a loyal brand advocate.": [
+      189,
+      "e77849de7ffc"
+    ],
+    "escalation": [
+      189,
+      "24aaa8e99ecd"
+    ],
+    "If a billing dispute remains unresolved after 24 hours, immediate escalation to a team lead is mandatory.": [
+      189,
+      "1b053e080bb3"
+    ],
+    "customer retention": [
+      189,
+      "09bd7d7d71b7"
+    ],
+    "Improving post-sale support raised our annual customer retention from 78 percent to 91 percent.": [
+      189,
+      "07a05031ecee"
+    ],
+    "churn rate": [
+      189,
+      "4e3c4b15432c"
+    ],
+    "Slow response times during peak hours drove up our monthly churn rate last quarter.": [
+      189,
+      "01e3fdd62352"
+    ],
+    "first-contact resolution": [
+      189,
+      "b4d2ec278ab9"
+    ],
+    "Empowering agents to approve small refunds boosted first-contact resolution across the help desk.": [
+      189,
+      "cdbec9be79d7"
+    ],
+    "onboarding": [
+      189,
+      "1f21316c7cfc"
+    ],
+    "A guided thirty-day onboarding session reduces setup mistakes for enterprise clients.": [
+      189,
+      "b293e192de1d"
+    ],
+    "We cut our repair turnaround time in half by keeping spare parts in regional service hubs.": [
+      189,
+      "4d7ca806d8eb"
+    ],
+    "proactive follow-up": [
+      189,
+      "ecaade2d50a3"
+    ],
+    "A proactive follow-up call 48 hours after repair reassures clients that we stand behind our work.": [
+      189,
+      "4e99ffb4944e"
+    ],
+    "complimentary gesture": [
+      189,
+      "cf46370fcd1c"
+    ],
+    "We waived the express delivery fee as a complimentary gesture after the initial technician delay.": [
+      189,
+      "a6554c18eadc"
+    ],
+    "ticket backlog": [
+      189,
+      "600d6023f0d1"
+    ],
+    "Clearing the weekend ticket backlog required two extra shifts on Monday morning.": [
+      189,
+      "4befba51db25"
+    ],
+    "satisfaction score": [
+      189,
+      "ebba71efa02d"
+    ],
+    "Our hospitality desk aims to keep its monthly satisfaction score above 4.7 out of 5.": [
+      189,
+      "c41a48afa6b7"
+    ],
+    "A premium corporate client calls upset because a server outage lasted three hours beyond your guaranteed SLA. Best first response?": [
+      189,
+      "9ce81f489fdb"
+    ],
+    "Explain that peak traffic is normal and ask them to reopen the ticket tomorrow": [
+      189,
+      "ce4bebacdaba"
+    ],
+    "Acknowledge the SLA breach sincerely, share live technician status, and commit to an exact update time": [
+      189,
+      "4fe56c65ff64"
+    ],
+    "Transfer them directly to Accounting without taking notes": [
+      189,
+      "a9d0f69ff01c"
+    ],
+    "Which operational metric measures how many service issues are completely solved during the customer's first call or chat?": [
+      189,
+      "9383ad773372"
+    ],
+    "First-contact resolution": [
+      189,
+      "2c3b867ab40d"
+    ],
+    "Ticket backlog": [
+      189,
+      "5343b7ad9822"
+    ],
+    "Churn rate": [
+      189,
+      "34e83c5692d0"
+    ],
+    "Why should senior support agents hold a guided onboarding call for new B2B service accounts?": [
+      189,
+      "5765f4d862e2"
+    ],
+    "To increase the ticket backlog before quarter-end": [
+      189,
+      "848334c274f8"
+    ],
+    "To help clients configure workflows correctly early and reduce early churn rate": [
+      189,
+      "8c9799a3bb9a"
+    ],
+    "To delay activating billing privileges for two months": [
+      189,
+      "f6eb1d10954a"
+    ],
+    "Your repair team accidentally delayed a client's installation by 24 hours. Which action counts as service recovery?": [
+      189,
+      "44ab400b0e4a"
+    ],
+    "Fixing the issue silently and hoping the client forgets the delay": [
+      189,
+      "b106fcdf2d01"
+    ],
+    "Assigning a priority technician, apologizing candidly, offering a one-month credit, and calling 48 hours later": [
+      189,
+      "520f242b1979"
+    ],
+    "Blaming traffic rules in the public feedback portal": [
+      189,
+      "68928a1f969c"
+    ],
+    "When should a front-line agent trigger an escalation to the operations supervisor?": [
+      189,
+      "489223eb9b4d"
+    ],
+    "Whenever a case requires authority beyond front-line limits or approaches SLA breach": [
+      189,
+      "5adeb3392e03"
+    ],
+    "Every time a customer asks a routine FAQ question": [
+      189,
+      "a1eb57152fd4"
+    ],
+    "Only after a client cancels their contract completely": [
+      189,
+      "f54df157b156"
+    ],
+    "What is the healthiest way to evaluate whether a service recovery effort actually worked?": [
+      189,
+      "bfc29f30aee1"
+    ],
+    "Ignore all survey feedback below five stars": [
+      189,
+      "5541210a0cf4"
+    ],
+    "Run a proactive follow-up check and track post-ticket satisfaction score and customer retention": [
+      189,
+      "5c52a8ff16b4"
+    ],
+    "Close every open ticket immediately without calling back": [
+      189,
+      "0f572408cb0e"
+    ],
+    "I completely understand your frustration, Mr. Tan—three hours past our agreed SLA is unacceptable, and we take full ownership.": [
+      189,
+      "090fd5c0727f"
+    ],
+    "I have escalated your ticket directly to our lead field engineer, who is already on route and will complete diagnostics before 2:00 PM.": [
+      189,
+      "c9174c6e0b71"
+    ],
+    "As a complimentary gesture, we are applying a full service credit for this billing cycle and will do a proactive follow-up call tomorrow morning.": [
+      189,
+      "cb3806ded12a"
+    ],
+    "Last week we cleared the Monday ticket backlog by noon and lifted first-contact resolution to eighty-six percent.": [
+      189,
+      "1e1bd999088c"
+    ],
+    "Even better, strengthening thirty-day client onboarding helped push our quarterly customer retention to a record ninety-two percent.": [
+      189,
+      "bc340949214c"
+    ],
+    "For next month, let’s cut average turnaround time on priority tickets below four hours to keep our satisfaction score above 4.8.": [
+      189,
+      "8b5d00f54a54"
+    ],
+    "A long-term client threatens to cancel because your support desk missed the 2-hour SLA twice this month. How do you respond?": [
+      189,
+      "7720dfb9b61f"
+    ],
+    "We sincerely apologize and take full responsibility for falling short of our two-hour service-level agreement twice this month. I have triggered a priority service recovery plan assigning a dedicated account lead to your account immediately, and as a complimentary gesture we are crediting fifty percent of this month's retainer while reviewing our staffing schedule to prevent repeats.": [
+      189,
+      "403623f22379"
+    ],
+    "May I schedule a brief follow-up call on Friday to verify that response times feel noticeably faster?": [
+      189,
+      "36ab4e296136"
+    ],
+    "Your team's churn rate rose from 3% to 6% among new accounts in the first 60 days. What fix do you propose?": [
+      189,
+      "875b5b9fdf6e"
+    ],
+    "The spike in early churn rate shows new customers struggle during initial setup rather than with core service quality. I propose restructuring onboarding into two live checkpoints—day three and day fourteen—paired with a proactive follow-up check-in at day thirty before clients lose momentum.": [
+      189,
+      "2ce6cb380e39"
+    ],
+    "Tracking retention at day sixty will show quickly whether these checkpoints pay off.": [
+      189,
+      "8b7fd1ec7ae6"
+    ],
+    "How do you explain the value of empowering front-line agents to issue small fee waivers without manager approval?": [
+      189,
+      "11bf991e543c"
+    ],
+    "Empowering trained agents to approve minor credits up to twenty-five dollars eliminates unnecessary escalation queues. It cuts customer turnaround time from days to minutes, lifts first-contact resolution immediately, and prevents low-risk complaints from clogging our ticket backlog.": [
+      189,
+      "54e351db2ba3"
+    ],
+    "We can audit those credits monthly to keep governance clean and transparent.": [
+      189,
+      "bf398a84df7f"
+    ],
+    "Wrap up a resolved service complaint call politely and confirm the client is satisfied before closing the ticket.": [
+      189,
+      "33e4e403524b"
+    ],
+    "To recap, your replacement router has been activated and the service credit appears on next week's statement. I will do a proactive follow-up call on Thursday afternoon to make sure everything remains rock solid, and your honest rating on our quick survey helps us improve our satisfaction score and long-term customer retention.": [
+      189,
+      "3c9af30ad1cf"
+    ],
+    "Thank you again for giving us the chance to make this right today.": [
+      189,
+      "b5ca30e70ca5"
+    ],
+    "Nam, I asked for this call because our regional retail stores lost point-of-sale support for nearly five hours yesterday afternoon. Under our service-level agreement, priority outages require a live technician on site within two hours, not excuses by email.": [
+      189,
+      "72a3762e070d"
+    ],
+    "Hannah, you have every right to hold us to that commitment, and I apologize unreservedly. We audited the timestamp logs this morning: your alert waited in our Tier-1 queue for ninety-five minutes before automatic escalation kicked in, which directly caused the missed SLA window.": [
+      189,
+      "38d066147c9d"
+    ],
+    "Five hours during peak evening checkout cost twelve stores significant revenue and left cashiers writing manual receipts. How can my leadership team trust that next month won’t bring another ticket backlog?": [
+      189,
+      "1cd79d88b85b"
+    ],
+    "Fair question—promises alone aren't enough. Starting today, any POS outage alert from your account bypasses Tier-1 triage and routes straight to our senior field supervisor within five minutes, cutting projected turnaround time in half.": [
+      189,
+      "6a33462bff14"
+    ],
+    "Direct routing helps going forward, yet we still absorbed overtime labor costs yesterday. What service recovery measure is your company proposing for the disruption itself?": [
+      189,
+      "76af360517ee"
+    ],
+    "We are applying our contract SLA credit automatically plus an extra complimentary gesture equal to ten percent off next month's maintenance fee—totaling three thousand two hundred dollars—and I will personally conduct a proactive follow-up review every Friday for the next month.": [
+      189,
+      "c90f7b5b2f3f"
+    ],
+    "What root cause delayed the technician dispatch for Hannah's retail stores?": [
+      189,
+      "af0be061d266"
+    ],
+    "The stores forgot to renew their annual maintenance contract on time.": [
+      189,
+      "4b8c622bb962"
+    ],
+    "The outage alert sat in the Tier-1 queue for 95 minutes before escalating.": [
+      189,
+      "f9355e664e04"
+    ],
+    "All regional field engineers were on holiday during evening checkout hours.": [
+      189,
+      "979bf86dfa11"
+    ],
+    "The stores disconnected their backup power routers manually.": [
+      189,
+      "fad59ff00cc7"
+    ],
+    "What permanent workflow fix did Nam put in place starting immediately?": [
+      189,
+      "e1c61d614ea1"
+    ],
+    "Outsourcing Tier-1 chat tickets to an external weekend call center": [
+      189,
+      "f6058134958b"
+    ],
+    "Bypassing Tier-1 triage so Hannah's POS alerts route straight to the senior field supervisor within 5 minutes": [
+      189,
+      "533269e3725d"
+    ],
+    "Extending the contracted SLA arrival limit from two hours to five hours": [
+      189,
+      "61e59313a613"
+    ],
+    "Issuing manual paper receipt books to all twelve stores": [
+      189,
+      "442488e31c88"
+    ],
+    "Which combination makes up Nam's $3,200 service recovery package?": [
+      189,
+      "ce05f68507d5"
+    ],
+    "A free POS hardware replacement plus waived bank fees": [
+      189,
+      "d48e90f26031"
+    ],
+    "The standard SLA penalty credit plus an extra 10% complimentary discount off next month's fee": [
+      189,
+      "0aa090c137ab"
+    ],
+    "Two free training workshops plus overtime cash paid directly to store cashiers": [
+      189,
+      "738c2df36dac"
+    ],
+    "Cancellation without penalty plus 50% refund on setup equipment": [
+      189,
+      "58064b19216b"
+    ],
+    "Linh, before our board meeting on Tuesday, walk me through the Q3 service retention report. Our annual churn rate dropped to four percent overall, yet something still looks bumpy in the small-business segment.": [
+      189,
+      "10470443790e"
+    ],
+    "Sharp catch, David. While enterprise customer retention hit ninety-five percent, sixteen percent of smaller clients canceled within forty-five days—usually before their team even finished configuring reporting dashboards during self-service onboarding.": [
+      189,
+      "0197757e23db"
+    ],
+    "So it wasn't price sensitivity at all—they simply never reached their first win with our platform. Have you tested anything with the August sign-ups to fix that drop-off?": [
+      189,
+      "8bf05b4cc1a9"
+    ],
+    "Yes, we piloted a twenty-minute live kickoff screen-share plus a day-ten proactive follow-up call for eighty new small-business accounts. Activation soared from fifty-four percent to eighty-nine percent, and their post-onboarding satisfaction score reached 4.8.": [
+      189,
+      "e90fa72da795"
+    ],
+    "That's huge—jumping from fifty-four to eighty-nine percent pays for agent hours several times over. Did helping clients properly up front also shrink support ticket volume afterwards?": [
+      189,
+      "2712644d8f07"
+    ],
+    "Dramatically—follow-up setup tickets fell by thirty-eight percent, which freed our help desk to raise first-contact resolution from seventy-four to eighty-seven percent without hiring extra headcount.": [
+      189,
+      "304561d55d05"
+    ],
+    "Why were 16% of new small-business accounts canceling within their first 45 days?": [
+      189,
+      "2efb7e7d94b8"
+    ],
+    "Enterprise clients complained about unfair pricing tiers.": [
+      189,
+      "55aa91dd7f54"
+    ],
+    "They struggled to complete dashboard setup during self-service onboarding before seeing value.": [
+      189,
+      "2e2c6f05b5c6"
+    ],
+    "The help desk refused to offer live phone support to small businesses.": [
+      189,
+      "77b10de3a547"
+    ],
+    "Payment gateways blocked regional credit cards in Q3.": [
+      189,
+      "a8ef68c6a32b"
+    ],
+    "What happened to account activation during Linh's August onboarding pilot?": [
+      189,
+      "f93ca4b8921b"
+    ],
+    "It held steady at 74% while satisfaction stayed at 4.0.": [
+      189,
+      "3c8f417ec27b"
+    ],
+    "It jumped from 54% to 89%, with a 4.8 satisfaction score.": [
+      189,
+      "43d497ea51da"
+    ],
+    "It dropped temporarily due to shorter kickoff calls.": [
+      189,
+      "2aafcb910534"
+    ],
+    "Only enterprise accounts joined the August pilot.": [
+      189,
+      "ed4d2700ff84"
+    ],
+    "How did better onboarding affect the main support help desk?": [
+      189,
+      "00fd857a6fdc"
+    ],
+    "Setup tickets fell by 38%, allowing first-contact resolution to climb to 87% with the same staff.": [
+      189,
+      "19e91e8d9619"
+    ],
+    "It forced the company to add three weekend shifts.": [
+      189,
+      "7c8040c60076"
+    ],
+    "Churn rate among enterprise clients rose temporarily to 6%.": [
+      189,
+      "557640ecdf52"
+    ],
+    "First-contact resolution dropped slightly because calls ran longer.": [
+      189,
+      "a07cd4251b1d"
+    ],
+    "occupancy rate": [
+      190,
+      "4fd5855f038d"
+    ],
+    "Our coastal resort reached an occupancy rate of 94 percent during the holiday week.": [
+      190,
+      "73ac4a41bd30"
+    ],
+    "overbooking": [
+      190,
+      "881fb0a00641"
+    ],
+    "Automated room inventory sync prevents double reservations and last-minute overbooking.": [
+      190,
+      "1fd40424d9a5"
+    ],
+    "concierge": [
+      190,
+      "3ae4d575940c"
+    ],
+    "The head concierge secured private museum tickets and airport transfers for the corporate group.": [
+      190,
+      "0c2f5c547a5b"
+    ],
+    "complimentary upgrade": [
+      190,
+      "5bf7232d1165"
+    ],
+    "Due to a maintenance delay in their original room, we offered a complimentary upgrade to an ocean-view suite.": [
+      190,
+      "ad59985f7d30"
+    ],
+    "peak-season surcharge": [
+      190,
+      "81b81916bdf5"
+    ],
+    "Please disclose any peak-season surcharge clearly on the quotation sheet before guests place a deposit.": [
+      190,
+      "e2c2a6bf2eee"
+    ],
+    "full board": [
+      190,
+      "def69ae45a91"
+    ],
+    "Most incentive travel groups prefer full board packages so meals are covered in one invoice.": [
+      190,
+      "294c8eb257ef"
+    ],
+    "cancellation policy": [
+      190,
+      "f98a63ea83c1"
+    ],
+    "Under our flexible cancellation policy, groups can adjust room counts free of charge up to 14 days prior.": [
+      190,
+      "a2ec356e437a"
+    ],
+    "tailor-made package": [
+      190,
+      "48f2cee5710c"
+    ],
+    "We crafted a tailor-made package combining heritage walking tours with private culinary workshops.": [
+      190,
+      "1902c3c1bf7c"
+    ],
+    "transfer service": [
+      190,
+      "d992f7c0b749"
+    ],
+    "Round-trip airport transfer service is included in the retreat quote for all twenty delegates.": [
+      190,
+      "e293dbc7f621"
+    ],
+    "hospitality standard": [
+      190,
+      "2f1f329f1b4a"
+    ],
+    "Daily lobby inspections ensure every partner boutique property meets five-star hospitality standards.": [
+      190,
+      "7fd66f6f229a"
+    ],
+    "excursion": [
+      190,
+      "cce663cb5842"
+    ],
+    "Rain forced us to switch the afternoon bay excursion to an indoor heritage craft village visit.": [
+      190,
+      "5306c109624d"
+    ],
+    "no-show fee": [
+      190,
+      "f58aa785002c"
+    ],
+    "Waiving the no-show fee when a flight is canceled due to weather builds strong repeat business.": [
+      190,
+      "8f8d3e5117ba"
+    ],
+    "A hotel partner calls at 3:00 PM saying two Deluxe rooms suffered AC leaks and overbooking leaves no identical category free. Best action for the tour operator?": [
+      190,
+      "ea7d1d7a6c2a"
+    ],
+    "Tell guests to look for another hotel on their own after arrival": [
+      190,
+      "5cdf7a9571b2"
+    ],
+    "Negotiate an immediate complimentary upgrade to suites at the partner hotel's expense and brief guests warmly": [
+      190,
+      "19c67a75c010"
+    ],
+    "Charge guests extra for the upgrade while blaming the weather": [
+      190,
+      "81d3760688d6"
+    ],
+    "Which room-and-meal plan gives corporate retreat organizers breakfast, lunch, and dinner covered in one predictable rate?": [
+      190,
+      "fbbb5ae72d3b"
+    ],
+    "Full board": [
+      190,
+      "c594029f7a6f"
+    ],
+    "No-show fee": [
+      190,
+      "3974df4caca4"
+    ],
+    "Transfer service": [
+      190,
+      "f4580bab409f"
+    ],
+    "Why must travel consultants highlight any peak-season surcharge and cancellation policy on the written proposal before deposit?": [
+      190,
+      "10b49c661d3c"
+    ],
+    "To make quotes harder to read so fewer guests ask questions": [
+      190,
+      "ba8c33ec9992"
+    ],
+    "To prevent surprise disputes over holiday supplements and refund cutoffs later": [
+      190,
+      "3d59cf6c9afd"
+    ],
+    "To guarantee a 100% occupancy rate during rainy months": [
+      190,
+      "e8564a65c06b"
+    ],
+    "Heavy coastal fog cancels a morning boat excursion for 18 incentive guests. How should the tour manager maintain hospitality standards?": [
+      190,
+      "6b67e0c72329"
+    ],
+    "Activate a vetted Plan B indoor excursion immediately and arrange timely group transfer service": [
+      190,
+      "8664b4c6cfe7"
+    ],
+    "Cancel the whole day's schedule and leave guests in the hotel lobby": [
+      190,
+      "b704e2e82489"
+    ],
+    "Charge a no-show fee to the boat company and keep guests waiting on the pier": [
+      190,
+      "140e2ab21203"
+    ],
+    "A corporate client requests a custom five-day wellness and culinary itinerary for executives with vegan dietary needs. What product is this?": [
+      190,
+      "e038afda6fd7"
+    ],
+    "An airport shuttle ticket": [
+      190,
+      "07bc9d5db5c4"
+    ],
+    "A tailor-made package": [
+      190,
+      "75165ab799fa"
+    ],
+    "A seasonal overbooking alert": [
+      190,
+      "132f3a544f22"
+    ],
+    "A guest's connecting international flight was delayed by airline technical trouble, causing them to miss check-in night one. Smart policy decision?": [
+      190,
+      "14190b98aa91"
+    ],
+    "Release the rest of their five-night booking and keep the full payment": [
+      190,
+      "f71d1710c7db"
+    ],
+    "Hold the remaining nights upon notice and waive the one-night no-show fee as goodwill": [
+      190,
+      "278658c8cd7c"
+    ],
+    "Double their room rate starting the next morning": [
+      190,
+      "20fbb09d4b23"
+    ],
+    "Welcome to Da Nang, Ms. Wilson. Because of an unexpected plumbing maintenance issue in one wing, your original Deluxe ocean room is temporarily offline.": [
+      190,
+      "62b10e516882"
+    ],
+    "To make sure your stay starts smoothly, we have arranged a complimentary upgrade to a Panorama Junior Suite at zero extra cost.": [
+      190,
+      "a89e7d24a8af"
+    ],
+    "Our concierge has also placed chilled welcome fruit in the suite and confirmed your private airport return transfer service for Sunday.": [
+      190,
+      "72b79add4e7b"
+    ],
+    "Our tailor-made package includes four nights of full board accommodation, gala dinner setup, and two half-day cultural excursions.": [
+      190,
+      "392b1581ee67"
+    ],
+    "Because your dates fall right before a public holiday, please note the modest peak-season surcharge listed separately on line four.": [
+      190,
+      "be2739b558e1"
+    ],
+    "Under our group cancellation policy, you can reduce up to fifteen percent of booked rooms penalty-free until three weeks before arrival.": [
+      190,
+      "0969ea44867b"
+    ],
+    "A VIP corporate guest arrives late and learns their room type was affected by overbooking. How do you protect hospitality standards?": [
+      190,
+      "11dba6af88ae"
+    ],
+    "We apologize sincerely for the overbooking affecting your original king room tonight. Rather than keeping you waiting, we have already prepared a complimentary upgrade to our Corner Executive Suite with late checkout guaranteed, and our concierge can unpack priority bags or book dinner tonight.": [
+      190,
+      "3c61c4418e64"
+    ],
+    "Your comfort tonight is our top priority—shall I hand you the suite key right now?": [
+      190,
+      "e73e7864c7a6"
+    ],
+    "A travel agency asks why your holiday quotation rose 18% compared to last month's off-peak quote.": [
+      190,
+      "a326ff472fa7"
+    ],
+    "Last month's off-peak quote reflected a fifty-percent occupancy rate, whereas this holiday weekend exceeds ninety-two percent occupancy across the coast. The eighteen-percent difference covers the standard peak-season surcharge and dedicated banquet staffing, though we locked in full board dining at off-peak rates for your group.": [
+      190,
+      "7a900d8e43f1"
+    ],
+    "If your group can shift arrival by just two days earlier, the holiday surcharge drops away completely.": [
+      190,
+      "e96889a81509"
+    ],
+    "A sudden storm closes the mountain cable car an hour before a 30-guest excursion departs. What do you announce?": [
+      190,
+      "e0b69937a064"
+    ],
+    "Good morning everyone—high winds have temporarily closed the mountain cable car for safety, so rather than waiting at the station we have activated our backup cultural excursion to the imperial tea house with covered private transfer service departing in fifteen minutes, maintaining our full hospitality standards rain or shine.": [
+      190,
+      "61913bf157e2"
+    ],
+    "We will also refund the cable-car ticket difference or apply it toward tonight's rooftop dinner.": [
+      190,
+      "24a5adf9206b"
+    ],
+    "A corporate event planner wants clear terms before signing a contract for 25 executives. Summarize your booking protections.": [
+      190,
+      "9d9d6ab97392"
+    ],
+    "Your tailor-made package locks in guaranteed adjacent rooms and private airport transfer service for all twenty-five executives. Our written cancellation policy allows free name swaps anytime and penalty-free room reductions up to twenty-one days out, plus we waive any no-show fee when verified flight delays occur.": [
+      190,
+      "1778dfcb07a6"
+    ],
+    "Shall I send the final agreement over for digital signature today?": [
+      190,
+      "d7636657f0d4"
+    ],
+    "Tuan, I just got an urgent alert from your reservations desk saying three Deluxe Garden rooms for my Australian group arriving tomorrow might be walked to a sister property because of holiday overbooking.": [
+      190,
+      "a63c57eeccad"
+    ],
+    "Wait—let me calm that down right away, Chloe. Our occupancy rate jumped to ninety-nine percent this week and two current guests extended unexpectedly for medical reasons, leaving us three Deluxe Garden rooms short tomorrow afternoon.": [
+      190,
+      "a8b5cd5ef3c0"
+    ],
+    "Moving six elderly travelers from the rest of their twenty-person group to another street would ruin their family reunion and violate our signed hospitality standards. We cannot split the group.": [
+      190,
+      "681e237655bb"
+    ],
+    "I completely agree—splitting a reunion group is our very last resort. Instead, I just blocked three Pool Villas that came off corporate hold this morning, and I am issuing a complimentary upgrade for those three rooms at zero cost to you.": [
+      190,
+      "07c032df60fc"
+    ],
+    "Pool Villas inside the same resort will actually thrill them—thank you, Tuan. Just confirm all six guests keep the exact full board dining access and private airport transfer service already paid on our voucher.": [
+      190,
+      "c86c935167dd"
+    ],
+    "Already coded into the reservation system, Chloe. I also briefed our head concierge to meet their minivan personally at the porch with cold towels so nobody even senses there was a room shuffle.": [
+      190,
+      "665a7535059e"
+    ],
+    "Why was the resort suddenly three Deluxe Garden rooms short?": [
+      190,
+      "9d1ca52992d0"
+    ],
+    "Renovation contractors closed the entire garden wing without notice.": [
+      190,
+      "ab06de9d7de4"
+    ],
+    "Occupancy reached 99% and two in-house guests extended unexpectedly for medical reasons.": [
+      190,
+      "ed84ca2e8007"
+    ],
+    "The tour agency forgot to send rooming names before the cancellation deadline.": [
+      190,
+      "c6231021f59f"
+    ],
+    "Three rooms were reserved twice due to a credit-card decline.": [
+      190,
+      "6405fb3f1c87"
+    ],
+    "Why did Chloe firmly reject moving three rooms to a sister property?": [
+      190,
+      "15a01e862e50"
+    ],
+    "The sister property lacked breakfast service.": [
+      190,
+      "141d3b57cf46"
+    ],
+    "Splitting six elderly travelers away from their 20-person family reunion would ruin the trip.": [
+      190,
+      "2b36b6a83dc0"
+    ],
+    "Australian visas prohibited staying at two different resorts.": [
+      190,
+      "5f0c57b92408"
+    ],
+    "She wanted cash reimbursement instead of rooms.": [
+      190,
+      "8ee544a7cab0"
+    ],
+    "How did Tuan solve the room shortage inside the same resort?": [
+      190,
+      "47b9dcb20111"
+    ],
+    "By delaying check-in until 9:00 PM for all twenty guests": [
+      190,
+      "fd30ed8c22cd"
+    ],
+    "By providing a free complimentary upgrade to three Pool Villas plus personal concierge welcome": [
+      190,
+      "41f048f32bd2"
+    ],
+    "By asking guests to pay a holiday peak-season surcharge on arrival": [
+      190,
+      "1bb63b8bc3f6"
+    ],
+    "By converting a conference hall into temporary suites": [
+      190,
+      "21aea4b30697"
+    ],
+    "Hung, our leadership board loved your tailor-made package for November in Phu Quoc, especially the coastal cycling excursion and private cooking class. Before signing for forty-five managers, Finance wants clarity on two items.": [
+      190,
+      "9f12ecce46b0"
+    ],
+    "Of course, Claire—let's go through both line items transparently so Finance sees zero hidden surprises.": [
+      190,
+      "a47d7fc8c647"
+    ],
+    "First, the hotel quote includes a twelve-percent peak-season surcharge because our weekend borders a regional holiday. Can your agency absorb or soften that supplement if we confirm full board dining for all three days?": [
+      190,
+      "950fb1f0346a"
+    ],
+    "Yes—since guaranteeing forty-five guests on full board fills their main banquet outlet, the resort agreed yesterday to halve that peak-season surcharge down to six percent, and we are throwing in free airport VIP transfer service as well.": [
+      190,
+      "0c55301ea141"
+    ],
+    "Halving the surcharge plus free transfers clears budget approval immediately. Our second concern is visa or flight delays—what happens under your cancellation policy if three managers drop out last minute?": [
+      190,
+      "39b85bba47ee"
+    ],
+    "We built two safeguards into the contract: free room reductions up to twenty days before arrival, and within the final twenty days we allow free colleague substitutions plus waiving the no-show fee once you share an airline delay notice.": [
+      190,
+      "3db982769fa7"
+    ],
+    "How did Hung manage to halve the hotel's 12% peak-season surcharge down to 6%?": [
+      190,
+      "ca4c189b8202"
+    ],
+    "By shifting the corporate retreat back by three full months": [
+      190,
+      "8812cc1b1bbe"
+    ],
+    "Because guaranteeing 45 guests on full board dining filled the resort's main banquet restaurant": [
+      190,
+      "e3be2ce6a9ea"
+    ],
+    "By removing the coastal cycling excursion and cooking class": [
+      190,
+      "a1f800f03a0d"
+    ],
+    "By switching the group from single rooms to shared dormitories": [
+      190,
+      "54e7e722c3a2"
+    ],
+    "What extra perk did Hung include free of charge alongside the halved surcharge?": [
+      190,
+      "97e6f3fd1982"
+    ],
+    "Complimentary spa vouchers for every spouse": [
+      190,
+      "9550dce05e7a"
+    ],
+    "Free airport VIP transfer service": [
+      190,
+      "2e187e363ada"
+    ],
+    "Free international airfare upgrades": [
+      190,
+      "f45955dced4a"
+    ],
+    "Zero deposit required until after checkout": [
+      190,
+      "9f9f0f58954a"
+    ],
+    "What protection applies if a manager is delayed by an airline within the final 20 days?": [
+      190,
+      "e0d15ad92159"
+    ],
+    "Full non-refundable forfeiture on both hotel and flight packages": [
+      190,
+      "3d30b95b2c59"
+    ],
+    "Free colleague name swaps plus no-show fee waiver upon showing airline delay notice": [
+      190,
+      "b47778931913"
+    ],
+    "Mandatory postponement of the entire 45-person event": [
+      190,
+      "61c72a6ebd33"
+    ],
+    "A flat 50% fine deducted from the cycling excursion budget": [
+      190,
+      "ed958b784030"
+    ],
+    "policyholder": [
+      191,
+      "05e6081b6e38"
+    ],
+    "Every policyholder receives a digital coverage summary explaining claim deadlines step by step.": [
+      191,
+      "f8495ddee06e"
+    ],
+    "premium": [
+      191,
+      "5c0a4fc7c32f"
+    ],
+    "Installing sprinklers across the warehouse reduced the factory's annual fire insurance premium by 15 percent.": [
+      191,
+      "beea670c786a"
+    ],
+    "deductible": [
+      191,
+      "be519d0657b3"
+    ],
+    "Choosing a higher deductible of one thousand dollars lowered our monthly corporate fleet premium.": [
+      191,
+      "3d0c47d2b877"
+    ],
+    "coverage": [
+      191,
+      "6dafbcf610e9"
+    ],
+    "Make sure our marine cargo coverage extends all the way from the factory gate to the buyer's warehouse.": [
+      191,
+      "91b40f9975d9"
+    ],
+    "beneficiary": [
+      191,
+      "ada6716160ff"
+    ],
+    "Agents should remind clients to review and update their beneficiary designations after major life changes.": [
+      191,
+      "da74ff3b0f7f"
+    ],
+    "underwriting": [
+      191,
+      "e6be49395427"
+    ],
+    "Complete medical disclosure speeds up underwriting approval for group health insurance.": [
+      191,
+      "83f2cf19bf48"
+    ],
+    "exclusion": [
+      191,
+      "d47edc45fa0d"
+    ],
+    "Walk every client through policy exclusions clearly so there are zero shocks when a claim arises.": [
+      191,
+      "a858c7f51977"
+    ],
+    "indemnity": [
+      191,
+      "40fc70451a99"
+    ],
+    "Under the indemnity clause, payment matches verified repair invoices up to the insured limit.": [
+      191,
+      "3561afb93a8c"
+    ],
+    "third-party liability": [
+      191,
+      "ea635aca8918"
+    ],
+    "Event venues require organizers to hold two million dollars in third-party liability insurance.": [
+      191,
+      "d46dabfdcfe2"
+    ],
+    "claims adjuster": [
+      191,
+      "099bb9f1b894"
+    ],
+    "The claims adjuster inspected the storm-damaged warehouse roof within twenty-four hours of our filing.": [
+      191,
+      "e3f0d9fcf90f"
+    ],
+    "sum insured": [
+      191,
+      "44f679db0e7d"
+    ],
+    "If factory machinery doubles in value, remember to update the sum insured upon renewal.": [
+      191,
+      "ed5375e31631"
+    ],
+    "waiting period": [
+      191,
+      "c08e0489d0f7"
+    ],
+    "Dental benefits carry a thirty-day waiting period after the employee health policy starts.": [
+      191,
+      "5a0f8a3a9a0f"
+    ],
+    "A client's policy carries a $500 deductible and approved storm repair costs come to $3,200. How much does the insurer reimburse?": [
+      191,
+      "f4f4359216cc"
+    ],
+    "$3,700": [
+      191,
+      "a561ed6fa2e3"
+    ],
+    "$2,700": [
+      191,
+      "fc4374fa9e0d"
+    ],
+    "$500": [
+      191,
+      "bfe2bb5bbae7"
+    ],
+    "Before issuing a warehouse property policy, why does the insurer send an engineer to inspect fire sprinklers and wiring?": [
+      191,
+      "c17622a51231"
+    ],
+    "For the underwriting risk assessment": [
+      191,
+      "6ed77d746492"
+    ],
+    "To assign an accidental death beneficiary": [
+      191,
+      "70f120c1f230"
+    ],
+    "To calculate employee dental waiting periods": [
+      191,
+      "badf70caf5f5"
+    ],
+    "A hotel guest trips over an exhibition cable set up by an outside conference team and suffers injury. Which policy coverage responds?": [
+      191,
+      "f9aa60a9a587"
+    ],
+    "Marine cargo exclusion": [
+      191,
+      "bb18f85ede92"
+    ],
+    "Third-party liability coverage": [
+      191,
+      "03f80fd13fa1"
+    ],
+    "Life policy beneficiary rider": [
+      191,
+      "61b9d2aeaaa7"
+    ],
+    "Why should corporate risk managers review their property sum insured before every annual policy renewal?": [
+      191,
+      "3a0653c3b09a"
+    ],
+    "So the claims adjuster never asks for loss photos": [
+      191,
+      "65c1a0df83ee"
+    ],
+    "Because underinsuring upgraded equipment caps indemnity below real replacement cost": [
+      191,
+      "d3e1d13cbd1a"
+    ],
+    "To eliminate all policy exclusions automatically": [
+      191,
+      "a4230d3b0135"
+    ],
+    "What is the most ethical and effective way for an insurance advisor to explain exclusions and waiting periods during onboarding?": [
+      191,
+      "bccfa592e907"
+    ],
+    "Bury them in fine print so customers sign faster": [
+      191,
+      "2260ef5de362"
+    ],
+    "Walk through clear plain-language examples of what is and isn't covered before signing": [
+      191,
+      "cc84df09212a"
+    ],
+    "Promise verbally that every expense is always 100% reimbursed": [
+      191,
+      "5a7372ae9d50"
+    ],
+    "Which specialist visits a loss site, audits invoices, and calculates the final indemnity payout?": [
+      191,
+      "aef1aaa1425b"
+    ],
+    "The claims adjuster": [
+      191,
+      "10dc825ba553"
+    ],
+    "The policyholder": [
+      191,
+      "2ad0c2247b6a"
+    ],
+    "The hotel concierge": [
+      191,
+      "c096aee38a35"
+    ],
+    "Your commercial property policy provides a five-million-dollar sum insured covering fire, storm damage, and electrical surges.": [
+      191,
+      "94acaf0307b8"
+    ],
+    "Before indemnity pays out on any approved claim, your agreed deductible of two thousand five hundred dollars applies per incident.": [
+      191,
+      "a8875c034236"
+    ],
+    "Also please note exclusion Clause 4b regarding gradual wear and tear—regular preventive roof maintenance keeps full coverage valid.": [
+      191,
+      "b39a2f2cc51f"
+    ],
+    "I have opened Claim #INS-884 and assigned a senior claims adjuster to inspect your damaged cargo container tomorrow at nine.": [
+      191,
+      "be64c6b7a69e"
+    ],
+    "To speed up underwriting and final indemnity payout, please upload timestamped photos, the packing list, and initial repair quotes today.": [
+      191,
+      "71c0c7ef90ba"
+    ],
+    "Once those documents are verified, Finance transfers the settlement directly to your corporate account within five business days.": [
+      191,
+      "7326ee05b9c6"
+    ],
+    "A client asks how raising their deductible helps lower annual insurance costs—and what trade-off to watch out for.": [
+      191,
+      "b9b2d39f9285"
+    ],
+    "Choosing a higher deductible lowers your annual premium immediately because your company absorbs minor nuisance repairs itself rather than filing small claims. However, make sure your operating reserve can comfortably cover that deductible per event before indemnity reimbursement arrives.": [
+      191,
+      "98fa577cfe32"
+    ],
+    "Shall I compare quotes at the two-thousand and five-thousand deductible tiers side by side?": [
+      191,
+      "009ba0a1d4fa"
+    ],
+    "Why did an insurance application take longer in underwriting, and how do you ask the client for missing medical or safety records?": [
+      191,
+      "a4d8856e19ad"
+    ],
+    "Thank you for sending your group health enrollment forms promptly. Our underwriting specialists reviewed the file and requested two missing lab reports to confirm full chronic-illness coverage without adding extra exclusion riders; once uploaded today, your standard thirty-day waiting period starts right on schedule.": [
+      191,
+      "398a9494fe79"
+    ],
+    "Please reply securely using the encrypted portal link below by Thursday.": [
+      191,
+      "3ace42c2844a"
+    ],
+    "A policyholder is frustrated because their claim for basement flood damage was declined under an exclusion clause. Respond empathetically.": [
+      191,
+      "6dedfed8204a"
+    ],
+    "I completely understand why receiving a partial decline after storm damage feels frustrating for a loyal policyholder. According to the claims adjuster's report under Exclusion 3d, ground-water seepage is outside standard fire-and-wind coverage, though the damaged electrical panels themselves qualify for partial reimbursement—and I can add flood endorsement protection ahead of next month's renewal.": [
+      191,
+      "2e4ff5c19fb0"
+    ],
+    "Let’s walk through the approved portion first so we release that payout right away.": [
+      191,
+      "f05e70b75c06"
+    ],
+    "Remind an SME owner before contract renewal why reviewing sum insured, beneficiary details, and third-party liability matters.": [
+      191,
+      "39e8b14640ce"
+    ],
+    "With your policy coming up for renewal next month, I recommend spending ten minutes verifying three items: increasing the sum insured to reflect your two new CNC machines, lifting third-party liability to match your new retail landlord's lease terms, and confirming your corporate beneficiary schedule is up to date.": [
+      191,
+      "48e7ba384fd0"
+    ],
+    "Keeping limits aligned with real growth ensures zero payout shortfalls later.": [
+      191,
+      "3c3ab12aad64"
+    ],
+    "Mai, thanks for visiting our packaging plant so quickly after Monday's typhoon. My contractors quoted twenty-eight thousand dollars to replace torn metal roof panels and dry out the soaked carton storage bay.": [
+      191,
+      "ba048085d609"
+    ],
+    "I reviewed the drone photos and timestamped storm log, Robert. Wind damage to the structural roof is clearly covered under Section Two of your commercial property coverage, and those repair quotes align cleanly with market rates.": [
+      191,
+      "1c5d9639fa36"
+    ],
+    "Wait—so why did the preliminary worksheet only approve twenty-three thousand five hundred dollars instead of the full twenty-eight thousand?": [
+      191,
+      "bf8113fb5737"
+    ],
+    "Two clear reasons appear in the breakdown: first, your agreed policy deductible of two thousand dollars applies to storm events. Second, twenty-five hundred dollars covered cardboard stock stored directly on the floor, which triggers a warehouse water exclusion unless pallets sit twelve centimeters off concrete.": [
+      191,
+      "4edcecfb2a5b"
+    ],
+    "Ah, I recall signing that pallet clause during underwriting two years ago—fair enough, my team missed putting wooden skids under that corner stack. How quickly can indemnity funds reach our account so the roofers start Friday?": [
+      191,
+      "e1dea3b03bc3"
+    ],
+    "As soon as you click approve on the twenty-three-thousand-five-hundred settlement voucher in the policyholder portal today, Finance transfers the full indemnity within seventy-two hours—before Friday afternoon.": [
+      191,
+      "55a87b892f80"
+    ],
+    "Why was $4,500 subtracted from Robert's $28,000 claim?": [
+      191,
+      "574bc8274cd1"
+    ],
+    "The roof repair contractors inflated quotes above market prices.": [
+      191,
+      "899cbf1be31b"
+    ],
+    "$2,000 went to the policy deductible and $2,500 fell under an exclusion for stock stored directly on the floor.": [
+      191,
+      "fa49c248bfae"
+    ],
+    "The plant failed to pay its monthly fire insurance premium on time.": [
+      191,
+      "94cdfcaadc4a"
+    ],
+    "Typhoon roof damage had a 90-day waiting period remaining.": [
+      191,
+      "927f2cef8992"
+    ],
+    "How did Robert react to the floor-storage exclusion decision?": [
+      191,
+      "ae3478690f1d"
+    ],
+    "He threatened to hire a lawyer immediately.": [
+      191,
+      "24e1fde30c20"
+    ],
+    "He acknowledged signing the pallet clause during underwriting two years earlier.": [
+      191,
+      "0adee1ee9c30"
+    ],
+    "He claimed the floor stock belonged to an outside distributor.": [
+      191,
+      "1119af7a5d23"
+    ],
+    "He demanded the adjuster cancel the deductible.": [
+      191,
+      "b1cf2aefdf29"
+    ],
+    "When will the $23,500 indemnity payment arrive?": [
+      191,
+      "f2ae65ff2acd"
+    ],
+    "In 30 business days after roof repairs pass municipal inspection": [
+      191,
+      "2803c5111c09"
+    ],
+    "Within 72 hours after Robert approves the settlement voucher in the portal": [
+      191,
+      "45e485bd2579"
+    ],
+    "Automatically deducted from next year's renewal premium": [
+      191,
+      "94ab907e5c16"
+    ],
+    "Split into twelve monthly installments starting next quarter": [
+      191,
+      "369b0940732c"
+    ],
+    "Ngoc, your logistics company's commercial package comes up for renewal next month. Before locking in the same terms automatically, I spotted three growth changes that expose you to underinsurance right now.": [
+      191,
+      "866338e8ff73"
+    ],
+    "Thanks for flagging that proactively, Tuan—we definitely grew this year. What jumps out first in your audit?": [
+      191,
+      "523f79c26437"
+    ],
+    "First, your warehouse added two automated cold-storage chillers worth four hundred thousand dollars, yet your property sum insured still caps at one million—leaving nearly thirty percent of assets unprotected.": [
+      191,
+      "860149d5067a"
+    ],
+    "Good catch—we should definitely raise the sum insured to 1.4 million. Second concern: our new retail distribution hub lease demands higher third-party liability proof before opening day.": [
+      191,
+      "b52b3d74ec09"
+    ],
+    "We already priced raising third-party liability from one million to three million dollars, plus eliminating the sixty-day waiting period for new fleet hires on your group accident rider—adding just nine percent to total premium.": [
+      191,
+      "a624d8865519"
+    ],
+    "Nine percent extra for forty percent higher asset limits and triple liability coverage is great value—can we shave off part of that increase by nudging our deductible slightly?": [
+      191,
+      "f94fe7b630ba"
+    ],
+    "Why was Ngoc's warehouse currently underinsured before renewal?": [
+      191,
+      "1e80ee25f970"
+    ],
+    "Her cold-storage insurance expired during the waiting period.": [
+      191,
+      "338c56d6c70f"
+    ],
+    "She added $400,000 in automated chillers while keeping the property sum insured capped at $1,000,000.": [
+      191,
+      "e4e68cb29417"
+    ],
+    "The broker mistakenly removed storm exclusions without telling Finance.": [
+      191,
+      "d9ede8fd800b"
+    ],
+    "Warehouse drivers declined group health coverage.": [
+      191,
+      "e53e67eb73f0"
+    ],
+    "Which combination did Tuan include for only a 9% increase in total premium?": [
+      191,
+      "94220599e23e"
+    ],
+    "Triple third-party liability ($3M) plus waiving the 60-day waiting period on fleet accident coverage": [
+      191,
+      "babbf5dc5edf"
+    ],
+    "Free solar roof installation plus zero deductible across all policies": [
+      191,
+      "4e6c53bf997a"
+    ],
+    "Replacing property insurance with life beneficiary coverage": [
+      191,
+      "2073be1ccf35"
+    ],
+    "Retroactive payouts for unreported 2024 traffic fines": [
+      191,
+      "dba47f364ee0"
+    ],
+    "How did Ngoc propose offsetting part of the 9% premium increase?": [
+      191,
+      "603df80b641e"
+    ],
+    "Dropping coverage for cold-storage chillers during winter": [
+      191,
+      "99d8b71caa4a"
+    ],
+    "Slightly raising the policy deductible": [
+      191,
+      "ada19f9f3afb"
+    ],
+    "Changing the corporate beneficiary designation": [
+      191,
+      "49ee200c7ceb"
+    ],
+    "Canceling driver accident riders for new hires": [
+      191,
+      "4c38687a4b50"
     ]
   },
   "audioKind": "bundle"
