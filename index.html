@@ -47,6 +47,8 @@
   --line: #ddd4c6;
   --teal: #0f5257;
   --teal-ink: #ffffff;
+  --teal-soft: rgba(15, 82, 87, .1);
+  --card-shadow: 0 2px 10px rgba(15, 82, 87, .04);
   --amber: #e2902f;
   --amber-ink: #2a1600;
   --good: #23784a;
@@ -62,13 +64,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0e1e20; --surface: #15292c; --sunk: #1c3639; --ink: #e7eeed; --muted: #9bb0ae; --line: #2a4a4d;
-    --teal: #55b6b2; --teal-ink: #06201f; --amber: #f0a752; --amber-ink: #2a1600; --grid: #2a4a4d;
+    --teal: #55b6b2; --teal-ink: #06201f; --teal-soft: rgba(85, 182, 178, .16); --card-shadow: none; --amber: #f0a752; --amber-ink: #2a1600; --grid: #2a4a4d;
     --good: #72d39b; --good-bg: #173a29; --bad: #f28b77; --bad-bg: #432018; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0e1e20; --surface: #15292c; --sunk: #1c3639; --ink: #e7eeed; --muted: #9bb0ae; --line: #2a4a4d;
-  --teal: #55b6b2; --teal-ink: #06201f; --amber: #f0a752; --amber-ink: #2a1600; --grid: #2a4a4d;
+  --teal: #55b6b2; --teal-ink: #06201f; --teal-soft: rgba(85, 182, 178, .16); --card-shadow: none; --amber: #f0a752; --amber-ink: #2a1600; --grid: #2a4a4d;
   --good: #72d39b; --good-bg: #173a29; --bad: #f28b77; --bad-bg: #432018; color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -120,10 +122,10 @@ select { width: 100%; }
 
 /* Chọn ngôn ngữ */
 .langpick { display: grid; gap: 12px; }
-.langcard { width: 100%; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: center; text-align: left; padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); }
-.langcard:hover { border-color: var(--teal); }
+.langcard { width: 100%; display: flex; align-items: center; gap: 16px; text-align: left; padding: 18px 20px; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--card-shadow); transition: border-color .15s ease, transform .12s ease; }
+.langcard:hover { border-color: var(--teal); transform: translateY(-1px); }
 .langcard.cur { border: 2px solid var(--teal); }
-.langcard .glyph { grid-row: span 3; width: 64px; height: 64px; border-radius: 16px; overflow: hidden; padding: 0; display: grid; place-items: center; background: var(--sunk); font-size: 1.9rem; font-weight: 700; color: var(--teal); }
+.langcard .glyph { flex-shrink: 0; width: 64px; height: 64px; border-radius: 16px; overflow: hidden; padding: 0; display: grid; place-items: center; background: var(--sunk); font-size: 1.9rem; font-weight: 700; color: var(--teal); }
 .langcard .glyph svg { display: block; width: 100%; height: 100%; }
 .langcard .name { font-size: 1.2rem; font-weight: 700; }
 .langcard .bar { grid-column: 2; }
@@ -213,7 +215,14 @@ select { width: 100%; }
 .cat-bar::-webkit-scrollbar { display: none; }
 .cat-pill { flex: none; padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); font-size: .88rem; font-weight: 500; cursor: pointer; transition: all .15s ease; white-space: nowrap; line-height: 1.2; }
 .cat-pill:hover { border-color: var(--teal); color: var(--ink); }
-.cat-pill.active { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); font-weight: 600; box-shadow: 0 2px 6px rgba(0, 128, 128, 0.25); }
+.cat-pill.active, .filter-pill.active { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); font-weight: 700; box-shadow: 0 2px 6px rgba(15, 82, 87, 0.22); }
+.filter-pill {
+  flex: none; min-height: 36px; padding: 6px 13px; border-radius: 999px;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--muted);
+  font-size: .84rem; font-weight: 600; cursor: pointer; transition: all .15s ease;
+  white-space: nowrap; line-height: 1.2;
+}
+.filter-pill:hover { border-color: var(--teal); color: var(--ink); }
 /* Nút Subjects & menu chọn chủ đề */
 .subjects-box { position: relative; width: 100%; }
 .subjects-trigger {
@@ -249,12 +258,10 @@ select { width: 100%; }
   flex: none;
 }
 .subjects-name {
-  font-size: .95rem;
+  font-size: .94rem;
   font-weight: 700;
   color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -523,22 +530,14 @@ body { overflow-x: hidden; }
 }
 .ielts-year-chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
-  overflow-x: auto;
-  padding: 4px 2px 6px 2px;
+  padding: 2px 0 4px 0;
   margin: 2px 0;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
 }
-.ielts-year-chips::-webkit-scrollbar { display: none; }
 .ielts-year-chips button {
-  flex-shrink: 0;
+  flex: none;
   white-space: nowrap;
-  font-size: .8rem;
-  font-weight: 600;
-  padding: 6px 12px;
-  min-height: 34px;
-  border-radius: 18px;
 }
 .ielts-vol-select {
   width: 100%;
@@ -919,6 +918,11 @@ body { overflow-x: hidden; }
   white-space: normal;
   line-height: 1.25;
 }
+.ielts-task-tabs button.ghost {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
 .ielts-word-counter {
   display: inline-flex;
   align-items: center;
@@ -1086,6 +1090,62 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
   background: var(--sunk); border: 1px solid var(--line); color: var(--teal);
 }
 .acc-toggle-btn:hover { background: var(--teal-soft); }
+.ielts-vocab-btn {
+  display: inline-flex; align-items: flex-start; justify-content: flex-start;
+  text-align: left; white-space: normal; word-break: break-word; overflow-wrap: anywhere;
+  max-width: 100%; min-height: 34px; height: auto;
+  padding: 6px 11px; font-size: .82rem; line-height: 1.38;
+  border-radius: 11px; background: var(--sunk); color: var(--ink);
+  border: 1px solid var(--line); gap: 6px;
+}
+.ielts-vocab-btn:hover { border-color: var(--teal); color: var(--teal); }
+.ielts-read-grid { display: flex; flex-direction: column; gap: 16px; }
+.ielts-read-left, .ielts-read-right { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.ielts-read-left > *, .ielts-read-right > * { min-width: 0; }
+@media (min-width: 760px) {
+  #app { max-width: 760px; }
+  .langpick { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .langcard { flex-direction: column; justify-content: center; text-align: center; padding: 24px 14px; gap: 12px; min-height: 152px; }
+  .badges { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@media (min-width: 960px) {
+  #app { max-width: 900px; }
+  body.has-tabs:not(.lessonmode) {
+    padding-left: 240px;
+    padding-right: 24px;
+    padding-block: 20px 40px;
+  }
+  .tabs {
+    left: 16px; top: 16px; bottom: auto; right: auto;
+    width: 204px;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 14px 10px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, .06);
+  }
+  .tabs button {
+    flex: none; width: 100%; max-width: none;
+    flex-direction: row; justify-content: flex-start; gap: 12px;
+    min-height: 46px; padding: 10px 14px;
+    font-size: .92rem; text-align: left; border-radius: 12px;
+  }
+  .tabs button[aria-current="page"] {
+    background: var(--teal-soft);
+    color: var(--teal);
+    font-weight: 700;
+  }
+  .ielts-read-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+  }
+  .ielts-read-left { position: sticky; top: 16px; }
+  .ielts-read-grid .ielts-passage { max-height: 62vh; }
+}
 </style>
 
 <div id="app"><p class="loading">Đang tải…</p></div>
@@ -1100,7 +1160,7 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261118-0300';
+const APP_BUILD_ID = '20261118-0400';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3078,6 +3138,7 @@ const TABS = [
 function setTabs(show) {
   const nav = document.getElementById('tabs'); nav.hidden = !show;
   document.body.classList.toggle('lessonmode', !show);
+  document.body.classList.toggle('has-tabs', !!show);
   if (!show) return;
   const code = S.lang;
   const tabsList = TABS.map(([k, label, d]) => {
@@ -3784,7 +3845,6 @@ function pickView() {
         const isCur = S.lang === c;
         return h('button', {
           class: 'langcard' + (isCur ? ' cur' : ''),
-          style: { display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px' },
           onclick: () => { S.lang = c; save(); go('home'); }
         },
           h('div', { class: 'glyph', style: { flexShrink: '0' } }, langFlagSvg(c)),
@@ -3991,7 +4051,7 @@ function homeView() {
         homeView();
       }
     },
-      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', overflow: 'hidden' } },
+      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flex: 1, minWidth: 0, overflow: 'hidden' } },
         h('span', { class: 'subjects-name' }, curCatObj.icon + ' ' + curCatObj.name),
         h('span', { class: 'chip level ' + curCatObj.level.split('–')[0].toLowerCase().replace(/\s+/g, '') }, curCatObj.level)
       ),
@@ -4160,7 +4220,7 @@ function homeView() {
       });
       return wrap;
     })(),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.90 · Cập nhật 18/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.91 · Cập nhật 18/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -8751,10 +8811,10 @@ function ieltsTabView() {
   const yearFilterChips = h('div', { class: 'ielts-year-chips' },
     ...['all', ...years].map((yr) => {
       const isActive = (IELTS_FILTER_YEAR === yr || (yr === 'all' && !IELTS_FILTER_YEAR));
-      const lbl = yr === 'all' ? 'Tất cả năm' : (yr === 2026 ? '⚡ 2026 Mới nhất' : 'Năm ' + yr);
+      const lbl = yr === 'all' ? 'Tất cả' : (yr === 2026 ? '⚡ 2026 Mới nhất' : String(yr));
       return h('button', {
-        class: isActive ? 'primary' : 'ghost',
-        style: { border: isActive ? 'none' : '1px solid var(--line)' },
+        class: 'filter-pill' + (isActive ? ' active' : ''),
+        'aria-pressed': String(isActive),
         onclick: () => {
           IELTS_FILTER_YEAR = yr;
           if (yr !== 'all') {
@@ -8792,30 +8852,35 @@ function ieltsTabView() {
     }
   }, ...volGroups);
 
-  const head = h('div', { class: 'stack' },
-    h('div', { class: 'row between wrap', style: { alignItems: 'center', gap: '8px' } },
-      h('h1', { style: { margin: 0 } }, 'Luyện IELTS'),
-      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
-        h('button', {
-          class: 'mini ghost',
-          style: { border: '1px solid #d97706', color: '#d97706', fontWeight: 600, padding: '4px 8px' },
-          onclick: () => showIeltsTipsModal(IELTS_ACTIVE_SKILL)
-        }, '💡 Cẩm nang Tip'),
+  const head = h('div', { class: 'stack', style: { gap: '8px' } },
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px' } },
+      h('p', { class: 'label', style: { margin: 0, whiteSpace: 'nowrap' } }, 'IELTS (2022–2026)'),
+      h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexShrink: 0 } },
         feedbackBtn({ mode: 'ielts', topicId: t.id, topicTitle: t.sub || t.title }),
         langSwitch()
       )
     ),
-    h('div', { class: 'stack', style: { gap: '4px' } }, yearFilterChips, volSelect),
+    h('div', { class: 'row between', style: { alignItems: 'center', gap: '10px' } },
+      h('h1', { style: { margin: 0 } }, 'Luyện IELTS'),
+      h('button', {
+        class: 'mini ghost',
+        style: { border: '1px solid var(--amber)', color: 'var(--amber)', fontWeight: 700, padding: '5px 11px', borderRadius: '99px', minHeight: '34px', whiteSpace: 'nowrap', flexShrink: 0 },
+        onclick: () => showIeltsTipsModal(IELTS_ACTIVE_SKILL)
+      }, '💡 Tip')
+    ),
+    h('div', { class: 'stack', style: { gap: '6px' } }, yearFilterChips, volSelect),
     h('div', { class: 'ielts-info-banner' },
-      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap' } },
-        h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
-        h('b', { style: { color: 'var(--teal)', fontSize: '1.02rem' } }, currentVol ? currentVol.targetBand : data.band),
+      h('div', { class: 'stack', style: { gap: '4px', flex: 1, minWidth: 0 } },
+        h('div', { class: 'row between wrap', style: { gap: '6px', alignItems: 'center' } },
+          h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
+            h('span', { class: 'chip level', style: { fontWeight: 700 } }, currentVol ? currentVol.code : (t.level || 'B1')),
+            h('b', { style: { color: 'var(--teal)', fontSize: '.98rem' } }, currentVol ? currentVol.targetBand : data.band)
+          ),
+          h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓')
+        ),
         h('span', { class: 'small muted', style: { wordBreak: 'break-word' } }, currentVol ? currentVol.sub : (t.sub || t.title))
       ),
-      h('div', { class: 'row between', style: { gap: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%', justifyContent: 'space-between' } },
-        h('span', { class: 'chip small' + (doneCount === 4 ? ' good' : '') }, doneCount + '/4 kỹ năng ✓'),
-        doneCount > 0 ? h('button', { class: 'mini accent', onclick: () => showIeltsSummaryModal(t) }, '📊 Bảng điểm Mock TRF') : null
-      )
+      doneCount > 0 ? h('button', { class: 'mini accent', style: { flexShrink: 0 }, onclick: () => showIeltsSummaryModal(t) }, '📊 Bảng điểm TRF') : null
     )
   );
 
@@ -8849,7 +8914,7 @@ function ieltsTabView() {
   else if (IELTS_ACTIVE_SKILL === 'read') contentEl = renderIeltsReading(t, data);
   else contentEl = renderIeltsWriting(t, data);
 
-  mount(h('div', { class: 'stack-lg', style: { paddingBottom: '70px' } },
+  mount(h('div', { class: 'stack-lg' },
     head,
     skillTabs,
     contentEl,
@@ -9383,15 +9448,19 @@ function renderIeltsReading(t, data) {
   const rd = data.reading;
 
   const passageBox = h('div', { class: 'ielts-passage' },
-    ...rd.paragraphs.map((p, idx) => h('p', {}, h('b', { style: { color: 'var(--teal)', marginRight: '6px' } }, '[' + String.fromCharCode(65 + idx) + ']'), p))
+    ...rd.paragraphs.map((p, idx) => {
+      const m = String(p || '').match(/^(\[[A-Z0-9]+\])\s*(.*)$/s);
+      const badge = m ? m[1] : ('[' + String.fromCharCode(65 + idx) + ']');
+      const txt = m ? m[2] : p;
+      return h('p', {}, h('b', { style: { color: 'var(--teal)', marginRight: '6px' } }, badge), txt);
+    })
   );
 
   const vocabBox = h('div', { class: 'panel stack' },
     h('b', {}, 'Từ vựng học thuật quan trọng trong bài đọc (Key IELTS Vocabulary)'),
     h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap' } },
       ...rd.vocab.map((v) => h('button', {
-        class: 'chip',
-        style: { fontSize: '.84rem', cursor: 'pointer' },
+        class: 'ielts-vocab-btn',
         onclick: () => { say('en', v.w); toast(v.w + ' ' + (v.r || '') + ': ' + v.m); }
       }, '🔊 ' + v.w + ' (' + v.m + ')'))
     )
@@ -9403,11 +9472,16 @@ function renderIeltsReading(t, data) {
     const btnRow = h('div', { class: 'ielts-tfng-row' });
     ['TRUE', 'FALSE', 'NOT GIVEN'].forEach((opt) => {
       const b = h('button', {
-        class: 'mini ghost',
+        class: 'mini',
+        style: { border: '1px solid var(--line)', background: 'var(--surface)', color: 'var(--ink)' },
         onclick: () => {
           tfngAnswers[idx] = opt;
           btnRow.querySelectorAll('button').forEach((other) => {
-            other.className = (other.textContent === opt) ? 'mini primary' : 'mini ghost';
+            const on = other.textContent === opt;
+            other.className = 'mini' + (on ? ' primary' : '');
+            other.style.background = on ? '' : 'var(--surface)';
+            other.style.color = on ? '' : 'var(--ink)';
+            other.style.borderColor = on ? '' : 'var(--line)';
           });
         }
       }, opt);
@@ -9463,27 +9537,31 @@ function renderIeltsReading(t, data) {
     markIeltsDone(t, 'read', Math.round((correctCount / rd.tfng.length) * 100), band);
   } }, 'Kiểm tra đáp án & Nộp bài (+15 XP)');
 
-  return h('div', { class: 'stack-lg' },
-    h('div', { class: 'panel stack' },
-      h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
-        h('b', { style: { flex: '1 1 200px', minWidth: 0 } }, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
-        h('span', { class: 'chip level' }, data.band)
+  return h('div', { class: 'ielts-read-grid' },
+    h('div', { class: 'ielts-read-left' },
+      h('div', { class: 'panel stack' },
+        h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
+          h('b', { style: { flex: '1 1 200px', minWidth: 0 } }, '📖 IELTS Academic Reading · Đoạn văn học thuật'),
+          h('span', { class: 'chip level' }, data.band)
+        ),
+        passageBox
+      )
+    ),
+    h('div', { class: 'ielts-read-right' },
+      h('div', { class: 'panel stack' },
+        h('p', { class: 'label' }, 'True / False / Not Given (Chọn TRUE nếu đúng, FALSE nếu sai, NOT GIVEN nếu không có)'),
+        ...tfngContainers.map((c) => c.el)
       ),
-      passageBox
-    ),
-    vocabBox,
-    h('div', { class: 'panel stack' },
-      h('p', { class: 'label' }, 'True / False / Not Given (Chọn TRUE nếu đúng, FALSE nếu sai, NOT GIVEN nếu không có)'),
-      ...tfngContainers.map((c) => c.el)
-    ),
-    submitBtn,
-    feedbackArea,
-    ieltsTipBox('Tip: Chiến lược Đọc hiệu quả', [
-      'Đọc tổng quan 1–2 phút nắm cấu trúc trước khi trả lời câu hỏi.',
-      'Skimming tốc độ: Đọc lướt tiêu đề, Topic sentence đầu đoạn và câu kết luận.',
-      'Scanning chính xác: Dùng mắt quét từ khóa khó thay thế (tên riêng, số liệu, năm) không đọc chi tiết.',
-      'Bẫy hạn định tuyệt đối: Cực kỳ cẩn trọng với always, never, all, completely, solely trong True/False/Not Given.'
-    ], 'reading')
+      submitBtn,
+      feedbackArea,
+      vocabBox,
+      ieltsTipBox('Tip: Chiến lược Đọc hiệu quả', [
+        'Đọc tổng quan 1–2 phút nắm cấu trúc trước khi trả lời câu hỏi.',
+        'Skimming tốc độ: Đọc lướt tiêu đề, Topic sentence đầu đoạn và câu kết luận.',
+        'Scanning chính xác: Dùng mắt quét từ khóa khó thay thế (tên riêng, số liệu, năm) không đọc chi tiết.',
+        'Bẫy hạn định tuyệt đối: Cực kỳ cẩn trọng với always, never, all, completely, solely trong True/False/Not Given.'
+      ], 'reading')
+    )
   );
 }
 
@@ -9493,8 +9571,8 @@ function renderIeltsWriting(t, data) {
   let currentTask = 'task2';
 
   const taskTabs = h('div', { class: 'ielts-task-tabs' },
-    h('button', { class: 'mini ' + (currentTask === 'task1' ? 'primary' : 'ghost'), style: { border: currentTask === 'task1' ? 'none' : '1px solid var(--line)' }, onclick: () => { currentTask = 'task1'; draw(); } }, 'Task 1: Thư/Báo cáo (≥150 từ)'),
-    h('button', { class: 'mini ' + (currentTask === 'task2' ? 'primary' : 'ghost'), style: { border: currentTask === 'task2' ? 'none' : '1px solid var(--line)' }, onclick: () => { currentTask = 'task2'; draw(); } }, 'Task 2: Bài luận (≥250 từ)')
+    h('button', { class: 'mini ' + (currentTask === 'task1' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task1'; draw(); } }, 'Task 1: Thư/Báo cáo (≥150 từ)'),
+    h('button', { class: 'mini ' + (currentTask === 'task2' ? 'primary' : 'ghost'), onclick: () => { currentTask = 'task2'; draw(); } }, 'Task 2: Bài luận (≥250 từ)')
   );
 
   const container = h('div', { class: 'stack-lg' });
@@ -11008,7 +11086,7 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
 
   const pyBtn = pyNodes.length ? h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showPy ? ('Ẩn ' + pyLabel) : ('Hiện ' + pyLabel)) : null;
   const viBtn = viNodes.length ? h('button', { type: 'button', class: 'ghost mini', style: { padding: '2px 8px', fontSize: '.75rem', borderRadius: '8px', border: '1px solid var(--line)' } }, showVi ? 'Ẩn nghĩa' : 'Hiện nghĩa') : null;
-  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', 'aria-label': 'Nghe cả đoạn hội thoại', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid rgba(45,212,191,.35)', color: 'var(--teal)' }, onclick: () => playLinesSeq(code, lines, playAllBtn, rowEls) }, '🔊 Nghe cả đoạn');
+  const playAllBtn = h('button', { type: 'button', class: 'ghost mini', 'aria-label': 'Nghe cả đoạn hội thoại', style: { padding: '2px 9px', fontSize: '.76rem', borderRadius: '8px', border: '1px solid var(--teal)', color: 'var(--teal)', background: 'var(--surface)' }, onclick: () => playLinesSeq(code, lines, playAllBtn, rowEls) }, '🔊 Nghe cả đoạn');
   const syncVisibility = () => {
     pyNodes.forEach((n) => { n.style.display = showPy ? 'block' : 'none'; });
     viNodes.forEach((n) => { n.style.display = showVi ? 'block' : 'none'; });
@@ -11020,11 +11098,11 @@ function renderDialogueCard(code, title, src, lines, opts = {}) {
 
   const cleanTitle = (title || 'Hội thoại đọc hiểu').replace(/\s*\(301\s*·\s*[^)]+\)/g, '').trim();
   const cleanSrc = src && !String(src).includes('301') ? src : '';
-  return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'rgba(15,23,42,.35)', border: '1px solid rgba(45,212,191,.22)' } },
+  return h('div', { class: 'panel stack', style: { gap: '8px', padding: opts.compact ? '12px 14px' : '14px 16px', background: 'var(--sunk)', border: '1px solid var(--line)' } },
     h('div', { class: 'row between', style: { alignItems: 'center', gap: '8px', flexWrap: 'wrap' } },
       h('div', { class: 'row', style: { gap: '6px', alignItems: 'center', flexWrap: 'wrap' } },
         h('strong', { style: { fontSize: '.9rem' } }, cleanTitle),
-        cleanSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'rgba(45,212,191,.14)', color: 'var(--teal)' } }, '📘 ' + cleanSrc) : null
+        cleanSrc ? h('span', { class: 'chip', style: { fontSize: '.68rem', padding: '1px 7px', margin: 0, background: 'var(--teal-soft)', color: 'var(--teal)' } }, '📘 ' + cleanSrc) : null
       ),
       h('div', { class: 'row', style: { gap: '5px', flexWrap: 'wrap' } }, playAllBtn, pyBtn, viBtn)
     ),
@@ -13145,14 +13223,14 @@ function renderSkillsMcqPanel(code, t, quizzes, onRefresh = () => skillsView('re
   const optsWrap = h('div', { class: 'stack', style: { gap: '8px' } }, ...opts.map((opt) => {
     const b = h('button', {
       type: 'button',
-      style: { textAlign: 'left', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'rgba(15,23,42,.35)', color: 'inherit', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '3px' },
+      style: { textAlign: 'left', padding: '10px 14px', borderRadius: '12px', border: '1px solid var(--line)', background: 'var(--surface)', color: 'var(--ink)', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '3px' },
       onclick: () => {
         if (graded) return;
         picked = opt;
         optBtns.forEach((ob) => {
           const isSel = ob === b;
           ob.style.borderColor = isSel ? 'var(--teal)' : 'var(--line)';
-          ob.style.background = isSel ? 'rgba(45,212,191,.14)' : 'rgba(15,23,42,.35)';
+          ob.style.background = isSel ? 'var(--teal-soft)' : 'var(--surface)';
         });
         checkBtn.disabled = false;
       }
@@ -13170,11 +13248,11 @@ function renderSkillsMcqPanel(code, t, quizzes, onRefresh = () => skillsView('re
     optBtns.forEach((b, j) => {
       b.disabled = true;
       if (opts[j].k === q.a) {
-        b.style.borderColor = '#22c55e';
-        b.style.background = 'rgba(34,197,94,.16)';
+        b.style.borderColor = 'var(--good)';
+        b.style.background = 'var(--good-bg)';
       } else if (opts[j] === picked) {
-        b.style.borderColor = '#ef4444';
-        b.style.background = 'rgba(239,68,68,.16)';
+        b.style.borderColor = 'var(--bad)';
+        b.style.background = 'var(--bad-bg)';
       }
       if (opts[j].r) {
         b.appendChild(h('span', { class: 'small read', style: { color: 'var(--teal)', fontWeight: 600 } }, opts[j].r));
@@ -14960,29 +15038,18 @@ function renderDeepReadingGuide() {
 
 function guideAccordionItem({ id, icon, title, subtitle, tag, content, defaultOpen = false }) {
   const summaryEl = h('summary', {
-    class: 'guide-summary',
-    style: {
-      cursor: 'pointer',
-      padding: '14px 16px',
-      userSelect: 'none',
-      listStyle: 'none',
-      outline: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '12px'
-    }
+    class: 'guide-summary acc-summary'
   },
-    h('div', { class: 'row', style: { gap: '12px', alignItems: 'center', flex: 1, minWidth: 0 } },
-      h('span', { style: { fontSize: '1.45rem', flexShrink: 0 } }, icon),
+    h('div', { class: 'acc-main' },
+      h('span', { style: { fontSize: '1.35rem', flexShrink: 0, lineHeight: 1 } }, icon),
       h('div', { style: { minWidth: 0, flex: 1 } },
-        h('b', { style: { fontSize: '1rem', color: 'var(--ink)', display: 'block', lineHeight: 1.35 } }, title),
-        subtitle ? h('p', { class: 'small muted', style: { margin: '3px 0 0 0', lineHeight: 1.35, fontSize: '.83rem' } }, subtitle) : null
+        h('span', { class: 'acc-title' }, title),
+        subtitle ? h('p', { class: 'acc-sub' }, subtitle) : null,
+        tag ? h('span', { class: 'chip small', style: { fontWeight: 600, fontSize: '.7rem', marginTop: '5px', display: 'inline-block' } }, tag) : null
       )
     ),
-    h('div', { class: 'row', style: { gap: '8px', alignItems: 'center', flexShrink: 0 } },
-      tag ? h('span', { class: 'chip small', style: { fontWeight: 600 } }, tag) : null,
-      h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700, fontSize: '.95rem' } }, '▾')
+    h('div', { class: 'acc-right' },
+      h('span', { class: 'guide-arrow', style: { color: 'var(--teal)', fontWeight: 700, fontSize: '.92rem' } }, '▾')
     )
   );
 
@@ -15182,11 +15249,8 @@ function renderEnglishKnowledgeView() {
       if (btn) btn.textContent = anyClosed ? '📁 Thu gọn tất cả' : '📖 Mở tất cả';
     };
 
-    const toolbar = h('div', { class: 'row between align-center wrap', style: { gap: '8px', margin: '4px 0 8px 0' } },
-      h('div', { class: 'row', style: { gap: '8px', alignItems: 'center' } },
-        h('h2', { style: { margin: 0, fontSize: '1.08rem', color: 'var(--ink)' } }, '💡 Cẩm nang & Phương pháp học tiếng Anh'),
-        h('span', { class: 'chip small' }, '7 chuyên đề')
-      ),
+    const toolbar = h('div', { class: 'acc-toolbar', style: { margin: '2px 0 4px 0' } },
+      h('span', { class: 'small muted', style: { fontWeight: 600 } }, '💡 7 chuyên đề Cẩm nang'),
       h('button', {
         id: 'toggle-guides-btn',
         class: 'acc-toggle-btn',
@@ -15479,7 +15543,7 @@ function renderKnowledgeGrammar(code) {
   const nWrong = pts.filter((x) => (sel === 'all' || x.lv === sel) && st.wrong[x.gid]).length;
   const bestVal = st.best[code + ':' + sel] != null ? st.best[code + ':' + sel] : (code === 'zh' ? st.best[sel] : null);
   const chip = (key, label) => h('button', {
-    class: 'mini' + (sel === key ? ' primary' : ' ghost'),
+    class: 'filter-pill' + (sel === key ? ' active' : ''),
     'aria-pressed': String(sel === key),
     onclick: () => { GQ[code] = key; knowledgeTabView(); }
   }, label);
@@ -15650,7 +15714,7 @@ function renderKnowledgeChietTu(code) {
 
   const filterRow = h('div', { class: 'row wrap', style: { gap: '6px' } },
     ...types.map((tp) => h('button', {
-      class: 'mini ' + (tp.id === fType ? 'primary' : 'ghost'),
+      class: 'filter-pill' + (tp.id === fType ? ' active' : ''),
       'aria-pressed': String(tp.id === fType),
       onclick: () => { CHIET_TU_FILTER_TYPE = tp.id; knowledgeTabView(); }
     }, tp.label))
@@ -16014,8 +16078,8 @@ function renderKnowledgeChars(code) {
       CHARS_SEARCH ? h('button', { class: 'ghost mini', onclick: () => { CHARS_SEARCH = ''; knowledgeTabView(); } }, 'Xóa tìm') : null
     ),
     lvs.length > 1 ? h('div', { class: 'row wrap', style: { gap: '6px' } },
-      h('button', { class: 'mini ' + (KANJI_LV_FILTER === 'all' ? 'primary' : 'ghost'), onclick: () => { KANJI_LV_FILTER = 'all'; knowledgeTabView(); } }, 'Tất cả (' + allKanji.length + ')'),
-      ...lvs.map((lv) => h('button', { class: 'mini ' + (KANJI_LV_FILTER === lv ? 'primary' : 'ghost'), onclick: () => { KANJI_LV_FILTER = lv; knowledgeTabView(); } }, lv + ' (' + allKanji.filter((x) => x.lv === lv).length + ')'))
+      h('button', { class: 'filter-pill' + (KANJI_LV_FILTER === 'all' ? ' active' : ''), 'aria-pressed': String(KANJI_LV_FILTER === 'all'), onclick: () => { KANJI_LV_FILTER = 'all'; knowledgeTabView(); } }, 'Tất cả (' + allKanji.length + ')'),
+      ...lvs.map((lv) => h('button', { class: 'filter-pill' + (KANJI_LV_FILTER === lv ? ' active' : ''), 'aria-pressed': String(KANJI_LV_FILTER === lv), onclick: () => { KANJI_LV_FILTER = lv; knowledgeTabView(); } }, lv + ' (' + allKanji.filter((x) => x.lv === lv).length + ')'))
     ) : null,
     filtered.length > 0 ? h('div', { class: 'acc-toolbar' },
       h('span', { class: 'small muted' }, q ? ('Tìm thấy ' + filtered.length + ' chữ Hán') : 'Chọn bài học · Bấm chữ tập viết'),
@@ -16044,15 +16108,15 @@ function renderKnowledgeKana(code) {
   ];
 
   return h('div', { class: 'stack-lg' },
-    h('div', { class: 'row between', style: { alignItems: 'center' } },
+    h('div', { class: 'stack', style: { gap: '10px' } },
       h('h2', { style: { margin: 0 } }, '🔤 Bảng 46 Chữ Cái Tiếng Nhật'),
-      h('div', { class: 'row', style: { gap: '6px' } },
+      h('div', { class: 'langs', style: { gridTemplateColumns: 'repeat(2, 1fr)' } },
         h('button', {
-          class: 'mini' + (KANA_MODE === 'hira' ? ' primary' : ' ghost'),
+          'aria-pressed': String(KANA_MODE === 'hira'),
           onclick: () => { KANA_MODE = 'hira'; knowledgeTabView(); }
         }, 'Hiragana (Chữ mềm)'),
         h('button', {
-          class: 'mini' + (KANA_MODE === 'kata' ? ' primary' : ' ghost'),
+          'aria-pressed': String(KANA_MODE === 'kata'),
           onclick: () => { KANA_MODE = 'kata'; knowledgeTabView(); }
         }, 'Katakana (Chữ cứng)')
       )
@@ -16954,10 +17018,10 @@ function renderHskkExamView() {
   );
 
   // Chọn cấp độ HSKK 3 - 6
-  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 8px 0' } },
+  const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 6px 0' } },
     ...levels.map((lv) => h('button', {
-      class: 'mini' + (HSKK_LV === lv ? ' primary' : ' ghost'),
-      style: { fontWeight: 700, minWidth: '72px' },
+      class: 'filter-pill' + (HSKK_LV === lv ? ' active' : ''),
+      'aria-pressed': String(HSKK_LV === lv),
       onclick: () => { HSKK_LV = lv; examTabView(); }
     }, HSKK_DATA[lv].shortName))
   );
@@ -17049,19 +17113,19 @@ function renderHskkExamView() {
   // Bộ lọc phần thi
   const filterTabs = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 6px 0' } },
     h('button', {
-      class: 'mini' + (HSKK_FILTER_PART === 'all' ? ' primary' : ' ghost'),
+      class: 'filter-pill' + (HSKK_FILTER_PART === 'all' ? ' active' : ''),
       onclick: () => { HSKK_FILTER_PART = 'all'; examTabView(); }
     }, 'Tất cả câu hỏi (' + curData.totalQs + ')'),
     h('button', {
-      class: 'mini' + (HSKK_FILTER_PART === 'p1' ? ' primary' : ' ghost'),
+      class: 'filter-pill' + (HSKK_FILTER_PART === 'p1' ? ' active' : ''),
       onclick: () => { HSKK_FILTER_PART = 'p1'; examTabView(); }
     }, 'Phần 1: Nghe phản xạ'),
     h('button', {
-      class: 'mini' + (HSKK_FILTER_PART === 'p2' ? ' primary' : ' ghost'),
+      class: 'filter-pill' + (HSKK_FILTER_PART === 'p2' ? ' active' : ''),
       onclick: () => { HSKK_FILTER_PART = 'p2'; examTabView(); }
     }, 'Phần 2: Nhìn tranh'),
     h('button', {
-      class: 'mini' + (HSKK_FILTER_PART === 'p3' ? ' primary' : ' ghost'),
+      class: 'filter-pill' + (HSKK_FILTER_PART === 'p3' ? ' active' : ''),
       onclick: () => { HSKK_FILTER_PART = 'p3'; examTabView(); }
     }, 'Phần 3: Trả lời câu hỏi')
   );
@@ -17368,8 +17432,9 @@ function examTabView() {
 
   const lvSelector = h('div', { class: 'row', style: { gap: '6px', flexWrap: 'wrap', margin: '4px 0 8px 0' } },
     ...levels.map((lv) => h('button', {
-      class: 'mini' + (curLv === lv ? ' primary' : ' ghost'),
-      style: { fontWeight: 700, minWidth: '60px' },
+      class: 'filter-pill' + (curLv === lv ? ' active' : ''),
+      style: { minWidth: '58px' },
+      'aria-pressed': String(curLv === lv),
       onclick: () => { EXAM_LV[code] = lv; examTabView(); }
     }, lv))
   );
