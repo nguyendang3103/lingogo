@@ -1160,7 +1160,7 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261118-0800';
+const APP_BUILD_ID = '20261119-0030';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -4269,7 +4269,7 @@ function homeView() {
       });
       return wrap;
     })(),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.96 · Cập nhật 18/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.97 · Cập nhật 19/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9998,9 +9998,17 @@ function topicCard(t, nx, num) {
   const d = DATA[t.lang];
   const hasGram = !!(t.gram && t.gram.length && d && d.grammar);
   const hasQuickQuiz = !!((t.vocab && t.vocab.length) || (t.kanji && t.kanji.length) || (t.quiz && t.quiz.length) || hasGram);
+  const revIdx = t.lessons.findIndex((l) => l.kind === 'review');
+  const canShortcut = revIdx !== -1 && !topicDone(t);
   const quickOpen = openQuickQuizTopics.has(ok);
   const body = open && h('div', { class: 'body' },
-    (hasGram || hasQuickQuiz) && h('div', { class: 'extras', style: { gap: '6px', marginBottom: '2px' } },
+    (hasGram || hasQuickQuiz || canShortcut) && h('div', { class: 'extras', style: { gap: '6px', marginBottom: '2px' } },
+      canShortcut && h('button', {
+        class: 'ghost mini',
+        title: 'Ôn tập cả chủ đề — đạt từ 80% trở lên sẽ tự động hoàn thành 100% các bài học trong chủ đề',
+        style: { border: '1px solid rgba(180,83,9,.35)', background: 'rgba(180,83,9,.08)', color: 'var(--amber)', fontSize: '.82rem', padding: '5px 10px', fontWeight: 600 },
+        onclick: () => lessonView(t, revIdx)
+      }, '🚀 Học tắt (≥80% đạt cả chủ đề)'),
       hasGram && h('button', {
         class: 'ghost mini',
         style: { border: '1px solid var(--line)', background: 'var(--sunk)', fontSize: '.82rem', padding: '5px 10px' },
@@ -11959,7 +11967,34 @@ function lessonView(t, i) {
     const won = new Set(); let fillXp = 0;
     all.forEach((r) => { if (r.ex.type === 'fill') fillXp += XP_ITEM * (r.ok || 0); else if (r.correct && !(r.ex.type === 'write' && r.self)) won.add(keyOf(r.ex)); });
     let xp = XP_ITEM * won.size + fillXp; if (repeat) xp = Math.ceil(xp / 2);
-    S.lessons[k] = Math.max(pct, typeof S.lessons[k] === 'number' ? S.lessons[k] : 0);
+    const isReviewLesson = t.lessons[i] && t.lessons[i].kind === 'review';
+    const wasTopicDone = topicDone(t);
+    const passedShortcut = isReviewLesson && pct >= 80;
+    let filledCount = 0;
+    if (passedShortcut) {
+      t.lessons.forEach((l, j) => {
+        const lk = lkey(t, j);
+        if (S.del && S.del[lk]) delete S.del[lk];
+        if (S.del && S.del['spk:' + lk]) delete S.del['spk:' + lk];
+        if (S.del && S.del['wrt:' + lk]) delete S.del['wrt:' + lk];
+        if (S.lessons[lk] == null) filledCount++;
+        S.lessons[lk] = Math.max(pct, typeof S.lessons[lk] === 'number' ? S.lessons[lk] : 0);
+      });
+      (t.vocab || []).forEach((w) => {
+        const sKey = sid(code, w.id);
+        if (!S.srs[sKey]) srsRate(sKey, true);
+      });
+      (t.kanji || []).forEach((kj) => {
+        const sKey = sid(code, kj.id);
+        if (!S.srs[sKey]) srsRate(sKey, true);
+      });
+      (t.gram || []).forEach((gid) => {
+        const gKey = code + ':gram:' + gid;
+        if (!S.srs[gKey]) srsRate(gKey, true);
+      });
+    } else {
+      S.lessons[k] = Math.max(pct, typeof S.lessons[k] === 'number' ? S.lessons[k] : 0);
+    }
     addXp(xp, code); checkAch();
     const nx = nextLesson(DATA[code]);
     setFeedbackContext(null);
@@ -11967,7 +12002,21 @@ function lessonView(t, i) {
     mount(h('div', { class: 'panel stack center', style: { marginTop: '24px' } },
       h('p', { class: 'label' }, t.sub || t.title),
       h('h1', {}, correct === total ? 'Không sai câu nào!' : 'Xong bài rồi!'),
-      h('p', {}, h('b', {}, correct + '/' + total + ' câu đúng'), ' · +' + xp + ' XP' + (repeat ? ' (học lại: nửa XP)' : '')),
+      h('p', {}, h('b', {}, correct + '/' + total + ' câu đúng (' + pct + '%)'), ' · +' + xp + ' XP' + (repeat ? ' (học lại: nửa XP)' : '')),
+      passedShortcut && !wasTopicDone && h('div', {
+        class: 'feedback ok',
+        style: { width: '100%', textAlign: 'center', margin: '4px 0' }
+      },
+        h('strong', {}, '🚀 Học tắt thành công! Đạt ' + pct + '% (≥ 80%)'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, 'Đã mở khóa & điền 100% tiến độ cho cả ' + t.lessons.length + '/' + t.lessons.length + ' bài học trong chủ đề này' + (filledCount > 0 ? ' (+' + filledCount + ' bài).' : '.'))
+      ),
+      isReviewLesson && !passedShortcut && !wasTopicDone && h('div', {
+        class: 'feedback',
+        style: { width: '100%', textAlign: 'center', margin: '4px 0', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', color: 'var(--ink)' }
+      },
+        h('strong', {}, '💡 Đạt ' + pct + '% — Cần từ 80% trở lên để tự động hoàn thành cả chủ đề'),
+        h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } }, 'Bạn có thể làm lại bài ôn tập này hoặc học từng bài nhỏ bên dưới.')
+      ),
       h('p', {}, 'Hôm nay ' + LANGS[code].short + ': ' + xpOf(todayN(), code) + '/' + goal() + ' XP · chuỗi ' + streak(code) + ' ngày'),
       nx && h('button', { class: 'primary block', onclick: () => lessonView(nx.t, nx.i) }, 'Học bài tiếp theo'),
       h('button', { class: 'block', onclick: () => go('home') }, 'Về trang Học'),
@@ -11985,10 +12034,18 @@ function lessonView(t, i) {
 
   const isDone = lessonDone(t, i);
   const oldScoreText = typeof S.lessons[lkey(t, i)] === 'number' ? ('Điểm cao nhất: ' + S.lessons[lkey(t, i)] + '%') : '';
+  const isShortcutEligible = t.lessons[i] && t.lessons[i].kind === 'review' && !topicDone(t);
 
   mount(h('div', { class: 'stack-lg' },
     h('div', { class: 'topbar' }, h('button', { class: 'ghost', onclick: exit }, 'Thoát'), h('span', { class: 'muted small grow' }, t.sub || t.title), feedbackBtn()),
     h('h1', { lang: t.lessons[i].kind === 'learn' ? LANGS[code].lang : null }, lessonTitle(t, i)),
+    isShortcutEligible && h('div', {
+      class: 'panel',
+      style: { padding: '10px 14px', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', borderRadius: '12px' }
+    },
+      h('strong', { style: { color: 'var(--amber)', fontSize: '.9rem' } }, '🚀 Học tắt cả chủ đề'),
+      h('p', { class: 'small', style: { margin: '3px 0 0 0' } }, 'Hoàn thành bài ôn tập tổng hợp này với kết quả từ 80% trở lên để tự động đánh dấu hoàn thành 100% toàn bộ ' + t.lessons.length + ' bài trong chủ đề.')
+    ),
     isDone && h('div', {
       class: 'panel row between',
       style: {
