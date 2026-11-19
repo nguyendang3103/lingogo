@@ -1,5 +1,5 @@
 {
-  "version": "3.97",
-  "build": "20261119-0030",
-  "message": "Thêm nút Học tắt Ôn tập cả chủ đề: đạt >= 80% tự động hoàn thành 100% tiến độ các bài trong chủ đề"
+  "version": "3.98",
+  "build": "20261119-0055",
+  "message": "Ôn tập cả chủ đề đạt >= 80% tự động hoàn thành 100% toàn bộ bài học trong chủ đề (không tạo nút học tắt riêng)"
 }

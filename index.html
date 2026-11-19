@@ -1160,7 +1160,7 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261119-0030';
+const APP_BUILD_ID = '20261119-0055';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -4269,7 +4269,7 @@ function homeView() {
       });
       return wrap;
     })(),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.97 · Cập nhật 19/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.98 · Cập nhật 19/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
@@ -9998,17 +9998,9 @@ function topicCard(t, nx, num) {
   const d = DATA[t.lang];
   const hasGram = !!(t.gram && t.gram.length && d && d.grammar);
   const hasQuickQuiz = !!((t.vocab && t.vocab.length) || (t.kanji && t.kanji.length) || (t.quiz && t.quiz.length) || hasGram);
-  const revIdx = t.lessons.findIndex((l) => l.kind === 'review');
-  const canShortcut = revIdx !== -1 && !topicDone(t);
   const quickOpen = openQuickQuizTopics.has(ok);
   const body = open && h('div', { class: 'body' },
-    (hasGram || hasQuickQuiz || canShortcut) && h('div', { class: 'extras', style: { gap: '6px', marginBottom: '2px' } },
-      canShortcut && h('button', {
-        class: 'ghost mini',
-        title: 'Ôn tập cả chủ đề — đạt từ 80% trở lên sẽ tự động hoàn thành 100% các bài học trong chủ đề',
-        style: { border: '1px solid rgba(180,83,9,.35)', background: 'rgba(180,83,9,.08)', color: 'var(--amber)', fontSize: '.82rem', padding: '5px 10px', fontWeight: 600 },
-        onclick: () => lessonView(t, revIdx)
-      }, '🚀 Học tắt (≥80% đạt cả chủ đề)'),
+    (hasGram || hasQuickQuiz) && h('div', { class: 'extras', style: { gap: '6px', marginBottom: '2px' } },
       hasGram && h('button', {
         class: 'ghost mini',
         style: { border: '1px solid var(--line)', background: 'var(--sunk)', fontSize: '.82rem', padding: '5px 10px' },
@@ -12007,15 +11999,15 @@ function lessonView(t, i) {
         class: 'feedback ok',
         style: { width: '100%', textAlign: 'center', margin: '4px 0' }
       },
-        h('strong', {}, '🚀 Học tắt thành công! Đạt ' + pct + '% (≥ 80%)'),
-        h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, 'Đã mở khóa & điền 100% tiến độ cho cả ' + t.lessons.length + '/' + t.lessons.length + ' bài học trong chủ đề này' + (filledCount > 0 ? ' (+' + filledCount + ' bài).' : '.'))
+        h('strong', {}, '🏆 Đạt ' + pct + '% (≥ 80%) · Hoàn thành 100% chủ đề!'),
+        h('p', { class: 'small', style: { margin: '4px 0 0 0' } }, 'Đã tự động đánh dấu hoàn thành cả ' + t.lessons.length + '/' + t.lessons.length + ' bài học trong chủ đề này' + (filledCount > 0 ? ' (+' + filledCount + ' bài).' : '.'))
       ),
       isReviewLesson && !passedShortcut && !wasTopicDone && h('div', {
         class: 'feedback',
         style: { width: '100%', textAlign: 'center', margin: '4px 0', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', color: 'var(--ink)' }
       },
-        h('strong', {}, '💡 Đạt ' + pct + '% — Cần từ 80% trở lên để tự động hoàn thành cả chủ đề'),
-        h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } }, 'Bạn có thể làm lại bài ôn tập này hoặc học từng bài nhỏ bên dưới.')
+        h('strong', {}, '💡 Đạt ' + pct + '% — Cần từ 80% trở lên để hoàn thành 100% cả chủ đề'),
+        h('p', { class: 'small muted', style: { margin: '4px 0 0 0' } }, 'Bạn có thể làm lại bài Ôn tập cả chủ đề này hoặc học từng bài nhỏ bên dưới.')
       ),
       h('p', {}, 'Hôm nay ' + LANGS[code].short + ': ' + xpOf(todayN(), code) + '/' + goal() + ' XP · chuỗi ' + streak(code) + ' ngày'),
       nx && h('button', { class: 'primary block', onclick: () => lessonView(nx.t, nx.i) }, 'Học bài tiếp theo'),
@@ -12043,8 +12035,8 @@ function lessonView(t, i) {
       class: 'panel',
       style: { padding: '10px 14px', background: 'rgba(180,83,9,.08)', border: '1px solid rgba(180,83,9,.3)', borderRadius: '12px' }
     },
-      h('strong', { style: { color: 'var(--amber)', fontSize: '.9rem' } }, '🚀 Học tắt cả chủ đề'),
-      h('p', { class: 'small', style: { margin: '3px 0 0 0' } }, 'Hoàn thành bài ôn tập tổng hợp này với kết quả từ 80% trở lên để tự động đánh dấu hoàn thành 100% toàn bộ ' + t.lessons.length + ' bài trong chủ đề.')
+      h('strong', { style: { color: 'var(--amber)', fontSize: '.9rem' } }, '🎯 Đạt ≥ 80% để hoàn thành cả chủ đề'),
+      h('p', { class: 'small', style: { margin: '3px 0 0 0' } }, 'Hoàn thành bài Ôn tập cả chủ đề này với kết quả từ 80% trở lên sẽ tự động đánh dấu hoàn thành 100% toàn bộ ' + t.lessons.length + ' bài trong chủ đề.')
     ),
     isDone && h('div', {
       class: 'panel row between',
