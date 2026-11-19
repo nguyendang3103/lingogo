@@ -1160,7 +1160,7 @@ details.acc-group > .acc-body { background: var(--bg); padding: 10px 12px; gap: 
    Dữ liệu bài học nằm trong data/<ngôn ngữ>.json (tải khi cần), âm thanh thu sẵn
    trong audio/, nét chữ trong data/strokes-<zh|ja>.json.
    ===================================================================== */
-const APP_BUILD_ID = '20261118-0700';
+const APP_BUILD_ID = '20261118-0710';
 const LANGS = {
   en: { label: 'English', vi: 'Tiếng Anh', short: 'Anh', folder: 'English', tts: 'en-US', rec: 'en-US', lang: 'en', cjk: false },
   zh: { label: '中文', vi: 'Tiếng Trung', short: 'Trung', folder: 'Chinese', tts: 'zh-CN', rec: 'zh-CN', lang: 'zh-Hans', cjk: true },
@@ -3614,6 +3614,54 @@ function renderScheduleTabContent(t, sch) {
   ];
 }
 
+// ===== Lộ trình bổ trợ Tiếng Anh: 30 ngày IELTS Listening · Đề IELTS 2022–2026 · Ngữ pháp CEFR =====
+function renderEnExtraRoadmap() {
+  const out = [];
+  const days = (window.IELTS_30DAY_CHALLENGE || []);
+  S.l30 = S.l30 || {};
+  const doneDays = days.filter((d) => S.l30[d.day]).length;
+  const dayItems = days.map((d) => {
+    const body = h('div', { class: 'stack', style: { gap: '8px' } });
+    const show = (label, html) => { if (!html) return null; return h('details', { class: 'panel', style: { padding: '8px 10px', borderRadius: '10px' } }, h('summary', { style: { cursor: 'pointer', fontWeight: 700, fontSize: '.84rem' } }, label), (() => { const x = h('div', { class: 'small', style: { lineHeight: 1.6, overflowX: 'auto' } }); x.innerHTML = html; return x; })()); };
+    return accordionItem({
+      cls: 'acc-group', iconEl: S.l30[d.day] ? '✅' : '🎧',
+      title: 'Ngày ' + d.day + ': ' + d.title,
+      subtitle: 'Nghe video bản xứ rồi làm đề, đối chiếu đáp án',
+      chips: [h('span', { class: 'chip' + (S.l30[d.day] ? ' good' : ''), style: { fontSize: '.72rem' } }, S.l30[d.day] ? 'Đã xong' : 'Chưa học')],
+      body: [h('div', { class: 'stack', style: { gap: '8px' } },
+        d.vimeoUrl ? h('a', { class: 'primary block', href: d.vimeoUrl, target: '_blank', rel: 'noopener', style: { textAlign: 'center', padding: '9px', borderRadius: '10px', textDecoration: 'none' } }, '▶ Mở video nghe ngày ' + d.day) : null,
+        show('📝 Đề', d.de), show('✅ Đáp án', d.ans), show('🇻🇳 Dịch đề', d.dich), show('📄 Transcript', d.transcript), show('📚 Từ vựng', d.vocab),
+        h('button', { class: S.l30[d.day] ? 'ghost block' : 'accent block', onclick: () => { S.l30[d.day] = !S.l30[d.day]; save(); pickView(); } }, S.l30[d.day] ? 'Bỏ đánh dấu hoàn thành' : '✓ Đánh dấu đã học ngày ' + d.day))]
+    });
+  });
+  out.push(accordionItem({
+    cls: 'acc-card', iconEl: '🎧', title: 'Chặng 2 · 30 ngày IELTS Listening',
+    subtitle: doneDays + '/' + days.length + ' ngày · mỗi ngày 1 bài nghe bản xứ ~20 phút',
+    chips: [h('span', { class: 'chip' + (doneDays === days.length && days.length ? ' good' : '') }, doneDays + '/' + days.length)],
+    body: days.length ? dayItems : [h('p', { class: 'small muted' }, 'Chưa tải được dữ liệu 30 ngày.')]
+  }));
+  const vols = (typeof IELTS_IOT_VOLUMES !== 'undefined' ? IELTS_IOT_VOLUMES : []);
+  const volDone = vols.filter((v) => ieltsDoneCount({ lang: 'en', id: 'vol_' + v.vol }) === 4).length;
+  const skillsDone = vols.reduce((a, v) => a + ieltsDoneCount({ lang: 'en', id: 'vol_' + v.vol }), 0);
+  out.push(accordionItem({
+    cls: 'acc-card', iconEl: '🏆', title: 'Chặng 3 · Đề IELTS 2022–2026 (4 kỹ năng)',
+    subtitle: volDone + '/' + vols.length + ' bộ đề hoàn tất · ' + skillsDone + '/' + (vols.length * 4) + ' kỹ năng',
+    chips: [h('span', { class: 'chip' }, volDone + '/' + vols.length)],
+    body: [...vols.map((v) => { const n = ieltsDoneCount({ lang: 'en', id: 'vol_' + v.vol }); return h('div', { class: 'row between', style: { padding: '6px 2px', gap: '8px', alignItems: 'center' } }, h('span', { class: 'small' }, v.code + ' · ' + v.sub), h('span', { class: 'chip' + (n === 4 ? ' good' : ''), style: { fontSize: '.72rem' } }, n + '/4')); }),
+      h('button', { class: 'ghost block', onclick: () => go('ielts') }, 'Vào Luyện IELTS →')]
+  }));
+  let gp = [];
+  try { gp = grammarPoints('en') || []; } catch (e) { gp = []; }
+  out.push(accordionItem({
+    cls: 'acc-card', iconEl: '📖', title: 'Chặng 4 · Ngữ pháp CEFR (A1–C1)',
+    subtitle: gp.length + ' chủ điểm · học song song, mỗi tuần 2 chủ điểm',
+    chips: [h('span', { class: 'chip' }, gp.length + ' điểm')],
+    body: [h('p', { class: 'small muted', style: { margin: 0 } }, 'Ước tính ~' + Math.ceil(gp.length / 2) + ' tuần nếu học 2 chủ điểm/tuần, chạy song song với các chặng trên.'),
+      h('button', { class: 'ghost block', onclick: () => { VIEW = 'grammar'; go('grammar'); } }, 'Vào Ngữ pháp →')]
+  }));
+  return out;
+}
+
 function renderRoadmapTabContent(t) {
   const currentLang = ROADMAP_LANG || S.lang || 'en';
   const paces = [
@@ -3754,6 +3802,7 @@ function renderRoadmapTabContent(t) {
             })
           )
         ),
+        ...(c === 'en' ? renderEnExtraRoadmap() : []),
         // Action button
         h('button', {
           class: 'primary block',
@@ -4220,7 +4269,7 @@ function homeView() {
       });
       return wrap;
     })(),
-    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.94 · Cập nhật 18/11/2026')));
+    h('p', { class: 'small muted center', style: { margin: '24px 0 12px 0', fontSize: '.76rem', opacity: .65 } }, 'Lingogo v3.95 · Cập nhật 18/11/2026')));
 }
 
 // ===== HỆ THỐNG LUYỆN THI IELTS 4 KỸ NĂNG (TIẾNG ANH) =====
