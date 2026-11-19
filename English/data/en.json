@@ -24091,7 +24091,7 @@
       "id": "5",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Đơn hàng XNK, Bao bì & Giao vận",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · Đơn hàng, Nhà máy & Đóng gói",
       "title": "Import-export: orders, Incoterms, payment & documents",
       "sub": "Xuất nhập khẩu: Đơn hàng (PO), Incoterms, Thanh toán & Chứng từ",
       "vocab": [
@@ -24566,10 +24566,490 @@
       ]
     },
     {
+      "id": "192",
+      "category": "b2",
+      "level": "B2",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · Đơn hàng, Nhà máy & Đóng gói",
+      "title": "Manufacturing, Production Planning & Plant Operations",
+      "sub": "Ngành Sản xuất: Kế hoạch sản xuất, dây chuyền, bảo trì & an toàn nhà máy",
+      "vocab": [
+        {
+          "id": "E192-0",
+          "w": "production schedule",
+          "r": "/prəˈdʌk.ʃən ˈskedʒ.uːl/",
+          "m": "kế hoạch / lịch trình chạy hàng sản xuất theo ngày, tuần",
+          "d": "the timetable specifying which factory orders, quantities, and lines run on each shift",
+          "ex": "We adjusted the weekly production schedule so rush export orders finish before Friday noon.",
+          "exr": "",
+          "exm": "Chúng tôi đã điều chỉnh lịch trình sản xuất tuần để các đơn hàng xuất gấp hoàn thành trước trưa thứ Sáu."
+        },
+        {
+          "id": "E192-1",
+          "w": "bill of materials",
+          "r": "/ˌbɪl əv məˈtɪr.i.əlz/",
+          "m": "bảng định mức nguyên vật liệu cấu thành sản phẩm (BOM)",
+          "d": "a detailed list of every raw material, component, and quantity needed to manufacture one unit",
+          "ex": "Engineering updated the bill of materials after switching to a corrosion-resistant steel bracket.",
+          "exr": "",
+          "exm": "Bộ phận kỹ thuật đã cập nhật bảng định mức nguyên vật liệu sau khi chuyển sang ngàm thép chống gỉ."
+        },
+        {
+          "id": "E192-2",
+          "w": "assembly line",
+          "r": "/əˈsem.bli laɪn/",
+          "m": "dây chuyền lắp ráp sản phẩm theo công đoạn nối tiếp",
+          "d": "a sequence of workstations where operators or machines add components step by step",
+          "ex": "Rebalancing tasks along assembly line three increased daily output by twelve percent.",
+          "exr": "",
+          "exm": "Cân bằng lại thao tác dọc dây chuyền lắp ráp số ba giúp tăng sản lượng ngày thêm 12%."
+        },
+        {
+          "id": "E192-3",
+          "w": "throughput",
+          "r": "/ˈθruː.pʊt/",
+          "m": "năng lực thông lượng đầu ra thực tế của dây chuyền",
+          "d": "the actual volume of finished goods a plant or line produces within a fixed timeframe",
+          "ex": "Upgrading the curing oven removed our drying delay and raised hourly throughput significantly.",
+          "exr": "",
+          "exm": "Nâng cấp lò sấy đã loại bỏ tình trạng chờ khô và tăng mạnh công suất đầu ra mỗi giờ."
+        },
+        {
+          "id": "E192-4",
+          "w": "raw materials",
+          "r": "/ˌrɔː məˈtɪr.i.əlz/",
+          "m": "nguyên vật liệu thô đầu vào phục vụ gia công",
+          "d": "unprocessed timber, resin, metal sheets, or yarn purchased before manufacturing begins",
+          "ex": "Incoming raw materials stay quarantined in warehouse bay B until lab humidity tests pass.",
+          "exr": "",
+          "exm": "Nguyên vật liệu thô nhập kho được cách ly ở khu B cho đến khi kiểm tra độ ẩm phòng thí nghiệm đạt chuẩn."
+        },
+        {
+          "id": "E192-5",
+          "w": "preventive maintenance",
+          "r": "/prɪˈven.tɪv ˈmeɪn.tən.əns/",
+          "m": "bảo trì phòng ngừa định kỳ để tránh hỏng hóc đột xuất",
+          "d": "scheduled servicing, lubrication, and part replacement done before machinery fails",
+          "ex": "Sunday preventive maintenance on the CNC routers kept breakdown rates near zero all quarter.",
+          "exr": "",
+          "exm": "Bảo trì phòng ngừa định kỳ vào Chủ nhật cho máy CNC giữ tỷ lệ hỏng hóc gần bằng 0 suốt cả quý."
+        },
+        {
+          "id": "E192-6",
+          "w": "downtime",
+          "r": "/ˈdaʊn.taɪm/",
+          "m": "thời gian dừng máy ngoài kế hoạch hoặc khi chuyển mã hàng",
+          "d": "hours during a working shift when production stops due to breakdowns or tooling changeovers",
+          "ex": "Unplanned conveyor downtime cost the plant ninety minutes of output on Tuesday morning.",
+          "exr": "",
+          "exm": "Thời gian dừng băng tải ngoài kế hoạch khiến nhà máy mất 90 phút sản lượng vào sáng thứ Ba."
+        },
+        {
+          "id": "E192-7",
+          "w": "quality assurance",
+          "r": "/ˈkwɑː.lə.ti əˈʃʊr.əns/",
+          "m": "hệ thống đảm bảo chất lượng xuyên suốt quy trình sản xuất (QA)",
+          "d": "process checks and standards designed to prevent defects from occurring during manufacturing",
+          "ex": "Quality assurance teams audit tooling calibration twice per shift to prevent dimension drift.",
+          "exr": "",
+          "exm": "Đội đảm bảo chất lượng kiểm tra hiệu chuẩn khuôn gá hai lần mỗi ca để ngừa sai lệch kích thước."
+        },
+        {
+          "id": "E192-8",
+          "w": "shift handover",
+          "r": "/ʃɪft ˈhænd.oʊ.vɚ/",
+          "m": "bàn giao tình trạng máy móc & tiến độ giữa hai ca sản xuất",
+          "d": "a structured briefing where outgoing supervisors update incoming shift leads on machine status",
+          "ex": "During shift handover, night supervisors log any abnormal motor vibration for the morning crew.",
+          "exr": "",
+          "exm": "Trong lúc bàn giao ca, tổ trưởng ca đêm ghi nhận mọi rung động bất thường của mô-tơ để ca sáng xử lý."
+        },
+        {
+          "id": "E192-9",
+          "w": "capacity utilization",
+          "r": "/kəˈpæs.ə.ti ˌjuː.tə.ləˈzeɪ.ʃən/",
+          "m": "tỷ lệ khai thác công suất thực tế của nhà xưởng",
+          "d": "the percentage of maximum theoretical plant output currently being used by active orders",
+          "ex": "Peak-season bookings pushed plant capacity utilization to eighty-nine percent this month.",
+          "exr": "",
+          "exm": "Đơn hàng mùa cao điểm đã đẩy tỷ lệ khai thác công suất nhà máy lên 89% trong tháng này."
+        },
+        {
+          "id": "E192-10",
+          "w": "workplace safety",
+          "r": "/ˈwɜːrk.pleɪs ˈseɪf.ti/",
+          "m": "an toàn lao động & phòng hộ tại khu vực sản xuất",
+          "d": "protocols, protective equipment, and machine guards keeping factory staff free from injury",
+          "ex": "Strict workplace safety rules require lockout tags and protective goggles in the stamping hall.",
+          "exr": "",
+          "exm": "Quy định an toàn lao động nghiêm ngặt yêu cầu khóa an toàn và kính bảo hộ trong phân xưởng dập."
+        },
+        {
+          "id": "E192-11",
+          "w": "batch traceability",
+          "r": "/bætʃ ˌtreɪ.səˈbɪl.ə.ti/",
+          "m": "truy xuất nguồn gốc nguyên liệu và công đoạn theo từng lô hàng",
+          "d": "recording lot numbers across every stage so defective batches can be isolated rapidly",
+          "ex": "Digital barcode scanning gives full batch traceability from resin pellets to packed cartons.",
+          "exr": "",
+          "exm": "Quét mã vạch số giúp truy xuất nguồn gốc trọn vẹn từng lô từ hạt nhựa nguyên liệu tới thùng đóng gói."
+        }
+      ],
+      "quiz": [
+        {
+          "id": "q192-0",
+          "q": "Before Engineering replaces a metal component on a flagship product, which document must planners update first so Purchasing buys the right parts?",
+          "o": [
+            "The visitor gate log",
+            "The bill of materials (BOM)",
+            "The cafeteria shift menu"
+          ],
+          "a": 1,
+          "why": "Bill of materials (định mức nguyên vật liệu) liệt kê chính xác từng linh kiện và số lượng cấu thành sản phẩm để bộ phận mua hàng đặt đúng."
+        },
+        {
+          "id": "q192-1",
+          "q": "Why do factories perform preventive maintenance on Sunday night instead of waiting until a machine breaks down on Tuesday?",
+          "o": [
+            "To minimize unplanned downtime and avoid halting active shifts",
+            "To eliminate the need for shift handover logs",
+            "To reduce workplace safety inspections to once a year"
+          ],
+          "a": 0,
+          "why": "Bảo trì phòng ngừa giúp phát hiện hao mòn sớm vào thời gian nghỉ, tránh dừng máy đột xuất (downtime) giữa lúc đơn hàng đang chạy gấp."
+        },
+        {
+          "id": "q192-2",
+          "q": "During assembly line balancing, Station 4 takes 65 seconds while all other stations finish in 40 seconds. What does Station 4 limit?",
+          "o": [
+            "Raw materials humidity in warehouse bay B",
+            "Overall line throughput per hour",
+            "Annual vacation balance for office staff"
+          ],
+          "a": 1,
+          "why": "Công đoạn chậm nhất quyết định nhịp ra hàng thực tế (throughput) của cả dây chuyền lắp ráp."
+        },
+        {
+          "id": "q192-3",
+          "q": "A client reports cracking on 200 plastic housings delivered in October. Which plant system lets you isolate only the affected resin lot instead of recalling a whole month?",
+          "o": [
+            "Batch traceability",
+            "Peak-season surcharge",
+            "Capacity utilization"
+          ],
+          "a": 0,
+          "why": "Batch traceability giúp truy ngược mã lô nguyên liệu, ca máy và ngày sản xuất để khoanh vùng chính xác lô hàng gặp sự cố."
+        },
+        {
+          "id": "q192-4",
+          "q": "What should an outgoing shift lead communicate clearly during a five-minute shift handover?",
+          "o": [
+            "Only total canteen meals served that afternoon",
+            "Units completed, tooling adjustments made, open machine alerts, and priority work orders",
+            "Competitors' holiday marketing slogans"
+          ],
+          "a": 1,
+          "why": "Bàn giao ca chuẩn cần nêu rõ sản lượng đã xong, tình trạng máy/khuôn và đơn hàng ưu tiên tiếp theo để ca sau không bị gián đoạn."
+        },
+        {
+          "id": "q192-5",
+          "q": "Your plant's capacity utilization hit 96% and a new urgent export order arrives. Which operational risk rises immediately?",
+          "o": [
+            "Overtime fatigue, tighter maintenance windows, and production schedule slippage",
+            "Empty warehouse racks waiting for customers",
+            "Lower workplace safety documentation requirements"
+          ],
+          "a": 0,
+          "why": "Chạy sát 96% công suất khiến nhà máy không còn khoảng đệm bảo trì hay xử lý hàng phát sinh, rất dễ trễ lịch trình sản xuất."
+        }
+      ],
+      "speak": [
+        {
+          "id": "s192-0",
+          "title": "Report an unexpected machine stop and adjust the production schedule",
+          "lines": [
+            {
+              "t": "Line two experienced forty minutes of unplanned downtime this morning because a main bearing overheated on the packaging sealer.",
+              "r": "",
+              "m": "Dây chuyền số hai sáng nay bị dừng máy ngoài kế hoạch 40 phút do bạc đạn chính trên máy ép màng đóng gói bị quá nhiệt."
+            },
+            {
+              "t": "Maintenance has already installed a spare unit, and we shifted two relief operators so the export lot catches up before tonight's shift handover.",
+              "r": "",
+              "m": "Đội bảo trì đã thay cụm dự phòng xong, và bên em đã điều chuyển thêm hai công nhân tăng cường để lô xuất khẩu kịp tiến độ trước lúc bàn giao ca tối."
+            },
+            {
+              "t": "We will add thermal sensor checks to Sunday's preventive maintenance checklist to protect weekly throughput.",
+              "r": "",
+              "m": "Chúng tôi sẽ bổ sung kiểm tra cảm biến nhiệt vào danh mục bảo trì phòng ngừa Chủ nhật này để giữ vững công suất đầu ra tuần."
+            }
+          ]
+        },
+        {
+          "id": "s192-1",
+          "title": "Walk a buyer through quality assurance and batch traceability on the plant floor",
+          "lines": [
+            {
+              "t": "Every incoming shipment of raw materials receives a lot barcode before it enters our warehouse or hits the assembly line.",
+              "r": "",
+              "m": "Mỗi lô nguyên vật liệu đầu vào đều được gắn mã vạch riêng trước khi nhập kho hoặc cấp lên dây chuyền lắp ráp."
+            },
+            {
+              "t": "Our quality assurance inspectors verify weight and weld strength every thirty minutes alongside strict workplace safety audits.",
+              "r": "",
+              "m": "Kỹ thuật viên đảm bảo chất lượng kiểm tra trọng lượng và độ bền mối hàn mỗi 30 phút song song với rà soát an toàn lao động nghiêm ngặt."
+            },
+            {
+              "t": "Because our digital log links each carton to its exact bill of materials revision, we achieve complete batch traceability within seconds.",
+              "r": "",
+              "m": "Nhờ nhật ký số liên kết từng thùng hàng tới đúng phiên bản định mức vật liệu, chúng tôi truy xuất trọn vẹn nguồn gốc theo lô chỉ trong vài giây."
+            }
+          ]
+        }
+      ],
+      "coach": [
+        {
+          "id": "c192-0",
+          "q": "An overseas buyer worries a rush order might delay their shipment. How do you explain your factory's production schedule adjustment reassuringly?",
+          "vi": "Khách hàng nước ngoài lo đơn hàng gấp sẽ làm trễ lịch tàu của họ. Bạn giải thích phương án điều phối lịch sản xuất ra sao để khách yên tâm?",
+          "st": "We reviewed our capacity utilization and adjusted the production schedule by + action + without cutting corners on quality.",
+          "ph": [
+            "production schedule",
+            "capacity utilization",
+            "throughput"
+          ],
+          "sa": "We reviewed current capacity utilization carefully and split the order across two parallel assembly lines starting tomorrow morning. By extending changeover prep onto night shift, we gain eighteen percent extra weekly throughput while keeping full quality checks intact so your container loads right on schedule.",
+          "ss": [
+            "I will send daily output tallies at 5:00 PM so your logistics team stays synced."
+          ],
+          "sc": "Reassuring an international customer on factory capacity and schedule reliability."
+        },
+        {
+          "id": "c192-1",
+          "q": "During a morning production meeting, convince management to invest in weekend preventive maintenance rather than running machines seven days straight.",
+          "vi": "Trong cuộc họp xưởng buổi sáng, hãy thuyết phục ban giám đốc dành thời gian bảo trì phòng ngừa cuối tuần thay vì chạy máy liên tục 7 ngày.",
+          "st": "Skipping scheduled preventive maintenance invites + downtime + that costs far more than + four-hour service window.",
+          "ph": [
+            "preventive maintenance",
+            "downtime",
+            "shift handover"
+          ],
+          "sa": "Running molding presses seven days straight pushes short-term units out, but one broken hydraulic seal triggers eight hours of unplanned downtime right in the middle of peak shipments. Reserving a four-hour Sunday preventive maintenance window paired with cleaner shift handover logs protects monthly output and extends tool life.",
+          "ss": [
+            "The maintenance team can stagger servicing by line so priority export goods keep moving."
+          ],
+          "sc": "Defending planned maintenance windows against short-term output pressure."
+        },
+        {
+          "id": "c192-2",
+          "q": "A defect slips into 40 finished units. Explain to a client how you trace and contain the lot without halting their entire order.",
+          "vi": "Phát hiện lỗi trên 40 thành phẩm. Hãy giải thích cho khách hàng cách bạn truy xuất lô và khoanh vùng xử lý mà không làm đứt toàn bộ đơn.",
+          "st": "Using full batch traceability, we isolated + affected lot + and updated + quality assurance step.",
+          "ph": [
+            "batch traceability",
+            "quality assurance",
+            "raw materials"
+          ],
+          "sa": "Through our barcode batch traceability system, we immediately isolated the single shift lot manufactured from resin batch number R-402—containing all affected units before container loading. We quarantined the remaining raw materials, added an automated vision gauge at station four for quality assurance, and resumed clean production the same afternoon.",
+          "ss": [
+            "Full inspection sheets for replacement units are attached for your QA manager."
+          ],
+          "sc": "Demonstrating mature root-cause containment and manufacturing traceability."
+        },
+        {
+          "id": "c192-3",
+          "q": "Brief new floor supervisors on balancing productivity targets with workplace safety standards.",
+          "vi": "Nhắc nhở các tổ trưởng sản xuất mới về việc cân bằng chỉ tiêu sản lượng với kỷ luật an toàn lao động.",
+          "st": "No assembly line target justifies + shortcut, so workplace safety remains + non-negotiable priority.",
+          "ph": [
+            "workplace safety",
+            "assembly line",
+            "bill of materials"
+          ],
+          "sa": "Faster output never comes at the expense of workplace safety. Supervisors must confirm safety guards are locked before restarting any assembly line jam, verify operators match protective gear to the bill of materials chemicals in use, and halt any machine showing abnormal heat immediately.",
+          "ss": [
+            "Safe shifts are consistently our highest-efficiency shifts over the full quarter."
+          ],
+          "sc": "Setting plant-floor leadership expectations around safety and operational discipline."
+        }
+      ],
+      "fill": {
+        "text": "Subject: Weekly Plant Operations Update & Line Maintenance Notice – Week 46\n\nDear Operations Team,\n\nWe hit eighty-eight percent [[capacity utilization|utilizing capacities|capacious utilize]] across all three plants this week while shipping four full export containers on time.\n\nFollowing Tuesday's brief conveyor [[downtime|down-times|timing down]] on Line B, Engineering replaced the worn sensor bracket and updated the [[bill of materials|bills of material|material billing]] revision sheet in ERP. Tomorrow evening between shifts, Maintenance will execute two hours of [[preventive maintenance|preventing maintain|maintained prevent]] on the curing tunnel before Monday morning's startup.\n\nPlease review shift handover logs carefully prior to the 6:00 AM briefing.\n\nBest regards,\nMinh Tran\nPlant Operations Manager",
+        "trans": "",
+        "audio": "audio/mail/en-192.mp3"
+      },
+      "gram": [],
+      "listening": [
+        {
+          "id": "L192-0",
+          "title": "Morning Production Briefing: Resolving a Line Delay & Maintenance Window",
+          "sub": "Họp giao ban nhà máy buổi sáng: Xử lý nghẽn công đoạn, cập nhật định mức BOM và lịch bảo trì phòng ngừa",
+          "level": "B2",
+          "audio": "audio/listen/en-192-0.mp3",
+          "speakers": {
+            "A": "Tuan (Plant Manager)",
+            "B": "Claire (Production Planner)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Claire, before the shift handover wraps up, look at assembly line two's overnight numbers. We planned nine hundred units, yet night shift finished only seven hundred sixty because the UV dryer slowed hourly throughput by fifteen percent.",
+              "m": "Claire này, trước khi kết thúc bàn giao ca, nhìn số liệu chạy đêm của dây chuyền số hai đi. Mình lên kế hoạch 900 sản phẩm nhưng ca đêm chỉ xong được 760 cái vì máy sấy UV làm giảm 15% năng lực đầu ra mỗi giờ."
+            },
+            {
+              "s": "B",
+              "t": "I spotted that dip at six-thirty, Tuan. Night maintenance traced it to clogged exhaust filters causing the dryer sensors to throttle heat automatically—thankfully zero defective pieces slipped through quality assurance.",
+              "m": "Em thấy mức tụt đó lúc 6 giờ 30 rồi anh Tuấn. Tổ bảo trì ca đêm tìm ra nguyên nhân là lọc gió xả bị nghẹt khiến cảm biến sấy tự động giảm nhiệt—may mắn là khâu đảm bảo chất lượng không để lọt sản phẩm lỗi nào."
+            },
+            {
+              "s": "A",
+              "t": "Good catch by QA. Even so, one hundred forty units behind pushes Friday's European container closer to cutoff. How can we update the production schedule today without triggering Saturday overtime?",
+              "m": "Đội QA kiểm rất chặt, đáng khen. Dù vậy, hụt 140 sản phẩm đẩy lô hàng xuất châu Âu thứ Sáu sát giờ đóng công. Hôm nay mình chỉnh lịch trình sản xuất thế nào để không phải tăng ca thứ Bảy?"
+            },
+            {
+              "s": "B",
+              "t": "Line three finishes its domestic batch by two o'clock, bringing plant capacity utilization down temporarily. I checked raw materials and the revised bill of materials: we have enough resin and metal inserts to run the missing hundred forty units on line three from three to six PM.",
+              "m": "Dây chuyền ba chạy xong lô nội địa lúc 2 giờ chiều, khiến công suất nhà máy lúc đó đang dư tạm thời. Em kiểm nguyên vật liệu thô và bản định mức BOM mới rồi: đủ hạt nhựa và chi tiết kim loại để đẩy nốt 140 cái sang dây chuyền ba chạy từ 3 đến 6 giờ chiều."
+            },
+            {
+              "s": "A",
+              "t": "Smart move shifting the load across lines. Just confirm Maintenance keeps line two open between six and eight PM for filter replacement and thermal preventive maintenance so tomorrow's shifts stay clear of downtime.",
+              "m": "Điều tải sang dây chuyền khác rất hợp lý. Nhớ chốt với bên Bảo trì giữ dây chuyền hai trống từ 6 đến 8 giờ tối để thay lọc và bảo trì phòng ngừa nhiệt, giúp mấy ca ngày mai không dính dừng máy nữa."
+            },
+            {
+              "s": "B",
+              "t": "Already logged on the maintenance board with lockout workplace safety sign-off, and I tagged both dryer repair runs under our batch traceability code so Friday's audit file stays spotless.",
+              "m": "Em đã ghi sẵn lên bảng bảo trì kèm xác nhận khóa an toàn lao động rồi, và cũng gắn mã truy xuất lô cho cả hai lượt sấy sau sửa để hồ sơ đánh giá thứ Sáu hoàn chỉnh."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq192-0-0",
+              "q": "Why did assembly line two finish only 760 units instead of 900 overnight?",
+              "o": [
+                "The night crew ran out of metal inserts halfway through the shift.",
+                "Clogged UV dryer exhaust filters reduced hourly throughput by 15%.",
+                "Two operators missed the 6:00 AM shift handover meeting.",
+                "The domestic batch took priority over European orders."
+              ],
+              "a": 1,
+              "why": "Bộ lọc xả của máy sấy UV bị nghẹt làm cảm biến giảm nhiệt, khiến năng lực đầu ra mỗi giờ giảm 15%."
+            },
+            {
+              "id": "lq192-0-1",
+              "q": "How did Claire solve the 140-unit deficit without scheduling Saturday overtime?",
+              "o": [
+                "By transferring the backlog onto assembly line three after 3:00 PM once its domestic batch finished",
+                "By bypassing quality assurance checks on the final 140 units",
+                "By requesting a container deadline extension from the port authority",
+                "By borrowing raw materials from Sunday's domestic shipment"
+              ],
+              "a": 0,
+              "why": "Dây chuyền ba chạy xong lô nội địa lúc 14:00 nên Claire chuyển 140 sản phẩm còn thiếu sang chạy trên dây chuyền ba từ 15:00 đến 18:00."
+            },
+            {
+              "id": "lq192-0-2",
+              "q": "What action is scheduled between 6:00 and 8:00 PM to prevent future downtime?",
+              "o": [
+                "Updating the bill of materials with cheaper resin pellets",
+                "Performing filter replacement and preventive maintenance on line two with safety sign-off",
+                "Canceling batch traceability logging for domestic cartons",
+                "Increasing dryer temperatures manually above safety thresholds"
+              ],
+              "a": 1,
+              "why": "Từ 18:00 đến 20:00, tổ bảo trì thay lọc gió và thực hiện bảo trì phòng ngừa trên dây chuyền hai kèm quy trình khóa an toàn lao động."
+            }
+          ]
+        },
+        {
+          "id": "L192-1",
+          "title": "Customer Factory Audit: Traceability, Workplace Safety & Utilization",
+          "sub": "Đón đoàn đánh giá khách hàng tại xưởng: Quy trình truy xuất lô, an toàn lao động & năng lực công suất",
+          "level": "B2",
+          "audio": "audio/listen/en-192-1.mp3",
+          "speakers": {
+            "A": "Martin (Visiting Buyer QA Lead)",
+            "B": "Huong (Factory Compliance Manager)"
+          },
+          "lines": [
+            {
+              "s": "A",
+              "t": "Huong, your assembly halls look clean and well organized. Before we finalize our 2027 annual supply agreement, I'd like to verify two operational areas: batch traceability and real peak-season capacity utilization.",
+              "m": "Chị Hương này, các phân xưởng lắp ráp nhìn rất sạch và ngăn nắp. Trước khi chốt hợp đồng cung ứng thường niên 2027, tôi muốn kiểm tra kỹ hai phần: khả năng truy xuất nguồn gốc theo lô và tỷ lệ khai thác công suất thực tế vào mùa cao điểm."
+            },
+            {
+              "s": "B",
+              "t": "Certainly, Martin—pick any finished pallet behind you and let's test our traceability live. Scan this carton label on the tablet, and it instantly pulls up the exact bill of materials version, incoming raw materials certificate, molding shift, and QA inspector signature.",
+              "m": "Vâng anh Martin—anh cứ chọn bất kỳ kiện hàng thành phẩm nào phía sau để kiểm tra truy xuất trực tiếp. Anh quét nhãn thùng này trên máy tính bảng, hệ thống sẽ hiện ngay phiên bản định mức vật liệu, chứng nhận nguyên liệu đầu vào, ca ép và chữ ký kiểm tra chất lượng."
+            },
+            {
+              "s": "A",
+              "t": "Impressive—that returned the resin supplier lot and curing oven timestamp in under five seconds. Now about capacity: last year our previous vendor hit ninety-nine percent capacity utilization in October and missed three sailings because machine repairs backed up everything.",
+              "m": "Quá ấn tượng—chưa tới 5 giây đã ra đúng lô nhà cung cấp hạt nhựa và giờ sấy lò. Giờ sang phần công suất: năm ngoái nhà cung cấp cũ của chúng tôi chạy tới 99% công suất vào tháng Mười và lỡ ba chuyến tàu chỉ vì sửa máy kéo theo dây chuyền ùn ứ."
+            },
+            {
+              "s": "B",
+              "t": "We specifically cap scheduled load at eighty-five percent capacity utilization, keeping fifteen percent buffer headroom for rush orders and weekly preventive maintenance. Across the past twelve months, unplanned downtime stayed below 1.2 percent of operating hours.",
+              "m": "Bên tôi chủ động khống chế lịch sản xuất ở mức 85% công suất, luôn chừa 15% biên dự phòng cho đơn gấp và bảo trì phòng ngừa hàng tuần. Trong suốt 12 tháng qua, thời gian dừng máy ngoài kế hoạch giữ ở mức dưới 1,2% giờ vận hành."
+            },
+            {
+              "s": "A",
+              "t": "Below 1.2 percent is solid engineering discipline. And I noticed color-coded walkways, noise monitors, and emergency stop guards along every press—how often do you run workplace safety drills?",
+              "m": "Dưới 1,2% cho thấy kỷ luật kỹ thuật rất tốt. Tôi cũng thấy lối đi phân màu, đồng hồ đo ồn và nút dừng khẩn cấp dọc từng máy dập—nhà máy tổ chức diễn tập an toàn lao động bao lâu một lần?"
+            },
+            {
+              "s": "B",
+              "t": "Every line supervisor leads a workplace safety hazard review during Monday shift handover, and full plant evacuation and chemical spill drills take place quarterly with third-party auditors observing.",
+              "m": "Mỗi tổ trưởng dây chuyền đều chủ trì rà soát nguy cơ mất an toàn ngay buổi giao ban ca sáng thứ Hai, còn diễn tập thoát hiểm toàn xưởng và ứng phó tràn hóa chất diễn ra hàng quý có bên đánh giá độc lập quan sát."
+            }
+          ],
+          "questions": [
+            {
+              "id": "lq192-1-0",
+              "q": "What happened when Martin scanned a finished carton barcode on Huong's tablet?",
+              "o": [
+                "It showed only the shipping port address and export invoice.",
+                "In under 5 seconds, it displayed the bill of materials, raw material lot, molding shift, and QA sign-off.",
+                "It flagged a delayed UV curing oven batch requiring manual lookup.",
+                "It redirected to a paper binder kept at the front security gate."
+              ],
+              "a": 1,
+              "why": "Quét mã vạch trả về trọn bộ hồ sơ truy xuất lô gồm BOM, chứng nhận nguyên liệu đầu vào, ca sản xuất và chữ ký QA chưa tới 5 giây."
+            },
+            {
+              "id": "lq192-1-1",
+              "q": "Why does Huong's plant cap planned orders at 85% capacity utilization instead of 99%?",
+              "o": [
+                "To avoid paying utilities during peak daytime tariffs",
+                "To leave a 15% buffer for rush orders and scheduled preventive maintenance, keeping downtime under 1.2%",
+                "Because two of the four assembly lines are permanently closed",
+                "To qualify for lower workplace safety inspection frequency"
+              ],
+              "a": 1,
+              "why": "Giữ mức trần 85% công suất giúp chừa 15% dư địa xử lý đơn gấp và bảo trì định kỳ, tránh rơi vào thảm họa kẹt máy như nhà cung cấp cũ."
+            },
+            {
+              "id": "lq192-1-2",
+              "q": "How often are full plant emergency and chemical drills audited at the factory?",
+              "o": [
+                "Once every two years",
+                "Quarterly, alongside weekly Monday safety reviews at shift handover",
+                "Only after a buyer files a formal compliance claim",
+                "Every Friday night without external observers"
+              ],
+              "a": 1,
+              "why": "Nhà máy rà soát an toàn mỗi thứ Hai khi giao ca và diễn tập tổng lực hàng quý dưới sự giám sát của đơn vị đánh giá thứ ba."
+            }
+          ]
+        }
+      ],
+      "catPos": 10,
+      "pos": 56
+    },
+    {
       "id": "184",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Đơn hàng XNK, Bao bì & Giao vận",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · Đơn hàng, Nhà máy & Đóng gói",
       "title": "Packaging standards, artwork & export packing",
       "sub": "Quy chuẩn bao bì, Thiết kế nhãn mác & Đóng gói xuất khẩu",
       "vocab": [
@@ -24878,8 +25358,8 @@
         "audio": "audio/mail/en-184.mp3"
       },
       "gram": [],
-      "catPos": 10,
-      "pos": 56,
+      "catPos": 11,
+      "pos": 57,
       "listening": [
         {
           "id": "L184-0",
@@ -25047,10 +25527,10 @@
     },
     {
       "id": "21",
-      "pos": 57,
+      "pos": 58,
       "title": "Emails to customers: confirmations, delays and apologies",
       "sub": "Email thương mại 2: Xác nhận đơn hàng, báo trễ & xin lỗi",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Đơn hàng XNK, Bao bì & Giao vận",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · Đơn hàng, Nhà máy & Đóng gói",
       "vocab": [
         {
           "id": "E21-0",
@@ -25350,7 +25830,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 11,
+      "catPos": 12,
       "level": "B2",
       "listening": [
         {
@@ -25521,7 +26001,7 @@
       "id": "185",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Quản lý lỗi QC, Khiếu nại & Claim",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · QC Lỗi, Khiếu nại & Claim",
       "title": "Production & packaging defects: inspection and containment",
       "sub": "Sự cố sản xuất bao bì: Phát hiện lỗi, Khoanh vùng & Khắc phục",
       "vocab": [
@@ -25830,8 +26310,8 @@
         "audio": "audio/mail/en-185.mp3"
       },
       "gram": [],
-      "catPos": 12,
-      "pos": 58,
+      "catPos": 13,
+      "pos": 59,
       "listening": [
         {
           "id": "L185-0",
@@ -26001,7 +26481,7 @@
       "id": "186",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Quản lý lỗi QC, Khiếu nại & Claim",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · QC Lỗi, Khiếu nại & Claim",
       "title": "Client updates: progress, transparency & issue reporting",
       "sub": "Trao đổi với khách hàng: Cập nhật tiến độ & Báo cáo sự cố",
       "vocab": [
@@ -26310,8 +26790,8 @@
         "audio": "audio/mail/en-186.mp3"
       },
       "gram": [],
-      "catPos": 13,
-      "pos": 59,
+      "catPos": 14,
+      "pos": 60,
       "listening": [
         {
           "id": "L186-0",
@@ -26479,10 +26959,10 @@
     },
     {
       "id": "26",
-      "pos": 60,
+      "pos": 61,
       "title": "Difficult emails: saying no, pushing back, chasing payment, complaints",
       "sub": "Email thương mại 3: Từ chối khéo, nhắc thanh toán & khiếu nại",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Quản lý lỗi QC, Khiếu nại & Claim",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · QC Lỗi, Khiếu nại & Claim",
       "vocab": [
         {
           "id": "E26-0",
@@ -26782,7 +27262,7 @@
       },
       "gram": [],
       "category": "b2",
-      "catPos": 14,
+      "catPos": 15,
       "level": "B2",
       "listening": [
         {
@@ -26953,7 +27433,7 @@
       "id": "187",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Thương mại · Quản lý lỗi QC, Khiếu nại & Claim",
+      "phase": "B2 · Trung cấp 2 · Thương mại & Sản xuất · QC Lỗi, Khiếu nại & Claim",
       "title": "Resolving claims & closing issue settlements",
       "sub": "Thương lượng & Chốt phương án xử lý sự cố (Claim, Đền bù & Tái đặt)",
       "vocab": [
@@ -27262,8 +27742,8 @@
         "audio": "audio/mail/en-187.mp3"
       },
       "gram": [],
-      "catPos": 15,
-      "pos": 61,
+      "catPos": 16,
+      "pos": 62,
       "listening": [
         {
           "id": "L187-0",
@@ -27906,8 +28386,8 @@
           ]
         }
       ],
-      "catPos": 16,
-      "pos": 62
+      "catPos": 17,
+      "pos": 63
     },
     {
       "id": "190",
@@ -28386,8 +28866,8 @@
           ]
         }
       ],
-      "catPos": 17,
-      "pos": 63
+      "catPos": 18,
+      "pos": 64
     },
     {
       "id": "191",
@@ -28866,486 +29346,6 @@
           ]
         }
       ],
-      "catPos": 18,
-      "pos": 64
-    },
-    {
-      "id": "192",
-      "category": "b2",
-      "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Sản xuất, Xây dựng & Bất động sản",
-      "title": "Manufacturing, Production Planning & Plant Operations",
-      "sub": "Ngành Sản xuất: Kế hoạch sản xuất, dây chuyền, bảo trì & an toàn nhà máy",
-      "vocab": [
-        {
-          "id": "E192-0",
-          "w": "production schedule",
-          "r": "/prəˈdʌk.ʃən ˈskedʒ.uːl/",
-          "m": "kế hoạch / lịch trình chạy hàng sản xuất theo ngày, tuần",
-          "d": "the timetable specifying which factory orders, quantities, and lines run on each shift",
-          "ex": "We adjusted the weekly production schedule so rush export orders finish before Friday noon.",
-          "exr": "",
-          "exm": "Chúng tôi đã điều chỉnh lịch trình sản xuất tuần để các đơn hàng xuất gấp hoàn thành trước trưa thứ Sáu."
-        },
-        {
-          "id": "E192-1",
-          "w": "bill of materials",
-          "r": "/ˌbɪl əv məˈtɪr.i.əlz/",
-          "m": "bảng định mức nguyên vật liệu cấu thành sản phẩm (BOM)",
-          "d": "a detailed list of every raw material, component, and quantity needed to manufacture one unit",
-          "ex": "Engineering updated the bill of materials after switching to a corrosion-resistant steel bracket.",
-          "exr": "",
-          "exm": "Bộ phận kỹ thuật đã cập nhật bảng định mức nguyên vật liệu sau khi chuyển sang ngàm thép chống gỉ."
-        },
-        {
-          "id": "E192-2",
-          "w": "assembly line",
-          "r": "/əˈsem.bli laɪn/",
-          "m": "dây chuyền lắp ráp sản phẩm theo công đoạn nối tiếp",
-          "d": "a sequence of workstations where operators or machines add components step by step",
-          "ex": "Rebalancing tasks along assembly line three increased daily output by twelve percent.",
-          "exr": "",
-          "exm": "Cân bằng lại thao tác dọc dây chuyền lắp ráp số ba giúp tăng sản lượng ngày thêm 12%."
-        },
-        {
-          "id": "E192-3",
-          "w": "throughput",
-          "r": "/ˈθruː.pʊt/",
-          "m": "năng lực thông lượng đầu ra thực tế của dây chuyền",
-          "d": "the actual volume of finished goods a plant or line produces within a fixed timeframe",
-          "ex": "Upgrading the curing oven removed our drying delay and raised hourly throughput significantly.",
-          "exr": "",
-          "exm": "Nâng cấp lò sấy đã loại bỏ tình trạng chờ khô và tăng mạnh công suất đầu ra mỗi giờ."
-        },
-        {
-          "id": "E192-4",
-          "w": "raw materials",
-          "r": "/ˌrɔː məˈtɪr.i.əlz/",
-          "m": "nguyên vật liệu thô đầu vào phục vụ gia công",
-          "d": "unprocessed timber, resin, metal sheets, or yarn purchased before manufacturing begins",
-          "ex": "Incoming raw materials stay quarantined in warehouse bay B until lab humidity tests pass.",
-          "exr": "",
-          "exm": "Nguyên vật liệu thô nhập kho được cách ly ở khu B cho đến khi kiểm tra độ ẩm phòng thí nghiệm đạt chuẩn."
-        },
-        {
-          "id": "E192-5",
-          "w": "preventive maintenance",
-          "r": "/prɪˈven.tɪv ˈmeɪn.tən.əns/",
-          "m": "bảo trì phòng ngừa định kỳ để tránh hỏng hóc đột xuất",
-          "d": "scheduled servicing, lubrication, and part replacement done before machinery fails",
-          "ex": "Sunday preventive maintenance on the CNC routers kept breakdown rates near zero all quarter.",
-          "exr": "",
-          "exm": "Bảo trì phòng ngừa định kỳ vào Chủ nhật cho máy CNC giữ tỷ lệ hỏng hóc gần bằng 0 suốt cả quý."
-        },
-        {
-          "id": "E192-6",
-          "w": "downtime",
-          "r": "/ˈdaʊn.taɪm/",
-          "m": "thời gian dừng máy ngoài kế hoạch hoặc khi chuyển mã hàng",
-          "d": "hours during a working shift when production stops due to breakdowns or tooling changeovers",
-          "ex": "Unplanned conveyor downtime cost the plant ninety minutes of output on Tuesday morning.",
-          "exr": "",
-          "exm": "Thời gian dừng băng tải ngoài kế hoạch khiến nhà máy mất 90 phút sản lượng vào sáng thứ Ba."
-        },
-        {
-          "id": "E192-7",
-          "w": "quality assurance",
-          "r": "/ˈkwɑː.lə.ti əˈʃʊr.əns/",
-          "m": "hệ thống đảm bảo chất lượng xuyên suốt quy trình sản xuất (QA)",
-          "d": "process checks and standards designed to prevent defects from occurring during manufacturing",
-          "ex": "Quality assurance teams audit tooling calibration twice per shift to prevent dimension drift.",
-          "exr": "",
-          "exm": "Đội đảm bảo chất lượng kiểm tra hiệu chuẩn khuôn gá hai lần mỗi ca để ngừa sai lệch kích thước."
-        },
-        {
-          "id": "E192-8",
-          "w": "shift handover",
-          "r": "/ʃɪft ˈhænd.oʊ.vɚ/",
-          "m": "bàn giao tình trạng máy móc & tiến độ giữa hai ca sản xuất",
-          "d": "a structured briefing where outgoing supervisors update incoming shift leads on machine status",
-          "ex": "During shift handover, night supervisors log any abnormal motor vibration for the morning crew.",
-          "exr": "",
-          "exm": "Trong lúc bàn giao ca, tổ trưởng ca đêm ghi nhận mọi rung động bất thường của mô-tơ để ca sáng xử lý."
-        },
-        {
-          "id": "E192-9",
-          "w": "capacity utilization",
-          "r": "/kəˈpæs.ə.ti ˌjuː.tə.ləˈzeɪ.ʃən/",
-          "m": "tỷ lệ khai thác công suất thực tế của nhà xưởng",
-          "d": "the percentage of maximum theoretical plant output currently being used by active orders",
-          "ex": "Peak-season bookings pushed plant capacity utilization to eighty-nine percent this month.",
-          "exr": "",
-          "exm": "Đơn hàng mùa cao điểm đã đẩy tỷ lệ khai thác công suất nhà máy lên 89% trong tháng này."
-        },
-        {
-          "id": "E192-10",
-          "w": "workplace safety",
-          "r": "/ˈwɜːrk.pleɪs ˈseɪf.ti/",
-          "m": "an toàn lao động & phòng hộ tại khu vực sản xuất",
-          "d": "protocols, protective equipment, and machine guards keeping factory staff free from injury",
-          "ex": "Strict workplace safety rules require lockout tags and protective goggles in the stamping hall.",
-          "exr": "",
-          "exm": "Quy định an toàn lao động nghiêm ngặt yêu cầu khóa an toàn và kính bảo hộ trong phân xưởng dập."
-        },
-        {
-          "id": "E192-11",
-          "w": "batch traceability",
-          "r": "/bætʃ ˌtreɪ.səˈbɪl.ə.ti/",
-          "m": "truy xuất nguồn gốc nguyên liệu và công đoạn theo từng lô hàng",
-          "d": "recording lot numbers across every stage so defective batches can be isolated rapidly",
-          "ex": "Digital barcode scanning gives full batch traceability from resin pellets to packed cartons.",
-          "exr": "",
-          "exm": "Quét mã vạch số giúp truy xuất nguồn gốc trọn vẹn từng lô từ hạt nhựa nguyên liệu tới thùng đóng gói."
-        }
-      ],
-      "quiz": [
-        {
-          "id": "q192-0",
-          "q": "Before Engineering replaces a metal component on a flagship product, which document must planners update first so Purchasing buys the right parts?",
-          "o": [
-            "The visitor gate log",
-            "The bill of materials (BOM)",
-            "The cafeteria shift menu"
-          ],
-          "a": 1,
-          "why": "Bill of materials (định mức nguyên vật liệu) liệt kê chính xác từng linh kiện và số lượng cấu thành sản phẩm để bộ phận mua hàng đặt đúng."
-        },
-        {
-          "id": "q192-1",
-          "q": "Why do factories perform preventive maintenance on Sunday night instead of waiting until a machine breaks down on Tuesday?",
-          "o": [
-            "To minimize unplanned downtime and avoid halting active shifts",
-            "To eliminate the need for shift handover logs",
-            "To reduce workplace safety inspections to once a year"
-          ],
-          "a": 0,
-          "why": "Bảo trì phòng ngừa giúp phát hiện hao mòn sớm vào thời gian nghỉ, tránh dừng máy đột xuất (downtime) giữa lúc đơn hàng đang chạy gấp."
-        },
-        {
-          "id": "q192-2",
-          "q": "During assembly line balancing, Station 4 takes 65 seconds while all other stations finish in 40 seconds. What does Station 4 limit?",
-          "o": [
-            "Raw materials humidity in warehouse bay B",
-            "Overall line throughput per hour",
-            "Annual vacation balance for office staff"
-          ],
-          "a": 1,
-          "why": "Công đoạn chậm nhất quyết định nhịp ra hàng thực tế (throughput) của cả dây chuyền lắp ráp."
-        },
-        {
-          "id": "q192-3",
-          "q": "A client reports cracking on 200 plastic housings delivered in October. Which plant system lets you isolate only the affected resin lot instead of recalling a whole month?",
-          "o": [
-            "Batch traceability",
-            "Peak-season surcharge",
-            "Capacity utilization"
-          ],
-          "a": 0,
-          "why": "Batch traceability giúp truy ngược mã lô nguyên liệu, ca máy và ngày sản xuất để khoanh vùng chính xác lô hàng gặp sự cố."
-        },
-        {
-          "id": "q192-4",
-          "q": "What should an outgoing shift lead communicate clearly during a five-minute shift handover?",
-          "o": [
-            "Only total canteen meals served that afternoon",
-            "Units completed, tooling adjustments made, open machine alerts, and priority work orders",
-            "Competitors' holiday marketing slogans"
-          ],
-          "a": 1,
-          "why": "Bàn giao ca chuẩn cần nêu rõ sản lượng đã xong, tình trạng máy/khuôn và đơn hàng ưu tiên tiếp theo để ca sau không bị gián đoạn."
-        },
-        {
-          "id": "q192-5",
-          "q": "Your plant's capacity utilization hit 96% and a new urgent export order arrives. Which operational risk rises immediately?",
-          "o": [
-            "Overtime fatigue, tighter maintenance windows, and production schedule slippage",
-            "Empty warehouse racks waiting for customers",
-            "Lower workplace safety documentation requirements"
-          ],
-          "a": 0,
-          "why": "Chạy sát 96% công suất khiến nhà máy không còn khoảng đệm bảo trì hay xử lý hàng phát sinh, rất dễ trễ lịch trình sản xuất."
-        }
-      ],
-      "speak": [
-        {
-          "id": "s192-0",
-          "title": "Report an unexpected machine stop and adjust the production schedule",
-          "lines": [
-            {
-              "t": "Line two experienced forty minutes of unplanned downtime this morning because a main bearing overheated on the packaging sealer.",
-              "r": "",
-              "m": "Dây chuyền số hai sáng nay bị dừng máy ngoài kế hoạch 40 phút do bạc đạn chính trên máy ép màng đóng gói bị quá nhiệt."
-            },
-            {
-              "t": "Maintenance has already installed a spare unit, and we shifted two relief operators so the export lot catches up before tonight's shift handover.",
-              "r": "",
-              "m": "Đội bảo trì đã thay cụm dự phòng xong, và bên em đã điều chuyển thêm hai công nhân tăng cường để lô xuất khẩu kịp tiến độ trước lúc bàn giao ca tối."
-            },
-            {
-              "t": "We will add thermal sensor checks to Sunday's preventive maintenance checklist to protect weekly throughput.",
-              "r": "",
-              "m": "Chúng tôi sẽ bổ sung kiểm tra cảm biến nhiệt vào danh mục bảo trì phòng ngừa Chủ nhật này để giữ vững công suất đầu ra tuần."
-            }
-          ]
-        },
-        {
-          "id": "s192-1",
-          "title": "Walk a buyer through quality assurance and batch traceability on the plant floor",
-          "lines": [
-            {
-              "t": "Every incoming shipment of raw materials receives a lot barcode before it enters our warehouse or hits the assembly line.",
-              "r": "",
-              "m": "Mỗi lô nguyên vật liệu đầu vào đều được gắn mã vạch riêng trước khi nhập kho hoặc cấp lên dây chuyền lắp ráp."
-            },
-            {
-              "t": "Our quality assurance inspectors verify weight and weld strength every thirty minutes alongside strict workplace safety audits.",
-              "r": "",
-              "m": "Kỹ thuật viên đảm bảo chất lượng kiểm tra trọng lượng và độ bền mối hàn mỗi 30 phút song song với rà soát an toàn lao động nghiêm ngặt."
-            },
-            {
-              "t": "Because our digital log links each carton to its exact bill of materials revision, we achieve complete batch traceability within seconds.",
-              "r": "",
-              "m": "Nhờ nhật ký số liên kết từng thùng hàng tới đúng phiên bản định mức vật liệu, chúng tôi truy xuất trọn vẹn nguồn gốc theo lô chỉ trong vài giây."
-            }
-          ]
-        }
-      ],
-      "coach": [
-        {
-          "id": "c192-0",
-          "q": "An overseas buyer worries a rush order might delay their shipment. How do you explain your factory's production schedule adjustment reassuringly?",
-          "vi": "Khách hàng nước ngoài lo đơn hàng gấp sẽ làm trễ lịch tàu của họ. Bạn giải thích phương án điều phối lịch sản xuất ra sao để khách yên tâm?",
-          "st": "We reviewed our capacity utilization and adjusted the production schedule by + action + without cutting corners on quality.",
-          "ph": [
-            "production schedule",
-            "capacity utilization",
-            "throughput"
-          ],
-          "sa": "We reviewed current capacity utilization carefully and split the order across two parallel assembly lines starting tomorrow morning. By extending changeover prep onto night shift, we gain eighteen percent extra weekly throughput while keeping full quality checks intact so your container loads right on schedule.",
-          "ss": [
-            "I will send daily output tallies at 5:00 PM so your logistics team stays synced."
-          ],
-          "sc": "Reassuring an international customer on factory capacity and schedule reliability."
-        },
-        {
-          "id": "c192-1",
-          "q": "During a morning production meeting, convince management to invest in weekend preventive maintenance rather than running machines seven days straight.",
-          "vi": "Trong cuộc họp xưởng buổi sáng, hãy thuyết phục ban giám đốc dành thời gian bảo trì phòng ngừa cuối tuần thay vì chạy máy liên tục 7 ngày.",
-          "st": "Skipping scheduled preventive maintenance invites + downtime + that costs far more than + four-hour service window.",
-          "ph": [
-            "preventive maintenance",
-            "downtime",
-            "shift handover"
-          ],
-          "sa": "Running molding presses seven days straight pushes short-term units out, but one broken hydraulic seal triggers eight hours of unplanned downtime right in the middle of peak shipments. Reserving a four-hour Sunday preventive maintenance window paired with cleaner shift handover logs protects monthly output and extends tool life.",
-          "ss": [
-            "The maintenance team can stagger servicing by line so priority export goods keep moving."
-          ],
-          "sc": "Defending planned maintenance windows against short-term output pressure."
-        },
-        {
-          "id": "c192-2",
-          "q": "A defect slips into 40 finished units. Explain to a client how you trace and contain the lot without halting their entire order.",
-          "vi": "Phát hiện lỗi trên 40 thành phẩm. Hãy giải thích cho khách hàng cách bạn truy xuất lô và khoanh vùng xử lý mà không làm đứt toàn bộ đơn.",
-          "st": "Using full batch traceability, we isolated + affected lot + and updated + quality assurance step.",
-          "ph": [
-            "batch traceability",
-            "quality assurance",
-            "raw materials"
-          ],
-          "sa": "Through our barcode batch traceability system, we immediately isolated the single shift lot manufactured from resin batch number R-402—containing all affected units before container loading. We quarantined the remaining raw materials, added an automated vision gauge at station four for quality assurance, and resumed clean production the same afternoon.",
-          "ss": [
-            "Full inspection sheets for replacement units are attached for your QA manager."
-          ],
-          "sc": "Demonstrating mature root-cause containment and manufacturing traceability."
-        },
-        {
-          "id": "c192-3",
-          "q": "Brief new floor supervisors on balancing productivity targets with workplace safety standards.",
-          "vi": "Nhắc nhở các tổ trưởng sản xuất mới về việc cân bằng chỉ tiêu sản lượng với kỷ luật an toàn lao động.",
-          "st": "No assembly line target justifies + shortcut, so workplace safety remains + non-negotiable priority.",
-          "ph": [
-            "workplace safety",
-            "assembly line",
-            "bill of materials"
-          ],
-          "sa": "Faster output never comes at the expense of workplace safety. Supervisors must confirm safety guards are locked before restarting any assembly line jam, verify operators match protective gear to the bill of materials chemicals in use, and halt any machine showing abnormal heat immediately.",
-          "ss": [
-            "Safe shifts are consistently our highest-efficiency shifts over the full quarter."
-          ],
-          "sc": "Setting plant-floor leadership expectations around safety and operational discipline."
-        }
-      ],
-      "fill": {
-        "text": "Subject: Weekly Plant Operations Update & Line Maintenance Notice – Week 46\n\nDear Operations Team,\n\nWe hit eighty-eight percent [[capacity utilization|utilizing capacities|capacious utilize]] across all three plants this week while shipping four full export containers on time.\n\nFollowing Tuesday's brief conveyor [[downtime|down-times|timing down]] on Line B, Engineering replaced the worn sensor bracket and updated the [[bill of materials|bills of material|material billing]] revision sheet in ERP. Tomorrow evening between shifts, Maintenance will execute two hours of [[preventive maintenance|preventing maintain|maintained prevent]] on the curing tunnel before Monday morning's startup.\n\nPlease review shift handover logs carefully prior to the 6:00 AM briefing.\n\nBest regards,\nMinh Tran\nPlant Operations Manager",
-        "trans": "",
-        "audio": "audio/mail/en-192.mp3"
-      },
-      "gram": [],
-      "listening": [
-        {
-          "id": "L192-0",
-          "title": "Morning Production Briefing: Resolving a Line Delay & Maintenance Window",
-          "sub": "Họp giao ban nhà máy buổi sáng: Xử lý nghẽn công đoạn, cập nhật định mức BOM và lịch bảo trì phòng ngừa",
-          "level": "B2",
-          "audio": "audio/listen/en-192-0.mp3",
-          "speakers": {
-            "A": "Tuan (Plant Manager)",
-            "B": "Claire (Production Planner)"
-          },
-          "lines": [
-            {
-              "s": "A",
-              "t": "Claire, before the shift handover wraps up, look at assembly line two's overnight numbers. We planned nine hundred units, yet night shift finished only seven hundred sixty because the UV dryer slowed hourly throughput by fifteen percent.",
-              "m": "Claire này, trước khi kết thúc bàn giao ca, nhìn số liệu chạy đêm của dây chuyền số hai đi. Mình lên kế hoạch 900 sản phẩm nhưng ca đêm chỉ xong được 760 cái vì máy sấy UV làm giảm 15% năng lực đầu ra mỗi giờ."
-            },
-            {
-              "s": "B",
-              "t": "I spotted that dip at six-thirty, Tuan. Night maintenance traced it to clogged exhaust filters causing the dryer sensors to throttle heat automatically—thankfully zero defective pieces slipped through quality assurance.",
-              "m": "Em thấy mức tụt đó lúc 6 giờ 30 rồi anh Tuấn. Tổ bảo trì ca đêm tìm ra nguyên nhân là lọc gió xả bị nghẹt khiến cảm biến sấy tự động giảm nhiệt—may mắn là khâu đảm bảo chất lượng không để lọt sản phẩm lỗi nào."
-            },
-            {
-              "s": "A",
-              "t": "Good catch by QA. Even so, one hundred forty units behind pushes Friday's European container closer to cutoff. How can we update the production schedule today without triggering Saturday overtime?",
-              "m": "Đội QA kiểm rất chặt, đáng khen. Dù vậy, hụt 140 sản phẩm đẩy lô hàng xuất châu Âu thứ Sáu sát giờ đóng công. Hôm nay mình chỉnh lịch trình sản xuất thế nào để không phải tăng ca thứ Bảy?"
-            },
-            {
-              "s": "B",
-              "t": "Line three finishes its domestic batch by two o'clock, bringing plant capacity utilization down temporarily. I checked raw materials and the revised bill of materials: we have enough resin and metal inserts to run the missing hundred forty units on line three from three to six PM.",
-              "m": "Dây chuyền ba chạy xong lô nội địa lúc 2 giờ chiều, khiến công suất nhà máy lúc đó đang dư tạm thời. Em kiểm nguyên vật liệu thô và bản định mức BOM mới rồi: đủ hạt nhựa và chi tiết kim loại để đẩy nốt 140 cái sang dây chuyền ba chạy từ 3 đến 6 giờ chiều."
-            },
-            {
-              "s": "A",
-              "t": "Smart move shifting the load across lines. Just confirm Maintenance keeps line two open between six and eight PM for filter replacement and thermal preventive maintenance so tomorrow's shifts stay clear of downtime.",
-              "m": "Điều tải sang dây chuyền khác rất hợp lý. Nhớ chốt với bên Bảo trì giữ dây chuyền hai trống từ 6 đến 8 giờ tối để thay lọc và bảo trì phòng ngừa nhiệt, giúp mấy ca ngày mai không dính dừng máy nữa."
-            },
-            {
-              "s": "B",
-              "t": "Already logged on the maintenance board with lockout workplace safety sign-off, and I tagged both dryer repair runs under our batch traceability code so Friday's audit file stays spotless.",
-              "m": "Em đã ghi sẵn lên bảng bảo trì kèm xác nhận khóa an toàn lao động rồi, và cũng gắn mã truy xuất lô cho cả hai lượt sấy sau sửa để hồ sơ đánh giá thứ Sáu hoàn chỉnh."
-            }
-          ],
-          "questions": [
-            {
-              "id": "lq192-0-0",
-              "q": "Why did assembly line two finish only 760 units instead of 900 overnight?",
-              "o": [
-                "The night crew ran out of metal inserts halfway through the shift.",
-                "Clogged UV dryer exhaust filters reduced hourly throughput by 15%.",
-                "Two operators missed the 6:00 AM shift handover meeting.",
-                "The domestic batch took priority over European orders."
-              ],
-              "a": 1,
-              "why": "Bộ lọc xả của máy sấy UV bị nghẹt làm cảm biến giảm nhiệt, khiến năng lực đầu ra mỗi giờ giảm 15%."
-            },
-            {
-              "id": "lq192-0-1",
-              "q": "How did Claire solve the 140-unit deficit without scheduling Saturday overtime?",
-              "o": [
-                "By transferring the backlog onto assembly line three after 3:00 PM once its domestic batch finished",
-                "By bypassing quality assurance checks on the final 140 units",
-                "By requesting a container deadline extension from the port authority",
-                "By borrowing raw materials from Sunday's domestic shipment"
-              ],
-              "a": 0,
-              "why": "Dây chuyền ba chạy xong lô nội địa lúc 14:00 nên Claire chuyển 140 sản phẩm còn thiếu sang chạy trên dây chuyền ba từ 15:00 đến 18:00."
-            },
-            {
-              "id": "lq192-0-2",
-              "q": "What action is scheduled between 6:00 and 8:00 PM to prevent future downtime?",
-              "o": [
-                "Updating the bill of materials with cheaper resin pellets",
-                "Performing filter replacement and preventive maintenance on line two with safety sign-off",
-                "Canceling batch traceability logging for domestic cartons",
-                "Increasing dryer temperatures manually above safety thresholds"
-              ],
-              "a": 1,
-              "why": "Từ 18:00 đến 20:00, tổ bảo trì thay lọc gió và thực hiện bảo trì phòng ngừa trên dây chuyền hai kèm quy trình khóa an toàn lao động."
-            }
-          ]
-        },
-        {
-          "id": "L192-1",
-          "title": "Customer Factory Audit: Traceability, Workplace Safety & Utilization",
-          "sub": "Đón đoàn đánh giá khách hàng tại xưởng: Quy trình truy xuất lô, an toàn lao động & năng lực công suất",
-          "level": "B2",
-          "audio": "audio/listen/en-192-1.mp3",
-          "speakers": {
-            "A": "Martin (Visiting Buyer QA Lead)",
-            "B": "Huong (Factory Compliance Manager)"
-          },
-          "lines": [
-            {
-              "s": "A",
-              "t": "Huong, your assembly halls look clean and well organized. Before we finalize our 2027 annual supply agreement, I'd like to verify two operational areas: batch traceability and real peak-season capacity utilization.",
-              "m": "Chị Hương này, các phân xưởng lắp ráp nhìn rất sạch và ngăn nắp. Trước khi chốt hợp đồng cung ứng thường niên 2027, tôi muốn kiểm tra kỹ hai phần: khả năng truy xuất nguồn gốc theo lô và tỷ lệ khai thác công suất thực tế vào mùa cao điểm."
-            },
-            {
-              "s": "B",
-              "t": "Certainly, Martin—pick any finished pallet behind you and let's test our traceability live. Scan this carton label on the tablet, and it instantly pulls up the exact bill of materials version, incoming raw materials certificate, molding shift, and QA inspector signature.",
-              "m": "Vâng anh Martin—anh cứ chọn bất kỳ kiện hàng thành phẩm nào phía sau để kiểm tra truy xuất trực tiếp. Anh quét nhãn thùng này trên máy tính bảng, hệ thống sẽ hiện ngay phiên bản định mức vật liệu, chứng nhận nguyên liệu đầu vào, ca ép và chữ ký kiểm tra chất lượng."
-            },
-            {
-              "s": "A",
-              "t": "Impressive—that returned the resin supplier lot and curing oven timestamp in under five seconds. Now about capacity: last year our previous vendor hit ninety-nine percent capacity utilization in October and missed three sailings because machine repairs backed up everything.",
-              "m": "Quá ấn tượng—chưa tới 5 giây đã ra đúng lô nhà cung cấp hạt nhựa và giờ sấy lò. Giờ sang phần công suất: năm ngoái nhà cung cấp cũ của chúng tôi chạy tới 99% công suất vào tháng Mười và lỡ ba chuyến tàu chỉ vì sửa máy kéo theo dây chuyền ùn ứ."
-            },
-            {
-              "s": "B",
-              "t": "We specifically cap scheduled load at eighty-five percent capacity utilization, keeping fifteen percent buffer headroom for rush orders and weekly preventive maintenance. Across the past twelve months, unplanned downtime stayed below 1.2 percent of operating hours.",
-              "m": "Bên tôi chủ động khống chế lịch sản xuất ở mức 85% công suất, luôn chừa 15% biên dự phòng cho đơn gấp và bảo trì phòng ngừa hàng tuần. Trong suốt 12 tháng qua, thời gian dừng máy ngoài kế hoạch giữ ở mức dưới 1,2% giờ vận hành."
-            },
-            {
-              "s": "A",
-              "t": "Below 1.2 percent is solid engineering discipline. And I noticed color-coded walkways, noise monitors, and emergency stop guards along every press—how often do you run workplace safety drills?",
-              "m": "Dưới 1,2% cho thấy kỷ luật kỹ thuật rất tốt. Tôi cũng thấy lối đi phân màu, đồng hồ đo ồn và nút dừng khẩn cấp dọc từng máy dập—nhà máy tổ chức diễn tập an toàn lao động bao lâu một lần?"
-            },
-            {
-              "s": "B",
-              "t": "Every line supervisor leads a workplace safety hazard review during Monday shift handover, and full plant evacuation and chemical spill drills take place quarterly with third-party auditors observing.",
-              "m": "Mỗi tổ trưởng dây chuyền đều chủ trì rà soát nguy cơ mất an toàn ngay buổi giao ban ca sáng thứ Hai, còn diễn tập thoát hiểm toàn xưởng và ứng phó tràn hóa chất diễn ra hàng quý có bên đánh giá độc lập quan sát."
-            }
-          ],
-          "questions": [
-            {
-              "id": "lq192-1-0",
-              "q": "What happened when Martin scanned a finished carton barcode on Huong's tablet?",
-              "o": [
-                "It showed only the shipping port address and export invoice.",
-                "In under 5 seconds, it displayed the bill of materials, raw material lot, molding shift, and QA sign-off.",
-                "It flagged a delayed UV curing oven batch requiring manual lookup.",
-                "It redirected to a paper binder kept at the front security gate."
-              ],
-              "a": 1,
-              "why": "Quét mã vạch trả về trọn bộ hồ sơ truy xuất lô gồm BOM, chứng nhận nguyên liệu đầu vào, ca sản xuất và chữ ký QA chưa tới 5 giây."
-            },
-            {
-              "id": "lq192-1-1",
-              "q": "Why does Huong's plant cap planned orders at 85% capacity utilization instead of 99%?",
-              "o": [
-                "To avoid paying utilities during peak daytime tariffs",
-                "To leave a 15% buffer for rush orders and scheduled preventive maintenance, keeping downtime under 1.2%",
-                "Because two of the four assembly lines are permanently closed",
-                "To qualify for lower workplace safety inspection frequency"
-              ],
-              "a": 1,
-              "why": "Giữ mức trần 85% công suất giúp chừa 15% dư địa xử lý đơn gấp và bảo trì định kỳ, tránh rơi vào thảm họa kẹt máy như nhà cung cấp cũ."
-            },
-            {
-              "id": "lq192-1-2",
-              "q": "How often are full plant emergency and chemical drills audited at the factory?",
-              "o": [
-                "Once every two years",
-                "Quarterly, alongside weekly Monday safety reviews at shift handover",
-                "Only after a buyer files a formal compliance claim",
-                "Every Friday night without external observers"
-              ],
-              "a": 1,
-              "why": "Nhà máy rà soát an toàn mỗi thứ Hai khi giao ca và diễn tập tổng lực hàng quý dưới sự giám sát của đơn vị đánh giá thứ ba."
-            }
-          ]
-        }
-      ],
       "catPos": 19,
       "pos": 65
     },
@@ -29353,7 +29353,7 @@
       "id": "193",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Sản xuất, Xây dựng & Bất động sản",
+      "phase": "B2 · Trung cấp 2 · Xây dựng & Bất động sản",
       "title": "Construction, Site Supervision & Contracting",
       "sub": "Ngành Xây dựng: Bản vẽ, tiên lượng BoQ, giám sát công trường & nghiệm thu",
       "vocab": [
@@ -29833,7 +29833,7 @@
       "id": "194",
       "category": "b2",
       "level": "B2",
-      "phase": "B2 · Trung cấp 2 · Sản xuất, Xây dựng & Bất động sản",
+      "phase": "B2 · Trung cấp 2 · Xây dựng & Bất động sản",
       "title": "Real Estate, Commercial Leasing & Property Management",
       "sub": "Ngành Bất động sản: Thuê mặt bằng, thẩm định, ký quỹ & quản lý tài sản",
       "vocab": [
